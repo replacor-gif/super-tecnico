@@ -1,0 +1,11 @@
+dist/
+__pycache__/
+*.py[cod]
+*.db
+*.sqlite
+*.sqlite3
+*.php
+.htaccess
+data/brands/fujitsu-general/media/
+test-artifacts/
+server.*.log

@@ -1,0 +1,19 @@
+{
+  "slug": "nombre-marca",
+  "name": "Nombre de la marca",
+  "display_name": "Nombre visible",
+  "enabled": true,
+  "web_data": "web",
+  "media": "media",
+  "publish_media": false,
+  "static_site": true,
+  "schema_version": "2.2.0",
+  "data_version": "1.0.0",
+  "counts": {
+    "categories": 0,
+    "topics": 0,
+    "variants": 0,
+    "errors": 0,
+    "search_entries": 0
+  }
+}

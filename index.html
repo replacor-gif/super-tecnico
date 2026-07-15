@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Biblioteca técnica Super Técnico para consulta de errores, programación, modos de servicio y valores técnicos.">
+  <meta name="theme-color" content="#0e3e5a">
+  <title>Super Técnico</title>
+  <link rel="stylesheet" href="assets/styles.css?v=2">
+</head>
+<body>
+<header class="site-header">
+  <div>
+    <h1>Super Técnico</h1>
+    <p>Biblioteca técnica de intervención</p>
+  </div>
+  <button id="coverageButton" class="secondary-button" type="button">Cobertura</button>
+</header>
+
+<main class="app-shell">
+  <section class="control-panel" aria-label="Navegación técnica">
+    <div class="field">
+      <label for="brandSelect">Marca</label>
+      <select id="brandSelect"><option value="">Cargando…</option></select>
+    </div>
+    <div class="field">
+      <label for="categorySelect">Categoría</label>
+      <select id="categorySelect" disabled><option value="">Selecciona una categoría</option></select>
+    </div>
+    <div class="field grow">
+      <label for="topicSelect">Tema</label>
+      <select id="topicSelect" disabled><option value="">Selecciona un tema</option></select>
+    </div>
+  </section>
+
+  <section class="search-panel" aria-label="Búsqueda global">
+    <form id="globalSearchForm">
+      <label class="sr-only" for="globalSearch">Buscar en toda la marca</label>
+      <input id="globalSearch" type="search" autocomplete="off" placeholder="Buscar: pump down, E12, boya, Peak Cut, mando 2 hilos…">
+      <button type="submit">Buscar</button>
+    </form>
+  </section>
+
+  <nav id="breadcrumb" class="breadcrumb" aria-label="Ruta"></nav>
+  <section id="contextPanel" class="context-panel hidden"></section>
+  <section id="content" class="content" aria-live="polite">
+    <div class="welcome-card">
+      <h2>Selecciona una marca y una categoría</h2>
+      <p>La información aparece por temas y variantes. Los procedimientos, tablas, advertencias y fuentes permanecen plegados hasta abrirlos.</p>
+    </div>
+  </section>
+</main>
+
+<dialog id="imageDialog" class="image-dialog">
+  <button id="closeImageDialog" class="dialog-close" type="button" aria-label="Cerrar">×</button>
+  <img id="dialogImage" alt="">
+  <p id="dialogCaption"></p>
+</dialog>
+
+<script src="assets/app.js?v=2" defer></script>
+</body>
+</html>

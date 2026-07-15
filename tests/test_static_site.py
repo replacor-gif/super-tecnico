@@ -1,0 +1,109 @@
+from __future__ import annotations
+
+import json
+import re
+import sys
+import tempfile
+import unicodedata
+import unittest
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+
+from build_static import build  # noqa: E402
+
+
+def load(path: Path):
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def normalized(value: str) -> str:
+    value = "".join(
+        char for char in unicodedata.normalize("NFD", value)
+        if unicodedata.category(char) != "Mn"
+    ).upper()
+    return re.sub(r"\s+", " ", re.sub(r"[^A-Z0-9]+", " ", value)).strip()
+
+
+def contains_query(entries: list[dict], query: str) -> bool:
+    tokens = normalized(query).split()
+    return any(all(token in str(item.get("haystack", "")) for token in tokens) for item in entries)
+
+
+class StaticSiteTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.temp = tempfile.TemporaryDirectory()
+        cls.dist = Path(cls.temp.name) / "dist"
+        cls.report = build(ROOT, cls.dist)
+        cls.brand = cls.dist / "data" / "brands" / "fujitsu-general"
+        cls.web = cls.brand / "web"
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.temp.cleanup()
+
+    def test_expected_counts(self):
+        manifest = load(self.dist / "data" / "brands" / "index.json")
+        self.assertEqual(len(manifest["brands"]), 1)
+        self.assertEqual(manifest["brands"][0]["counts"], {
+            "categories": 18,
+            "topics": 29,
+            "variants": 46,
+            "errors": 110,
+            "search_entries": 156,
+        })
+
+    def test_search_examples_are_present(self):
+        entries = load(self.web / "search.json")
+        for query in ("pump down", "boya", "Peak Cut", "mando 2 hilos"):
+            with self.subTest(query=query):
+                self.assertTrue(contains_query(entries, query))
+
+        errors = load(self.web / "errors" / "index.json")
+        token = normalized("E12")
+        self.assertTrue(any(token in item.get("search_text", "") for item in errors))
+
+    def test_media_is_not_published_or_referenced(self):
+        self.assertFalse((self.brand / "media").exists())
+        self.assertEqual(self.report["checks"]["media_files"], 0)
+        self.assertGreaterEqual(self.report["checks"]["media_references_removed"], 26)
+
+        for path in self.web.rglob("*.json"):
+            data = load(path)
+            pending = [data]
+            while pending:
+                node = pending.pop()
+                if isinstance(node, dict):
+                    if "media" in node:
+                        self.assertEqual(node["media"], [], path)
+                    pending.extend(node.values())
+                elif isinstance(node, list):
+                    pending.extend(node)
+
+    def test_forbidden_server_files_are_absent(self):
+        forbidden_suffixes = {".db", ".sqlite", ".sqlite3", ".php", ".py", ".md"}
+        for path in self.dist.rglob("*"):
+            if path.is_file():
+                self.assertNotIn(path.suffix.lower(), forbidden_suffixes, path)
+                self.assertNotEqual(path.name.lower(), ".htaccess")
+
+    def test_browser_uses_static_data_provider(self):
+        html = (self.dist / "index.html").read_text(encoding="utf-8")
+        script = (self.dist / "assets" / "app.js").read_text(encoding="utf-8")
+        self.assertIn("assets/app.js", html)
+        self.assertIn("data/brands/index.json", script)
+        self.assertNotIn("api.php", html + script)
+        self.assertNotIn("media.php", html + script)
+
+    def test_all_json_is_utf8_and_valid(self):
+        paths = list(self.dist.rglob("*.json"))
+        self.assertGreaterEqual(len(paths), 148)
+        for path in paths:
+            load(path)
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)
