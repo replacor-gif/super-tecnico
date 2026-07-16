@@ -160,6 +160,8 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(actual["errors"]["entries"], 117)
         self.assertEqual(actual["errors"]["interpretations"], 127)
         self.assertEqual(actual["errors"]["technical_interpretations"], 118)
+        self.assertEqual(actual["errors"]["status_counts"].get("complete"), 118)
+        self.assertEqual(actual["errors"]["status_counts"].get("developed", 0), 0)
         self.assertEqual(actual["errors"]["status_counts"].get("partial", 0), 0)
         self.assertEqual(actual["errors"]["status_counts"].get("reference_only", 0), 0)
         self.assertEqual(actual["technical_variants"]["entries"], 71)
@@ -538,7 +540,7 @@ class StaticSiteTests(unittest.TestCase):
 
         quality = load(web / "quality.json")
         self.assertEqual(quality["errors"]["status_counts"].get("reference_only", 0), 0)
-        self.assertEqual(quality["errors"]["status_counts"].get("complete"), 81)
+        self.assertEqual(quality["errors"]["status_counts"].get("complete"), 118)
 
         search = load(web / "search.json")
         for query in (
@@ -640,6 +642,54 @@ class StaticSiteTests(unittest.TestCase):
             "S134 S130 no pulsar pump down",
             "CL Ht or dF estados normales",
             "PC Ln Sn limitacion",
+        ):
+            with self.subTest(query=query):
+                self.assertTrue(contains_query(search, query))
+
+    def test_fujitsu_all_technical_errors_have_documented_behavior_or_values(self):
+        web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
+
+        technical_count = 0
+        for path in (web / "errors" / "details").glob("*.json"):
+            detail = load(path)
+            for interpretation in detail["interpretations"]:
+                if interpretation.get("entry_role") == "grouping_reference":
+                    continue
+                technical_count += 1
+                kinds = {item["item_type"] for item in interpretation.get("info_items", [])}
+                self.assertTrue({"cause", "check"}.issubset(kinds), (path, interpretation["id"]))
+                self.assertTrue(
+                    "machine_behavior" in kinds
+                    or interpretation.get("operational_impacts")
+                    or interpretation.get("datasets"),
+                    (path, interpretation["id"]),
+                )
+                self.assertTrue(any(source.get("page_start") for source in interpretation["sources"]))
+        self.assertEqual(technical_count, 118)
+
+        e11_return = load(web / "errors" / "details" / "1.json")["interpretations"][0]
+        e11_behavior = next(item for item in e11_return["info_items"] if item["item_type"] == "machine_behavior")
+        self.assertIn("2 minutos", e11_behavior["body"])
+        self.assertIn("15 segundos", e11_behavior["body"])
+
+        e64 = load(web / "errors" / "details" / "17.json")["interpretations"][0]
+        self.assertEqual(e64["operational_impacts"][0]["stop_level"], "permanent_stop")
+        e97 = load(web / "errors" / "details" / "28.json")["interpretations"][0]
+        self.assertTrue(any(
+            item["item_type"] == "machine_behavior" and "100 rpm" in item["body"] and "20 segundos" in item["body"]
+            for item in e97["info_items"]
+        ))
+
+        quality = load(web / "quality.json")
+        self.assertEqual(quality["errors"]["status_counts"], {"complete": 118, "grouping_reference": 9})
+        self.assertEqual(quality["errors"]["component_coverage"]["operational_impacts"], {"count": 105, "percent": 89.0})
+
+        search = load(web / "search.json")
+        for query in (
+            "E11 2 minutos 15 segundos",
+            "E64 cinco repeticiones parada permanente",
+            "E97 100 rpm 20 segundos",
+            "A3 108 2 paradas 24 horas",
         ):
             with self.subTest(query=query):
                 self.assertTrue(contains_query(search, query))
