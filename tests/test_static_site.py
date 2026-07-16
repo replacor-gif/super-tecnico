@@ -54,10 +54,10 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(set(brands), {"daikin", "fujitsu-general"})
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
-            "topics": 30,
-            "variants": 47,
+            "topics": 31,
+            "variants": 48,
             "errors": 110,
-            "search_entries": 157,
+            "search_entries": 158,
         })
         self.assertEqual(brands["daikin"]["counts"], {
             "categories": 7,
@@ -159,7 +159,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(actual["errors"]["entries"], 110)
         self.assertLessEqual(actual["errors"]["interpretations"], 121)
         self.assertGreater(actual["errors"]["status_counts"].get("reference_only", 0), 0)
-        self.assertEqual(actual["technical_variants"]["entries"], 47)
+        self.assertEqual(actual["technical_variants"]["entries"], 48)
 
     def test_fujitsu_confirmation_only_duplicates_are_consolidated(self):
         web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
@@ -267,6 +267,37 @@ class StaticSiteTests(unittest.TestCase):
         search = load(web / "search.json")
         self.assertTrue(contains_query(search, "CHECK RUN LED A F"))
         self.assertTrue(contains_query(search, "correccion automatica cableado"))
+
+    def test_fujitsu_legacy_simultaneous_addressing_is_complete(self):
+        web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
+        quality = load(web / "quality.json")
+        self.assertGreaterEqual(quality["errors"]["status_counts"].get("complete", 0), 70)
+        self.assertLessEqual(quality["errors"]["status_counts"].get("reference_only", 0), 20)
+
+        for error_id, interpretation_id in ((37, 43), (38, 45), (39, 46)):
+            with self.subTest(error_id=error_id):
+                detail = load(web / "errors" / "details" / f"{error_id}.json")
+                interpretation = next(item for item in detail["interpretations"] if item["id"] == interpretation_id)
+                item_types = {item["item_type"] for item in interpretation["info_items"]}
+                self.assertIn("cause", item_types)
+                self.assertIn("check", item_types)
+                self.assertIn("machine_behavior", item_types)
+                self.assertTrue(interpretation["datasets"])
+                self.assertTrue(any(
+                    source.get("document_ref") == "9374318445-06"
+                    for source in interpretation["sources"]
+                ))
+
+        topic = load(web / "topics" / "31.json")
+        variant = topic["variants"][0]
+        self.assertEqual(variant["id"], 48)
+        self.assertEqual({parameter["parameter_code"] for parameter in variant["parameters"]}, {"DIP R.C.", "02", "51", "DIP SW1-2"})
+        rc = next(parameter for parameter in variant["parameters"] if parameter["parameter_code"] == "DIP R.C.")
+        self.assertEqual(len(rc["options"]), 16)
+
+        search = load(web / "search.json")
+        self.assertTrue(contains_query(search, "funcion 02 circuito frigorifico"))
+        self.assertTrue(contains_query(search, "funcion 51 principal secundaria"))
 
 
 if __name__ == "__main__":
