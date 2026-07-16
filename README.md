@@ -4,6 +4,11 @@ Biblioteca técnica estática para consulta por marca, categoría, tema y varian
 
 `https://replacor-gif.github.io/super-tecnico/`
 
+## Marcas disponibles
+
+- **Fujitsu / General:** marca de referencia principal.
+- **Daikin:** Referencia V1 de prueba con 16 registros técnicos. Quince registros mantienen visible la advertencia de página o manual pendiente de verificar.
+
 ## Qué se publica
 
 - Interfaz HTML, CSS y JavaScript.
@@ -53,4 +58,3 @@ En IONOS MyWebsite Now, crear un elemento de navegación llamado **Super Técnic
 - Aplicación pública, gratuita y sin cuentas, formularios ni pagos.
 - GitHub Pages no debe utilizarse para convertirla en un SaaS comercial.
 - La base SQLite maestra se mantiene fuera del repositorio y se usa únicamente para generar nuevas proyecciones web.
-
