@@ -54,10 +54,10 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(set(brands), {"daikin", "fujitsu-general"})
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
-            "topics": 29,
-            "variants": 46,
+            "topics": 30,
+            "variants": 47,
             "errors": 110,
-            "search_entries": 156,
+            "search_entries": 157,
         })
         self.assertEqual(brands["daikin"]["counts"], {
             "categories": 7,
@@ -159,7 +159,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(actual["errors"]["entries"], 110)
         self.assertLessEqual(actual["errors"]["interpretations"], 121)
         self.assertGreater(actual["errors"]["status_counts"].get("reference_only", 0), 0)
-        self.assertEqual(actual["technical_variants"]["entries"], 46)
+        self.assertEqual(actual["technical_variants"]["entries"], 47)
 
     def test_fujitsu_confirmation_only_duplicates_are_consolidated(self):
         web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
@@ -240,6 +240,33 @@ class StaticSiteTests(unittest.TestCase):
         search = load(web / "search.json")
         self.assertTrue(contains_query(search, "SET4 1 180 segundos"))
         self.assertTrue(contains_query(search, "CNC01 12 V"))
+
+    def test_fujitsu_multisplit_check_run_is_complete(self):
+        web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
+        quality = load(web / "quality.json")
+        self.assertGreaterEqual(quality["errors"]["status_counts"].get("complete", 0), 67)
+        self.assertLessEqual(quality["errors"]["status_counts"].get("reference_only", 0), 23)
+
+        e15 = load(web / "errors" / "details" / "4.json")
+        interpretation = next(item for item in e15["interpretations"] if item["id"] == 42)
+        item_types = {item["item_type"] for item in interpretation["info_items"]}
+        self.assertIn("cause", item_types)
+        self.assertIn("check", item_types)
+        self.assertIn("machine_behavior", item_types)
+        self.assertTrue(any(
+            source.get("document_ref") == "9374995530-05"
+            for source in interpretation["sources"]
+        ))
+
+        topic = load(web / "topics" / "30.json")
+        variant = topic["variants"][0]
+        self.assertEqual(variant["id"], 47)
+        self.assertGreaterEqual(len(variant["steps"]), 8)
+        self.assertTrue(any("10 minutos" in step.get("instruction", "") for step in variant["steps"]))
+
+        search = load(web / "search.json")
+        self.assertTrue(contains_query(search, "CHECK RUN LED A F"))
+        self.assertTrue(contains_query(search, "correccion automatica cableado"))
 
 
 if __name__ == "__main__":
