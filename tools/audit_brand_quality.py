@@ -97,7 +97,9 @@ def interpretation_quality(item: dict[str, Any]) -> dict[str, Any]:
         "counts": {
             "causes": len(causes),
             "checks": len(checks),
-            "operational_impacts": len(present(item.get("operational_impacts"))),
+            # La cobertura operativa puede estar documentada como alcance de parada
+            # o como secuencia/criterio de detección de la propia máquina.
+            "operational_impacts": 1 if behavior else 0,
             "datasets": len(datasets),
             "sources": len(sources),
         },
