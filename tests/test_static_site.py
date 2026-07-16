@@ -54,10 +54,10 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(set(brands), {"daikin", "fujitsu-general"})
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
-            "topics": 34,
-            "variants": 58,
-            "errors": 116,
-            "search_entries": 174,
+            "topics": 35,
+            "variants": 60,
+            "errors": 117,
+            "search_entries": 177,
         })
         self.assertEqual(brands["daikin"]["counts"], {
             "categories": 7,
@@ -157,15 +157,15 @@ class StaticSiteTests(unittest.TestCase):
         expected = audit_brand(brand)
         actual = load(brand / "web" / "quality.json")
         self.assertEqual(actual, expected)
-        self.assertEqual(actual["errors"]["entries"], 116)
-        self.assertEqual(actual["errors"]["interpretations"], 130)
+        self.assertEqual(actual["errors"]["entries"], 117)
+        self.assertEqual(actual["errors"]["interpretations"], 129)
         self.assertGreater(actual["errors"]["status_counts"].get("reference_only", 0), 0)
-        self.assertEqual(actual["technical_variants"]["entries"], 58)
+        self.assertEqual(actual["technical_variants"]["entries"], 60)
 
     def test_fujitsu_confirmation_only_duplicates_are_consolidated(self):
         web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
         expected = {
-            3: 2, 5: 1, 9: 1, 11: 1, 12: 1, 13: 1, 14: 2,
+            3: 2, 5: 1, 7: 1, 9: 1, 11: 1, 12: 1, 13: 1, 14: 2, 15: 1,
             16: 1, 17: 1, 18: 2, 19: 1, 20: 1, 21: 1, 22: 1,
             23: 1, 25: 1, 26: 1, 28: 1, 29: 1, 30: 1, 31: 1, 32: 1,
         }
@@ -303,10 +303,10 @@ class StaticSiteTests(unittest.TestCase):
     def test_fujitsu_grouping_codes_route_to_complete_subcodes(self):
         web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
         quality = load(web / "quality.json")
-        self.assertEqual(quality["errors"]["grouping_references"], 8)
-        self.assertEqual(quality["errors"]["technical_interpretations"], 122)
-        self.assertEqual(quality["errors"]["status_counts"].get("grouping_reference"), 8)
-        self.assertLessEqual(quality["errors"]["status_counts"].get("reference_only", 0), 10)
+        self.assertEqual(quality["errors"]["grouping_references"], 9)
+        self.assertEqual(quality["errors"]["technical_interpretations"], 120)
+        self.assertEqual(quality["errors"]["status_counts"].get("grouping_reference"), 9)
+        self.assertLessEqual(quality["errors"]["status_counts"].get("reference_only", 0), 6)
         for component in quality["errors"]["component_coverage"].values():
             self.assertLessEqual(component["percent"], 100.0)
 
@@ -412,6 +412,55 @@ class StaticSiteTests(unittest.TestCase):
             "198 264 V sin alimentacion",
             "no enfria strainer",
             "fuga agua desague",
+        ):
+            with self.subTest(query=query):
+                self.assertTrue(contains_query(search, query))
+
+    def test_fujitsu_eeprom_subcooler_and_second_fan_are_developed(self):
+        web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
+
+        for error_id, page in ((7, "03-25"), (15, "03-40")):
+            with self.subTest(error_id=error_id):
+                detail = load(web / "errors" / "details" / f"{error_id}.json")
+                self.assertEqual(len(detail["interpretations"]), 1)
+                interpretation = detail["interpretations"][0]
+                kinds = {item["item_type"] for item in interpretation["info_items"]}
+                self.assertTrue({"cause", "check"}.issubset(kinds))
+                self.assertTrue(any(
+                    source.get("document_ref") == "AOHG18_24KBTA3_SERVICE" and source.get("page_start") == page
+                    for source in interpretation["sources"]
+                ))
+
+        e62 = load(web / "errors" / "details" / "15.json")["interpretations"][0]
+        self.assertEqual({item["id"] for item in e62["related_errors"]}, {70, 71, 72})
+
+        e82 = load(web / "errors" / "details" / "46.json")["interpretations"][0]
+        self.assertEqual(e82["entry_role"], "grouping_reference")
+        self.assertEqual({item["id"] for item in e82["related_errors"]}, {86, 117})
+
+        e821 = load(web / "errors" / "details" / "117.json")["interpretations"][0]
+        self.assertTrue(any("CN142" in item["body"] and "5–6" in item["body"] for item in e821["info_items"]))
+        curve = e821["datasets"][0]
+        self.assertEqual(next(point["value_nominal"] for point in curve["points"] if point["variable_value"] == 25), 4.8)
+        self.assertTrue(any(source.get("document_ref") == "AIRSTAGE_JII_SERVICE" for source in e821["sources"]))
+
+        e98 = load(web / "errors" / "details" / "48.json")["interpretations"][0]
+        self.assertEqual(e98["operational_impacts"][0]["stop_level"], "permanent_stop")
+        power, control = e98["datasets"][0]["points"]
+        self.assertEqual((power["value_min"], power["value_max"]), (280.0, 373.0))
+        self.assertEqual((control["value_min"], control["value_nominal"], control["value_max"]), (13.5, 15.0, 16.5))
+
+        topic = load(web / "topics" / "35.json")
+        self.assertEqual({item["id"] for item in topic["variants"]}, {59, 60})
+        self.assertTrue(all(not item["media"] for item in topic["variants"]))
+
+        search = load(web / "search.json")
+        for query in (
+            "E32 EEPROM corrosion",
+            "E62 6 comunicacion inverter",
+            "E82 1 CN142 5 6",
+            "E98 CN802 280 373",
+            "segundo ventilador parada permanente",
         ):
             with self.subTest(query=query):
                 self.assertTrue(contains_query(search, query))
