@@ -165,6 +165,8 @@ def audit_brand(brand_dir: Path) -> dict[str, Any]:
             assessments.append(quality)
             interpretation_total += 1
             interpretation_statuses[quality["status"]] += 1
+            if quality["status"] == "grouping_reference":
+                continue
             counts = quality["counts"]
             for key in ("causes", "checks", "operational_impacts", "datasets"):
                 if counts[key]:
