@@ -556,6 +556,9 @@ def refresh_search() -> None:
             text.extend([str(alias.get("alias_display") or ""), str(alias.get("alias_normalized") or "")])
         for interpretation in detail.get("interpretations") or []:
             text.extend([str(interpretation.get("title") or ""), str(interpretation.get("description") or "")])
+            text.append(str(interpretation.get("routing_note") or ""))
+            for related in interpretation.get("related_errors") or []:
+                text.extend([str(related.get("code_display") or ""), str(related.get("label") or "")])
             text.extend(str(item.get("body") or "") for item in interpretation.get("info_items") or [])
             for impact in interpretation.get("operational_impacts") or []:
                 text.extend(str(impact.get(key) or "") for key in ("summary", "affected_scope", "unaffected_scope", "restart_behavior", "degraded_behavior", "notes"))

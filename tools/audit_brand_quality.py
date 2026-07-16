@@ -46,6 +46,10 @@ def interpretation_quality(item: dict[str, Any]) -> dict[str, Any]:
     page = has_page(sources)
     reviewed = item.get("review_status") == "reviewed"
     meaning = bool(str(item.get("title") or item.get("description") or "").strip())
+    grouping_reference = (
+        item.get("entry_role") == "grouping_reference"
+        and bool(present(item.get("related_errors")))
+    )
 
     score = sum((
         10 if meaning else 0,
@@ -71,7 +75,11 @@ def interpretation_quality(item: dict[str, Any]) -> dict[str, Any]:
     if not sources:
         missing.append("fuente")
 
-    if causes and checks and page and (behavior or datasets) and score >= 75:
+    if grouping_reference and sources and page:
+        status = "grouping_reference"
+        score = max(score, 95)
+        missing = []
+    elif causes and checks and page and (behavior or datasets) and score >= 75:
         status = "complete"
     elif causes and checks and sources and score >= 55:
         status = "developed"
@@ -176,6 +184,9 @@ def audit_brand(brand_dir: Path) -> dict[str, Any]:
             "missing": combined_missing,
         })
 
+    grouping_total = interpretation_statuses["grouping_reference"]
+    technical_total = interpretation_total - grouping_total
+
     variants = []
     variant_statuses: Counter[str] = Counter()
     for path in sorted((web / "topics").glob("*.json"), key=lambda p: int(p.stem)):
@@ -202,15 +213,18 @@ def audit_brand(brand_dir: Path) -> dict[str, Any]:
             "complete": "Causas y comprobaciones, página exacta y al menos efecto operativo o valores técnicos.",
             "developed": "Causas, comprobaciones y fuente; todavía falta algún bloque de profundidad.",
             "partial": "Tiene desarrollo técnico, pero faltan causas, comprobaciones o trazabilidad suficiente.",
+            "grouping_reference": "Código paraguas con fuente y enlaces directos a las variantes técnicas desarrolladas; no duplica sus comprobaciones.",
             "reference_only": "Solo significado y fuente. No debe presentarse como ficha técnica completa.",
             "unverified": "No tiene fuente documental utilizable.",
         },
         "errors": {
             "entries": len(error_rows),
             "interpretations": interpretation_total,
+            "technical_interpretations": technical_total,
+            "grouping_references": grouping_total,
             "status_counts": dict(interpretation_statuses),
             "component_coverage": {
-                key: {"count": component_counts[key], "percent": percentage(component_counts[key], interpretation_total)}
+                key: {"count": component_counts[key], "percent": percentage(component_counts[key], technical_total)}
                 for key in ("causes", "checks", "operational_impacts", "datasets", "exact_page")
             },
             "backlog": error_rows,

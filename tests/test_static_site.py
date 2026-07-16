@@ -117,6 +117,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("data/brands/index.json", script)
         self.assertNotIn("api.php", html + script)
         self.assertNotIn("media.php", html + script)
+        self.assertIn("renderRelatedErrors", script)
 
     def test_error_finder_explains_current_coverage(self):
         script = (self.dist / "assets" / "app.js").read_text(encoding="utf-8")
@@ -298,6 +299,34 @@ class StaticSiteTests(unittest.TestCase):
         search = load(web / "search.json")
         self.assertTrue(contains_query(search, "funcion 02 circuito frigorifico"))
         self.assertTrue(contains_query(search, "funcion 51 principal secundaria"))
+
+    def test_fujitsu_grouping_codes_route_to_complete_subcodes(self):
+        web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
+        quality = load(web / "quality.json")
+        self.assertEqual(quality["errors"]["grouping_references"], 4)
+        self.assertEqual(quality["errors"]["technical_interpretations"], 117)
+        self.assertEqual(quality["errors"]["status_counts"].get("grouping_reference"), 4)
+        self.assertLessEqual(quality["errors"]["status_counts"].get("reference_only", 0), 16)
+
+        expected = {
+            44: {84},
+            47: {87, 88},
+            49: {99, 100, 101},
+            50: {105, 106},
+        }
+        for error_id, target_ids in expected.items():
+            with self.subTest(error_id=error_id):
+                detail = load(web / "errors" / "details" / f"{error_id}.json")
+                interpretation = detail["interpretations"][0]
+                self.assertEqual(interpretation["entry_role"], "grouping_reference")
+                self.assertEqual({item["id"] for item in interpretation["related_errors"]}, target_ids)
+                self.assertTrue(interpretation["routing_note"])
+                for target_id in target_ids:
+                    self.assertTrue((web / "errors" / "details" / f"{target_id}.json").exists())
+
+        search = load(web / "search.json")
+        self.assertTrue(contains_query(search, "E75 E75 1 sonda aspiracion"))
+        self.assertTrue(contains_query(search, "E9A E9A 3 bobina expansion"))
 
 
 if __name__ == "__main__":

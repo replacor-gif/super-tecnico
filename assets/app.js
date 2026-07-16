@@ -412,6 +412,7 @@ function renderErrorDetail(e) {
     <div class="chips">${chip(indicationLabel(e.indication_type))}${chip(scopeLabel(e.unit_scope))}${aliases.length ? chip('Variantes: '+aliases.join(', ')) : ''}</div>
     ${(e.interpretations || []).map((i,idx) => `<details class="variant-card" ${idx === 0 ? 'open' : ''}><summary><span class="variant-title">${esc(i.title)}</span>${i.description ? `<span class="variant-recognition">${esc(i.description)}</span>` : ''}</summary><div class="card-body">
       <div class="chips">${chip(sourceKind(i.source_kind),'official')}${chip('Fiabilidad: '+confidenceLabel(i.confidence))}</div>
+      ${renderRelatedErrors(i)}
       ${renderInfoItems(i.info_items || [])}
       ${renderImpacts(i.operational_impacts || [])}
       ${renderDatasets(i.datasets || [])}
@@ -419,6 +420,11 @@ function renderErrorDetail(e) {
     </div></details>`).join('')}
     ${renderMedia(e.media || [])}
   </div></section>`;
+}
+function renderRelatedErrors(interpretation) {
+  const related = interpretation.related_errors || [];
+  if (!related.length) return '';
+  return `<div class="notice-box"><strong>Este código agrupa variantes más concretas</strong>${interpretation.routing_note ? `<p>${esc(interpretation.routing_note)}</p>` : ''}<div class="chips">${related.map(item => `<button type="button" data-open-error="${esc(item.id)}"><span class="code-badge">${esc(item.code_display)}</span>${esc(item.label || 'Abrir subcódigo')}</button>`).join('')}</div></div>`;
 }
 function renderInfoItems(items) {
   if (!items.length) return '';
