@@ -54,10 +54,10 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(set(brands), {"daikin", "fujitsu-general"})
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
-            "topics": 36,
-            "variants": 64,
+            "topics": 38,
+            "variants": 68,
             "errors": 117,
-            "search_entries": 181,
+            "search_entries": 185,
         })
         self.assertEqual(brands["daikin"]["counts"], {
             "categories": 7,
@@ -159,8 +159,8 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(actual, expected)
         self.assertEqual(actual["errors"]["entries"], 117)
         self.assertEqual(actual["errors"]["interpretations"], 129)
-        self.assertGreater(actual["errors"]["status_counts"].get("reference_only", 0), 0)
-        self.assertEqual(actual["technical_variants"]["entries"], 64)
+        self.assertEqual(actual["errors"]["status_counts"].get("reference_only", 0), 0)
+        self.assertEqual(actual["technical_variants"]["entries"], 68)
 
     def test_fujitsu_confirmation_only_duplicates_are_consolidated(self):
         web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
@@ -498,6 +498,50 @@ class StaticSiteTests(unittest.TestCase):
             "12 4 arranque Monitor Mode",
             "15 4 adquisicion datos direccion",
             "27 1 maestro esclavo F1 06",
+        ):
+            with self.subTest(query=query):
+                self.assertTrue(contains_query(search, query))
+
+    def test_fujitsu_display_io_and_branch_box_errors_are_complete(self):
+        web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
+
+        e6a = load(web / "errors" / "details" / "43.json")
+        self.assertIn("E6A.1", {item["alias_display"] for item in e6a["aliases"]})
+        e6a_interpretation = e6a["interpretations"][0]
+        self.assertTrue({"cause", "check", "machine_behavior"}.issubset(
+            {item["item_type"] for item in e6a_interpretation["info_items"]}
+        ))
+        self.assertEqual(e6a_interpretation["datasets"][0]["points"][0]["value_nominal"], 10)
+        self.assertTrue(any(
+            source.get("document_ref") == "AOU48RLXFZ1_HYBRID_FLEX_SERVICE"
+            and source.get("page_start") == "02-64"
+            for source in e6a_interpretation["sources"]
+        ))
+
+        ed2 = load(web / "errors" / "details" / "51.json")
+        self.assertTrue({"J2", "E.J2.U"}.issubset({item["alias_display"] for item in ed2["aliases"]}))
+        ed2_interpretation = ed2["interpretations"][0]
+        led_map = ed2_interpretation["datasets"][0]["points"]
+        self.assertEqual(len(led_map), 10)
+        self.assertTrue(any(point["variable_value"] == "LED402: 8 + LED403/404/405" and "EEV" in point["value_text"] for point in led_map))
+        self.assertTrue(any("no afirma" in item["body"] for item in ed2_interpretation["info_items"]))
+
+        e6a_topic = load(web / "topics" / "37.json")
+        branch_topic = load(web / "topics" / "38.json")
+        self.assertEqual({item["id"] for item in e6a_topic["variants"]}, {65})
+        self.assertEqual({item["id"] for item in branch_topic["variants"]}, {66, 67, 68})
+        self.assertTrue(all(not item["media"] for item in e6a_topic["variants"] + branch_topic["variants"]))
+
+        quality = load(web / "quality.json")
+        self.assertEqual(quality["errors"]["status_counts"].get("reference_only", 0), 0)
+        self.assertEqual(quality["errors"]["status_counts"].get("complete"), 80)
+
+        search = load(web / "search.json")
+        for query in (
+            "E6A 1 PCB I O 10 segundos",
+            "J2 LED401 LED402 caja primaria",
+            "LED402 8 EEV puerto A B C",
+            "ED2 cantidad cajas CHECK RUN",
         ):
             with self.subTest(query=query):
                 self.assertTrue(contains_query(search, query))
