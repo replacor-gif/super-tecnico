@@ -172,6 +172,41 @@ class StaticSiteTests(unittest.TestCase):
                 row = next(item for item in index if item["id"] == error_id)
                 self.assertEqual(row["interpretation_count"], interpretation_count)
 
+    def test_fujitsu_vrii_service_diagnostics_are_developed(self):
+        web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
+        quality = load(web / "quality.json")
+        self.assertGreaterEqual(quality["errors"]["status_counts"].get("complete", 0), 55)
+        self.assertLessEqual(quality["errors"]["status_counts"].get("reference_only", 0), 54)
+
+        for error_id in range(69, 111):
+            with self.subTest(error_id=error_id):
+                detail = load(web / "errors" / "details" / f"{error_id}.json")
+                interpretation = detail["interpretations"][0]
+                item_types = {item["item_type"] for item in interpretation["info_items"]}
+                self.assertIn("cause", item_types)
+                self.assertIn("check", item_types)
+                self.assertIn("machine_behavior", item_types)
+                self.assertTrue(any(
+                    source.get("document_ref") == "AIRSTAGE_VRII_SERVICE"
+                    for source in interpretation["sources"]
+                ))
+
+        discharge_pressure = load(web / "errors" / "details" / "90.json")["interpretations"][0]
+        curve = discharge_pressure["datasets"][0]
+        self.assertEqual(curve["points"][0]["value_nominal"], 0.50)
+        self.assertEqual(curve["points"][-1]["value_nominal"], 4.50)
+
+        eev = load(web / "errors" / "details" / "99.json")["interpretations"][0]
+        winding = eev["datasets"][0]["points"][0]
+        self.assertEqual((winding["value_min"], winding["value_nominal"], winding["value_max"]), (42.0, 46.0, 50.0))
+
+        fan = load(web / "errors" / "details" / "96.json")["interpretations"][0]
+        self.assertEqual(fan["operational_impacts"][0]["stop_level"], "permanent_stop")
+
+        search = load(web / "search.json")
+        self.assertTrue(contains_query(search, "CN118 5 V"))
+        self.assertTrue(contains_query(search, "EEV1 46 ohm"))
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
