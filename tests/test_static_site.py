@@ -54,10 +54,10 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(set(brands), {"daikin", "fujitsu-general"})
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
-            "topics": 38,
-            "variants": 68,
+            "topics": 39,
+            "variants": 71,
             "errors": 117,
-            "search_entries": 185,
+            "search_entries": 188,
         })
         self.assertEqual(brands["daikin"]["counts"], {
             "categories": 7,
@@ -158,9 +158,11 @@ class StaticSiteTests(unittest.TestCase):
         actual = load(brand / "web" / "quality.json")
         self.assertEqual(actual, expected)
         self.assertEqual(actual["errors"]["entries"], 117)
-        self.assertEqual(actual["errors"]["interpretations"], 129)
+        self.assertEqual(actual["errors"]["interpretations"], 127)
+        self.assertEqual(actual["errors"]["technical_interpretations"], 118)
+        self.assertEqual(actual["errors"]["status_counts"].get("partial", 0), 0)
         self.assertEqual(actual["errors"]["status_counts"].get("reference_only", 0), 0)
-        self.assertEqual(actual["technical_variants"]["entries"], 68)
+        self.assertEqual(actual["technical_variants"]["entries"], 71)
 
     def test_fujitsu_confirmation_only_duplicates_are_consolidated(self):
         web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
@@ -304,7 +306,7 @@ class StaticSiteTests(unittest.TestCase):
         web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
         quality = load(web / "quality.json")
         self.assertEqual(quality["errors"]["grouping_references"], 9)
-        self.assertEqual(quality["errors"]["technical_interpretations"], 120)
+        self.assertEqual(quality["errors"]["technical_interpretations"], 118)
         self.assertEqual(quality["errors"]["status_counts"].get("grouping_reference"), 9)
         self.assertLessEqual(quality["errors"]["status_counts"].get("reference_only", 0), 6)
         for component in quality["errors"]["component_coverage"].values():
@@ -534,7 +536,7 @@ class StaticSiteTests(unittest.TestCase):
 
         quality = load(web / "quality.json")
         self.assertEqual(quality["errors"]["status_counts"].get("reference_only", 0), 0)
-        self.assertEqual(quality["errors"]["status_counts"].get("complete"), 80)
+        self.assertEqual(quality["errors"]["status_counts"].get("complete"), 81)
 
         search = load(web / "search.json")
         for query in (
@@ -542,6 +544,50 @@ class StaticSiteTests(unittest.TestCase):
             "J2 LED401 LED402 caja primaria",
             "LED402 8 EEV puerto A B C",
             "ED2 cantidad cajas CHECK RUN",
+        ):
+            with self.subTest(query=query):
+                self.assertTrue(contains_query(search, query))
+
+    def test_fujitsu_e84_and_e95_duplicates_are_consolidated(self):
+        web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
+
+        e84 = load(web / "errors" / "details" / "24.json")
+        self.assertEqual(len(e84["interpretations"]), 1)
+        e84_interpretation = e84["interpretations"][0]
+        self.assertEqual(e84_interpretation["operational_impacts"][0]["stop_level"], "permanent_stop")
+        e84_text = " ".join(
+            [e84_interpretation["description"]]
+            + [item["body"] for item in e84_interpretation["info_items"]]
+        )
+        self.assertIn("0 A", e84_text)
+        self.assertIn("56 rps", e84_text)
+        self.assertTrue(any(
+            source.get("document_ref") == "AOEH09KMCG"
+            for source in e84_interpretation["sources"]
+        ))
+
+        e95 = load(web / "errors" / "details" / "27.json")
+        self.assertEqual(len(e95["interpretations"]), 2)
+        e95_text = " ".join(
+            [item["title"] + " " + item["description"] for item in e95["interpretations"]]
+            + [info["body"] for item in e95["interpretations"] for info in item["info_items"]]
+        )
+        for expected in ("30 intentos", "90", "40 segundos", "cinco veces"):
+            self.assertIn(expected, e95_text)
+
+        topic = load(web / "topics" / "39.json")
+        self.assertEqual({item["id"] for item in topic["variants"]}, {69, 70, 71})
+        self.assertTrue(all(not item["media"] for item in topic["variants"]))
+
+        quality = load(web / "quality.json")
+        self.assertEqual(quality["errors"]["status_counts"].get("partial", 0), 0)
+        self.assertEqual(quality["errors"]["status_counts"].get("reference_only", 0), 0)
+
+        search = load(web / "search.json")
+        for query in (
+            "E84 0 A 56 rps",
+            "E95 10 3 30 sobrecorriente",
+            "E95 rotor 90 40 segundos",
         ):
             with self.subTest(query=query):
                 self.assertTrue(contains_query(search, query))
