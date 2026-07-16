@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 from build_static import build  # noqa: E402
+from audit_brand_quality import audit_brand  # noqa: E402
 
 
 def load(path: Path):
@@ -149,6 +150,27 @@ class StaticSiteTests(unittest.TestCase):
         self.assertGreaterEqual(len(paths), 165)
         for path in paths:
             load(path)
+
+    def test_fujitsu_quality_audit_is_current(self):
+        brand = ROOT / "data" / "brands" / "fujitsu-general"
+        expected = audit_brand(brand)
+        actual = load(brand / "web" / "quality.json")
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual["errors"]["entries"], 110)
+        self.assertEqual(actual["errors"]["interpretations"], 139)
+        self.assertGreater(actual["errors"]["status_counts"].get("reference_only", 0), 0)
+        self.assertEqual(actual["technical_variants"]["entries"], 46)
+
+    def test_fujitsu_confirmation_only_duplicates_are_consolidated(self):
+        web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
+        expected = {3: 2, 11: 1, 12: 1, 14: 2}
+        for error_id, interpretation_count in expected.items():
+            with self.subTest(error_id=error_id):
+                detail = load(web / "errors" / "details" / f"{error_id}.json")
+                self.assertEqual(len(detail["interpretations"]), interpretation_count)
+                index = load(web / "errors" / "index.json")
+                row = next(item for item in index if item["id"] == error_id)
+                self.assertEqual(row["interpretation_count"], interpretation_count)
 
 
 if __name__ == "__main__":
