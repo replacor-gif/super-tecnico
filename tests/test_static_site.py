@@ -157,13 +157,17 @@ class StaticSiteTests(unittest.TestCase):
         actual = load(brand / "web" / "quality.json")
         self.assertEqual(actual, expected)
         self.assertEqual(actual["errors"]["entries"], 110)
-        self.assertEqual(actual["errors"]["interpretations"], 139)
+        self.assertLessEqual(actual["errors"]["interpretations"], 121)
         self.assertGreater(actual["errors"]["status_counts"].get("reference_only", 0), 0)
         self.assertEqual(actual["technical_variants"]["entries"], 46)
 
     def test_fujitsu_confirmation_only_duplicates_are_consolidated(self):
         web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
-        expected = {3: 2, 11: 1, 12: 1, 14: 2}
+        expected = {
+            3: 2, 5: 1, 9: 1, 11: 1, 12: 1, 13: 1, 14: 2,
+            16: 1, 17: 1, 18: 2, 19: 1, 20: 1, 21: 1, 22: 1,
+            23: 1, 25: 1, 26: 1, 28: 1, 29: 1, 30: 1, 31: 1, 32: 1,
+        }
         for error_id, interpretation_count in expected.items():
             with self.subTest(error_id=error_id):
                 detail = load(web / "errors" / "details" / f"{error_id}.json")
@@ -206,6 +210,36 @@ class StaticSiteTests(unittest.TestCase):
         search = load(web / "search.json")
         self.assertTrue(contains_query(search, "CN118 5 V"))
         self.assertTrue(contains_query(search, "EEV1 46 ohm"))
+
+    def test_fujitsu_vrii_communications_and_addressing_are_developed(self):
+        web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
+        quality = load(web / "quality.json")
+        self.assertGreaterEqual(quality["errors"]["status_counts"].get("complete", 0), 66)
+        self.assertLessEqual(quality["errors"]["status_counts"].get("reference_only", 0), 24)
+
+        for error_id in (40, 54, 55, 58, 59, 61, 62, 63, 64, 65, 66):
+            with self.subTest(error_id=error_id):
+                detail = load(web / "errors" / "details" / f"{error_id}.json")
+                interpretation = detail["interpretations"][0]
+                item_types = {item["item_type"] for item in interpretation["info_items"]}
+                self.assertIn("cause", item_types)
+                self.assertIn("check", item_types)
+                self.assertIn("machine_behavior", item_types)
+                self.assertTrue(any(
+                    source.get("document_ref") == "AIRSTAGE_VRII_SERVICE"
+                    for source in interpretation["sources"]
+                ))
+
+        remote = load(web / "errors" / "details" / "54.json")["interpretations"][0]
+        self.assertEqual(remote["datasets"][0]["points"][0]["value_nominal"], 12.0)
+
+        missing_indoor = load(web / "errors" / "details" / "64.json")["interpretations"][0]
+        self.assertEqual(missing_indoor["operational_impacts"][0]["stop_level"], "all_system")
+        self.assertIn("no se detiene", missing_indoor["operational_impacts"][0]["degraded_behavior"])
+
+        search = load(web / "search.json")
+        self.assertTrue(contains_query(search, "SET4 1 180 segundos"))
+        self.assertTrue(contains_query(search, "CNC01 12 V"))
 
 
 if __name__ == "__main__":
