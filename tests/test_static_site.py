@@ -54,10 +54,10 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(set(brands), {"daikin", "fujitsu-general"})
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
-            "topics": 32,
-            "variants": 50,
-            "errors": 113,
-            "search_entries": 163,
+            "topics": 34,
+            "variants": 58,
+            "errors": 116,
+            "search_entries": 174,
         })
         self.assertEqual(brands["daikin"]["counts"], {
             "categories": 7,
@@ -157,10 +157,10 @@ class StaticSiteTests(unittest.TestCase):
         expected = audit_brand(brand)
         actual = load(brand / "web" / "quality.json")
         self.assertEqual(actual, expected)
-        self.assertEqual(actual["errors"]["entries"], 113)
-        self.assertEqual(actual["errors"]["interpretations"], 126)
+        self.assertEqual(actual["errors"]["entries"], 116)
+        self.assertEqual(actual["errors"]["interpretations"], 130)
         self.assertGreater(actual["errors"]["status_counts"].get("reference_only", 0), 0)
-        self.assertEqual(actual["technical_variants"]["entries"], 50)
+        self.assertEqual(actual["technical_variants"]["entries"], 58)
 
     def test_fujitsu_confirmation_only_duplicates_are_consolidated(self):
         web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
@@ -304,7 +304,7 @@ class StaticSiteTests(unittest.TestCase):
         web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
         quality = load(web / "quality.json")
         self.assertEqual(quality["errors"]["grouping_references"], 8)
-        self.assertEqual(quality["errors"]["technical_interpretations"], 118)
+        self.assertEqual(quality["errors"]["technical_interpretations"], 122)
         self.assertEqual(quality["errors"]["status_counts"].get("grouping_reference"), 8)
         self.assertLessEqual(quality["errors"]["status_counts"].get("reference_only", 0), 10)
         for component in quality["errors"]["component_coverage"].values():
@@ -368,6 +368,51 @@ class StaticSiteTests(unittest.TestCase):
 
         search = load(web / "search.json")
         for query in ("E26 direccion duplicada", "CN18 compuerta", "E76 sonda valvula 5 V", "E61 2 342 V"):
+            with self.subTest(query=query):
+                self.assertTrue(contains_query(search, query))
+
+    def test_fujitsu_indoor_safety_and_symptom_diagnostics(self):
+        web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
+
+        e45 = load(web / "errors" / "details" / "114.json")
+        self.assertEqual(len(e45["interpretations"]), 2)
+        self.assertEqual(
+            {item["operational_impacts"][0]["stop_level"] for item in e45["interpretations"]},
+            {"all_system", "degraded"},
+        )
+        self.assertTrue(all(
+            any(source.get("document_ref") == "AOHG18_24KBTA3_SERVICE" for source in item["sources"])
+            for item in e45["interpretations"]
+        ))
+
+        e58 = load(web / "errors" / "details" / "115.json")["interpretations"][0]
+        self.assertTrue(any("CN11" in item["body"] for item in e58["info_items"]))
+        self.assertTrue({"cause", "check"}.issubset({item["item_type"] for item in e58["info_items"]}))
+
+        ea8 = load(web / "errors" / "details" / "116.json")["interpretations"][0]
+        self.assertEqual(ea8["operational_impacts"][0]["stop_level"], "all_system")
+        self.assertIn("ventilación", ea8["operational_impacts"][0]["degraded_behavior"])
+        self.assertIn("no puede detenerse", ea8["description"])
+
+        symptom = load(web / "topics" / "33.json")
+        self.assertEqual({item["id"] for item in symptom["variants"]}, set(range(51, 57)))
+        no_operation = next(item for item in symptom["variants"] if item["id"] == 53)
+        self.assertTrue(any("CN14" in section["body"] and "CNC01" in section["body"] for section in no_operation["sections"]))
+        self.assertTrue(any("13 V" in (step.get("expected_result") or "") for step in no_operation["steps"]))
+
+        components = load(web / "topics" / "34.json")
+        self.assertEqual({item["id"] for item in components["variants"]}, {57, 58})
+        self.assertTrue(all(not item["media"] for item in components["variants"]))
+
+        search = load(web / "search.json")
+        for query in (
+            "E45 sensor deteriorado",
+            "EA8 ventilacion seguridad",
+            "E58 CN11 microinterruptor",
+            "198 264 V sin alimentacion",
+            "no enfria strainer",
+            "fuga agua desague",
+        ):
             with self.subTest(query=query):
                 self.assertTrue(contains_query(search, query))
 
