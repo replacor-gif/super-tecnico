@@ -307,6 +307,8 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(quality["errors"]["technical_interpretations"], 117)
         self.assertEqual(quality["errors"]["status_counts"].get("grouping_reference"), 4)
         self.assertLessEqual(quality["errors"]["status_counts"].get("reference_only", 0), 16)
+        for component in quality["errors"]["component_coverage"].values():
+            self.assertLessEqual(component["percent"], 100.0)
 
         expected = {
             44: {84},
