@@ -54,10 +54,10 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(set(brands), {"daikin", "fujitsu-general"})
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
-            "topics": 31,
-            "variants": 48,
-            "errors": 110,
-            "search_entries": 158,
+            "topics": 32,
+            "variants": 50,
+            "errors": 113,
+            "search_entries": 163,
         })
         self.assertEqual(brands["daikin"]["counts"], {
             "categories": 7,
@@ -157,10 +157,10 @@ class StaticSiteTests(unittest.TestCase):
         expected = audit_brand(brand)
         actual = load(brand / "web" / "quality.json")
         self.assertEqual(actual, expected)
-        self.assertEqual(actual["errors"]["entries"], 110)
-        self.assertLessEqual(actual["errors"]["interpretations"], 121)
+        self.assertEqual(actual["errors"]["entries"], 113)
+        self.assertEqual(actual["errors"]["interpretations"], 126)
         self.assertGreater(actual["errors"]["status_counts"].get("reference_only", 0), 0)
-        self.assertEqual(actual["technical_variants"]["entries"], 48)
+        self.assertEqual(actual["technical_variants"]["entries"], 50)
 
     def test_fujitsu_confirmation_only_duplicates_are_consolidated(self):
         web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
@@ -303,10 +303,10 @@ class StaticSiteTests(unittest.TestCase):
     def test_fujitsu_grouping_codes_route_to_complete_subcodes(self):
         web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
         quality = load(web / "quality.json")
-        self.assertEqual(quality["errors"]["grouping_references"], 4)
-        self.assertEqual(quality["errors"]["technical_interpretations"], 117)
-        self.assertEqual(quality["errors"]["status_counts"].get("grouping_reference"), 4)
-        self.assertLessEqual(quality["errors"]["status_counts"].get("reference_only", 0), 16)
+        self.assertEqual(quality["errors"]["grouping_references"], 8)
+        self.assertEqual(quality["errors"]["technical_interpretations"], 118)
+        self.assertEqual(quality["errors"]["status_counts"].get("grouping_reference"), 8)
+        self.assertLessEqual(quality["errors"]["status_counts"].get("reference_only", 0), 10)
         for component in quality["errors"]["component_coverage"].values():
             self.assertLessEqual(component["percent"], 100.0)
 
@@ -329,6 +329,47 @@ class StaticSiteTests(unittest.TestCase):
         search = load(web / "search.json")
         self.assertTrue(contains_query(search, "E75 E75 1 sonda aspiracion"))
         self.assertTrue(contains_query(search, "E9A E9A 3 bobina expansion"))
+
+    def test_fujitsu_indoor_damper_power_and_valve_diagnostics(self):
+        web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
+
+        for error_id in (111, 112, 113):
+            with self.subTest(error_id=error_id):
+                interpretation = load(web / "errors" / "details" / f"{error_id}.json")["interpretations"][0]
+                kinds = {item["item_type"] for item in interpretation["info_items"]}
+                self.assertIn("cause", kinds)
+                self.assertIn("check", kinds)
+                self.assertTrue(any(source.get("document_ref") == "AOHG18_24KBTA3_SERVICE" for source in interpretation["sources"]))
+
+        e57 = load(web / "errors" / "details" / "41.json")
+        self.assertEqual(len(e57["interpretations"]), 2)
+        self.assertTrue(all(
+            {"cause", "check"}.issubset({item["item_type"] for item in interpretation["info_items"]})
+            for interpretation in e57["interpretations"]
+        ))
+
+        e76 = load(web / "errors" / "details" / "45.json")
+        self.assertEqual(len(e76["interpretations"]), 2)
+        for interpretation in e76["interpretations"]:
+            self.assertEqual(len(interpretation["datasets"]), 2)
+            resistance = interpretation["datasets"][0]
+            voltage = interpretation["datasets"][1]
+            self.assertEqual(next(point["value_nominal"] for point in resistance["points"] if point["variable_value"] == 25), 10.0)
+            self.assertEqual(next(point["value_nominal"] for point in voltage["points"] if point["variable_value"] == 25), 3.97)
+            self.assertTrue(any("5,0 V" in item["body"] for item in interpretation["info_items"]))
+
+        e612 = load(web / "errors" / "details" / "68.json")["interpretations"][0]
+        values = [point["value_nominal"] for point in e612["datasets"][0]["points"]]
+        self.assertEqual(values, [342, 400, 456])
+
+        topic = load(web / "topics" / "32.json")
+        self.assertEqual({variant["id"] for variant in topic["variants"]}, {49, 50})
+        self.assertTrue(all(not variant["media"] for variant in topic["variants"]))
+
+        search = load(web / "search.json")
+        for query in ("E26 direccion duplicada", "CN18 compuerta", "E76 sonda valvula 5 V", "E61 2 342 V"):
+            with self.subTest(query=query):
+                self.assertTrue(contains_query(search, query))
 
 
 if __name__ == "__main__":
