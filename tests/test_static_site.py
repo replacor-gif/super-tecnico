@@ -54,10 +54,10 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(set(brands), {"daikin", "fujitsu-general"})
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
-            "topics": 35,
-            "variants": 60,
+            "topics": 36,
+            "variants": 64,
             "errors": 117,
-            "search_entries": 177,
+            "search_entries": 181,
         })
         self.assertEqual(brands["daikin"]["counts"], {
             "categories": 7,
@@ -160,7 +160,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(actual["errors"]["entries"], 117)
         self.assertEqual(actual["errors"]["interpretations"], 129)
         self.assertGreater(actual["errors"]["status_counts"].get("reference_only", 0), 0)
-        self.assertEqual(actual["technical_variants"]["entries"], 60)
+        self.assertEqual(actual["technical_variants"]["entries"], 64)
 
     def test_fujitsu_confirmation_only_duplicates_are_consolidated(self):
         web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
@@ -461,6 +461,43 @@ class StaticSiteTests(unittest.TestCase):
             "E82 1 CN142 5 6",
             "E98 CN802 280 373",
             "segundo ventilador parada permanente",
+        ):
+            with self.subTest(query=query):
+                self.assertTrue(contains_query(search, query))
+
+    def test_fujitsu_two_wire_controller_internal_errors_are_developed(self):
+        web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
+
+        for error_id in (53, 56, 57, 60):
+            with self.subTest(error_id=error_id):
+                interpretation = load(web / "errors" / "details" / f"{error_id}.json")["interpretations"][0]
+                kinds = {item["item_type"] for item in interpretation["info_items"]}
+                self.assertTrue({"cause", "check"}.issubset(kinds))
+                self.assertTrue(any(
+                    source.get("document_ref") == "UTY_RCRYZ1_IM_9373328483"
+                    for source in interpretation["sources"]
+                ))
+                self.assertTrue(any("12 V" in item["body"] or "F1" in item["body"] for item in interpretation["info_items"]))
+
+        data_error = load(web / "errors" / "details" / "57.json")["interpretations"][0]
+        self.assertIn("unidad interior", data_error["description"])
+        master_error = load(web / "errors" / "details" / "60.json")["interpretations"][0]
+        self.assertTrue(any("exactamente un mando" in item["body"] for item in master_error["info_items"]))
+
+        topic = load(web / "topics" / "36.json")
+        self.assertEqual({item["id"] for item in topic["variants"]}, {61, 62, 63, 64})
+        self.assertTrue(all(item["steps"] and item["sections"] for item in topic["variants"]))
+        self.assertTrue(all(not item["media"] for item in topic["variants"]))
+
+        quality = load(web / "quality.json")
+        self.assertLessEqual(quality["errors"]["status_counts"].get("reference_only", 0), 2)
+
+        search = load(web / "search.json")
+        for query in (
+            "C2 1 PCB transmision this product",
+            "12 4 arranque Monitor Mode",
+            "15 4 adquisicion datos direccion",
+            "27 1 maestro esclavo F1 06",
         ):
             with self.subTest(query=query):
                 self.assertTrue(contains_query(search, query))
