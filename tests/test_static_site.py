@@ -40,6 +40,8 @@ class StaticSiteTests(unittest.TestCase):
         cls.report = build(ROOT, cls.dist)
         cls.brand = cls.dist / "data" / "brands" / "fujitsu-general"
         cls.web = cls.brand / "web"
+        cls.daikin = cls.dist / "data" / "brands" / "daikin"
+        cls.daikin_web = cls.daikin / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -47,13 +49,21 @@ class StaticSiteTests(unittest.TestCase):
 
     def test_expected_counts(self):
         manifest = load(self.dist / "data" / "brands" / "index.json")
-        self.assertEqual(len(manifest["brands"]), 1)
-        self.assertEqual(manifest["brands"][0]["counts"], {
+        brands = {item["slug"]: item for item in manifest["brands"]}
+        self.assertEqual(set(brands), {"daikin", "fujitsu-general"})
+        self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
             "topics": 29,
             "variants": 46,
             "errors": 110,
             "search_entries": 156,
+        })
+        self.assertEqual(brands["daikin"]["counts"], {
+            "categories": 7,
+            "topics": 8,
+            "variants": 14,
+            "errors": 2,
+            "search_entries": 16,
         })
 
     def test_search_examples_are_present(self):
@@ -66,12 +76,21 @@ class StaticSiteTests(unittest.TestCase):
         token = normalized("E12")
         self.assertTrue(any(token in item.get("search_text", "") for item in errors))
 
+        daikin_entries = load(self.daikin_web / "search.json")
+        for query in ("A3", "AF", "pump down", "flotador", "BRC1E", "VRV IV"):
+            with self.subTest(brand="daikin", query=query):
+                self.assertTrue(contains_query(daikin_entries, query))
+
+        daikin_errors = load(self.daikin_web / "errors" / "index.json")
+        self.assertEqual({item["code_display"] for item in daikin_errors}, {"A3", "AF"})
+
     def test_media_is_not_published_or_referenced(self):
         self.assertFalse((self.brand / "media").exists())
+        self.assertFalse((self.daikin / "media").exists())
         self.assertEqual(self.report["checks"]["media_files"], 0)
         self.assertGreaterEqual(self.report["checks"]["media_references_removed"], 26)
 
-        for path in self.web.rglob("*.json"):
+        for path in list(self.web.rglob("*.json")) + list(self.daikin_web.rglob("*.json")):
             data = load(path)
             pending = [data]
             while pending:
@@ -98,9 +117,29 @@ class StaticSiteTests(unittest.TestCase):
         self.assertNotIn("api.php", html + script)
         self.assertNotIn("media.php", html + script)
 
+    def test_daikin_projection_keeps_private_master_data_out(self):
+        public_text = "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in self.daikin.rglob("*.json")
+        )
+        self.assertNotIn("drive_id", public_text)
+        self.assertNotIn("drive_title", public_text)
+        self.assertNotIn("modelos_ocultos", public_text)
+        self.assertNotIn("1uuiYPbdPX75iZNp2zBLjCQ8M8E3sxodh", public_text)
+        self.assertFalse(any(self.daikin.rglob("*.sqlite")))
+        self.assertFalse(any(self.daikin.rglob("*.db")))
+
+        topics = [load(path) for path in (self.daikin_web / "topics").glob("*.json")]
+        variants = [variant for topic in topics for variant in topic["variants"]]
+        self.assertEqual(len(variants), 14)
+        self.assertTrue(all(
+            any(section["title"] == "Estado de verificación" for section in variant["sections"])
+            for variant in variants
+        ))
+
     def test_all_json_is_utf8_and_valid(self):
         paths = list(self.dist.rglob("*.json"))
-        self.assertGreaterEqual(len(paths), 148)
+        self.assertGreaterEqual(len(paths), 165)
         for path in paths:
             load(path)
 
