@@ -163,6 +163,8 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(actual["errors"]["status_counts"].get("partial", 0), 0)
         self.assertEqual(actual["errors"]["status_counts"].get("reference_only", 0), 0)
         self.assertEqual(actual["technical_variants"]["entries"], 71)
+        self.assertEqual(actual["technical_variants"]["status_counts"].get("partial", 0), 0)
+        self.assertEqual(actual["technical_variants"]["status_counts"].get("reference_only", 0), 0)
 
     def test_fujitsu_confirmation_only_duplicates_are_consolidated(self):
         web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
@@ -588,6 +590,56 @@ class StaticSiteTests(unittest.TestCase):
             "E84 0 A 56 rps",
             "E95 10 3 30 sobrecorriente",
             "E95 rotor 90 40 segundos",
+        ):
+            with self.subTest(query=query):
+                self.assertTrue(contains_query(search, query))
+
+    def test_fujitsu_normal_status_and_board_buttons_are_complete(self):
+        web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
+
+        board = load(web / "topics" / "5.json")["variants"][0]
+        self.assertEqual(board["id"], 6)
+        self.assertGreaterEqual(len(board["sections"]), 4)
+        self.assertGreaterEqual(len(board["steps"]), 6)
+        board_text = " ".join(
+            [board["summary"]]
+            + [item["body"] for item in board["sections"]]
+            + [item["instruction"] for item in board["steps"]]
+            + [item["expected_result"] or "" for item in board["steps"]]
+        )
+        for expected in ("S134", "S130", "EXIT", "electricidad estática", "no es una tecla de retroceso"):
+            self.assertIn(expected, board_text)
+        self.assertTrue(any(
+            source.get("document_ref") == "AOEG22KATA"
+            and source.get("page_start") == "05-6"
+            and source.get("page_end") == "05-8"
+            for source in board["sources"]
+        ))
+
+        status = load(web / "topics" / "24.json")["variants"][0]
+        self.assertEqual(status["id"], 37)
+        self.assertGreaterEqual(len(status["sections"]), 4)
+        self.assertGreaterEqual(len(status["steps"]), 5)
+        self.assertFalse(status["media"])
+        options = status["parameters"][0]["options"]
+        self.assertEqual({item["option_value"] for item in options}, {"CL", "Ht", "or", "dF", "PC", "Ln", "Sn"})
+        status_text = " ".join(
+            [status["summary"]]
+            + [item["body"] for item in status["sections"]]
+            + [item["instruction"] for item in status["steps"]]
+        )
+        self.assertIn("no errores por sí solos", status["summary"])
+        self.assertIn("prefijo E", status_text)
+        self.assertIn("recuperación de aceite", status_text)
+
+        quality = load(web / "quality.json")
+        self.assertEqual(quality["technical_variants"]["status_counts"], {"complete": 43, "developed": 28})
+
+        search = load(web / "search.json")
+        for query in (
+            "S134 S130 no pulsar pump down",
+            "CL Ht or dF estados normales",
+            "PC Ln Sn limitacion",
         ):
             with self.subTest(query=query):
                 self.assertTrue(contains_query(search, query))
