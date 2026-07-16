@@ -635,7 +635,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("recuperación de aceite", status_text)
 
         quality = load(web / "quality.json")
-        self.assertEqual(quality["technical_variants"]["status_counts"], {"complete": 43, "developed": 28})
+        self.assertEqual(quality["technical_variants"]["status_counts"], {"complete": 71})
 
         search = load(web / "search.json")
         for query in (
@@ -690,6 +690,56 @@ class StaticSiteTests(unittest.TestCase):
             "E64 cinco repeticiones parada permanente",
             "E97 100 rpm 20 segundos",
             "A3 108 2 paradas 24 horas",
+        ):
+            with self.subTest(query=query):
+                self.assertTrue(contains_query(search, query))
+
+    def test_fujitsu_all_technical_variants_have_steps_and_explanations(self):
+        web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
+
+        variants = []
+        for path in (web / "topics").glob("*.json"):
+            topic = load(path)
+            variants.extend(topic["variants"])
+            for variant in topic["variants"]:
+                self.assertTrue(variant["steps"], (path, variant["id"]))
+                self.assertTrue(variant["sections"], (path, variant["id"]))
+                self.assertTrue(any(source.get("page_start") for source in variant["sources"]), (path, variant["id"]))
+        self.assertEqual(len(variants), 71)
+
+        drain = load(web / "topics" / "16.json")["variants"]
+        float_sequence = next(item for item in drain if item["id"] == 27)
+        float_text = " ".join(
+            [item["instruction"] + " " + (item["expected_result"] or "") for item in float_sequence["steps"]]
+        )
+        self.assertIn("frío/seco", float_text)
+        self.assertIn("3 minutos", float_text)
+        self.assertIn("sin extrapolar", float_text)
+
+        buses = load(web / "topics" / "14.json")["variants"]
+        two_wire = next(item for item in buses if item["id"] == 23)
+        three_wire = next(item for item in buses if item["id"] == 24)
+        self.assertTrue(any("no tiene polaridad" in item["instruction"] for item in two_wire["steps"]))
+        self.assertTrue(any(
+            "9C" in item["instruction"] or "9C" in (item["expected_result"] or "")
+            for item in three_wire["steps"]
+        ))
+
+        resistance = next(item for item in load(web / "topics" / "20.json")["variants"] if item["id"] == 33)
+        resistance_text = " ".join(item["instruction"] for item in resistance["steps"])
+        for expected in ("0-50 Ω", "190 Ω-1 kΩ", "45-60 Ω"):
+            self.assertIn(expected, resistance_text)
+
+        quality = load(web / "quality.json")
+        self.assertEqual(quality["technical_variants"]["status_counts"], {"complete": 71})
+
+        search = load(web / "search.json")
+        for query in (
+            "bus 2WIRE blanco negro rojo aislado",
+            "bus 3WIRE 9C reloj",
+            "flotador frio seco 3 minutos sin extrapolar",
+            "resistencia bus 0 50 cortocircuito",
+            "Service Tool tendencias sobrecalentamiento presiones",
         ):
             with self.subTest(query=query):
                 self.assertTrue(contains_query(search, query))
