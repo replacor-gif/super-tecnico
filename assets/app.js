@@ -130,7 +130,7 @@ async function staticApi(action, params={}) {
 
   if (action === 'errors') {
     const query = String(params.q || '').trim();
-    const limit = Math.min(Math.max(Number(params.limit || 50), 1), 100);
+    const limit = Math.min(Math.max(Number(params.limit || 50), 1), 500);
     let items = await fetchJson(brandWebPath(brand, 'errors/index.json'));
     if (query) {
       const tokens = normalizeSearch(query).split(' ').filter(Boolean);
@@ -259,7 +259,7 @@ async function selectCategory(slug) {
     els.context.classList.remove('hidden');
     els.context.innerHTML = `<h2>${esc(state.category.name)}</h2><p>${esc(state.category.description || '')}</p>`;
     if (slug === 'errors') {
-      renderErrorFinder(data.topics);
+      await renderErrorFinder(data.topics);
     } else {
       renderTopicChooser(data.topics);
     }
@@ -271,15 +271,23 @@ function renderTopicChooser(topics) {
   els.content.innerHTML = topics.map(t => `<article class="search-hit"><h3>${esc(t.title)}</h3><p>${esc(t.summary || '')}</p><button type="button" data-open-topic="${t.id}">Abrir ${t.variant_count || 0} variante(s)</button></article>`).join('');
 }
 
-function renderErrorFinder(topics) {
+async function renderErrorFinder(topics) {
+  const catalog = (await api('errors', {brand:state.brand, limit:500})).errors || [];
+  const availableCodes = catalog.map(item => item.code_display).filter(Boolean);
+  const compactCodes = availableCodes.length <= 20 ? availableCodes.join(', ') : '';
+  const catalogSummary = catalog.length
+    ? `La base actual contiene ${catalog.length} código(s)${compactCodes ? `: ${compactCodes}` : ''}.`
+    : 'La base actual todavía no contiene códigos de error.';
   els.content.innerHTML = `
     <section class="result-card"><div class="card-body">
       <h2>Buscar código, subcódigo o significado</h2>
+      <div class="notice-box"><strong>Cobertura disponible:</strong> ${esc(catalogSummary)} Los códigos que todavía no se hayan incorporado no devolverán una ficha.</div>
       <form id="errorSearchForm" class="error-search">
         <input id="errorSearchInput" type="search" placeholder="Ejemplos: E12, 12.1, boya, comunicación, IPM">
         <button type="submit">Buscar error</button>
       </form>
       <div id="errorResults" class="search-results"><p class="empty">Escribe un código o una palabra relacionada.</p></div>
+      ${catalog.length ? `<details class="nested-detail"><summary>Ver códigos disponibles (${catalog.length})</summary><div class="nested-content search-results">${catalog.map(renderErrorHit).join('')}</div></details>` : ''}
     </div></section>
     ${topics.length ? `<section class="result-card"><div class="card-body"><h2>Lectura e interpretación desde placas</h2>${topics.map(t => `<article class="search-hit"><h3>${esc(t.title)}</h3><p>${esc(t.summary || '')}</p><button type="button" data-open-topic="${t.id}">Abrir</button></article>`).join('')}</div></section>` : ''}`;
   document.getElementById('errorSearchForm').addEventListener('submit', async event => {
@@ -290,7 +298,9 @@ function renderErrorFinder(topics) {
     box.innerHTML = '<p class="loading">Buscando…</p>';
     try {
       const data = await api('errors', {brand:state.brand, q});
-      box.innerHTML = data.errors.length ? data.errors.map(renderErrorHit).join('') : '<p class="empty">No se han encontrado coincidencias.</p>';
+      box.innerHTML = data.errors.length
+        ? data.errors.map(renderErrorHit).join('')
+        : `<div class="empty"><strong>“${esc(q)}” todavía no está incluido en la base de ${esc(state.brandName)}.</strong><p>El buscador funciona, pero no puede mostrar una ficha que aún no se ha cargado.${compactCodes ? ` Prueba con uno de los códigos disponibles: ${esc(compactCodes)}.` : ''}</p></div>`;
     } catch (error) { box.innerHTML = `<p class="error-message">${esc(error.message)}</p>`; }
   });
 }
@@ -436,7 +446,7 @@ async function globalSearch(query) {
     setBreadcrumb(state.brandName, `Búsqueda: ${query}`);
     els.context.classList.remove('hidden');
     els.context.innerHTML = `<h2>Resultados de búsqueda</h2><p>${data.results.length} coincidencia(s) para “${esc(query)}”.</p>`;
-    els.content.innerHTML = data.results.length ? data.results.map(r => `<article class="search-hit"><h3>${r.type === 'error' ? '<span class="code-badge">Error</span>' : ''}${esc(r.title)}</h3><p>${esc(r.category)}${r.summary ? ` — ${esc(r.summary)}` : ''}</p><button type="button" ${r.type === 'error' ? `data-open-error="${r.id}"` : `data-open-variant="${r.id}"`}>Abrir ficha</button></article>`).join('') : '<div class="empty">No se han encontrado coincidencias.</div>';
+    els.content.innerHTML = data.results.length ? data.results.map(r => `<article class="search-hit"><h3>${r.type === 'error' ? '<span class="code-badge">Error</span>' : ''}${esc(r.title)}</h3><p>${esc(r.category)}${r.summary ? ` — ${esc(r.summary)}` : ''}</p><button type="button" ${r.type === 'error' ? `data-open-error="${r.id}"` : `data-open-variant="${r.id}"`}>Abrir ficha</button></article>`).join('') : `<div class="empty"><strong>“${esc(query)}” no está incluido todavía en la base de ${esc(state.brandName)}.</strong><p>No es un fallo del buscador: será necesario añadir la ficha correspondiente a los datos de esta marca.</p></div>`;
   } catch (error) { showError(error); }
 }
 

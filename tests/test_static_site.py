@@ -117,6 +117,13 @@ class StaticSiteTests(unittest.TestCase):
         self.assertNotIn("api.php", html + script)
         self.assertNotIn("media.php", html + script)
 
+    def test_error_finder_explains_current_coverage(self):
+        script = (self.dist / "assets" / "app.js").read_text(encoding="utf-8")
+        self.assertIn("Ver códigos disponibles", script)
+        self.assertIn("todavía no está incluido en la base", script)
+        self.assertIn("no puede mostrar una ficha que aún no se ha cargado", script)
+        self.assertIn("limit:500", script)
+
     def test_daikin_projection_keeps_private_master_data_out(self):
         public_text = "\n".join(
             path.read_text(encoding="utf-8")
