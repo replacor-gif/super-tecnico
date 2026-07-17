@@ -6,40 +6,62 @@
   <meta name="description" content="Biblioteca técnica Super Técnico para consulta de errores, programación, modos de servicio y valores técnicos.">
   <meta name="theme-color" content="#0e3e5a">
   <title>Super Técnico</title>
-  <link rel="stylesheet" href="assets/styles.css?v=2">
+  <link rel="stylesheet" href="assets/styles.css?v=4">
 </head>
 <body>
 <header class="site-header">
-  <div>
+  <div class="brand-heading">
     <h1>Super Técnico</h1>
     <p>Biblioteca técnica de intervención</p>
   </div>
-  <button id="coverageButton" class="secondary-button" type="button">Cobertura</button>
+  <div class="header-actions">
+    <button id="homeButton" class="secondary-button" type="button">Inicio</button>
+    <button id="coverageButton" class="secondary-button" type="button">Cobertura</button>
+  </div>
 </header>
 
 <main class="app-shell">
-  <section class="control-panel" aria-label="Navegación técnica">
-    <div class="field">
+  <section class="brand-panel" aria-label="Marca activa">
+    <div class="field brand-field">
       <label for="brandSelect">Marca</label>
       <select id="brandSelect"><option value="">Cargando…</option></select>
     </div>
-    <div class="field">
-      <label for="categorySelect">Categoría</label>
-      <select id="categorySelect" disabled><option value="">Selecciona una categoría</option></select>
+    <div class="brand-status" id="brandStatus">Cargando biblioteca…</div>
+  </section>
+
+  <section class="search-panel search-hero" aria-label="Búsqueda global">
+    <div class="search-heading">
+      <h2>¿Qué necesitas consultar?</h2>
+      <p>Escribe un código, componente o procedimiento. No hace falta conocer el nombre exacto.</p>
     </div>
-    <div class="field grow">
-      <label for="topicSelect">Tema</label>
-      <select id="topicSelect" disabled><option value="">Selecciona un tema</option></select>
+    <form id="globalSearchForm">
+      <label class="sr-only" for="globalSearch">Buscar en toda la marca</label>
+      <input id="globalSearch" type="search" autocomplete="off" placeholder="Ejemplos: E12, pump down, boya, mando 2 hilos, Peak Cut…">
+      <button type="submit">Buscar</button>
+    </form>
+    <div class="quick-actions" aria-label="Búsquedas frecuentes">
+      <button type="button" class="quick-chip" data-quick-query="sacar códigos">Sacar códigos</button>
+      <button type="button" class="quick-chip" data-quick-query="pump down">Pump down</button>
+      <button type="button" class="quick-chip" data-quick-query="mando 2 hilos">Mando 2 hilos</button>
+      <button type="button" class="quick-chip" data-quick-query="boya drenaje">Boya y drenaje</button>
+      <button type="button" class="quick-chip" data-quick-query="programación">Programación</button>
+      <button type="button" class="quick-chip" data-quick-query="VRF direccionamiento">VRF</button>
     </div>
   </section>
 
-  <section class="search-panel" aria-label="Búsqueda global">
-    <form id="globalSearchForm">
-      <label class="sr-only" for="globalSearch">Buscar en toda la marca</label>
-      <input id="globalSearch" type="search" autocomplete="off" placeholder="Buscar: pump down, E12, boya, Peak Cut, mando 2 hilos…">
-      <button type="submit">Buscar</button>
-    </form>
-  </section>
+  <details class="menu-navigation">
+    <summary>Navegar por menús</summary>
+    <section class="control-panel" aria-label="Navegación técnica">
+      <div class="field">
+        <label for="categorySelect">Categoría</label>
+        <select id="categorySelect" disabled><option value="">Selecciona una categoría</option></select>
+      </div>
+      <div class="field grow">
+        <label for="topicSelect">Tema</label>
+        <select id="topicSelect" disabled><option value="">Selecciona un tema</option></select>
+      </div>
+    </section>
+  </details>
 
   <nav id="breadcrumb" class="breadcrumb" aria-label="Ruta"></nav>
   <section id="contextPanel" class="context-panel hidden"></section>
@@ -57,6 +79,6 @@
   <p id="dialogCaption"></p>
 </dialog>
 
-  <script src="assets/app.js?v=3" defer></script>
+  <script src="assets/app.js?v=5" defer></script>
 </body>
 </html>

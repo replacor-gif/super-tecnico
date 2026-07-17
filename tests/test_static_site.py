@@ -119,6 +119,26 @@ class StaticSiteTests(unittest.TestCase):
         self.assertNotIn("media.php", html + script)
         self.assertIn("renderRelatedErrors", script)
 
+    def test_field_navigation_uses_dashboard_accordions_and_quick_search(self):
+        html = (self.dist / "index.html").read_text(encoding="utf-8")
+        script = (self.dist / "assets" / "app.js").read_text(encoding="utf-8")
+        styles = (self.dist / "assets" / "styles.css").read_text(encoding="utf-8")
+
+        for marker in (
+            'id="homeButton"', 'id="brandStatus"', 'class="menu-navigation"',
+            'data-quick-query="sacar códigos"', 'data-quick-query="mando 2 hilos"',
+        ):
+            self.assertIn(marker, html)
+        for marker in (
+            "renderBrandDashboard", "rememberRecent", "data-open-category",
+            "Consultado recientemente", "Elige lo que necesitas",
+            "machine_behavior", "Cómo reconocerlo", "En frío o deshumidificación",
+        ):
+            self.assertIn(marker, script)
+        self.assertNotIn("await selectCategory(remembered)", script)
+        for marker in (".category-grid", ".category-card", ".quick-actions", ".recent-panel", ".info-priority"):
+            self.assertIn(marker, styles)
+
     def test_error_finder_explains_current_coverage(self):
         script = (self.dist / "assets" / "app.js").read_text(encoding="utf-8")
         self.assertIn("Ver códigos disponibles", script)

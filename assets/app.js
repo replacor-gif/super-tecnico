@@ -9,6 +9,8 @@ const els = {
   breadcrumb: document.getElementById('breadcrumb'),
   searchForm: document.getElementById('globalSearchForm'),
   search: document.getElementById('globalSearch'),
+  brandStatus: document.getElementById('brandStatus'),
+  homeButton: document.getElementById('homeButton'),
   coverageButton: document.getElementById('coverageButton'),
   imageDialog: document.getElementById('imageDialog'),
   dialogImage: document.getElementById('dialogImage'),
@@ -16,9 +18,10 @@ const els = {
   closeImageDialog: document.getElementById('closeImageDialog'),
 };
 
-const state = { brand: '', brandName: '', categories: [], category: null, topics: [], topic: null };
+const state = { brand: '', brandName: '', brandInfo: null, categories: [], category: null, topics: [], topic: null };
 const cache = new Map();
 const fileCache = new Map();
+const installedBrands = new Map();
 
 function esc(value) {
   return String(value ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
@@ -205,19 +208,81 @@ function mediaUrl(path) {
   return dataUrl(`data/brands/${brandSlug(state.brand)}/media/${segments.map(encodeURIComponent).join('/')}`).href;
 }
 
+function categoryIcon(slug) {
+  return ({
+    errors:'ERR', diagnostic_access:'COD', service_modes:'TEST', configuration:'CFG',
+    commissioning:'INI', history_reset:'HIS', controllers_buses:'BUS', monitoring:'MON',
+    external_io:'I/O', controls:'CTL', drainage_overflow:'H₂O', vrf_network:'VRF',
+    normal_states:'OK', service_tools:'PC', component_checks:'CMP',
+    technical_values:'VAL', symptom_diagnosis:'DIA', board_replacement:'PCB',
+  }[slug] || 'TEC');
+}
+function countLabel(value, singular, plural=`${singular}s`) {
+  const count = Number(value || 0);
+  return `${count} ${count === 1 ? singular : plural}`;
+}
+
+function recentKey() { return `st.recents.${state.brand}`; }
+function readRecents() {
+  try { return JSON.parse(localStorage.getItem(recentKey()) || '[]').slice(0, 6); }
+  catch { return []; }
+}
+function rememberRecent(item) {
+  if (!state.brand || !item?.id || !item?.type) return;
+  const rows = readRecents().filter(row => !(row.type === item.type && Number(row.id) === Number(item.id)));
+  rows.unshift({...item, id:Number(item.id)});
+  localStorage.setItem(recentKey(), JSON.stringify(rows.slice(0, 6)));
+}
+function renderRecents() {
+  const rows = readRecents();
+  if (!rows.length) return '';
+  return `<section class="recent-panel context-panel"><h2>Consultado recientemente</h2><div class="recent-list">${rows.map(row => `<button type="button" class="recent-link" ${row.type === 'error' ? `data-open-error="${row.id}"` : `data-open-variant="${row.id}"`}>${row.code ? `<span class="code-badge">${esc(row.code)}</span>` : ''}${esc(row.title)}</button>`).join('')}</div></section>`;
+}
+
+function renderBrandDashboard() {
+  state.category = null;
+  state.topic = null;
+  els.category.value = '';
+  els.topic.innerHTML = '<option value="">Selecciona un tema</option>';
+  els.topic.disabled = true;
+  setBreadcrumb(state.brandName);
+  els.context.classList.add('hidden');
+  const cards = state.categories.map(category => {
+    const topics = category.topics || [];
+    const topicButtons = topics.map(topic => `<button type="button" class="topic-link" data-open-topic="${topic.id}"><span>${esc(topic.title)}</span><small>${esc(countLabel(topic.variant_count, 'ficha'))}</small></button>`).join('');
+    const primary = category.slug === 'errors'
+      ? `<button type="button" class="category-primary" data-open-category="errors">Buscar código o significado</button>`
+      : '';
+    return `<details class="category-card" ${category.slug === 'errors' ? 'open' : ''}>
+      <summary><span class="category-icon">${esc(categoryIcon(category.slug))}</span><span><span class="category-title">${esc(category.name)}</span><span class="category-description">${esc(category.description || '')}</span></span><span class="category-count">${esc(countLabel(category.variant_count, 'ficha'))}</span></summary>
+      <div class="topic-menu">${topicButtons || '<p class="empty">Sin temas publicados.</p>'}</div>${primary}
+    </details>`;
+  }).join('');
+  els.content.innerHTML = `${renderRecents()}<section class="dashboard-heading"><h2>Elige lo que necesitas</h2><p>Abre una categoría y después la ficha que más se parezca a la máquina que tienes delante.</p></section><section class="category-grid">${cards}</section>`;
+}
+
+function showHome() {
+  if (!state.brand || !state.categories.length) return;
+  renderBrandDashboard();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
 async function init() {
   try {
     const data = await api('brands');
+    data.brands.forEach(brand => installedBrands.set(brand.slug, brand));
     els.brand.innerHTML = data.brands.length ? data.brands.map(b => `<option value="${esc(b.slug)}">${esc(b.display_name)}</option>`).join('') : '<option value="">Sin marcas instaladas</option>';
     if (!data.brands.length) return;
     const remembered = localStorage.getItem('st.brand');
-    els.brand.value = data.brands.some(b => b.slug === remembered) ? remembered : data.brands[0].slug;
+    const referenceBrand = [...data.brands].sort((a,b) => Number(b.counts?.variants || 0) - Number(a.counts?.variants || 0))[0];
+    els.brand.value = data.brands.some(b => b.slug === remembered) ? remembered : referenceBrand.slug;
     await selectBrand(els.brand.value);
   } catch (error) { showError(error); }
 }
 
 async function selectBrand(slug) {
   state.brand = slug;
+  state.brandInfo = installedBrands.get(slug) || null;
   localStorage.setItem('st.brand', slug);
   const option = els.brand.selectedOptions[0];
   state.brandName = option?.textContent || slug;
@@ -229,17 +294,10 @@ async function selectBrand(slug) {
     els.category.innerHTML = '<option value="">Selecciona una categoría</option>' + data.categories.map(c => `<option value="${esc(c.slug)}">${esc(c.name)} (${c.variant_count || 0})</option>`).join('');
     els.category.disabled = false;
     const remembered = localStorage.getItem(`st.category.${slug}`);
-    if (data.categories.some(c => c.slug === remembered)) {
-      els.category.value = remembered;
-      await selectCategory(remembered);
-    } else {
-      state.category = null; state.topic = null;
-      els.topic.innerHTML = '<option value="">Selecciona un tema</option>';
-      setBreadcrumb(state.brandName);
-      els.context.classList.remove('hidden');
-      els.context.innerHTML = `<h2>${esc(state.brandName)}</h2><p>Selecciona una categoría. La marca contiene ${data.categories.length} bloques técnicos.</p>`;
-      els.content.innerHTML = `<div class="welcome-card"><h2>Consulta técnica por categorías</h2><p>También puedes utilizar el buscador superior para localizar directamente un código, procedimiento, tensión o componente.</p></div>`;
-    }
+    els.category.value = data.categories.some(c => c.slug === remembered) ? remembered : '';
+    const counts = state.brandInfo?.counts || {};
+    els.brandStatus.textContent = `${data.categories.length} categorías disponibles · ${counts.errors || 0} errores · ${counts.variants || 0} fichas técnicas`;
+    renderBrandDashboard();
   } catch (error) { showError(error); }
 }
 
@@ -316,6 +374,13 @@ async function selectTopic(id) {
   try {
     const data = await api('topic', {brand:state.brand, topic_id:id});
     state.topic = data.topic;
+    if (data.topic.category?.slug) {
+      state.category = state.categories.find(item => item.slug === data.topic.category.slug) || state.category;
+      els.category.value = data.topic.category.slug;
+      state.topics = state.category?.topics || state.topics;
+      els.topic.innerHTML = '<option value="">Selecciona un tema</option>' + state.topics.map(topic => `<option value="${topic.id}">${esc(topic.title)} (${topic.variant_count || 0})</option>`).join('');
+      els.topic.disabled = state.topics.length === 0;
+    }
     els.topic.value = String(id);
     setBreadcrumb(state.brandName, data.topic.category?.name || state.category?.name, data.topic.title);
     els.context.classList.remove('hidden');
@@ -398,6 +463,7 @@ async function openError(id) {
   try {
     const data = await api('error', {brand:state.brand, error_id:id});
     const e = data.error;
+    rememberRecent({type:'error', id:e.id, code:e.code_display, title:e.short_label || 'Código de error'});
     setBreadcrumb(state.brandName, 'Errores y protecciones', e.code_display);
     els.context.classList.remove('hidden');
     els.context.innerHTML = `<h2><span class="code-badge">${esc(e.code_display)}</span>${esc(e.short_label || 'Código de error')}</h2><p>${esc(scopeLabel(e.unit_scope))}. Se muestran todas las interpretaciones documentadas.</p>`;
@@ -429,7 +495,13 @@ function renderRelatedErrors(interpretation) {
 function renderInfoItems(items) {
   if (!items.length) return '';
   const groups = items.reduce((a,x)=>((a[x.item_type||'observation']??=[]).push(x),a),{});
-  return Object.entries(groups).map(([type,rows]) => `<details class="nested-detail" ${['cause','check'].includes(type) ? 'open' : ''}><summary>${esc(itemTypeLabel(type))}</summary><div class="nested-content"><ul>${rows.map(x => `<li>${x.title ? `<strong>${esc(x.title)}:</strong> ` : ''}${esc(x.body)}</li>`).join('')}</ul></div></details>`).join('');
+  const order = ['machine_behavior', 'related_element', 'cause', 'check', 'safety', 'observation'];
+  return order.filter(type => groups[type]?.length).map(type => {
+    const rows = groups[type];
+    const open = ['machine_behavior', 'cause', 'check'].includes(type) ? 'open' : '';
+    const priority = type === 'machine_behavior' ? ' info-priority' : '';
+    return `<details class="nested-detail${priority}" ${open}><summary>${esc(itemTypeLabel(type))}</summary><div class="nested-content"><ul>${rows.map(x => `<li>${x.title ? `<strong>${esc(x.title)}:</strong> ` : ''}${esc(x.body)}</li>`).join('')}</ul></div></details>`;
+  }).join('');
 }
 function renderImpacts(items) {
   if (!items.length) return '';
@@ -460,6 +532,7 @@ async function openVariant(id) {
   loading('Cargando ficha técnica…');
   try {
     const data = await api('variant', {brand:state.brand, variant_id:id});
+    rememberRecent({type:'variant', id:data.variant.id, title:data.variant.title});
     setBreadcrumb(state.brandName, data.topic.category?.name, data.topic.title, data.variant.title);
     els.context.classList.remove('hidden');
     els.context.innerHTML = `<h2>${esc(data.variant.title)}</h2><p>${esc(data.variant.recognition || data.variant.summary || '')}</p>`;
@@ -493,7 +566,20 @@ function sourceKind(v) { return ({official:'Dato oficial',calculated:'Valor calc
 function confidenceLabel(v) { return ({high:'alta',medium:'media',low:'baja',unknown:'no indicada'}[v] || v || ''); }
 function indicationLabel(v) { return ({display:'Display',led:'LED/parpadeos',remote_controller:'Mando',app:'Aplicación',mixed:'Indicación combinada',other:'Otra indicación'}[v] || v || ''); }
 function sectionLabel(v) { return ({wiring:'Cableado',notes:'Observaciones',safety:'Seguridad',operation:'Funcionamiento',checks:'Comprobaciones',behavior:'Comportamiento'}[v] || 'Información'); }
-function phaseLabel(v) { return ({procedure:'Procedimiento',precheck:'Comprobaciones previas',check:'Comprobaciones',result:'Interpretación del resultado',finish:'Finalización',cancel:'Cancelación',warning:'Advertencias'}[v] || v || 'Procedimiento'); }
+function phaseLabel(v) { return ({
+  access:'Acceso', active_error:'Error activo', address:'Direccionamiento', cancel:'Cancelación',
+  check:'Comprobaciones', checklist:'Lista de comprobación', classification:'Clasificación', classify:'Clasificación',
+  configure:'Configuración', connection:'Conexión', cooling:'En frío o deshumidificación', correct:'Corrección',
+  diagnosis:'Diagnóstico', erase:'Borrado', erase_automatic:'Borrado automático', erase_manual:'Borrado manual',
+  exit:'Salir', finish:'Finalización', group:'Control de grupo', history:'Historial', interpret:'Interpretación',
+  interpretation:'Interpretación', isolation:'Aislamiento de la avería', measurement:'Medición', monitoring:'Monitorización',
+  navigation:'Navegación', network:'Red de comunicación', observation:'Observación', other_modes:'Otros modos',
+  power:'Alimentación', precheck:'Comprobaciones previas', prepare:'Preparación', prerequisites:'Antes de empezar',
+  procedure:'Procedimiento', programming:'Programación', read:'Lectura', recognition:'Cómo reconocerlo',
+  record:'Registrar datos', recovery:'Recuperación', restart:'Reinicio', result:'Interpretación del resultado',
+  safety:'Seguridad', start:'Inicio', stop:'Parada', timing:'Temporización', verification:'Verificación',
+  verify:'Verificación', warning:'Advertencias',
+}[v] || v || 'Procedimiento'); }
 function itemTypeLabel(v) { return ({related_element:'Elementos relacionados',cause:'Posibles causas',check:'Comprobaciones',observation:'Observaciones',safety:'Seguridad',machine_behavior:'Comportamiento de la máquina'}[v] || v); }
 function stopLabel(v) { return ({all_system:'Se detiene todo el sistema',affected_unit:'Se detiene la unidad afectada',branch:'Se detiene una rama o grupo',outdoor_only:'Se detiene la unidad exterior',degraded:'Funcionamiento degradado',unknown:'Efecto no especificado'}[v] || v || 'Efecto operativo'); }
 
@@ -501,10 +587,22 @@ els.brand.addEventListener('change', () => selectBrand(els.brand.value));
 els.category.addEventListener('change', () => els.category.value && selectCategory(els.category.value));
 els.topic.addEventListener('change', () => els.topic.value && selectTopic(els.topic.value));
 els.searchForm.addEventListener('submit', event => { event.preventDefault(); const q = els.search.value.trim(); if (q.length >= 2 && state.brand) globalSearch(q); });
+els.homeButton.addEventListener('click', showHome);
 els.coverageButton.addEventListener('click', showCoverage);
 els.closeImageDialog.addEventListener('click', () => els.imageDialog.close());
 els.imageDialog.addEventListener('click', event => { if (event.target === els.imageDialog) els.imageDialog.close(); });
 document.addEventListener('click', event => {
+  const quickButton = event.target.closest('[data-quick-query]');
+  if (quickButton) {
+    const query = quickButton.dataset.quickQuery || '';
+    els.search.value = query;
+    if (query.length >= 2 && state.brand) globalSearch(query);
+  }
+  const categoryButton = event.target.closest('[data-open-category]');
+  if (categoryButton) {
+    els.category.value = categoryButton.dataset.openCategory;
+    selectCategory(categoryButton.dataset.openCategory);
+  }
   const topicButton = event.target.closest('[data-open-topic]'); if (topicButton) selectTopic(topicButton.dataset.openTopic);
   const errorButton = event.target.closest('[data-open-error]'); if (errorButton) openError(errorButton.dataset.openError);
   const variantButton = event.target.closest('[data-open-variant]'); if (variantButton) openVariant(variantButton.dataset.openVariant);
