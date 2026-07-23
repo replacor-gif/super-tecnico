@@ -43,6 +43,8 @@ class StaticSiteTests(unittest.TestCase):
         cls.web = cls.brand / "web"
         cls.daikin = cls.dist / "data" / "brands" / "daikin"
         cls.daikin_web = cls.daikin / "web"
+        cls.mitsubishi = cls.dist / "data" / "brands" / "mitsubishi-electric"
+        cls.mitsubishi_web = cls.mitsubishi / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -51,7 +53,7 @@ class StaticSiteTests(unittest.TestCase):
     def test_expected_counts(self):
         manifest = load(self.dist / "data" / "brands" / "index.json")
         brands = {item["slug"]: item for item in manifest["brands"]}
-        self.assertEqual(set(brands), {"daikin", "fujitsu-general"})
+        self.assertEqual(set(brands), {"daikin", "fujitsu-general", "mitsubishi-electric"})
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
             "topics": 39,
@@ -65,6 +67,13 @@ class StaticSiteTests(unittest.TestCase):
             "variants": 34,
             "errors": 66,
             "search_entries": 100,
+        })
+        self.assertEqual(brands["mitsubishi-electric"]["counts"], {
+            "categories": 15,
+            "topics": 22,
+            "variants": 56,
+            "errors": 107,
+            "search_entries": 163,
         })
 
     def test_search_examples_are_present(self):
@@ -91,13 +100,40 @@ class StaticSiteTests(unittest.TestCase):
             "A0-11", "A3", "AF", "E3", "E9", "J8", "U3", "U4", "UA", "E-1",
         }.issubset({item["code_display"] for item in daikin_errors}))
 
+        mitsubishi_entries = load(self.mitsubishi_web / "search.json")
+        for query in (
+            "P5 boya 90 segundos",
+            "P5 parada 5 segundos cuatro veces",
+            "PAR-41 8,5 12 VDC",
+            "SW871 10 15 minutos",
+            "6607 sin ACK",
+            "1102 125",
+            "M-NET 17 30 VDC",
+            "POWER 11 bus continua",
+            "pump down",
+        ):
+            with self.subTest(brand="mitsubishi-electric", query=query):
+                self.assertTrue(contains_query(mitsubishi_entries, query))
+
+        mitsubishi_errors = load(self.mitsubishi_web / "errors" / "index.json")
+        self.assertEqual(len(mitsubishi_errors), 107)
+        self.assertTrue({
+            "P5", "PA", "E6", "U2", "0403", "1102", "1302", "4250",
+            "5101", "6607", "6832", "7102", "POWER ×11",
+        }.issubset({item["code_display"] for item in mitsubishi_errors}))
+
     def test_media_is_not_published_or_referenced(self):
         self.assertFalse((self.brand / "media").exists())
         self.assertFalse((self.daikin / "media").exists())
+        self.assertFalse((self.mitsubishi / "media").exists())
         self.assertEqual(self.report["checks"]["media_files"], 0)
         self.assertGreaterEqual(self.report["checks"]["media_references_removed"], 26)
 
-        for path in list(self.web.rglob("*.json")) + list(self.daikin_web.rglob("*.json")):
+        for path in (
+            list(self.web.rglob("*.json"))
+            + list(self.daikin_web.rglob("*.json"))
+            + list(self.mitsubishi_web.rglob("*.json"))
+        ):
             data = load(path)
             pending = [data]
             while pending:
@@ -227,6 +263,78 @@ class StaticSiteTests(unittest.TestCase):
         self.assertGreaterEqual(errors["E9"]["interpretation_count"], 4)
         self.assertGreaterEqual(errors["U3"]["interpretation_count"], 3)
         self.assertGreaterEqual(errors["J8"]["interpretation_count"], 2)
+
+    def test_mitsubishi_reference_v1_quality_and_traceability(self):
+        brand = ROOT / "data" / "brands" / "mitsubishi-electric"
+        expected = audit_brand(brand)
+        actual = load(brand / "web" / "quality.json")
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual["errors"]["entries"], 107)
+        self.assertEqual(actual["errors"]["interpretations"], 142)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 142})
+        self.assertEqual(actual["technical_variants"]["entries"], 56)
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 56})
+
+        sources = load(brand / "web" / "sources.json")
+        self.assertEqual(len(sources), 12)
+        self.assertTrue(all(source["status"] == "reviewed" for source in sources))
+        self.assertTrue({
+            "OBH766B", "OBH767", "OBH790P", "OCH697", "OCH416D",
+            "OCH832B", "OCH675E", "WT09534X02", "WT05000X01",
+            "WT06591X01",
+        }.issubset({source["document_ref"] for source in sources}))
+
+        interpretations = []
+        for path in (brand / "web" / "errors" / "details").glob("*.json"):
+            interpretations.extend(load(path)["interpretations"])
+        self.assertTrue(all(
+            {"cause", "check", "machine_behavior"}.issubset(
+                {item["item_type"] for item in interpretation["info_items"]}
+            )
+            and any(source.get("page_start") for source in interpretation["sources"])
+            for interpretation in interpretations
+        ))
+
+    def test_mitsubishi_key_diagnostics_are_separated_by_family(self):
+        brand = ROOT / "data" / "brands" / "mitsubishi-electric"
+        web = brand / "web"
+        errors = {item["code_display"]: item for item in load(web / "errors" / "index.json")}
+        self.assertEqual(errors["P5"]["interpretation_count"], 2)
+        self.assertGreaterEqual(errors["U2"]["interpretation_count"], 3)
+        self.assertEqual(errors["POWER ×1"]["interpretation_count"], 2)
+        self.assertEqual(errors["POWER ×2"]["interpretation_count"], 2)
+        self.assertEqual(errors["POWER ×3"]["interpretation_count"], 2)
+        self.assertEqual(errors["POWER ×11"]["interpretation_count"], 2)
+
+        topics = [
+            load(path)
+            for path in (web / "topics").glob("*.json")
+        ]
+        variants = [variant for topic in topics for variant in topic["variants"]]
+        titles = {variant["title"] for variant in variants}
+        self.assertTrue({
+            "Cassette — autocheck inalámbrico por pitidos",
+            "PAR-41MAA — Remote controller check",
+            "Cassette antigua — P5 por boya durante 90 segundos",
+            "Cassette moderna — P5 por parada repetida del motor",
+            "MXZ de 2 conexiones — corrección por 30 min en frío",
+            "MXZ de 3–6 conexiones — botón SW871",
+            "Alcance de parada: interior frente a BC/exterior",
+            "M-NET — forma de onda, ruido y pantalla",
+        }.issubset(titles))
+        self.assertTrue(all(
+            variant["steps"]
+            and variant["sections"]
+            and variant["media"] == []
+            and any(source.get("page_start") for source in variant["sources"])
+            for variant in variants
+        ))
+
+        public_text = "\n".join(path.read_text(encoding="utf-8") for path in brand.rglob("*.json"))
+        self.assertNotIn("tmp/pdfs", public_text)
+        self.assertFalse(any(brand.rglob("*.pdf")))
+        self.assertFalse(any(brand.rglob("*.db")))
+        self.assertFalse(any(brand.rglob("*.sqlite")))
 
     def test_all_json_is_utf8_and_valid(self):
         paths = list(self.dist.rglob("*.json"))
