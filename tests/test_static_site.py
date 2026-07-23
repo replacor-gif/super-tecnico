@@ -30,7 +30,12 @@ def normalized(value: str) -> str:
 
 def contains_query(entries: list[dict], query: str) -> bool:
     tokens = normalized(query).split()
-    return any(all(token in str(item.get("haystack", "")) for token in tokens) for item in entries)
+    for item in entries:
+        haystack = str(item.get("haystack", ""))
+        compact = haystack.replace(" ", "")
+        if all(token in haystack or token in compact for token in tokens):
+            return True
+    return False
 
 
 class StaticSiteTests(unittest.TestCase):
@@ -45,6 +50,8 @@ class StaticSiteTests(unittest.TestCase):
         cls.daikin_web = cls.daikin / "web"
         cls.mitsubishi = cls.dist / "data" / "brands" / "mitsubishi-electric"
         cls.mitsubishi_web = cls.mitsubishi / "web"
+        cls.gree = cls.dist / "data" / "brands" / "gree"
+        cls.gree_web = cls.gree / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -53,7 +60,7 @@ class StaticSiteTests(unittest.TestCase):
     def test_expected_counts(self):
         manifest = load(self.dist / "data" / "brands" / "index.json")
         brands = {item["slug"]: item for item in manifest["brands"]}
-        self.assertEqual(set(brands), {"daikin", "fujitsu-general", "mitsubishi-electric"})
+        self.assertEqual(set(brands), {"daikin", "fujitsu-general", "gree", "mitsubishi-electric"})
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
             "topics": 39,
@@ -74,6 +81,13 @@ class StaticSiteTests(unittest.TestCase):
             "variants": 56,
             "errors": 107,
             "search_entries": 163,
+        })
+        self.assertEqual(brands["gree"]["counts"], {
+            "categories": 15,
+            "topics": 22,
+            "variants": 68,
+            "errors": 159,
+            "search_entries": 227,
         })
 
     def test_search_examples_are_present(self):
@@ -117,6 +131,32 @@ class StaticSiteTests(unittest.TestCase):
 
         mitsubishi_errors = load(self.mitsubishi_web / "errors" / "index.json")
         self.assertEqual(len(mitsubishi_errors), 107)
+
+        gree_entries = load(self.gree_web / "search.json")
+        for query in (
+            "E9 8 segundos boya",
+            "COM N 56 VDC",
+            "A2 10 min",
+            "XK46 C01 3 segundos",
+            "n6 cinco",
+            "C9 120 h",
+            "NTC 20 25",
+            "IPM 0.3 0.7",
+            "n8 30 min",
+            "Commissioning Tool MC40-00/B",
+            "A8 24 h",
+            "15k NTC 1.65 V",
+        ):
+            with self.subTest(brand="gree", query=query):
+                self.assertTrue(contains_query(gree_entries, query))
+
+        gree_errors = load(self.gree_web / "errors" / "index.json")
+        self.assertEqual(len(gree_errors), 159)
+        self.assertTrue({
+            "A2", "A8", "C0", "C5", "dH", "E6", "E9", "F0", "H5",
+            "L3", "P8", "U7",
+        }.issubset({item["code_display"] for item in gree_errors}))
+
         self.assertTrue({
             "P5", "PA", "E6", "U2", "0403", "1102", "1302", "4250",
             "5101", "6607", "6832", "7102", "POWER ×11",
@@ -126,6 +166,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse((self.brand / "media").exists())
         self.assertFalse((self.daikin / "media").exists())
         self.assertFalse((self.mitsubishi / "media").exists())
+        self.assertFalse((self.gree / "media").exists())
         self.assertEqual(self.report["checks"]["media_files"], 0)
         self.assertGreaterEqual(self.report["checks"]["media_references_removed"], 26)
 
@@ -133,6 +174,7 @@ class StaticSiteTests(unittest.TestCase):
             list(self.web.rglob("*.json"))
             + list(self.daikin_web.rglob("*.json"))
             + list(self.mitsubishi_web.rglob("*.json"))
+            + list(self.gree_web.rglob("*.json"))
         ):
             data = load(path)
             pending = [data]
@@ -321,6 +363,74 @@ class StaticSiteTests(unittest.TestCase):
             "MXZ de 3–6 conexiones — botón SW871",
             "Alcance de parada: interior frente a BC/exterior",
             "M-NET — forma de onda, ruido y pantalla",
+        }.issubset(titles))
+        self.assertTrue(all(
+            variant["steps"]
+            and variant["sections"]
+            and variant["media"] == []
+            and any(source.get("page_start") for source in variant["sources"])
+            for variant in variants
+        ))
+
+        public_text = "\n".join(path.read_text(encoding="utf-8") for path in brand.rglob("*.json"))
+        self.assertNotIn("tmp/pdfs", public_text)
+        self.assertFalse(any(brand.rglob("*.pdf")))
+        self.assertFalse(any(brand.rglob("*.db")))
+        self.assertFalse(any(brand.rglob("*.sqlite")))
+
+    def test_gree_reference_v1_quality_and_traceability(self):
+        brand = ROOT / "data" / "brands" / "gree"
+        expected = audit_brand(brand)
+        actual = load(brand / "web" / "quality.json")
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual["errors"]["entries"], 159)
+        self.assertEqual(actual["errors"]["interpretations"], 192)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 192})
+        self.assertEqual(actual["technical_variants"]["entries"], 68)
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 68})
+
+        sources = load(brand / "web" / "sources.json")
+        self.assertEqual(len(sources), 12)
+        self.assertTrue(all(source["status"] == "reviewed" for source in sources))
+        self.assertTrue({
+            "ENVO-R32-SM-A", "LIVO-GEN3-SM-230V-A", "VIREO-GEN3-SM-A",
+            "SLIM-DUCT-SM-A", "GMV5-MINI-HP-SM", "GMV5-IDU-SM",
+            "GMV6-UH-MINI-SM", "XK19-TPG", "XK46-OM", "XK62-XK79-OM",
+        }.issubset({source["document_ref"] for source in sources}))
+
+        interpretations = []
+        for path in (brand / "web" / "errors" / "details").glob("*.json"):
+            interpretations.extend(load(path)["interpretations"])
+        self.assertTrue(all(
+            {"cause", "check", "machine_behavior"}.issubset(
+                {item["item_type"] for item in interpretation["info_items"]}
+            )
+            and any(source.get("page_start") for source in interpretation["sources"])
+            for interpretation in interpretations
+        ))
+
+    def test_gree_repeated_codes_and_service_procedures_are_separated(self):
+        brand = ROOT / "data" / "brands" / "gree"
+        web = brand / "web"
+        errors = {item["code_display"]: item for item in load(web / "errors" / "index.json")}
+        self.assertGreaterEqual(errors["E9"]["interpretation_count"], 2)
+        self.assertGreaterEqual(errors["C5"]["interpretation_count"], 2)
+        self.assertGreaterEqual(errors["F0"]["interpretation_count"], 2)
+        self.assertGreaterEqual(errors["H5"]["interpretation_count"], 2)
+        self.assertGreaterEqual(errors["L3"]["interpretation_count"], 2)
+
+        topics = [load(path) for path in (web / "topics").glob("*.json")]
+        variants = [variant for topic in topics for variant in topic["variants"]]
+        titles = {variant["title"] for variant in variants}
+        self.assertTrue({
+            "XK46 — localizar interior y leer errores con C01",
+            "GMV6 — consultar las cinco últimas averías con n6",
+            "Split inverter — diagnóstico COM–N (~56 VDC)",
+            "GMV6 — A2 recuperación desde tuberías interiores",
+            "GMV6 — C9 emergencia de un ventilador",
+            "Cassette R32 — E9 tras 8 s de boya abierta",
+            "Sistema modular — aislar un módulo exterior averiado",
+            "GMV6 — prueba de diodos del IPM",
         }.issubset(titles))
         self.assertTrue(all(
             variant["steps"]

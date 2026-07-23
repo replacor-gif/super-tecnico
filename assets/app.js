@@ -71,13 +71,24 @@ function normalizeSearch(value) {
 function searchScore(haystack, tokens, title='') {
   let score = 0;
   const normalizedTitle = normalizeSearch(title);
+  const compactHaystack = haystack.replace(/\s+/g, '');
+  const compactTitle = normalizedTitle.replace(/\s+/g, '');
   tokens.forEach(token => {
     if (!token) return;
-    if (normalizedTitle.includes(token)) score += 12;
-    if (normalizedTitle.startsWith(token)) score += 8;
-    score += Math.min(haystack.split(token).length - 1, 5) * 2;
+    if (normalizedTitle.includes(token) || compactTitle.includes(token)) score += 12;
+    if (normalizedTitle.startsWith(token) || compactTitle.startsWith(token)) score += 8;
+    const occurrences = Math.max(
+      haystack.split(token).length - 1,
+      compactHaystack.split(token).length - 1,
+    );
+    score += Math.min(occurrences, 5) * 2;
   });
   return score;
+}
+
+function matchesSearchTokens(haystack, tokens) {
+  const compactHaystack = String(haystack || '').replace(/\s+/g, '');
+  return tokens.every(token => haystack.includes(token) || compactHaystack.includes(token));
 }
 
 async function navigation(brand) {
@@ -138,7 +149,7 @@ async function staticApi(action, params={}) {
     if (query) {
       const tokens = normalizeSearch(query).split(' ').filter(Boolean);
       items = items
-        .filter(item => tokens.every(token => String(item.search_text || '').includes(token)))
+        .filter(item => matchesSearchTokens(String(item.search_text || ''), tokens))
         .map(item => ({item, score:searchScore(String(item.search_text || ''), tokens, `${item.code_display || ''} ${item.short_label || ''}`)}))
         .sort((a,b) => b.score - a.score)
         .slice(0, limit)
@@ -165,7 +176,7 @@ async function staticApi(action, params={}) {
     const entries = await fetchJson(brandWebPath(brand, 'search.json'));
     const results = entries
       .filter(entry => !category || entry.category_slug === category)
-      .filter(entry => tokens.every(token => String(entry.haystack || '').includes(token)))
+      .filter(entry => matchesSearchTokens(String(entry.haystack || ''), tokens))
       .map(entry => ({entry, score:searchScore(String(entry.haystack || ''), tokens, String(entry.title || ''))}))
       .sort((a,b) => (b.score - a.score) || String(a.entry.title || '').localeCompare(String(b.entry.title || ''), 'es'))
       .slice(0, limit)
