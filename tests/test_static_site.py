@@ -60,11 +60,11 @@ class StaticSiteTests(unittest.TestCase):
             "search_entries": 188,
         })
         self.assertEqual(brands["daikin"]["counts"], {
-            "categories": 7,
-            "topics": 8,
-            "variants": 14,
-            "errors": 2,
-            "search_entries": 16,
+            "categories": 13,
+            "topics": 14,
+            "variants": 34,
+            "errors": 66,
+            "search_entries": 100,
         })
 
     def test_search_examples_are_present(self):
@@ -78,12 +78,18 @@ class StaticSiteTests(unittest.TestCase):
         self.assertTrue(any(token in item.get("search_text", "") for item in errors))
 
         daikin_entries = load(self.daikin_web / "search.json")
-        for query in ("A3", "AF", "pump down", "flotador", "BRC1E", "VRV IV"):
+        for query in (
+            "A3", "AF", "pump down", "flotador", "BRC1E", "VRV IV",
+            "E9 X21A", "Madoka P1 P2", "Wiring Error Check SW3",
+        ):
             with self.subTest(brand="daikin", query=query):
                 self.assertTrue(contains_query(daikin_entries, query))
 
         daikin_errors = load(self.daikin_web / "errors" / "index.json")
-        self.assertEqual({item["code_display"] for item in daikin_errors}, {"A3", "AF"})
+        self.assertEqual(len(daikin_errors), 66)
+        self.assertTrue({
+            "A0-11", "A3", "AF", "E3", "E9", "J8", "U3", "U4", "UA", "E-1",
+        }.issubset({item["code_display"] for item in daikin_errors}))
 
     def test_media_is_not_published_or_referenced(self):
         self.assertFalse((self.brand / "media").exists())
@@ -160,11 +166,67 @@ class StaticSiteTests(unittest.TestCase):
 
         topics = [load(path) for path in (self.daikin_web / "topics").glob("*.json")]
         variants = [variant for topic in topics for variant in topic["variants"]]
-        self.assertEqual(len(variants), 14)
+        self.assertEqual(len(variants), 34)
         self.assertTrue(all(
-            any(section["title"] == "Estado de verificación" for section in variant["sections"])
+            variant["steps"]
+            and variant["sections"]
+            and any(source.get("page_start") for source in variant["sources"])
             for variant in variants
         ))
+
+    def test_daikin_reference_v2_quality_and_traceability(self):
+        brand = ROOT / "data" / "brands" / "daikin"
+        expected = audit_brand(brand)
+        actual = load(brand / "web" / "quality.json")
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual["errors"]["entries"], 66)
+        self.assertEqual(actual["errors"]["interpretations"], 118)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 118})
+        self.assertEqual(actual["technical_variants"]["entries"], 34)
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 34})
+
+        sources = load(brand / "web" / "sources.json")
+        self.assertEqual(len(sources), 9)
+        self.assertTrue(all(source["status"] == "reviewed" for source in sources))
+        self.assertTrue({
+            "ESiES06-07", "ESiEN05-04", "SiUS121602E", "4P370475-1",
+            "4PW71264-1", "4P596266-1B", "4P486046-1C",
+        }.issubset({source["document_ref"] for source in sources}))
+
+        interpretations = []
+        for path in (brand / "web" / "errors" / "details").glob("*.json"):
+            interpretations.extend(load(path)["interpretations"])
+        self.assertTrue(all(
+            {"cause", "check", "machine_behavior"}.issubset(
+                {item["item_type"] for item in interpretation["info_items"]}
+            )
+            and any(source.get("page_start") for source in interpretation["sources"])
+            for interpretation in interpretations
+        ))
+
+    def test_daikin_key_procedures_and_subcodes_are_present(self):
+        web = ROOT / "data" / "brands" / "daikin" / "web"
+        search = load(web / "search.json")
+        for query in (
+            "TIMER CANCEL 5 segundos",
+            "BRC7E830 pitido continuo",
+            "BRC1E historial 10",
+            "Madoka esclavo U5 U8",
+            "RZAG BS2 8 segundos",
+            "boya 80 segundos 10 minutos",
+            "E9 Y2E X21A",
+            "LC FAN2",
+            "U3 operacion posible",
+            "J8 todas las unidades",
+            "sonda descarga 100 13.1",
+        ):
+            with self.subTest(query=query):
+                self.assertTrue(contains_query(search, query))
+
+        errors = {item["code_display"]: item for item in load(web / "errors" / "index.json")}
+        self.assertGreaterEqual(errors["E9"]["interpretation_count"], 4)
+        self.assertGreaterEqual(errors["U3"]["interpretation_count"], 3)
+        self.assertGreaterEqual(errors["J8"]["interpretation_count"], 2)
 
     def test_all_json_is_utf8_and_valid(self):
         paths = list(self.dist.rglob("*.json"))
