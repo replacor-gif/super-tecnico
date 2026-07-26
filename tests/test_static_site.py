@@ -52,6 +52,8 @@ class StaticSiteTests(unittest.TestCase):
         cls.mitsubishi_web = cls.mitsubishi / "web"
         cls.gree = cls.dist / "data" / "brands" / "gree"
         cls.gree_web = cls.gree / "web"
+        cls.panasonic = cls.dist / "data" / "brands" / "panasonic"
+        cls.panasonic_web = cls.panasonic / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -60,7 +62,10 @@ class StaticSiteTests(unittest.TestCase):
     def test_expected_counts(self):
         manifest = load(self.dist / "data" / "brands" / "index.json")
         brands = {item["slug"]: item for item in manifest["brands"]}
-        self.assertEqual(set(brands), {"daikin", "fujitsu-general", "gree", "mitsubishi-electric"})
+        self.assertEqual(
+            set(brands),
+            {"daikin", "fujitsu-general", "gree", "mitsubishi-electric", "panasonic"},
+        )
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
             "topics": 39,
@@ -88,6 +93,13 @@ class StaticSiteTests(unittest.TestCase):
             "variants": 68,
             "errors": 159,
             "search_entries": 227,
+        })
+        self.assertEqual(brands["panasonic"]["counts"], {
+            "categories": 15,
+            "topics": 25,
+            "variants": 94,
+            "errors": 126,
+            "search_entries": 220,
         })
 
     def test_search_examples_are_present(self):
@@ -157,6 +169,34 @@ class StaticSiteTests(unittest.TestCase):
             "L3", "P8", "U7",
         }.issubset({item["code_display"] for item in gree_errors}))
 
+        panasonic_entries = load(self.panasonic_web / "search.json")
+        for query in (
+            "H11 12 A 30 segundos",
+            "H11 comunicacion",
+            "P10 boya",
+            "CZ-RTC6 R1 R2 500 m",
+            "Assigning 10 min",
+            "S-LINK 30 120 ohm",
+            "Test Run 60 min",
+            "pump down",
+            "EEV 46 4 ohm",
+            "ventilador 280 VDC",
+            "NTC 20k Beta 3950",
+            "P04 3.3 2.6 MPa",
+            "bomba 0001 0060",
+            "H&C Diagnosis",
+            "J07 R32",
+        ):
+            with self.subTest(brand="panasonic", query=query):
+                self.assertTrue(contains_query(panasonic_entries, query))
+
+        panasonic_errors = load(self.panasonic_web / "errors" / "index.json")
+        self.assertEqual(len(panasonic_errors), 126)
+        self.assertTrue({
+            "E01", "E04", "H11", "H12", "H21", "P04", "P10", "P12",
+            "F29", "F31", "J07", "J08",
+        }.issubset({item["code_display"] for item in panasonic_errors}))
+
         self.assertTrue({
             "P5", "PA", "E6", "U2", "0403", "1102", "1302", "4250",
             "5101", "6607", "6832", "7102", "POWER ×11",
@@ -167,6 +207,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse((self.daikin / "media").exists())
         self.assertFalse((self.mitsubishi / "media").exists())
         self.assertFalse((self.gree / "media").exists())
+        self.assertFalse((self.panasonic / "media").exists())
         self.assertEqual(self.report["checks"]["media_files"], 0)
         self.assertGreaterEqual(self.report["checks"]["media_references_removed"], 26)
 
@@ -175,6 +216,7 @@ class StaticSiteTests(unittest.TestCase):
             + list(self.daikin_web.rglob("*.json"))
             + list(self.mitsubishi_web.rglob("*.json"))
             + list(self.gree_web.rglob("*.json"))
+            + list(self.panasonic_web.rglob("*.json"))
         ):
             data = load(path)
             pending = [data]
@@ -431,6 +473,76 @@ class StaticSiteTests(unittest.TestCase):
             "Cassette R32 — E9 tras 8 s de boya abierta",
             "Sistema modular — aislar un módulo exterior averiado",
             "GMV6 — prueba de diodos del IPM",
+        }.issubset(titles))
+        self.assertTrue(all(
+            variant["steps"]
+            and variant["sections"]
+            and variant["media"] == []
+            and any(source.get("page_start") for source in variant["sources"])
+            for variant in variants
+        ))
+
+        public_text = "\n".join(path.read_text(encoding="utf-8") for path in brand.rglob("*.json"))
+        self.assertNotIn("tmp/pdfs", public_text)
+        self.assertFalse(any(brand.rglob("*.pdf")))
+        self.assertFalse(any(brand.rglob("*.db")))
+        self.assertFalse(any(brand.rglob("*.sqlite")))
+
+    def test_panasonic_reference_v1_quality_and_traceability(self):
+        brand = ROOT / "data" / "brands" / "panasonic"
+        expected = audit_brand(brand)
+        actual = load(brand / "web" / "quality.json")
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual["errors"]["entries"], 126)
+        self.assertEqual(actual["errors"]["interpretations"], 142)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 142})
+        self.assertEqual(actual["technical_variants"]["entries"], 94)
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 94})
+
+        sources = load(brand / "web" / "sources.json")
+        self.assertEqual(len(sources), 17)
+        self.assertTrue(all(source["status"] == "reviewed" for source in sources))
+        self.assertTrue({
+            "PAPAMY1212045CE", "SM700885-00", "PAPAMY1505100CE",
+            "PAPAMY2509044CE", "ECOI-VRF-CODE-GUIDE", "SM830186-00",
+            "W-2WAY-ECOI-SM", "U-8_24MS3H7-II-EN",
+            "WEB-ACXF60-38393-EN", "EU-4P-CZ-RTC6-CONEX-20",
+        }.issubset({source["document_ref"] for source in sources}))
+
+        interpretations = []
+        for path in (brand / "web" / "errors" / "details").glob("*.json"):
+            interpretations.extend(load(path)["interpretations"])
+        self.assertTrue(all(
+            {"cause", "check", "machine_behavior"}.issubset(
+                {item["item_type"] for item in interpretation["info_items"]}
+            )
+            and any(source.get("page_start") for source in interpretation["sources"])
+            for interpretation in interpretations
+        ))
+
+    def test_panasonic_repeated_codes_and_service_procedures_are_separated(self):
+        brand = ROOT / "data" / "brands" / "panasonic"
+        web = brand / "web"
+        errors = {item["code_display"]: item for item in load(web / "errors" / "index.json")}
+        self.assertGreaterEqual(errors["H11"]["interpretation_count"], 3)
+        self.assertGreaterEqual(errors["H12"]["interpretation_count"], 3)
+        self.assertGreaterEqual(errors["H21"]["interpretation_count"], 2)
+        self.assertGreaterEqual(errors["P10"]["interpretation_count"], 2)
+        self.assertGreaterEqual(errors["P12"]["interpretation_count"], 2)
+
+        topics = [load(path) for path in (web / "topics").glob("*.json")]
+        variants = [variant for topic in topics for variant in topic["variants"]]
+        titles = {variant["title"] for variant in variants}
+        self.assertTrue({
+            "Mando inalámbrico RAC — localizar el código con CHECK",
+            "CZ-RTC6 — últimas cuatro alarmas y Sensor info",
+            "ECOi actual — decodificar LED1 M y LED2 N",
+            "CZ-RTC6 — bus R1/R2 de dos hilos sin polaridad",
+            "S-LINK — resistencia de línea con alimentación cortada",
+            "CZ-RTC6 — Test Run desde Maintenance func",
+            "PACi — forzar bomba 1 minuto o funcionamiento continuo",
+            "Multisplit — comprobar EEV: 46 ±4 Ω a 20 °C",
+            "Códigos repetidos — H11, H12, H21, P10 y P12",
         }.issubset(titles))
         self.assertTrue(all(
             variant["steps"]
