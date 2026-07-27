@@ -6,8 +6,12 @@ Biblioteca técnica estática para consulta por marca, categoría, tema y varian
 
 ## Marcas disponibles
 
-- **Fujitsu / General:** marca de referencia principal.
-- **Daikin:** Referencia V1 de prueba con 16 registros técnicos. Quince registros mantienen visible la advertencia de página o manual pendiente de verificar.
+- **Fujitsu / General:** referencia ampliada de split, multisplit, cassette y Airstage VRF.
+- **Daikin:** Sky Air, cassette, multisplit, VRV y mandos BRC/Madoka.
+- **Gree:** split, U-Match, FLEXX, GMV y mandos cableados.
+- **Midea:** AtomX R454B, V6 VRF, split, multisplit, cassette, conductos y WDC-120T2.
+- **Mitsubishi Electric:** M-Series, MXZ, Mr. Slim y CITY MULTI.
+- **Panasonic:** RAC, PACi, multisplit, cassette y ECOi/VRF.
 
 ## Qué se publica
 
