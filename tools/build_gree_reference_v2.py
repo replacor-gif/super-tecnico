@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Construye Gree Referencia V1 para Super Técnico.
+"""Construye Gree Referencia V2 para Super Técnico.
 
 La proyección pública contiene resúmenes técnicos, referencias y páginas
 verificadas. No se publican PDF, capturas ni bases SQLite.
@@ -150,6 +150,42 @@ SOURCES: dict[str, dict[str, Any]] = {
         "document_type": "controller_manual",
         "source_url": BASE + "documents/controllers/xk79-wired-controller/xk79-owner-s-manual.pdf",
         "notes": "Mando VRF actual: parámetros, tablas de errores, estados y control de acceso.",
+    },
+    "UMATCH_PLUS": {
+        "title": "Service Manual — U-Match+ 18–48K",
+        "document_ref": "U-MATCH-PLUS-SM-B",
+        "publication_date": "2025",
+        "language": "en",
+        "document_type": "service_manual",
+        "source_url": BASE + "our-products/u-match-plus/documents/u-match-plus-service-manual-b.pdf",
+        "notes": "Comercial 18–48K: efecto operativo de protecciones, drenaje, sensores y diagnóstico paso a paso.",
+    },
+    "FLEXX": {
+        "title": "Service Manual — FLEXX HP con manejadora BH",
+        "document_ref": "GREE-FLEXX-INDOOR-OUTDOOR-SM-092821",
+        "publication_date": "2021",
+        "language": "en",
+        "document_type": "service_manual",
+        "source_url": BASE + "our-products/flexx/documents/flexx-service-manual-hp-bh.pdf",
+        "notes": "Sistema central 24–60K: catálogo exterior, IPM/PFC, diagnóstico sin código y curvas de sensores.",
+    },
+    "FLEXX_ECO": {
+        "title": "Service Manual — FLEXX ECO 24–60K",
+        "document_ref": "GC202301-I",
+        "publication_date": "2023",
+        "language": "en",
+        "document_type": "service_manual",
+        "source_url": BASE + "our-products/flexx-eco/documents/flexx-eco-service-manual-a.pdf",
+        "notes": "Sistema central 24–60K: sensores de presión, drivers de ventilador y protecciones inverter.",
+    },
+    "FLEXX_ULTRA": {
+        "title": "Service Manual — FLEXX ULTRA R32 24–60K",
+        "document_ref": "GC202406-I",
+        "publication_date": "2024",
+        "language": "en",
+        "document_type": "service_manual",
+        "source_url": BASE + "our-products/flexx-ultra-r32/documents/flexx-ultra-r32-service-manual-a.pdf",
+        "notes": "Sistema central R32: detección de refrigerante, calefacción auxiliar, sensores y 58 códigos.",
     },
 }
 
@@ -525,6 +561,42 @@ VIREO_EXTRA = [
     ("P3", "Frecuencia intermedia del compresor en modo de prueba", "outdoor", "51"),
 ]
 
+COMMERCIAL_V2_ROWS = [
+    ("e1", "FLEXX ECO — sensor de alta presión fuera de rango durante 30 s", "outdoor", "FLEXX_ECO", "35"),
+    ("e3", "FLEXX ECO — sensor de baja presión fuera de rango durante 30 s", "outdoor", "FLEXX_ECO", "35"),
+    ("A1", "FLEXX ECO — protección IPM del ventilador exterior", "outdoor", "FLEXX_ECO", "26"),
+    ("AC", "FLEXX ECO — fallo de arranque del ventilador exterior", "outdoor", "FLEXX_ECO", "26"),
+    ("UL", "FLEXX ECO — sobrecorriente del ventilador exterior inverter", "outdoor", "FLEXX_ECO", "26"),
+    ("AE", "FLEXX ECO — circuito de detección de corriente del ventilador", "outdoor", "FLEXX_ECO", "26"),
+    ("AJ", "FLEXX ECO — ventilador exterior fuera de sincronismo", "outdoor", "FLEXX_ECO", "26"),
+    ("PP", "U-Match+ — tensión de entrada AC exterior anormal", "outdoor", "UMATCH_PLUS", "75"),
+    ("PA", "U-Match+ — protección de corriente AC en la entrada", "outdoor", "UMATCH_PLUS", "75"),
+    ("Pc", "U-Match+ — circuito de detección de corriente del driver", "outdoor", "UMATCH_PLUS", "75"),
+    ("C6", "FLEXX ULTRA R32 — sonda de descarga exterior", "outdoor", "FLEXX_ULTRA", "23"),
+    ("C3", "FLEXX ULTRA R32 — sonda del condensador exterior", "outdoor", "FLEXX_ULTRA", "23"),
+    ("C7", "FLEXX ULTRA R32 — sonda de tubería exterior", "outdoor", "FLEXX_ULTRA", "23"),
+    ("H2", "FLEXX ULTRA R32 — protección por temperatura baja del IPM", "outdoor", "FLEXX_ULTRA", "23"),
+    ("FE", "FLEXX ULTRA R32 — sensor de refrigerante anormal", "indoor", "FLEXX_ULTRA", "23"),
+    ("EH", "FLEXX ULTRA R32 — activación errónea de protección de calefacción auxiliar", "indoor", "FLEXX_ULTRA", "23"),
+    ("C1", "FLEXX ULTRA R32 — sonda de ambiente interior", "indoor", "FLEXX_ULTRA", "23"),
+    ("C2", "FLEXX ULTRA R32 — sonda de batería interior", "indoor", "FLEXX_ULTRA", "23"),
+    ("FJ", "FLEXX ULTRA R32 — sonda de aire de impulsión interior", "indoor", "FLEXX_ULTRA", "23"),
+    ("CA", "FLEXX ULTRA R32 — sonda de entrada del evaporador", "indoor", "FLEXX_ULTRA", "23"),
+    ("Cb", "FLEXX ULTRA R32 — sonda de salida del evaporador", "indoor", "FLEXX_ULTRA", "23"),
+    ("CJ", "FLEXX ULTRA R32 — jumper de capacidad interior", "indoor", "FLEXX_ULTRA", "23"),
+    ("EA", "FLEXX ULTRA R32 — protección por fuga de refrigerante interior", "system", "FLEXX_ULTRA", "23"),
+    ("Ab", "FLEXX ULTRA R32 — reset del driver del ventilador", "outdoor", "FLEXX_ULTRA", "23"),
+    ("A6", "FLEXX ULTRA R32 — comunicación del driver del ventilador", "outdoor", "FLEXX_ULTRA", "23"),
+    ("A8", "FLEXX ULTRA R32 — temperatura excesiva del módulo del ventilador", "outdoor", "FLEXX_ULTRA", "23"),
+    ("A9", "FLEXX ULTRA R32 — sensor de temperatura del driver del ventilador", "outdoor", "FLEXX_ULTRA", "23"),
+    ("Ad", "FLEXX ULTRA R32 — pérdida de fase del driver del ventilador", "outdoor", "FLEXX_ULTRA", "24"),
+    ("AH", "FLEXX ULTRA R32 — bus DC alto del driver del ventilador", "outdoor", "FLEXX_ULTRA", "24"),
+    ("AL", "FLEXX ULTRA R32 — bus DC bajo del driver del ventilador", "outdoor", "FLEXX_ULTRA", "24"),
+    ("C8", "FLEXX ULTRA R32 — jumper de capacidad del driver", "outdoor", "FLEXX_ULTRA", "24"),
+    ("LE", "FLEXX ULTRA R32 — compresor bloqueado", "outdoor", "FLEXX_ULTRA", "24"),
+    ("Ac", "FLEXX ULTRA R32 — fallo de arranque del ventilador exterior", "outdoor", "FLEXX_ULTRA", "24"),
+]
+
 
 def build_errors() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     specs: list[dict[str, Any]] = []
@@ -565,6 +637,32 @@ def build_errors() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
         else:
             behavior = "La unidad continúa operando, pero reduce o limita la frecuencia del compresor para proteger el sistema."
         specs.append(spec(code, title, scope, "VIREO", page, behavior=behavior))
+
+    for code, title, scope, ref, page in COMMERCIAL_V2_ROWS:
+        behavior = ""
+        causes = None
+        checks = None
+        if code == "EA":
+            behavior = (
+                "La unidad entra en protección de refrigerante R32. Ventile la zona, elimine la fuga "
+                "y no puentee el sensor ni rearme antes de confirmar una condición segura."
+            )
+            causes = [
+                "Fuga real de refrigerante en la zona de la unidad interior",
+                "Sensor de refrigerante, cableado o alimentación defectuosos",
+                "Entrada o placa interior anormal tras descartar una fuga real",
+            ]
+            checks = [
+                "Tratar primero el aviso como fuga real y aplicar el procedimiento R32",
+                "Ventilar, localizar y reparar la fuga antes de restablecer",
+                "Solo después comprobar sensor, alimentación, cableado y lectura de placa",
+            ]
+        elif code == "FE":
+            behavior = "La detección R32 deja de ser fiable y la unidad se protege; no anular el sensor."
+        specs.append(spec(
+            code, title, scope, ref, page, behavior=behavior,
+            causes=causes, checks=checks,
+        ))
 
     by_code: dict[str, list[dict[str, Any]]] = defaultdict(list)
     interpretation_id = 0
@@ -1378,6 +1476,167 @@ def build_topics() -> list[dict[str, Any]]:
          step("verify", 1, "Pruebe boya, bomba y drenaje antes de rearmar.")],
         "CASS30", "17", "18", system_type="Cassette 30/36K", unit_scope="indoor")
 
+    add(22, "U-Match+ — E3 puede ser protección, falta de refrigerante o recuperación",
+        "Equipo comercial U-Match+ con mando cableado; aparece E3 en la interior.",
+        "Evitar tratar como avería el modo de recuperación y distinguir dos protecciones diferentes.",
+        "El manual asigna a E3 tres estados: baja presión, falta de refrigerante y recuperación de refrigerante.",
+        ["En recuperación E3 desaparece al salir y no es avería.",
+         "La protección de baja actúa por presostato; la falta de refrigerante usa la lógica del sistema.",
+         "Tres repeticiones dentro de 30 min pueden impedir el rearme automático."],
+        [step("prepare", 1, "Confirme si alguien ha activado recuperación o depuración desde el mando."),
+         step("procedure", 1, "Si no es recuperación, mida presión real y confirme válvulas totalmente abiertas."),
+         step("procedure", 2, "Revise fuga, carga, caudal y presostato/cableado según potencia."),
+         step("verify", 1, "Rearme solo después de identificar cuál de los tres estados originó E3.")],
+        "UMATCH_PLUS", "74", "77", system_type="U-Match+", unit_scope="system")
+
+    add(9, "U-Match+ — E9 confirmado tras 8 segundos de boya abierta",
+        "Interior comercial con bomba y entrada de nivel; el mando muestra E9.",
+        "Diagnosticar desbordamiento real, boya atascada o entrada de placa.",
+        "Desde la alimentación, ocho segundos continuos con el interruptor de nivel abierto generan E9 y exigen cortar y restablecer tensión después de reparar.",
+        ["Compruebe primero si existe agua real.",
+         "Si lleva bomba, verifique caudal y alimentación antes de condenar la boya.",
+         "El procedimiento del manual permite aislar boya/entrada mediante la interfaz de protección, solo como prueba técnica."],
+        [step("prepare", 1, "Corte tensión, vacíe la bandeja y compruebe pendiente y desagüe."),
+         step("procedure", 1, "Accione la boya y mida su continuidad; confirme que no queda mecánicamente trabada."),
+         step("procedure", 2, "Compruebe funcionamiento de la bomba y la entrada de nivel de la placa."),
+         step("exit", 1, "Restablezca tensión únicamente con el drenaje probado.")],
+        "UMATCH_PLUS", "73", "79", system_type="U-Match+", unit_scope="indoor")
+
+    add(18, "U-Match+ — E2 es protección antihielo recuperable",
+        "Equipo en frío o deshumidificación que muestra E2.",
+        "Separar una protección normal por batería fría de una avería recurrente de caudal.",
+        "E2 detiene compresor y ventilador exterior; vuelve cuando la batería supera el umbral y el compresor ha permanecido parado tres minutos.",
+        ["No es por sí solo un sensor averiado.",
+         "Si se repite, revisar filtro, retorno, impulsión y caudal interior.",
+         "El manual lo define como protección normal."],
+        [step("prepare", 1, "Anote temperatura de batería, modo y tiempo de funcionamiento."),
+         step("procedure", 1, "Compruebe filtro, conductos, retorno e impulsión."),
+         step("verify", 1, "Confirme recuperación térmica y retardo de tres minutos.")],
+        "UMATCH_PLUS", "73", "77", system_type="U-Match+", unit_scope="indoor")
+
+    add(13, "U-Match+ — qué se detiene y cuándo se bloquea",
+        "Sistema comercial 18–48K con tabla de control de fallos.",
+        "Conocer el efecto antes de rearmar repetidamente.",
+        "E1 corta todas las cargas salvo la válvula de cuatro vías en calor y no recupera solo; E4 se bloquea tras más de seis protecciones; E8/H6 se bloquean tras seis fallos en una hora.",
+        ["E6 se declara cuando exterior no recibe datos de interior o display no comunica con interior.",
+         "F0–F4 se recuperan al desaparecer circuito abierto/corto; en ventilación F0–F3 pueden mostrar código y seguir funcionando.",
+         "U7 admite dos recuperaciones; el tercer fallo exige rearme de alimentación."],
+        [step("prepare", 1, "Registre código, número de repeticiones y modo."),
+         step("procedure", 1, "Aplique la estrategia de recuperación específica; no corte tensión antes de guardar la secuencia."),
+         step("verify", 1, "Compruebe que el componente y la condición física se han normalizado.")],
+        "UMATCH_PLUS", "73", "75", system_type="U-Match+", unit_scope="system")
+
+    add(16, "FLEXX — prueba de diodos IPM y PFC",
+        "Sistema central FLEXX con compresor inverter y módulo de potencia exterior.",
+        "Separar cortocircuito del módulo de un defecto del compresor.",
+        "Con U/V/W y L1-2/L2-1 desconectados, las lecturas P/N deben quedar entre 0,3 y 0,7 V; una lectura de 0 indica módulo dañado.",
+        ["Corte tensión y espere al menos un minuto antes de desconectar.",
+         "Use modo diodo y respete la polaridad descrita.",
+         "No conecte el compresor hasta descartar cortocircuito y aislamiento defectuoso."],
+        [step("prepare", 1, "Corte alimentación, espere y verifique descarga del bus."),
+         step("procedure", 1, "Desconecte U/V/W y mida UP, VP, WP, NU, NV y NW."),
+         step("procedure", 2, "Para PFC, desconecte L1-2/L2-1 y mida respecto a P y N."),
+         step("verify", 1, "Todas las lecturas deben estar entre 0,3 y 0,7 V.")],
+        "FLEXX", "23", system_type="FLEXX", unit_scope="outdoor")
+
+    add(1, "FLEXX — catálogo exterior de 27 códigos",
+        "Placa exterior central con display LED; no depende del termostato para mostrar el código.",
+        "Leer y clasificar sensores, presión, driver y configuración de una máquina de gran potencia.",
+        "La tabla incluye E1/E3/E4, F2/F3/F4/F6, EE/ee, H4/H5/H6/H7/HC, Lc, P0/P5/P6/P7/P8/PA/Pc/PL/PH/PU, e1 y C4.",
+        ["Si hay varias averías, el display las alterna.",
+         "EE es memoria de control exterior y ee memoria del driver.",
+         "e1 es sensor de alta; E1 es protección de alta."],
+        [step("prepare", 1, "Observe al menos dos ciclos completos del display."),
+         step("procedure", 1, "Anote mayúsculas/minúsculas, orden y cualquier código alternado."),
+         step("verify", 1, "Abra la interpretación FLEXX y su diagrama de diagnóstico.")],
+        "FLEXX", "25", system_type="FLEXX", unit_scope="outdoor")
+
+    add(16, "FLEXX — E1/E3: medir presión antes de cambiar sensores",
+        "Exterior FLEXX que muestra E1 o E3.",
+        "Distinguir protección real de presostato, cableado o placa.",
+        "E1 se origina en el presostato de alta; E3 agrupa baja presión, falta de refrigerante y recuperación.",
+        ["En E1 revisar válvulas, caudal, filtros, temperatura, exceso de carga y restricción.",
+         "En E3 el diagrama usa 0,05 MPa como referencia de baja.",
+         "La presencia de presostato de baja depende de la capacidad; no debe suponerse."],
+        [step("prepare", 1, "Confirme válvulas abiertas y conecte manómetros adecuados."),
+         step("procedure", 1, "Compare la presión real con el estado del presostato/sensor y su cableado."),
+         step("procedure", 2, "Revise caudal, carga, fuga y restricciones antes de sustituir placa."),
+         step("verify", 1, "Compruebe recuperación sin puentear la protección.")],
+        "FLEXX", "26", "29", system_type="FLEXX", unit_scope="outdoor")
+
+    add(20, "FLEXX ECO — EE, ee y C4 después de cambiar placa",
+        "Exterior central con memoria principal, memoria de driver y jumper de modelo/capacidad.",
+        "Evitar sustituir una placa y dejarla sin identificación correcta.",
+        "EE indica lectura/escritura de la memoria principal, ee la memoria del driver y C4 un jumper ausente o incompatible.",
+        ["Fotografíe placa, jumper y conectores antes de desmontar.",
+         "No intercambie EE con ee.",
+         "Un jumper incorrecto puede impedir el arranque aunque la placa sea nueva."],
+        [step("prepare", 1, "Corte tensión y registre referencia, jumper y cableado."),
+         step("procedure", 1, "Instale una placa compatible y transfiera solo el identificador documentado."),
+         step("verify", 1, "Alimente y confirme que EE/ee/C4 desaparecen antes del Test Run.")],
+        "FLEXX_ECO", "26", "36", system_type="FLEXX ECO", unit_scope="outdoor")
+
+    add(18, "FLEXX ULTRA — ruido de EEV, desescarche y retorno de aceite",
+        "Sistema central R32 que realiza secuencias automáticas sin código permanente.",
+        "Evitar confundir sonidos y cambios de funcionamiento con averías.",
+        "Al arrancar la EEV se reinicializa y puede producir un traqueteo; en desescarche la cuatro vías conmuta, el ventilador exterior para y después se recupera; el retorno de aceite dura aproximadamente cinco minutos.",
+        ["La EEV abre antes que el compresor.",
+         "Durante retorno de aceite aumenta la frecuencia del compresor.",
+         "En ventilación el ventilador exterior no funciona."],
+        [step("prepare", 1, "Anote modo, temperatura exterior y duración del comportamiento."),
+         step("procedure", 1, "Observe si coincide con inicialización, desescarche o retorno de aceite."),
+         step("verify", 1, "Busque una avería solo si la secuencia no termina o aparece un código real.")],
+        "FLEXX_ULTRA", "6", "7", system_type="FLEXX ULTRA R32", unit_scope="system")
+
+    add(21, "FLEXX ULTRA R32 — FE y EA no se deben puentear",
+        "Manejadora R32 con sensor de refrigerante y protección específica.",
+        "Priorizar seguridad ante sensor anormal o fuga detectada.",
+        "FE identifica fallo del sensor; EA identifica protección por fuga. Ambos requieren tratar primero la zona como potencialmente insegura.",
+        ["Ventile y elimine fuentes de ignición.",
+         "No confunda EA con un código GMV de carga manual.",
+         "Solo tras descartar/reparar la fuga se comprueban alimentación, cableado y sensor."],
+        [step("prepare", 1, "Detenga la intervención eléctrica no esencial y ventile la zona."),
+         step("procedure", 1, "Compruebe fuga con método compatible con R32."),
+         step("procedure", 2, "Después revise sensor, cableado, alimentación y entrada de placa."),
+         step("exit", 1, "Restablezca únicamente con la zona segura y la causa eliminada.", warning="danger")],
+        "FLEXX_ULTRA", "23", "24", system_type="FLEXX ULTRA R32", unit_scope="system")
+
+    add(1, "FLEXX ULTRA R32 — catálogo de 58 códigos",
+        "Sistema central R32 24–60K con display de placa exterior.",
+        "Cubrir sensores interiores, refrigerante, calefacción auxiliar y drivers que no aparecen en FLEXX anterior.",
+        "La generación ULTRA añade C1/C2/C3/C6/C7/C8/CA/Cb/CJ, FE/EA/EH/FJ, H2, A6/A8/A9/Ab/Ac/Ad/AH/AL y LE.",
+        ["C6 sustituye a F4 como código de sonda de descarga en esta familia.",
+         "L3 es ventilador exterior DC, no desbordamiento.",
+         "E0 es ventilador interior."],
+        [step("prepare", 1, "Identifique físicamente la familia R32 y la unidad que muestra el código."),
+         step("procedure", 1, "Anote el código con capitalización y los códigos alternados."),
+         step("verify", 1, "Use la interpretación ULTRA y no la de split/GMV con el mismo código.")],
+        "FLEXX_ULTRA", "23", "24", system_type="FLEXX ULTRA R32", unit_scope="system")
+
+    add(16, "FLEXX ECO/ULTRA — sensores de presión se validan durante 30 segundos",
+        "Aparece e1 o e3 en el display exterior.",
+        "Evitar cambiar el transductor por una lectura instantánea o por confundir protección con sensor.",
+        "La placa declara el fallo si la conversión analógica supera sus límites durante 30 segundos continuos.",
+        ["e1/e3 son fallos de señal; E1/E3 son protecciones del circuito.",
+         "Comprobar contacto, alimentación, señal y presión real.",
+         "Comparar lectura de placa con manómetro antes de sustituir."],
+        [step("prepare", 1, "Conecte manómetros y registre presión estable."),
+         step("procedure", 1, "Mida alimentación/señal del transductor según el esquema."),
+         step("verify", 1, "Compare valor electrónico y real durante más de 30 segundos.")],
+        "FLEXX_ECO", "35", system_type="FLEXX ECO/ULTRA", unit_scope="outdoor")
+
+    add(21, "Familia — FLEXX y FLEXX ECO 24–60K",
+        "Sistema central con manejadora, termostato y exterior inverter de 24.000 a 60.000 BTU/h.",
+        "Separar sus códigos de los split y GMV.",
+        "FLEXX usa display exterior, catálogo P/H/F/E y procedimientos de potencia; FLEXX ECO añade seis capacidades y driver de ventilador ampliado.",
+        ["Busque manejadora BH/AH y exterior central.",
+         "El catálogo exterior contiene e1/EE/ee/C4.",
+         "No use procedimientos H1/H2 o D1/D2 propios de mandos/GMV."],
+        [step("prepare", 1, "Identifique arquitectura central y generación."),
+         step("procedure", 1, "Seleccione FLEXX o FLEXX ECO por placa y catálogo."),
+         step("verify", 1, "Confirme que código, efecto y página coinciden.")],
+        "FLEXX_ECO", "3", "5", system_type="FLEXX", unit_scope="system")
+
     return [topics[i] for i in sorted(topics)]
 
 
@@ -1514,7 +1773,7 @@ def main() -> int:
     ])
 
     coverage_notes = {
-        "errors": "Split, cassette, conductos, GMV5/GMV6 y mandos con interpretaciones separadas.",
+        "errors": "Split, cassette, conductos, U-Match+, FLEXX/ECO/ULTRA, GMV5/GMV6 y mandos con interpretaciones separadas.",
         "diagnostic_access": "XK46 C01, XK79, LED de cassette, display exterior y dirección.",
         "history_reset": "n6, cinco fallos, dirección, borrado y salida.",
         "service_modes": "A2, Fo, A8, n3 y C9 con límites y salida.",
@@ -1524,21 +1783,41 @@ def main() -> int:
         "commissioning": "Test individual y depuración obligatoria GMV5/GMV6.",
         "multisplit": "Conflicto de modo y control de grupo hasta 16 interiores.",
         "gmv_network": "n8, n9, proyecto, capacidad y emergencia modular.",
-        "component_checks": "NTC, bobinas, EEV, compresor, IPM, fan y presión.",
+        "component_checks": "NTC, bobinas, EEV, compresor, IPM/PFC, fan y presión.",
         "technical_values": "Valores exactos con familia y página.",
         "normal_states": "A0/A3/A4/A9/AJ/db y distinción de avería.",
         "service_tools_boards": "Commissioning Tool, n7 y ajustes tras sustituir PCB.",
-        "system_architecture": "Pistas para split, cassette, conductos y GMV.",
+        "system_architecture": "Pistas para split, cassette, conductos, U-Match+, FLEXX y GMV.",
     }
     write_json(WEB_DIR / "coverage.json", [
         {
             "id": category_id, "brand_id": BRAND_ID, "area_slug": slug,
-            "area_name": name, "equipment_scope": "Gree — corpus Referencia V1",
-            "coverage_status": "reference_v1", "source_count": len(SOURCES),
+            "area_name": name, "equipment_scope": "Gree — corpus Referencia V2",
+            "coverage_status": "reference_v2_strong", "source_count": len(SOURCES),
             "notes": coverage_notes[slug], "last_reviewed": now[:10],
         }
         for category_id, slug, name, _ in CATEGORIES
     ])
+    write_json(WEB_DIR / "coverage_matrix.json", {
+        "brand": "Gree",
+        "release": "Referencia V2",
+        "coverage_basis": "Información completa respecto a los manuales oficiales enumerados; no se declara cobertura de todos los modelos fabricados.",
+        "families": [
+            {"family": "Split residencial", "status": "strong", "sources": ["ENVO-R32-SM-A", "LIVO-GEN3-SM-230V-A", "VIREO-GEN3-SM-A"]},
+            {"family": "Conductos y cassette", "status": "strong", "sources": ["SLIM-DUCT-SM-A", "ALL-MATCH-360-R32-9-24-SM-A", "ALL-MATCH-360-R32-30-36-SM-A"]},
+            {"family": "U-Match+ comercial", "status": "strong", "sources": ["U-MATCH-PLUS-SM-B"]},
+            {"family": "FLEXX central", "status": "strong", "sources": ["GREE-FLEXX-INDOOR-OUTDOOR-SM-092821", "GC202301-I", "GC202406-I"]},
+            {"family": "GMV/MultiPRO", "status": "strong", "sources": ["GMV5-MINI-HP-SM", "GMV5-IDU-SM", "GMV6-UH-MINI-SM"]},
+            {"family": "Mandos cableados", "status": "strong", "sources": ["XK19-TPG", "XK46-OM", "XK62-XK79-OM"]},
+        ],
+        "known_gaps": [
+            "No se extrapolan códigos a familias regionales que no figuran en el corpus.",
+            "Los sistemas GMV heat-recovery de otras generaciones pueden añadir códigos y cajas selectoras no documentados aquí.",
+            "Los procedimientos de fábrica o de placas sin manual público permanecen fuera de la versión pública.",
+        ],
+        "counts": {"sources": len(SOURCES), "categories": len(CATEGORIES), "topics": len(topics), "variants": len(variant_map), "errors": len(error_indexes)},
+        "last_reviewed": now[:10],
+    })
 
     counts = {
         "categories": len(navigation_categories),
@@ -1552,11 +1831,11 @@ def main() -> int:
             "schema_name": "Super Tecnico",
             "navigation_model": "brand_category_topic_variant",
             "schema_version": "2.2.0",
-            "data_version": "1.0.0",
+            "data_version": "2.0.0",
             "last_update_utc": now,
             "reference_brand": "Gree",
             "verification_warning": (
-                "Completa respecto al corpus Gree Referencia V1. "
+                "Completa respecto al corpus oficial Gree Referencia V2; no equivale a todos los modelos de la marca. "
                 "Confirme siempre familia, unidad que muestra el código y forma de indicación."
             ),
         },
@@ -1566,11 +1845,11 @@ def main() -> int:
     brand = {
         "slug": "gree", "name": "Gree", "display_name": "Gree", "enabled": True,
         "web_data": "web", "media": "media", "publish_media": False,
-        "static_site": True, "schema_version": "2.2.0", "data_version": "1.0.0",
+        "static_site": True, "schema_version": "2.2.0", "data_version": "2.0.0",
         "exported_at_utc": now, "counts": counts,
         "notes": (
-            "Gree Referencia V1: split actual y antiguo, cassette, conductos, "
-            "GMV5/GMV6, XK19/XK46/XK79, drenaje, buses y modos de servicio."
+            "Gree Referencia V2: split actual y antiguo, cassette, conductos, "
+            "U-Match+, FLEXX/ECO/ULTRA R32, GMV5/GMV6, mandos, drenaje, buses y servicio."
         ),
     }
     write_json(BRAND_DIR / "brand.json", brand)

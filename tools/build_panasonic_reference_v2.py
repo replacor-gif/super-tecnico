@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Construye Panasonic Referencia V1 para Super Técnico.
+"""Construye Panasonic Referencia V2 para Super Técnico.
 
 La publicación contiene resúmenes técnicos trazables a documentación oficial.
 No publica PDF, capturas, bases SQLite ni material gráfico de los manuales.
@@ -195,6 +195,42 @@ SOURCES: dict[str, dict[str, Any]] = {
         "document_type": "service_manual",
         "source_url": "https://www.panasonicproclub.com/uploads/HU/catalogues/service-manuals/SM830194-00.pdf",
         "notes": "Curvas oficiales de termistores de aire/intercambiador y descarga.",
+    },
+    "ECOI_3WAY": {
+        "title": "Service Manual — ECOi 3-Way MF1",
+        "document_ref": "SM830188-00",
+        "publication_date": "2010",
+        "language": "en",
+        "document_type": "service_manual",
+        "source_url": "https://www.panasonicproclub.com/uploads/CZ/catalogues/ecoi/service-manual/Ecoi_service%20manual_MF1%28SM830188-00%29.pdf",
+        "notes": "Tres tubos de 8–16 HP: respaldo, recuperación, mando de mantenimiento, alarmas y programación EEPROM.",
+    },
+    "RTC2_OPER": {
+        "title": "Operating Instructions — CZ-RTC2",
+        "document_ref": "CZ-RTC2-OM-9L",
+        "publication_date": "2010",
+        "language": "en",
+        "document_type": "controller_manual",
+        "source_url": "https://www.panasonicproclub.com/uploads/CZ/catalogues/ecoi/operating-instruction/CZ-RTC2_instruction%20manual_9L.pdf",
+        "notes": "Mando cableado clásico ECOi/PACi: reconocimiento, botones, control diario y avisos.",
+    },
+    "PACI_WALL": {
+        "title": "Service Manual — PACi NX mural S-25…100PK4R",
+        "document_ref": "PAPAMY2509043CE",
+        "publication_date": "2025",
+        "language": "en",
+        "document_type": "service_manual",
+        "source_url": "https://www.panasonic.com/content/dam/pim/au/en/PA/PAC-S-/PAC-S-R32-INV-WM-1-SPP/S-25_100PK4R_Service%20Manual.pdf",
+        "notes": "PACi mural actual: placa interior, catálogo PAC, diagnóstico y reparación.",
+    },
+    "VRF_GEN_2026": {
+        "title": "VRF General Catalogue 2026 — ECOi R32/R410A",
+        "document_ref": "VRF-GEN-26-LR",
+        "publication_date": "2026",
+        "language": "en",
+        "document_type": "technical_catalogue",
+        "source_url": "https://www.panasonicproclub.com/uploads/LT/catalogues/VRF_GEN_26_LR.pdf",
+        "notes": "Topologías actuales, capacidades, válvulas de seguridad R32 y efecto operativo por zona.",
     },
 }
 
@@ -594,6 +630,50 @@ ECOI_ROWS = [
     ("P30", "Protección en una subunidad del grupo", "indoor", "6"),
 ]
 
+ECOI_3WAY_ROWS = [
+    ("E06", "ECOi 3 tubos — exterior sin comunicación serie de las interiores", "system", "5-9"),
+    ("E12", "ECOi 3 tubos — inicio de auto-address prohibido", "network", "5-9"),
+    ("E15", "ECOi 3 tubos — auto-address detecta menos interiores de las configuradas", "network", "5-9"),
+    ("E16", "ECOi 3 tubos — auto-address detecta más interiores de las configuradas", "network", "5-10"),
+    ("E20", "ECOi 3 tubos — ninguna interior reconocida durante auto-address", "network", "5-10"),
+    ("E24", "ECOi 3 tubos — exterior inverter sin comunicación de otra exterior", "network", "5-11"),
+    ("E25", "ECOi 3 tubos — dirección de exterior duplicada", "network", "5-11"),
+    ("E26", "ECOi 3 tubos — cantidad de exteriores no coincide con la configuración", "network", "5-11"),
+    ("E29", "ECOi 3 tubos — secundaria sin comunicación de la exterior Main durante 3 min", "network", "5-11"),
+    ("F04", "ECOi 3 tubos — sonda de descarga del compresor inverter 1", "outdoor", "5-12"),
+    ("F05", "ECOi 3 tubos — sonda de descarga del compresor 2", "outdoor", "5-12"),
+    ("F22", "ECOi 3 tubos — sonda de descarga del compresor 3", "outdoor", "5-12"),
+    ("F06", "ECOi 3 tubos — sonda de gas del intercambiador exterior 1", "outdoor", "5-13"),
+    ("F23", "ECOi 3 tubos — sonda de gas del intercambiador exterior 2", "outdoor", "5-13"),
+    ("F25", "ECOi 3 tubos — sonda de gas del intercambiador exterior 3", "outdoor", "5-13"),
+    ("F07", "ECOi 3 tubos — sonda de líquido del intercambiador exterior 1", "outdoor", "5-13"),
+    ("F24", "ECOi 3 tubos — sonda de líquido del intercambiador exterior 2", "outdoor", "5-13"),
+    ("F26", "ECOi 3 tubos — sonda de líquido del intercambiador exterior 3", "outdoor", "5-13"),
+    ("F08", "ECOi 3 tubos — sonda de aire exterior", "outdoor", "5-14"),
+    ("F12", "ECOi 3 tubos — sonda de aspiración del compresor", "outdoor", "5-14"),
+    ("F16", "ECOi 3 tubos — incoherencia entre sensor y presostato de alta", "outdoor", "5-15"),
+    ("F17", "ECOi 3 tubos — sensor de baja abierto o cortocircuitado", "outdoor", "5-16"),
+    ("H11", "ECOi 3 tubos — sobrecorriente del compresor 2", "outdoor", "5-17"),
+    ("H12", "ECOi 3 tubos — corriente de bloqueo del compresor 2", "outdoor", "5-17"),
+    ("H21", "ECOi 3 tubos — sobrecorriente del compresor 3", "outdoor", "5-17"),
+    ("H22", "ECOi 3 tubos — corriente de bloqueo del compresor 3", "outdoor", "5-17"),
+    ("H05", "ECOi 3 tubos — sonda de descarga del compresor 1 desprendida", "outdoor", "5-18"),
+    ("H15", "ECOi 3 tubos — sonda de descarga del compresor 2 desprendida", "outdoor", "5-18"),
+    ("H25", "ECOi 3 tubos — sonda de descarga del compresor 3 desprendida", "outdoor", "5-18"),
+    ("H06", "ECOi 3 tubos — presostato de baja activado", "outdoor", "5-19"),
+    ("H07", "ECOi 3 tubos — no se detecta retorno de aceite", "outdoor", "5-20"),
+    ("L04", "ECOi 3 tubos — dirección de sistema exterior duplicada", "network", "5-21"),
+    ("L11", "ECOi 3 tubos — kit de solenoides común o grupo de mandos mal cableado", "network", "5-22"),
+    ("L10", "ECOi 3 tubos — capacidad exterior EEPROM sin configurar", "outdoor", "5-22"),
+    ("L17", "ECOi 3 tubos — exterior incompatible o tipo de refrigerante EEPROM incorrecto", "system", "5-23"),
+    ("P03", "ECOi 3 tubos — descarga alta del compresor inverter 1", "outdoor", "5-24"),
+    ("P17", "ECOi 3 tubos — descarga alta del compresor 2", "outdoor", "5-24"),
+    ("P18", "ECOi 3 tubos — descarga alta del compresor 3", "outdoor", "5-24"),
+    ("P04", "ECOi 3 tubos — presostato de alta activado a 3,3 MPa", "outdoor", "5-25"),
+    ("P22", "ECOi 3 tubos — fallo de arranque o señal Hall del ventilador exterior", "outdoor", "5-26"),
+    ("CHECK", "ECOi 3 tubos — inspección parpadeante por funcionamiento de respaldo", "system", "5-27"),
+]
+
 
 def build_errors() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     specs: list[dict[str, Any]] = []
@@ -691,6 +771,47 @@ def build_errors() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
             page,
             description=f"Interpretación ECOi/VRF del código {code}; no mezclar con el significado RAC del mismo código.",
             behavior=behavior,
+        ))
+
+    backup_codes = {"H11", "H12", "H21", "H22", "H31", "P16", "P22", "P26", "P29"}
+    for code, title, scope, page in ECOI_3WAY_ROWS:
+        behavior = ""
+        causes = None
+        checks = None
+        if code in backup_codes:
+            behavior = (
+                "El sistema ECOi 3 tubos puede continuar en respaldo automático cuando la arquitectura "
+                "dispone de compresores/módulos sanos. CHECK parpadea; repare la causa y restablezca "
+                "la alimentación de todas las exteriores para cancelar el respaldo."
+            )
+        elif code == "CHECK":
+            behavior = (
+                "No es por sí solo un código de avería: indica que el sistema continúa en respaldo automático. "
+                "Consulte el historial para localizar P16/P22/P26/P29/Hx1/Hx2/H31 u otra causa asociada."
+            )
+            causes = [
+                "Compresor o ventilador exterior aislado por una alarma compatible con respaldo",
+                "Contactor de compresor pegado detectado por la lógica de inspección",
+                "Respaldo manual aún activo después de una reparación",
+            ]
+            checks = [
+                "Consultar el historial de exterior con el mando de mantenimiento",
+                "Identificar qué exterior/compresor está aislado antes de intervenir",
+                "Tras reparar, restablecer la alimentación de todas las exteriores para cancelar el modo",
+            ]
+        elif code in {"E12", "E15", "E16", "E20", "E24", "E25", "E26", "E29", "L04", "L11"}:
+            behavior = "La puesta en marcha o comunicación del circuito queda bloqueada hasta corregir cantidad, dirección o cableado."
+        specs.append(spec(
+            code,
+            title,
+            scope,
+            "ECOI_3WAY",
+            page,
+            description=f"Interpretación específica del sistema ECOi 3 tubos para {code}.",
+            behavior=behavior,
+            aliases=(f"{code} 3 WAY", f"{code} MF1"),
+            causes=causes,
+            checks=checks,
         ))
 
     specs.extend([
@@ -3089,6 +3210,336 @@ TECH_VARIANTS = [
     ),
 ]
 
+TECH_VARIANTS += [
+    tv(
+        16,
+        "ECOi 3 tubos — respaldo automático de compresor o ventilador",
+        "Sistema MF1 de 8–16 HP con varios compresores; CHECK parpadea después de una alarma exterior.",
+        "Saber si el sistema puede seguir y cómo se cancela el respaldo.",
+        "P16, P22, P26, P29, Hx1/Hx2 y H31 pueden iniciar funcionamiento de respaldo; el técnico debe consultar el historial para identificar el elemento aislado.",
+        (
+            "Después de transmitir la alarma, el respaldo comienza al volver a pulsar ON/OFF y borrar la alarma.",
+            "CHECK sigue parpadeando para avisar de funcionamiento degradado.",
+            "Tras reparar, el respaldo no se cancela hasta restablecer la alimentación de todas las exteriores.",
+        ),
+        (
+            "Consulte el historial exterior y anote código, dirección y compresor.",
+            "Confirme que el sistema tiene un elemento sano capaz de asumir el servicio.",
+            "Use el respaldo solo mientras se organiza la reparación.",
+            "Después de reparar, restablezca simultáneamente la alimentación de todas las exteriores.",
+        ),
+        "ECOI_3WAY",
+        "1-31",
+        "2-8",
+        system_type="ECOi 3 tubos",
+        unit_scope="system",
+    ),
+    tv(
+        13,
+        "ECOi 3 tubos — respaldo manual con DIP S010",
+        "Exterior MF1 con compresor inverter y hasta dos compresores de velocidad fija.",
+        "Aislar únicamente el compresor averiado cuando el procedimiento oficial lo permite.",
+        "S010 combina BACK UP con INV, AC1 y AC2; la posición depende de cuál de los tres compresores haya fallado.",
+        (
+            "Antes del cambio deben identificarse con certeza el compresor y el código que lo afecta.",
+            "El ajuste puede combinar dos compresores aislados, pero reduce mucho la capacidad disponible.",
+            "Las válvulas de servicio de la exterior averiada se gestionan según el procedimiento frigorífico.",
+        ),
+        (
+            "Corte la alimentación de todas las exteriores.",
+            "Registre la posición original de S010 y seleccione la combinación oficial.",
+            "Compruebe carga y presiones durante la puesta en marcha de respaldo.",
+            "Después de reparar, devuelva S010 a funcionamiento normal.",
+        ),
+        "ECOI_3WAY",
+        "2-6",
+        "2-8",
+        system_type="ECOi 3 tubos",
+        unit_scope="outdoor",
+    ),
+    tv(
+        21,
+        "ECOi 3 tubos — conectar CZ-RTC2 como mando de mantenimiento exterior",
+        "Placa exterior con conector RC azul de 3 pines y mazo de servicio CV6231785082.",
+        "Consultar EEPROM, sensores, unidades conectadas e historial exterior.",
+        "El CZ-RTC2 se conecta mediante el mazo especial; no sustituye al mando ordinario de las interiores y no funciona aquí como mando de usuario.",
+        (
+            "El mazo enlaza RC 3P azul con un relé/conector blanco de dos pines.",
+            "Un mando ordinario debe permanecer conectado para las funciones normales.",
+            "Permite Test Run global, monitor de temperaturas, direcciones, horas, EEV e historial.",
+        ),
+        (
+            "Corte tensión e identifique el conector RC de la placa exterior.",
+            "Conecte el mazo CV6231785082 y el CZ-RTC2 sin alterar el bus normal.",
+            "Alimente y seleccione la dirección exterior que desea monitorizar.",
+            "Desconecte el conjunto de servicio con la alimentación cortada.",
+        ),
+        "ECOI_3WAY",
+        "3-2",
+        "3-8",
+        system_type="ECOi 3 tubos",
+        unit_scope="outdoor",
+        controller_profile=RTC2_PROFILE,
+    ),
+    tv(
+        21,
+        "CZ-RTC2 de mantenimiento — datos que realmente puede leer",
+        "CZ-RTC2 conectado a la exterior mediante el mazo de servicio.",
+        "Usar datos vivos e históricos antes de sustituir componentes.",
+        "El monitor incluye interiores conectadas, modo, temperaturas de entrada/salida, posición EEV, presiones, corriente, horas y ocho alarmas exteriores.",
+        (
+            "Las alarmas exteriores se guardan de la 1, más reciente, a la 8, más antigua.",
+            "La lectura de historial muestra código y número de unidad alternativamente.",
+            "Los fallos interiores se consultan por separado desde sus mandos.",
+        ),
+        (
+            "Registre dirección del sistema y de la exterior seleccionada.",
+            "Lea primero historial y horas antes de borrar o cortar tensión.",
+            "Compare sensores relacionados y no un único valor aislado.",
+            "Guarde la ficha de puesta en marcha con modo, carga y temperaturas.",
+        ),
+        "ECOI_3WAY",
+        "3-6",
+        "3-11",
+        system_type="ECOi 3 tubos",
+        unit_scope="outdoor",
+        monitoring=(
+            {"point_code": "Alarm 1–8", "name": "Historial exterior", "unit": "código/dirección", "notes": "1 es la más reciente"},
+            {"point_code": "IDU count", "name": "Interiores conectadas", "unit": "cantidad", "notes": None},
+            {"point_code": "EEV", "name": "Posición de válvula interior", "unit": "pasos", "notes": None},
+            {"point_code": "Comp hours", "name": "Horas de compresor", "unit": "h", "notes": None},
+        ),
+    ),
+    tv(
+        4,
+        "ECOi 3 tubos — consultar ocho alarmas exteriores",
+        "Mando de mantenimiento exterior en modo normal o monitor.",
+        "Recuperar la secuencia de fallos sin mezclarla con las alarmas interiores.",
+        "CHECK y el botón indicado durante cuatro segundos abren el historial; la dirección exterior aparece en lugar del número de interior.",
+        (
+            "Solo contiene alarmas exteriores.",
+            "El código y la unidad que lo originó se alternan.",
+            "No borre ni restablezca alimentación antes de fotografiar los ocho registros.",
+        ),
+        (
+            "Seleccione la exterior y anote su dirección.",
+            "Mantenga CHECK y el botón de historial durante cuatro segundos.",
+            "Recorra del registro 1 al 8 y anote código/dirección.",
+            "Salga sin modificar EEPROM.",
+        ),
+        "ECOI_3WAY",
+        "3-11",
+        system_type="ECOi 3 tubos",
+        unit_scope="outdoor",
+        controller_profile=RTC2_PROFILE,
+    ),
+    tv(
+        9,
+        "ECOi 3 tubos — bombear refrigerante desde una exterior averiada",
+        "Sistema modular con una exterior que va a repararse y otras exteriores operativas.",
+        "Trasladar refrigerante a módulos sanos/interiores antes de reparar componentes distintos del compresor.",
+        "El procedimiento usa CZ-RTC2 de mantenimiento, manómetros y recuperadora; el cierre de válvulas y la parada se coordinan por presión.",
+        (
+            "La recuperación se realiza con las válvulas de servicio y la exterior seleccionada.",
+            "Si no hay mando de mantenimiento, el manual ofrece una variante mediante el conector SCT amarillo CN231.",
+            "No es el pump down simple de un split.",
+        ),
+        (
+            "Prepare manómetros, recuperadora y cilindro preevacuado; identifique todas las válvulas.",
+            "Conecte CZ-RTC2 al RC azul y arranque Test Run global en frío.",
+            "Siga la presión y cierre las válvulas en el orden y momento indicados.",
+            "Detenga todas las unidades y confirme presión segura antes de abrir el circuito.",
+        ),
+        "ECOI_3WAY",
+        "2-9",
+        "2-22",
+        system_type="ECOi 3 tubos",
+        unit_scope="system",
+        controller_profile=RTC2_PROFILE,
+    ),
+    tv(
+        25,
+        "ECOi 3 tubos — interpretar símbolos de alarma y alcance",
+        "Tabla de alarmas con códigos entre dobles o simples signos de inspección.",
+        "Saber si una alarma afecta a otras interiores o permite servicio parcial.",
+        "La leyenda distingue alarmas que no afectan a las otras interiores de otras que, según el caso, sí pueden afectar al sistema.",
+        (
+            "No debe deducirse el alcance solo por la letra E/F/H/L/P.",
+            "El respaldo automático se confirma por CHECK parpadeante y el historial asociado.",
+            "La aplicación conserva cada interpretación 3 tubos separada de RAC, PACi y 2 tubos.",
+        ),
+        (
+            "Confirme que la fuente es ECOi 3 tubos.",
+            "Abra todas las interpretaciones del código y compare el efecto operativo.",
+            "Compruebe si CHECK parpadea y qué módulo continúa funcionando.",
+            "No reinicie hasta registrar historial y alcance real.",
+        ),
+        "ECOI_3WAY",
+        "5-2",
+        "5-3",
+        system_type="ECOi 3 tubos",
+        unit_scope="system",
+    ),
+    tv(
+        14,
+        "ECOi 3 tubos — auto-address con cantidad incorrecta",
+        "Puesta en marcha MF1 con E15, E16 o E20.",
+        "Corregir la causa sin repetir auto-address a ciegas.",
+        "E15 indica menos interiores que las configuradas, E16 más interiores y E20 ninguna interior reconocida.",
+        (
+            "E15 puede deberse a cantidad configurada excesiva o interiores sin alimentación/comunicación.",
+            "E16 indica recuento superior al previsto o una configuración demasiado baja.",
+            "E20 obliga a revisar primero el bus desde la exterior y el conector serie.",
+        ),
+        (
+            "Anote cantidad configurada y cantidad realmente alimentada.",
+            "Compruebe continuidad, polaridad/topología y alimentación de todas las interiores.",
+            "Corrija direcciones duplicadas y conectores antes de repetir auto-address.",
+            "Verifique el recuento final desde el mando de mantenimiento.",
+        ),
+        "ECOI_3WAY",
+        "5-9",
+        "5-10",
+        system_type="ECOi 3 tubos",
+        unit_scope="network",
+    ),
+    tv(
+        22,
+        "ECOi 3 tubos — L10 y L17 después de cambiar una placa exterior",
+        "Placa exterior de recambio con capacidad o tipo de refrigerante EEPROM sin restaurar.",
+        "Evitar que una placa correcta quede bloqueada por datos de modelo.",
+        "L10 aparece si la capacidad está a cero/no admitida; L17 puede aparecer si el tipo de refrigerante EEPROM no corresponde a R410A.",
+        (
+            "El mando de mantenimiento permite revisar item 81, capacidad, e item 80, refrigerante.",
+            "No copie valores de otra potencia.",
+            "Después de programar deben verificarse direcciones, cantidad y Test Run.",
+        ),
+        (
+            "Antes del cambio registre EEPROM, dirección, capacidad y posición de interruptores.",
+            "Conecte el mando de mantenimiento y revise item 80 e item 81.",
+            "Introduzca solo los valores documentados para la unidad.",
+            "Complete auto-address y Test Run antes de entregar.",
+        ),
+        "ECOI_3WAY",
+        "5-22",
+        "5-23",
+        system_type="ECOi 3 tubos",
+        unit_scope="outdoor",
+        controller_profile=RTC2_PROFILE,
+    ),
+    tv(
+        23,
+        "ECOi R32 actual — fuga aislada por zona",
+        "Sistema 2 tubos R32 con válvula de seguridad por área y detectores compatibles.",
+        "Saber qué se para cuando se detecta refrigerante en una zona.",
+        "La válvula de seguridad cierra el área afectada y detiene sus interiores; las áreas no afectadas pueden reanudar después de tres minutos en Thermo Off.",
+        (
+            "El cierre por zona evita parar necesariamente todo el sistema.",
+            "Un detector puede asociarse a una interior o grupo según la topología.",
+            "No debe abrirse la válvula ni rearmarse antes de ventilar y eliminar la fuga.",
+        ),
+        (
+            "Identifique en plano qué interiores pertenecen a la válvula de la zona.",
+            "Ventile, localice y repare la fuga con procedimiento R32.",
+            "Compruebe detector, cableado, fuente y válvula de seguridad.",
+            "Confirme que solo las áreas sanas reanudan y que la zona reparada queda segura.",
+        ),
+        "VRF_GEN_2026",
+        "R32 safety",
+        system_type="ECOi R32",
+        unit_scope="zone",
+    ),
+    tv(
+        5,
+        "ECOi R32 — detector, mando y alimentación de seguridad",
+        "Interior/grupo con detector de fugas y válvula de seguridad R32.",
+        "Evitar una topología que invalide la detección o deje dispositivos sin alimentación.",
+        "Con detector conectado se admite un único mando cableado en el grupo; el conjunto de dispositivos y su fuente deben respetar la topología del sistema de seguridad.",
+        (
+            "No se instala un mando Sub cuando la configuración de detector exige un único mando.",
+            "La documentación contempla alimentación externa de 16 V con respaldo independiente conforme a EN 378.",
+            "El límite de dispositivos incluye interiores, detector y válvula de seguridad.",
+        ),
+        (
+            "Dibuje el grupo y cuente todos los dispositivos conectados.",
+            "Compruebe fuente de 16 V, respaldo y continuidad del circuito de seguridad.",
+            "Verifique que no existe un segundo mando incompatible.",
+            "Ejecute la prueba de seguridad de la puesta en marcha.",
+        ),
+        "VRF_GEN_2026",
+        "R32 safety",
+        system_type="ECOi R32",
+        unit_scope="group",
+    ),
+    tv(
+        24,
+        "Familia — PACi NX mural actual S-25…100PK4R",
+        "Interior mural comercial R32 de la serie PK4R, no un RAC doméstico.",
+        "Evitar usar el catálogo H/F de RAC cuando la unidad pertenece a PACi.",
+        "El manual actual separa placa y controles interiores, catálogo PACi y procedimientos de desmontaje/reparación.",
+        (
+            "Los códigos PACi se consultan desde el mando compatible y no con el CHECK inalámbrico RAC.",
+            "P01/P09/P10/P12 conservan significados de la familia PACi, no del split doméstico.",
+            "La capacidad llega a 100 y comparte arquitectura de servicio con PACi NX.",
+        ),
+        (
+            "Confirme que la unidad es PK4R/PACi por etiqueta y mando.",
+            "Use el método de lectura CZ-RTC compatible.",
+            "Abra la interpretación PACi del código y sus pruebas.",
+            "No aplique un procedimiento RAC por coincidencia de letras.",
+        ),
+        "PACI_WALL",
+        "59",
+        system_type="PACi NX mural R32",
+        unit_scope="indoor",
+    ),
+    tv(
+        17,
+        "ECOi 3 tubos — diferenciar sonda abierta de sonda desprendida",
+        "Códigos F04/F05/F22 o H05/H15/H25 en una exterior MF1.",
+        "No sustituir una sonda eléctricamente correcta que solo ha perdido contacto térmico.",
+        "F04/F05/F22 se declaran por circuito abierto/corto o temperatura imposible; H05/H15/H25 detectan que la descarga no cambia como debería con el compresor.",
+        (
+            "La sonda puede medir correctamente en ohmios y estar fuera del tubo.",
+            "El contacto térmico y el aislamiento influyen en la lectura.",
+            "Compare evolución de los tres compresores desde el monitor.",
+        ),
+        (
+            "Mida resistencia y continuidad con la alimentación cortada.",
+            "Inspeccione inserción, fijación y aislamiento sobre la tubería.",
+            "Compare tendencia de descarga con compresor en marcha y parado.",
+            "Sustituya solo después de separar sonda, montaje y placa.",
+        ),
+        "ECOI_3WAY",
+        "5-12",
+        "5-18",
+        system_type="ECOi 3 tubos",
+        unit_scope="outdoor",
+    ),
+    tv(
+        17,
+        "ECOi 3 tubos — F16 compara sensor y presostato de alta",
+        "Exterior muestra F16 aunque la presión medida no parezca extrema.",
+        "Distinguir transductor desviado, presostato, cableado o presión real.",
+        "F16 puede aparecer si actúa el presostato cuando el sensor indica 3,03 MPa o menos; el manual avisa de que no siempre es un sensor averiado.",
+        (
+            "Debe compararse manómetro, lectura electrónica y estado del presostato.",
+            "Un cierre real del presostato con lectura baja puede indicar incoherencia de señal.",
+            "Caudal y exceso de refrigerante también deben descartarse si la presión sí es alta.",
+        ),
+        (
+            "Conecte manómetro y lea alta desde el mando de mantenimiento.",
+            "Compruebe el estado eléctrico del presostato y el cableado.",
+            "Compare las tres señales durante funcionamiento estable.",
+            "Decida entre circuito frigorífico, sensor, presostato o PCB.",
+        ),
+        "ECOI_3WAY",
+        "5-15",
+        system_type="ECOi 3 tubos",
+        unit_scope="outdoor",
+    ),
+]
+
 
 def build_topics() -> list[dict[str, Any]]:
     topics: dict[int, dict[str, Any]] = {}
@@ -3352,21 +3803,21 @@ def main() -> int:
     ])
 
     coverage_notes = {
-        "errors": "RAC, multisplit, PACi y ECOi/VRF con interpretaciones repetidas separadas.",
-        "diagnostic_access": "CHECK inalámbrico, CZ-RTC2/5/6, display exterior y LED M/N.",
-        "history_reset": "Memoria RAC, cuatro alarmas CZ-RTC6 y rearme de protecciones.",
-        "service_modes": "Test Run, frío/calor forzado, pump down y desescarche.",
-        "configuration": "Simple/Detailed settings, EEPROM, sensores, presión estática y entradas.",
+        "errors": "RAC, multisplit, PACi, ECOi 2/3 tubos y VRF actual con interpretaciones repetidas separadas.",
+        "diagnostic_access": "CHECK inalámbrico, CZ-RTC2/5/6, mando de mantenimiento, display exterior y LED M/N.",
+        "history_reset": "Memoria RAC, CZ-RTC6 y ocho alarmas exteriores ECOi 3 tubos.",
+        "service_modes": "Test Run, frío/calor forzado, pump down, recuperación modular, respaldo y desescarche.",
+        "configuration": "Simple/Detailed settings, EEPROM, capacidad, refrigerante, sensores, presión estática y entradas.",
         "controllers_buses": "CZ-RTC2/5/6, R1/R2, Assigning, S-LINK y comunicación RAC.",
         "drainage_overflow": "P10/P11/P12, boya, bomba, 1/60 min y postdrenaje 0–60 min.",
         "commissioning": "Auto-address, direccionamiento manual, recuento y verificación sin reprogramar.",
         "multisplit": "Capacidad, correspondencia A–E, demanda compartida y H41.",
-        "vrf_network": "S-LINK 30–120 Ω, dos terminadores, módulos y alcance operativo.",
+        "vrf_network": "S-LINK 30–120 Ω, dos terminadores, módulos, respaldo y aislamiento R32 por zona.",
         "component_checks": "NTC, EEV, ventiladores DC, bomba, presión y monitorización.",
         "technical_values": "Curvas oficiales/calculadas, tensiones, resistencias, umbrales y tiempos.",
         "normal_states": "Retardos, desescarche, retorno de aceite, aire frío y postdrenaje.",
-        "service_tools_boards": "CONEX, H&C, Service Cloud, RCS-TM80BG y sustitución de PCB.",
-        "system_architecture": "RAC, multi, PACi, ECOi, R32 y códigos reutilizados.",
+        "service_tools_boards": "CONEX, H&C, Service Cloud, CZ-RTC2 de mantenimiento, EEPROM y sustitución de PCB.",
+        "system_architecture": "RAC, multi, PACi mural/conductos, ECOi 2/3 tubos, R32 y códigos reutilizados.",
     }
     write_json(WEB_DIR / "coverage.json", [
         {
@@ -3374,14 +3825,35 @@ def main() -> int:
             "brand_id": BRAND_ID,
             "area_slug": slug,
             "area_name": name,
-            "equipment_scope": "Panasonic — corpus Referencia V1",
-            "coverage_status": "reference_v1",
+            "equipment_scope": "Panasonic — corpus Referencia V2",
+            "coverage_status": "reference_v2_strong",
             "source_count": len(SOURCES),
             "notes": coverage_notes[slug],
             "last_reviewed": now[:10],
         }
         for category_id, slug, name, _ in CATEGORIES
     ])
+    write_json(WEB_DIR / "coverage_matrix.json", {
+        "brand": "Panasonic",
+        "release": "Referencia V2",
+        "coverage_basis": "Información completa respecto a los manuales oficiales enumerados; no se declara cobertura de todos los modelos fabricados.",
+        "families": [
+            {"family": "RAC/split", "status": "strong", "sources": ["PHAAM0810051C2", "PAPAMY1212045CE"]},
+            {"family": "Multisplit", "status": "strong", "sources": ["SM700885-00", "PAPAMY1505100CE"]},
+            {"family": "Cassette y PACi", "status": "strong", "sources": ["PAPAMY1503095CE", "PAPAMY2509044CE", "PAPAMY2308067CE", "PAPAMY2509043CE"]},
+            {"family": "ECOi 2 tubos", "status": "strong", "sources": ["SM830186-00", "W-2WAY-ECOI-SM"]},
+            {"family": "ECOi 3 tubos", "status": "strong", "sources": ["SM830188-00"]},
+            {"family": "VRF R32 actual", "status": "strong", "sources": ["U-8_24MS3H7-II-EN", "VRF-GEN-26-LR"]},
+            {"family": "Mandos y herramientas", "status": "strong", "sources": ["CZ-RTC2-OM-9L", "CZ-RTC5A-OM", "WEB-ACXF60-38393-EN", "CZ-RTC6-OM-EN", "EU-4P-CZ-RTC6-CONEX-20"]},
+        ],
+        "known_gaps": [
+            "No se extrapolan códigos a familias regionales o generaciones que no figuran en el corpus.",
+            "ECO G y determinadas generaciones Mini ECOi pueden añadir procedimientos no documentados aquí.",
+            "Los ajustes reservados a fábrica y documentos sin acceso público no se publican.",
+        ],
+        "counts": {"sources": len(SOURCES), "categories": len(CATEGORIES), "topics": len(topics), "variants": len(variant_map), "errors": len(error_indexes)},
+        "last_reviewed": now[:10],
+    })
 
     counts = {
         "categories": len(navigation_categories),
@@ -3395,11 +3867,11 @@ def main() -> int:
             "schema_name": "Super Tecnico",
             "navigation_model": "brand_category_topic_variant",
             "schema_version": "2.2.0",
-            "data_version": "1.0.0",
+            "data_version": "2.0.0",
             "last_update_utc": now,
             "reference_brand": "Panasonic",
             "verification_warning": (
-                "Completa respecto al corpus Panasonic Referencia V1. "
+                "Completa respecto al corpus oficial Panasonic Referencia V2; no equivale a todos los modelos de la marca. "
                 "Confirme siempre arquitectura, unidad que muestra el código y forma de indicación."
             ),
         },
@@ -3416,12 +3888,12 @@ def main() -> int:
         "publish_media": False,
         "static_site": True,
         "schema_version": "2.2.0",
-        "data_version": "1.0.0",
+        "data_version": "2.0.0",
         "exported_at_utc": now,
         "counts": counts,
         "notes": (
-            "Panasonic Referencia V1: RAC antiguo/actual, multisplit, cassette, "
-            "PACi, ECOi/VRF, CZ-RTC2/5/6, S-LINK, drenaje, servicio y componentes."
+            "Panasonic Referencia V2: RAC, multisplit, cassette, PACi mural/conductos, "
+            "ECOi 2/3 tubos, VRF R32, CZ-RTC2/5/6, respaldo, drenaje y servicio."
         ),
     }
     write_json(BRAND_DIR / "brand.json", brand)

@@ -90,16 +90,16 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(brands["gree"]["counts"], {
             "categories": 15,
             "topics": 22,
-            "variants": 68,
-            "errors": 159,
-            "search_entries": 227,
+            "variants": 81,
+            "errors": 179,
+            "search_entries": 260,
         })
         self.assertEqual(brands["panasonic"]["counts"], {
             "categories": 15,
             "topics": 25,
-            "variants": 94,
-            "errors": 126,
-            "search_entries": 220,
+            "variants": 108,
+            "errors": 127,
+            "search_entries": 235,
         })
 
     def test_search_examples_are_present(self):
@@ -158,15 +158,19 @@ class StaticSiteTests(unittest.TestCase):
             "Commissioning Tool MC40-00/B",
             "A8 24 h",
             "15k NTC 1.65 V",
+            "U-Match E3 tres estados",
+            "FLEXX ULTRA FE EA",
+            "FLEXX IPM PFC 0.3 0.7",
+            "sensor presion 30 segundos",
         ):
             with self.subTest(brand="gree", query=query):
                 self.assertTrue(contains_query(gree_entries, query))
 
         gree_errors = load(self.gree_web / "errors" / "index.json")
-        self.assertEqual(len(gree_errors), 159)
+        self.assertEqual(len(gree_errors), 179)
         self.assertTrue({
             "A2", "A8", "C0", "C5", "dH", "E6", "E9", "F0", "H5",
-            "L3", "P8", "U7",
+            "L3", "P8", "U7", "FE", "EH", "CA", "Cb", "LE",
         }.issubset({item["code_display"] for item in gree_errors}))
 
         panasonic_entries = load(self.panasonic_web / "search.json")
@@ -186,15 +190,21 @@ class StaticSiteTests(unittest.TestCase):
             "bomba 0001 0060",
             "H&C Diagnosis",
             "J07 R32",
+            "respaldo automatico CHECK",
+            "CV6231785082",
+            "ocho alarmas exteriores",
+            "item 80 item 81",
+            "F16 3.03 MPa",
+            "zona tres minutos Thermo Off",
         ):
             with self.subTest(brand="panasonic", query=query):
                 self.assertTrue(contains_query(panasonic_entries, query))
 
         panasonic_errors = load(self.panasonic_web / "errors" / "index.json")
-        self.assertEqual(len(panasonic_errors), 126)
+        self.assertEqual(len(panasonic_errors), 127)
         self.assertTrue({
             "E01", "E04", "H11", "H12", "H21", "P04", "P10", "P12",
-            "F29", "F31", "J07", "J08",
+            "F29", "F31", "J07", "J08", "CHECK",
         }.issubset({item["code_display"] for item in panasonic_errors}))
 
         self.assertTrue({
@@ -420,24 +430,26 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse(any(brand.rglob("*.db")))
         self.assertFalse(any(brand.rglob("*.sqlite")))
 
-    def test_gree_reference_v1_quality_and_traceability(self):
+    def test_gree_reference_v2_quality_and_traceability(self):
         brand = ROOT / "data" / "brands" / "gree"
         expected = audit_brand(brand)
         actual = load(brand / "web" / "quality.json")
         self.assertEqual(actual, expected)
-        self.assertEqual(actual["errors"]["entries"], 159)
-        self.assertEqual(actual["errors"]["interpretations"], 192)
-        self.assertEqual(actual["errors"]["status_counts"], {"complete": 192})
-        self.assertEqual(actual["technical_variants"]["entries"], 68)
-        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 68})
+        self.assertEqual(actual["errors"]["entries"], 179)
+        self.assertEqual(actual["errors"]["interpretations"], 225)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 225})
+        self.assertEqual(actual["technical_variants"]["entries"], 81)
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 81})
 
         sources = load(brand / "web" / "sources.json")
-        self.assertEqual(len(sources), 12)
+        self.assertEqual(len(sources), 16)
         self.assertTrue(all(source["status"] == "reviewed" for source in sources))
         self.assertTrue({
             "ENVO-R32-SM-A", "LIVO-GEN3-SM-230V-A", "VIREO-GEN3-SM-A",
             "SLIM-DUCT-SM-A", "GMV5-MINI-HP-SM", "GMV5-IDU-SM",
             "GMV6-UH-MINI-SM", "XK19-TPG", "XK46-OM", "XK62-XK79-OM",
+            "U-MATCH-PLUS-SM-B", "GREE-FLEXX-INDOOR-OUTDOOR-SM-092821",
+            "GC202301-I", "GC202406-I",
         }.issubset({source["document_ref"] for source in sources}))
 
         interpretations = []
@@ -488,25 +500,27 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse(any(brand.rglob("*.db")))
         self.assertFalse(any(brand.rglob("*.sqlite")))
 
-    def test_panasonic_reference_v1_quality_and_traceability(self):
+    def test_panasonic_reference_v2_quality_and_traceability(self):
         brand = ROOT / "data" / "brands" / "panasonic"
         expected = audit_brand(brand)
         actual = load(brand / "web" / "quality.json")
         self.assertEqual(actual, expected)
-        self.assertEqual(actual["errors"]["entries"], 126)
-        self.assertEqual(actual["errors"]["interpretations"], 142)
-        self.assertEqual(actual["errors"]["status_counts"], {"complete": 142})
-        self.assertEqual(actual["technical_variants"]["entries"], 94)
-        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 94})
+        self.assertEqual(actual["errors"]["entries"], 127)
+        self.assertEqual(actual["errors"]["interpretations"], 183)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 183})
+        self.assertEqual(actual["technical_variants"]["entries"], 108)
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 108})
 
         sources = load(brand / "web" / "sources.json")
-        self.assertEqual(len(sources), 17)
+        self.assertEqual(len(sources), 21)
         self.assertTrue(all(source["status"] == "reviewed" for source in sources))
         self.assertTrue({
             "PAPAMY1212045CE", "SM700885-00", "PAPAMY1505100CE",
             "PAPAMY2509044CE", "ECOI-VRF-CODE-GUIDE", "SM830186-00",
             "W-2WAY-ECOI-SM", "U-8_24MS3H7-II-EN",
             "WEB-ACXF60-38393-EN", "EU-4P-CZ-RTC6-CONEX-20",
+            "SM830188-00", "CZ-RTC2-OM-9L", "PAPAMY2509043CE",
+            "VRF-GEN-26-LR",
         }.issubset({source["document_ref"] for source in sources}))
 
         interpretations = []
@@ -519,6 +533,30 @@ class StaticSiteTests(unittest.TestCase):
             and any(source.get("page_start") for source in interpretation["sources"])
             for interpretation in interpretations
         ))
+
+    def test_gree_and_panasonic_v2_publish_honest_coverage_matrices(self):
+        for slug, expected_sources in (("gree", 16), ("panasonic", 21)):
+            with self.subTest(brand=slug):
+                brand = ROOT / "data" / "brands" / slug
+                config = load(brand / "brand.json")
+                navigation = load(brand / "web" / "navigation.json")
+                matrix = load(brand / "web" / "coverage_matrix.json")
+                coverage = load(brand / "web" / "coverage.json")
+
+                self.assertEqual(config["data_version"], "2.0.0")
+                self.assertEqual(navigation["metadata"]["data_version"], "2.0.0")
+                self.assertEqual(matrix["counts"]["sources"], expected_sources)
+                self.assertTrue(matrix["known_gaps"])
+                self.assertIn("no se declara cobertura", matrix["coverage_basis"].lower())
+                self.assertTrue(all(
+                    item["coverage_status"] == "reference_v2_strong"
+                    for item in coverage
+                ))
+                self.assertTrue(all(
+                    family["status"] == "strong"
+                    and family["sources"]
+                    for family in matrix["families"]
+                ))
 
     def test_panasonic_repeated_codes_and_service_procedures_are_separated(self):
         brand = ROOT / "data" / "brands" / "panasonic"
