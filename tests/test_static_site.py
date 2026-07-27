@@ -30,7 +30,12 @@ def normalized(value: str) -> str:
 
 def contains_query(entries: list[dict], query: str) -> bool:
     tokens = normalized(query).split()
-    return any(all(token in str(item.get("haystack", "")) for token in tokens) for item in entries)
+    for item in entries:
+        haystack = str(item.get("haystack", ""))
+        compact = haystack.replace(" ", "")
+        if all(token in haystack or token in compact for token in tokens):
+            return True
+    return False
 
 
 class StaticSiteTests(unittest.TestCase):
@@ -45,6 +50,10 @@ class StaticSiteTests(unittest.TestCase):
         cls.daikin_web = cls.daikin / "web"
         cls.mitsubishi = cls.dist / "data" / "brands" / "mitsubishi-electric"
         cls.mitsubishi_web = cls.mitsubishi / "web"
+        cls.gree = cls.dist / "data" / "brands" / "gree"
+        cls.gree_web = cls.gree / "web"
+        cls.panasonic = cls.dist / "data" / "brands" / "panasonic"
+        cls.panasonic_web = cls.panasonic / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -53,7 +62,10 @@ class StaticSiteTests(unittest.TestCase):
     def test_expected_counts(self):
         manifest = load(self.dist / "data" / "brands" / "index.json")
         brands = {item["slug"]: item for item in manifest["brands"]}
-        self.assertEqual(set(brands), {"daikin", "fujitsu-general", "mitsubishi-electric"})
+        self.assertEqual(
+            set(brands),
+            {"daikin", "fujitsu-general", "gree", "mitsubishi-electric", "panasonic"},
+        )
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
             "topics": 39,
@@ -74,6 +86,20 @@ class StaticSiteTests(unittest.TestCase):
             "variants": 56,
             "errors": 107,
             "search_entries": 163,
+        })
+        self.assertEqual(brands["gree"]["counts"], {
+            "categories": 15,
+            "topics": 22,
+            "variants": 81,
+            "errors": 179,
+            "search_entries": 260,
+        })
+        self.assertEqual(brands["panasonic"]["counts"], {
+            "categories": 15,
+            "topics": 25,
+            "variants": 108,
+            "errors": 127,
+            "search_entries": 235,
         })
 
     def test_search_examples_are_present(self):
@@ -117,6 +143,70 @@ class StaticSiteTests(unittest.TestCase):
 
         mitsubishi_errors = load(self.mitsubishi_web / "errors" / "index.json")
         self.assertEqual(len(mitsubishi_errors), 107)
+
+        gree_entries = load(self.gree_web / "search.json")
+        for query in (
+            "E9 8 segundos boya",
+            "COM N 56 VDC",
+            "A2 10 min",
+            "XK46 C01 3 segundos",
+            "n6 cinco",
+            "C9 120 h",
+            "NTC 20 25",
+            "IPM 0.3 0.7",
+            "n8 30 min",
+            "Commissioning Tool MC40-00/B",
+            "A8 24 h",
+            "15k NTC 1.65 V",
+            "U-Match E3 tres estados",
+            "FLEXX ULTRA FE EA",
+            "FLEXX IPM PFC 0.3 0.7",
+            "sensor presion 30 segundos",
+        ):
+            with self.subTest(brand="gree", query=query):
+                self.assertTrue(contains_query(gree_entries, query))
+
+        gree_errors = load(self.gree_web / "errors" / "index.json")
+        self.assertEqual(len(gree_errors), 179)
+        self.assertTrue({
+            "A2", "A8", "C0", "C5", "dH", "E6", "E9", "F0", "H5",
+            "L3", "P8", "U7", "FE", "EH", "CA", "Cb", "LE",
+        }.issubset({item["code_display"] for item in gree_errors}))
+
+        panasonic_entries = load(self.panasonic_web / "search.json")
+        for query in (
+            "H11 12 A 30 segundos",
+            "H11 comunicacion",
+            "P10 boya",
+            "CZ-RTC6 R1 R2 500 m",
+            "Assigning 10 min",
+            "S-LINK 30 120 ohm",
+            "Test Run 60 min",
+            "pump down",
+            "EEV 46 4 ohm",
+            "ventilador 280 VDC",
+            "NTC 20k Beta 3950",
+            "P04 3.3 2.6 MPa",
+            "bomba 0001 0060",
+            "H&C Diagnosis",
+            "J07 R32",
+            "respaldo automatico CHECK",
+            "CV6231785082",
+            "ocho alarmas exteriores",
+            "item 80 item 81",
+            "F16 3.03 MPa",
+            "zona tres minutos Thermo Off",
+        ):
+            with self.subTest(brand="panasonic", query=query):
+                self.assertTrue(contains_query(panasonic_entries, query))
+
+        panasonic_errors = load(self.panasonic_web / "errors" / "index.json")
+        self.assertEqual(len(panasonic_errors), 127)
+        self.assertTrue({
+            "E01", "E04", "H11", "H12", "H21", "P04", "P10", "P12",
+            "F29", "F31", "J07", "J08", "CHECK",
+        }.issubset({item["code_display"] for item in panasonic_errors}))
+
         self.assertTrue({
             "P5", "PA", "E6", "U2", "0403", "1102", "1302", "4250",
             "5101", "6607", "6832", "7102", "POWER ×11",
@@ -126,6 +216,8 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse((self.brand / "media").exists())
         self.assertFalse((self.daikin / "media").exists())
         self.assertFalse((self.mitsubishi / "media").exists())
+        self.assertFalse((self.gree / "media").exists())
+        self.assertFalse((self.panasonic / "media").exists())
         self.assertEqual(self.report["checks"]["media_files"], 0)
         self.assertGreaterEqual(self.report["checks"]["media_references_removed"], 26)
 
@@ -133,6 +225,8 @@ class StaticSiteTests(unittest.TestCase):
             list(self.web.rglob("*.json"))
             + list(self.daikin_web.rglob("*.json"))
             + list(self.mitsubishi_web.rglob("*.json"))
+            + list(self.gree_web.rglob("*.json"))
+            + list(self.panasonic_web.rglob("*.json"))
         ):
             data = load(path)
             pending = [data]
@@ -321,6 +415,172 @@ class StaticSiteTests(unittest.TestCase):
             "MXZ de 3–6 conexiones — botón SW871",
             "Alcance de parada: interior frente a BC/exterior",
             "M-NET — forma de onda, ruido y pantalla",
+        }.issubset(titles))
+        self.assertTrue(all(
+            variant["steps"]
+            and variant["sections"]
+            and variant["media"] == []
+            and any(source.get("page_start") for source in variant["sources"])
+            for variant in variants
+        ))
+
+        public_text = "\n".join(path.read_text(encoding="utf-8") for path in brand.rglob("*.json"))
+        self.assertNotIn("tmp/pdfs", public_text)
+        self.assertFalse(any(brand.rglob("*.pdf")))
+        self.assertFalse(any(brand.rglob("*.db")))
+        self.assertFalse(any(brand.rglob("*.sqlite")))
+
+    def test_gree_reference_v2_quality_and_traceability(self):
+        brand = ROOT / "data" / "brands" / "gree"
+        expected = audit_brand(brand)
+        actual = load(brand / "web" / "quality.json")
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual["errors"]["entries"], 179)
+        self.assertEqual(actual["errors"]["interpretations"], 225)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 225})
+        self.assertEqual(actual["technical_variants"]["entries"], 81)
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 81})
+
+        sources = load(brand / "web" / "sources.json")
+        self.assertEqual(len(sources), 16)
+        self.assertTrue(all(source["status"] == "reviewed" for source in sources))
+        self.assertTrue({
+            "ENVO-R32-SM-A", "LIVO-GEN3-SM-230V-A", "VIREO-GEN3-SM-A",
+            "SLIM-DUCT-SM-A", "GMV5-MINI-HP-SM", "GMV5-IDU-SM",
+            "GMV6-UH-MINI-SM", "XK19-TPG", "XK46-OM", "XK62-XK79-OM",
+            "U-MATCH-PLUS-SM-B", "GREE-FLEXX-INDOOR-OUTDOOR-SM-092821",
+            "GC202301-I", "GC202406-I",
+        }.issubset({source["document_ref"] for source in sources}))
+
+        interpretations = []
+        for path in (brand / "web" / "errors" / "details").glob("*.json"):
+            interpretations.extend(load(path)["interpretations"])
+        self.assertTrue(all(
+            {"cause", "check", "machine_behavior"}.issubset(
+                {item["item_type"] for item in interpretation["info_items"]}
+            )
+            and any(source.get("page_start") for source in interpretation["sources"])
+            for interpretation in interpretations
+        ))
+
+    def test_gree_repeated_codes_and_service_procedures_are_separated(self):
+        brand = ROOT / "data" / "brands" / "gree"
+        web = brand / "web"
+        errors = {item["code_display"]: item for item in load(web / "errors" / "index.json")}
+        self.assertGreaterEqual(errors["E9"]["interpretation_count"], 2)
+        self.assertGreaterEqual(errors["C5"]["interpretation_count"], 2)
+        self.assertGreaterEqual(errors["F0"]["interpretation_count"], 2)
+        self.assertGreaterEqual(errors["H5"]["interpretation_count"], 2)
+        self.assertGreaterEqual(errors["L3"]["interpretation_count"], 2)
+
+        topics = [load(path) for path in (web / "topics").glob("*.json")]
+        variants = [variant for topic in topics for variant in topic["variants"]]
+        titles = {variant["title"] for variant in variants}
+        self.assertTrue({
+            "XK46 — localizar interior y leer errores con C01",
+            "GMV6 — consultar las cinco últimas averías con n6",
+            "Split inverter — diagnóstico COM–N (~56 VDC)",
+            "GMV6 — A2 recuperación desde tuberías interiores",
+            "GMV6 — C9 emergencia de un ventilador",
+            "Cassette R32 — E9 tras 8 s de boya abierta",
+            "Sistema modular — aislar un módulo exterior averiado",
+            "GMV6 — prueba de diodos del IPM",
+        }.issubset(titles))
+        self.assertTrue(all(
+            variant["steps"]
+            and variant["sections"]
+            and variant["media"] == []
+            and any(source.get("page_start") for source in variant["sources"])
+            for variant in variants
+        ))
+
+        public_text = "\n".join(path.read_text(encoding="utf-8") for path in brand.rglob("*.json"))
+        self.assertNotIn("tmp/pdfs", public_text)
+        self.assertFalse(any(brand.rglob("*.pdf")))
+        self.assertFalse(any(brand.rglob("*.db")))
+        self.assertFalse(any(brand.rglob("*.sqlite")))
+
+    def test_panasonic_reference_v2_quality_and_traceability(self):
+        brand = ROOT / "data" / "brands" / "panasonic"
+        expected = audit_brand(brand)
+        actual = load(brand / "web" / "quality.json")
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual["errors"]["entries"], 127)
+        self.assertEqual(actual["errors"]["interpretations"], 183)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 183})
+        self.assertEqual(actual["technical_variants"]["entries"], 108)
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 108})
+
+        sources = load(brand / "web" / "sources.json")
+        self.assertEqual(len(sources), 21)
+        self.assertTrue(all(source["status"] == "reviewed" for source in sources))
+        self.assertTrue({
+            "PAPAMY1212045CE", "SM700885-00", "PAPAMY1505100CE",
+            "PAPAMY2509044CE", "ECOI-VRF-CODE-GUIDE", "SM830186-00",
+            "W-2WAY-ECOI-SM", "U-8_24MS3H7-II-EN",
+            "WEB-ACXF60-38393-EN", "EU-4P-CZ-RTC6-CONEX-20",
+            "SM830188-00", "CZ-RTC2-OM-9L", "PAPAMY2509043CE",
+            "VRF-GEN-26-LR",
+        }.issubset({source["document_ref"] for source in sources}))
+
+        interpretations = []
+        for path in (brand / "web" / "errors" / "details").glob("*.json"):
+            interpretations.extend(load(path)["interpretations"])
+        self.assertTrue(all(
+            {"cause", "check", "machine_behavior"}.issubset(
+                {item["item_type"] for item in interpretation["info_items"]}
+            )
+            and any(source.get("page_start") for source in interpretation["sources"])
+            for interpretation in interpretations
+        ))
+
+    def test_gree_and_panasonic_v2_publish_honest_coverage_matrices(self):
+        for slug, expected_sources in (("gree", 16), ("panasonic", 21)):
+            with self.subTest(brand=slug):
+                brand = ROOT / "data" / "brands" / slug
+                config = load(brand / "brand.json")
+                navigation = load(brand / "web" / "navigation.json")
+                matrix = load(brand / "web" / "coverage_matrix.json")
+                coverage = load(brand / "web" / "coverage.json")
+
+                self.assertEqual(config["data_version"], "2.0.0")
+                self.assertEqual(navigation["metadata"]["data_version"], "2.0.0")
+                self.assertEqual(matrix["counts"]["sources"], expected_sources)
+                self.assertTrue(matrix["known_gaps"])
+                self.assertIn("no se declara cobertura", matrix["coverage_basis"].lower())
+                self.assertTrue(all(
+                    item["coverage_status"] == "reference_v2_strong"
+                    for item in coverage
+                ))
+                self.assertTrue(all(
+                    family["status"] == "strong"
+                    and family["sources"]
+                    for family in matrix["families"]
+                ))
+
+    def test_panasonic_repeated_codes_and_service_procedures_are_separated(self):
+        brand = ROOT / "data" / "brands" / "panasonic"
+        web = brand / "web"
+        errors = {item["code_display"]: item for item in load(web / "errors" / "index.json")}
+        self.assertGreaterEqual(errors["H11"]["interpretation_count"], 3)
+        self.assertGreaterEqual(errors["H12"]["interpretation_count"], 3)
+        self.assertGreaterEqual(errors["H21"]["interpretation_count"], 2)
+        self.assertGreaterEqual(errors["P10"]["interpretation_count"], 2)
+        self.assertGreaterEqual(errors["P12"]["interpretation_count"], 2)
+
+        topics = [load(path) for path in (web / "topics").glob("*.json")]
+        variants = [variant for topic in topics for variant in topic["variants"]]
+        titles = {variant["title"] for variant in variants}
+        self.assertTrue({
+            "Mando inalámbrico RAC — localizar el código con CHECK",
+            "CZ-RTC6 — últimas cuatro alarmas y Sensor info",
+            "ECOi actual — decodificar LED1 M y LED2 N",
+            "CZ-RTC6 — bus R1/R2 de dos hilos sin polaridad",
+            "S-LINK — resistencia de línea con alimentación cortada",
+            "CZ-RTC6 — Test Run desde Maintenance func",
+            "PACi — forzar bomba 1 minuto o funcionamiento continuo",
+            "Multisplit — comprobar EEV: 46 ±4 Ω a 20 °C",
+            "Códigos repetidos — H11, H12, H21, P10 y P12",
         }.issubset(titles))
         self.assertTrue(all(
             variant["steps"]
