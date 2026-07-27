@@ -54,6 +54,8 @@ class StaticSiteTests(unittest.TestCase):
         cls.gree_web = cls.gree / "web"
         cls.panasonic = cls.dist / "data" / "brands" / "panasonic"
         cls.panasonic_web = cls.panasonic / "web"
+        cls.midea = cls.dist / "data" / "brands" / "midea"
+        cls.midea_web = cls.midea / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -64,7 +66,7 @@ class StaticSiteTests(unittest.TestCase):
         brands = {item["slug"]: item for item in manifest["brands"]}
         self.assertEqual(
             set(brands),
-            {"daikin", "fujitsu-general", "gree", "mitsubishi-electric", "panasonic"},
+            {"daikin", "fujitsu-general", "gree", "midea", "mitsubishi-electric", "panasonic"},
         )
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
@@ -100,6 +102,13 @@ class StaticSiteTests(unittest.TestCase):
             "variants": 108,
             "errors": 127,
             "search_entries": 235,
+        })
+        self.assertEqual(brands["midea"]["counts"], {
+            "categories": 15,
+            "topics": 24,
+            "variants": 85,
+            "errors": 221,
+            "search_entries": 306,
         })
 
     def test_search_examples_are_present(self):
@@ -212,12 +221,41 @@ class StaticSiteTests(unittest.TestCase):
             "5101", "6607", "6832", "7102", "POWER ×11",
         }.issubset({item["code_display"] for item in mitsubishi_errors}))
 
+        midea_entries = load(self.midea_web / "search.json")
+        for query in (
+            "A11 fuga R454B ventilador maxima",
+            "WDC-120T2 10 fallos",
+            "ON OFF velocidad 7 s",
+            "X1 X2 200 m",
+            "3 min 30 s",
+            "cassette boya 3 min calor",
+            "b36 5 min",
+            "P Q E 0,75 1200 m",
+            "System Test 240 minutos",
+            "n1-2-0 pump down",
+            "PC03 4,4 0,13 MPa",
+            "24V 12V 5V 3,3V",
+            "d51 presion estatica 3 7 min",
+            "d72 respaldo 7 dias",
+            "bus DC 277 410",
+        ):
+            with self.subTest(brand="midea", query=query):
+                self.assertTrue(contains_query(midea_entries, query))
+
+        midea_errors = load(self.midea_web / "errors" / "index.json")
+        self.assertEqual(len(midea_errors), 221)
+        self.assertTrue({
+            "A01", "A11", "C21", "C51", "b36", "EH0E", "EL01",
+            "PC03", "PC0L", "U3A", "1L46", "d51", "d72",
+        }.issubset({item["code_display"] for item in midea_errors}))
+
     def test_media_is_not_published_or_referenced(self):
         self.assertFalse((self.brand / "media").exists())
         self.assertFalse((self.daikin / "media").exists())
         self.assertFalse((self.mitsubishi / "media").exists())
         self.assertFalse((self.gree / "media").exists())
         self.assertFalse((self.panasonic / "media").exists())
+        self.assertFalse((self.midea / "media").exists())
         self.assertEqual(self.report["checks"]["media_files"], 0)
         self.assertGreaterEqual(self.report["checks"]["media_references_removed"], 26)
 
@@ -227,6 +265,7 @@ class StaticSiteTests(unittest.TestCase):
             + list(self.mitsubishi_web.rglob("*.json"))
             + list(self.gree_web.rglob("*.json"))
             + list(self.panasonic_web.rglob("*.json"))
+            + list(self.midea_web.rglob("*.json"))
         ):
             data = load(path)
             pending = [data]
@@ -592,6 +631,70 @@ class StaticSiteTests(unittest.TestCase):
 
         public_text = "\n".join(path.read_text(encoding="utf-8") for path in brand.rglob("*.json"))
         self.assertNotIn("tmp/pdfs", public_text)
+        self.assertFalse(any(brand.rglob("*.pdf")))
+        self.assertFalse(any(brand.rglob("*.db")))
+        self.assertFalse(any(brand.rglob("*.sqlite")))
+
+    def test_midea_reference_v1_quality_and_traceability(self):
+        brand = ROOT / "data" / "brands" / "midea"
+        expected = audit_brand(brand)
+        actual = load(brand / "web" / "quality.json")
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual["errors"]["entries"], 221)
+        self.assertEqual(actual["errors"]["interpretations"], 224)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 224})
+        self.assertEqual(actual["technical_variants"]["entries"], 85)
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 85})
+
+        sources = load(brand / "web" / "sources.json")
+        self.assertEqual(len(sources), 11)
+        self.assertTrue(all(source["status"] == "reviewed" for source in sources))
+        self.assertTrue({
+            "SM-MIDEA-R454B-ATOMX-V2", "MIDEA-VRF-IDU-R454B-V5",
+            "WDC-120T2-V1", "SM-AG11-R410A-3D-INV-220628",
+            "SM-DLFSOAH", "SM-DLCMRHB", "MIDEA-V6-I-SERIES-IM",
+            "MCAC-UTSM-201501",
+        }.issubset({source["document_ref"] for source in sources}))
+
+        interpretations = []
+        for path in (brand / "web" / "errors" / "details").glob("*.json"):
+            interpretations.extend(load(path)["interpretations"])
+        self.assertTrue(all(
+            {"cause", "check", "machine_behavior"}.issubset(
+                {item["item_type"] for item in interpretation["info_items"]}
+            )
+            and any(source.get("page_start") for source in interpretation["sources"])
+            for interpretation in interpretations
+        ))
+
+        errors = {item["code_display"]: item for item in load(brand / "web" / "errors" / "index.json")}
+        self.assertGreaterEqual(errors["C21"]["interpretation_count"], 2)
+        self.assertGreaterEqual(errors["P52"]["interpretation_count"], 2)
+
+        topics = [load(path) for path in (brand / "web" / "topics").glob("*.json")]
+        variants = [variant for topic in topics for variant in topic["variants"]]
+        titles = {variant["title"] for variant in variants}
+        self.assertTrue({
+            "WDC-120T2 — registro de diez fallos",
+            "Split mural — modo ingeniero del mando inalámbrico",
+            "AtomX — Cooling System Test",
+            "A11 — comportamiento automático por fuga",
+            "Cassette de una vía — secuencia en calefacción",
+            "Cassette de una vía — secuencia en refrigeración",
+            "V6 — bus P/Q/E",
+            "AtomX — fuentes auxiliares de placa",
+            "Conductos — detección automática de presión estática",
+        }.issubset(titles))
+        self.assertTrue(all(
+            variant["steps"]
+            and variant["sections"]
+            and variant["media"] == []
+            and any(source.get("page_start") for source in variant["sources"])
+            for variant in variants
+        ))
+
+        public_text = "\n".join(path.read_text(encoding="utf-8") for path in brand.rglob("*.json"))
+        self.assertNotIn("C:\\tmp", public_text)
         self.assertFalse(any(brand.rglob("*.pdf")))
         self.assertFalse(any(brand.rglob("*.db")))
         self.assertFalse(any(brand.rglob("*.sqlite")))
