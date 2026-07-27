@@ -6,13 +6,13 @@
   <meta name="description" content="Biblioteca técnica Super Técnico para consulta de errores, programación, modos de servicio y valores técnicos.">
   <meta name="theme-color" content="#0e3e5a">
   <title>Super Técnico</title>
-  <link rel="stylesheet" href="assets/styles.css?v=4">
+  <link rel="stylesheet" href="assets/styles.css?v=5">
 </head>
 <body>
 <header class="site-header">
   <div class="brand-heading">
     <h1>Super Técnico</h1>
-    <p>Biblioteca técnica de intervención</p>
+    <p>Guía técnica de intervención</p>
   </div>
   <div class="header-actions">
     <button id="homeButton" class="secondary-button" type="button">Inicio</button>
@@ -23,16 +23,31 @@
 <main class="app-shell">
   <section class="brand-panel" aria-label="Marca activa">
     <div class="field brand-field">
-      <label for="brandSelect">Marca</label>
+      <label for="brandSelect"><span class="step-label">Paso 1</span>Selecciona la marca</label>
       <select id="brandSelect"><option value="">Cargando…</option></select>
     </div>
-    <div class="brand-status" id="brandStatus">Cargando biblioteca…</div>
+    <div class="brand-status" id="brandStatus">Cargando información técnica…</div>
   </section>
+
+  <section id="quickAccessPanel" class="quick-access-panel" aria-label="Consulta rápida">
+    <div class="loading">Preparando accesos rápidos…</div>
+  </section>
+
+  <section class="resource-strip" aria-label="Recursos técnicos">
+    <div class="resource-copy">
+      <span class="step-label">Recurso técnico</span>
+      <h2>Libro Gree y Midea</h2>
+      <p>Esquemas y documentación de reparación · edición española de consulta.</p>
+    </div>
+    <span class="resource-status" title="El acceso se definirá después de estudiar su comercialización">Próximamente · acceso por definir</span>
+  </section>
+
+  <aside class="ad-slot ad-slot-home" data-ad-placement="home" aria-label="Publicidad" hidden></aside>
 
   <section class="search-panel search-hero" aria-label="Búsqueda global">
     <div class="search-heading">
-      <h2>¿Qué necesitas consultar?</h2>
-      <p>Escribe un código, componente o procedimiento. No hace falta conocer el nombre exacto.</p>
+      <h2>¿No encuentras el apartado?</h2>
+      <p>Busca por código, componente, síntoma o procedimiento. No hace falta conocer el nombre exacto.</p>
     </div>
     <form id="globalSearchForm">
       <label class="sr-only" for="globalSearch">Buscar en toda la marca</label>
@@ -50,7 +65,7 @@
   </section>
 
   <details class="menu-navigation">
-    <summary>Navegar por menús</summary>
+    <summary>Explorar por categoría y tema</summary>
     <section class="control-panel" aria-label="Navegación técnica">
       <div class="field">
         <label for="categorySelect">Categoría</label>
@@ -71,6 +86,7 @@
       <p>La información aparece por temas y variantes. Los procedimientos, tablas, advertencias y fuentes permanecen plegados hasta abrirlos.</p>
     </div>
   </section>
+  <aside class="ad-slot ad-slot-after-content" data-ad-placement="after-content" aria-label="Publicidad" hidden></aside>
 </main>
 
 <dialog id="imageDialog" class="image-dialog">
@@ -79,6 +95,6 @@
   <p id="dialogCaption"></p>
 </dialog>
 
-  <script src="assets/app.js?v=5" defer></script>
+  <script src="assets/app.js?v=7" defer></script>
 </body>
 </html>

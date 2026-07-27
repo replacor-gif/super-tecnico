@@ -306,22 +306,33 @@ class StaticSiteTests(unittest.TestCase):
 
         for marker in (
             'id="homeButton"', 'id="brandStatus"', 'class="menu-navigation"',
+            'id="quickAccessPanel"', 'Selecciona la marca',
+            'class="resource-strip"', 'Libro Gree y Midea',
+            'Próximamente · acceso por definir',
+            'data-ad-placement="home"', 'data-ad-placement="after-content"',
             'data-quick-query="sacar códigos"', 'data-quick-query="mando 2 hilos"',
         ):
             self.assertIn(marker, html)
         for marker in (
-            "renderBrandDashboard", "rememberRecent", "data-open-category",
-            "Consultado recientemente", "Elige lo que necesitas",
+            "renderBrandDashboard", "renderQuickAccess", "rememberRecent", "data-open-category",
+            "Consultado recientemente", "¿Qué necesitas hacer?",
+            "quickErrorSelect", "errorCatalogSelect", "errorCatalogOptions",
+            "No se ha eliminado información.", "todos los temas, errores, procedimientos",
             "machine_behavior", "Cómo reconocerlo", "En frío o deshumidificación",
         ):
             self.assertIn(marker, script)
         self.assertNotIn("await selectCategory(remembered)", script)
-        for marker in (".category-grid", ".category-card", ".quick-actions", ".recent-panel", ".info-priority"):
+        for marker in (
+            ".category-grid", ".category-card", ".quick-actions", ".recent-panel",
+            ".info-priority", ".quick-error-form", ".task-grid", ".library-explorer",
+            ".resource-strip", ".ad-slot[hidden]",
+        ):
             self.assertIn(marker, styles)
 
     def test_error_finder_explains_current_coverage(self):
         script = (self.dist / "assets" / "app.js").read_text(encoding="utf-8")
-        self.assertIn("Ver códigos disponibles", script)
+        self.assertIn("O elegir de la lista completa", script)
+        self.assertIn("Selecciona un código de error", script)
         self.assertIn("todavía no está incluido en la base", script)
         self.assertIn("no puede mostrar una ficha que aún no se ha cargado", script)
         self.assertIn("limit:500", script)

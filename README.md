@@ -1,6 +1,6 @@
 # Super Técnico
 
-Biblioteca técnica estática para consulta por marca, categoría, tema y variante. La publicación prevista es:
+Guía técnica estática para consulta por marca, código, categoría, tema y variante. La publicación prevista es:
 
 `https://replacor-gif.github.io/super-tecnico/`
 
@@ -56,6 +56,27 @@ En el repositorio, seleccionar **Settings → Pages → Source: GitHub Actions**
 ## Integración con REPLACOR
 
 En IONOS MyWebsite Now, crear un elemento de navegación llamado **Super Técnico** y enlazarlo a la dirección de GitHub Pages. La aplicación se abre como página independiente; no utiliza iframe ni subdominio.
+
+## Libro técnico
+
+La portada incorpora un acceso reservado para:
+
+**Gree y Midea: esquemas y documentación de reparación — edición española de consulta.**
+
+El libro no se publica ni se incorpora al repositorio. El bloque se mantiene como presentación de un futuro producto técnico y el acceso se definirá después de estudiar su comercialización, precio, entrega y protección. Nunca debe enlazarse directamente el archivo PDF desde la versión pública de GitHub Pages.
+
+## Preparación para publicidad — edición 3
+
+La interfaz incluye dos contenedores publicitarios semánticos y ocultos: uno después de los accesos principales y otro al terminar el contenido técnico. No se carga ninguna red publicitaria, cookie ni rastreador en la versión actual.
+
+Antes de activarlos:
+
+1. Migrar la aplicación a un alojamiento apto para un proyecto comercial.
+2. Configurar privacidad, consentimiento y cookies según corresponda.
+3. Reservar dimensiones fijas para evitar saltos de pantalla.
+4. No insertar anuncios dentro de advertencias, procedimientos, tablas ni entre interpretaciones de un mismo error.
+
+GitHub Pages seguirá utilizándose para desarrollo y pruebas públicas. Sus condiciones indican que no está pensado como alojamiento gratuito para operar un negocio en línea o proporcionar software comercial como servicio: https://docs.github.com/es/pages/getting-started-with-github-pages/github-pages-limits
 
 ## Límites de esta versión
 

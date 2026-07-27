@@ -10,6 +10,7 @@ const els = {
   searchForm: document.getElementById('globalSearchForm'),
   search: document.getElementById('globalSearch'),
   brandStatus: document.getElementById('brandStatus'),
+  quickAccess: document.getElementById('quickAccessPanel'),
   homeButton: document.getElementById('homeButton'),
   coverageButton: document.getElementById('coverageButton'),
   imageDialog: document.getElementById('imageDialog'),
@@ -18,7 +19,16 @@ const els = {
   closeImageDialog: document.getElementById('closeImageDialog'),
 };
 
-const state = { brand: '', brandName: '', brandInfo: null, categories: [], category: null, topics: [], topic: null };
+const state = {
+  brand: '',
+  brandName: '',
+  brandInfo: null,
+  categories: [],
+  category: null,
+  topics: [],
+  topic: null,
+  errorCatalog: [],
+};
 const cache = new Map();
 const fileCache = new Map();
 const installedBrands = new Map();
@@ -212,6 +222,9 @@ async function api(action, params={}) {
 function loading(text='Cargando información…') { els.content.innerHTML = `<div class="loading">${esc(text)}</div>`; }
 function showError(error) { els.content.innerHTML = `<div class="error-message">${esc(error.message || error)}</div>`; }
 function setBreadcrumb(...items) { els.breadcrumb.innerHTML = items.filter(Boolean).map(x => `<span>${esc(x)}</span>`).join(''); }
+function revealResults() {
+  window.requestAnimationFrame(() => els.context.scrollIntoView({behavior:'smooth', block:'start'}));
+}
 function chip(text, className='') { return text ? `<span class="chip ${className}">${esc(text)}</span>` : ''; }
 function mediaUrl(path) {
   const segments = String(path || '').replace(/\\/g, '/').split('/').filter(Boolean);
@@ -250,6 +263,63 @@ function renderRecents() {
   return `<section class="recent-panel context-panel"><h2>Consultado recientemente</h2><div class="recent-list">${rows.map(row => `<button type="button" class="recent-link" ${row.type === 'error' ? `data-open-error="${row.id}"` : `data-open-variant="${row.id}"`}>${row.code ? `<span class="code-badge">${esc(row.code)}</span>` : ''}${esc(row.title)}</button>`).join('')}</div></section>`;
 }
 
+const primaryAccess = [
+  {slug:'errors', label:'Errores y protecciones', hint:'Seleccionar un código o consultar sus posibles significados', icon:'ERR'},
+  {slug:'diagnostic_access', label:'Obtener códigos', hint:'Mandos, displays, placas, historiales y subcódigos', icon:'COD'},
+  {slug:'service_modes', label:'Marchas forzadas y pruebas', hint:'Test Run, Pump Down y funciones de servicio', icon:'TEST'},
+  {slug:'configuration', label:'Programación y ajustes', hint:'Mandos, microinterruptores, parámetros y direcciones', icon:'CFG'},
+  {slug:'component_checks', label:'Comprobar componentes', hint:'Sondas, ventiladores, bombas, válvulas y electrónica', icon:'CMP'},
+  {slug:'technical_values', label:'Valores técnicos', hint:'Tensiones, resistencias, presiones y tablas', icon:'VAL'},
+];
+
+function errorCatalogOptions(catalog, placeholder='Selecciona un código de error') {
+  const rows = [...catalog].sort((a, b) => String(a.code_display || '').localeCompare(
+    String(b.code_display || ''), 'es', {numeric:true, sensitivity:'base'},
+  ));
+  return `<option value="">${esc(placeholder)}</option>${rows.map(item => {
+    const detail = Number(item.interpretation_count || 0) > 1
+      ? `${item.interpretation_count} posibles significados`
+      : (item.short_label || 'Código de error');
+    return `<option value="${item.id}">${esc(item.code_display)} — ${esc(detail)}</option>`;
+  }).join('')}`;
+}
+
+function renderQuickAccess() {
+  if (!els.quickAccess) return;
+  const availableCategories = new Map(state.categories.map(category => [category.slug, category]));
+  const taskButtons = primaryAccess
+    .filter(item => availableCategories.has(item.slug))
+    .map(item => `<button type="button" class="task-card" data-open-category="${esc(item.slug)}">
+      <span class="task-icon">${esc(item.icon)}</span>
+      <span><strong>${esc(item.label)}</strong><small>${esc(item.hint)}</small></span>
+    </button>`).join('');
+  const errorCount = state.errorCatalog.length;
+  els.quickAccess.innerHTML = `
+    <div class="quick-access-heading">
+      <span class="step-label">Paso 2</span>
+      <h2>¿Qué necesitas hacer?</h2>
+      <p>Para consultar una avería, elige directamente el código. Para otro trabajo técnico, abre uno de los accesos.</p>
+    </div>
+    <form id="quickErrorForm" class="quick-error-form">
+      <div class="field">
+        <label for="quickErrorSelect">Código de error</label>
+        <select id="quickErrorSelect" ${errorCount ? '' : 'disabled'}>
+          ${errorCatalogOptions(state.errorCatalog, errorCount ? `Selecciona uno de los ${errorCount} códigos` : 'No hay códigos publicados')}
+        </select>
+      </div>
+      <button id="quickErrorButton" type="submit" disabled>Abrir ficha</button>
+    </form>
+    <div class="task-grid">${taskButtons}</div>`;
+
+  const select = document.getElementById('quickErrorSelect');
+  const button = document.getElementById('quickErrorButton');
+  select?.addEventListener('change', () => { button.disabled = !select.value; });
+  document.getElementById('quickErrorForm')?.addEventListener('submit', event => {
+    event.preventDefault();
+    if (select.value) openError(select.value);
+  });
+}
+
 function renderBrandDashboard() {
   state.category = null;
   state.topic = null;
@@ -269,7 +339,7 @@ function renderBrandDashboard() {
       <div class="topic-menu">${topicButtons || '<p class="empty">Sin temas publicados.</p>'}</div>${primary}
     </details>`;
   }).join('');
-  els.content.innerHTML = `${renderRecents()}<section class="dashboard-heading"><h2>Elige lo que necesitas</h2><p>Abre una categoría y después la ficha que más se parezca a la máquina que tienes delante.</p></section><section class="category-grid">${cards}</section>`;
+  els.content.innerHTML = `${renderRecents()}<details class="library-explorer"><summary>Ver todos los apartados técnicos (${state.categories.length})</summary><div class="library-explorer-body"><p><strong>No se ha eliminado información.</strong> Aquí siguen disponibles todos los temas, errores, procedimientos, programaciones, pruebas y valores técnicos de la marca, organizados por categorías.</p><section class="category-grid">${cards}</section></div></details>`;
 }
 
 function showHome() {
@@ -294,20 +364,27 @@ async function init() {
 async function selectBrand(slug) {
   state.brand = slug;
   state.brandInfo = installedBrands.get(slug) || null;
+  state.errorCatalog = [];
   localStorage.setItem('st.brand', slug);
   const option = els.brand.selectedOptions[0];
   state.brandName = option?.textContent || slug;
   els.category.disabled = true; els.topic.disabled = true;
+  if (els.quickAccess) els.quickAccess.innerHTML = '<div class="loading">Preparando accesos rápidos…</div>';
   loading('Cargando categorías…');
   try {
-    const data = await api('categories', {brand:slug});
+    const [data, errorData] = await Promise.all([
+      api('categories', {brand:slug}),
+      api('errors', {brand:slug, limit:500}),
+    ]);
     state.categories = data.categories;
+    state.errorCatalog = errorData.errors || [];
     els.category.innerHTML = '<option value="">Selecciona una categoría</option>' + data.categories.map(c => `<option value="${esc(c.slug)}">${esc(c.name)} (${c.variant_count || 0})</option>`).join('');
     els.category.disabled = false;
     const remembered = localStorage.getItem(`st.category.${slug}`);
     els.category.value = data.categories.some(c => c.slug === remembered) ? remembered : '';
     const counts = state.brandInfo?.counts || {};
     els.brandStatus.textContent = `${data.categories.length} categorías disponibles · ${counts.errors || 0} errores · ${counts.variants || 0} fichas técnicas`;
+    renderQuickAccess();
     renderBrandDashboard();
   } catch (error) { showError(error); }
 }
@@ -332,6 +409,7 @@ async function selectCategory(slug) {
     } else {
       renderTopicChooser(data.topics);
     }
+    revealResults();
   } catch (error) { showError(error); }
 }
 
@@ -341,7 +419,10 @@ function renderTopicChooser(topics) {
 }
 
 async function renderErrorFinder(topics) {
-  const catalog = (await api('errors', {brand:state.brand, limit:500})).errors || [];
+  const catalog = state.errorCatalog.length
+    ? state.errorCatalog
+    : ((await api('errors', {brand:state.brand, limit:500})).errors || []);
+  state.errorCatalog = catalog;
   const availableCodes = catalog.map(item => item.code_display).filter(Boolean);
   const compactCodes = availableCodes.length <= 20 ? availableCodes.join(', ') : '';
   const catalogSummary = catalog.length
@@ -356,7 +437,7 @@ async function renderErrorFinder(topics) {
         <button type="submit">Buscar error</button>
       </form>
       <div id="errorResults" class="search-results"><p class="empty">Escribe un código o una palabra relacionada.</p></div>
-      ${catalog.length ? `<details class="nested-detail"><summary>Ver códigos disponibles (${catalog.length})</summary><div class="nested-content search-results">${catalog.map(renderErrorHit).join('')}</div></details>` : ''}
+      ${catalog.length ? `<form id="errorCatalogForm" class="error-catalog-form"><div class="field"><label for="errorCatalogSelect">O elegir de la lista completa</label><select id="errorCatalogSelect">${errorCatalogOptions(catalog)}</select></div><button id="errorCatalogButton" type="submit" disabled>Abrir ficha</button></form>` : ''}
     </div></section>
     ${topics.length ? `<section class="result-card"><div class="card-body"><h2>Lectura e interpretación desde placas</h2>${topics.map(t => `<article class="search-hit"><h3>${esc(t.title)}</h3><p>${esc(t.summary || '')}</p><button type="button" data-open-topic="${t.id}">Abrir</button></article>`).join('')}</div></section>` : ''}`;
   document.getElementById('errorSearchForm').addEventListener('submit', async event => {
@@ -371,6 +452,13 @@ async function renderErrorFinder(topics) {
         ? data.errors.map(renderErrorHit).join('')
         : `<div class="empty"><strong>“${esc(q)}” todavía no está incluido en la base de ${esc(state.brandName)}.</strong><p>El buscador funciona, pero no puede mostrar una ficha que aún no se ha cargado.${compactCodes ? ` Prueba con uno de los códigos disponibles: ${esc(compactCodes)}.` : ''}</p></div>`;
     } catch (error) { box.innerHTML = `<p class="error-message">${esc(error.message)}</p>`; }
+  });
+  const catalogSelect = document.getElementById('errorCatalogSelect');
+  const catalogButton = document.getElementById('errorCatalogButton');
+  catalogSelect?.addEventListener('change', () => { catalogButton.disabled = !catalogSelect.value; });
+  document.getElementById('errorCatalogForm')?.addEventListener('submit', event => {
+    event.preventDefault();
+    if (catalogSelect.value) openError(catalogSelect.value);
   });
 }
 
@@ -397,6 +485,7 @@ async function selectTopic(id) {
     els.context.classList.remove('hidden');
     els.context.innerHTML = `<h2>${esc(data.topic.title)}</h2><p>${esc(data.topic.summary || '')}</p>`;
     renderTopic(data.topic);
+    revealResults();
   } catch (error) { showError(error); }
 }
 
@@ -480,6 +569,7 @@ async function openError(id) {
     els.context.innerHTML = `<h2><span class="code-badge">${esc(e.code_display)}</span>${esc(e.short_label || 'Código de error')}</h2><p>${esc(scopeLabel(e.unit_scope))}. Se muestran todas las interpretaciones documentadas.</p>`;
     els.content.innerHTML = renderErrorDetail(e);
     bindMediaButtons();
+    revealResults();
   } catch (error) { showError(error); }
 }
 
@@ -550,6 +640,7 @@ async function globalSearch(query) {
     els.context.classList.remove('hidden');
     els.context.innerHTML = `<h2>Resultados de búsqueda</h2><p>${data.results.length} coincidencia(s) para “${esc(query)}”.</p>`;
     els.content.innerHTML = data.results.length ? data.results.map(r => `<article class="search-hit"><h3>${r.type === 'error' ? '<span class="code-badge">Error</span>' : ''}${esc(r.title)}</h3><p>${esc(r.category)}${r.summary ? ` — ${esc(r.summary)}` : ''}</p><button type="button" ${r.type === 'error' ? `data-open-error="${r.id}"` : `data-open-variant="${r.id}"`}>Abrir ficha</button></article>`).join('') : `<div class="empty"><strong>“${esc(query)}” no está incluido todavía en la base de ${esc(state.brandName)}.</strong><p>No es un fallo del buscador: será necesario añadir la ficha correspondiente a los datos de esta marca.</p></div>`;
+    revealResults();
   } catch (error) { showError(error); }
 }
 
@@ -563,6 +654,7 @@ async function openVariant(id) {
     els.context.innerHTML = `<h2>${esc(data.variant.title)}</h2><p>${esc(data.variant.recognition || data.variant.summary || '')}</p>`;
     els.content.innerHTML = renderVariant(data.variant, true);
     bindMediaButtons();
+    revealResults();
   } catch (error) { showError(error); }
 }
 
@@ -575,6 +667,7 @@ async function showCoverage() {
     els.context.classList.remove('hidden');
     els.context.innerHTML = '<h2>Cobertura documental</h2><p>Indica qué áreas están cubiertas, parciales o pendientes. No significa que toda la historia de la marca esté documentada.</p>';
     els.content.innerHTML = `<div class="coverage-grid">${data.coverage.map(c => { const status = c.coverage_status || c.status || c.coverage || 'sin estado'; const label = ({covered:'Cubierto',partial:'Parcial',pending:'Pendiente'}[status] || status); return `<article class="coverage-card"><h3>${esc(c.area_name || c.area || c.name || c.category || 'Área')}</h3><div class="chips">${chip(label, status === 'covered' ? 'official' : 'warning')}${c.equipment_scope ? chip(c.equipment_scope) : ''}</div><p>${esc(c.notes || c.description || '')}</p></article>`; }).join('')}</div>`;
+    revealResults();
   } catch (error) { showError(error); }
 }
 
