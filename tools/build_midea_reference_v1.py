@@ -145,6 +145,87 @@ SOURCES: dict[str, dict[str, Any]] = {
         "source_url": "https://mbt.midea.com/content/dam/midea-aem/mbt/hvac-goods/midea-products-category/vrfs/vrf-idu/four-way-cassette/pdf1.pdf",
         "notes": "Cassette VRF: P/Q/E, X1/X2, resistencia final y prueba de desagüe.",
     },
+    "A6": {
+        "title": "Manual de usuario — Conductos A6",
+        "document_ref": "MU-M-EXP-CONDUCTO-A6-ES",
+        "publication_date": "2020",
+        "language": "es",
+        "document_type": "user_manual",
+        "source_url": "https://www.midea.es/wp-content/uploads/2020/03/MU_M_EXP_CONDUCTO-A6-ES.pdf",
+        "notes": "Conductos A6: códigos del display/LED de la unidad, incluido E3 para ventilador interior y E8 para comunicación twin.",
+    },
+    "E3GUIDE": {
+        "title": "Guía técnica — E3, velocidad del ventilador fuera de control",
+        "document_ref": "MIDEA-ES-E3-FAN-DIAGNOSIS",
+        "publication_date": "2019",
+        "language": "es",
+        "document_type": "technical_bulletin",
+        "source_url": "https://www.midea.es/wp-content/uploads/2019/11/E3.pdf",
+        "notes": "Diagnóstico oficial E3: umbrales de RPM, cableado y tensiones del motor DC interior.",
+    },
+    "CCM30": {
+        "title": "Installation & Owner's Manual — Centralized Controller CCM30",
+        "document_ref": "MIDEA-CCM30-MD12IU-028BW",
+        "publication_date": "2013",
+        "language": "en",
+        "document_type": "controller_manual",
+        "source_url": "https://www.midea.com.ua/sites/default/files/downloadables-documents/pdf/im-um-ccm30.pdf",
+        "notes": "Control central de generación anterior: tabla propia de códigos, donde E8 identifica velocidad de aire fuera de control.",
+    },
+}
+
+
+SOURCE_INDICATION_CONTEXTS: dict[str, dict[str, str]] = {
+    "ATOMX": {
+        "indication_type": "display",
+        "display_location": "Display de la placa exterior",
+        "family_hint": "VRF R454B AtomX",
+    },
+    "IDU454": {
+        "indication_type": "mixed",
+        "display_location": "Panel, display o mando asociado a la unidad interior",
+        "family_hint": "Interiores VRF R454B",
+    },
+    "INFINI": {
+        "indication_type": "mixed",
+        "display_location": "Display y LED de la unidad interior",
+        "family_hint": "Split inverter de esta generación",
+    },
+    "HYPER": {
+        "indication_type": "mixed",
+        "display_location": "Display y LED de la unidad interior",
+        "family_hint": "Split Hyper Heat de esta generación",
+    },
+    "ONEWAY": {
+        "indication_type": "mixed",
+        "display_location": "Display y LED de la unidad interior",
+        "family_hint": "Cassette de una vía de esta generación",
+    },
+    "MULTI": {
+        "indication_type": "display",
+        "display_location": "Display o LED de la unidad exterior",
+        "family_hint": "Multisplit de la familia documentada",
+    },
+    "V6": {
+        "indication_type": "display",
+        "display_location": "Display de la placa exterior",
+        "family_hint": "VRF V6 I-Series",
+    },
+    "A6": {
+        "indication_type": "mixed",
+        "display_location": "Display/LED de la unidad interior",
+        "family_hint": "Conductos A6 y plataforma equivalente",
+    },
+    "E3GUIDE": {
+        "indication_type": "mixed",
+        "display_location": "LED o display local de la unidad",
+        "family_hint": "Plataforma Midea con motor DC de ventilador",
+    },
+    "CCM30": {
+        "indication_type": "remote_controller",
+        "display_location": "Control central de pared o interfaz XYE compatible",
+        "family_hint": "Capa de control CCM30 de generación anterior",
+    },
 }
 
 
@@ -193,12 +274,17 @@ def error_spec(
     behavior: str | None = None,
     aliases: str = "",
     restart: str = "Según la condición y la familia.",
-) -> dict[str, str]:
-    return {
+    linked_indications: list[dict[str, str]] | None = None,
+    extra_sources: list[tuple[str, str, str]] | None = None,
+) -> dict[str, Any]:
+    result: dict[str, Any] = {
         "code": code, "title": title, "scope": scope, "ref": ref, "page": page,
         "behavior": behavior or "La unidad afectada entra en protección mientras persista la condición.",
         "aliases": aliases, "restart": restart,
     }
+    result["linked_indications"] = linked_indications or []
+    result["extra_sources"] = extra_sources or []
+    return result
 
 
 def rows_from_table(
@@ -208,7 +294,7 @@ def rows_from_table(
     rows: list[tuple[str, str]],
     *,
     behavior: str | None = None,
-) -> list[dict[str, str]]:
+) -> list[dict[str, Any]]:
     return [
         error_spec(code, title, scope, ref, page, behavior=behavior)
         for code, title in rows
@@ -373,9 +459,72 @@ STATUS_CODES = [
                behavior="La exterior estima virtualmente un sensor averiado durante 1–7 días; valor predeterminado 7 días.", restart="Reparar el sensor antes de que expire el respaldo."),
 ]
 
+LEGACY_DUCT_CONTROLLER_CODES = [
+    error_spec(
+        "E3",
+        "Velocidad del ventilador interior fuera de control",
+        "indoor",
+        "E3GUIDE",
+        "1–2",
+        behavior=(
+            "Si la velocidad permanece por debajo de 300 RPM o por encima de "
+            "1500 RPM durante el tiempo de detección, la unidad se detiene y "
+            "el LED o display local muestra E3."
+        ),
+        restart="Corregir bloqueo, cableado, motor o placa y repetir la prueba tras dos minutos sin alimentación.",
+        linked_indications=[{
+            "code_display": "E8",
+            "indication_type": "remote_controller",
+            "display_location": "Control central de pared o interfaz XYE compatible",
+            "family_hint": "Capa de control CCM30 de generación anterior",
+            "relationship": "La misma condición técnica puede comunicarse como E8 en esta capa de control.",
+            "source_ref": "CCM30",
+        }],
+        extra_sources=[
+            ("A6", "14", "Tabla de códigos del display/LED de conductos A6"),
+            ("CCM30", "24", "Tabla de códigos del control central"),
+        ],
+    ),
+    error_spec(
+        "E8",
+        "Velocidad del ventilador interior fuera de control — código del control",
+        "controller",
+        "CCM30",
+        "24",
+        behavior=(
+            "El control central informa E8 para la condición de velocidad de aire "
+            "fuera de control; la unidad interior de conductos compatible puede "
+            "mostrar E3 en su display o LED local."
+        ),
+        restart="Consultar también el código local de la unidad antes de intervenir y corregir la causa del ventilador.",
+        linked_indications=[{
+            "code_display": "E3",
+            "indication_type": "mixed",
+            "display_location": "Display/LED de la unidad interior",
+            "family_hint": "Conductos A6 y plataforma equivalente",
+            "relationship": "Código local documentado para la misma condición del ventilador interior.",
+            "source_ref": "A6",
+        }],
+        extra_sources=[
+            ("A6", "14", "E3 en el display/LED de la unidad interior"),
+            ("E3GUIDE", "1–2", "Diagnóstico y valores del ventilador interior"),
+        ],
+    ),
+    error_spec(
+        "E8",
+        "Comunicación incorrecta entre dos unidades interiores",
+        "indoor",
+        "A6",
+        "14",
+        behavior="En configuración twin, la comunicación entre las dos unidades interiores no es válida.",
+        restart="Revisar alimentación, cableado, configuración principal/secundaria y comunicación entre interiores.",
+    ),
+]
+
 ERROR_SPECS = (
     ATOMX_MAIN + ATOMX_INSTALL + DRIVER_CODES + IDU_CODES
     + RESIDENTIAL_CODES + CASSETTE_CODES + V6_CODES + STATUS_CODES
+    + LEGACY_DUCT_CONTROLLER_CODES
 )
 
 
@@ -385,6 +534,23 @@ def diagnostic_profile(title: str, code: str) -> tuple[list[str], list[str]]:
         return (
             ["Fuga real de R454B en la zona de la interior", "Detector contaminado por vapor, aceite u otra sustancia", "Detector de fugas dañado o agotado", "Entrada del detector o placa principal interior defectuosa"],
             ["Asegurar y ventilar la zona antes de tocar la máquina", "Confirmar la atmósfera con detector adecuado y localizar la interior que alarma", "Recuperar el refrigerante residual por los puntos descritos", "Reparar y comprobar estanqueidad; limpiar/validar o sustituir el detector antes de recargar"],
+        )
+    if "VELOCIDAD DEL VENTILADOR INTERIOR" in text:
+        return (
+            [
+                "Turbina o eje bloqueado, rozando o con el rodamiento dañado",
+                "Conector o cableado del motor incorrecto, flojo o interrumpido",
+                "Motor o electrónica integrada del ventilador defectuosos",
+                "Alimentación, señal de mando o realimentación FG incorrectas",
+                "Placa electrónica interior defectuosa",
+            ],
+            [
+                "Cortar la alimentación, esperar el tiempo de seguridad y comprobar que la turbina gira libremente",
+                "Revisar el conector y el orden de los conductores antes de medir o sustituir componentes",
+                "En motor DC compatible de cinco hilos, comprobar las tensiones documentadas entre cada señal y GND",
+                "Si las alimentaciones y la orden son correctas, comprobar la respuesta FG antes de decidir entre motor y placa",
+                "Rearmar durante dos minutos y confirmar tanto el código local como el mostrado por el control",
+            ],
         )
     if code == "C21":
         return (
@@ -452,7 +618,7 @@ def diagnostic_profile(title: str, code: str) -> tuple[list[str], list[str]]:
     )
 
 
-def operational_impact(spec: dict[str, str]) -> dict[str, Any]:
+def operational_impact(spec: dict[str, Any]) -> dict[str, Any]:
     behavior = spec["behavior"]
     value = normalize(behavior)
     if any(word in value for word in ("ESTADO NORMAL", "NO AVERIA", "NO REQUIERE REARME", "SECUENCIA")):
@@ -474,7 +640,7 @@ def operational_impact(spec: dict[str, str]) -> dict[str, Any]:
     }
 
 
-def datasets_for(spec: dict[str, str], interpretation_id: int) -> list[dict[str, Any]]:
+def datasets_for(spec: dict[str, Any], interpretation_id: int) -> list[dict[str, Any]]:
     title = normalize(spec["title"])
     points: list[dict[str, Any]] = []
     dataset_name = ""
@@ -510,8 +676,43 @@ def datasets_for(spec: dict[str, str], interpretation_id: int) -> list[dict[str,
             {"sort_order": 2, "variable_value": "máximo", "value_nominal": 264, "value_min": None, "value_max": 264, "notes": "Límite superior documentado."},
         ]
         notes = "Medición L1–L2 con la unidad alimentada."
+    elif "VELOCIDAD DEL VENTILADOR INTERIOR" in title:
+        dataset_name = "Motor DC interior de cinco hilos — tensiones de diagnóstico"
+        variable_name, variable_unit = "Pin/señal respecto a GND (pin 3 negro)", ""
+        value_name, value_unit = "Tensión", "VDC"
+        points = [
+            {
+                "sort_order": 1, "variable_value": "pin 1 rojo — Vs/Vm",
+                "value_nominal": None, "value_min": 280, "value_max": 380,
+                "notes": "Bus de potencia del motor; tensión peligrosa.",
+            },
+            {
+                "sort_order": 2, "variable_value": "pin 4 blanco — Vcc",
+                "value_nominal": None, "value_min": 14, "value_max": 18.5,
+                "notes": "Alimentación de control.",
+            },
+            {
+                "sort_order": 3, "variable_value": "pin 5 amarillo — Vsp",
+                "value_nominal": None, "value_min": 0, "value_max": 5.6,
+                "notes": "Orden de velocidad.",
+            },
+            {
+                "sort_order": 4, "variable_value": "pin 6 azul — FG",
+                "value_nominal": None, "value_min": 14, "value_max": 18.5,
+                "notes": "Realimentación de velocidad según el boletín.",
+            },
+        ]
+        notes = (
+            "Aplicar únicamente al motor DC compatible de cinco hilos descrito "
+            "por Midea; confirmar conector, colores y arquitectura antes de medir."
+        )
     if not points:
         return []
+    dataset_sources = (
+        [source("E3GUIDE", "2", "Tensiones del motor DC interior")]
+        if "VELOCIDAD DEL VENTILADOR INTERIOR" in title
+        else [source(spec["ref"], spec["page"], f"Valores — {spec['code']}")]
+    )
     return [{
         "id": interpretation_id * 10 + 1,
         "name": dataset_name,
@@ -527,11 +728,11 @@ def datasets_for(spec: dict[str, str], interpretation_id: int) -> list[dict[str,
         "notes": notes,
         "visible": 1,
         "points": points,
-        "sources": [source(spec["ref"], spec["page"], f"Valores — {spec['code']}")],
+        "sources": dataset_sources,
     }]
 
 
-def behavior_override(spec: dict[str, str]) -> None:
+def behavior_override(spec: dict[str, Any]) -> None:
     code, ref = spec["code"], spec["ref"]
     if code == "A01":
         spec["behavior"] = "La exterior y todas las interiores del sistema se detienen por orden de emergencia."
@@ -551,9 +752,36 @@ def behavior_override(spec: dict[str, str]) -> None:
         spec["behavior"] = "En calefacción, limita la operación tras una hora por debajo de −25 °C; puede recuperar al cumplirse las condiciones de temperatura y tiempo."
 
 
-def build_interpretation(interpretation_id: int, spec: dict[str, str]) -> dict[str, Any]:
+def build_indication_contexts(spec: dict[str, Any]) -> list[dict[str, Any]]:
+    base = SOURCE_INDICATION_CONTEXTS.get(spec["ref"], {
+        "indication_type": "other",
+        "display_location": "Punto de indicación descrito por la fuente",
+        "family_hint": SOURCES[spec["ref"]]["title"],
+    })
+    rows: list[dict[str, Any]] = [{
+        "code_display": spec["code"],
+        "code_normalized": normalize(spec["code"]).replace(" ", ""),
+        "indication_type": base["indication_type"],
+        "display_location": base["display_location"],
+        "family_hint": base["family_hint"],
+        "relationship": "Código documentado en esta capa de indicación.",
+        "source_ref": spec["ref"],
+        "source_document_ref": SOURCES[spec["ref"]]["document_ref"],
+        "related_error_id": None,
+    }]
+    for linked in spec.get("linked_indications", []):
+        row = dict(linked)
+        row["code_normalized"] = normalize(row["code_display"]).replace(" ", "")
+        row["source_document_ref"] = SOURCES[row["source_ref"]]["document_ref"]
+        row["related_error_id"] = None
+        rows.append(row)
+    return rows
+
+
+def build_interpretation(interpretation_id: int, spec: dict[str, Any]) -> dict[str, Any]:
     behavior_override(spec)
     causes, checks = diagnostic_profile(spec["title"], spec["code"])
+    indication_contexts = build_indication_contexts(spec)
     info: list[dict[str, Any]] = []
     item_id = interpretation_id * 100
 
@@ -572,19 +800,41 @@ def build_interpretation(interpretation_id: int, spec: dict[str, str]) -> dict[s
         add("cause", row)
     for row in checks:
         add("check", row)
+    if "VELOCIDAD DEL VENTILADOR INTERIOR" in normalize(spec["title"]):
+        add(
+            "safety",
+            "El pin de potencia del motor DC puede tener 280–380 VDC. "
+            "Solo debe medirse con procedimiento, categoría de instrumento y protección adecuados.",
+        )
     add("observation", f"Rearme: {spec['restart']}")
     add("observation", f"Variante documentada en {SOURCES[spec['ref']]['document_ref']}; confirme familia y forma de indicación.")
+    source_rows = [
+        source(spec["ref"], spec["page"], f"Diagnóstico — {spec['code']}: {spec['title']}")
+    ]
+    for ref, page, section_name in spec.get("extra_sources", []):
+        source_rows.append(source(ref, page, section_name))
+    unique_sources: list[dict[str, Any]] = []
+    seen_sources: set[tuple[str, str, str]] = set()
+    for row in source_rows:
+        key = (row["document_ref"], row["page_start"], row["section"])
+        if key not in seen_sources:
+            seen_sources.add(key)
+            unique_sources.append(row)
     return {
         "id": interpretation_id,
         "title": spec["title"],
-        "description": f"Interpretación documentada de {spec['code']} para {spec['title'].lower()}.",
+        "description": (
+            f"Interpretación documentada de {spec['code']} en "
+            f"{indication_contexts[0]['display_location'].lower()}: {spec['title'].lower()}."
+        ),
         "source_kind": "official",
         "confidence": "high",
         "review_status": "reviewed",
+        "indication_contexts": indication_contexts,
         "info_items": info,
         "operational_impacts": [operational_impact(spec)],
         "datasets": datasets_for(spec, interpretation_id),
-        "sources": [source(spec["ref"], spec["page"], f"Diagnóstico — {spec['code']}: {spec['title']}")],
+        "sources": unique_sources,
         "_aliases": split_items(spec.get("aliases", "")),
         "_scope": spec["scope"],
     }
@@ -609,19 +859,35 @@ def build_errors() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
             {"alias_display": alias, "alias_normalized": normalize(alias).replace(" ", "")}
             for alias in sorted(alias_values, key=normalize)
         ]
+        indication_types = {
+            row["indication_type"]
+            for interpretation in interpretations
+            for row in interpretation.get("indication_contexts", [])
+        }
+        indication_type = next(iter(indication_types)) if len(indication_types) == 1 else "mixed"
         short_label = interpretations[0]["title"] if len(interpretations) == 1 else f"{len(interpretations)} interpretaciones documentadas"
         search_blob = " ".join(
             [code, short_label]
             + [row["alias_display"] for row in aliases]
             + [
-                " ".join([item["title"], item["description"]] + [row["body"] for row in item["info_items"]])
+                " ".join(
+                    [item["title"], item["description"]]
+                    + [row["body"] for row in item["info_items"]]
+                    + [
+                        " ".join([
+                            row["code_display"], row["display_location"],
+                            row["family_hint"], row["relationship"],
+                        ])
+                        for row in item.get("indication_contexts", [])
+                    ]
+                )
                 for item in interpretations
             ]
         )
         index = {
             "id": error_id, "code_display": code,
             "code_normalized": normalize(code).replace(" ", ""),
-            "indication_type": "display_led_or_controller", "unit_scope": scope,
+            "indication_type": indication_type, "unit_scope": scope,
             "short_label": short_label, "interpretation_count": len(interpretations),
             "search_text": normalize(search_blob),
         }
@@ -638,6 +904,16 @@ def build_errors() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
             "media": [],
         })
         indexes.append(index)
+    error_ids_by_code = {
+        row["code_normalized"]: row["id"]
+        for row in indexes
+    }
+    for detail in details:
+        for interpretation in detail["interpretations"]:
+            for row in interpretation.get("indication_contexts", []):
+                normalized = row["code_normalized"]
+                if normalized != detail["code_normalized"]:
+                    row["related_error_id"] = error_ids_by_code.get(normalized)
     return indexes, details
 
 
@@ -1322,6 +1598,13 @@ VARIANT_SPECS = [
        "Confirme quién muestra el código, refrigerante, arquitectura y forma exacta antes de abrir una interpretación.",
        "Anote código respetando letras/prefijos|Identifique interior/exterior/mando|Elija split, multizona, V6 o AtomX|Compare descripción y comportamiento",
        "V6", "25", "Repeated code rules"),
+    vs(22, "E3 en la unidad / E8 en el control — ventilador interior",
+       "Conductos con código local E3 y control central o interfaz compatible que informa E8.", "Conductos y control XYE", "system",
+       "Reconocer que una misma avería puede cambiar de código entre capas de indicación.",
+       "Midea documenta E3 en el LED/display local para velocidad del ventilador interior y E8 en la tabla del control central CCM30.",
+       "E8 no es universal: en el display local A6 también puede significar comunicación twin y en la placa exterior V6 significa dirección de exterior.",
+       "Anote dónde se leyó el código|Consulte el display local y el mando por separado|Abra todas las interpretaciones E8|Confirme la que coincide con la capa de indicación|Use E3 para el procedimiento técnico del ventilador",
+       "CCM30", "24", "Controller code layer versus local unit code"),
     vs(22, "Prefijos x/y y mayúsculas",
        "Código xH4, xP3, xL0 o yHd en VRF.", "V6 VRF", "outdoor",
        "No perder la identidad del compresor o exterior.",
@@ -1471,6 +1754,7 @@ def build_search(
     details_by_id = {item["id"]: item for item in error_details}
     for index in error_indexes:
         detail = details_by_id[index["id"]]
+        interpretation_titles = [row["title"] for row in detail["interpretations"]]
         body = " ".join(
             [index["search_text"]]
             + [
@@ -1495,7 +1779,11 @@ def build_search(
             "type": "error", "id": index["id"], "topic_id": None,
             "category_slug": "errors", "category": CATEGORY_BY_SLUG["errors"]["name"],
             "title": f"{index['code_display']} — {index['short_label']}",
-            "summary": detail["interpretations"][0]["description"],
+            "summary": (
+                "Incluye: " + "; ".join(interpretation_titles)
+                if len(interpretation_titles) > 1
+                else detail["interpretations"][0]["description"]
+            ),
             "haystack": normalize(synonyms(body)),
         })
     return entries
@@ -1554,12 +1842,12 @@ def main() -> int:
     write_json(WEB_DIR / "sources.json", source_rows)
 
     coverage_notes = {
-        "errors": "AtomX R454B, interiores R454B, V6, split, cassette y multisplit con interpretaciones separadas.",
+        "errors": "AtomX R454B, interiores R454B, V6, split, cassette, multisplit y códigos separados por capa de indicación.",
         "diagnostic_access": "WDC-120T2, modo ingeniero inalámbrico, LED/display y placas AtomX/V6.",
         "history_reset": "Diez fallos con fecha/hora, dos históricos de monitor y memorias de placa.",
         "service_modes": "AUTO/COOL, desescarche, System Test y recuperación/equilibrado AtomX.",
         "configuration": "Prioridades, silencio, temperaturas objetivo, contactos, ENC y presión estática.",
-        "controllers_buses": "X1/X2, D1/D2, 24 V, adquisición 3 min 30 s y comunicaciones C51/C76/EL01.",
+        "controllers_buses": "X1/X2, D1/D2, 24 V, adquisición 3 min 30 s, comunicaciones C51/C76/EL01 y equivalencias mando/unidad.",
         "drainage_overflow": "Secuencias diferenciadas frío/calor, b36 a 5 min y cassette EE a 3 min.",
         "commissioning": "AtomX frío/calor, V6, cassette, conductos y comercial antiguo.",
         "multisplit": "Conflicto de modo, comunicación por ramas y bus DC por capacidad.",
@@ -1592,7 +1880,7 @@ def main() -> int:
         "metadata": {
             "schema_name": "Super Tecnico",
             "navigation_model": "brand_category_topic_variant",
-            "schema_version": "2.2.0", "data_version": "1.0.0",
+            "schema_version": "2.2.0", "data_version": "1.1.0",
             "last_update_utc": now, "reference_brand": "Midea",
             "verification_warning": (
                 "Completa respecto al corpus Midea Referencia V1. Confirme siempre "
@@ -1606,11 +1894,12 @@ def main() -> int:
         "slug": "midea", "name": "Midea", "display_name": "Midea",
         "enabled": True, "web_data": "web", "media": "media",
         "publish_media": False, "static_site": True,
-        "schema_version": "2.2.0", "data_version": "1.0.0",
+        "schema_version": "2.2.0", "data_version": "1.1.0",
         "exported_at_utc": now, "counts": counts,
         "notes": (
             "Midea Referencia V1: AtomX R454B, interiores VRF R454B, WDC-120T2, "
-            "V6, split, cassette, conductos, multisplit y comercial anterior. Sin PDFs ni capturas."
+            "V6, split, cassette, conductos, multisplit y comercial anterior. "
+            "Distingue códigos del mando, display local y placa. Sin PDFs ni capturas."
         ),
     }
     write_json(BRAND_DIR / "brand.json", brand)

@@ -106,9 +106,9 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(brands["midea"]["counts"], {
             "categories": 15,
             "topics": 24,
-            "variants": 85,
-            "errors": 221,
-            "search_entries": 306,
+            "variants": 86,
+            "errors": 222,
+            "search_entries": 308,
         })
 
     def test_search_examples_are_present(self):
@@ -238,15 +238,18 @@ class StaticSiteTests(unittest.TestCase):
             "d51 presion estatica 3 7 min",
             "d72 respaldo 7 dias",
             "bus DC 277 410",
+            "E3 ventilador interior",
+            "E8 control central ventilador",
+            "E8 comunicacion twin",
         ):
             with self.subTest(brand="midea", query=query):
                 self.assertTrue(contains_query(midea_entries, query))
 
         midea_errors = load(self.midea_web / "errors" / "index.json")
-        self.assertEqual(len(midea_errors), 221)
+        self.assertEqual(len(midea_errors), 222)
         self.assertTrue({
             "A01", "A11", "C21", "C51", "b36", "EH0E", "EL01",
-            "PC03", "PC0L", "U3A", "1L46", "d51", "d72",
+            "PC03", "PC0L", "U3A", "1L46", "d51", "d72", "E3", "E8",
         }.issubset({item["code_display"] for item in midea_errors}))
 
     def test_media_is_not_published_or_referenced(self):
@@ -293,6 +296,8 @@ class StaticSiteTests(unittest.TestCase):
         self.assertNotIn("api.php", html + script)
         self.assertNotIn("media.php", html + script)
         self.assertIn("renderRelatedErrors", script)
+        self.assertIn("renderIndicationContexts", script)
+        self.assertIn("El código puede cambiar según dónde se lea", script)
 
     def test_field_navigation_uses_dashboard_accordions_and_quick_search(self):
         html = (self.dist / "index.html").read_text(encoding="utf-8")
@@ -640,20 +645,21 @@ class StaticSiteTests(unittest.TestCase):
         expected = audit_brand(brand)
         actual = load(brand / "web" / "quality.json")
         self.assertEqual(actual, expected)
-        self.assertEqual(actual["errors"]["entries"], 221)
-        self.assertEqual(actual["errors"]["interpretations"], 224)
-        self.assertEqual(actual["errors"]["status_counts"], {"complete": 224})
-        self.assertEqual(actual["technical_variants"]["entries"], 85)
-        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 85})
+        self.assertEqual(actual["errors"]["entries"], 222)
+        self.assertEqual(actual["errors"]["interpretations"], 227)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 227})
+        self.assertEqual(actual["technical_variants"]["entries"], 86)
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 86})
 
         sources = load(brand / "web" / "sources.json")
-        self.assertEqual(len(sources), 11)
+        self.assertEqual(len(sources), 14)
         self.assertTrue(all(source["status"] == "reviewed" for source in sources))
         self.assertTrue({
             "SM-MIDEA-R454B-ATOMX-V2", "MIDEA-VRF-IDU-R454B-V5",
             "WDC-120T2-V1", "SM-AG11-R410A-3D-INV-220628",
             "SM-DLFSOAH", "SM-DLCMRHB", "MIDEA-V6-I-SERIES-IM",
-            "MCAC-UTSM-201501",
+            "MCAC-UTSM-201501", "MU-M-EXP-CONDUCTO-A6-ES",
+            "MIDEA-ES-E3-FAN-DIAGNOSIS", "MIDEA-CCM30-MD12IU-028BW",
         }.issubset({source["document_ref"] for source in sources}))
 
         interpretations = []
@@ -663,6 +669,13 @@ class StaticSiteTests(unittest.TestCase):
             {"cause", "check", "machine_behavior"}.issubset(
                 {item["item_type"] for item in interpretation["info_items"]}
             )
+            and interpretation["indication_contexts"]
+            and all(
+                context.get("display_location")
+                and context.get("family_hint")
+                and context.get("source_document_ref")
+                for context in interpretation["indication_contexts"]
+            )
             and any(source.get("page_start") for source in interpretation["sources"])
             for interpretation in interpretations
         ))
@@ -670,6 +683,34 @@ class StaticSiteTests(unittest.TestCase):
         errors = {item["code_display"]: item for item in load(brand / "web" / "errors" / "index.json")}
         self.assertGreaterEqual(errors["C21"]["interpretation_count"], 2)
         self.assertGreaterEqual(errors["P52"]["interpretation_count"], 2)
+        self.assertEqual(errors["E3"]["interpretation_count"], 1)
+        self.assertEqual(errors["E8"]["interpretation_count"], 3)
+        e3 = load(brand / "web" / "errors" / "details" / f"{errors['E3']['id']}.json")
+        e8 = load(brand / "web" / "errors" / "details" / f"{errors['E8']['id']}.json")
+        e3_interpretation = e3["interpretations"][0]
+        self.assertEqual(
+            {item["code_display"] for item in e3_interpretation["indication_contexts"]},
+            {"E3", "E8"},
+        )
+        self.assertTrue(any(
+            item["code_display"] == "E8"
+            and item["related_error_id"] == errors["E8"]["id"]
+            and "control" in item["display_location"].lower()
+            for item in e3_interpretation["indication_contexts"]
+        ))
+        self.assertTrue(any(
+            dataset["name"].startswith("Motor DC interior")
+            and any(
+                point.get("value_min") == 280 and point.get("value_max") == 380
+                for point in dataset["points"]
+            )
+            for dataset in e3_interpretation["datasets"]
+        ))
+        self.assertTrue({
+            "Dirección de exterior",
+            "Velocidad del ventilador interior fuera de control — código del control",
+            "Comunicación incorrecta entre dos unidades interiores",
+        }.issubset({item["title"] for item in e8["interpretations"]}))
 
         topics = [load(path) for path in (brand / "web" / "topics").glob("*.json")]
         variants = [variant for topic in topics for variant in topic["variants"]]
@@ -684,6 +725,7 @@ class StaticSiteTests(unittest.TestCase):
             "V6 — bus P/Q/E",
             "AtomX — fuentes auxiliares de placa",
             "Conductos — detección automática de presión estática",
+            "E3 en la unidad / E8 en el control — ventilador interior",
         }.issubset(titles))
         self.assertTrue(all(
             variant["steps"]

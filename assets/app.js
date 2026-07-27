@@ -489,6 +489,7 @@ function renderErrorDetail(e) {
     <div class="chips">${chip(indicationLabel(e.indication_type))}${chip(scopeLabel(e.unit_scope))}${aliases.length ? chip('Variantes: '+aliases.join(', ')) : ''}</div>
     ${(e.interpretations || []).map((i,idx) => `<details class="variant-card" ${idx === 0 ? 'open' : ''}><summary><span class="variant-title">${esc(i.title)}</span>${i.description ? `<span class="variant-recognition">${esc(i.description)}</span>` : ''}</summary><div class="card-body">
       <div class="chips">${chip(sourceKind(i.source_kind),'official')}${chip('Fiabilidad: '+confidenceLabel(i.confidence))}</div>
+      ${renderIndicationContexts(i.indication_contexts || [])}
       ${renderRelatedErrors(i)}
       ${renderInfoItems(i.info_items || [])}
       ${renderImpacts(i.operational_impacts || [])}
@@ -497,6 +498,19 @@ function renderErrorDetail(e) {
     </div></details>`).join('')}
     ${renderMedia(e.media || [])}
   </div></section>`;
+}
+function renderIndicationContexts(items) {
+  if (!items.length) return '';
+  const hasEquivalent = items.some(item => item.related_error_id);
+  return `<details class="nested-detail info-priority" open><summary>${hasEquivalent ? 'Dónde aparece y qué código equivalente buscar' : 'Dónde aparece este código'}</summary><div class="nested-content">
+    ${hasEquivalent ? '<div class="notice-box"><strong>El código puede cambiar según dónde se lea</strong><p>Compruebe si el dato procede del mando, del display de la unidad o de una placa antes de elegir la interpretación.</p></div>' : ''}
+    <div class="table-wrap"><table><thead><tr><th>Código mostrado</th><th>Dónde se lee</th><th>Familia o pista</th><th>Relación</th></tr></thead><tbody>${items.map(item => `<tr>
+      <td>${item.related_error_id ? `<button type="button" data-open-error="${esc(item.related_error_id)}"><span class="code-badge">${esc(item.code_display)}</span></button>` : `<span class="code-badge">${esc(item.code_display)}</span>`}</td>
+      <td>${esc(item.display_location || '')}</td>
+      <td>${esc(item.family_hint || '')}</td>
+      <td>${esc(item.relationship || '')}</td>
+    </tr>`).join('')}</tbody></table></div>
+  </div></details>`;
 }
 function renderRelatedErrors(interpretation) {
   const related = interpretation.related_errors || [];
