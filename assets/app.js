@@ -575,9 +575,12 @@ async function openError(id) {
 
 function renderErrorDetail(e) {
   const aliases = (e.aliases || []).map(a => a.alias_display).filter(a => a !== e.code_display);
+  const interpretations = e.interpretations || [];
+  const hasMultipleInterpretations = interpretations.length > 1;
   return `<section class="result-card"><div class="card-body">
     <div class="chips">${chip(indicationLabel(e.indication_type))}${chip(scopeLabel(e.unit_scope))}${aliases.length ? chip('Variantes: '+aliases.join(', ')) : ''}</div>
-    ${(e.interpretations || []).map((i,idx) => `<details class="variant-card" ${idx === 0 ? 'open' : ''}><summary><span class="variant-title">${esc(i.title)}</span>${i.description ? `<span class="variant-recognition">${esc(i.description)}</span>` : ''}</summary><div class="card-body">
+    ${hasMultipleInterpretations ? `<div class="notice-box interpretation-choice"><strong>${interpretations.length} posibles significados documentados</strong><p>Ninguno está preseleccionado. Revise la lista y abra la interpretación que mejor coincida con la máquina y el lugar donde se ha leído el código.</p></div>` : ''}
+    ${interpretations.map(i => `<details class="variant-card" ${hasMultipleInterpretations ? '' : 'open'}><summary><span class="variant-title">${esc(i.title)}</span>${i.description ? `<span class="variant-recognition">${esc(i.description)}</span>` : ''}</summary><div class="card-body">
       <div class="chips">${chip(sourceKind(i.source_kind),'official')}${chip('Fiabilidad: '+confidenceLabel(i.confidence))}</div>
       ${renderIndicationContexts(i.indication_contexts || [])}
       ${renderRelatedErrors(i)}

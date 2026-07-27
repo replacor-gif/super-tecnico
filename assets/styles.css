@@ -38,6 +38,8 @@ button { cursor: pointer; }
 }
 .site-header h1 { margin: 0; font-size: clamp(1.5rem, 3vw, 2.15rem); }
 .site-header p { margin: 2px 0 0; opacity: .82; }
+.brand-heading { display: flex; align-items: center; gap: 12px; }
+.app-logo { width: 58px; height: 58px; object-fit: contain; flex: 0 0 auto; }
 .app-shell { width: min(1280px, calc(100% - 24px)); margin: 18px auto 48px; }
 .control-panel, .search-panel, .context-panel, .welcome-card, .result-card, .coverage-card, .quick-access-panel, .resource-strip {
   background: var(--panel);
@@ -428,6 +430,7 @@ th { background: #eef3f6; }
 @media (max-width: 560px) {
   .app-shell { width: min(100% - 14px, 1280px); margin-top: 8px; }
   .site-header { padding: 14px; }
+  .app-logo { width: 48px; height: 48px; }
   .search-panel form, .error-search, .quick-error-form, .error-catalog-form { grid-template-columns: 1fr; }
   .result-card > summary { padding-left: 14px; }
   .card-body { padding: 14px; }

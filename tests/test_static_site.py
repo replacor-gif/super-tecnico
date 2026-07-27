@@ -306,6 +306,7 @@ class StaticSiteTests(unittest.TestCase):
 
         for marker in (
             'id="homeButton"', 'id="brandStatus"', 'class="menu-navigation"',
+            'class="app-logo"', 'assets/super-tecnico-logo.png',
             'id="quickAccessPanel"', 'Selecciona la marca',
             'class="resource-strip"', 'Libro Gree y Midea',
             'Próximamente · acceso por definir',
@@ -318,10 +319,12 @@ class StaticSiteTests(unittest.TestCase):
             "Consultado recientemente", "¿Qué necesitas hacer?",
             "quickErrorSelect", "errorCatalogSelect", "errorCatalogOptions",
             "No se ha eliminado información.", "todos los temas, errores, procedimientos",
+            "hasMultipleInterpretations", "Ninguno está preseleccionado.",
             "machine_behavior", "Cómo reconocerlo", "En frío o deshumidificación",
         ):
             self.assertIn(marker, script)
         self.assertNotIn("await selectCategory(remembered)", script)
+        self.assertTrue((self.dist / "assets" / "super-tecnico-logo.png").is_file())
         for marker in (
             ".category-grid", ".category-card", ".quick-actions", ".recent-panel",
             ".info-priority", ".quick-error-form", ".task-grid", ".library-explorer",

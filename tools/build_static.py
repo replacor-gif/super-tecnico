@@ -164,7 +164,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         shutil.rmtree(output)
     output.mkdir(parents=True)
 
-    for required in ("index.html", "assets/app.js", "assets/styles.css"):
+    for required in ("index.html", "assets/app.js", "assets/styles.css", "assets/super-tecnico-logo.png"):
         source = source_root / required
         if not source.is_file():
             raise BuildError(f"Falta {required}")
