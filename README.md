@@ -63,7 +63,11 @@ La portada incorpora un acceso reservado para:
 
 **Gree y Midea: esquemas y documentación de reparación — edición española de consulta.**
 
-El libro no se publica ni se incorpora al repositorio. El bloque se mantiene como presentación de un futuro producto técnico y el acceso se definirá después de estudiar su comercialización, precio, entrega y protección. Nunca debe enlazarse directamente el archivo PDF desde la versión pública de GitHub Pages.
+El libro se publica gratuitamente en la portada de Super Técnico:
+
+`recursos/libro-electronica-inverter-replacor.pdf`
+
+La edición web contiene 501 páginas y está optimizada para lectura y descarga desde el navegador.
 
 ## Preparación para publicidad — edición 3
 

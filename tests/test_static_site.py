@@ -308,8 +308,9 @@ class StaticSiteTests(unittest.TestCase):
             'id="homeButton"', 'id="brandStatus"', 'class="menu-navigation"',
             'class="app-logo"', 'assets/super-tecnico-logo.png',
             'id="quickAccessPanel"', 'Selecciona la marca',
-            'class="resource-strip"', 'Libro Gree y Midea',
-            'Próximamente · acceso por definir',
+            'class="resource-strip resource-strip-public"', 'Libro Gree y Midea',
+            'Libro técnico gratuito', 'Abrir libro completo',
+            'recursos/libro-electronica-inverter-replacor.pdf',
             'data-ad-placement="home"', 'data-ad-placement="after-content"',
             'data-quick-query="sacar códigos"', 'data-quick-query="mando 2 hilos"',
         ):
@@ -325,6 +326,8 @@ class StaticSiteTests(unittest.TestCase):
             self.assertIn(marker, script)
         self.assertNotIn("await selectCategory(remembered)", script)
         self.assertTrue((self.dist / "assets" / "super-tecnico-logo.png").is_file())
+        self.assertTrue((self.dist / "assets" / "libro-electronica-inverter-replacor-portada.png").is_file())
+        self.assertTrue((self.dist / "recursos" / "libro-electronica-inverter-replacor.pdf").is_file())
         for marker in (
             ".category-grid", ".category-card", ".quick-actions", ".recent-panel",
             ".info-priority", ".quick-error-form", ".task-grid", ".library-explorer",
