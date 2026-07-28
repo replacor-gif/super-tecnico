@@ -506,6 +506,7 @@ function renderVariant(v, forceOpen=false) {
       ${v.summary ? `<p>${esc(v.summary)}</p>` : ''}
       ${renderController(v.controller)}
       ${renderSections(v.sections || [])}
+      ${renderLedPatternTable(v.led_patterns || [])}
       ${renderSteps(v.steps || [])}
       ${renderParameters(v.parameters || [])}
       ${renderMonitoring(v.monitoring_points || [])}
@@ -595,6 +596,7 @@ function renderErrorDetail(e) {
 function renderIndicationContexts(items) {
   if (!items.length) return '';
   const hasEquivalent = items.some(item => item.related_error_id);
+  const hasLedPatterns = items.some(item => Array.isArray(item.led_indicators) && item.led_indicators.length);
   return `<details class="nested-detail info-priority" open><summary>${hasEquivalent ? 'Dónde aparece y qué código equivalente buscar' : 'Dónde aparece este código'}</summary><div class="nested-content">
     ${hasEquivalent ? '<div class="notice-box"><strong>El código puede cambiar según dónde se lea</strong><p>Compruebe si el dato procede del mando, del display de la unidad o de una placa antes de elegir la interpretación.</p></div>' : ''}
     <div class="table-wrap"><table><thead><tr><th>Código mostrado</th><th>Dónde se lee</th><th>Familia o pista</th><th>Relación</th></tr></thead><tbody>${items.map(item => `<tr>
@@ -602,6 +604,28 @@ function renderIndicationContexts(items) {
       <td>${esc(item.display_location || '')}</td>
       <td>${esc(item.family_hint || '')}</td>
       <td>${esc(item.relationship || '')}</td>
+    </tr>`).join('')}</tbody></table></div>
+    ${hasLedPatterns ? renderLedPatternTable(items.filter(item => Array.isArray(item.led_indicators) && item.led_indicators.length)) : ''}
+  </div></details>`;
+}
+function renderLedPatternTable(items) {
+  const stateLabel = value => ({
+    on:'Encendido fijo', off:'Apagado', blink:'Parpadea',
+    fast_blink:'Parpadeo rápido', slow_blink:'Parpadeo lento',
+    pulse:'Número de destellos', alternate:'Alterna',
+  }[value] || value || 'No indicado');
+  const indicator = row => {
+    const color = String(row.color || 'neutral').toLowerCase();
+    const state = String(row.state || 'off').toLowerCase();
+    const detail = row.detail ? ` · ${row.detail}` : '';
+    return `<span class="led-pattern-item"><span class="led-indicator led-${esc(color)} led-state-${esc(state)}" aria-hidden="true"></span><span><strong>${esc(row.label || row.color || 'LED')}:</strong> ${esc(stateLabel(state))}${esc(detail)}</span></span>`;
+  };
+  return `<details class="nested-detail led-pattern-detail" open><summary>Tabla de pilotos de la placa exterior</summary><div class="nested-content">
+    <div class="notice-box"><strong>Lea el ciclo completo antes de decidir</strong><p>Fijo, apagado y parpadeando son estados distintos. Anote también el orden, la pausa y el número de destellos si el manual los utiliza.</p></div>
+    <div class="table-wrap"><table class="led-pattern-table"><thead><tr><th>Código o estado</th><th>Patrón de pilotos</th><th>Significado y lectura</th></tr></thead><tbody>${items.map(item => `<tr>
+      <td><span class="code-badge">${esc(item.code_display || '')}</span><br>${esc(item.display_location || '')}</td>
+      <td><div class="led-pattern">${item.led_indicators.map(indicator).join('')}</div></td>
+      <td>${item.relationship ? `<p class="led-meaning"><strong>Significado:</strong> ${esc(item.relationship)}</p>` : ''}${item.counting_rule || item.cycle_note || item.sequence ? `<details class="led-reading-note"><summary>Cómo leer esta fila</summary>${item.counting_rule ? `<p><strong>Conteo:</strong> ${esc(item.counting_rule)}</p>` : ''}${item.cycle_note ? `<p><strong>Ciclo:</strong> ${esc(item.cycle_note)}</p>` : ''}${item.sequence ? `<p><strong>Secuencia:</strong> ${esc(item.sequence)}</p>` : ''}</details>` : ''}</td>
     </tr>`).join('')}</tbody></table></div>
   </div></details>`;
 }
@@ -685,7 +709,11 @@ function bindMediaButtons() {
 function scopeLabel(v) { return ({indoor:'Unidad interior',outdoor:'Unidad exterior',general:'General',unknown:'Ámbito no especificado'}[v] || v || ''); }
 function sourceKind(v) { return ({official:'Dato oficial',calculated:'Valor calculado',workshop_experience:'Experiencia de taller',technical_hypothesis:'Hipótesis técnica'}[v] || v || ''); }
 function confidenceLabel(v) { return ({high:'alta',medium:'media',low:'baja',unknown:'no indicada'}[v] || v || ''); }
-function indicationLabel(v) { return ({display:'Display',led:'LED/parpadeos',remote_controller:'Mando',app:'Aplicación',mixed:'Indicación combinada',other:'Otra indicación'}[v] || v || ''); }
+function indicationLabel(v) { return ({
+  display:'Display', outdoor_display:'Display exterior', led:'LED/parpadeos',
+  outdoor_led:'Pilotos de la exterior', controller:'Mando', remote_controller:'Mando',
+  app:'Aplicación', mixed:'Indicación combinada', other:'Otra indicación'
+}[v] || v || ''); }
 function sectionLabel(v) { return ({wiring:'Cableado',notes:'Observaciones',safety:'Seguridad',operation:'Funcionamiento',checks:'Comprobaciones',behavior:'Comportamiento'}[v] || 'Información'); }
 function phaseLabel(v) { return ({
   access:'Acceso', active_error:'Error activo', address:'Direccionamiento', cancel:'Cancelación',

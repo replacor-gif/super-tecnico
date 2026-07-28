@@ -14,6 +14,7 @@ Guía técnica estática para consulta por marca, código, categoría, tema y va
 - **Midea:** AtomX R454B, V6 VRF, split, multisplit, cassette, conductos y WDC-120T2; distingue códigos del mando, display local y placa.
 - **Mitsubishi Electric:** M-Series, MXZ, Mr. Slim y CITY MULTI.
 - **Panasonic:** RAC, PACi, multisplit, cassette y ECOi/VRF.
+- **Samsung:** RAC, FJM, DVM S/S2, MCU, mandos y herramientas; incluye tablas visuales separadas de pilotos exteriores 9K/12K y 18K/24K/30K.
 
 ## Qué se publica
 

@@ -60,6 +60,8 @@ class StaticSiteTests(unittest.TestCase):
         cls.lg_web = cls.lg / "web"
         cls.haier = cls.dist / "data" / "brands" / "haier"
         cls.haier_web = cls.haier / "web"
+        cls.samsung = cls.dist / "data" / "brands" / "samsung"
+        cls.samsung_web = cls.samsung / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -70,7 +72,7 @@ class StaticSiteTests(unittest.TestCase):
         brands = {item["slug"]: item for item in manifest["brands"]}
         self.assertEqual(
             set(brands),
-            {"daikin", "fujitsu-general", "gree", "haier", "lg", "midea", "mitsubishi-electric", "panasonic"},
+            {"daikin", "fujitsu-general", "gree", "haier", "lg", "midea", "mitsubishi-electric", "panasonic", "samsung"},
         )
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
@@ -127,6 +129,13 @@ class StaticSiteTests(unittest.TestCase):
             "variants": 67,
             "errors": 120,
             "search_entries": 187,
+        })
+        self.assertEqual(brands["samsung"]["counts"], {
+            "categories": 16,
+            "topics": 31,
+            "variants": 72,
+            "errors": 119,
+            "search_entries": 191,
         })
 
     def test_search_examples_are_present(self):
@@ -295,6 +304,30 @@ class StaticSiteTests(unittest.TestCase):
             "39-0", "71-1", "78", "555.0", "555.3", "08", "0C", "Lo",
         }.issubset({item["code_display"] for item in haier_errors}))
 
+        samsung_entries = load(self.samsung_web / "search.json")
+        for query in (
+            "E199 K1 K5",
+            "E201 dial interiores",
+            "E203 rojo fijo verde fijo naranja parpadea",
+            "E604 mando 12 V",
+            "E153 boya bomba",
+            "K2 pump down K7",
+            "SNET 60 minutos",
+            "pilotos amarillo verde rojo",
+            "option code todos pilotos parpadean",
+            "E206 C003 inverter PBA",
+            "triple evacuacion 5000 2000 200",
+        ):
+            with self.subTest(brand="samsung", query=query):
+                self.assertTrue(contains_query(samsung_entries, query))
+
+        samsung_errors = load(self.samsung_web / "errors" / "index.json")
+        self.assertEqual(len(samsung_errors), 119)
+        self.assertTrue({
+            "E101", "E153", "E163", "E199", "E201", "E203",
+            "E206-C003", "E416", "E458", "E464", "E500", "E604", "UP", "dF",
+        }.issubset({item["code_display"] for item in samsung_errors}))
+
     def test_media_is_not_published_or_referenced(self):
         self.assertFalse((self.brand / "media").exists())
         self.assertFalse((self.daikin / "media").exists())
@@ -303,6 +336,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse((self.panasonic / "media").exists())
         self.assertFalse((self.midea / "media").exists())
         self.assertFalse((self.haier / "media").exists())
+        self.assertFalse((self.samsung / "media").exists())
         self.assertEqual(self.report["checks"]["media_files"], 0)
         self.assertGreaterEqual(self.report["checks"]["media_references_removed"], 26)
 
@@ -314,6 +348,7 @@ class StaticSiteTests(unittest.TestCase):
             + list(self.panasonic_web.rglob("*.json"))
             + list(self.midea_web.rglob("*.json"))
             + list(self.haier_web.rglob("*.json"))
+            + list(self.samsung_web.rglob("*.json"))
         ):
             data = load(path)
             pending = [data]
@@ -340,10 +375,45 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("data/brands/index.json", script)
         self.assertNotIn("api.php", html + script)
         self.assertNotIn("media.php", html + script)
+        self.assertIn("renderLedPatternTable", script)
+        self.assertIn("led-pattern-table", script)
         self.assertIn("renderRelatedErrors", script)
         self.assertIn("renderIndicationContexts", script)
         self.assertIn("El código puede cambiar según dónde se lea", script)
 
+    def test_samsung_led_tables_are_structured_and_accessible(self):
+        topic = load(self.samsung_web / "topics" / "1.json")
+        self.assertEqual(topic["slug"], "rac-outdoor-led-master")
+        self.assertEqual(len(topic["variants"][0]["led_patterns"]), 25)
+        self.assertEqual(len(topic["variants"][1]["led_patterns"]), 27)
+
+        allowed_states = {"on", "off", "blink", "fast_blink", "slow_blink", "pulse", "alternate"}
+        for variant in topic["variants"]:
+            for pattern in variant["led_patterns"]:
+                self.assertEqual(
+                    [row["label"] for row in pattern["led_indicators"]],
+                    ["Amarillo", "Verde", "Rojo"],
+                )
+                self.assertTrue(all(row["state"] in allowed_states for row in pattern["led_indicators"]))
+                self.assertTrue(pattern["relationship"])
+                self.assertTrue(pattern["family_hint"])
+
+        details = [
+            load(path)
+            for path in self.samsung_web.joinpath("errors", "details").glob("*.json")
+        ]
+        e203 = next(row for row in details if row["code_display"] == "E203")
+        led_contexts = [
+            context
+            for interpretation in e203["interpretations"]
+            for context in interpretation["indication_contexts"]
+            if context.get("led_indicators")
+        ]
+        self.assertTrue(any(
+            [row["label"] for row in context["led_indicators"]] == ["Rojo", "Verde", "Naranja"]
+            and [row["state"] for row in context["led_indicators"]] == ["on", "on", "blink"]
+            for context in led_contexts
+        ))
     def test_field_navigation_uses_dashboard_accordions_and_quick_search(self):
         html = (self.dist / "index.html").read_text(encoding="utf-8")
         script = (self.dist / "assets" / "app.js").read_text(encoding="utf-8")
