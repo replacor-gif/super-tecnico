@@ -9,6 +9,7 @@ Guía técnica estática para consulta por marca, código, categoría, tema y va
 - **Fujitsu / General:** referencia ampliada de split, multisplit, cassette y Airstage VRF.
 - **Daikin:** Sky Air, cassette, multisplit, VRV y mandos BRC/Madoka.
 - **Gree:** split, U-Match, FLEXX, GMV y mandos cableados.
+- **LG:** Single Zone, Multi F/Multi F MAX, cassette, MULTI V 5, mandos PREMTB/PREMTC y LGMV.
 - **Midea:** AtomX R454B, V6 VRF, split, multisplit, cassette, conductos y WDC-120T2; distingue códigos del mando, display local y placa.
 - **Mitsubishi Electric:** M-Series, MXZ, Mr. Slim y CITY MULTI.
 - **Panasonic:** RAC, PACi, multisplit, cassette y ECOi/VRF.

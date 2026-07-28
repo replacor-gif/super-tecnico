@@ -56,6 +56,8 @@ class StaticSiteTests(unittest.TestCase):
         cls.panasonic_web = cls.panasonic / "web"
         cls.midea = cls.dist / "data" / "brands" / "midea"
         cls.midea_web = cls.midea / "web"
+        cls.lg = cls.dist / "data" / "brands" / "lg"
+        cls.lg_web = cls.lg / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -66,7 +68,7 @@ class StaticSiteTests(unittest.TestCase):
         brands = {item["slug"]: item for item in manifest["brands"]}
         self.assertEqual(
             set(brands),
-            {"daikin", "fujitsu-general", "gree", "midea", "mitsubishi-electric", "panasonic"},
+            {"daikin", "fujitsu-general", "gree", "lg", "midea", "mitsubishi-electric", "panasonic"},
         )
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
@@ -109,6 +111,13 @@ class StaticSiteTests(unittest.TestCase):
             "variants": 86,
             "errors": 222,
             "search_entries": 308,
+        })
+        self.assertEqual(brands["lg"]["counts"], {
+            "categories": 15,
+            "topics": 23,
+            "variants": 64,
+            "errors": 81,
+            "search_entries": 145,
         })
 
     def test_search_examples_are_present(self):
@@ -1355,6 +1364,94 @@ class StaticSiteTests(unittest.TestCase):
         ):
             with self.subTest(query=query):
                 self.assertTrue(contains_query(search, query))
+
+    def test_lg_reference_v1_quality_traceability_and_key_diagnostics(self):
+        brand = ROOT / "data" / "brands" / "lg"
+        web = brand / "web"
+        expected = audit_brand(brand)
+        actual = load(web / "quality.json")
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual["errors"]["entries"], 81)
+        self.assertEqual(actual["errors"]["interpretations"], 105)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 105})
+        self.assertEqual(actual["technical_variants"]["entries"], 64)
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 64})
+
+        sources = load(web / "sources.json")
+        self.assertEqual(len(sources), 7)
+        self.assertTrue(all(source["status"] == "reviewed" for source in sources))
+        self.assertTrue({
+            "MFL41161610",
+            "IM_MultiF_ODU",
+            "IM_Multi_F_CeilingCassette",
+            "SM_MultiV_5_OutdoorUnits",
+            "IM StandardIII Wired Remote PREMTB101",
+            "MFL62862020",
+            "LG-HVAC-LGMV",
+        }.issubset({source["document_ref"] for source in sources}))
+
+        errors = {item["code_display"]: item for item in load(web / "errors" / "index.json")}
+        self.assertEqual(errors["CH04"]["interpretation_count"], 2)
+        self.assertEqual(errors["CH21"]["interpretation_count"], 2)
+        self.assertIn("CH39", errors)
+        self.assertIn("CH48", errors)
+        ch21 = load(web / "errors" / "details" / f"{errors['CH21']['id']}.json")
+        aliases = {item["alias_display"] for item in ch21["aliases"]}
+        self.assertTrue({"211", "212", "213"}.issubset(aliases))
+        self.assertTrue(all(
+            {"cause", "check", "machine_behavior"}.issubset(
+                {item["item_type"] for item in interpretation["info_items"]}
+            )
+            and interpretation["datasets"]
+            and interpretation["operational_impacts"]
+            and any(source.get("page_start") for source in interpretation["sources"])
+            for path in (web / "errors" / "details").glob("*.json")
+            for interpretation in load(path)["interpretations"]
+        ))
+
+        topics = [load(path) for path in (web / "topics").glob("*.json")]
+        variants = [variant for topic in topics for variant in topic["variants"]]
+        titles = {variant["title"] for variant in variants}
+        self.assertTrue({
+            "PREMTB101: historial de hasta 20 errores",
+            "CH03: la interior no recibe al mando",
+            "Single Zone: Pump Down desde el modo frío",
+            "Cassette: CH04 y estado OFF",
+            "MULTI V: auto addressing desde SW01C",
+            "FDD Fd8/Fd9: todas las unidades a plena carga",
+            "Nivel 2: comunicación y recuperación automática",
+            "LGMV: monitorización y gráficas",
+            "Placa interior: capacidad, EEPROM y grupo",
+        }.issubset(titles))
+        self.assertTrue(all(
+            variant["steps"]
+            and variant["sections"]
+            and variant["media"] == []
+            and any(source.get("page_start") for source in variant["sources"])
+            for variant in variants
+        ))
+
+        search = load(web / "search.json")
+        for query in (
+            "CH03",
+            "CH04 boya",
+            "212",
+            "pump down",
+            "mando 3 hilos",
+            "auto addressing SW01C",
+            "Fd8 plena carga",
+            "LGMV graficas",
+            "CH39 MICOM",
+            "CH48 liquida",
+        ):
+            with self.subTest(query=query):
+                self.assertTrue(contains_query(search, query))
+
+        public_text = "\n".join(path.read_text(encoding="utf-8") for path in brand.rglob("*.json"))
+        self.assertNotIn("lg-manuals", public_text)
+        self.assertFalse(any(brand.rglob("*.pdf")))
+        self.assertFalse(any(brand.rglob("*.db")))
+        self.assertFalse(any(brand.rglob("*.sqlite")))
 
 
 if __name__ == "__main__":
