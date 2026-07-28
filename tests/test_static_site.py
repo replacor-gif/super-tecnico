@@ -58,6 +58,8 @@ class StaticSiteTests(unittest.TestCase):
         cls.midea_web = cls.midea / "web"
         cls.lg = cls.dist / "data" / "brands" / "lg"
         cls.lg_web = cls.lg / "web"
+        cls.haier = cls.dist / "data" / "brands" / "haier"
+        cls.haier_web = cls.haier / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -68,7 +70,7 @@ class StaticSiteTests(unittest.TestCase):
         brands = {item["slug"]: item for item in manifest["brands"]}
         self.assertEqual(
             set(brands),
-            {"daikin", "fujitsu-general", "gree", "lg", "midea", "mitsubishi-electric", "panasonic"},
+            {"daikin", "fujitsu-general", "gree", "haier", "lg", "midea", "mitsubishi-electric", "panasonic"},
         )
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
@@ -118,6 +120,13 @@ class StaticSiteTests(unittest.TestCase):
             "variants": 64,
             "errors": 81,
             "search_entries": 145,
+        })
+        self.assertEqual(brands["haier"]["counts"], {
+            "categories": 15,
+            "topics": 24,
+            "variants": 67,
+            "errors": 120,
+            "search_entries": 187,
         })
 
     def test_search_examples_are_present(self):
@@ -261,6 +270,31 @@ class StaticSiteTests(unittest.TestCase):
             "PC03", "PC0L", "U3A", "1L46", "d51", "d72", "E3", "E8",
         }.issubset({item["code_display"] for item in midea_errors}))
 
+        haier_entries = load(self.haier_web / "search.json")
+        for query in (
+            "E7 15 comunicacion",
+            "29 1D baja presion",
+            "boya calor 2 s",
+            "YR-E16B 35",
+            "YR-E17 tres hilos",
+            "CC n2 n3 PS",
+            "LL HH",
+            "10K 23K 50K",
+            "alarma no detiene 78",
+            "CN4 220",
+            "555.3 ambiente",
+            "ventilador 310 334",
+        ):
+            with self.subTest(brand="haier", query=query):
+                self.assertTrue(contains_query(haier_entries, query))
+
+        haier_errors = load(self.haier_web / "errors" / "index.json")
+        self.assertEqual(len(haier_errors), 120)
+        self.assertTrue({
+            "E7", "E14", "F1", "F36", "15", "26-0", "29", "1D",
+            "39-0", "71-1", "78", "555.0", "555.3", "08", "0C", "Lo",
+        }.issubset({item["code_display"] for item in haier_errors}))
+
     def test_media_is_not_published_or_referenced(self):
         self.assertFalse((self.brand / "media").exists())
         self.assertFalse((self.daikin / "media").exists())
@@ -268,6 +302,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse((self.gree / "media").exists())
         self.assertFalse((self.panasonic / "media").exists())
         self.assertFalse((self.midea / "media").exists())
+        self.assertFalse((self.haier / "media").exists())
         self.assertEqual(self.report["checks"]["media_files"], 0)
         self.assertGreaterEqual(self.report["checks"]["media_references_removed"], 26)
 
@@ -278,6 +313,7 @@ class StaticSiteTests(unittest.TestCase):
             + list(self.gree_web.rglob("*.json"))
             + list(self.panasonic_web.rglob("*.json"))
             + list(self.midea_web.rglob("*.json"))
+            + list(self.haier_web.rglob("*.json"))
         ):
             data = load(path)
             pending = [data]
@@ -1449,6 +1485,84 @@ class StaticSiteTests(unittest.TestCase):
 
         public_text = "\n".join(path.read_text(encoding="utf-8") for path in brand.rglob("*.json"))
         self.assertNotIn("lg-manuals", public_text)
+        self.assertFalse(any(brand.rglob("*.pdf")))
+        self.assertFalse(any(brand.rglob("*.db")))
+        self.assertFalse(any(brand.rglob("*.sqlite")))
+
+    def test_haier_reference_v1_quality_traceability_and_code_layers(self):
+        brand = ROOT / "data" / "brands" / "haier"
+        web = brand / "web"
+        expected = audit_brand(brand)
+        actual = load(web / "quality.json")
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual["errors"]["entries"], 120)
+        self.assertEqual(actual["errors"]["interpretations"], 133)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 133})
+        self.assertEqual(actual["technical_variants"]["entries"], 67)
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 67})
+
+        sources = load(web / "sources.json")
+        self.assertEqual(len(sources), 8)
+        self.assertTrue(all(source["status"] == "reviewed" for source in sources))
+        self.assertTrue({
+            "HAIER-ADVANCED-PLUS-SM",
+            "HAIER-ARCTIC-MULTI-SG-20210508",
+            "HAIER-GE-MULTI-SM-20220411",
+            "HAIER-FLEXFIT-PRO-SM-20210508",
+            "HAIER-MRV-S-ODU-SM",
+            "HAIER-MRV-S-COMPACT-CASSETTE-SM",
+            "HAIER-YR-E17-CONTROLLER",
+            "49-5000680-REV0",
+        }.issubset({source["document_ref"] for source in sources}))
+
+        errors = {item["code_display"]: item for item in load(web / "errors" / "index.json")}
+        self.assertEqual(errors["0C"]["interpretation_count"], 2)
+        self.assertEqual(errors["20"]["interpretation_count"], 3)
+        for code in ("E7", "15", "29", "1D"):
+            detail = load(web / "errors" / "details" / f"{errors[code]['id']}.json")
+            contexts = [
+                row
+                for interpretation in detail["interpretations"]
+                for row in interpretation["indication_contexts"]
+            ]
+            self.assertTrue(any(row.get("related_error_id") for row in contexts), code)
+
+        code_78 = load(web / "errors" / "details" / f"{errors['78']['id']}.json")
+        self.assertIn(
+            "no detiene",
+            code_78["interpretations"][0]["operational_impacts"][0]["summary"].lower(),
+        )
+        code_1d = load(web / "errors" / "details" / f"{errors['1D']['id']}.json")
+        self.assertTrue(any(
+            row["code_display"] == "29"
+            for row in code_1d["interpretations"][0]["indication_contexts"]
+        ))
+
+        topics = [load(path) for path in (web / "topics").glob("*.json")]
+        variants = [variant for topic in topics for variant in topic["variants"]]
+        titles = {variant["title"] for variant in variants}
+        self.assertTrue({
+            "YR-E17: error actual e histórico de todo el grupo",
+            "YR-E16B: menú Error Code",
+            "MRV: decimal 29 en exterior y hexadecimal 1D en mando",
+            "Frío/seco con compresor en marcha",
+            "Calor, ventilación o espera",
+            "FlexFit Multi: autocomprobación automática CC",
+            "MRV: condiciones previas al Trial Operation",
+            "Elegir la curva correcta: 10K, 23K o 50K",
+            "Código 78: alarma sin parada",
+        }.issubset(titles))
+        self.assertTrue(all(
+            variant["steps"]
+            and variant["sections"]
+            and variant["media"] == []
+            and any(source.get("page_start") for source in variant["sources"])
+            for variant in variants
+        ))
+
+        public_text = "\n".join(path.read_text(encoding="utf-8") for path in brand.rglob("*.json"))
+        self.assertNotIn("tmp\\pdfs\\haier", public_text)
+        self.assertNotIn("tmp/text/haier", public_text)
         self.assertFalse(any(brand.rglob("*.pdf")))
         self.assertFalse(any(brand.rglob("*.db")))
         self.assertFalse(any(brand.rglob("*.sqlite")))
