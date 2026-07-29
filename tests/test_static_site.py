@@ -76,6 +76,14 @@ class StaticSiteTests(unittest.TestCase):
         cls.roca_web = cls.roca / "web"
         cls.airwell = cls.dist / "data" / "brands" / "airwell-historica"
         cls.airwell_web = cls.airwell / "web"
+        cls.hitachi = cls.dist / "data" / "brands" / "hitachi"
+        cls.hitachi_web = cls.hitachi / "web"
+        cls.sharp = cls.dist / "data" / "brands" / "sharp"
+        cls.sharp_web = cls.sharp / "web"
+        cls.sanyo = cls.dist / "data" / "brands" / "sanyo-historica"
+        cls.sanyo_web = cls.sanyo / "web"
+        cls.chigo = cls.dist / "data" / "brands" / "chigo"
+        cls.chigo_web = cls.chigo / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -86,7 +94,7 @@ class StaticSiteTests(unittest.TestCase):
         brands = {item["slug"]: item for item in manifest["brands"]}
         self.assertEqual(
             set(brands),
-            {"airwell-historica", "aux-air", "daikin", "fujitsu-general", "gree", "haier", "hisense", "lg", "midea", "mitsubishi-electric", "mitsubishi-heavy-industries", "panasonic", "roca-clima", "samsung", "tcl", "toshiba"},
+            {"airwell-historica", "aux-air", "chigo", "daikin", "fujitsu-general", "gree", "haier", "hisense", "hitachi", "lg", "midea", "mitsubishi-electric", "mitsubishi-heavy-industries", "panasonic", "roca-clima", "samsung", "sanyo-historica", "sharp", "tcl", "toshiba"},
         )
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
@@ -200,6 +208,80 @@ class StaticSiteTests(unittest.TestCase):
             "errors": 40,
             "search_entries": 131,
         })
+        self.assertEqual(brands["hitachi"]["counts"], {
+            "categories": 16,
+            "topics": 19,
+            "variants": 38,
+            "errors": 61,
+            "search_entries": 99,
+        })
+        self.assertEqual(brands["sharp"]["counts"], {
+            "categories": 15,
+            "topics": 17,
+            "variants": 34,
+            "errors": 83,
+            "search_entries": 117,
+        })
+        self.assertEqual(brands["sanyo-historica"]["counts"], {
+            "categories": 15,
+            "topics": 20,
+            "variants": 41,
+            "errors": 68,
+            "search_entries": 109,
+        })
+        self.assertEqual(brands["chigo"]["counts"], {
+            "categories": 15,
+            "topics": 18,
+            "variants": 37,
+            "errors": 37,
+            "search_entries": 74,
+        })
+
+    def test_manufacturer_wave_v1_is_complete_searchable_and_public_safe(self):
+        expectations = {
+            "hitachi": ("S43", "H-LINK", "funcionamiento de emergencia", "boya"),
+            "sharp": ("24-3", "Wire Check", "pitido largo", "187 253 V"),
+            "sanyo-historica": ("P04", "respaldo automático", "Service Checker", "E06"),
+            "chigo": ("E9 boya", "3 minutos", "ZKFR", "E8"),
+        }
+        roots = {
+            "hitachi": self.hitachi,
+            "sharp": self.sharp,
+            "sanyo-historica": self.sanyo,
+            "chigo": self.chigo,
+        }
+        for slug, queries in expectations.items():
+            with self.subTest(brand=slug):
+                brand = roots[slug]
+                web = brand / "web"
+                quality = load(web / "quality.json")
+                self.assertEqual(quality, audit_brand(ROOT / "data" / "brands" / slug))
+                self.assertEqual(
+                    set(quality["errors"]["status_counts"]),
+                    {"complete"},
+                )
+                self.assertEqual(
+                    set(quality["technical_variants"]["status_counts"]),
+                    {"complete"},
+                )
+                entries = load(web / "search.json")
+                for query in queries:
+                    self.assertTrue(contains_query(entries, query), f"{slug}: {query}")
+                sources = load(web / "sources.json")
+                self.assertTrue(sources)
+                self.assertTrue(all(item["source_url"].startswith("https://") for item in sources))
+                self.assertFalse(any(brand.rglob("*.pdf")))
+                self.assertFalse(any(brand.rglob("*.db")))
+                self.assertFalse(any(brand.rglob("*.sqlite")))
+
+        chigo_errors = {
+            item["code_display"]: item
+            for item in load(self.chigo_web / "errors" / "index.json")
+        }
+        for code in ("E1", "E2", "E3", "E5", "E8"):
+            self.assertGreaterEqual(chigo_errors[code]["interpretation_count"], 2)
+        sanyo_provenance = load(self.sanyo_web / "provenance.json")
+        self.assertEqual(sanyo_provenance["accepted"][0]["status"], "accepted_historic_sanyo")
 
     def test_search_examples_are_present(self):
         entries = load(self.web / "search.json")
@@ -2415,7 +2497,10 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(by_id[8]["brand_slug"], "lg")
         self.assertEqual(by_id[7]["confidence"], "media")
         self.assertIn("no identifica una PCB por sí sola", by_id[7]["explanation"])
-        self.assertIsNone(next(item for item in patterns if item["oem"] == "Chigo")["brand_slug"])
+        self.assertEqual(next(item for item in patterns if item["oem"] == "Chigo")["brand_slug"], "chigo")
+        self.assertEqual(next(item for item in patterns if item["oem"] == "Hitachi")["brand_slug"], "hitachi")
+        self.assertEqual(next(item for item in patterns if item["oem"] == "Sharp")["brand_slug"], "sharp")
+        self.assertEqual(next(item for item in patterns if item["oem"] == "Sanyo (legado)")["brand_slug"], "sanyo-historica")
 
         for item in patterns:
             code = re.sub(r"\s+", "", item["example"].upper())

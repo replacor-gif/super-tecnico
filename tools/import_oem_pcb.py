@@ -17,6 +17,7 @@ OEM_BRAND_SLUGS = {
     "Fujitsu General": "fujitsu-general",
     "Gree": "gree",
     "Haier": "haier",
+    "Hitachi": "hitachi",
     "Hisense": "hisense",
     "LG": "lg",
     "Midea": "midea",
@@ -24,8 +25,11 @@ OEM_BRAND_SLUGS = {
     "Mitsubishi Heavy Industries": "mitsubishi-heavy-industries",
     "Panasonic": "panasonic",
     "Samsung": "samsung",
+    "Sanyo (legado)": "sanyo-historica",
+    "Sharp": "sharp",
     "TCL": "tcl",
     "Toshiba": "toshiba",
+    "Chigo": "chigo",
 }
 
 PRIMARY_SOURCE_OVERRIDES = {

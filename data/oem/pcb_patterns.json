@@ -696,7 +696,7 @@
     {
       "id": 32,
       "oem": "Chigo",
-      "brand_slug": null,
+      "brand_slug": "chigo",
       "visible_pattern": "ZKFR-xx...",
       "regex": "^ZKFR-[A-Z0-9-]{3,25}$",
       "search_prefix": "ZKFR-",
@@ -718,7 +718,7 @@
     {
       "id": 33,
       "oem": "Chigo",
-      "brand_slug": null,
+      "brand_slug": "chigo",
       "visible_pattern": "ZGHT-xx...",
       "regex": "^ZGHT-[A-Z0-9-]{3,25}$",
       "search_prefix": "ZGHT-",
@@ -740,7 +740,7 @@
     {
       "id": 34,
       "oem": "Sanyo (legado)",
-      "brand_slug": null,
+      "brand_slug": "sanyo-historica",
       "visible_pattern": "CB-xxxx",
       "regex": "^CB-\\d{3,6}[A-Z]?$",
       "search_prefix": "CB-",
@@ -762,7 +762,7 @@
     {
       "id": 35,
       "oem": "Sanyo (legado)",
-      "brand_slug": null,
+      "brand_slug": "sanyo-historica",
       "visible_pattern": "CR-xxxx",
       "regex": "^CR-\\d{3,6}[A-Z]?$",
       "search_prefix": "CR-",
@@ -784,7 +784,7 @@
     {
       "id": 36,
       "oem": "Sanyo (legado)",
-      "brand_slug": null,
+      "brand_slug": "sanyo-historica",
       "visible_pattern": "POW-xxxx",
       "regex": "^POW-\\d{3,6}[A-Z]?$",
       "search_prefix": "POW-",
@@ -806,7 +806,7 @@
     {
       "id": 37,
       "oem": "Hitachi",
-      "brand_slug": null,
+      "brand_slug": "hitachi",
       "visible_pattern": "PMRAS-...",
       "regex": "^PMRAS-[A-Z0-9-]{3,24}$",
       "search_prefix": "PMRAS-",
@@ -828,7 +828,7 @@
     {
       "id": 38,
       "oem": "Hitachi",
-      "brand_slug": null,
+      "brand_slug": "hitachi",
       "visible_pattern": "HWRAC...",
       "regex": "^HWRAC[A-Z0-9-]{3,24}$",
       "search_prefix": "HWRAC",
@@ -850,7 +850,7 @@
     {
       "id": 39,
       "oem": "Hitachi",
-      "brand_slug": null,
+      "brand_slug": "hitachi",
       "visible_pattern": "HWRAK...",
       "regex": "^HWRAK[A-Z0-9-]{3,24}$",
       "search_prefix": "HWRAK",
@@ -1026,7 +1026,7 @@
     {
       "id": 47,
       "oem": "Sharp",
-      "brand_slug": null,
+      "brand_slug": "sharp",
       "visible_pattern": "DSGY-xxxxJBKZ",
       "regex": "^DSGY-[A-Z0-9-]{3,24}JBKZ$",
       "search_prefix": "DSGY-",

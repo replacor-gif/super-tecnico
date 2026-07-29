@@ -34,6 +34,7 @@ La interfaz es multilingüe. Las fichas técnicas conservan durante la beta el t
 - **Daikin:** Sky Air, cassette, multisplit, VRV y mandos BRC/Madoka.
 - **Gree:** split, U-Match, FLEXX, GMV y mandos cableados.
 - **Haier:** Advanced Plus, Arctic Multi, FlexFit Multi/Pro, cassette, MRV-S y mandos YR-E17/YR-E16B; relaciona códigos distintos entre unidad, mando y placa.
+- **Hitachi:** RAC/PAC, H-LINK, Central Station y SET FREE; separa alarmas de unidad, red, control central y funcionamiento degradado.
 - **Hisense:** split, comercial, cassette, multisplit, controles HYXE/HYRE y Hi-FLEXi VRF; separa códigos de mando, display interior, piloto/tubo digital exterior y red H-NET.
 - **LG:** Single Zone, Multi F/Multi F MAX, cassette, MULTI V 5, mandos PREMTB/PREMTC y LGMV.
 - **Midea:** AtomX R454B, V6 VRF, split, multisplit, cassette, conductos y WDC-120T2; distingue códigos del mando, display local y placa.
@@ -42,8 +43,11 @@ La interfaz es multilingüe. Las fichas técnicas conservan durante la beta el t
 - **Panasonic:** RAC, PACi, multisplit, cassette y ECOi/VRF.
 - **Roca (histórica):** AVO/BLI/BCI/BVI, termostato DPC-1 y enfriadoras YLCC/YCSA de la etapa Clima Roca York. Solo se admiten familias con fabricación o procedencia industrial acreditada; se excluyen equipos modernos de origen dudoso.
 - **Samsung:** RAC, FJM, DVM S/S2, MCU, mandos y herramientas; incluye tablas visuales separadas de pilotos exteriores 9K/12K y 18K/24K/30K.
+- **SANYO (histórica):** W-2WAY, 2WAY y 3-WAY ECO-i documentadas como SANYO; incluye mandos, dos pilotos, direccionamiento y respaldo sin mezclar Panasonic posterior.
+- **Sharp:** códigos principal–subcódigo, obtención por mando, Wire Check multisplit, comunicación serie, servicio y valores eléctricos.
 - **TCL:** split inverter, comercial, cassette, conductos, Free Match, portátil y TMV6+ VRF; relaciona display, mando, cuatro pilotos cassette y tabla exterior de 1–17 destellos.
 - **Toshiba:** SEIYA/RAC, multisplit, RAV, cassette y SMMSe/SMMS-u VRF; relaciona códigos de mando con tablas visuales D800–D805 sin mezclar familias.
+- **Chigo:** split, cassette, DC inverter y multisplit; conserva todos los significados alternativos de E1/E2/E3/E5/E8 según plataforma y punto de lectura.
 
 ## Qué se publica
 
