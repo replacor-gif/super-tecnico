@@ -283,6 +283,64 @@ def validate_components_catalog(source_root: Path) -> tuple[dict[str, Any], dict
     }
 
 
+def validate_oem_pcb_catalog(source_root: Path) -> tuple[dict[str, Any], dict[str, int]]:
+    catalog = read_json(source_root / "data" / "oem" / "pcb_patterns.json")
+    meta = catalog.get("meta") or {}
+    patterns = catalog.get("patterns") or []
+    ambiguous = catalog.get("ambiguous_patterns") or []
+
+    expected = {"patterns": 47, "oems": 21, "ambiguous_patterns": 15}
+    if len(patterns) != expected["patterns"]:
+        raise BuildError("El identificador OEM no contiene los 47 patrones revisados")
+    if len({item.get("oem") for item in patterns}) != expected["oems"]:
+        raise BuildError("El identificador OEM no contiene las 21 plataformas previstas")
+    if len(ambiguous) != expected["ambiguous_patterns"]:
+        raise BuildError("El identificador OEM no contiene los 15 bloqueos ambiguos")
+
+    ids = [int(item.get("id") or 0) for item in patterns]
+    if any(record_id < 1 for record_id in ids) or len(ids) != len(set(ids)):
+        raise BuildError("Hay identificadores OEM vacíos o duplicados")
+
+    for item in patterns:
+        record_id = int(item["id"])
+        if item.get("confidence") not in {"alta", "media"}:
+            raise BuildError(f"Confianza OEM no válida: {record_id}")
+        source = item.get("source") or {}
+        if not str(source.get("url") or "").startswith("https://"):
+            raise BuildError(f"Patrón OEM sin fuente HTTPS: {record_id}")
+        if source.get("authority") not in {"primary", "documented", "indirect"}:
+            raise BuildError(f"Nivel de evidencia OEM no válido: {record_id}")
+        brand_slug = item.get("brand_slug")
+        if brand_slug and not SLUG_RE.fullmatch(str(brand_slug)):
+            raise BuildError(f"Marca enlazada no válida en patrón OEM: {record_id}")
+        try:
+            matcher = re.compile(str(item["regex"]), re.IGNORECASE)
+        except re.error as exc:
+            raise BuildError(f"Regex OEM no válida: {record_id}") from exc
+        example = re.sub(r"\s+", "", str(item.get("example") or "").upper())
+        if not matcher.fullmatch(example):
+            raise BuildError(f"El ejemplo OEM no coincide con su patrón: {record_id}")
+
+    for item in ambiguous:
+        try:
+            re.compile(str(item["regex"]), re.IGNORECASE)
+        except re.error as exc:
+            raise BuildError(
+                f"Regex ambigua no válida: {item.get('visible_pattern')}"
+            ) from exc
+        if not item.get("reason") or not item.get("recommended_action"):
+            raise BuildError("Hay un patrón ambiguo sin explicación o siguiente paso")
+
+    if int(meta.get("pattern_count") or 0) != expected["patterns"]:
+        raise BuildError("Los metadatos del identificador OEM no coinciden")
+    if int(meta.get("oem_count") or 0) != expected["oems"]:
+        raise BuildError("El recuento de OEM no coincide con sus metadatos")
+    if int(meta.get("ambiguous_pattern_count") or 0) != expected["ambiguous_patterns"]:
+        raise BuildError("El recuento de patrones ambiguos no coincide con sus metadatos")
+
+    return catalog, expected
+
+
 def build(source_root: Path, output: Path) -> dict[str, Any]:
     source_root = source_root.resolve()
     output = output.resolve()
@@ -370,12 +428,15 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
     components_details = source_root / "data" / "components" / "details"
     for path in sorted(components_details.glob("*.json")):
         write_json(output / "data" / "components" / "details" / path.name, read_json(path))
+    oem_catalog, oem_stats = validate_oem_pcb_catalog(source_root)
+    write_json(output / "data" / "oem" / "pcb_patterns.json", oem_catalog)
     report = {
         "project": "Super Técnico estático",
         "generated_at_utc": generated_at,
         "brands": manifest,
         "smd": smd_stats,
         "components": components_stats,
+        "oem_pcb": oem_stats,
         "checks": counters,
     }
     write_json(output / "build-report.json", report)

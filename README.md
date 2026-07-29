@@ -7,6 +7,7 @@ Portal técnico estático con herramientas independientes. La publicación es:
 ## Herramientas disponibles
 
 - **Biblioteca técnica HVAC:** consulta por marca, código, categoría, tema y variante.
+- **Identificador OEM de placas HVAC:** cuando falta la marca comercial, relaciona el código impreso en la PCB con 21 plataformas posibles y enlaza el error con la base del fabricante electrónico disponible.
 - **Identificador SMD:** búsqueda por marcaje o referencia con filtros opcionales de encapsulado, patillas, fabricante, tipo y designador de placa.
 - **Calculadoras técnicas:** 12 herramientas de electrónica y climatización con unidades, fórmulas y advertencias.
 - **Referencias de componentes:** consulta por referencia, marcado, fabricante, categoría, encapsulado y parámetros eléctricos.
@@ -51,6 +52,7 @@ La interfaz es multilingüe. Las fichas técnicas conservan durante la beta el t
 - Manifiesto automático de marcas.
 - Catálogo SMD público formado únicamente por registros contrastados y autorizados.
 - Proyección pública de referencias de componentes, dividida en fragmentos para cargar cada ficha bajo demanda.
+- Proyección pública de 47 patrones OEM de placas y 15 formatos ambiguos bloqueados.
 - Únicamente imágenes propias o con autorización expresa.
 
 Los candidatos históricos se publican únicamente como índices factuales de localización, con su procedencia y una advertencia visible de verificación. No se publican bases SQLite, PHP, herramientas internas, manuales ni capturas de manuales no autorizadas.

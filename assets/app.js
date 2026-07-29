@@ -13,6 +13,7 @@ const els = {
   quickAccess: document.getElementById('quickAccessPanel'),
   homeButton: document.getElementById('homeButton'),
   coverageButton: document.getElementById('coverageButton'),
+  oemFinderButton: document.getElementById('oemFinderButton'),
   imageDialog: document.getElementById('imageDialog'),
   dialogImage: document.getElementById('dialogImage'),
   dialogCaption: document.getElementById('dialogCaption'),
@@ -28,6 +29,7 @@ const state = {
   topics: [],
   topic: null,
   errorCatalog: [],
+  oemCatalog: null,
 };
 const cache = new Map();
 const fileCache = new Map();
@@ -300,7 +302,10 @@ function renderQuickAccess() {
     .map(item => `<button type="button" class="task-card" data-open-category="${esc(item.slug)}">
       <span class="task-icon">${esc(item.icon)}</span>
       <span><strong>${esc(item.label)}</strong><small>${esc(item.hint)}</small></span>
-    </button>`).join('');
+    </button>`).join('') + `<button type="button" class="task-card task-card-oem" data-open-oem>
+      <span class="task-icon">PCB</span>
+      <span><strong>¿No aparece la marca comercial?</strong><small>Localiza el fabricante probable por el código impreso en la placa y consulta después el error.</small></span>
+    </button>`;
   const errorCount = state.errorCatalog.length;
   els.quickAccess.innerHTML = `
     <div class="quick-access-heading">
@@ -447,6 +452,10 @@ async function renderErrorFinder(topics) {
       </form>
       <div id="errorResults" class="search-results"><p class="empty">Escribe un código o una palabra relacionada.</p></div>
       ${catalog.length ? `<form id="errorCatalogForm" class="error-catalog-form"><div class="field"><label for="errorCatalogSelect">O elegir de la lista completa</label><select id="errorCatalogSelect">${errorCatalogOptions(catalog)}</select></div><button id="errorCatalogButton" type="submit" disabled>Abrir ficha</button></form>` : ''}
+      <aside class="oem-callout">
+        <div><strong>¿La marca de la máquina no está en Super Técnico?</strong><p>Busca el fabricante electrónico por el código serigrafiado o la etiqueta de su placa.</p></div>
+        <button type="button" data-open-oem>Identificar por placa</button>
+      </aside>
     </div></section>
     ${topics.length ? `<section class="result-card"><div class="card-body"><h2>Lectura e interpretación desde placas</h2>${topics.map(t => `<article class="search-hit"><h3>${esc(t.title)}</h3><p>${esc(t.summary || '')}</p><button type="button" data-open-topic="${t.id}">Abrir</button></article>`).join('')}</div></section>` : ''}`;
   document.getElementById('errorSearchForm').addEventListener('submit', async event => {
@@ -473,6 +482,231 @@ async function renderErrorFinder(topics) {
 
 function renderErrorHit(item) {
   return `<article class="search-hit"><h3><span class="code-badge">${esc(item.code_display)}</span>${esc(localizedText(item, 'short_label', 'Código de error'))}</h3><p>${esc(scopeLabel(item.unit_scope))} · ${item.interpretation_count || 0} interpretación(es)</p><button type="button" data-open-error="${item.id}">Ver información</button></article>`;
+}
+
+async function loadOemCatalog() {
+  if (state.oemCatalog) return state.oemCatalog;
+  state.oemCatalog = await fetchJson('data/oem/pcb_patterns.json');
+  return state.oemCatalog;
+}
+
+function normalizePcbCode(value) {
+  return String(value || '').toUpperCase().replace(/\s+/g, '').trim();
+}
+
+function compactErrorCode(value) {
+  return normalizeSearch(value).replace(/\s+/g, '');
+}
+
+function oemPatternOptions(patterns) {
+  const groups = new Map();
+  [...patterns]
+    .sort((a, b) => String(a.oem).localeCompare(String(b.oem), 'es')
+      || String(a.visible_pattern).localeCompare(String(b.visible_pattern), 'es', {numeric:true}))
+    .forEach(pattern => {
+      if (!groups.has(pattern.oem)) groups.set(pattern.oem, []);
+      groups.get(pattern.oem).push(pattern);
+    });
+  return '<option value="">Selecciona el patrón que ves en la PCB</option>'
+    + [...groups.entries()].map(([oem, rows]) => `<optgroup label="${esc(oem)}">${
+      rows.map(row => `<option value="${row.id}">${esc(row.visible_pattern)} · ${row.confidence === 'alta' ? 'confianza alta' : 'confirmar con otra pista'}</option>`).join('')
+    }</optgroup>`).join('');
+}
+
+function identifyOemByCode(catalog, rawCode) {
+  const code = normalizePcbCode(rawCode);
+  const matches = (catalog.patterns || []).filter(item => {
+    try { return new RegExp(item.regex, 'i').test(code); }
+    catch { return false; }
+  }).sort((a, b) => {
+    const confidence = {alta:2, media:1};
+    return (confidence[b.confidence] || 0) - (confidence[a.confidence] || 0)
+      || String(b.search_prefix || '').length - String(a.search_prefix || '').length;
+  });
+  if (matches.length) return {status:'identified', code, matches};
+  const ambiguous = (catalog.ambiguous_patterns || []).find(item => {
+    try { return new RegExp(item.regex, 'i').test(code); }
+    catch { return false; }
+  });
+  if (ambiguous) return {status:'ambiguous', code, ambiguous, matches:[]};
+  return {status:'not_found', code, matches:[]};
+}
+
+async function findOemErrorCandidates(pattern, rawErrorCode) {
+  const brand = pattern.brand_slug;
+  if (!brand || !installedBrands.has(brand)) {
+    return {available:false, exact:[], related:[]};
+  }
+  const query = compactErrorCode(rawErrorCode);
+  const catalog = await fetchJson(brandWebPath(brand, 'errors/index.json'));
+  const exact = catalog.filter(item => compactErrorCode(item.code_normalized || item.code_display) === query);
+  if (exact.length || query.length < 2) return {available:true, exact, related:[]};
+  const tokens = normalizeSearch(rawErrorCode).split(' ').filter(Boolean);
+  const related = catalog
+    .filter(item => matchesSearchTokens(String(item.search_text || ''), tokens))
+    .map(item => ({item, score:searchScore(String(item.search_text || ''), tokens, item.code_display)}))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 8)
+    .map(row => row.item);
+  return {available:true, exact:[], related};
+}
+
+function oemConfidenceLabel(value) {
+  return value === 'alta' ? 'Coincidencia fuerte' : 'Coincidencia probable';
+}
+
+function oemAuthorityLabel(value) {
+  return ({
+    primary:'Fuente oficial localizada',
+    documented:'Manual o documentación técnica',
+    indirect:'Evidencia de catálogo; confirmar',
+  }[value] || 'Evidencia aportada');
+}
+
+function renderOemErrorRows(pattern, result, errorCode) {
+  if (!result.available) {
+    return `<div class="empty oem-error-empty"><strong>La tabla de ${esc(pattern.recommended_error_table)} todavía no está incorporada.</strong><p>La placa puede quedar orientada hacia ${esc(pattern.oem)}, pero Super Técnico aún no puede relacionar de forma segura el error ${esc(errorCode)} con una ficha técnica.</p></div>`;
+  }
+  const rows = result.exact.length ? result.exact : result.related;
+  if (!rows.length) {
+    return `<div class="empty oem-error-empty"><strong>No hay una ficha para ${esc(errorCode)} en la base de ${esc(pattern.recommended_error_table)}.</strong><p>Esto significa “no documentado todavía”, no “código inexistente”. Comprueba también dónde se leyó el error y envía una sugerencia si dispones del manual.</p></div>`;
+  }
+  const relatedNotice = result.exact.length ? '' : `<div class="warning-box"><strong>No existe una coincidencia exacta.</strong> Estas fichas solo mencionan ${esc(errorCode)} dentro de su documentación; deben tratarse como referencias relacionadas.</div>`;
+  return `${relatedNotice}<div class="oem-error-list">${rows.map(item => `<article class="search-hit">
+    <h4><span class="code-badge">${esc(item.code_display)}</span>${esc(item.short_label || 'Código de error')}</h4>
+    <p>${esc(scopeLabel(item.unit_scope))} · ${item.interpretation_count || 0} posible(s) significado(s). Ninguno se abrirá automáticamente.</p>
+    <button type="button" data-open-oem-error="${item.id}" data-oem-brand="${esc(pattern.brand_slug)}">Ver todos los significados</button>
+  </article>`).join('')}</div>`;
+}
+
+function renderOemMatch(pattern, result, errorCode, readLocation) {
+  const source = pattern.source || {};
+  return `<article class="result-card oem-match-card"><div class="card-body">
+    <div class="oem-match-heading">
+      <div><span class="step-label">${pattern.confidence === 'alta' ? 'OEM identificado' : 'OEM probable'}</span><h3>${esc(pattern.oem)}</h3></div>
+      <span class="code-badge">${esc(pattern.visible_pattern)}</span>
+    </div>
+    <div class="chips">${chip(oemConfidenceLabel(pattern.confidence), pattern.confidence === 'alta' ? 'official' : 'warning')}${chip(oemAuthorityLabel(source.authority))}${chip(`Tabla recomendada: ${pattern.recommended_error_table}`)}</div>
+    <p>${esc(pattern.explanation)}</p>
+    <div class="warning-box"><strong>Confirmación necesaria:</strong> ${esc(pattern.exceptions)}</div>
+    <dl class="oem-facts">
+      <div><dt>Dónde suele estar</dt><dd>${esc(pattern.usual_location)}</dd></div>
+      <div><dt>Ejemplo de formato</dt><dd>${esc(pattern.example)}</dd></div>
+      <div><dt>Error introducido</dt><dd>${esc(errorCode)}${readLocation ? ` · leído en ${esc(readLocation)}` : ''}</dd></div>
+    </dl>
+    <section class="oem-error-section"><h4>Resultados posibles para el error ${esc(errorCode)}</h4>${renderOemErrorRows(pattern, result, errorCode)}</section>
+    ${source.url ? `<details class="nested-detail"><summary>Fuente del patrón de placa</summary><div class="nested-content"><p>${esc(source.title || 'Documento de referencia')}</p><a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">Abrir fuente ↗</a><p class="source-caution">La fuente respalda el patrón de placa; la aplicabilidad del error debe confirmarse con la familia y el lugar donde se leyó.</p></div></details>` : ''}
+  </div></article>`;
+}
+
+async function runOemLookup(catalog) {
+  const codeInput = document.getElementById('oemBoardCode');
+  const patternSelect = document.getElementById('oemPatternSelect');
+  const errorInput = document.getElementById('oemErrorCode');
+  const locationSelect = document.getElementById('oemErrorLocation');
+  const results = document.getElementById('oemResults');
+  const rawCode = codeInput.value.trim();
+  const errorCode = errorInput.value.trim().toUpperCase();
+  if (!rawCode && !patternSelect.value) {
+    results.innerHTML = '<div class="error-message">Escribe el código completo de la placa o selecciona su patrón en la lista.</div>';
+    codeInput.focus();
+    return;
+  }
+  if (!errorCode) {
+    results.innerHTML = '<div class="error-message">Indica también el código de error que muestra la máquina.</div>';
+    errorInput.focus();
+    return;
+  }
+
+  let identification;
+  if (rawCode) {
+    identification = identifyOemByCode(catalog, rawCode);
+  } else {
+    const selected = (catalog.patterns || []).find(item => String(item.id) === patternSelect.value);
+    identification = selected
+      ? {status:'selected_pattern', code:selected.visible_pattern, matches:[selected]}
+      : {status:'not_found', code:'', matches:[]};
+  }
+
+  if (identification.status === 'ambiguous') {
+    const item = identification.ambiguous;
+    results.innerHTML = `<div class="warning-box oem-blocked"><strong>El código ${esc(identification.code)} no basta para identificar el fabricante.</strong><p>${esc(item.reason)}</p><p><strong>Siguiente paso:</strong> ${esc(item.recommended_action)}</p></div>`;
+    return;
+  }
+  if (identification.status === 'not_found') {
+    results.innerHTML = `<div class="empty"><strong>No se reconoce el código de placa ${esc(identification.code)}.</strong><p>No elijas una plataforma por parecido. Busca otra referencia completa en la serigrafía o etiqueta de la PCB y conserva una fotografía de conjunto.</p></div>`;
+    return;
+  }
+
+  results.innerHTML = '<div class="loading">Relacionando la placa con las bases de errores…</div>';
+  const matchesWithResults = await Promise.all(identification.matches.map(async pattern => ({
+    pattern,
+    result:await findOemErrorCandidates(pattern, errorCode),
+  })));
+  const readLocation = locationSelect.value;
+  results.innerHTML = `<div class="oem-results-intro"><strong>${matchesWithResults.length} plataforma(s) electrónica(s) posible(s)</strong><p>Revisa todas. Ninguna ficha se abre automáticamente y la marca de la carcasa no se usa como prueba.</p></div>${
+    matchesWithResults.map(({pattern, result}) => renderOemMatch(pattern, result, errorCode, readLocation)).join('')
+  }`;
+}
+
+async function showOemFinder() {
+  state.category = null;
+  state.topic = null;
+  setBreadcrumb('Identificación por placa', 'Marca comercial no disponible');
+  els.context.classList.remove('hidden');
+  els.context.innerHTML = '<h2>Localizar errores por fabricante electrónico</h2><p>Úsalo cuando la marca comercial no esté en la lista o sospeches que la electrónica procede de otro fabricante.</p>';
+  loading('Cargando patrones de placas…');
+  try {
+    const catalog = await loadOemCatalog();
+    els.content.innerHTML = `<section class="result-card oem-finder"><div class="card-body">
+      <div class="notice-box"><strong>Este método orienta; no certifica el modelo.</strong><p>${esc(catalog.meta.warning)}</p></div>
+      <details class="nested-detail oem-guide" open>
+        <summary>Cómo localizar correctamente el código de la placa</summary>
+        <div class="nested-content">
+          <ol class="procedure-list">
+            <li class="danger-box"><strong>Desconecta la alimentación.</strong> Respeta el tiempo de descarga indicado por el fabricante y verifica ausencia de tensión antes de acercarte a la electrónica.</li>
+            <li>Haz una fotografía general de la placa y otra de cada etiqueta antes de desconectar cables.</li>
+            <li>Busca un código alfanumérico impreso en la serigrafía o en una etiqueta adherida a la propia PCB. Puede estar cerca del borde, de los relés o del conector principal.</li>
+            <li>No uses el modelo de la máquina, el número de serie, el código del compresor ni la referencia de un componente aislado como si fueran el código de la placa.</li>
+            <li>Escribe el código completo. Si no puedes leerlo entero, selecciona abajo el patrón que coincida visualmente y confirma después con otra pista.</li>
+          </ol>
+        </div>
+      </details>
+      <form id="oemLookupForm" class="oem-lookup-form">
+        <div class="field oem-code-field">
+          <label for="oemBoardCode"><span class="step-label">Paso 1 recomendado</span>Código completo impreso en la placa</label>
+          <input id="oemBoardCode" type="text" maxlength="80" autocomplete="off" placeholder="Ejemplo: MCC-1606">
+        </div>
+        <div class="field">
+          <label for="oemPatternSelect">O elige el patrón que reconoces</label>
+          <select id="oemPatternSelect">${oemPatternOptions(catalog.patterns || [])}</select>
+        </div>
+        <div class="field">
+          <label for="oemErrorCode"><span class="step-label">Paso 2</span>Código de error que da la máquina</label>
+          <input id="oemErrorCode" type="text" maxlength="40" autocomplete="off" placeholder="Ejemplo: E8">
+        </div>
+        <div class="field">
+          <label for="oemErrorLocation">Dónde aparece el error (opcional)</label>
+          <select id="oemErrorLocation">
+            <option value="">No lo sé</option>
+            <option value="mando de pared">Mando de pared</option>
+            <option value="display de la unidad interior">Display de la unidad interior</option>
+            <option value="placa interior o sus pilotos">Placa interior o sus pilotos</option>
+            <option value="display de la unidad exterior">Display de la unidad exterior</option>
+            <option value="placa exterior o sus pilotos">Placa exterior o sus pilotos</option>
+          </select>
+        </div>
+        <button type="submit">Buscar errores posibles</button>
+      </form>
+      <p class="oem-coverage">${catalog.meta.pattern_count} patrones · ${catalog.meta.oem_count} fabricantes/plataformas · ${catalog.meta.ambiguous_pattern_count} formatos bloqueados por ser insuficientes.</p>
+      <div id="oemResults" class="oem-results"><div class="empty"><strong>Aquí aparecerán todas las posibilidades.</strong><p>La aplicación no decidirá por ti ni abrirá automáticamente el primer significado.</p></div></div>
+    </div></section>`;
+    document.getElementById('oemLookupForm').addEventListener('submit', event => {
+      event.preventDefault();
+      runOemLookup(catalog).catch(showError);
+    });
+    revealResults();
+  } catch (error) { showError(error); }
 }
 
 async function selectTopic(id) {
@@ -751,6 +985,7 @@ els.topic.addEventListener('change', () => els.topic.value && selectTopic(els.to
 els.searchForm.addEventListener('submit', event => { event.preventDefault(); const q = els.search.value.trim(); if (q.length >= 2 && state.brand) globalSearch(q); });
 els.homeButton.addEventListener('click', showHome);
 els.coverageButton.addEventListener('click', showCoverage);
+els.oemFinderButton?.addEventListener('click', showOemFinder);
 els.closeImageDialog.addEventListener('click', () => els.imageDialog.close());
 els.imageDialog.addEventListener('click', event => { if (event.target === els.imageDialog) els.imageDialog.close(); });
 document.addEventListener('click', event => {
@@ -764,6 +999,17 @@ document.addEventListener('click', event => {
   if (categoryButton) {
     els.category.value = categoryButton.dataset.openCategory;
     selectCategory(categoryButton.dataset.openCategory);
+  }
+  const oemButton = event.target.closest('[data-open-oem]');
+  if (oemButton) showOemFinder();
+  const oemErrorButton = event.target.closest('[data-open-oem-error]');
+  if (oemErrorButton) {
+    const brand = oemErrorButton.dataset.oemBrand;
+    const errorId = oemErrorButton.dataset.openOemError;
+    if (brand && installedBrands.has(brand) && errorId) {
+      els.brand.value = brand;
+      selectBrand(brand).then(() => openError(errorId)).catch(showError);
+    }
   }
   const topicButton = event.target.closest('[data-open-topic]'); if (topicButton) selectTopic(topicButton.dataset.openTopic);
   const errorButton = event.target.closest('[data-open-error]'); if (errorButton) openError(errorButton.dataset.openError);

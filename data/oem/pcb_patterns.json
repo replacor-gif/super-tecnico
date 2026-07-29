@@ -1,0 +1,1141 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "data_version": "2.0",
+    "reviewed_at": "2026-07-29",
+    "pattern_count": 47,
+    "oem_count": 21,
+    "ambiguous_pattern_count": 15,
+    "high_confidence_count": 30,
+    "medium_confidence_count": 17,
+    "warning": "El código de placa orienta hacia una plataforma electrónica; no demuestra por sí solo el fabricante, el modelo ni que una tabla de errores sea aplicable."
+  },
+  "patterns": [
+    {
+      "id": 1,
+      "oem": "Toshiba",
+      "brand_slug": "toshiba",
+      "visible_pattern": "MCC-xxxx",
+      "regex": "^MCC[- ]?\\d{3,5}(?:[-A-Z0-9]+)?$",
+      "search_prefix": "MCC-",
+      "code_type": "codigo_tipo_pcb",
+      "usual_location": "serigrafia o manual de servicio",
+      "confidence": "alta",
+      "recommended_error_table": "Toshiba",
+      "explanation": "Patrón muy característico de placas Toshiba de control, interfaz e inverter.",
+      "exceptions": "También aparece en equipos Carrier desarrollados sobre plataforma Toshiba; el OEM a efectos de errores sigue siendo Toshiba.",
+      "example": "MCC-1606",
+      "source": {
+        "url": "https://www.toshiba-aircon.co.uk/wp-content/uploads/2017/09/Service_Manual_SHRMi_A12-006_MMY-MAP_4_FT8-E_080-100-120-140_EN_00.pdf",
+        "title": "Toshiba SHRMi service manual A12-006",
+        "kind": "manual_servicio_oficial",
+        "authority": "primary"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 2,
+      "oem": "Daikin",
+      "brand_slug": "daikin",
+      "visible_pattern": "2Pxxxxxx-x",
+      "regex": "^2P\\d{5,8}-\\d{1,2}$",
+      "search_prefix": "2P",
+      "code_type": "codigo_dibujo_pcb",
+      "usual_location": "serigrafia o etiqueta",
+      "confidence": "alta",
+      "recommended_error_table": "Daikin",
+      "explanation": "Familia de número de dibujo/placa usada en PCB Daikin.",
+      "exceptions": "No confundir con códigos 2P genéricos de componentes o catálogos ajenos a climatización.",
+      "example": "2P123456-1",
+      "source": {
+        "url": "https://daikin.manymanuals.com/split-system-air-conditioners/FVXG50K2V1B/service-manual-34389/22",
+        "title": "Daikin service manual PCB references",
+        "kind": "manual_servicio",
+        "authority": "documented"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 3,
+      "oem": "Daikin",
+      "brand_slug": "daikin",
+      "visible_pattern": "2PBxxxxx-xx",
+      "regex": "^2PB\\d{4,8}-\\d{1,2}$",
+      "search_prefix": "2PB",
+      "code_type": "codigo_dibujo_pcb",
+      "usual_location": "serigrafia o etiqueta",
+      "confidence": "alta",
+      "recommended_error_table": "Daikin",
+      "explanation": "Variante de numeración Daikin observada en placas de distintas generaciones.",
+      "exceptions": "Confirmar que el código pertenece a la PCB y no a una pieza mecánica.",
+      "example": "2PB12345-01",
+      "source": {
+        "url": "https://www.scribd.com/document/100522695/DAIKIN-Service-manual-SkyAir-B-Series",
+        "title": "Daikin SkyAir service manual",
+        "kind": "manual_servicio",
+        "authority": "documented"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 4,
+      "oem": "Daikin",
+      "brand_slug": "daikin",
+      "visible_pattern": "3SWxxxxx-x",
+      "regex": "^3SW\\d{4,8}-\\d{1,2}$",
+      "search_prefix": "3SW",
+      "code_type": "codigo_dibujo_pcb",
+      "usual_location": "serigrafia o etiqueta",
+      "confidence": "alta",
+      "recommended_error_table": "Daikin",
+      "explanation": "Código de placa usado en determinadas gamas Daikin/Sky Air.",
+      "exceptions": "Aplicar solo cuando se lee completo en una PCB de climatización.",
+      "example": "3SW12345-1",
+      "source": {
+        "url": "https://www.scribd.com/document/100522695/DAIKIN-Service-manual-SkyAir-B-Series",
+        "title": "Daikin SkyAir service manual",
+        "kind": "manual_servicio",
+        "authority": "documented"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 5,
+      "oem": "Daikin",
+      "brand_slug": "daikin",
+      "visible_pattern": "4SWxxxxx-x",
+      "regex": "^4SW\\d{4,8}-\\d{1,2}$",
+      "search_prefix": "4SW",
+      "code_type": "codigo_dibujo_pcb",
+      "usual_location": "serigrafia o etiqueta",
+      "confidence": "alta",
+      "recommended_error_table": "Daikin",
+      "explanation": "Código de placa usado en determinadas gamas Daikin/Sky Air.",
+      "exceptions": "Aplicar solo cuando se lee completo en una PCB de climatización.",
+      "example": "4SW12345-1",
+      "source": {
+        "url": "https://www.scribd.com/document/100522695/DAIKIN-Service-manual-SkyAir-B-Series",
+        "title": "Daikin SkyAir service manual",
+        "kind": "manual_servicio",
+        "authority": "documented"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 6,
+      "oem": "Samsung",
+      "brand_slug": "samsung",
+      "visible_pattern": "DB92-xxxxx",
+      "regex": "^DB92-\\d{5}[A-Z0-9-]*$",
+      "search_prefix": "DB92-",
+      "code_type": "codigo_pcb_conjunto",
+      "usual_location": "etiqueta o impresion de placa",
+      "confidence": "alta",
+      "recommended_error_table": "Samsung",
+      "explanation": "Samsung identifica numerosas PCB principales e inverter con DB92.",
+      "exceptions": "La serie DB92 también se usa en conjuntos; confirmar que el objeto es una placa de aire acondicionado.",
+      "example": "DB92-04837A-E",
+      "source": {
+        "url": "https://www.samsung.com/my/business/system-air-conditioners/parts-db92-05043d/",
+        "title": "Samsung Air Conditioner PBA Main DB92-05043D",
+        "kind": "fabricante_oem",
+        "authority": "primary"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 7,
+      "oem": "Samsung",
+      "brand_slug": "samsung",
+      "visible_pattern": "DB93-xxxxx",
+      "regex": "^DB93-\\d{5}[A-Z0-9-]*$",
+      "search_prefix": "DB93-",
+      "code_type": "codigo_pcb_conjunto",
+      "usual_location": "etiqueta o impresion de placa",
+      "confidence": "media",
+      "recommended_error_table": "Samsung",
+      "explanation": "DB93 es una familia de referencias Samsung que puede aparecer en placas, mandos y otros conjuntos; no identifica una PCB por sí sola.",
+      "exceptions": "Aceptar la orientación Samsung únicamente si DB93 está impreso en la propia placa de climatización o el manual lo describe expresamente como PCB/PBA.",
+      "example": "DB93-10521A",
+      "source": {
+        "url": "https://www.manualslib.com/manual/1143135/Samsung-Ash180ue.html",
+        "title": "Samsung ASH service manual PCB diagram",
+        "kind": "manual_servicio",
+        "authority": "documented"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 8,
+      "oem": "LG",
+      "brand_slug": "lg",
+      "visible_pattern": "EBRxxxxxxxx",
+      "regex": "^EBR\\d{7,10}$",
+      "search_prefix": "EBR",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta o impresion de placa",
+      "confidence": "alta",
+      "recommended_error_table": "LG",
+      "explanation": "Prefijo OEM de placas LG, incluidas PCB principales, display e inverter.",
+      "exceptions": "El código EBR identifica la placa LG, pero no determina por sí solo si es interior, exterior o display.",
+      "example": "EBR78402302",
+      "source": {
+        "url": "https://www.lg.com/br/pecas-e-acessorios-de-ar-condicionado/ebr30056413/",
+        "title": "LG placa principal de aire acondicionado EBR30056413",
+        "kind": "fabricante_oem",
+        "authority": "primary"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 9,
+      "oem": "Panasonic",
+      "brand_slug": "panasonic",
+      "visible_pattern": "CWA73Cxxxx",
+      "regex": "^CWA73C[A-Z0-9]{3,8}$",
+      "search_prefix": "CWA73C",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "alta",
+      "recommended_error_table": "Panasonic",
+      "explanation": "Familia repetida en placas originales Panasonic de climatización.",
+      "exceptions": "Puede existir más de una revisión para un mismo equipo; usar el código completo para repuesto.",
+      "example": "CWA73C6144",
+      "source": {
+        "url": "https://panasonic.encompass.com/item/9589436/Panasonic/CWA73C6144/",
+        "title": "Panasonic PCB assembly reference",
+        "kind": "catalogo_oem",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 10,
+      "oem": "Panasonic",
+      "brand_slug": "panasonic",
+      "visible_pattern": "ACXA73Cxxxxx",
+      "regex": "^ACXA73C[A-Z0-9]{4,9}$",
+      "search_prefix": "ACXA73C",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "media",
+      "recommended_error_table": "Panasonic",
+      "explanation": "Variante moderna de referencia de conjunto electrónico Panasonic.",
+      "exceptions": "Confirmar con fotografía o manual del modelo; algunas referencias ACXA no son placas principales.",
+      "example": "ACXA73C12345",
+      "source": {
+        "url": "https://panasonic.encompass.com/item/9589436/Panasonic/CWA73C6144/",
+        "title": "Panasonic PCB reference family",
+        "kind": "catalogo_oem",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 11,
+      "oem": "Mitsubishi Electric",
+      "brand_slug": "mitsubishi-electric",
+      "visible_pattern": "E12 xxx xxx",
+      "regex": "^E12[ -]?[A-Z0-9]{3}[ -]?[A-Z0-9]{3}$",
+      "search_prefix": "E12",
+      "code_type": "referencia_oem",
+      "usual_location": "etiqueta o lista de piezas",
+      "confidence": "media",
+      "recommended_error_table": "Mitsubishi Electric",
+      "explanation": "Prefijo de referencias Mitsubishi Electric; numerosas PCB de climatización usan E12.",
+      "exceptions": "E12 también aparece en otras piezas del equipo. Solo identifica la placa cuando el código está físicamente en una PCB o descrito como P.C. BOARD.",
+      "example": "E12 C95 450",
+      "source": {
+        "url": "https://mitsubishi.manymanuals.com/split-system-air-conditioners/muz-gb50va/service-manual-34465/49",
+        "title": "Mitsubishi Electric parts list",
+        "kind": "manual_servicio",
+        "authority": "documented"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 12,
+      "oem": "Mitsubishi Heavy Industries",
+      "brand_slug": "mitsubishi-heavy-industries",
+      "visible_pattern": "RCT505Axxx",
+      "regex": "^RCT505A[A-Z0-9-]{2,12}$",
+      "search_prefix": "RCT505A",
+      "code_type": "referencia_pwb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "alta",
+      "recommended_error_table": "Mitsubishi Heavy Industries",
+      "explanation": "Familia de referencias PWB/PCB de Mitsubishi Heavy Industries.",
+      "exceptions": "No confundir Mitsubishi Heavy con Mitsubishi Electric; sus tablas de error y electrónica son diferentes.",
+      "example": "RCT505A123",
+      "source": {
+        "url": "https://www.nationwidespares.com.au/Mitsubishi-Heavy-Industries-Spare-Parts/page/2",
+        "title": "MHI PCB spare references",
+        "kind": "catalogo_oem",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 13,
+      "oem": "Fujitsu General",
+      "brand_slug": "fujitsu-general",
+      "visible_pattern": "K970xxxxxxx",
+      "regex": "^K970\\d{6,10}$",
+      "search_prefix": "K970",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "alta",
+      "recommended_error_table": "Fujitsu General",
+      "explanation": "Familia de referencias de PCB Fujitsu General, también en equipos General/O General.",
+      "exceptions": "El fabricante de plataforma es Fujitsu General aunque la marca frontal sea General u O General.",
+      "example": "K9709892015",
+      "source": {
+        "url": "https://www.sidharvey.com/item/K9709892015/PCB-Control-Board/",
+        "title": "Fujitsu PCB control board",
+        "kind": "catalogo_oem",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 14,
+      "oem": "Fujitsu General",
+      "brand_slug": "fujitsu-general",
+      "visible_pattern": "KxxXX-xxxxXXX-xx",
+      "regex": "^K\\d{2}[A-Z]{2}-\\d{4}[A-Z]{3}-[A-Z0-9]{2}$",
+      "search_prefix": "K",
+      "code_type": "codigo_diseno_pcb",
+      "usual_location": "serigrafia",
+      "confidence": "media",
+      "recommended_error_table": "Fujitsu General",
+      "explanation": "Formato de diseño observado en placas Fujitsu/General.",
+      "exceptions": "La K inicial sola no identifica al fabricante; exigir coincidencia del formato completo.",
+      "example": "K13RA-1305WSE-C1",
+      "source": {
+        "url": "https://www.fujitsuspareparts.com.au/product-page/9709622063-indoor-main-control-pcb",
+        "title": "Fujitsu PCB example",
+        "kind": "catalogo_tecnico",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 15,
+      "oem": "Midea",
+      "brand_slug": "midea",
+      "visible_pattern": "CE-KFRxx...",
+      "regex": "^CE-KFR[A-Z0-9/_.-]{3,25}$",
+      "search_prefix": "CE-KFR",
+      "code_type": "codigo_diseno_pcb",
+      "usual_location": "serigrafia",
+      "confidence": "alta",
+      "recommended_error_table": "Midea",
+      "explanation": "Patrón muy habitual en placas Midea de split e inverter.",
+      "exceptions": "El sufijo varía ampliamente; usar el prefijo CE-KFR completo.",
+      "example": "CE-KFR35W/BP3N1",
+      "source": {
+        "url": "https://manuals.plus/ae/1005006825126420",
+        "title": "Midea control board listing/manual",
+        "kind": "documentacion_tecnica",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 16,
+      "oem": "Midea",
+      "brand_slug": "midea",
+      "visible_pattern": "ME-POWER-xxA...",
+      "regex": "^ME-POWER-[A-Z0-9/_.-]{3,25}$",
+      "search_prefix": "ME-POWER-",
+      "code_type": "codigo_potencia_pcb",
+      "usual_location": "serigrafia",
+      "confidence": "alta",
+      "recommended_error_table": "Midea",
+      "explanation": "Identifica placas de potencia/inverter de plataforma Midea.",
+      "exceptions": "Puede aparecer en equipos de otras marcas comerciales fabricados por Midea.",
+      "example": "ME-POWER-12A",
+      "source": {
+        "url": "https://www.tingertech.com/Original-Air-Conditioner-PCB-Control-Circuit-Board-pd557700048.html",
+        "title": "Midea original PCB listing",
+        "kind": "catalogo_tecnico",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 17,
+      "oem": "Midea",
+      "brand_slug": "midea",
+      "visible_pattern": "EU-KFRxx...",
+      "regex": "^EU-KFR[A-Z0-9/_.-]{3,25}$",
+      "search_prefix": "EU-KFR",
+      "code_type": "codigo_diseno_pcb",
+      "usual_location": "serigrafia",
+      "confidence": "media",
+      "recommended_error_table": "Midea",
+      "explanation": "Variante observada en plataformas Midea destinadas a ciertos mercados.",
+      "exceptions": "Confirmar con un segundo identificador Midea cuando sea posible.",
+      "example": "EU-KFR35G",
+      "source": {
+        "url": "https://airtech-online.com/produit/17122000045458/",
+        "title": "Midea/Kaysun shared PCB reference",
+        "kind": "catalogo_tecnico",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 18,
+      "oem": "Midea",
+      "brand_slug": "midea",
+      "visible_pattern": "17122xxxxxxxxx",
+      "regex": "^17122\\d{9}$",
+      "search_prefix": "17122",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "alta",
+      "recommended_error_table": "Midea",
+      "explanation": "Familia logística muy repetida en placas Midea y marcas OEM fabricadas por Midea.",
+      "exceptions": "Es una referencia de conjunto; debe leerse en la etiqueta de la PCB.",
+      "example": "17122000045458",
+      "source": {
+        "url": "https://midea.encompass.com/item/12286658/Midea/17122000008498/",
+        "title": "Midea PCB assembly",
+        "kind": "catalogo_oem",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 19,
+      "oem": "Midea",
+      "brand_slug": "midea",
+      "visible_pattern": "17123xxxxxxxxx",
+      "regex": "^17123\\d{9}$",
+      "search_prefix": "17123",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "media",
+      "recommended_error_table": "Midea",
+      "explanation": "Familia de referencia observada en placas de plataformas Midea.",
+      "exceptions": "Confirmar con serigrafía CE-KFR/ME-POWER u otra evidencia cuando esté disponible.",
+      "example": "17123000012345",
+      "source": {
+        "url": "https://airtech-online.com/produit/17122000045458/",
+        "title": "Midea shared PCB reference family",
+        "kind": "catalogo_tecnico",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 20,
+      "oem": "Midea",
+      "brand_slug": "midea",
+      "visible_pattern": "17127xxxxxxxxx",
+      "regex": "^17127\\d{9}$",
+      "search_prefix": "17127",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "media",
+      "recommended_error_table": "Midea",
+      "explanation": "Familia usada en determinados conjuntos y sistemas Midea/MDV.",
+      "exceptions": "No usar el prefijo 1712 de forma aislada; exigir la serie completa.",
+      "example": "17127000012345",
+      "source": {
+        "url": "https://airtech-online.com/produit/17122000045458/",
+        "title": "Midea shared PCB reference family",
+        "kind": "catalogo_tecnico",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 21,
+      "oem": "Gree",
+      "brand_slug": "gree",
+      "visible_pattern": "GRJxxx-xxx",
+      "regex": "^GRJ[A-Z0-9]{2,6}-[A-Z0-9]{2,8}$",
+      "search_prefix": "GRJ",
+      "code_type": "codigo_diseno_pcb",
+      "usual_location": "serigrafia",
+      "confidence": "alta",
+      "recommended_error_table": "Gree",
+      "explanation": "Código de diseño característico observado en placas Gree.",
+      "exceptions": "Puede encontrarse en máquinas con marca comercial distinta fabricadas por Gree.",
+      "example": "GRJ123-A45",
+      "source": {
+        "url": "https://www.alibaba.com/showroom/gree-main-control-board.html",
+        "title": "Gree PCB examples",
+        "kind": "catalogo_tecnico",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 22,
+      "oem": "Gree",
+      "brand_slug": "gree",
+      "visible_pattern": "300027xxxxxx",
+      "regex": "^300027\\d{6}$",
+      "search_prefix": "300027",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "alta",
+      "recommended_error_table": "Gree",
+      "explanation": "Familia repetida de referencias de placas Gree.",
+      "exceptions": "Confirmar que son 12 dígitos y que está en una PCB de climatización.",
+      "example": "300027000100",
+      "source": {
+        "url": "https://autoplicity.com/21717379-gree-300027060985-control-board",
+        "title": "Gree control board reference",
+        "kind": "catalogo_tecnico",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 23,
+      "oem": "Gree",
+      "brand_slug": "gree",
+      "visible_pattern": "30138xxxxxx",
+      "regex": "^30138\\d{7}$",
+      "search_prefix": "30138",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "alta",
+      "recommended_error_table": "Gree",
+      "explanation": "Familia Gree presente en múltiples mini-split OEM.",
+      "exceptions": "La marca exterior puede ser distinta; para errores se debe revisar la plataforma Gree.",
+      "example": "301380001234",
+      "source": {
+        "url": "https://tosot.pl/en/",
+        "title": "TOSOT/Gree platform information",
+        "kind": "fabricante_oem",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 24,
+      "oem": "Gree",
+      "brand_slug": "gree",
+      "visible_pattern": "3022xxxxxxx",
+      "regex": "^3022\\d{7,8}$",
+      "search_prefix": "3022",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "media",
+      "recommended_error_table": "Gree",
+      "explanation": "Familia observada en determinadas placas Gree/VRF.",
+      "exceptions": "Confirmar longitud completa y contexto de la PCB.",
+      "example": "30220001234",
+      "source": {
+        "url": "https://tosot.pl/en/",
+        "title": "TOSOT/Gree platform information",
+        "kind": "fabricante_oem",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 25,
+      "oem": "Gree",
+      "brand_slug": "gree",
+      "visible_pattern": "ZSxxxx",
+      "regex": "^ZS[A-Z0-9]{4,10}$",
+      "search_prefix": "ZS",
+      "code_type": "codigo_diseno_pcb",
+      "usual_location": "serigrafia",
+      "confidence": "media",
+      "recommended_error_table": "Gree",
+      "explanation": "Familia de códigos de diseño observada en módulos Gree.",
+      "exceptions": "ZS es corto y puede aparecer fuera de Gree; exigir contexto de climatización y, si es posible, segundo código.",
+      "example": "ZS1234",
+      "source": {
+        "url": "https://www.alibaba.com/showroom/gree-main-control-board.html",
+        "title": "Gree PCB examples",
+        "kind": "catalogo_tecnico",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 26,
+      "oem": "Haier",
+      "brand_slug": "haier",
+      "visible_pattern": "A001180xxxx / 001180xxxx",
+      "regex": "^A?001180\\d{4,8}[A-Z]?$",
+      "search_prefix": "001180",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "alta",
+      "recommended_error_table": "Haier",
+      "explanation": "Familia de referencias Haier, con A inicial opcional.",
+      "exceptions": "Confirmar que el código está en la placa y no en otro repuesto Haier.",
+      "example": "0011800381B",
+      "source": {
+        "url": "https://www.topes.net/tienda/placa-control-0011800381b/",
+        "title": "Haier control PCB",
+        "kind": "catalogo_tecnico",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 27,
+      "oem": "Hisense",
+      "brand_slug": "hisense",
+      "visible_pattern": "PCBxx-xxx-Vxx",
+      "regex": "^PCB[A-Z0-9]{2,6}-[A-Z0-9]{2,8}-V\\d{1,3}$",
+      "search_prefix": "PCB",
+      "code_type": "codigo_diseno_pcb",
+      "usual_location": "serigrafia",
+      "confidence": "media",
+      "recommended_error_table": "Hisense",
+      "explanation": "Formato observado en placas Hisense.",
+      "exceptions": "El prefijo PCB es genérico; solo aceptar si coincide el formato completo y el contexto es climatización.",
+      "example": "PCB12-345-V01",
+      "source": {
+        "url": "https://manuals.plus/es/ae/1005008824512630",
+        "title": "Hisense PCB example",
+        "kind": "documentacion_tecnica",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 28,
+      "oem": "AUX",
+      "brand_slug": "aux-air",
+      "visible_pattern": "SX-...",
+      "regex": "^SX-[A-Z0-9-]{4,24}$",
+      "search_prefix": "SX-",
+      "code_type": "codigo_diseno_pcb",
+      "usual_location": "serigrafia",
+      "confidence": "alta",
+      "recommended_error_table": "AUX",
+      "explanation": "Familia de códigos de diseño frecuente en placas AUX.",
+      "exceptions": "SX es breve; exigir guion y cadena completa en una PCB HVAC.",
+      "example": "SX-AC-1234",
+      "source": {
+        "url": "https://manuals.plus/ae/1005006119678227",
+        "title": "AUX PCB documentation",
+        "kind": "documentacion_tecnica",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 29,
+      "oem": "AUX",
+      "brand_slug": "aux-air",
+      "visible_pattern": "CJ-...",
+      "regex": "^CJ-[A-Z0-9-]{4,24}$",
+      "search_prefix": "CJ-",
+      "code_type": "codigo_diseno_pcb",
+      "usual_location": "serigrafia",
+      "confidence": "media",
+      "recommended_error_table": "AUX",
+      "explanation": "Familia observada en controladores y placas AUX.",
+      "exceptions": "Confirmar con etiqueta AUX 112225/171700 cuando sea posible.",
+      "example": "CJ-AC-1234",
+      "source": {
+        "url": "https://aselcn.com/product/aux-control-board-11222542000016/",
+        "title": "AUX control board",
+        "kind": "catalogo_tecnico",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 30,
+      "oem": "AUX",
+      "brand_slug": "aux-air",
+      "visible_pattern": "112225xxxxxxxx",
+      "regex": "^112225\\d{8}$",
+      "search_prefix": "112225",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "alta",
+      "recommended_error_table": "AUX",
+      "explanation": "Referencia larga de conjuntos PCB AUX.",
+      "exceptions": "Puede estar en máquinas reetiquetadas por otras marcas.",
+      "example": "11222542000016",
+      "source": {
+        "url": "https://aselcn.com/product/aux-control-board-11222542000016/",
+        "title": "AUX control board",
+        "kind": "catalogo_tecnico",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 31,
+      "oem": "AUX",
+      "brand_slug": "aux-air",
+      "visible_pattern": "171700xxxxxxxx",
+      "regex": "^171700\\d{8}$",
+      "search_prefix": "171700",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "alta",
+      "recommended_error_table": "AUX",
+      "explanation": "Otra familia de referencias de placa AUX.",
+      "exceptions": "No confundir con series Midea 17122/17123/17127.",
+      "example": "17170000123456",
+      "source": {
+        "url": "https://aselcn.com/product/aux-control-board-11222542000016/",
+        "title": "AUX control board family",
+        "kind": "catalogo_tecnico",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 32,
+      "oem": "Chigo",
+      "brand_slug": null,
+      "visible_pattern": "ZKFR-xx...",
+      "regex": "^ZKFR-[A-Z0-9-]{3,25}$",
+      "search_prefix": "ZKFR-",
+      "code_type": "codigo_diseno_pcb",
+      "usual_location": "serigrafia",
+      "confidence": "alta",
+      "recommended_error_table": "Chigo",
+      "explanation": "Modelo de PCB documentado en manuales de servicio Chigo.",
+      "exceptions": "No confundir con KFR genérico sin Z inicial.",
+      "example": "ZKFR-35GW",
+      "source": {
+        "url": "https://chigo.manymanuals.de/split-system-air-conditioners/kfr-70gw/service-manual-4814/23",
+        "title": "Chigo service manual",
+        "kind": "manual_servicio",
+        "authority": "documented"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 33,
+      "oem": "Chigo",
+      "brand_slug": null,
+      "visible_pattern": "ZGHT-xx...",
+      "regex": "^ZGHT-[A-Z0-9-]{3,25}$",
+      "search_prefix": "ZGHT-",
+      "code_type": "codigo_diseno_pcb",
+      "usual_location": "serigrafia",
+      "confidence": "alta",
+      "recommended_error_table": "Chigo",
+      "explanation": "Código de PCB documentado en equipos Chigo.",
+      "exceptions": "Exigir el prefijo ZGHT completo.",
+      "example": "ZGHT-12A",
+      "source": {
+        "url": "https://chigo.manymanuals.de/split-system-air-conditioners/kfr-70gw/service-manual-4814/23",
+        "title": "Chigo service manual",
+        "kind": "manual_servicio",
+        "authority": "documented"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 34,
+      "oem": "Sanyo (legado)",
+      "brand_slug": null,
+      "visible_pattern": "CB-xxxx",
+      "regex": "^CB-\\d{3,6}[A-Z]?$",
+      "search_prefix": "CB-",
+      "code_type": "codigo_pcb",
+      "usual_location": "serigrafia o manual",
+      "confidence": "media",
+      "recommended_error_table": "Sanyo",
+      "explanation": "Código de placa usado en equipos Sanyo antiguos.",
+      "exceptions": "CB es un prefijo genérico; solo usar en contexto de aire acondicionado Sanyo/antigua plataforma Sanyo.",
+      "example": "CB-1234",
+      "source": {
+        "url": "https://www.manualslib.com/manual/786792/Sanyo-Sap-Krv96eh.html",
+        "title": "Sanyo service manual",
+        "kind": "manual_servicio",
+        "authority": "documented"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 35,
+      "oem": "Sanyo (legado)",
+      "brand_slug": null,
+      "visible_pattern": "CR-xxxx",
+      "regex": "^CR-\\d{3,6}[A-Z]?$",
+      "search_prefix": "CR-",
+      "code_type": "codigo_pcb",
+      "usual_location": "serigrafia o manual",
+      "confidence": "media",
+      "recommended_error_table": "Sanyo",
+      "explanation": "Código de placa usado en equipos Sanyo antiguos.",
+      "exceptions": "CR es genérico; exigir contexto HVAC y formato completo.",
+      "example": "CR-1234",
+      "source": {
+        "url": "https://www.manualslib.com/manual/786792/Sanyo-Sap-Krv96eh.html",
+        "title": "Sanyo service manual",
+        "kind": "manual_servicio",
+        "authority": "documented"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 36,
+      "oem": "Sanyo (legado)",
+      "brand_slug": null,
+      "visible_pattern": "POW-xxxx",
+      "regex": "^POW-\\d{3,6}[A-Z]?$",
+      "search_prefix": "POW-",
+      "code_type": "codigo_pcb_potencia",
+      "usual_location": "serigrafia o manual",
+      "confidence": "alta",
+      "recommended_error_table": "Sanyo",
+      "explanation": "Código de placas de potencia en determinadas plataformas Sanyo.",
+      "exceptions": "Aplicar a equipos Sanyo antiguos o derivados documentados.",
+      "example": "POW-1234",
+      "source": {
+        "url": "https://www.manualslib.com/manual/786792/Sanyo-Sap-Krv96eh.html",
+        "title": "Sanyo service manual",
+        "kind": "manual_servicio",
+        "authority": "documented"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 37,
+      "oem": "Hitachi",
+      "brand_slug": null,
+      "visible_pattern": "PMRAS-...",
+      "regex": "^PMRAS-[A-Z0-9-]{3,24}$",
+      "search_prefix": "PMRAS-",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "alta",
+      "recommended_error_table": "Hitachi",
+      "explanation": "Familia Hitachi usada en placas principales y receptoras.",
+      "exceptions": "Confirmar que la referencia corresponde a PWB/PCB.",
+      "example": "PMRAS-1234",
+      "source": {
+        "url": "https://m.culmi.com.my/index.php?cid=73590&ws=ourproducts",
+        "title": "Hitachi PCB references",
+        "kind": "catalogo_tecnico",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 38,
+      "oem": "Hitachi",
+      "brand_slug": null,
+      "visible_pattern": "HWRAC...",
+      "regex": "^HWRAC[A-Z0-9-]{3,24}$",
+      "search_prefix": "HWRAC",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "alta",
+      "recommended_error_table": "Hitachi",
+      "explanation": "Familia de referencias de control Hitachi.",
+      "exceptions": "No confundir con el modelo completo del equipo; debe estar en la placa.",
+      "example": "HWRAC12345",
+      "source": {
+        "url": "https://m.culmi.com.my/index.php?cid=73590&ws=ourproducts",
+        "title": "Hitachi PCB references",
+        "kind": "catalogo_tecnico",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 39,
+      "oem": "Hitachi",
+      "brand_slug": null,
+      "visible_pattern": "HWRAK...",
+      "regex": "^HWRAK[A-Z0-9-]{3,24}$",
+      "search_prefix": "HWRAK",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "alta",
+      "recommended_error_table": "Hitachi",
+      "explanation": "Familia de referencias de control Hitachi.",
+      "exceptions": "No confundir con el modelo completo del equipo; debe estar en la placa.",
+      "example": "HWRAK12345",
+      "source": {
+        "url": "https://m.culmi.com.my/index.php?cid=73590&ws=ourproducts",
+        "title": "Hitachi PCB references",
+        "kind": "catalogo_tecnico",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 40,
+      "oem": "Electrolux",
+      "brand_slug": null,
+      "visible_pattern": "405xxxxxxx",
+      "regex": "^405\\d{7}$",
+      "search_prefix": "405",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "media",
+      "recommended_error_table": "Electrolux",
+      "explanation": "Familia de referencias usada en conjuntos electrónicos Electrolux/Westinghouse.",
+      "exceptions": "405 es un prefijo numérico relativamente genérico; exigir 10 dígitos y contexto de placa HVAC Electrolux.",
+      "example": "4051234567",
+      "source": {
+        "url": "https://www.electrolux.com/",
+        "title": "Electrolux OEM reference family",
+        "kind": "fabricante_oem",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 41,
+      "oem": "York / Johnson Controls",
+      "brand_slug": null,
+      "visible_pattern": "S1-xxxxxxxxxxx",
+      "regex": "^S1-\\d{10,13}$",
+      "search_prefix": "S1-",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "media",
+      "recommended_error_table": "York / Johnson Controls",
+      "explanation": "Prefijo de repuesto OEM usado en placas York/Johnson Controls.",
+      "exceptions": "No determina si una gama mini-split fue fabricada por otro OEM; si hay un código Gree/Midea en la PCB, ese código tiene prioridad.",
+      "example": "S1-12345678901",
+      "source": {
+        "url": "https://www.yorknow.com/",
+        "title": "York OEM parts family",
+        "kind": "fabricante_oem",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 42,
+      "oem": "Skyworth",
+      "brand_slug": null,
+      "visible_pattern": "W608x-xxx",
+      "regex": "^W608[A-Z0-9-]{3,14}$",
+      "search_prefix": "W608",
+      "code_type": "codigo_diseno_pcb",
+      "usual_location": "serigrafia",
+      "confidence": "media",
+      "recommended_error_table": "Skyworth",
+      "explanation": "Código de diseño observado en la plataforma Skyworth usada en algunas series Hyundai/Airton.",
+      "exceptions": "Confirmar con el código K5010 o documentación del modelo cuando sea posible.",
+      "example": "W6081-123",
+      "source": {
+        "url": "https://manualzz.com/doc/55998455/hyundai-hrp-s09wh--hrp-s12wh--hrp-s18wh--hrp-s24wh-servic...",
+        "title": "Hyundai HRP-S / Skyworth service manual",
+        "kind": "manual_servicio",
+        "authority": "documented"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 43,
+      "oem": "Skyworth",
+      "brand_slug": null,
+      "visible_pattern": "K5010xxxx",
+      "regex": "^K5010\\d{4,8}$",
+      "search_prefix": "K5010",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "alta",
+      "recommended_error_table": "Skyworth",
+      "explanation": "Referencia de placas principales Skyworth documentada en determinadas series Hyundai HRP-S.",
+      "exceptions": "No identifica a toda la marca Hyundai; solo a la plataforma electrónica Skyworth.",
+      "example": "K50102124",
+      "source": {
+        "url": "https://manualzz.com/doc/55998455/hyundai-hrp-s09wh--hrp-s12wh--hrp-s18wh--hrp-s24wh-servic...",
+        "title": "Hyundai HRP-S / Skyworth service manual",
+        "kind": "manual_servicio",
+        "authority": "documented"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 44,
+      "oem": "TCL",
+      "brand_slug": "tcl",
+      "visible_pattern": "A010xxx",
+      "regex": "^A010\\d{3,6}$",
+      "search_prefix": "A010",
+      "code_type": "codigo_tipo_pcb",
+      "usual_location": "serigrafia",
+      "confidence": "alta",
+      "recommended_error_table": "TCL",
+      "explanation": "Los manuales TCL identifican tipos de PCB mediante códigos A010xxx impresos en la placa.",
+      "exceptions": "Exigir A010 seguido de 3 a 6 dígitos.",
+      "example": "A010386",
+      "source": {
+        "url": "https://www.manualslib.com/manual/3282287/Tcl-Tac-09csd-Xa81i.html",
+        "title": "TCL service manual PCB types",
+        "kind": "manual_servicio",
+        "authority": "documented"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 45,
+      "oem": "TCL",
+      "brand_slug": "tcl",
+      "visible_pattern": "CTTC-xxxxxxxxx-TCL-PCB",
+      "regex": "^CTTC-[A-Z0-9-]{5,30}-TCL(?:-PCB)?$",
+      "search_prefix": "CTTC-",
+      "code_type": "codigo_diseno_pcb",
+      "usual_location": "serigrafia",
+      "confidence": "alta",
+      "recommended_error_table": "TCL",
+      "explanation": "Código de producción/diseño que incorpora explícitamente TCL o TCL-PCB.",
+      "exceptions": "Es una identificación muy fuerte cuando aparece completa.",
+      "example": "CTTC-210901714-TCL-PCB",
+      "source": {
+        "url": "https://www.faustoricambi.it/tableros-electronicos-zephir-31101000222-tarjeta-electronica-pcb-kb-5150-tcl-pcb-unidad-interior-aire-acondicionado.4.20.150.gp.61024.uw",
+        "title": "TCL PCB product image/reference",
+        "kind": "catalogo_tecnico",
+        "authority": "indirect"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 46,
+      "oem": "TCL",
+      "brand_slug": "tcl",
+      "visible_pattern": "1090xxxxxx",
+      "regex": "^1090\\d{6}$",
+      "search_prefix": "1090",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "media",
+      "recommended_error_table": "TCL",
+      "explanation": "Familia de referencias de placas principales y display TCL.",
+      "exceptions": "1090 por sí solo no basta; exigir 10 dígitos y contexto TCL/HVAC.",
+      "example": "1090320163",
+      "source": {
+        "url": "https://manuals.plus/m/dd15c1712b475fe377a0941c880341aebfed6d46ad81c21f877bac8df5265328",
+        "title": "TCL service manual parts list",
+        "kind": "manual_servicio",
+        "authority": "documented"
+      },
+      "reviewed_at": "2026-07-29"
+    },
+    {
+      "id": 47,
+      "oem": "Sharp",
+      "brand_slug": null,
+      "visible_pattern": "DSGY-xxxxJBKZ",
+      "regex": "^DSGY-[A-Z0-9-]{3,24}JBKZ$",
+      "search_prefix": "DSGY-",
+      "code_type": "referencia_pcb_oem",
+      "usual_location": "etiqueta de placa",
+      "confidence": "alta",
+      "recommended_error_table": "Sharp",
+      "explanation": "Familia de placas Sharp; algunas gamas Bosch Climate Class comparten esta plataforma.",
+      "exceptions": "Si aparece DSGY, usar documentación/errores de la plataforma Sharp concreta, no asumir que todo Bosch sea Sharp.",
+      "example": "DSGY-H123JBKZ",
+      "source": {
+        "url": "https://sharp.manymanuals.com/split-system-air-conditioners/ay-xpm12fr/service-manual-5097/44",
+        "title": "Sharp service manual PCB references",
+        "kind": "manual_servicio",
+        "authority": "documented"
+      },
+      "reviewed_at": "2026-07-29"
+    }
+  ],
+  "ambiguous_patterns": [
+    {
+      "visible_pattern": "KFR-xx...",
+      "regex": "^KFR[-A-Z0-9/_.]{2,}$",
+      "reason": "KFR aparece en numerosos fabricantes chinos y no identifica por sí solo al OEM.",
+      "recommended_action": "Buscar CE-KFR, EU-KFR, ZKFR, ZGHT, ME-POWER u otro prefijo completo."
+    },
+    {
+      "visible_pattern": "PCB...",
+      "regex": "^PCB[A-Z0-9/_.-]*$",
+      "reason": "PCB es una descripción genérica.",
+      "recommended_action": "Exigir el formato completo del fabricante, por ejemplo PCBxx-xxx-Vxx, y otra evidencia."
+    },
+    {
+      "visible_pattern": "30xxxxxxxxxx",
+      "regex": "^30\\d{4,}$",
+      "reason": "El inicio 30 sin subfamilia es insuficiente.",
+      "recommended_action": "Buscar 300027, 30138, 3022 u otro prefijo Gree completo."
+    },
+    {
+      "visible_pattern": "1712xxxxxxxxxx",
+      "regex": "^1712\\d{4,}$",
+      "reason": "El prefijo 1712 incompleto puede abarcar distintas familias.",
+      "recommended_action": "Exigir 17122, 17123 o 17127 con la longitud completa."
+    },
+    {
+      "visible_pattern": "SX...",
+      "regex": "^SX[A-Z0-9]+$",
+      "reason": "SX sin guion y sin cadena completa es demasiado genérico.",
+      "recommended_action": "Exigir SX- seguido del resto del código y contexto HVAC."
+    },
+    {
+      "visible_pattern": "CJ...",
+      "regex": "^CJ[A-Z0-9]+$",
+      "reason": "CJ sin guion y sin cadena completa es demasiado genérico.",
+      "recommended_action": "Exigir CJ- seguido del resto del código y, preferiblemente, una referencia AUX."
+    },
+    {
+      "visible_pattern": "E12...",
+      "regex": "^E12[A-Z0-9 -]{0,8}$",
+      "reason": "E12 aparece en muchas piezas Mitsubishi Electric, no solo PCB.",
+      "recommended_action": "Aceptar solo si está en una placa o el manual lo describe como P.C. BOARD."
+    },
+    {
+      "visible_pattern": "CB-/CR-",
+      "regex": "^(?:CB|CR)-[A-Z0-9-]*$",
+      "reason": "Prefijos cortos y genéricos.",
+      "recommended_action": "Usar solo en equipos Sanyo antiguos y con contexto de placa."
+    },
+    {
+      "visible_pattern": "405...",
+      "regex": "^405\\d*$",
+      "reason": "Prefijo numérico demasiado corto.",
+      "recommended_action": "Exigir 10 dígitos, etiqueta de PCB y contexto Electrolux."
+    },
+    {
+      "visible_pattern": "Axxxx-xxx",
+      "regex": "^A[A-Z0-9]{3,8}-[A-Z0-9-]{2,}$",
+      "reason": "Formato demasiado genérico.",
+      "recommended_action": "No identificar OEM sin un prefijo más específico."
+    },
+    {
+      "visible_pattern": "20xxxxxx",
+      "regex": "^20\\d{4,}$",
+      "reason": "Número genérico de repuesto.",
+      "recommended_action": "No identificar fabricante únicamente con este patrón."
+    },
+    {
+      "visible_pattern": "651xxxxx",
+      "regex": "^651\\d{3,}$",
+      "reason": "Referencia comercial no exclusiva de una plataforma electrónica.",
+      "recommended_action": "Buscar otro código serigrafiado en la PCB."
+    },
+    {
+      "visible_pattern": "436xxx / 452xxxx",
+      "regex": "^(?:436|452)\\d{3,}$",
+      "reason": "Referencias de recambio insuficientes para deducir OEM real.",
+      "recommended_action": "Buscar el código de diseño impreso en la placa."
+    },
+    {
+      "visible_pattern": "31101-/31201-",
+      "regex": "^(?:31101|31201)-?[A-Z0-9-]+$",
+      "reason": "Referencias de distribuidor o marca comercial; el OEM puede variar.",
+      "recommended_action": "Buscar un patrón Midea, Gree, TCL, AUX, Haier u otro en la propia PCB."
+    },
+    {
+      "visible_pattern": "1PR03xxxx",
+      "regex": "^1PR03[A-Z0-9-]+$",
+      "reason": "Referencia de recambio Airwell; la plataforma OEM puede variar.",
+      "recommended_action": "Buscar el código de diseño o referencia del fabricante real."
+    }
+  ]
+}

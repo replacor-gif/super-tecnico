@@ -2390,6 +2390,80 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse(any(brand.rglob("*.db")))
         self.assertFalse(any(brand.rglob("*.sqlite")))
 
+    def test_pcb_oem_identifier_is_public_validated_and_linked_to_errors(self):
+        catalog = load(self.dist / "data" / "oem" / "pcb_patterns.json")
+        meta = catalog["meta"]
+        patterns = catalog["patterns"]
+        ambiguous = catalog["ambiguous_patterns"]
+
+        self.assertEqual(meta["pattern_count"], 47)
+        self.assertEqual(meta["oem_count"], 21)
+        self.assertEqual(meta["ambiguous_pattern_count"], 15)
+        self.assertEqual(len(patterns), 47)
+        self.assertEqual(len({item["id"] for item in patterns}), 47)
+        self.assertEqual(len(ambiguous), 15)
+        self.assertEqual(self.report["oem_pcb"], {
+            "patterns": 47,
+            "oems": 21,
+            "ambiguous_patterns": 15,
+        })
+
+        by_id = {item["id"]: item for item in patterns}
+        self.assertEqual(by_id[1]["brand_slug"], "toshiba")
+        self.assertEqual(by_id[1]["source"]["authority"], "primary")
+        self.assertEqual(by_id[6]["brand_slug"], "samsung")
+        self.assertEqual(by_id[8]["brand_slug"], "lg")
+        self.assertEqual(by_id[7]["confidence"], "media")
+        self.assertIn("no identifica una PCB por sí sola", by_id[7]["explanation"])
+        self.assertIsNone(next(item for item in patterns if item["oem"] == "Chigo")["brand_slug"])
+
+        for item in patterns:
+            code = re.sub(r"\s+", "", item["example"].upper())
+            self.assertRegex(code, re.compile(item["regex"], re.IGNORECASE), item["id"])
+            self.assertTrue(item["source"]["url"].startswith("https://"))
+            self.assertIn(item["source"]["authority"], {"primary", "documented", "indirect"})
+
+        generic_kfr = next(item for item in ambiguous if item["visible_pattern"] == "KFR-xx...")
+        self.assertRegex("KFR-35GW", re.compile(generic_kfr["regex"], re.IGNORECASE))
+        self.assertFalse(any(
+            re.fullmatch(item["regex"], "KFR-35GW", re.IGNORECASE)
+            for item in patterns
+        ))
+
+        midea_e8 = next(
+            item for item in load(self.midea_web / "errors" / "index.json")
+            if item["code_normalized"] == "E8"
+        )
+        self.assertEqual(midea_e8["interpretation_count"], 3)
+
+        html = (self.dist / "climatizacion.html").read_text(encoding="utf-8")
+        script = (self.dist / "assets" / "app.js").read_text(encoding="utf-8")
+        styles = (self.dist / "assets" / "styles.css").read_text(encoding="utf-8")
+        for marker in (
+            'id="oemFinderButton"',
+            "¿No aparece la marca? Identificar por placa",
+            "assets/app.js?v=10",
+        ):
+            self.assertIn(marker, html)
+        for marker in (
+            "data/oem/pcb_patterns.json",
+            "showOemFinder",
+            "identifyOemByCode",
+            "findOemErrorCandidates",
+            "oemPatternOptions",
+            "Buscar errores posibles",
+            "Ninguna ficha se abre automáticamente",
+            "data-open-oem-error",
+        ):
+            self.assertIn(marker, script)
+        for marker in (
+            ".oem-lookup-form",
+            ".oem-callout",
+            ".oem-match-card",
+            ".task-card-oem",
+        ):
+            self.assertIn(marker, styles)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
