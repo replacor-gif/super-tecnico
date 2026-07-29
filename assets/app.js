@@ -37,6 +37,14 @@ function esc(value) {
   return String(value ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
 }
 function nl(value) { return esc(value).replace(/\n/g, '<br>'); }
+function localizedText(record, field, fallback='') {
+  if (!record) return fallback;
+  const language = window.ST_I18N?.language || 'es';
+  return record.translations?.[language]?.[field]
+    || record[`${field}_${language}`]
+    || record[field]
+    || fallback;
+}
 
 function dataUrl(relativePath) {
   return new URL(relativePath.replace(/^\/+/, ''), document.baseURI);
@@ -330,12 +338,12 @@ function renderBrandDashboard() {
   els.context.classList.add('hidden');
   const cards = state.categories.map(category => {
     const topics = category.topics || [];
-    const topicButtons = topics.map(topic => `<button type="button" class="topic-link" data-open-topic="${topic.id}"><span>${esc(topic.title)}</span><small>${esc(countLabel(topic.variant_count, 'ficha'))}</small></button>`).join('');
+    const topicButtons = topics.map(topic => `<button type="button" class="topic-link" data-open-topic="${topic.id}"><span>${esc(localizedText(topic, 'title'))}</span><small>${esc(countLabel(topic.variant_count, 'ficha'))}</small></button>`).join('');
     const primary = category.slug === 'errors'
       ? `<button type="button" class="category-primary" data-open-category="errors">Buscar código o significado</button>`
       : '';
     return `<details class="category-card" ${category.slug === 'errors' ? 'open' : ''}>
-      <summary><span class="category-icon">${esc(categoryIcon(category.slug))}</span><span><span class="category-title">${esc(category.name)}</span><span class="category-description">${esc(category.description || '')}</span></span><span class="category-count">${esc(countLabel(category.variant_count, 'ficha'))}</span></summary>
+      <summary><span class="category-icon">${esc(categoryIcon(category.slug))}</span><span><span class="category-title">${esc(localizedText(category, 'name'))}</span><span class="category-description">${esc(localizedText(category, 'description'))}</span></span><span class="category-count">${esc(countLabel(category.variant_count, 'ficha'))}</span></summary>
       <div class="topic-menu">${topicButtons || '<p class="empty">Sin temas publicados.</p>'}</div>${primary}
     </details>`;
   }).join('');
@@ -404,7 +412,7 @@ async function selectCategory(slug) {
     els.topic.disabled = data.topics.length === 0;
     setBreadcrumb(state.brandName, state.category.name);
     els.context.classList.remove('hidden');
-    els.context.innerHTML = `<h2>${esc(state.category.name)}</h2><p>${esc(state.category.description || '')}</p>`;
+    els.context.innerHTML = `<h2>${esc(localizedText(state.category, 'name'))}</h2><p>${esc(localizedText(state.category, 'description'))}</p>`;
     if (slug === 'errors') {
       await renderErrorFinder(data.topics);
     } else {
@@ -416,7 +424,7 @@ async function selectCategory(slug) {
 
 function renderTopicChooser(topics) {
   if (!topics.length) { els.content.innerHTML = '<div class="empty">Esta categoría todavía no tiene contenido.</div>'; return; }
-  els.content.innerHTML = topics.map(t => `<article class="search-hit"><h3>${esc(t.title)}</h3><p>${esc(t.summary || '')}</p><button type="button" data-open-topic="${t.id}">Abrir ${t.variant_count || 0} variante(s)</button></article>`).join('');
+  els.content.innerHTML = topics.map(t => `<article class="search-hit"><h3>${esc(localizedText(t, 'title'))}</h3><p>${esc(localizedText(t, 'summary'))}</p><button type="button" data-open-topic="${t.id}">Abrir ${t.variant_count || 0} variante(s)</button></article>`).join('');
 }
 
 async function renderErrorFinder(topics) {
@@ -464,7 +472,7 @@ async function renderErrorFinder(topics) {
 }
 
 function renderErrorHit(item) {
-  return `<article class="search-hit"><h3><span class="code-badge">${esc(item.code_display)}</span>${esc(item.short_label || 'Código de error')}</h3><p>${esc(scopeLabel(item.unit_scope))} · ${item.interpretation_count || 0} interpretación(es)</p><button type="button" data-open-error="${item.id}">Ver información</button></article>`;
+  return `<article class="search-hit"><h3><span class="code-badge">${esc(item.code_display)}</span>${esc(localizedText(item, 'short_label', 'Código de error'))}</h3><p>${esc(scopeLabel(item.unit_scope))} · ${item.interpretation_count || 0} interpretación(es)</p><button type="button" data-open-error="${item.id}">Ver información</button></article>`;
 }
 
 async function selectTopic(id) {
@@ -484,7 +492,7 @@ async function selectTopic(id) {
     els.topic.value = String(id);
     setBreadcrumb(state.brandName, data.topic.category?.name || state.category?.name, data.topic.title);
     els.context.classList.remove('hidden');
-    els.context.innerHTML = `<h2>${esc(data.topic.title)}</h2><p>${esc(data.topic.summary || '')}</p>`;
+    els.context.innerHTML = `<h2>${esc(localizedText(data.topic, 'title'))}</h2><p>${esc(localizedText(data.topic, 'summary'))}</p>`;
     renderTopic(data.topic);
     revealResults();
   } catch (error) { showError(error); }
@@ -500,11 +508,11 @@ function renderTopic(topic) {
 function renderVariant(v, forceOpen=false) {
   const chips = [chip(v.system_type), chip(scopeLabel(v.unit_scope)), chip(v.refrigerant), chip(sourceKind(v.source_kind),'official')].join('');
   return `<details class="result-card" ${forceOpen ? 'open' : ''} id="variant-${v.id}">
-    <summary><span class="variant-title">${esc(v.title)}</span>${v.recognition ? `<span class="variant-recognition">Cómo reconocerla: ${esc(v.recognition)}</span>` : ''}</summary>
+    <summary><span class="variant-title">${esc(localizedText(v, 'title'))}</span>${localizedText(v, 'recognition') ? `<span class="variant-recognition">Cómo reconocerla: ${esc(localizedText(v, 'recognition'))}</span>` : ''}</summary>
     <div class="card-body">
       ${chips ? `<div class="chips">${chips}</div>` : ''}
-      ${v.purpose ? `<p><strong>Finalidad:</strong> ${esc(v.purpose)}</p>` : ''}
-      ${v.summary ? `<p>${esc(v.summary)}</p>` : ''}
+      ${localizedText(v, 'purpose') ? `<p><strong>Finalidad:</strong> ${esc(localizedText(v, 'purpose'))}</p>` : ''}
+      ${localizedText(v, 'summary') ? `<p>${esc(localizedText(v, 'summary'))}</p>` : ''}
       ${renderController(v.controller)}
       ${renderSections(v.sections || [])}
       ${renderLedPatternTable(v.led_patterns || [])}
@@ -518,7 +526,7 @@ function renderVariant(v, forceOpen=false) {
 }
 
 function renderSections(sections) {
-  return sections.map(s => `<details class="nested-detail" ${s.collapsed_default === 0 ? 'open' : ''}><summary>${esc(s.title || sectionLabel(s.section_type))}</summary><div class="nested-content">${formatBody(s.body)}</div></details>`).join('');
+  return sections.map(s => `<details class="nested-detail" ${s.collapsed_default === 0 ? 'open' : ''}><summary>${esc(localizedText(s, 'title', sectionLabel(s.section_type)))}</summary><div class="nested-content">${formatBody(localizedText(s, 'body'))}</div></details>`).join('');
 }
 function formatBody(body) {
   const text = String(body || '').trim();
@@ -530,7 +538,7 @@ function formatBody(body) {
 function renderSteps(steps) {
   if (!steps.length) return '';
   const grouped = Object.groupBy ? Object.groupBy(steps, x => x.phase || 'procedure') : steps.reduce((a,x)=>((a[x.phase||'procedure']??=[]).push(x),a),{});
-  return Object.entries(grouped).map(([phase, items]) => `<details class="nested-detail" open><summary>${esc(phaseLabel(phase))}</summary><div class="nested-content"><ol class="procedure-list">${items.map(s => `<li class="${s.warning_level === 'danger' ? 'danger-box' : s.warning_level === 'warning' || s.warning_level === 'caution' ? 'warning-box' : ''}">${esc(s.instruction)}${s.expected_result ? `<span class="expected">Resultado esperado: ${esc(s.expected_result)}</span>` : ''}</li>`).join('')}</ol></div></details>`).join('');
+  return Object.entries(grouped).map(([phase, items]) => `<details class="nested-detail" open><summary>${esc(phaseLabel(phase))}</summary><div class="nested-content"><ol class="procedure-list">${items.map(s => `<li class="${s.warning_level === 'danger' ? 'danger-box' : s.warning_level === 'warning' || s.warning_level === 'caution' ? 'warning-box' : ''}">${esc(localizedText(s, 'instruction'))}${localizedText(s, 'expected_result') ? `<span class="expected">Resultado esperado: ${esc(localizedText(s, 'expected_result'))}</span>` : ''}</li>`).join('')}</ol></div></details>`).join('');
 }
 function renderParameters(parameters) {
   if (!parameters.length) return '';
@@ -565,10 +573,10 @@ async function openError(id) {
   try {
     const data = await api('error', {brand:state.brand, error_id:id});
     const e = data.error;
-    rememberRecent({type:'error', id:e.id, code:e.code_display, title:e.short_label || 'Código de error'});
+    rememberRecent({type:'error', id:e.id, code:e.code_display, title:localizedText(e, 'short_label', 'Código de error')});
     setBreadcrumb(state.brandName, 'Errores y protecciones', e.code_display);
     els.context.classList.remove('hidden');
-    els.context.innerHTML = `<h2><span class="code-badge">${esc(e.code_display)}</span>${esc(e.short_label || 'Código de error')}</h2><p>${esc(scopeLabel(e.unit_scope))}. Se muestran todas las interpretaciones documentadas.</p>`;
+    els.context.innerHTML = `<h2><span class="code-badge">${esc(e.code_display)}</span>${esc(localizedText(e, 'short_label', 'Código de error'))}</h2><p>${esc(scopeLabel(e.unit_scope))}. Se muestran todas las interpretaciones documentadas.</p>`;
     els.content.innerHTML = renderErrorDetail(e);
     bindMediaButtons();
     revealResults();
@@ -582,7 +590,7 @@ function renderErrorDetail(e) {
   return `<section class="result-card"><div class="card-body">
     <div class="chips">${chip(indicationLabel(e.indication_type))}${chip(scopeLabel(e.unit_scope))}${aliases.length ? chip('Variantes: '+aliases.join(', ')) : ''}</div>
     ${hasMultipleInterpretations ? `<div class="notice-box interpretation-choice"><strong>${interpretations.length} posibles significados documentados</strong><p>Ninguno está preseleccionado. Revise la lista y abra la interpretación que mejor coincida con la máquina y el lugar donde se ha leído el código.</p></div>` : ''}
-    ${interpretations.map(i => `<details class="variant-card" ${hasMultipleInterpretations ? '' : 'open'}><summary><span class="variant-title">${esc(i.title)}</span>${i.description ? `<span class="variant-recognition">${esc(i.description)}</span>` : ''}</summary><div class="card-body">
+    ${interpretations.map(i => `<details class="variant-card" ${hasMultipleInterpretations ? '' : 'open'}><summary><span class="variant-title">${esc(localizedText(i, 'title'))}</span>${localizedText(i, 'description') ? `<span class="variant-recognition">${esc(localizedText(i, 'description'))}</span>` : ''}</summary><div class="card-body">
       <div class="chips">${chip(sourceKind(i.source_kind),'official')}${chip('Fiabilidad: '+confidenceLabel(i.confidence))}</div>
       ${renderIndicationContexts(i.indication_contexts || [])}
       ${renderRelatedErrors(i)}
@@ -643,12 +651,12 @@ function renderInfoItems(items) {
     const rows = groups[type];
     const open = ['machine_behavior', 'cause', 'check'].includes(type) ? 'open' : '';
     const priority = type === 'machine_behavior' ? ' info-priority' : '';
-    return `<details class="nested-detail${priority}" ${open}><summary>${esc(itemTypeLabel(type))}</summary><div class="nested-content"><ul>${rows.map(x => `<li>${x.title ? `<strong>${esc(x.title)}:</strong> ` : ''}${esc(x.body)}</li>`).join('')}</ul></div></details>`;
+    return `<details class="nested-detail${priority}" ${open}><summary>${esc(itemTypeLabel(type))}</summary><div class="nested-content"><ul>${rows.map(x => `<li>${localizedText(x, 'title') ? `<strong>${esc(localizedText(x, 'title'))}:</strong> ` : ''}${esc(localizedText(x, 'body'))}</li>`).join('')}</ul></div></details>`;
   }).join('');
 }
 function renderImpacts(items) {
   if (!items.length) return '';
-  return `<details class="nested-detail" open><summary>Efecto sobre el funcionamiento</summary><div class="nested-content">${items.map(x => `<div class="notice-box"><strong>${esc(x.summary || stopLabel(x.stop_level))}</strong>${x.affected_scope ? `<p><strong>Afecta a:</strong> ${esc(x.affected_scope)}</p>` : ''}${x.unaffected_scope ? `<p><strong>Sigue funcionando:</strong> ${esc(x.unaffected_scope)}</p>` : ''}${x.restart_behavior ? `<p><strong>Recuperación:</strong> ${esc(x.restart_behavior)}</p>` : ''}${x.degraded_behavior ? `<p><strong>Modo degradado:</strong> ${esc(x.degraded_behavior)}</p>` : ''}${x.notes ? `<p>${esc(x.notes)}</p>` : ''}</div>`).join('')}</div></details>`;
+  return `<details class="nested-detail" open><summary>Efecto sobre el funcionamiento</summary><div class="nested-content">${items.map(x => `<div class="notice-box"><strong>${esc(localizedText(x, 'summary', stopLabel(x.stop_level)))}</strong>${localizedText(x, 'affected_scope') ? `<p><strong>Afecta a:</strong> ${esc(localizedText(x, 'affected_scope'))}</p>` : ''}${localizedText(x, 'unaffected_scope') ? `<p><strong>Sigue funcionando:</strong> ${esc(localizedText(x, 'unaffected_scope'))}</p>` : ''}${localizedText(x, 'restart_behavior') ? `<p><strong>Recuperación:</strong> ${esc(localizedText(x, 'restart_behavior'))}</p>` : ''}${localizedText(x, 'degraded_behavior') ? `<p><strong>Modo degradado:</strong> ${esc(localizedText(x, 'degraded_behavior'))}</p>` : ''}${localizedText(x, 'notes') ? `<p>${esc(localizedText(x, 'notes'))}</p>` : ''}</div>`).join('')}</div></details>`;
 }
 function renderDatasets(datasets) {
   if (!datasets.length) return '';

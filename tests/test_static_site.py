@@ -584,6 +584,8 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("renderRelatedErrors", script)
         self.assertIn("renderIndicationContexts", script)
         self.assertIn("El código puede cambiar según dónde se lea", script)
+        self.assertIn("function localizedText", script)
+        self.assertIn("record.translations?.[language]?.[field]", script)
 
     def test_beta_multilingual_shell_and_feedback_are_public(self):
         pages = {
