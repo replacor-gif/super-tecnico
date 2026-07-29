@@ -14,7 +14,7 @@ Portal técnico estático con herramientas independientes. La publicación es:
 
 El identificador SMD publica 439 candidatos de seis fabricantes, todos con marcaje, encapsulado, patillaje, parámetros eléctricos y una fuente oficial. Cuando un código tiene varios significados, muestra todos los candidatos cerrados y no selecciona ninguno automáticamente.
 
-La base de referencias publica 4.137 componentes y 6.489 parámetros. Separa 810 fichas oficiales o revisadas de 3.327 candidatos históricos pendientes de contrastar. Ninguna coincidencia se presenta como sustitución automática.
+La base de referencias publica 4.353 componentes y 7.107 parámetros. Separa 1.026 fichas oficiales o revisadas de 3.327 candidatos históricos pendientes de contrastar. Esta versión amplía especialmente IPM, MOSFET de potencia y drivers multicanal como ULN2003A, y avisa cuando una referencia parece contener un error de escritura. Ninguna coincidencia se presenta como sustitución automática.
 
 ## Versión beta e idiomas
 

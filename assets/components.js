@@ -51,6 +51,7 @@
       exactAlias: 'Alias exacto',
       exactMarking: 'Marcado SMD exacto',
       partPrefix: 'Familia o referencia relacionada',
+      nearPart: 'Referencia parecida: revisa la escritura',
       textMatch: 'Coincidencia documental',
       open: 'Abrir ficha',
       loadingDetail: 'Cargando ficha completa…',
@@ -108,7 +109,8 @@
       results: '{count} matches for “{query}”', noResults: 'No matches with those details.',
       noResultsText: 'Try another spelling, remove filters or report the missing reference.', limited: 'Showing the first {shown} of {total} results. Add a manufacturer, package or more characters.',
       exactPart: 'Exact reference', exactAlias: 'Exact alias', exactMarking: 'Exact SMD marking',
-      partPrefix: 'Related family or reference', textMatch: 'Document match', open: 'Open record',
+      partPrefix: 'Related family or reference', nearPart: 'Similar reference: check the spelling',
+      textMatch: 'Document match', open: 'Open record',
       loadingDetail: 'Loading full record…', detailError: 'The full record could not be loaded.',
       confirmed: 'Confirmed', high: 'High confidence', probable: 'Probable', pending: 'Pending verification',
       pendingWarning: 'Historical record pending verification. Use it to locate candidates and check manufacturer, package, pinout and datasheet before deciding.',
@@ -141,7 +143,8 @@
       results: '{count} coincidências para “{query}”', noResults: 'Não há coincidências com esses dados.',
       noResultsText: 'Experimente outra escrita, retire filtros ou comunique a referência em falta.', limited: 'São mostrados os primeiros {shown} de {total}. Adicione fabricante, encapsulamento ou mais caracteres.',
       exactPart: 'Referência exata', exactAlias: 'Alias exato', exactMarking: 'Marcação SMD exata',
-      partPrefix: 'Família ou referência relacionada', textMatch: 'Coincidência documental', open: 'Abrir ficha',
+      partPrefix: 'Família ou referência relacionada', nearPart: 'Referência semelhante: confirme a escrita',
+      textMatch: 'Coincidência documental', open: 'Abrir ficha',
       loadingDetail: 'A carregar ficha completa…', detailError: 'Não foi possível carregar a ficha completa.',
       confirmed: 'Confirmado', high: 'Alta confiança', probable: 'Provável', pending: 'Pendente de verificação',
       pendingWarning: 'Registo histórico pendente de verificação. Use-o para localizar candidatos e confirme fabricante, encapsulamento, pinagem e datasheet.',
@@ -174,7 +177,8 @@
       results: '{count} correspondances pour « {query} »', noResults: 'Aucune correspondance avec ces critères.',
       noResultsText: 'Essayez une autre écriture, retirez les filtres ou signalez la référence manquante.', limited: 'Affichage des {shown} premiers résultats sur {total}. Ajoutez fabricant, boîtier ou caractères.',
       exactPart: 'Référence exacte', exactAlias: 'Alias exact', exactMarking: 'Marquage SMD exact',
-      partPrefix: 'Famille ou référence liée', textMatch: 'Correspondance documentaire', open: 'Ouvrir la fiche',
+      partPrefix: 'Famille ou référence liée', nearPart: 'Référence proche : vérifiez la saisie',
+      textMatch: 'Correspondance documentaire', open: 'Ouvrir la fiche',
       loadingDetail: 'Chargement de la fiche complète…', detailError: 'Impossible de charger la fiche complète.',
       confirmed: 'Confirmé', high: 'Confiance élevée', probable: 'Probable', pending: 'À vérifier',
       pendingWarning: 'Fiche historique en attente de vérification. Utilisez-la pour trouver des candidats puis vérifiez fabricant, boîtier, brochage et datasheet.',
@@ -217,6 +221,38 @@
   }
   function normalize(value) {
     return String(value ?? '').normalize('NFD').replace(/\p{Diacritic}/gu, '').toUpperCase().replace(/[^A-Z0-9]+/g, '');
+  }
+  function editDistance(left, right) {
+    if (left === right) return 0;
+    if (!left.length) return right.length;
+    if (!right.length) return left.length;
+    let previousPrevious = null;
+    let previous = Array.from({length: right.length + 1}, (_, index) => index);
+    for (let leftIndex = 1; leftIndex <= left.length; leftIndex += 1) {
+      const current = [leftIndex];
+      for (let rightIndex = 1; rightIndex <= right.length; rightIndex += 1) {
+        const substitution = previous[rightIndex - 1]
+          + Number(left[leftIndex - 1] !== right[rightIndex - 1]);
+        let value = Math.min(
+          current[rightIndex - 1] + 1,
+          previous[rightIndex] + 1,
+          substitution,
+        );
+        if (
+          previousPrevious
+          && leftIndex > 1
+          && rightIndex > 1
+          && left[leftIndex - 1] === right[rightIndex - 2]
+          && left[leftIndex - 2] === right[rightIndex - 1]
+        ) {
+          value = Math.min(value, previousPrevious[rightIndex - 2] + 1);
+        }
+        current.push(value);
+      }
+      previousPrevious = previous;
+      previous = current;
+    }
+    return previous[right.length];
   }
   function locale() { return ({en: 'en-US', pt: 'pt-PT', fr: 'fr-FR', es: 'es-ES'})[lang()] || 'es-ES'; }
   function formatNumber(value, digits = 3) {
@@ -271,6 +307,18 @@
       score = 650; reason = tr('partPrefix');
     } else if (haystack.includes(normalizedQuery)) {
       score = 400; reason = tr('textMatch');
+    } else if (normalizedQuery.length >= 6) {
+      const threshold = normalizedQuery.length >= 10 ? 2 : 1;
+      const closest = Math.min(
+        ...[part, ...aliases]
+          .filter(value => Math.abs(value.length - normalizedQuery.length) <= threshold)
+          .map(value => editDistance(value, normalizedQuery)),
+        Number.POSITIVE_INFINITY,
+      );
+      if (closest <= threshold) {
+        score = 210 - (closest * 20);
+        reason = tr('nearPart');
+      }
     }
     if (!score) return null;
     score += item.official ? 90 : 0;

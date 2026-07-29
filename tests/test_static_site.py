@@ -795,6 +795,8 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("assets/calculators.js", calculators)
         self.assertIn("data/components/catalog.json", components_js)
         self.assertIn("data/components/details/", components_js)
+        self.assertIn("function editDistance(", components_js)
+        self.assertIn("nearPart:", components_js)
         self.assertEqual(len(re.findall(r"\bid:\s*['\"][a-z]+['\"]", calculators_js)), 12)
         self.assertIn("st:languagechange", calculators_js)
         self.assertIn("st:languagechange", components_js)
@@ -804,10 +806,10 @@ class StaticSiteTests(unittest.TestCase):
     def test_component_public_projection_is_complete_and_warns_about_candidates(self):
         catalog = load(self.dist / "data" / "components" / "catalog.json")
         counts = catalog["meta"]["counts"]
-        self.assertEqual(counts["components"], 4137)
-        self.assertEqual(counts["specifications"], 6489)
+        self.assertEqual(counts["components"], 4353)
+        self.assertEqual(counts["specifications"], 7107)
         self.assertEqual(counts["markings"], 3862)
-        self.assertEqual(counts["reviewed"], 810)
+        self.assertEqual(counts["reviewed"], 1026)
         self.assertEqual(counts["historical"], 3327)
         self.assertEqual(catalog["meta"]["chunk_count"], 64)
         self.assertIn("pendientes de verificar", catalog["meta"]["warning"])
@@ -827,9 +829,9 @@ class StaticSiteTests(unittest.TestCase):
                 self.assertEqual(int(component_id) % 64, chunk_id)
                 self.assertEqual(int(component_id), detail["id"])
                 detail_ids.add(int(component_id))
-        self.assertEqual(len(detail_ids), 4137)
+        self.assertEqual(len(detail_ids), 4353)
         self.assertEqual(detail_ids, {item["id"] for item in catalog["components"]})
-        self.assertEqual(self.report["components"]["components"], 4137)
+        self.assertEqual(self.report["components"]["components"], 4353)
 
         irf840 = next(item for item in catalog["components"] if item["part_number"] == "IRF840")
         self.assertTrue(irf840["official"])
@@ -840,6 +842,35 @@ class StaticSiteTests(unittest.TestCase):
         )[str(irf840["id"])]
         self.assertEqual(irf840_detail["source"]["publisher"], "Vishay Siliconix")
         self.assertTrue(irf840_detail["datasheet_url"].startswith("https://www.vishay.com/"))
+
+        expected_components = {
+            "ULN2003A": ("Texas Instruments", "Driver de potencia"),
+            "IKCM20L60GD": ("Infineon Technologies", "Módulo de potencia IPM"),
+            "STGIB15CH60TS-L": ("STMicroelectronics", "Módulo de potencia IPM"),
+            "PSS30SF1F6": ("Mitsubishi Electric", "Módulo de potencia IPM"),
+            "IRFP460": ("Vishay Siliconix", "MOSFET"),
+            "STP20NM60": ("STMicroelectronics", "MOSFET"),
+            "TK12A60D": ("Toshiba Electronic Devices & Storage", "MOSFET"),
+        }
+        for part_number, (manufacturer, category) in expected_components.items():
+            item = next(
+                row for row in catalog["components"]
+                if row["part_number"] == part_number and row["manufacturer"] == manufacturer
+            )
+            self.assertTrue(item["official"])
+            self.assertEqual(item["category"], category)
+            detail = load(
+                self.dist / "data" / "components" / "details" / f"{item['id'] % 64}.json"
+            )[str(item["id"])]
+            self.assertTrue(detail["source"]["url"].startswith("https://"))
+            self.assertEqual(detail["equivalents"], [])
+
+        uln2003a = next(
+            row for row in catalog["components"]
+            if row["part_number"] == "ULN2003A"
+            and row["manufacturer"] == "Texas Instruments"
+        )
+        self.assertIn("ULN2003", uln2003a["aliases"])
 
     def test_samsung_led_tables_are_structured_and_accessible(self):
         topic = load(self.samsung_web / "topics" / "1.json")
