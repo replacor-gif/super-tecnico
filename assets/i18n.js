@@ -643,6 +643,7 @@
   const stored = localStorage.getItem('st.language');
   const browserLanguage = (navigator.language || 'es').slice(0, 2).toLowerCase();
   let language = languages[requested] ? requested : (languages[stored] ? stored : (languages[browserLanguage] ? browserLanguage : 'es'));
+  if (languages[requested]) localStorage.setItem('st.language', language);
 
   function interpolate(text, variables = {}) {
     return Object.entries(variables).reduce(
@@ -680,7 +681,7 @@
     bar.innerHTML = `
       <strong>${t('common.betaTitle')}</strong>
       <p>${t('common.betaText')}</p>
-      <a class="st-beta-feedback" href="feedback.html?page=${encodeURIComponent(window.location.href)}">${t('common.feedback')}</a>
+      <a class="st-beta-feedback" href="feedback.html?lang=${language}&page=${encodeURIComponent(window.location.href)}">${t('common.feedback')}</a>
       <label class="st-language-control">
         <span>${t('common.language')}</span>
         <select id="stLanguageSelect" aria-label="${t('common.language')}">

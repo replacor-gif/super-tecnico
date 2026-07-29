@@ -606,7 +606,7 @@ class StaticSiteTests(unittest.TestCase):
             "st.language",
             "st:languagechange",
             "common.translationScope",
-            "feedback.html?page=",
+            "feedback.html?lang=${language}&page=",
             "Versión beta pública",
             "Public beta version",
             "Versão beta pública",
