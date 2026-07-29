@@ -16,6 +16,7 @@ Guía técnica estática para consulta por marca, código, categoría, tema y va
 - **Mitsubishi Electric:** M-Series, MXZ, Mr. Slim y CITY MULTI.
 - **Panasonic:** RAC, PACi, multisplit, cassette y ECOi/VRF.
 - **Samsung:** RAC, FJM, DVM S/S2, MCU, mandos y herramientas; incluye tablas visuales separadas de pilotos exteriores 9K/12K y 18K/24K/30K.
+- **TCL:** split inverter, comercial, cassette, conductos, Free Match, portátil y TMV6+ VRF; relaciona display, mando, cuatro pilotos cassette y tabla exterior de 1–17 destellos.
 - **Toshiba:** SEIYA/RAC, multisplit, RAV, cassette y SMMSe/SMMS-u VRF; relaciona códigos de mando con tablas visuales D800–D805 sin mezclar familias.
 
 ## Qué se publica

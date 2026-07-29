@@ -66,6 +66,8 @@ class StaticSiteTests(unittest.TestCase):
         cls.toshiba_web = cls.toshiba / "web"
         cls.hisense = cls.dist / "data" / "brands" / "hisense"
         cls.hisense_web = cls.hisense / "web"
+        cls.tcl = cls.dist / "data" / "brands" / "tcl"
+        cls.tcl_web = cls.tcl / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -76,7 +78,7 @@ class StaticSiteTests(unittest.TestCase):
         brands = {item["slug"]: item for item in manifest["brands"]}
         self.assertEqual(
             set(brands),
-            {"daikin", "fujitsu-general", "gree", "haier", "hisense", "lg", "midea", "mitsubishi-electric", "panasonic", "samsung", "toshiba"},
+            {"daikin", "fujitsu-general", "gree", "haier", "hisense", "lg", "midea", "mitsubishi-electric", "panasonic", "samsung", "tcl", "toshiba"},
         )
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
@@ -154,6 +156,13 @@ class StaticSiteTests(unittest.TestCase):
             "variants": 107,
             "errors": 114,
             "search_entries": 221,
+        })
+        self.assertEqual(brands["tcl"]["counts"], {
+            "categories": 16,
+            "topics": 28,
+            "variants": 67,
+            "errors": 105,
+            "search_entries": 172,
         })
 
     def test_search_examples_are_present(self):
@@ -394,6 +403,31 @@ class StaticSiteTests(unittest.TestCase):
             "FE", "P01", "P06", "P0A", "P0d",
         }.issubset({item["code_display"] for item in hisense_errors}))
 
+        tcl_entries = load(self.tcl_web / "search.json")
+        for query in (
+            "ECO ocho veces ocho segundos",
+            "E8 11 destellos exterior",
+            "LED exterior 0,5 3 s",
+            "cassette LED1 LED4",
+            "boya 8 s 180 s 10 min",
+            "Mode Up cinco segundos",
+            "P3 RS485",
+            "CAN 2000 m 100 kbps",
+            "respaldo compresor",
+            "WIREDCASCTRL todos iconos 3 s",
+            "310 V 15 V ventilador",
+        ):
+            with self.subTest(brand="tcl", query=query):
+                self.assertTrue(contains_query(tcl_entries, query))
+
+        tcl_errors = load(self.tcl_web / "errors" / "index.json")
+        self.assertEqual(len(tcl_errors), 105)
+        self.assertTrue({
+            "E0", "E4", "E8", "E9", "EE", "EF", "FE", "P0", "P1",
+            "P5", "D3", "C0", "C5", "Fb", "Fn",
+            "1 destello exterior", "17 destello exterior",
+        }.issubset({item["code_display"] for item in tcl_errors}))
+
     def test_media_is_not_published_or_referenced(self):
         self.assertFalse((self.brand / "media").exists())
         self.assertFalse((self.daikin / "media").exists())
@@ -405,6 +439,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse((self.samsung / "media").exists())
         self.assertFalse((self.toshiba / "media").exists())
         self.assertFalse((self.hisense / "media").exists())
+        self.assertFalse((self.tcl / "media").exists())
         self.assertEqual(self.report["checks"]["media_files"], 0)
         self.assertGreaterEqual(self.report["checks"]["media_references_removed"], 26)
 
@@ -419,6 +454,7 @@ class StaticSiteTests(unittest.TestCase):
             + list(self.samsung_web.rglob("*.json"))
             + list(self.toshiba_web.rglob("*.json"))
             + list(self.hisense_web.rglob("*.json"))
+            + list(self.tcl_web.rglob("*.json"))
         ):
             data = load(path)
             pending = [data]
@@ -551,6 +587,47 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(actual["errors"]["status_counts"], {"complete": 159})
         self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 107})
         self.assertEqual(actual["errors"]["component_coverage"]["exact_page"], {"count": 159, "percent": 100.0})
+
+    def test_tcl_reference_v1_led_tables_quality_and_code_layers(self):
+        outdoor_topic = load(self.tcl_web / "topics" / "1.json")
+        self.assertEqual(outdoor_topic["slug"], "outdoor-blink-table")
+        patterns = outdoor_topic["variants"][0]["led_patterns"]
+        self.assertEqual(len(patterns), 17)
+        self.assertEqual([item["code_display"] for item in patterns], [str(value) for value in range(1, 18)])
+        for pattern in patterns:
+            self.assertEqual(pattern["led_indicators"][0]["label"], "LED exterior")
+            self.assertEqual(pattern["led_indicators"][0]["state"], "pulse")
+            self.assertIn("0,5 s", pattern["counting_rule"])
+            self.assertIn("3 s", pattern["cycle_note"])
+
+        cassette_topic = load(self.tcl_web / "topics" / "2.json")
+        self.assertEqual(cassette_topic["slug"], "cassette-four-led-table")
+        cassette_patterns = cassette_topic["variants"][0]["led_patterns"]
+        self.assertGreaterEqual(len(cassette_patterns), 12)
+        self.assertTrue(all(
+            [row["label"] for row in pattern["led_indicators"]] == ["LED1", "LED2", "LED3", "LED4"]
+            for pattern in cassette_patterns
+        ))
+
+        details = [
+            load(path)
+            for path in self.tcl_web.joinpath("errors", "details").glob("*.json")
+        ]
+        e4 = next(item for item in details if item["code_display"] == "E4")
+        self.assertEqual(len(e4["interpretations"]), 3)
+        ee = next(item for item in details if item["code_display"] == "EE")
+        self.assertEqual(len(ee["interpretations"]), 2)
+        fe = next(item for item in details if item["code_display"] == "FE")
+        self.assertEqual(len(fe["interpretations"]), 2)
+        p1 = next(item for item in details if item["code_display"] == "P1")
+        self.assertEqual(len(p1["interpretations"]), 2)
+
+        expected = audit_brand(ROOT / "data" / "brands" / "tcl")
+        actual = load(ROOT / "data" / "brands" / "tcl" / "web" / "quality.json")
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 111})
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 67})
+        self.assertEqual(actual["errors"]["component_coverage"]["exact_page"], {"count": 111, "percent": 100.0})
 
     def test_field_navigation_uses_dashboard_accordions_and_quick_search(self):
         html = (self.dist / "index.html").read_text(encoding="utf-8")
