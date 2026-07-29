@@ -68,6 +68,8 @@ class StaticSiteTests(unittest.TestCase):
         cls.hisense_web = cls.hisense / "web"
         cls.tcl = cls.dist / "data" / "brands" / "tcl"
         cls.tcl_web = cls.tcl / "web"
+        cls.mhi = cls.dist / "data" / "brands" / "mitsubishi-heavy-industries"
+        cls.mhi_web = cls.mhi / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -78,7 +80,7 @@ class StaticSiteTests(unittest.TestCase):
         brands = {item["slug"]: item for item in manifest["brands"]}
         self.assertEqual(
             set(brands),
-            {"daikin", "fujitsu-general", "gree", "haier", "hisense", "lg", "midea", "mitsubishi-electric", "panasonic", "samsung", "tcl", "toshiba"},
+            {"daikin", "fujitsu-general", "gree", "haier", "hisense", "lg", "midea", "mitsubishi-electric", "mitsubishi-heavy-industries", "panasonic", "samsung", "tcl", "toshiba"},
         )
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
@@ -163,6 +165,13 @@ class StaticSiteTests(unittest.TestCase):
             "variants": 67,
             "errors": 105,
             "search_entries": 172,
+        })
+        self.assertEqual(brands["mitsubishi-heavy-industries"]["counts"], {
+            "categories": 16,
+            "topics": 35,
+            "variants": 100,
+            "errors": 110,
+            "search_entries": 210,
         })
 
     def test_search_examples_are_present(self):
@@ -428,6 +437,32 @@ class StaticSiteTests(unittest.TestCase):
             "1 destello exterior", "17 destello exterior",
         }.issubset({item["code_display"] for item in tcl_errors}))
 
+        mhi_entries = load(self.mhi_web / "search.json")
+        for query in (
+            "RUN TIMER 42",
+            "pulso inicial 1,5 s 11 s",
+            "E9 boya 3 s 10 s",
+            "pump down 0,087 MPa",
+            "E5 normal pump down",
+            "RC-EX3 dos hilos no polarizado",
+            "P31 direccionamiento automatico",
+            "SW3-7 frio calor forzado",
+            "Mente PC 30 minutos",
+            "E54-2 alta presion PSH",
+            "E37-5 subenfriamiento",
+            "LED amarillo 9 destellos",
+        ):
+            with self.subTest(brand="mitsubishi-heavy-industries", query=query):
+                self.assertTrue(contains_query(mhi_entries, query))
+
+        mhi_errors = load(self.mhi_web / "errors" / "index.json")
+        self.assertEqual(len(mhi_errors), 110)
+        self.assertTrue({
+            "01", "05", "35", "42", "61", "62", "80", "84",
+            "E1", "E5", "E9", "E19", "E35", "E41", "E45", "E59",
+            "E36-1", "E37-5", "E43-2", "E54-2", "E58-1", "WAIT",
+        }.issubset({item["code_display"] for item in mhi_errors}))
+
     def test_media_is_not_published_or_referenced(self):
         self.assertFalse((self.brand / "media").exists())
         self.assertFalse((self.daikin / "media").exists())
@@ -440,6 +475,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse((self.toshiba / "media").exists())
         self.assertFalse((self.hisense / "media").exists())
         self.assertFalse((self.tcl / "media").exists())
+        self.assertFalse((self.mhi / "media").exists())
         self.assertEqual(self.report["checks"]["media_files"], 0)
         self.assertGreaterEqual(self.report["checks"]["media_references_removed"], 26)
 
@@ -455,6 +491,7 @@ class StaticSiteTests(unittest.TestCase):
             + list(self.toshiba_web.rglob("*.json"))
             + list(self.hisense_web.rglob("*.json"))
             + list(self.tcl_web.rglob("*.json"))
+            + list(self.mhi_web.rglob("*.json"))
         ):
             data = load(path)
             pending = [data]
@@ -628,6 +665,61 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(actual["errors"]["status_counts"], {"complete": 111})
         self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 67})
         self.assertEqual(actual["errors"]["component_coverage"]["exact_page"], {"count": 111, "percent": 100.0})
+
+    def test_mhi_reference_v1_led_tables_quality_and_code_layers(self):
+        rac_topic = load(self.mhi_web / "topics" / "2.json")
+        self.assertEqual(rac_topic["slug"], "rac-run-timer-table")
+        rac_patterns = rac_topic["variants"][0]["led_patterns"]
+        self.assertEqual(len(rac_patterns), 23)
+        code_42 = next(item for item in rac_patterns if item["code_display"] == "42")
+        self.assertEqual(
+            [(row["label"], row["state"], row["detail"]) for row in code_42["led_indicators"]],
+            [("RUN", "pulse", "4 destellos"), ("TIMER", "pulse", "2 destellos")],
+        )
+        self.assertIn("1,5 s", code_42["counting_rule"])
+        self.assertIn("11 s", code_42["cycle_note"])
+
+        pac_topic = load(self.mhi_web / "topics" / "3.json")
+        self.assertEqual(pac_topic["slug"], "pac-led-table")
+        pac_patterns = pac_topic["variants"][0]["led_patterns"]
+        self.assertEqual(len(pac_patterns), 18)
+        e42_pattern = next(item for item in pac_patterns if item["code_display"] == "E42")
+        self.assertEqual(
+            [(row["label"], row["state"]) for row in e42_pattern["led_indicators"]],
+            [
+                ("LED rojo control", "pulse"),
+                ("LED verde control", "blink"),
+                ("LED amarillo inverter", "pulse"),
+            ],
+        )
+        self.assertEqual(e42_pattern["led_indicators"][2]["detail"], "9 destellos")
+
+        details = [
+            load(path)
+            for path in self.mhi_web.joinpath("errors", "details").glob("*.json")
+        ]
+        for code in ("E5", "E9", "E38", "E42", "E45", "E48", "E53", "E59"):
+            row = next(item for item in details if item["code_display"] == code)
+            self.assertEqual(len(row["interpretations"]), 2, code)
+        e54_2 = next(item for item in details if item["code_display"] == "E54-2")
+        self.assertIn("alta presión", e54_2["interpretations"][0]["title"])
+
+        expected = audit_brand(ROOT / "data" / "brands" / "mitsubishi-heavy-industries")
+        actual = load(ROOT / "data" / "brands" / "mitsubishi-heavy-industries" / "web" / "quality.json")
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 128})
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 100})
+        self.assertEqual(actual["errors"]["component_coverage"]["exact_page"], {"count": 128, "percent": 100.0})
+
+        sources = load(self.mhi_web / "sources.json")
+        self.assertEqual(len(sources), 9)
+        self.assertTrue(all(source["status"] == "reviewed" for source in sources))
+        public_text = "\n".join(path.read_text(encoding="utf-8") for path in self.mhi.rglob("*.json"))
+        self.assertNotIn("tmp\\pdfs\\mhi", public_text)
+        self.assertNotIn("tmp/text/mhi", public_text)
+        self.assertFalse(any(self.mhi.rglob("*.pdf")))
+        self.assertFalse(any(self.mhi.rglob("*.db")))
+        self.assertFalse(any(self.mhi.rglob("*.sqlite")))
 
     def test_field_navigation_uses_dashboard_accordions_and_quick_search(self):
         html = (self.dist / "index.html").read_text(encoding="utf-8")
