@@ -7,7 +7,9 @@
   <meta name="theme-color" content="#173242">
   <title>Identificador SMD | Super Técnico</title>
   <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
   <link rel="stylesheet" href="assets/smd.css?v=1">
+  <script src="assets/i18n.js?v=1" defer></script>
 </head>
 <body>
   <header class="smd-header">
@@ -16,24 +18,25 @@
       <span>
         <strong>Super Técnico</strong>
         <small>Identificador SMD</small>
+        <span class="beta-badge" data-i18n="common.betaBadge">BETA · En construcción</span>
       </span>
     </a>
     <nav aria-label="Navegación">
-      <a href="index.html">Todas las herramientas</a>
-      <a href="climatizacion.html">Climatización</a>
+      <a href="index.html" data-i18n="common.tools">Todas las herramientas</a>
+      <a href="climatizacion.html" data-i18n="common.hvac">Climatización</a>
     </nav>
   </header>
 
   <main>
     <section class="smd-hero">
       <div>
-        <p class="eyebrow">Electrónica · identificación asistida</p>
-        <h1>¿Qué pone en el componente?</h1>
-        <p>Escribe el marcaje tal como lo ves. Mostraremos <strong>todas las coincidencias posibles</strong> para que puedas contrastar encapsulado, patillaje, función y valores.</p>
+        <p class="eyebrow" data-i18n="smd.eyebrow">Electrónica · identificación asistida</p>
+        <h1 data-i18n="smd.hero">¿Qué pone en el componente?</h1>
+        <p data-i18n="smd.heroText">Escribe el marcaje tal como lo ves. Mostraremos todas las coincidencias posibles para que puedas contrastar encapsulado, patillaje, función y valores.</p>
       </div>
       <div class="database-status" id="databaseStatus">
         <span class="status-dot" aria-hidden="true"></span>
-        <span>Cargando base verificada…</span>
+        <span data-i18n="smd.loading">Cargando base verificada…</span>
       </div>
     </section>
 
@@ -43,13 +46,13 @@
           <div class="form-heading">
             <span class="step-number">1</span>
             <div>
-              <h2>Introduce el marcaje</h2>
-              <p>No elimines letras que parezcan formar parte del código. La aplicación reconoce varios sufijos de fecha o planta.</p>
+              <h2 data-i18n="smd.stepOne">Introduce el marcaje</h2>
+              <p data-i18n="smd.stepOneText">No elimines letras que parezcan formar parte del código. La aplicación reconoce varios sufijos de fecha o planta.</p>
             </div>
           </div>
 
           <label class="marking-field" for="markingInput">
-            <span>Marcaje o referencia</span>
+            <span data-i18n="smd.marking">Marcaje o referencia</span>
             <div class="marking-input-wrap">
               <input
                 id="markingInput"
@@ -59,14 +62,15 @@
                 spellcheck="false"
                 autocapitalize="characters"
                 placeholder="Ejemplos: K38, K72, AIs, bH, Z1…"
+                data-i18n-placeholder="smd.placeholder"
                 required
               >
-              <button type="submit">Buscar</button>
+              <button type="submit" data-i18n="common.search">Buscar</button>
             </div>
           </label>
 
           <div class="examples" aria-label="Ejemplos de búsqueda">
-            <span>Prueba:</span>
+            <span data-i18n="smd.try">Prueba:</span>
             <button type="button" data-example="K38">K38</button>
             <button type="button" data-example="K72">K72</button>
             <button type="button" data-example="AIs">AIs</button>
@@ -77,45 +81,45 @@
           <div class="form-divider">
             <span class="step-number">2</span>
             <div>
-              <h2>Añade lo que puedas observar</h2>
-              <p>Estos datos no son obligatorios, pero ayudan a ordenar mejor los candidatos.</p>
+              <h2 data-i18n="smd.stepTwo">Añade lo que puedas observar</h2>
+              <p data-i18n="smd.stepTwoText">Estos datos no son obligatorios, pero ayudan a ordenar mejor los candidatos.</p>
             </div>
           </div>
 
           <div class="primary-filters">
             <label for="packageSelect">
-              <span>Encapsulado</span>
+              <span data-i18n="smd.package">Encapsulado</span>
               <select id="packageSelect" name="package" disabled>
-                <option value="">No lo sé</option>
+                <option value="" data-i18n="smd.unknown">No lo sé</option>
               </select>
             </label>
             <label for="pinSelect">
-              <span>Número de patillas</span>
+              <span data-i18n="smd.pins">Número de patillas</span>
               <select id="pinSelect" name="pins" disabled>
-                <option value="">No lo sé</option>
+                <option value="" data-i18n="smd.unknown">No lo sé</option>
               </select>
             </label>
           </div>
 
           <details class="advanced-filters">
-            <summary>Más pistas opcionales</summary>
+            <summary data-i18n="smd.more">Más pistas opcionales</summary>
             <div class="advanced-grid">
               <label for="typeSelect">
-                <span>Tipo que sospechas</span>
+                <span data-i18n="smd.suspectedType">Tipo que sospechas</span>
                 <select id="typeSelect" name="type" disabled>
-                  <option value="">No lo sé</option>
+                  <option value="" data-i18n="smd.unknown">No lo sé</option>
                 </select>
               </label>
               <label for="manufacturerSelect">
-                <span>Logotipo o fabricante</span>
+                <span data-i18n="smd.manufacturer">Logotipo o fabricante</span>
                 <select id="manufacturerSelect" name="manufacturer" disabled>
-                  <option value="">No lo sé</option>
+                  <option value="" data-i18n="smd.unknown">No lo sé</option>
                 </select>
               </label>
               <label for="designatorSelect">
-                <span>Letra impresa en la placa</span>
+                <span data-i18n="smd.designator">Letra impresa en la placa</span>
                 <select id="designatorSelect" name="designator">
-                  <option value="">No lo sé</option>
+                  <option value="" data-i18n="smd.unknown">No lo sé</option>
                   <option value="Q">Q · transistor o MOSFET</option>
                   <option value="D">D · diodo o protección</option>
                   <option value="U">U / IC · circuito integrado</option>
@@ -125,7 +129,7 @@
           </details>
 
           <button class="search-submit" type="submit">
-            Buscar posibles componentes
+            <span data-i18n="smd.searchCandidates">Buscar posibles componentes</span>
             <span aria-hidden="true">→</span>
           </button>
         </form>
@@ -141,39 +145,39 @@
 
       <aside class="method-panel">
         <section>
-          <p class="eyebrow">Método recomendado</p>
-          <h2>Confirma antes de sustituir</h2>
+          <p class="eyebrow" data-i18n="smd.method">Método recomendado</p>
+          <h2 data-i18n="smd.confirm">Confirma antes de sustituir</h2>
           <ol>
             <li>
               <strong>Marcaje</strong>
-              <span>Respeta mayúsculas, minúsculas, puntos, barras y orientación.</span>
+              <span data-i18n="smd.methodMarking">Respeta mayúsculas, minúsculas, puntos, barras y orientación.</span>
             </li>
             <li>
               <strong>Encapsulado</strong>
-              <span>Compara patillas y medidas aproximadas.</span>
+              <span data-i18n="smd.methodPackage">Compara patillas y medidas aproximadas.</span>
             </li>
             <li>
               <strong>Función en la placa</strong>
-              <span>Mira si está junto a una bobina, fuente, señal, sensor o protección.</span>
+              <span data-i18n="smd.methodFunction">Mira si está junto a una bobina, fuente, señal, sensor o protección.</span>
             </li>
             <li>
               <strong>Patillaje y medidas</strong>
-              <span>Contrasta tensiones y conexiones antes de montar otra pieza.</span>
+              <span data-i18n="smd.methodPinout">Contrasta tensiones y conexiones antes de montar otra pieza.</span>
             </li>
           </ol>
         </section>
         <section class="coverage-card">
-          <h2>Cobertura actual</h2>
+          <h2 data-i18n="smd.coverage">Cobertura actual</h2>
           <dl id="coverageStats">
-            <div><dt>Candidatos oficiales</dt><dd>—</dd></div>
-            <div><dt>Fabricantes</dt><dd>—</dd></div>
-            <div><dt>Fichas completas</dt><dd>—</dd></div>
+            <div><dt data-i18n="smd.officialCandidates">Candidatos oficiales</dt><dd>—</dd></div>
+            <div><dt data-i18n="smd.manufacturers">Fabricantes</dt><dd>—</dd></div>
+            <div><dt data-i18n="smd.completeRecords">Fichas completas</dt><dd>—</dd></div>
           </dl>
-          <p>La base crecerá por fabricantes. Que no aparezca una pieza no significa que no exista.</p>
+          <p data-i18n="smd.coverageNote">La base crecerá por fabricantes. Que no aparezca una pieza no significa que no exista.</p>
         </section>
         <section class="safety-card">
-          <strong>Importante</strong>
-          <p>Un mismo código puede pertenecer a componentes diferentes. El resultado es una lista de candidatos, no una identificación automática ni una equivalencia de sustitución.</p>
+          <strong data-i18n="smd.important">Importante</strong>
+          <p data-i18n="smd.warning">Un mismo código puede pertenecer a componentes diferentes. El resultado es una lista de candidatos, no una identificación automática ni una equivalencia de sustitución.</p>
         </section>
       </aside>
     </section>

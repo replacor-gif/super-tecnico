@@ -19,6 +19,10 @@ const state = {
   confusionPairs: new Set(),
 };
 
+function tr(key, variables = {}) {
+  return window.ST_I18N?.t(key, variables) || key;
+}
+
 function escapeHtml(value) {
   return String(value ?? '')
     .replaceAll('&', '&amp;')
@@ -42,7 +46,9 @@ function humanNumber(value) {
 
 function setStatus(kind, text) {
   els.status.className = `database-status ${kind || ''}`.trim();
-  els.status.querySelector('span:last-child').textContent = text;
+  const statusText = els.status.querySelector('span:last-child');
+  statusText.removeAttribute('data-i18n');
+  statusText.textContent = text;
 }
 
 function addOptions(select, values, formatter = value => value) {
@@ -67,12 +73,12 @@ function setupFilters() {
   });
   addOptions(els.package, packages, name => {
     const pins = [...packagePins.get(name)].filter(Boolean).sort((a, b) => a - b);
-    return pins.length === 1 ? `${name} · ${pins[0]} patillas` : name;
+    return pins.length === 1 ? `${name} · ${tr('smd.pinsUnit', {count: pins[0]})}` : name;
   });
 
   const pins = [...new Set(state.candidates.map(item => Number(item.package.pins)).filter(Boolean))]
     .sort((a, b) => a - b);
-  addOptions(els.pins, pins.map(String), value => `${value} patillas`);
+  addOptions(els.pins, pins.map(String), value => tr('smd.pinsUnit', {count: value}));
 
   const types = [...new Set(state.candidates.map(item => item.component.type).filter(Boolean))]
     .sort((a, b) => a.localeCompare(b, 'es'));
@@ -274,11 +280,11 @@ function matchLevel(item) {
   const {score, kind, filterMatches} = item._match;
   const exactKinds = new Set(['part_exact', 'mark_exact_case', 'mark_exact', 'raw_exact']);
   if (score >= 128 && exactKinds.has(kind) && filterMatches >= 1) {
-    return {label: 'Coincidencia muy alta', className: ''};
+    return {label: tr('smd.matchExact'), className: ''};
   }
-  if (score >= 90) return {label: 'Marcaje coincidente', className: ''};
-  if (score >= 66) return {label: 'Posible coincidencia', className: 'possible'};
-  return {label: 'Coincidencia aproximada', className: 'approximate'};
+  if (score >= 90) return {label: tr('smd.matchExact'), className: ''};
+  if (score >= 66) return {label: tr('smd.matchPossible'), className: 'possible'};
+  return {label: tr('smd.matchApproximate'), className: 'approximate'};
 }
 
 function getFilters() {
@@ -371,17 +377,17 @@ function renderCandidate(item) {
           <div class="candidate-meta">
             <span class="meta-pill">${escapeHtml(item.component.type)}</span>
             <span class="meta-pill">${escapeHtml(item.package.name)}</span>
-            <span class="meta-pill">${escapeHtml(item.package.pins)} patillas</span>
+          <span class="meta-pill">${escapeHtml(tr('smd.pinsUnit', {count: item.package.pins}))}</span>
           </div>
         </div>
         <div class="match-column">
           <span class="match-pill ${level.className}">${escapeHtml(level.label)}</span>
-          <span class="open-label"></span>
+          <span class="open-label" data-open-label="${escapeHtml(tr('smd.openRecord'))}" data-close-label="${escapeHtml(tr('smd.closeRecord'))}"></span>
         </div>
       </summary>
       <div class="candidate-body">
         <div class="match-reasons">
-          <strong>Por qué aparece:</strong>
+          <strong>${escapeHtml(tr('smd.why'))}</strong>
           <ul>${item._match.reasons.map(reason => `<li>${escapeHtml(reason)}</li>`).join('')}</ul>
         </div>
         <div class="candidate-overview">
@@ -403,35 +409,35 @@ function renderCandidate(item) {
         <p class="candidate-description">${escapeHtml(item.component.description || '')}</p>
         <div class="technical-details">
           <details>
-            <summary>Cómo reconocer el marcaje</summary>
+            <summary>${escapeHtml(tr('smd.recognise'))}</summary>
             <div class="detail-content">
               ${markingLayouts(item)}
               <p><strong>Patrón registrado:</strong> ${escapeHtml(item.marking.pattern)}</p>
             </div>
           </details>
           <details>
-            <summary>Patillaje</summary>
+            <summary>${escapeHtml(tr('smd.pinout'))}</summary>
             <div class="detail-content">${pinoutRows(item.pinout)}</div>
           </details>
           <details>
-            <summary>Valores y límites eléctricos</summary>
+            <summary>${escapeHtml(tr('smd.electrical'))}</summary>
             <div class="detail-content">${parameterRows(item.parameters)}</div>
           </details>
           <details>
-            <summary>Fuente y nivel de comprobación</summary>
+            <summary>${escapeHtml(tr('smd.sourceLevel'))}</summary>
             <div class="detail-content">
               <div class="source-box">
                 <strong>${escapeHtml(item.source.title)}</strong>
                 <span>${escapeHtml(item.source.publisher || item.component.manufacturer)}</span>
                 ${item.source.page_or_section ? `<span>${escapeHtml(item.source.page_or_section)}</span>` : ''}
-                <a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener noreferrer">Abrir documento oficial ↗</a>
+                <a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(tr('smd.openOfficial'))}</a>
               </div>
               <p>Marcaje, encapsulado, patillaje y datos eléctricos están contrastados en documentación oficial. La identificación sobre una placa concreta sigue requiriendo comprobación.</p>
             </div>
           </details>
         </div>
         <div class="replacement-warning">
-          <strong>No sustituyas solo por el marcaje.</strong> Confirma patillaje, polaridad, función, tensiones, corrientes y características dinámicas. Dos componentes con el mismo código visible pueden no ser equivalentes.
+          <strong>${escapeHtml(tr('smd.replacementTitle'))}</strong> Confirma patillaje, polaridad, función, tensiones, corrientes y características dinámicas. Dos componentes con el mismo código visible pueden no ser equivalentes.
         </div>
       </div>
     </details>`;
@@ -462,9 +468,9 @@ function renderResults(results, filters) {
     els.results.innerHTML = `
       <div class="no-results">
         <div class="empty-chip" aria-hidden="true">?</div>
-        <h2>No hay candidatos oficiales para “${queryLabel}”</h2>
-        <p>Comprueba 0/O, 1/I, 5/S, 8/B, 2/Z y 6/G. Prueba también solo con el bloque fijo del marcaje y deja los filtros opcionales vacíos.</p>
-        <button type="button" id="clearFiltersButton">Quitar filtros opcionales</button>
+        <h2>${escapeHtml(tr('smd.noResults', {query: filters.query}))}</h2>
+        <p>${escapeHtml(tr('smd.noResultsText'))}</p>
+        <button type="button" id="clearFiltersButton">${escapeHtml(tr('smd.clearFilters'))}</button>
       </div>`;
     document.getElementById('clearFiltersButton').addEventListener('click', () => {
       [els.package, els.pins, els.type, els.manufacturer, els.designator].forEach(select => { select.value = ''; });
@@ -477,14 +483,14 @@ function renderResults(results, filters) {
   els.results.innerHTML = `
     <div class="results-heading">
       <div>
-        <h2>Posibles componentes para “${queryLabel}”</h2>
-        <p>La lista está ordenada por coincidencia. Ninguna ficha se abre automáticamente.</p>
+        <h2>${escapeHtml(tr('smd.resultsTitle', {query: filters.query}))}</h2>
+        <p>${escapeHtml(tr('smd.resultsIntro'))}</p>
       </div>
       <span class="result-count" aria-label="${results.length} resultados">${results.length}</span>
     </div>
     ${ambiguous ? `
       <p class="ambiguity-notice">
-        <strong>Marcaje ambiguo:</strong> existen varias piezas oficiales con el mismo código y encapsulado. Revisa todas las posibilidades antes de decidir.
+        ${escapeHtml(tr('smd.ambiguity'))}
       </p>` : ''}
     <div class="result-list">
       ${results.map(renderCandidate).join('')}
@@ -567,7 +573,10 @@ async function init() {
     setupCoverage();
     setStatus(
       'ready',
-      `${humanNumber(catalog.meta.candidate_count)} candidatos verificados · ${humanNumber(catalog.meta.manufacturer_count)} fabricantes`,
+      tr('smd.statusReady', {
+        candidates: humanNumber(catalog.meta.candidate_count),
+        manufacturers: humanNumber(catalog.meta.manufacturer_count),
+      }),
     );
     applyUrlState();
   } catch (error) {
@@ -575,8 +584,8 @@ async function init() {
     setStatus('error', 'No se pudo cargar la base SMD');
     els.results.innerHTML = `
       <div class="no-results">
-        <h2>No se pudo cargar el identificador</h2>
-        <p>Recarga la página. Si el problema continúa, la publicación puede estar actualizándose.</p>
+        <h2>${escapeHtml(tr('smd.loadError'))}</h2>
+        <p>${escapeHtml(tr('smd.loadErrorText'))}</p>
       </div>`;
   }
 }
@@ -594,3 +603,14 @@ document.querySelectorAll('[data-example]').forEach(button => {
 });
 
 init();
+
+document.addEventListener('st:languagechange', () => {
+  if (!state.catalog) return;
+  setupFilters();
+  setupCoverage();
+  setStatus('ready', tr('smd.statusReady', {
+    candidates: humanNumber(state.catalog.meta.candidate_count),
+    manufacturers: humanNumber(state.catalog.meta.manufacturer_count),
+  }));
+  if (compact(els.marking.value)) runSearch();
+});

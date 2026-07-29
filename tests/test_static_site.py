@@ -585,6 +585,37 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("renderIndicationContexts", script)
         self.assertIn("El código puede cambiar según dónde se lea", script)
 
+    def test_beta_multilingual_shell_and_feedback_are_public(self):
+        pages = {
+            name: (self.dist / name).read_text(encoding="utf-8")
+            for name in ("index.html", "climatizacion.html", "smd.html", "feedback.html")
+        }
+        for name, html in pages.items():
+            with self.subTest(page=name):
+                self.assertIn("assets/common.css", html)
+                self.assertIn("assets/i18n.js", html)
+                self.assertIn("BETA", html)
+
+        i18n = (self.dist / "assets" / "i18n.js").read_text(encoding="utf-8")
+        feedback = (self.dist / "assets" / "feedback.js").read_text(encoding="utf-8")
+        for language in ("es", "en", "pt", "fr"):
+            self.assertIn(f"{language}:", i18n)
+        for marker in (
+            "st.language",
+            "st:languagechange",
+            "common.translationScope",
+            "feedback.html?page=",
+            "Versión beta pública",
+            "Public beta version",
+            "Versão beta pública",
+            "Version bêta publique",
+        ):
+            self.assertIn(marker, i18n)
+        self.assertIn("mailto:info@replacor.com", feedback)
+        self.assertNotIn("fetch(", feedback)
+        self.assertIn('id="feedbackForm"', pages["feedback.html"])
+        self.assertIn("https://www.replacor.com/", pages["feedback.html"])
+
     def test_samsung_led_tables_are_structured_and_accessible(self):
         topic = load(self.samsung_web / "topics" / "1.json")
         self.assertEqual(topic["slug"], "rac-outdoor-led-master")
@@ -1102,7 +1133,7 @@ class StaticSiteTests(unittest.TestCase):
         script = (self.dist / "assets" / "smd.js").read_text(encoding="utf-8")
         self.assertIn('id="smdSearchForm"', html)
         self.assertIn("data/smd/catalog.json", script)
-        self.assertIn("Ninguna ficha se abre automáticamente.", script)
+        self.assertIn("smd.resultsIntro", script)
         self.assertIn("directKinds", script)
         self.assertNotIn("<details class=\"candidate-card\" open", script)
 

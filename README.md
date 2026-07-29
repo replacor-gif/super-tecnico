@@ -11,6 +11,17 @@ Portal técnico estático con herramientas independientes. La publicación es:
 
 El identificador SMD publica 439 candidatos de seis fabricantes, todos con marcaje, encapsulado, patillaje, parámetros eléctricos y una fuente oficial. Cuando un código tiene varios significados, muestra todos los candidatos cerrados y no selecciona ninguno automáticamente.
 
+## Versión beta e idiomas
+
+Super Técnico se publica expresamente como una **beta en construcción**. Todas las pantallas incluyen:
+
+- aviso permanente de revisión y uso responsable;
+- selector persistente de español, inglés, portugués y francés;
+- acceso al formulario de errores, sugerencias, traducciones e información faltante;
+- envío voluntario mediante el programa de correo del técnico a `info@replacor.com`, sin almacenar el formulario en GitHub Pages.
+
+La interfaz es multilingüe. Las fichas técnicas conservan durante la beta el texto español revisado hasta que cada traducción técnica se valide, evitando que una traducción automática altere valores, protecciones o procedimientos.
+
 ## Marcas disponibles
 
 - **AUX:** split, Light Commercial, cassette/conductos, multisplit, mando XK y ARV/VRF; separa display interior, mando, pilotos exteriores D1/D2/D3, placa comercial y código ARV por indicadores.

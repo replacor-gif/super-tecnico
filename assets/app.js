@@ -383,6 +383,7 @@ async function selectBrand(slug) {
     const remembered = localStorage.getItem(`st.category.${slug}`);
     els.category.value = data.categories.some(c => c.slug === remembered) ? remembered : '';
     const counts = state.brandInfo?.counts || {};
+    els.brandStatus.removeAttribute('data-i18n');
     els.brandStatus.textContent = `${data.categories.length} categorías disponibles · ${counts.errors || 0} errores · ${counts.variants || 0} fichas técnicas`;
     renderQuickAccess();
     renderBrandDashboard();

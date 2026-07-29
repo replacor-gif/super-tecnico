@@ -7,7 +7,9 @@
   <meta name="theme-color" content="#0e3e5a">
   <title>Biblioteca de climatización | Super Técnico</title>
   <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
   <link rel="stylesheet" href="assets/styles.css?v=7">
+  <script src="assets/i18n.js?v=1" defer></script>
 </head>
 <body>
 <header class="site-header">
@@ -15,18 +17,20 @@
     <img class="app-logo" src="assets/super-tecnico-logo.png" alt="">
     <div>
       <h1>Super Técnico</h1>
-      <p>Guía técnica de intervención</p>
+      <p data-i18n="hvac.guide">Guía técnica de intervención</p>
+      <span class="beta-badge" data-i18n="common.betaBadge">BETA · En construcción</span>
     </div>
   </div>
   <div class="header-actions">
-    <a class="secondary-button" href="index.html">Herramientas</a>
-    <button id="homeButton" class="secondary-button" type="button">Inicio</button>
-    <button id="coverageButton" class="secondary-button" type="button">Cobertura</button>
+    <a class="secondary-button" href="index.html" data-i18n="common.backTools">Herramientas</a>
+    <button id="homeButton" class="secondary-button" type="button" data-i18n="hvac.home">Inicio</button>
+    <button id="coverageButton" class="secondary-button" type="button" data-i18n="hvac.coverage">Cobertura</button>
     <a
       class="secondary-button support-header-link"
       href="https://www.paypal.com/donate/?hosted_button_id=G983GYUGGH6HY"
       target="_blank"
       rel="noopener noreferrer"
+      data-i18n="hvac.support"
     >Apoyar</a>
   </div>
 </header>
@@ -34,14 +38,14 @@
 <main class="app-shell">
   <section class="brand-panel" aria-label="Marca activa">
     <div class="field brand-field">
-      <label for="brandSelect"><span class="step-label">Paso 1</span>Selecciona la marca</label>
+      <label for="brandSelect"><span class="step-label" data-i18n="hvac.stepOne">Paso 1</span><span data-i18n="hvac.selectBrand">Selecciona la marca</span></label>
       <select id="brandSelect"><option value="">Cargando…</option></select>
     </div>
-    <div class="brand-status" id="brandStatus">Cargando información técnica…</div>
+    <div class="brand-status" id="brandStatus" data-i18n="hvac.loading">Cargando información técnica…</div>
   </section>
 
   <section id="quickAccessPanel" class="quick-access-panel" aria-label="Consulta rápida">
-    <div class="loading">Preparando accesos rápidos…</div>
+    <div class="loading" data-i18n="hvac.quick">Preparando accesos rápidos…</div>
   </section>
 
   <section class="resource-strip resource-strip-public" aria-label="Libro técnico gratuito">
@@ -51,8 +55,8 @@
       alt="Portada del libro Gree y Midea: esquemas y documentación de reparación"
     >
     <div class="resource-copy">
-      <span class="step-label">Libro técnico gratuito</span>
-      <h2>Libro Gree y Midea</h2>
+      <span class="step-label" data-i18n="hvac.freeBook">Libro técnico gratuito</span>
+      <h2 data-i18n="portal.bookTitle">Libro Gree y Midea</h2>
       <p>Esquemas y documentación de reparación · edición española completa para consulta técnica.</p>
       <p class="resource-meta">501 páginas · PDF optimizado · 19 MB</p>
     </div>
@@ -61,6 +65,7 @@
       href="recursos/libro-electronica-inverter-replacor.pdf"
       target="_blank"
       rel="noopener"
+      data-i18n="hvac.bookOpen"
     >Abrir libro completo</a>
   </section>
 
@@ -84,13 +89,13 @@
 
   <section class="search-panel search-hero" aria-label="Búsqueda global">
     <div class="search-heading">
-      <h2>¿No encuentras el apartado?</h2>
-      <p>Busca por código, componente, síntoma o procedimiento. No hace falta conocer el nombre exacto.</p>
+      <h2 data-i18n="hvac.searchTitle">¿No encuentras el apartado?</h2>
+      <p data-i18n="hvac.searchText">Busca por código, componente, síntoma o procedimiento. No hace falta conocer el nombre exacto.</p>
     </div>
     <form id="globalSearchForm">
       <label class="sr-only" for="globalSearch">Buscar en toda la marca</label>
-      <input id="globalSearch" type="search" autocomplete="off" placeholder="Ejemplos: E12, pump down, boya, mando 2 hilos, Peak Cut…">
-      <button type="submit">Buscar</button>
+      <input id="globalSearch" type="search" autocomplete="off" placeholder="Ejemplos: E12, pump down, boya, mando 2 hilos, Peak Cut…" data-i18n-placeholder="hvac.searchPlaceholder">
+      <button type="submit" data-i18n="common.search">Buscar</button>
     </form>
     <div class="quick-actions" aria-label="Búsquedas frecuentes">
       <button type="button" class="quick-chip" data-quick-query="sacar códigos">Sacar códigos</button>
@@ -103,14 +108,14 @@
   </section>
 
   <details class="menu-navigation">
-    <summary>Explorar por categoría y tema</summary>
+    <summary data-i18n="hvac.explore">Explorar por categoría y tema</summary>
     <section class="control-panel" aria-label="Navegación técnica">
       <div class="field">
-        <label for="categorySelect">Categoría</label>
+        <label for="categorySelect" data-i18n="hvac.category">Categoría</label>
         <select id="categorySelect" disabled><option value="">Selecciona una categoría</option></select>
       </div>
       <div class="field grow">
-        <label for="topicSelect">Tema</label>
+        <label for="topicSelect" data-i18n="hvac.topic">Tema</label>
         <select id="topicSelect" disabled><option value="">Selecciona un tema</option></select>
       </div>
     </section>
@@ -120,8 +125,8 @@
   <section id="contextPanel" class="context-panel hidden"></section>
   <section id="content" class="content" aria-live="polite">
     <div class="welcome-card">
-      <h2>Selecciona una marca y una categoría</h2>
-      <p>La información aparece por temas y variantes. Los procedimientos, tablas, advertencias y fuentes permanecen plegados hasta abrirlos.</p>
+      <h2 data-i18n="hvac.welcomeTitle">Selecciona una marca y una categoría</h2>
+      <p data-i18n="hvac.welcomeText">La información aparece por temas y variantes. Los procedimientos, tablas, advertencias y fuentes permanecen plegados hasta abrirlos.</p>
     </div>
   </section>
   <aside class="ad-slot ad-slot-after-content" data-ad-placement="after-content" aria-label="Publicidad" hidden></aside>

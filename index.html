@@ -7,7 +7,9 @@
   <meta name="theme-color" content="#0b2637">
   <title>Super Técnico | Herramientas para el técnico</title>
   <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
   <link rel="stylesheet" href="assets/portal.css?v=1">
+  <script src="assets/i18n.js?v=1" defer></script>
 </head>
 <body>
   <header class="portal-header">
@@ -16,32 +18,33 @@
       <span>
         <strong>Super Técnico</strong>
         <small>Herramientas técnicas REPLACOR</small>
+        <span class="beta-badge" data-i18n="common.betaBadge">BETA · En construcción</span>
       </span>
     </a>
     <nav aria-label="Enlaces principales">
-      <a href="https://www.replacor.com/" target="_blank" rel="noopener">REPLACOR</a>
-      <a class="support-link" href="https://www.paypal.com/donate/?hosted_button_id=G983GYUGGH6HY" target="_blank" rel="noopener noreferrer">Apoyar el proyecto</a>
+      <a href="https://www.replacor.com/" target="_blank" rel="noopener" data-i18n="common.replacor">REPLACOR</a>
+      <a class="support-link" href="https://www.paypal.com/donate/?hosted_button_id=G983GYUGGH6HY" target="_blank" rel="noopener noreferrer" data-i18n="common.support">Apoyar el proyecto</a>
     </nav>
   </header>
 
   <main>
     <section class="portal-hero">
       <div class="hero-copy">
-        <p class="eyebrow">Biblioteca técnica en crecimiento</p>
-        <h1>¿Qué necesitas consultar?</h1>
-        <p class="hero-intro">Elige una herramienta. Cada apartado conserva su propia información y está preparado para incorporar nuevas utilidades sin mezclar contenidos.</p>
+        <p class="eyebrow" data-i18n="portal.eyebrow">Biblioteca técnica en crecimiento</p>
+        <h1 data-i18n="portal.title">¿Qué necesitas consultar?</h1>
+        <p class="hero-intro" data-i18n="portal.intro">Elige una herramienta. Cada apartado conserva su propia información y está preparado para incorporar nuevas utilidades sin mezclar contenidos.</p>
       </div>
       <div class="hero-stat" aria-label="Estado del proyecto">
         <strong>2</strong>
-        <span>herramientas disponibles</span>
+        <span data-i18n="portal.count">herramientas disponibles</span>
       </div>
     </section>
 
     <section class="tools-section" aria-labelledby="toolsTitle">
       <div class="section-heading">
-        <p class="eyebrow">Acceso directo</p>
-        <h2 id="toolsTitle">Herramientas de Super Técnico</h2>
-        <p>Entra solo en el apartado que necesitas en ese momento.</p>
+        <p class="eyebrow" data-i18n="portal.access">Acceso directo</p>
+        <h2 id="toolsTitle" data-i18n="portal.toolsTitle">Herramientas de Super Técnico</h2>
+        <p data-i18n="portal.toolsIntro">Entra solo en el apartado que necesitas en ese momento.</p>
       </div>
 
       <div class="tool-grid">
@@ -53,17 +56,17 @@
             <span class="fan-centre"></span>
           </div>
           <div class="tool-copy">
-            <span class="tool-badge">Climatización</span>
-            <h3>Biblioteca técnica HVAC</h3>
-            <p>Errores, subcódigos, mandos, programaciones, marchas forzadas, buses, puesta en marcha y procedimientos por fabricante.</p>
+            <span class="tool-badge" data-i18n="portal.hvacBadge">Climatización</span>
+            <h3 data-i18n="portal.hvacTitle">Biblioteca técnica HVAC</h3>
+            <p data-i18n="portal.hvacText">Errores, subcódigos, mandos, programaciones, marchas forzadas, buses, puesta en marcha y procedimientos por fabricante.</p>
             <ul>
-              <li>16 marcas documentadas</li>
-              <li>Códigos con todos sus significados</li>
-              <li>Información plegada para consultar solo lo necesario</li>
+              <li data-i18n="portal.hvacOne">16 marcas documentadas</li>
+              <li data-i18n="portal.hvacTwo">Códigos con todos sus significados</li>
+              <li data-i18n="portal.hvacThree">Información plegada para consultar solo lo necesario</li>
             </ul>
           </div>
           <a class="tool-button" href="climatizacion.html">
-            Abrir climatización
+            <span data-i18n="portal.hvacOpen">Abrir climatización</span>
             <span aria-hidden="true">→</span>
           </a>
         </article>
@@ -75,17 +78,17 @@
             <span class="chip-pins chip-pins-right"></span>
           </div>
           <div class="tool-copy">
-            <span class="tool-badge">Electrónica</span>
-            <h3>Identificador de componentes SMD</h3>
-            <p>Introduce lo que ves impreso en el componente y obtén todas las coincidencias oficiales posibles para contrastarlas en la placa.</p>
+            <span class="tool-badge" data-i18n="portal.smdBadge">Electrónica</span>
+            <h3 data-i18n="portal.smdTitle">Identificador de componentes SMD</h3>
+            <p data-i18n="portal.smdText">Introduce lo que ves impreso en el componente y obtén todas las coincidencias oficiales posibles para contrastarlas en la placa.</p>
             <ul>
-              <li>439 candidatos verificados</li>
-              <li>Marcaje, encapsulado, patillaje y parámetros</li>
-              <li>Nunca oculta coincidencias ambiguas</li>
+              <li data-i18n="portal.smdOne">439 candidatos verificados</li>
+              <li data-i18n="portal.smdTwo">Marcaje, encapsulado, patillaje y parámetros</li>
+              <li data-i18n="portal.smdThree">Nunca oculta coincidencias ambiguas</li>
             </ul>
           </div>
           <a class="tool-button" href="smd.html">
-            Abrir identificador SMD
+            <span data-i18n="portal.smdOpen">Abrir identificador SMD</span>
             <span aria-hidden="true">→</span>
           </a>
         </article>
@@ -93,11 +96,11 @@
         <article class="tool-card tool-card-upcoming">
           <div class="tool-icon plus-icon" aria-hidden="true">+</div>
           <div class="tool-copy">
-            <span class="tool-badge">Próximamente</span>
-            <h3>Nuevas herramientas</h3>
-            <p>La portada está preparada para añadir las próximas aplicaciones sin alterar las que ya funcionan.</p>
+            <span class="tool-badge" data-i18n="portal.soon">Próximamente</span>
+            <h3 data-i18n="portal.newTools">Nuevas herramientas</h3>
+            <p data-i18n="portal.newToolsText">La portada está preparada para añadir las próximas aplicaciones sin alterar las que ya funcionan.</p>
           </div>
-          <span class="tool-button tool-button-disabled" aria-disabled="true">En preparación</span>
+          <span class="tool-button tool-button-disabled" aria-disabled="true" data-i18n="portal.preparing">En preparación</span>
         </article>
       </div>
     </section>
@@ -105,26 +108,26 @@
     <section class="portal-resource">
       <img src="assets/libro-electronica-inverter-replacor-portada.png" alt="Portada del libro técnico de electrónica inverter Gree y Midea">
       <div>
-        <p class="eyebrow">Recurso técnico gratuito</p>
-        <h2>Libro Gree y Midea</h2>
-        <p>Esquemas y documentación de reparación en una edición española completa para consulta técnica.</p>
+        <p class="eyebrow" data-i18n="portal.resource">Recurso técnico gratuito</p>
+        <h2 data-i18n="portal.bookTitle">Libro Gree y Midea</h2>
+        <p data-i18n="portal.bookText">Esquemas y documentación de reparación en una edición española completa para consulta técnica.</p>
       </div>
-      <a href="recursos/libro-electronica-inverter-replacor.pdf" target="_blank" rel="noopener">Abrir libro</a>
+      <a href="recursos/libro-electronica-inverter-replacor.pdf" target="_blank" rel="noopener" data-i18n="portal.bookOpen">Abrir libro</a>
     </section>
 
     <section class="portal-support">
       <div>
-        <p class="eyebrow">Proyecto independiente</p>
-        <h2>Ayuda a que siga creciendo</h2>
-        <p>Las aportaciones voluntarias ayudan a revisar documentación, ampliar fabricantes y desarrollar nuevas herramientas para la comunidad técnica.</p>
+        <p class="eyebrow" data-i18n="portal.independent">Proyecto independiente</p>
+        <h2 data-i18n="portal.grow">Ayuda a que siga creciendo</h2>
+        <p data-i18n="portal.growText">Las aportaciones voluntarias ayudan a revisar documentación, ampliar fabricantes y desarrollar nuevas herramientas para la comunidad técnica.</p>
       </div>
-      <a href="https://www.paypal.com/donate/?hosted_button_id=G983GYUGGH6HY" target="_blank" rel="noopener noreferrer">Apoyar con PayPal</a>
+      <a href="https://www.paypal.com/donate/?hosted_button_id=G983GYUGGH6HY" target="_blank" rel="noopener noreferrer" data-i18n="portal.paypal">Apoyar con PayPal</a>
     </section>
   </main>
 
   <footer>
-    <p>Super Técnico · Proyecto técnico de REPLACOR</p>
-    <p>La información orienta la comprobación; no sustituye la hoja de datos ni las medidas de seguridad.</p>
+    <p data-i18n="portal.footer">Super Técnico · Proyecto técnico de REPLACOR</p>
+    <p data-i18n="portal.disclaimer">La información orienta la comprobación; no sustituye la hoja de datos ni las medidas de seguridad.</p>
   </footer>
 </body>
 </html>

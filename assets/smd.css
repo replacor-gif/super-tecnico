@@ -768,11 +768,11 @@ select:disabled {
 }
 
 .candidate-card[open] .open-label::after {
-  content: "Cerrar ficha";
+  content: attr(data-close-label);
 }
 
 .candidate-card:not([open]) .open-label::after {
-  content: "Abrir ficha";
+  content: attr(data-open-label);
 }
 
 .candidate-body {
