@@ -62,6 +62,8 @@ class StaticSiteTests(unittest.TestCase):
         cls.haier_web = cls.haier / "web"
         cls.samsung = cls.dist / "data" / "brands" / "samsung"
         cls.samsung_web = cls.samsung / "web"
+        cls.toshiba = cls.dist / "data" / "brands" / "toshiba"
+        cls.toshiba_web = cls.toshiba / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -72,7 +74,7 @@ class StaticSiteTests(unittest.TestCase):
         brands = {item["slug"]: item for item in manifest["brands"]}
         self.assertEqual(
             set(brands),
-            {"daikin", "fujitsu-general", "gree", "haier", "lg", "midea", "mitsubishi-electric", "panasonic", "samsung"},
+            {"daikin", "fujitsu-general", "gree", "haier", "lg", "midea", "mitsubishi-electric", "panasonic", "samsung", "toshiba"},
         )
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
@@ -136,6 +138,13 @@ class StaticSiteTests(unittest.TestCase):
             "variants": 72,
             "errors": 119,
             "search_entries": 191,
+        })
+        self.assertEqual(brands["toshiba"]["counts"], {
+            "categories": 16,
+            "topics": 34,
+            "variants": 80,
+            "errors": 122,
+            "search_entries": 202,
         })
 
     def test_search_examples_are_present(self):
@@ -328,6 +337,29 @@ class StaticSiteTests(unittest.TestCase):
             "E206-C003", "E416", "E458", "E464", "E500", "E604", "UP", "dF",
         }.issubset({item["code_display"] for item in samsung_errors}))
 
+        toshiba_entries = load(self.toshiba_web / "search.json")
+        for query in (
+            "04 comunicacion 15 60 V",
+            "P10 boya 4 minutos",
+            "D800 D805 F04",
+            "SW81 SW82 refrigerant collection",
+            "RBC AMTU31 A B 18 V",
+            "001 O DN 007 20000 horas",
+            "or recuperacion aceite",
+            "desescarche cooperativo 01D 01E 01F",
+            "F08 continua funcionamiento",
+            "52 codigos 7F",
+        ):
+            with self.subTest(brand="toshiba", query=query):
+                self.assertTrue(contains_query(toshiba_entries, query))
+
+        toshiba_errors = load(self.toshiba_web / "errors" / "index.json")
+        self.assertEqual(len(toshiba_errors), 122)
+        self.assertTrue({
+            "04", "1C", "20", "E01", "E04", "E09", "F04", "F08",
+            "H01", "L29", "P10", "P20", "001", "022", "or", "dF",
+        }.issubset({item["code_display"] for item in toshiba_errors}))
+
     def test_media_is_not_published_or_referenced(self):
         self.assertFalse((self.brand / "media").exists())
         self.assertFalse((self.daikin / "media").exists())
@@ -337,6 +369,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse((self.midea / "media").exists())
         self.assertFalse((self.haier / "media").exists())
         self.assertFalse((self.samsung / "media").exists())
+        self.assertFalse((self.toshiba / "media").exists())
         self.assertEqual(self.report["checks"]["media_files"], 0)
         self.assertGreaterEqual(self.report["checks"]["media_references_removed"], 26)
 
@@ -349,6 +382,7 @@ class StaticSiteTests(unittest.TestCase):
             + list(self.midea_web.rglob("*.json"))
             + list(self.haier_web.rglob("*.json"))
             + list(self.samsung_web.rglob("*.json"))
+            + list(self.toshiba_web.rglob("*.json"))
         ):
             data = load(path)
             pending = [data]
@@ -414,6 +448,41 @@ class StaticSiteTests(unittest.TestCase):
             and [row["state"] for row in context["led_indicators"]] == ["on", "on", "blink"]
             for context in led_contexts
         ))
+
+    def test_toshiba_reference_v1_led_tables_quality_and_code_layers(self):
+        topic = load(self.toshiba_web / "topics" / "1.json")
+        self.assertEqual(topic["slug"], "toshiba-six-led-master")
+        self.assertEqual([len(item["led_patterns"]) for item in topic["variants"]], [27, 27, 31])
+
+        allowed_states = {"on", "off", "blink", "fast_blink", "slow_blink", "pulse", "alternate"}
+        for variant in topic["variants"]:
+            for pattern in variant["led_patterns"]:
+                self.assertEqual(
+                    [row["label"] for row in pattern["led_indicators"]],
+                    ["D800", "D801", "D802", "D803", "D804", "D805"],
+                )
+                self.assertTrue(all(row["state"] in allowed_states for row in pattern["led_indicators"]))
+                self.assertTrue(pattern["relationship"])
+                self.assertTrue(pattern["family_hint"])
+
+        details = [
+            load(path)
+            for path in self.toshiba_web.joinpath("errors", "details").glob("*.json")
+        ]
+        e01 = next(item for item in details if item["code_display"] == "E01")
+        self.assertEqual(len(e01["interpretations"]), 2)
+        code_1c = next(item for item in details if item["code_display"] == "1C")
+        self.assertGreaterEqual(len(code_1c["interpretations"]), 5)
+        p10 = next(item for item in details if item["code_display"] == "P10")
+        self.assertEqual(len(p10["interpretations"]), 2)
+
+        expected = audit_brand(ROOT / "data" / "brands" / "toshiba")
+        actual = load(ROOT / "data" / "brands" / "toshiba" / "web" / "quality.json")
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 176})
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 80})
+        self.assertEqual(actual["errors"]["component_coverage"]["exact_page"], {"count": 176, "percent": 100.0})
+
     def test_field_navigation_uses_dashboard_accordions_and_quick_search(self):
         html = (self.dist / "index.html").read_text(encoding="utf-8")
         script = (self.dist / "assets" / "app.js").read_text(encoding="utf-8")
