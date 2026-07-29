@@ -986,7 +986,15 @@ def build_interpretation(config: dict[str, Any], ident: int, spec: dict[str, Any
         "source_kind": "official", "confidence": "high", "review_status": "reviewed",
         "indication_contexts": contexts, "info_items": info,
         "operational_impacts": [{
-            "stop_level": "warning" if spec["profile"] == "normal" else ("unit" if spec["scope"] in {"indoor", "outdoor"} else "system"),
+            "stop_level": (
+                "warning"
+                if spec["profile"] == "normal"
+                else (
+                    "circuit"
+                    if spec["scope"] == "circuit"
+                    else ("unit" if spec["scope"] in {"indoor", "outdoor", "unit"} else "system")
+                )
+            ),
             "summary": spec["behavior"], "affected_scope": f'Alcance documentado para {spec["family"]}.',
             "unaffected_scope": "No se presupone continuidad de otras unidades si la fuente no lo especifica.",
             "restart_behavior": "Corrija la causa y rearme únicamente con el procedimiento de esta familia.",

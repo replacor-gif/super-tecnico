@@ -29,14 +29,21 @@ La interfaz es multilingüe. Las fichas técnicas conservan durante la beta el t
 
 ## Marcas disponibles
 
+- **Aermec:** enfriadoras y bombas de calor con controles Moducontrol, pCO y plataformas WFN/WFI; separa mensajes textuales cuando el fabricante no publica un número universal.
 - **AUX:** split, Light Commercial, cassette/conductos, multisplit, mando XK y ARV/VRF; separa display interior, mando, pilotos exteriores D1/D2/D3, placa comercial y código ARV por indicadores.
+- **Carrier:** AquaSnap, 30XF-Z, SmartVu, Connect Touch y Pro-Dialog+; incluye alarmas de circuito, VFD, EXV, bombas, caudal, aceite y comunicaciones.
+- **CIAT:** Aquaciat Power, Connect Touch y Vectic; incluye alarmas de enfriadoras, subcódigos VFD, free-cooling, hidráulica y programación.
 - **Fujitsu / General:** referencia ampliada de split, multisplit, cassette y Airstage VRF.
 - **Daikin:** Sky Air, cassette, multisplit, VRV y mandos BRC/Madoka.
 - **Gree:** split, U-Match, FLEXX, GMV y mandos cableados.
 - **Haier:** Advanced Plus, Arctic Multi, FlexFit Multi/Pro, cassette, MRV-S y mandos YR-E17/YR-E16B; relaciona códigos distintos entre unidad, mando y placa.
 - **Hitachi:** RAC/PAC, H-LINK, Central Station y SET FREE; separa alarmas de unidad, red, control central y funcionamiento degradado.
 - **Hisense:** split, comercial, cassette, multisplit, controles HYXE/HYRE y Hi-FLEXi VRF; separa códigos de mando, display interior, piloto/tubo digital exterior y red H-NET.
+- **Hitecsa:** rooftops, enfriadoras y controles µKR3/pCO; contempla circuitos, bombas, antihielo, caudal, maestro/esclavo e historial.
+- **Keyter:** enfriadoras y bombas de calor con PERSEA y TH-Tune; incluye códigos numéricos, textos de alarma, circuitos, ventiladores, bombas y configuración.
+- **Lennox:** rooftops Baltic/Flexair con CLIMATIC 60; incluye alarmas de unidad, circuito, sensores, ventilación, economizador y comportamiento degradado.
 - **LG:** Single Zone, Multi F/Multi F MAX, cassette, MULTI V 5, mandos PREMTB/PREMTC y LGMV.
+- **McQuay (histórica):** equipos acreditados de la etapa McQuay con MicroTech II y Chiller System Manager; no mezcla equipos Daikin Applied posteriores.
 - **Midea:** AtomX R454B, V6 VRF, split, multisplit, cassette, conductos y WDC-120T2; distingue códigos del mando, display local y placa.
 - **Mitsubishi Electric:** M-Series, MXZ, Mr. Slim y CITY MULTI.
 - **Mitsubishi Heavy Industries:** RAC SRK/SRC, PAC, cassette/conductos, SCM multisplit, mandos RC-EX3 y KX/KXZ VRF; separa pilotos RUN/TIMER, códigos del mando, LED de la exterior y subcódigos de siete segmentos.
@@ -45,8 +52,11 @@ La interfaz es multilingüe. Las fichas técnicas conservan durante la beta el t
 - **Samsung:** RAC, FJM, DVM S/S2, MCU, mandos y herramientas; incluye tablas visuales separadas de pilotos exteriores 9K/12K y 18K/24K/30K.
 - **SANYO (histórica):** W-2WAY, 2WAY y 3-WAY ECO-i documentadas como SANYO; incluye mandos, dos pilotos, direccionamiento y respaldo sin mezclar Panasonic posterior.
 - **Sharp:** códigos principal–subcódigo, obtención por mando, Wire Check multisplit, comunicación serie, servicio y valores eléctricos.
+- **Systemair:** climatizadores Access/Topvex y enfriadoras SysAer; incluye clases de alarma, identificación numérica, alarmas AL01–AL25, historial y rearme.
 - **TCL:** split inverter, comercial, cassette, conductos, Free Match, portátil y TMV6+ VRF; relaciona display, mando, cuatro pilotos cassette y tabla exterior de 1–17 destellos.
 - **Toshiba:** SEIYA/RAC, multisplit, RAV, cassette y SMMSe/SMMS-u VRF; relaciona códigos de mando con tablas visuales D800–D805 sin mezclar familias.
+- **Trane:** IntelliPak/Symbio 800, Tracer y enfriadoras CGAM; distingue diagnósticos informativos, bloqueo de circuito, bloqueo de unidad y rearme.
+- **YORK / Johnson Controls:** Sun Premier, YPAL y controles de rooftop; incluye alarmas y fallos por código, severidad, circuito, economizador y condensados.
 - **Chigo:** split, cassette, DC inverter y multisplit; conserva todos los significados alternativos de E1/E2/E3/E5/E8 según plataforma y punto de lectura.
 
 ## Qué se publica

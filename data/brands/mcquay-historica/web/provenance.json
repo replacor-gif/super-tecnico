@@ -1,0 +1,1 @@
+{"policy":"Solo equipos documentados originalmente como McQuay o MicroTech II de la etapa histórica.","accepted":[{"status":"accepted_historic_mcquay","families":["MicroTech II CSM","Vertical Self-Contained","Water-Cooled Scroll"]}],"excluded":[{"status":"excluded","reason":"No duplicar equipos Daikin Applied modernos que ya no se identifican como McQuay."}]}

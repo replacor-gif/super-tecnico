@@ -94,7 +94,14 @@ class StaticSiteTests(unittest.TestCase):
         brands = {item["slug"]: item for item in manifest["brands"]}
         self.assertEqual(
             set(brands),
-            {"airwell-historica", "aux-air", "chigo", "daikin", "fujitsu-general", "gree", "haier", "hisense", "hitachi", "lg", "midea", "mitsubishi-electric", "mitsubishi-heavy-industries", "panasonic", "roca-clima", "samsung", "sanyo-historica", "sharp", "tcl", "toshiba"},
+            {
+                "aermec", "airwell-historica", "aux-air", "carrier", "chigo",
+                "ciat", "daikin", "fujitsu-general", "gree", "haier", "hisense",
+                "hitecsa", "hitachi", "keyter", "lennox", "lg", "mcquay-historica",
+                "midea", "mitsubishi-electric", "mitsubishi-heavy-industries",
+                "panasonic", "roca-clima", "samsung", "sanyo-historica", "sharp",
+                "systemair", "tcl", "toshiba", "trane", "york",
+            },
         )
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
@@ -236,6 +243,76 @@ class StaticSiteTests(unittest.TestCase):
             "errors": 37,
             "search_entries": 74,
         })
+        industrial_counts = {
+            "carrier": (59, 89),
+            "york": (60, 90),
+            "ciat": (51, 81),
+            "trane": (25, 55),
+            "lennox": (69, 99),
+            "hitecsa": (27, 57),
+            "keyter": (99, 129),
+            "aermec": (25, 55),
+            "systemair": (43, 73),
+            "mcquay-historica": (25, 55),
+        }
+        for slug, (errors, search_entries) in industrial_counts.items():
+            with self.subTest(industrial_brand=slug):
+                self.assertEqual(brands[slug]["counts"], {
+                    "categories": 12,
+                    "topics": 15,
+                    "variants": 30,
+                    "errors": errors,
+                    "search_entries": search_entries,
+                })
+
+    def test_industrial_manufacturers_v1_are_complete_searchable_and_public_safe(self):
+        expectations = {
+            "carrier": ("10091", "17001", "Lenscan", "SmartVu"),
+            "york": ("188 desbordamiento", "170", "economizador", "Sun Premier"),
+            "ciat": ("10128", "VFD 24", "Connect Touch", "recuperación calor"),
+            "trane": ("TRIP LOCK", "redescubrimiento", "Symbio 800", "Tracer"),
+            "lennox": ("091", "141", "Climatic 60", "baja presión"),
+            "hitecsa": ("antihielo", "master offline", "µKR3", "presostato"),
+            "keyter": ("11 ALLP", "1 ALPC", "PERSEA", "TH Tune"),
+            "aermec": ("freeze protection", "evaporator flow alarm", "WFN", "Moducontrol"),
+            "systemair": ("AL03", "1105 desescarche", "Access", "NaviPad"),
+            "mcquay-historica": ("COMM LOSS", "LOW OIL PRESSURE", "MicroTech II", "CSM"),
+        }
+        for slug, queries in expectations.items():
+            with self.subTest(brand=slug):
+                source_brand = ROOT / "data" / "brands" / slug
+                public_brand = self.dist / "data" / "brands" / slug
+                web = public_brand / "web"
+                quality = load(web / "quality.json")
+                self.assertEqual(quality, audit_brand(source_brand))
+                self.assertEqual(set(quality["errors"]["status_counts"]), {"complete"})
+                self.assertEqual(set(quality["technical_variants"]["status_counts"]), {"complete"})
+                self.assertEqual(
+                    quality["errors"]["component_coverage"]["exact_page"]["percent"],
+                    100.0,
+                )
+                entries = load(web / "search.json")
+                for query in queries:
+                    self.assertTrue(contains_query(entries, query), f"{slug}: {query}")
+                sources = load(web / "sources.json")
+                self.assertGreaterEqual(len(sources), 2)
+                self.assertTrue(all(item["source_url"].startswith("https://") for item in sources))
+                self.assertFalse(any(public_brand.rglob("*.pdf")))
+                self.assertFalse(any(public_brand.rglob("*.db")))
+                self.assertFalse(any(public_brand.rglob("*.sqlite")))
+
+        provenance = load(
+            self.dist
+            / "data"
+            / "brands"
+            / "mcquay-historica"
+            / "web"
+            / "provenance.json"
+        )
+        self.assertEqual(
+            provenance["accepted"][0]["status"],
+            "accepted_historic_mcquay",
+        )
 
     def test_manufacturer_wave_v1_is_complete_searchable_and_public_safe(self):
         expectations = {
