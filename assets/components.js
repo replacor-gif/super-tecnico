@@ -300,13 +300,14 @@
     ].filter(Boolean).join(' '));
     let score = 0;
     let reason = '';
-    if (part === normalizedQuery) { score = 1000; reason = tr('exactPart'); }
-    else if (aliases.includes(normalizedQuery)) { score = 920; reason = tr('exactAlias'); }
-    else if (markings.includes(normalizedQuery)) { score = 850; reason = tr('exactMarking'); }
+    let kind = '';
+    if (part === normalizedQuery) { score = 1000; reason = tr('exactPart'); kind = 'part'; }
+    else if (aliases.includes(normalizedQuery)) { score = 920; reason = tr('exactAlias'); kind = 'alias'; }
+    else if (markings.includes(normalizedQuery)) { score = 850; reason = tr('exactMarking'); kind = 'marking'; }
     else if (part.startsWith(normalizedQuery) || aliases.some(value => value.startsWith(normalizedQuery))) {
-      score = 650; reason = tr('partPrefix');
+      score = 650; reason = tr('partPrefix'); kind = 'prefix';
     } else if (haystack.includes(normalizedQuery)) {
-      score = 400; reason = tr('textMatch');
+      score = 400; reason = tr('textMatch'); kind = 'text';
     } else if (normalizedQuery.length >= 6) {
       const threshold = normalizedQuery.length >= 10 ? 2 : 1;
       const closest = Math.min(
@@ -318,13 +319,14 @@
       if (closest <= threshold) {
         score = 210 - (closest * 20);
         reason = tr('nearPart');
+        kind = 'near';
       }
     }
     if (!score) return null;
     score += item.official ? 90 : 0;
     score += Number(item.quality_rank || 0) * 8;
     score += Math.round(Number(item.confidence || 0) * 20);
-    return {score, reason};
+    return {score, reason, kind};
   }
   function passesFilters(item) {
     if (els.category.value && item.category !== els.category.value) return false;
@@ -391,7 +393,7 @@
     }
     els.query.setCustomValidity('');
     state.query = query;
-    state.results = state.catalog.components
+    const matches = state.catalog.components
       .filter(passesFilters)
       .map(item => {
         const match = matchScore(item, query);
@@ -399,6 +401,13 @@
       })
       .filter(Boolean)
       .sort((a, b) => b.score - a.score || String(a.item.part_number).localeCompare(String(b.item.part_number)));
+    const hasExactReference = matches.some(entry => entry.kind === 'part' || entry.kind === 'alias');
+    const hasExactMarking = matches.some(entry => entry.kind === 'marking');
+    state.results = hasExactReference
+      ? matches.filter(entry => entry.kind === 'part' || entry.kind === 'alias')
+      : hasExactMarking
+        ? matches.filter(entry => entry.kind === 'marking')
+        : matches;
     updateUrl(query);
     renderResults();
     els.results.scrollIntoView({behavior: 'smooth', block: 'start'});

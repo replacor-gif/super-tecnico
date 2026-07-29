@@ -231,10 +231,10 @@ def validate_components_catalog(source_root: Path) -> tuple[dict[str, Any], dict
         raise BuildError("El catálogo de componentes no contiene una lista válida")
 
     expected = {
-        "components": 4353,
-        "specifications": 7107,
+        "components": 4981,
+        "specifications": 8363,
         "markings": 3862,
-        "reviewed": 1026,
+        "reviewed": 1654,
         "historical": 3327,
     }
     counts = meta.get("counts") or {}

@@ -806,10 +806,10 @@ class StaticSiteTests(unittest.TestCase):
     def test_component_public_projection_is_complete_and_warns_about_candidates(self):
         catalog = load(self.dist / "data" / "components" / "catalog.json")
         counts = catalog["meta"]["counts"]
-        self.assertEqual(counts["components"], 4353)
-        self.assertEqual(counts["specifications"], 7107)
+        self.assertEqual(counts["components"], 4981)
+        self.assertEqual(counts["specifications"], 8363)
         self.assertEqual(counts["markings"], 3862)
-        self.assertEqual(counts["reviewed"], 1026)
+        self.assertEqual(counts["reviewed"], 1654)
         self.assertEqual(counts["historical"], 3327)
         self.assertEqual(catalog["meta"]["chunk_count"], 64)
         self.assertIn("pendientes de verificar", catalog["meta"]["warning"])
@@ -829,9 +829,9 @@ class StaticSiteTests(unittest.TestCase):
                 self.assertEqual(int(component_id) % 64, chunk_id)
                 self.assertEqual(int(component_id), detail["id"])
                 detail_ids.add(int(component_id))
-        self.assertEqual(len(detail_ids), 4353)
+        self.assertEqual(len(detail_ids), 4981)
         self.assertEqual(detail_ids, {item["id"] for item in catalog["components"]})
-        self.assertEqual(self.report["components"]["components"], 4353)
+        self.assertEqual(self.report["components"]["components"], 4981)
 
         irf840 = next(item for item in catalog["components"] if item["part_number"] == "IRF840")
         self.assertTrue(irf840["official"])
@@ -871,6 +871,37 @@ class StaticSiteTests(unittest.TestCase):
             and row["manufacturer"] == "Texas Instruments"
         )
         self.assertIn("ULN2003", uln2003a["aliases"])
+
+        logic_components = {
+            "74HC14": ("Nexperia", "Circuito integrado"),
+            "SN74HC14": ("Texas Instruments", "Circuito integrado"),
+            "SN74LS00": ("Texas Instruments", "Circuito integrado"),
+            "CD4011B": ("Texas Instruments", "Circuito integrado"),
+            "HEF4017B": ("Nexperia", "Circuito integrado"),
+            "HCF4093": ("STMicroelectronics", "Circuito integrado"),
+            "NE555": ("Texas Instruments", "Circuito integrado"),
+            "L293D": ("STMicroelectronics", "Driver de potencia"),
+            "L298": ("STMicroelectronics", "Driver de potencia"),
+        }
+        for part_number, (manufacturer, category) in logic_components.items():
+            item = next(
+                row for row in catalog["components"]
+                if row["part_number"] == part_number and row["manufacturer"] == manufacturer
+            )
+            self.assertTrue(item["official"])
+            self.assertEqual(item["category"], category)
+            detail = load(
+                self.dist / "data" / "components" / "details" / f"{item['id'] % 64}.json"
+            )[str(item["id"])]
+            self.assertTrue(detail["source"]["url"].startswith("https://"))
+            self.assertEqual(detail["equivalents"], [])
+
+        sn74hc14 = next(
+            row for row in catalog["components"]
+            if row["part_number"] == "SN74HC14"
+            and row["manufacturer"] == "Texas Instruments"
+        )
+        self.assertIn("SN74HC14N", sn74hc14["aliases"])
 
     def test_samsung_led_tables_are_structured_and_accessible(self):
         topic = load(self.samsung_web / "topics" / "1.json")
