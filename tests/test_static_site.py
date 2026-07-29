@@ -74,6 +74,8 @@ class StaticSiteTests(unittest.TestCase):
         cls.aux_web = cls.aux / "web"
         cls.roca = cls.dist / "data" / "brands" / "roca-clima"
         cls.roca_web = cls.roca / "web"
+        cls.airwell = cls.dist / "data" / "brands" / "airwell-historica"
+        cls.airwell_web = cls.airwell / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -84,7 +86,7 @@ class StaticSiteTests(unittest.TestCase):
         brands = {item["slug"]: item for item in manifest["brands"]}
         self.assertEqual(
             set(brands),
-            {"aux-air", "daikin", "fujitsu-general", "gree", "haier", "hisense", "lg", "midea", "mitsubishi-electric", "mitsubishi-heavy-industries", "panasonic", "roca-clima", "samsung", "tcl", "toshiba"},
+            {"airwell-historica", "aux-air", "daikin", "fujitsu-general", "gree", "haier", "hisense", "lg", "midea", "mitsubishi-electric", "mitsubishi-heavy-industries", "panasonic", "roca-clima", "samsung", "tcl", "toshiba"},
         )
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
@@ -190,6 +192,13 @@ class StaticSiteTests(unittest.TestCase):
             "variants": 76,
             "errors": 79,
             "search_entries": 155,
+        })
+        self.assertEqual(brands["airwell-historica"]["counts"], {
+            "categories": 17,
+            "topics": 34,
+            "variants": 91,
+            "errors": 40,
+            "search_entries": 131,
         })
 
     def test_search_examples_are_present(self):
@@ -913,6 +922,103 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse(any(self.roca.rglob("*.pdf")))
         self.assertFalse(any(self.roca.rglob("*.db")))
         self.assertFalse(any(self.roca.rglob("*.sqlite")))
+
+    def test_airwell_historical_reference_v1_provenance_codes_and_service_data(self):
+        quality = load(self.airwell_web / "quality.json")
+        self.assertEqual(
+            quality,
+            audit_brand(ROOT / "data" / "brands" / "airwell-historica"),
+        )
+        self.assertEqual(quality["errors"]["status_counts"], {"complete": 167})
+        self.assertEqual(quality["technical_variants"]["status_counts"], {"complete": 91})
+        self.assertEqual(
+            quality["errors"]["component_coverage"]["exact_page"],
+            {"count": 167, "percent": 100.0},
+        )
+
+        provenance = load(self.airwell_web / "provenance.json")
+        self.assertEqual(provenance["policy_version"], "1.0")
+        self.assertTrue(any(
+            item["status"] == "accepted_explicit_manufacturer"
+            and item["family"] == "HRW 07-12"
+            and item["page"] == "40"
+            for item in provenance["accepted"]
+        ))
+        self.assertTrue(any(
+            item["status"] == "accepted_historic_own_manufacturing_era"
+            and "TRIO/QUATTRO" in item["family"]
+            for item in provenance["accepted"]
+        ))
+        self.assertTrue(provenance["excluded"])
+
+        sources = load(self.airwell_web / "sources.json")
+        self.assertEqual(len(sources), 7)
+        self.assertTrue({
+            "SM BS DCI 1-A.1 GB",
+            "SM DLSRPM 1-A.4 GB",
+            "SM DUODCI 1-A.1 GB",
+            "SM TQDCI 1-A.1 GB",
+            "IOM HRW 02-N-7F / 3990404",
+            "AIRWELL-CATALOGUE-2017-GB",
+            "AIRWELL-DEPLIANT-GAMME-FR-0425-V11",
+        }.issubset({source["document_ref"] for source in sources}))
+
+        errors = {
+            item["code_display"]: item
+            for item in load(self.airwell_web / "errors" / "index.json")
+        }
+        self.assertEqual(errors["1"]["interpretation_count"], 7)
+        self.assertEqual(errors["3"]["interpretation_count"], 7)
+        self.assertEqual(errors["11"]["interpretation_count"], 7)
+        self.assertEqual(errors["21"]["interpretation_count"], 5)
+        self.assertEqual(errors["111111110"]["interpretation_count"], 2)
+        self.assertTrue({
+            "1", "3", "11", "21", "29", "30", "31",
+            "100000000", "111100000", "111111110", "111111111",
+        }.issubset(errors))
+
+        topics = [
+            load(path) for path in self.airwell_web.joinpath("topics").glob("*.json")
+        ]
+        variants = [variant for topic in topics for variant in topic["variants"]]
+        titles = {variant["title"] for variant in variants}
+        self.assertTrue({
+            "Tabla interior BS",
+            "Exterior MSMP",
+            "Tabla exterior 1-30",
+            "Tabla modo frío",
+            "Entrada por mando",
+            "Advertencia de protección",
+            "Desbordamiento con unidad ON",
+            "Puertos A-D",
+            "Ventilador exterior BLDC",
+            "Fabricante explícito HRW",
+            "Equipos posteriores a 2008",
+        }.issubset(titles))
+
+        search = load(self.airwell_web / "search.json")
+        for query in (
+            "MODE RESET diagnóstico BS",
+            "MSMP once LED",
+            "HMI tres dígitos puertos A D",
+            "DLS autoprueba mando 16 grados",
+            "desbordamiento DNC unidad OFF",
+            "HRW 111111110 flotador",
+            "270 V sobretensión TQ",
+            "Airwell Industrie France fabricante",
+            "equipos posteriores 2008 origen no acreditado",
+        ):
+            with self.subTest(query=query):
+                self.assertTrue(contains_query(search, query))
+
+        public_text = "\n".join(
+            path.read_text(encoding="utf-8") for path in self.airwell.rglob("*.json")
+        )
+        self.assertNotIn("tmp\\pdfs\\airwell", public_text)
+        self.assertNotIn("tmp/pdfs/airwell", public_text)
+        self.assertFalse(any(self.airwell.rglob("*.pdf")))
+        self.assertFalse(any(self.airwell.rglob("*.db")))
+        self.assertFalse(any(self.airwell.rglob("*.sqlite")))
 
     def test_field_navigation_uses_dashboard_accordions_and_quick_search(self):
         html = (self.dist / "index.html").read_text(encoding="utf-8")
