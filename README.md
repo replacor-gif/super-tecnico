@@ -17,6 +17,7 @@ Guía técnica estática para consulta por marca, código, categoría, tema y va
 - **Mitsubishi Electric:** M-Series, MXZ, Mr. Slim y CITY MULTI.
 - **Mitsubishi Heavy Industries:** RAC SRK/SRC, PAC, cassette/conductos, SCM multisplit, mandos RC-EX3 y KX/KXZ VRF; separa pilotos RUN/TIMER, códigos del mando, LED de la exterior y subcódigos de siete segmentos.
 - **Panasonic:** RAC, PACi, multisplit, cassette y ECOi/VRF.
+- **Roca (histórica):** AVO/BLI/BCI/BVI, termostato DPC-1 y enfriadoras YLCC/YCSA de la etapa Clima Roca York. Solo se admiten familias con fabricación o procedencia industrial acreditada; se excluyen equipos modernos de origen dudoso.
 - **Samsung:** RAC, FJM, DVM S/S2, MCU, mandos y herramientas; incluye tablas visuales separadas de pilotos exteriores 9K/12K y 18K/24K/30K.
 - **TCL:** split inverter, comercial, cassette, conductos, Free Match, portátil y TMV6+ VRF; relaciona display, mando, cuatro pilotos cassette y tabla exterior de 1–17 destellos.
 - **Toshiba:** SEIYA/RAC, multisplit, RAV, cassette y SMMSe/SMMS-u VRF; relaciona códigos de mando con tablas visuales D800–D805 sin mezclar familias.

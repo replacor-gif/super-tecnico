@@ -72,6 +72,8 @@ class StaticSiteTests(unittest.TestCase):
         cls.mhi_web = cls.mhi / "web"
         cls.aux = cls.dist / "data" / "brands" / "aux-air"
         cls.aux_web = cls.aux / "web"
+        cls.roca = cls.dist / "data" / "brands" / "roca-clima"
+        cls.roca_web = cls.roca / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -82,7 +84,7 @@ class StaticSiteTests(unittest.TestCase):
         brands = {item["slug"]: item for item in manifest["brands"]}
         self.assertEqual(
             set(brands),
-            {"aux-air", "daikin", "fujitsu-general", "gree", "haier", "hisense", "lg", "midea", "mitsubishi-electric", "mitsubishi-heavy-industries", "panasonic", "samsung", "tcl", "toshiba"},
+            {"aux-air", "daikin", "fujitsu-general", "gree", "haier", "hisense", "lg", "midea", "mitsubishi-electric", "mitsubishi-heavy-industries", "panasonic", "roca-clima", "samsung", "tcl", "toshiba"},
         )
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
@@ -181,6 +183,13 @@ class StaticSiteTests(unittest.TestCase):
             "variants": 107,
             "errors": 98,
             "search_entries": 205,
+        })
+        self.assertEqual(brands["roca-clima"]["counts"], {
+            "categories": 16,
+            "topics": 30,
+            "variants": 76,
+            "errors": 79,
+            "search_entries": 155,
         })
 
     def test_search_examples_are_present(self):
@@ -828,6 +837,82 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse(any(self.aux.rglob("*.pdf")))
         self.assertFalse(any(self.aux.rglob("*.db")))
         self.assertFalse(any(self.aux.rglob("*.sqlite")))
+
+    def test_roca_reference_v1_provenance_codes_and_operational_effects(self):
+        quality = load(self.roca_web / "quality.json")
+        self.assertEqual(quality, audit_brand(ROOT / "data" / "brands" / "roca-clima"))
+        self.assertEqual(quality["errors"]["status_counts"], {"complete": 92})
+        self.assertEqual(quality["technical_variants"]["status_counts"], {"complete": 76})
+
+        provenance = load(self.roca_web / "provenance.json")
+        self.assertEqual(provenance["policy_version"], "1.0")
+        self.assertTrue(any(
+            item["status"] == "accepted_explicit_manufacturer"
+            and item["family"] == "YCSA/YCSA-H 50/60 T/TP"
+            and item["page"] == "55"
+            for item in provenance["accepted"]
+        ))
+        self.assertTrue(provenance["excluded"])
+
+        sources = load(self.roca_web / "sources.json")
+        self.assertEqual(len(sources), 8)
+        self.assertTrue({
+            "N-27134-1003",
+            "INF-27426",
+            "DPC-1-INSTALLATION-OPERATION",
+            "N-27344-1204M",
+            "Y-R61063-1104",
+            "YCSA-120-180-TECHNICAL",
+            "ROCA-HISTORY-2005-HVAC-SALE",
+            "BORME-C-2007-16073",
+        }.issubset({source["document_ref"] for source in sources}))
+
+        errors = {item["code_display"]: item for item in load(self.roca_web / "errors" / "index.json")}
+        self.assertEqual(errors["1-1"]["interpretation_count"], 2)
+        self.assertEqual(errors["2-4"]["interpretation_count"], 2)
+        self.assertTrue({
+            "1", "1-1", "4-4", "11", "45", "91", "93", "99",
+            "E1", "EE", "FL", "H1", "L2", "d1", "r2", "Cn",
+        }.issubset(errors))
+
+        green = load(self.roca_web / "topics" / "2.json")
+        self.assertEqual(len(green["variants"][0]["led_patterns"]), 16)
+        red = load(self.roca_web / "topics" / "3.json")
+        self.assertEqual(len(red["variants"][0]["led_patterns"]), 6)
+        self.assertEqual(len(red["variants"][1]["led_patterns"]), 15)
+
+        topics = [load(path) for path in self.roca_web.joinpath("topics").glob("*.json")]
+        variants = [variant for topic in topics for variant in topic["variants"]]
+        titles = {variant["title"] for variant in variants}
+        self.assertTrue({
+            "Código propio 91-99",
+            "AVO: cuatro formas documentadas de rearme",
+            "Alarma seria ID1",
+            "Térmico de bomba ID4/ID18",
+            "Incidencia verde AVO",
+            "Parada parcial/total YCSA",
+            "Fabricante explícito",
+            "Equipos posteriores a la venta",
+        }.issubset(titles | {topic["title"] for topic in topics}))
+
+        search = load(self.roca_web / "search.json")
+        for query in (
+            "piloto verde 1-1",
+            "piloto rojo alta presión",
+            "DPC 93 comunicación",
+            "YLCC FL caudal",
+            "YCSA bomba reserva",
+            "fabricante Clima Roca York",
+            "equipos posteriores marcas blancas",
+        ):
+            with self.subTest(query=query):
+                self.assertTrue(contains_query(search, query))
+
+        public_text = "\n".join(path.read_text(encoding="utf-8") for path in self.roca.rglob("*.json"))
+        self.assertNotIn("tmp\\pdfs\\roca", public_text)
+        self.assertFalse(any(self.roca.rglob("*.pdf")))
+        self.assertFalse(any(self.roca.rglob("*.db")))
+        self.assertFalse(any(self.roca.rglob("*.sqlite")))
 
     def test_field_navigation_uses_dashboard_accordions_and_quick_search(self):
         html = (self.dist / "index.html").read_text(encoding="utf-8")
