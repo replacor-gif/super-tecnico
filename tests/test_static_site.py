@@ -570,8 +570,11 @@ class StaticSiteTests(unittest.TestCase):
                 self.assertNotEqual(path.name.lower(), ".htaccess")
 
     def test_browser_uses_static_data_provider(self):
-        html = (self.dist / "index.html").read_text(encoding="utf-8")
+        portal = (self.dist / "index.html").read_text(encoding="utf-8")
+        html = (self.dist / "climatizacion.html").read_text(encoding="utf-8")
         script = (self.dist / "assets" / "app.js").read_text(encoding="utf-8")
+        self.assertIn("climatizacion.html", portal)
+        self.assertIn("smd.html", portal)
         self.assertIn("assets/app.js", html)
         self.assertIn("data/brands/index.json", script)
         self.assertNotIn("api.php", html + script)
@@ -1021,7 +1024,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse(any(self.airwell.rglob("*.sqlite")))
 
     def test_field_navigation_uses_dashboard_accordions_and_quick_search(self):
-        html = (self.dist / "index.html").read_text(encoding="utf-8")
+        html = (self.dist / "climatizacion.html").read_text(encoding="utf-8")
         script = (self.dist / "assets" / "app.js").read_text(encoding="utf-8")
         styles = (self.dist / "assets" / "styles.css").read_text(encoding="utf-8")
 
@@ -1055,6 +1058,53 @@ class StaticSiteTests(unittest.TestCase):
             ".resource-strip", ".ad-slot[hidden]",
         ):
             self.assertIn(marker, styles)
+
+    def test_smd_catalog_is_public_safe_complete_and_ambiguous(self):
+        catalog = load(self.dist / "data" / "smd" / "catalog.json")
+        meta = catalog["meta"]
+        candidates = catalog["candidates"]
+        self.assertEqual(meta["candidate_count"], 439)
+        self.assertEqual(meta["manufacturer_count"], 6)
+        self.assertEqual(meta["identification_ready"], 439)
+        self.assertEqual(meta["exact_ambiguity_groups"], 13)
+        self.assertEqual(len(candidates), 439)
+        self.assertEqual(len({item["id"] for item in candidates}), 439)
+        self.assertTrue(all(
+            item["quality"]["level"] == "identification_ready"
+            and item["quality"]["marking_verified"]
+            and item["quality"]["package_verified"]
+            and item["quality"]["pinout_verified"]
+            and item["quality"]["electrical_data_verified"]
+            and item["marking"]["layouts"]
+            and item["package"]["name"]
+            and item["package"]["pins"]
+            and item["pinout"]
+            and item["parameters"]
+            and item["source"]["url"].startswith("https://")
+            and item["source"]["datasheet_url"].startswith("https://")
+            for item in candidates
+        ))
+
+        markings = {item["marking"]["core"] for item in candidates}
+        for marking in ("K38", "K72", "AIs", "K224", "Z1"):
+            self.assertIn(marking, markings)
+        z1 = [
+            item for item in candidates
+            if item["marking"]["core"] == "Z1" and item["package"]["name"] == "SOT-23"
+        ]
+        self.assertEqual(len(z1), 2)
+
+        public_text = json.dumps(catalog, ensure_ascii=False).lower()
+        self.assertNotIn("smd codebook", public_text)
+        self.assertNotIn("historical candidate", public_text)
+
+        html = (self.dist / "smd.html").read_text(encoding="utf-8")
+        script = (self.dist / "assets" / "smd.js").read_text(encoding="utf-8")
+        self.assertIn('id="smdSearchForm"', html)
+        self.assertIn("data/smd/catalog.json", script)
+        self.assertIn("Ninguna ficha se abre automáticamente.", script)
+        self.assertIn("directKinds", script)
+        self.assertNotIn("<details class=\"candidate-card\" open", script)
 
     def test_error_finder_explains_current_coverage(self):
         script = (self.dist / "assets" / "app.js").read_text(encoding="utf-8")

@@ -3,134 +3,128 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Biblioteca técnica Super Técnico para consulta de errores, programación, modos de servicio y valores técnicos.">
-  <meta name="theme-color" content="#0e3e5a">
-  <title>Super Técnico</title>
-  <link rel="stylesheet" href="assets/styles.css?v=7">
+  <meta name="description" content="Super Técnico reúne herramientas profesionales para diagnosticar climatización e identificar componentes electrónicos SMD.">
+  <meta name="theme-color" content="#0b2637">
+  <title>Super Técnico | Herramientas para el técnico</title>
+  <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/portal.css?v=1">
 </head>
 <body>
-<header class="site-header">
-  <div class="brand-heading">
-    <img class="app-logo" src="assets/super-tecnico-logo.png" alt="">
-    <div>
-      <h1>Super Técnico</h1>
-      <p>Guía técnica de intervención</p>
-    </div>
-  </div>
-  <div class="header-actions">
-    <button id="homeButton" class="secondary-button" type="button">Inicio</button>
-    <button id="coverageButton" class="secondary-button" type="button">Cobertura</button>
-    <a
-      class="secondary-button support-header-link"
-      href="https://www.paypal.com/donate/?hosted_button_id=G983GYUGGH6HY"
-      target="_blank"
-      rel="noopener noreferrer"
-    >Apoyar</a>
-  </div>
-</header>
+  <header class="portal-header">
+    <a class="portal-brand" href="index.html" aria-label="Inicio de Super Técnico">
+      <img src="assets/super-tecnico-logo.png" alt="">
+      <span>
+        <strong>Super Técnico</strong>
+        <small>Herramientas técnicas REPLACOR</small>
+      </span>
+    </a>
+    <nav aria-label="Enlaces principales">
+      <a href="https://www.replacor.com/" target="_blank" rel="noopener">REPLACOR</a>
+      <a class="support-link" href="https://www.paypal.com/donate/?hosted_button_id=G983GYUGGH6HY" target="_blank" rel="noopener noreferrer">Apoyar el proyecto</a>
+    </nav>
+  </header>
 
-<main class="app-shell">
-  <section class="brand-panel" aria-label="Marca activa">
-    <div class="field brand-field">
-      <label for="brandSelect"><span class="step-label">Paso 1</span>Selecciona la marca</label>
-      <select id="brandSelect"><option value="">Cargando…</option></select>
-    </div>
-    <div class="brand-status" id="brandStatus">Cargando información técnica…</div>
-  </section>
-
-  <section id="quickAccessPanel" class="quick-access-panel" aria-label="Consulta rápida">
-    <div class="loading">Preparando accesos rápidos…</div>
-  </section>
-
-  <section class="resource-strip resource-strip-public" aria-label="Libro técnico gratuito">
-    <img
-      class="resource-cover"
-      src="assets/libro-electronica-inverter-replacor-portada.png"
-      alt="Portada del libro Gree y Midea: esquemas y documentación de reparación"
-    >
-    <div class="resource-copy">
-      <span class="step-label">Libro técnico gratuito</span>
-      <h2>Libro Gree y Midea</h2>
-      <p>Esquemas y documentación de reparación · edición española completa para consulta técnica.</p>
-      <p class="resource-meta">501 páginas · PDF optimizado · 19 MB</p>
-    </div>
-    <a
-      class="resource-button"
-      href="recursos/libro-electronica-inverter-replacor.pdf"
-      target="_blank"
-      rel="noopener"
-    >Abrir libro completo</a>
-  </section>
-
-  <section class="support-strip" aria-label="Apoya el desarrollo de Super Técnico">
-    <div class="support-icon" aria-hidden="true">ST</div>
-    <div class="support-copy">
-      <span class="step-label">Proyecto gratuito en crecimiento</span>
-      <h2>Ayúdanos a construir Super Técnico</h2>
-      <p>Tu aportación voluntaria nos ayuda a revisar manuales, incorporar nuevas marcas y mejorar la aplicación para toda la comunidad técnica.</p>
-      <p class="support-note">La aportación no proporciona contenido exclusivo ni es fiscalmente deducible.</p>
-    </div>
-    <a
-      class="support-button"
-      href="https://www.paypal.com/donate/?hosted_button_id=G983GYUGGH6HY"
-      target="_blank"
-      rel="noopener noreferrer"
-    >Apoyar con PayPal</a>
-  </section>
-
-  <aside class="ad-slot ad-slot-home" data-ad-placement="home" aria-label="Publicidad" hidden></aside>
-
-  <section class="search-panel search-hero" aria-label="Búsqueda global">
-    <div class="search-heading">
-      <h2>¿No encuentras el apartado?</h2>
-      <p>Busca por código, componente, síntoma o procedimiento. No hace falta conocer el nombre exacto.</p>
-    </div>
-    <form id="globalSearchForm">
-      <label class="sr-only" for="globalSearch">Buscar en toda la marca</label>
-      <input id="globalSearch" type="search" autocomplete="off" placeholder="Ejemplos: E12, pump down, boya, mando 2 hilos, Peak Cut…">
-      <button type="submit">Buscar</button>
-    </form>
-    <div class="quick-actions" aria-label="Búsquedas frecuentes">
-      <button type="button" class="quick-chip" data-quick-query="sacar códigos">Sacar códigos</button>
-      <button type="button" class="quick-chip" data-quick-query="pump down">Pump down</button>
-      <button type="button" class="quick-chip" data-quick-query="mando 2 hilos">Mando 2 hilos</button>
-      <button type="button" class="quick-chip" data-quick-query="boya drenaje">Boya y drenaje</button>
-      <button type="button" class="quick-chip" data-quick-query="programación">Programación</button>
-      <button type="button" class="quick-chip" data-quick-query="VRF direccionamiento">VRF</button>
-    </div>
-  </section>
-
-  <details class="menu-navigation">
-    <summary>Explorar por categoría y tema</summary>
-    <section class="control-panel" aria-label="Navegación técnica">
-      <div class="field">
-        <label for="categorySelect">Categoría</label>
-        <select id="categorySelect" disabled><option value="">Selecciona una categoría</option></select>
+  <main>
+    <section class="portal-hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Biblioteca técnica en crecimiento</p>
+        <h1>¿Qué necesitas consultar?</h1>
+        <p class="hero-intro">Elige una herramienta. Cada apartado conserva su propia información y está preparado para incorporar nuevas utilidades sin mezclar contenidos.</p>
       </div>
-      <div class="field grow">
-        <label for="topicSelect">Tema</label>
-        <select id="topicSelect" disabled><option value="">Selecciona un tema</option></select>
+      <div class="hero-stat" aria-label="Estado del proyecto">
+        <strong>2</strong>
+        <span>herramientas disponibles</span>
       </div>
     </section>
-  </details>
 
-  <nav id="breadcrumb" class="breadcrumb" aria-label="Ruta"></nav>
-  <section id="contextPanel" class="context-panel hidden"></section>
-  <section id="content" class="content" aria-live="polite">
-    <div class="welcome-card">
-      <h2>Selecciona una marca y una categoría</h2>
-      <p>La información aparece por temas y variantes. Los procedimientos, tablas, advertencias y fuentes permanecen plegados hasta abrirlos.</p>
-    </div>
-  </section>
-  <aside class="ad-slot ad-slot-after-content" data-ad-placement="after-content" aria-label="Publicidad" hidden></aside>
-</main>
+    <section class="tools-section" aria-labelledby="toolsTitle">
+      <div class="section-heading">
+        <p class="eyebrow">Acceso directo</p>
+        <h2 id="toolsTitle">Herramientas de Super Técnico</h2>
+        <p>Entra solo en el apartado que necesitas en ese momento.</p>
+      </div>
 
-<dialog id="imageDialog" class="image-dialog">
-  <button id="closeImageDialog" class="dialog-close" type="button" aria-label="Cerrar">×</button>
-  <img id="dialogImage" alt="">
-  <p id="dialogCaption"></p>
-</dialog>
+      <div class="tool-grid">
+        <article class="tool-card tool-card-hvac">
+          <div class="tool-icon" aria-hidden="true">
+            <span class="fan-blade fan-one"></span>
+            <span class="fan-blade fan-two"></span>
+            <span class="fan-blade fan-three"></span>
+            <span class="fan-centre"></span>
+          </div>
+          <div class="tool-copy">
+            <span class="tool-badge">Climatización</span>
+            <h3>Biblioteca técnica HVAC</h3>
+            <p>Errores, subcódigos, mandos, programaciones, marchas forzadas, buses, puesta en marcha y procedimientos por fabricante.</p>
+            <ul>
+              <li>16 marcas documentadas</li>
+              <li>Códigos con todos sus significados</li>
+              <li>Información plegada para consultar solo lo necesario</li>
+            </ul>
+          </div>
+          <a class="tool-button" href="climatizacion.html">
+            Abrir climatización
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
 
-  <script src="assets/app.js?v=8" defer></script>
+        <article class="tool-card tool-card-smd">
+          <div class="tool-icon chip-icon" aria-hidden="true">
+            <span class="chip-body">SMD</span>
+            <span class="chip-pins chip-pins-left"></span>
+            <span class="chip-pins chip-pins-right"></span>
+          </div>
+          <div class="tool-copy">
+            <span class="tool-badge">Electrónica</span>
+            <h3>Identificador de componentes SMD</h3>
+            <p>Introduce lo que ves impreso en el componente y obtén todas las coincidencias oficiales posibles para contrastarlas en la placa.</p>
+            <ul>
+              <li>439 candidatos verificados</li>
+              <li>Marcaje, encapsulado, patillaje y parámetros</li>
+              <li>Nunca oculta coincidencias ambiguas</li>
+            </ul>
+          </div>
+          <a class="tool-button" href="smd.html">
+            Abrir identificador SMD
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+
+        <article class="tool-card tool-card-upcoming">
+          <div class="tool-icon plus-icon" aria-hidden="true">+</div>
+          <div class="tool-copy">
+            <span class="tool-badge">Próximamente</span>
+            <h3>Nuevas herramientas</h3>
+            <p>La portada está preparada para añadir las próximas aplicaciones sin alterar las que ya funcionan.</p>
+          </div>
+          <span class="tool-button tool-button-disabled" aria-disabled="true">En preparación</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="portal-resource">
+      <img src="assets/libro-electronica-inverter-replacor-portada.png" alt="Portada del libro técnico de electrónica inverter Gree y Midea">
+      <div>
+        <p class="eyebrow">Recurso técnico gratuito</p>
+        <h2>Libro Gree y Midea</h2>
+        <p>Esquemas y documentación de reparación en una edición española completa para consulta técnica.</p>
+      </div>
+      <a href="recursos/libro-electronica-inverter-replacor.pdf" target="_blank" rel="noopener">Abrir libro</a>
+    </section>
+
+    <section class="portal-support">
+      <div>
+        <p class="eyebrow">Proyecto independiente</p>
+        <h2>Ayuda a que siga creciendo</h2>
+        <p>Las aportaciones voluntarias ayudan a revisar documentación, ampliar fabricantes y desarrollar nuevas herramientas para la comunidad técnica.</p>
+      </div>
+      <a href="https://www.paypal.com/donate/?hosted_button_id=G983GYUGGH6HY" target="_blank" rel="noopener noreferrer">Apoyar con PayPal</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>Super Técnico · Proyecto técnico de REPLACOR</p>
+    <p>La información orienta la comprobación; no sustituye la hoja de datos ni las medidas de seguridad.</p>
+  </footer>
 </body>
 </html>

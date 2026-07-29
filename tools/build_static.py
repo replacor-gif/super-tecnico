@@ -155,6 +155,73 @@ def validate_public_tree(output: Path) -> None:
             read_json(path)
 
 
+def validate_smd_catalog(source_root: Path) -> tuple[dict[str, Any], dict[str, int]]:
+    catalog = read_json(source_root / "data" / "smd" / "catalog.json")
+    meta = catalog.get("meta") or {}
+    candidates = catalog.get("candidates") or []
+    if not isinstance(candidates, list):
+        raise BuildError("El catálogo SMD no contiene una lista de candidatos válida")
+
+    expected_candidates = 439
+    expected_manufacturers = 6
+    if int(meta.get("candidate_count") or 0) != expected_candidates:
+        raise BuildError(
+            f"Catálogo SMD: se esperaban {expected_candidates} candidatos y hay {len(candidates)}"
+        )
+    if len(candidates) != expected_candidates:
+        raise BuildError("El recuento real de candidatos SMD no coincide con sus metadatos")
+    if int(meta.get("manufacturer_count") or 0) != expected_manufacturers:
+        raise BuildError("El catálogo SMD no contiene los seis fabricantes oficiales previstos")
+    if int(meta.get("identification_ready") or 0) != expected_candidates:
+        raise BuildError("Hay candidatos SMD que no están listos para identificación")
+
+    candidate_ids = [str(item.get("id") or "") for item in candidates]
+    if any(not candidate_id for candidate_id in candidate_ids):
+        raise BuildError("Hay candidatos SMD sin identificador")
+    if len(candidate_ids) != len(set(candidate_ids)):
+        raise BuildError("Hay identificadores SMD duplicados")
+
+    prohibited_fragments = ("smd codebook", "the smd codebook", "historical candidate")
+    for item in candidates:
+        quality = item.get("quality") or {}
+        if (
+            quality.get("level") != "identification_ready"
+            or not all(
+                quality.get(key) is True
+                for key in (
+                    "marking_verified",
+                    "package_verified",
+                    "pinout_verified",
+                    "electrical_data_verified",
+                )
+            )
+        ):
+            raise BuildError(f"Candidato SMD no listo: {item.get('id')}")
+        if not item.get("marking", {}).get("layouts"):
+            raise BuildError(f"Candidato SMD sin diseño de marcaje: {item.get('id')}")
+        if not item.get("package", {}).get("name") or not item.get("package", {}).get("pins"):
+            raise BuildError(f"Candidato SMD sin encapsulado o patillas: {item.get('id')}")
+        if not item.get("pinout"):
+            raise BuildError(f"Candidato SMD sin patillaje: {item.get('id')}")
+        if not item.get("parameters"):
+            raise BuildError(f"Candidato SMD sin parámetros: {item.get('id')}")
+        source = item.get("source") or {}
+        for key in ("url", "datasheet_url"):
+            if not str(source.get(key) or "").startswith("https://"):
+                raise BuildError(f"Candidato SMD sin fuente HTTPS: {item.get('id')}")
+        serialized = json.dumps(item, ensure_ascii=False).lower()
+        if any(fragment in serialized for fragment in prohibited_fragments):
+            raise BuildError(f"El catálogo SMD contiene una fuente histórica privada: {item.get('id')}")
+
+    stats = {
+        "candidates": len(candidates),
+        "manufacturers": int(meta["manufacturer_count"]),
+        "identification_ready": int(meta["identification_ready"]),
+        "exact_ambiguity_groups": int(meta.get("exact_ambiguity_groups") or 0),
+    }
+    return catalog, stats
+
+
 def build(source_root: Path, output: Path) -> dict[str, Any]:
     source_root = source_root.resolve()
     output = output.resolve()
@@ -166,7 +233,12 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
 
     for required in (
         "index.html",
+        "climatizacion.html",
+        "smd.html",
         "assets/app.js",
+        "assets/portal.css",
+        "assets/smd.css",
+        "assets/smd.js",
         "assets/styles.css",
         "assets/super-tecnico-logo.png",
         "assets/libro-electronica-inverter-replacor-portada.png",
@@ -218,10 +290,13 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "generated_at_utc": generated_at,
         "brands": manifest,
     })
+    smd_catalog, smd_stats = validate_smd_catalog(source_root)
+    write_json(output / "data" / "smd" / "catalog.json", smd_catalog)
     report = {
         "project": "Super Técnico estático",
         "generated_at_utc": generated_at,
         "brands": manifest,
+        "smd": smd_stats,
         "checks": counters,
     }
     write_json(output / "build-report.json", report)

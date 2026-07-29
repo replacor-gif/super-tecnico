@@ -1,8 +1,15 @@
 # Super Técnico
 
-Guía técnica estática para consulta por marca, código, categoría, tema y variante. La publicación prevista es:
+Portal técnico estático con herramientas independientes. La publicación es:
 
 `https://replacor-gif.github.io/super-tecnico/`
+
+## Herramientas disponibles
+
+- **Biblioteca técnica HVAC:** consulta por marca, código, categoría, tema y variante.
+- **Identificador SMD:** búsqueda por marcaje o referencia con filtros opcionales de encapsulado, patillas, fabricante, tipo y designador de placa.
+
+El identificador SMD publica 439 candidatos de seis fabricantes, todos con marcaje, encapsulado, patillaje, parámetros eléctricos y una fuente oficial. Cuando un código tiene varios significados, muestra todos los candidatos cerrados y no selecciona ninguno automáticamente.
 
 ## Marcas disponibles
 
@@ -27,9 +34,10 @@ Guía técnica estática para consulta por marca, código, categoría, tema y va
 - Interfaz HTML, CSS y JavaScript.
 - Proyecciones JSON preparadas para la web.
 - Manifiesto automático de marcas.
+- Catálogo SMD público formado únicamente por registros contrastados y autorizados.
 - Únicamente imágenes propias o con autorización expresa.
 
-No se publican bases SQLite, PHP, herramientas internas, manuales ni capturas de manuales no autorizadas.
+No se publican bases SQLite, candidatos históricos de procedencia no autorizada, PHP, herramientas internas, manuales ni capturas de manuales no autorizadas.
 
 ## Prueba local
 
