@@ -64,6 +64,8 @@ class StaticSiteTests(unittest.TestCase):
         cls.samsung_web = cls.samsung / "web"
         cls.toshiba = cls.dist / "data" / "brands" / "toshiba"
         cls.toshiba_web = cls.toshiba / "web"
+        cls.hisense = cls.dist / "data" / "brands" / "hisense"
+        cls.hisense_web = cls.hisense / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -74,7 +76,7 @@ class StaticSiteTests(unittest.TestCase):
         brands = {item["slug"]: item for item in manifest["brands"]}
         self.assertEqual(
             set(brands),
-            {"daikin", "fujitsu-general", "gree", "haier", "lg", "midea", "mitsubishi-electric", "panasonic", "samsung", "toshiba"},
+            {"daikin", "fujitsu-general", "gree", "haier", "hisense", "lg", "midea", "mitsubishi-electric", "panasonic", "samsung", "toshiba"},
         )
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
@@ -145,6 +147,13 @@ class StaticSiteTests(unittest.TestCase):
             "variants": 80,
             "errors": 122,
             "search_entries": 202,
+        })
+        self.assertEqual(brands["hisense"]["counts"], {
+            "categories": 16,
+            "topics": 37,
+            "variants": 107,
+            "errors": 114,
+            "search_entries": 221,
         })
 
     def test_search_examples_are_present(self):
@@ -360,6 +369,31 @@ class StaticSiteTests(unittest.TestCase):
             "H01", "L29", "P10", "P20", "001", "022", "or", "dF",
         }.issubset({item["code_display"] for item in toshiba_errors}))
 
+        hisense_entries = load(self.hisense_web / "search.json")
+        for query in (
+            "SLEEP diez veces",
+            "HIGH POWER cinco veces",
+            "LED2 300 900",
+            "RUN DEFROST decenas unidades",
+            "PSW1 PSW3 cinco segundos",
+            "no01 no15 historial",
+            "emergencia ocho horas",
+            "P06 0,2 MPa",
+            "boya 01 51",
+            "Hi Checker tarjeta SD",
+            "auto addressing tres minutos cinco",
+        ):
+            with self.subTest(brand="hisense", query=query):
+                self.assertTrue(contains_query(hisense_entries, query))
+
+        hisense_errors = load(self.hisense_web / "errors" / "index.json")
+        self.assertEqual(len(hisense_errors), 114)
+        self.assertTrue({
+            "01", "03", "04", "16", "31", "35", "43", "51", "53",
+            "64", "70", "C1", "C3", "EE", "E4", "E8", "E36",
+            "FE", "P01", "P06", "P0A", "P0d",
+        }.issubset({item["code_display"] for item in hisense_errors}))
+
     def test_media_is_not_published_or_referenced(self):
         self.assertFalse((self.brand / "media").exists())
         self.assertFalse((self.daikin / "media").exists())
@@ -370,6 +404,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse((self.haier / "media").exists())
         self.assertFalse((self.samsung / "media").exists())
         self.assertFalse((self.toshiba / "media").exists())
+        self.assertFalse((self.hisense / "media").exists())
         self.assertEqual(self.report["checks"]["media_files"], 0)
         self.assertGreaterEqual(self.report["checks"]["media_references_removed"], 26)
 
@@ -383,6 +418,7 @@ class StaticSiteTests(unittest.TestCase):
             + list(self.haier_web.rglob("*.json"))
             + list(self.samsung_web.rglob("*.json"))
             + list(self.toshiba_web.rglob("*.json"))
+            + list(self.hisense_web.rglob("*.json"))
         ):
             data = load(path)
             pending = [data]
@@ -482,6 +518,39 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(actual["errors"]["status_counts"], {"complete": 176})
         self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 80})
         self.assertEqual(actual["errors"]["component_coverage"]["exact_page"], {"count": 176, "percent": 100.0})
+
+    def test_hisense_reference_v1_led_tables_quality_and_code_layers(self):
+        topic = load(self.hisense_web / "topics" / "1.json")
+        self.assertEqual(topic["slug"], "legacy-outdoor-led-table")
+        patterns = topic["variants"][0]["led_patterns"]
+        self.assertEqual(len(patterns), 18)
+        self.assertEqual([item["code_display"] for item in patterns], [str(value) for value in range(1, 19)])
+        for pattern in patterns:
+            self.assertEqual(pattern["led_indicators"], [{
+                "label": "LED2", "color": "red", "state": "blink",
+            }])
+            self.assertIn("300 ms", pattern["counting_rule"])
+            self.assertIn("900 ms", pattern["cycle_note"])
+
+        details = [
+            load(path)
+            for path in self.hisense_web.joinpath("errors", "details").glob("*.json")
+        ]
+        code_16 = next(item for item in details if item["code_display"] == "16")
+        self.assertEqual(len(code_16["interpretations"]), 4)
+        code_31 = next(item for item in details if item["code_display"] == "31")
+        self.assertEqual(len(code_31["interpretations"]), 3)
+        code_51 = next(item for item in details if item["code_display"] == "51")
+        self.assertEqual(len(code_51["interpretations"]), 2)
+        c3 = next(item for item in details if item["code_display"] == "C3")
+        self.assertEqual(c3["interpretations"][0]["title"], "Interior de otro ciclo conectada a la caja selectora")
+
+        expected = audit_brand(ROOT / "data" / "brands" / "hisense")
+        actual = load(ROOT / "data" / "brands" / "hisense" / "web" / "quality.json")
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 159})
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 107})
+        self.assertEqual(actual["errors"]["component_coverage"]["exact_page"], {"count": 159, "percent": 100.0})
 
     def test_field_navigation_uses_dashboard_accordions_and_quick_search(self):
         html = (self.dist / "index.html").read_text(encoding="utf-8")

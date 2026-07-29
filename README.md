@@ -10,6 +10,7 @@ Guía técnica estática para consulta por marca, código, categoría, tema y va
 - **Daikin:** Sky Air, cassette, multisplit, VRV y mandos BRC/Madoka.
 - **Gree:** split, U-Match, FLEXX, GMV y mandos cableados.
 - **Haier:** Advanced Plus, Arctic Multi, FlexFit Multi/Pro, cassette, MRV-S y mandos YR-E17/YR-E16B; relaciona códigos distintos entre unidad, mando y placa.
+- **Hisense:** split, comercial, cassette, multisplit, controles HYXE/HYRE y Hi-FLEXi VRF; separa códigos de mando, display interior, piloto/tubo digital exterior y red H-NET.
 - **LG:** Single Zone, Multi F/Multi F MAX, cassette, MULTI V 5, mandos PREMTB/PREMTC y LGMV.
 - **Midea:** AtomX R454B, V6 VRF, split, multisplit, cassette, conductos y WDC-120T2; distingue códigos del mando, display local y placa.
 - **Mitsubishi Electric:** M-Series, MXZ, Mr. Slim y CITY MULTI.
