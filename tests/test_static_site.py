@@ -575,6 +575,8 @@ class StaticSiteTests(unittest.TestCase):
         script = (self.dist / "assets" / "app.js").read_text(encoding="utf-8")
         self.assertIn("climatizacion.html", portal)
         self.assertIn("smd.html", portal)
+        self.assertIn("calculadoras.html", portal)
+        self.assertIn("componentes.html", portal)
         self.assertIn("assets/app.js", html)
         self.assertIn("data/brands/index.json", script)
         self.assertNotIn("api.php", html + script)
@@ -590,7 +592,14 @@ class StaticSiteTests(unittest.TestCase):
     def test_beta_multilingual_shell_and_feedback_are_public(self):
         pages = {
             name: (self.dist / name).read_text(encoding="utf-8")
-            for name in ("index.html", "climatizacion.html", "smd.html", "feedback.html")
+            for name in (
+                "index.html",
+                "climatizacion.html",
+                "smd.html",
+                "calculadoras.html",
+                "componentes.html",
+                "feedback.html",
+            )
         }
         for name, html in pages.items():
             with self.subTest(page=name):
@@ -617,6 +626,61 @@ class StaticSiteTests(unittest.TestCase):
         self.assertNotIn("fetch(", feedback)
         self.assertIn('id="feedbackForm"', pages["feedback.html"])
         self.assertIn("https://www.replacor.com/", pages["feedback.html"])
+
+    def test_calculators_and_component_reference_modules_are_public(self):
+        calculators = (self.dist / "calculadoras.html").read_text(encoding="utf-8")
+        components_html = (self.dist / "componentes.html").read_text(encoding="utf-8")
+        calculators_js = (self.dist / "assets" / "calculators.js").read_text(encoding="utf-8")
+        components_js = (self.dist / "assets" / "components.js").read_text(encoding="utf-8")
+        self.assertIn("assets/calculations.js", calculators)
+        self.assertIn("assets/calculators.js", calculators)
+        self.assertIn("data/components/catalog.json", components_js)
+        self.assertIn("data/components/details/", components_js)
+        self.assertEqual(len(re.findall(r"\bid:\s*['\"][a-z]+['\"]", calculators_js)), 12)
+        self.assertIn("st:languagechange", calculators_js)
+        self.assertIn("st:languagechange", components_js)
+        self.assertIn("BETA", calculators)
+        self.assertIn("BETA", components_html)
+
+    def test_component_public_projection_is_complete_and_warns_about_candidates(self):
+        catalog = load(self.dist / "data" / "components" / "catalog.json")
+        counts = catalog["meta"]["counts"]
+        self.assertEqual(counts["components"], 4137)
+        self.assertEqual(counts["specifications"], 6489)
+        self.assertEqual(counts["markings"], 3862)
+        self.assertEqual(counts["reviewed"], 810)
+        self.assertEqual(counts["historical"], 3327)
+        self.assertEqual(catalog["meta"]["chunk_count"], 64)
+        self.assertIn("pendientes de verificar", catalog["meta"]["warning"])
+
+        a7 = [
+            item for item in catalog["components"]
+            if "A7" in {str(marking).upper() for marking in item.get("markings", [])}
+        ]
+        self.assertEqual(len(a7), 5)
+        self.assertTrue(any(item["official"] for item in a7))
+        self.assertTrue(any(item["quality"].startswith("hist") for item in a7))
+
+        detail_ids = set()
+        for chunk_id in range(64):
+            chunk = load(self.dist / "data" / "components" / "details" / f"{chunk_id}.json")
+            for component_id, detail in chunk.items():
+                self.assertEqual(int(component_id) % 64, chunk_id)
+                self.assertEqual(int(component_id), detail["id"])
+                detail_ids.add(int(component_id))
+        self.assertEqual(len(detail_ids), 4137)
+        self.assertEqual(detail_ids, {item["id"] for item in catalog["components"]})
+        self.assertEqual(self.report["components"]["components"], 4137)
+
+        irf840 = next(item for item in catalog["components"] if item["part_number"] == "IRF840")
+        self.assertTrue(irf840["official"])
+        self.assertEqual(irf840["voltage_max_v"], 500)
+        self.assertEqual(irf840["current_max_a"], 8)
+        irf840_detail = load(
+            self.dist / "data" / "components" / "details" / f"{irf840['id'] % 64}.json"
+        )[str(irf840["id"])]
+        self.assertEqual(irf840_detail["source"]["publisher"], "Vishay Siliconix")
+        self.assertTrue(irf840_detail["datasheet_url"].startswith("https://www.vishay.com/"))
 
     def test_samsung_led_tables_are_structured_and_accessible(self):
         topic = load(self.samsung_web / "topics" / "1.json")

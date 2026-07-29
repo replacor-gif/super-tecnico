@@ -8,8 +8,12 @@ Portal técnico estático con herramientas independientes. La publicación es:
 
 - **Biblioteca técnica HVAC:** consulta por marca, código, categoría, tema y variante.
 - **Identificador SMD:** búsqueda por marcaje o referencia con filtros opcionales de encapsulado, patillas, fabricante, tipo y designador de placa.
+- **Calculadoras técnicas:** 12 herramientas de electrónica y climatización con unidades, fórmulas y advertencias.
+- **Referencias de componentes:** consulta por referencia, marcado, fabricante, categoría, encapsulado y parámetros eléctricos.
 
 El identificador SMD publica 439 candidatos de seis fabricantes, todos con marcaje, encapsulado, patillaje, parámetros eléctricos y una fuente oficial. Cuando un código tiene varios significados, muestra todos los candidatos cerrados y no selecciona ninguno automáticamente.
+
+La base de referencias publica 4.137 componentes y 6.489 parámetros. Separa 810 fichas oficiales o revisadas de 3.327 candidatos históricos pendientes de contrastar. Ninguna coincidencia se presenta como sustitución automática.
 
 ## Versión beta e idiomas
 
@@ -46,14 +50,16 @@ La interfaz es multilingüe. Las fichas técnicas conservan durante la beta el t
 - Proyecciones JSON preparadas para la web.
 - Manifiesto automático de marcas.
 - Catálogo SMD público formado únicamente por registros contrastados y autorizados.
+- Proyección pública de referencias de componentes, dividida en fragmentos para cargar cada ficha bajo demanda.
 - Únicamente imágenes propias o con autorización expresa.
 
-No se publican bases SQLite, candidatos históricos de procedencia no autorizada, PHP, herramientas internas, manuales ni capturas de manuales no autorizadas.
+Los candidatos históricos se publican únicamente como índices factuales de localización, con su procedencia y una advertencia visible de verificación. No se publican bases SQLite, PHP, herramientas internas, manuales ni capturas de manuales no autorizadas.
 
 ## Prueba local
 
 ```bash
 python -m unittest discover -s tests -v
+node tests/test_calculations.js
 python tools/build_static.py --source . --output dist
 python -m http.server 8080 --directory dist
 ```

@@ -222,6 +222,67 @@ def validate_smd_catalog(source_root: Path) -> tuple[dict[str, Any], dict[str, i
     return catalog, stats
 
 
+def validate_components_catalog(source_root: Path) -> tuple[dict[str, Any], dict[str, int]]:
+    components_root = source_root / "data" / "components"
+    catalog = read_json(components_root / "catalog.json")
+    meta = catalog.get("meta") or {}
+    components = catalog.get("components") or []
+    if not isinstance(components, list):
+        raise BuildError("El catálogo de componentes no contiene una lista válida")
+
+    expected = {
+        "components": 4137,
+        "specifications": 6489,
+        "markings": 3862,
+        "reviewed": 810,
+        "historical": 3327,
+    }
+    counts = meta.get("counts") or {}
+    for key, value in expected.items():
+        if int(counts.get(key) or 0) != value:
+            raise BuildError(
+                f"Catálogo de componentes: {key} esperado={value}, obtenido={counts.get(key)}"
+            )
+    if len(components) != expected["components"]:
+        raise BuildError("El índice público de componentes no coincide con sus metadatos")
+
+    component_ids = {int(item["id"]) for item in components}
+    if len(component_ids) != len(components):
+        raise BuildError("Hay identificadores de componente duplicados")
+
+    chunk_count = int(meta.get("chunk_count") or 0)
+    if chunk_count != 64:
+        raise BuildError(f"Número de fragmentos de componentes inesperado: {chunk_count}")
+    detail_ids: set[int] = set()
+    for chunk_id in range(chunk_count):
+        chunk = read_json(components_root / "details" / f"{chunk_id}.json")
+        if not isinstance(chunk, dict):
+            raise BuildError(f"Fragmento de componentes no válido: {chunk_id}")
+        for key, detail in chunk.items():
+            component_id = int(key)
+            if component_id in detail_ids or int(detail.get("id") or -1) != component_id:
+                raise BuildError(f"Detalle de componente duplicado o incoherente: {component_id}")
+            if component_id % chunk_count != chunk_id:
+                raise BuildError(f"Componente {component_id} guardado en un fragmento incorrecto")
+            for url_key in ("datasheet_url",):
+                url = detail.get(url_key)
+                if url and not str(url).startswith("https://"):
+                    raise BuildError(f"URL pública no segura en componente {component_id}")
+            source_url = (detail.get("source") or {}).get("url")
+            if source_url and not str(source_url).startswith("https://"):
+                raise BuildError(f"Fuente pública no segura en componente {component_id}")
+            detail_ids.add(component_id)
+    if detail_ids != component_ids:
+        raise BuildError("Los detalles públicos no coinciden con el índice de componentes")
+
+    return catalog, {
+        **expected,
+        "manufacturers": int(counts.get("manufacturers") or 0),
+        "packages": int(counts.get("packages") or 0),
+        "chunks": chunk_count,
+    }
+
+
 def build(source_root: Path, output: Path) -> dict[str, Any]:
     source_root = source_root.resolve()
     output = output.resolve()
@@ -235,9 +296,16 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "index.html",
         "climatizacion.html",
         "smd.html",
+        "calculadoras.html",
+        "componentes.html",
         "feedback.html",
         "assets/app.js",
+        "assets/calculations.js",
+        "assets/calculators.css",
+        "assets/calculators.js",
         "assets/common.css",
+        "assets/components.css",
+        "assets/components.js",
         "assets/feedback.css",
         "assets/feedback.js",
         "assets/i18n.js",
@@ -297,11 +365,17 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
     })
     smd_catalog, smd_stats = validate_smd_catalog(source_root)
     write_json(output / "data" / "smd" / "catalog.json", smd_catalog)
+    components_catalog, components_stats = validate_components_catalog(source_root)
+    write_json(output / "data" / "components" / "catalog.json", components_catalog)
+    components_details = source_root / "data" / "components" / "details"
+    for path in sorted(components_details.glob("*.json")):
+        write_json(output / "data" / "components" / "details" / path.name, read_json(path))
     report = {
         "project": "Super Técnico estático",
         "generated_at_utc": generated_at,
         "brands": manifest,
         "smd": smd_stats,
+        "components": components_stats,
         "checks": counters,
     }
     write_json(output / "build-report.json", report)

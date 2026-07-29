@@ -1,0 +1,194 @@
+[
+  {
+    "id": 4137,
+    "part_number": "IRF840",
+    "manufacturer": "Vishay Siliconix",
+    "category": "MOSFET",
+    "subtype": "MOSFET de potencia de canal N y alta tensión",
+    "description": "MOSFET de potencia de canal N, 500 V y 8 A en encapsulado TO-220AB.",
+    "packages": ["TO-220AB"],
+    "markings": [],
+    "aliases": ["IRF840PbF", "SiHF840"],
+    "quality": "oficial",
+    "quality_rank": 7,
+    "confidence": 0.98,
+    "official": true,
+    "generic": false,
+    "voltage_max_v": 500,
+    "current_max_a": 8,
+    "power_max_w": 125,
+    "rds_on_max_ohm": 0.85,
+    "frequency_hz": null,
+    "lifecycle_status": "Consultar disponibilidad y sufijo exacto con el fabricante",
+    "notes": "Confirma el sufijo, fabricante, patillaje, condiciones térmicas y área segura de operación antes de sustituir.",
+    "datasheet_url": "https://www.vishay.com/docs/91070/91070.pdf",
+    "specifications": [
+      {
+        "specification_id": "SUP-IRF840-1",
+        "spec_key": "vds_max",
+        "name_es": "Tensión drenador-fuente máxima",
+        "minimum_value": null,
+        "typical_value": null,
+        "maximum_value": 500,
+        "text_value": null,
+        "unit": "V",
+        "conditions": "VGS = 0 V",
+        "confidence_score": 0.98,
+        "notes": null
+      },
+      {
+        "specification_id": "SUP-IRF840-2",
+        "spec_key": "vgs_max",
+        "name_es": "Tensión puerta-fuente máxima",
+        "minimum_value": -20,
+        "typical_value": null,
+        "maximum_value": 20,
+        "text_value": "±20",
+        "unit": "V",
+        "conditions": "",
+        "confidence_score": 0.98,
+        "notes": null
+      },
+      {
+        "specification_id": "SUP-IRF840-3",
+        "spec_key": "id_max",
+        "name_es": "Corriente continua de drenador máxima",
+        "minimum_value": null,
+        "typical_value": null,
+        "maximum_value": 8,
+        "text_value": null,
+        "unit": "A",
+        "conditions": "TC = 25 °C; VGS = 10 V",
+        "confidence_score": 0.98,
+        "notes": null
+      },
+      {
+        "specification_id": "SUP-IRF840-4",
+        "spec_key": "idm_max",
+        "name_es": "Corriente pulsada de drenador máxima",
+        "minimum_value": null,
+        "typical_value": null,
+        "maximum_value": 32,
+        "text_value": null,
+        "unit": "A",
+        "conditions": "Limitada por temperatura máxima de unión",
+        "confidence_score": 0.98,
+        "notes": null
+      },
+      {
+        "specification_id": "SUP-IRF840-5",
+        "spec_key": "rds_on_max",
+        "name_es": "Resistencia drenador-fuente en conducción máxima",
+        "minimum_value": null,
+        "typical_value": null,
+        "maximum_value": 0.85,
+        "text_value": null,
+        "unit": "Ω",
+        "conditions": "VGS = 10 V; ID = 4,8 A",
+        "confidence_score": 0.98,
+        "notes": null
+      },
+      {
+        "specification_id": "SUP-IRF840-6",
+        "spec_key": "pd_max",
+        "name_es": "Potencia disipada máxima",
+        "minimum_value": null,
+        "typical_value": null,
+        "maximum_value": 125,
+        "text_value": null,
+        "unit": "W",
+        "conditions": "TC = 25 °C",
+        "confidence_score": 0.98,
+        "notes": null
+      },
+      {
+        "specification_id": "SUP-IRF840-7",
+        "spec_key": "vgs_threshold",
+        "name_es": "Tensión umbral de puerta",
+        "minimum_value": 2,
+        "typical_value": null,
+        "maximum_value": 4,
+        "text_value": null,
+        "unit": "V",
+        "conditions": "VDS = VGS; ID = 250 µA",
+        "confidence_score": 0.98,
+        "notes": null
+      },
+      {
+        "specification_id": "SUP-IRF840-8",
+        "spec_key": "qg_max",
+        "name_es": "Carga total de puerta máxima",
+        "minimum_value": null,
+        "typical_value": null,
+        "maximum_value": 63,
+        "text_value": null,
+        "unit": "nC",
+        "conditions": "VGS = 10 V; ID = 8 A; VDS = 400 V",
+        "confidence_score": 0.98,
+        "notes": null
+      },
+      {
+        "specification_id": "SUP-IRF840-9",
+        "spec_key": "tj_range",
+        "name_es": "Rango de temperatura de unión",
+        "minimum_value": -55,
+        "typical_value": null,
+        "maximum_value": 150,
+        "text_value": "-55 a +150",
+        "unit": "°C",
+        "conditions": "",
+        "confidence_score": 0.98,
+        "notes": null
+      }
+    ],
+    "package_details": [
+      {
+        "name": "TO-220AB",
+        "family": "TO-220",
+        "pin_count": 3,
+        "mount_type": "THT",
+        "pinout_variant": "G-D-S; pestaña conectada al drenador",
+        "primary_package": 1,
+        "notes": "Confirma la variante y el aislamiento del disipador."
+      }
+    ],
+    "marking_details": [],
+    "pinouts": [
+      {
+        "package": "TO-220AB",
+        "pin_number": "1",
+        "pin_symbol": "G",
+        "function_es": "Puerta",
+        "confidence_score": 0.98,
+        "notes": null
+      },
+      {
+        "package": "TO-220AB",
+        "pin_number": "2",
+        "pin_symbol": "D",
+        "function_es": "Drenador; también conectado a la pestaña",
+        "confidence_score": 0.98,
+        "notes": null
+      },
+      {
+        "package": "TO-220AB",
+        "pin_number": "3",
+        "pin_symbol": "S",
+        "function_es": "Fuente",
+        "confidence_score": 0.98,
+        "notes": null
+      }
+    ],
+    "applications": [],
+    "equivalents": [],
+    "verification": [],
+    "source": {
+      "title": "IRF840 Power MOSFET, document 91070",
+      "publisher": "Vishay Siliconix",
+      "url": "https://www.vishay.com/en/product/91070/",
+      "type": "ficha técnica oficial",
+      "authority": 5,
+      "retrieved_date": "2026-07-29"
+    }
+  }
+]

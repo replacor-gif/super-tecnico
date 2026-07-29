@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Super Técnico reúne herramientas profesionales para diagnosticar climatización e identificar componentes electrónicos SMD.">
+  <meta name="description" content="Super Técnico reúne bibliotecas HVAC, identificación SMD, referencias electrónicas y calculadoras técnicas para profesionales.">
   <meta name="theme-color" content="#0b2637">
   <title>Super Técnico | Herramientas para el técnico</title>
   <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
   <link rel="stylesheet" href="assets/common.css?v=1">
-  <link rel="stylesheet" href="assets/portal.css?v=1">
-  <script src="assets/i18n.js?v=2" defer></script>
+  <link rel="stylesheet" href="assets/portal.css?v=2">
+  <script src="assets/i18n.js?v=4" defer></script>
 </head>
 <body>
   <header class="portal-header">
@@ -35,7 +35,7 @@
         <p class="hero-intro" data-i18n="portal.intro">Elige una herramienta. Cada apartado conserva su propia información y está preparado para incorporar nuevas utilidades sin mezclar contenidos.</p>
       </div>
       <div class="hero-stat" aria-label="Estado del proyecto">
-        <strong>2</strong>
+        <strong>4</strong>
         <span data-i18n="portal.count">herramientas disponibles</span>
       </div>
     </section>
@@ -93,14 +93,45 @@
           </a>
         </article>
 
-        <article class="tool-card tool-card-upcoming">
-          <div class="tool-icon plus-icon" aria-hidden="true">+</div>
-          <div class="tool-copy">
-            <span class="tool-badge" data-i18n="portal.soon">Próximamente</span>
-            <h3 data-i18n="portal.newTools">Nuevas herramientas</h3>
-            <p data-i18n="portal.newToolsText">La portada está preparada para añadir las próximas aplicaciones sin alterar las que ya funcionan.</p>
+        <article class="tool-card tool-card-calculators">
+          <div class="tool-icon calculator-icon" aria-hidden="true">
+            <span>V</span><span>Ω</span><span>A</span><span>Σ</span>
           </div>
-          <span class="tool-button tool-button-disabled" aria-disabled="true" data-i18n="portal.preparing">En preparación</span>
+          <div class="tool-copy">
+            <span class="tool-badge" data-i18n="portal.calcBadge">Cálculo técnico</span>
+            <h3 data-i18n="portal.calcTitle">Calculadoras de taller</h3>
+            <p data-i18n="portal.calcText">Doce herramientas para resolver cálculos habituales de electrónica, alimentación y climatización.</p>
+            <ul>
+              <li data-i18n="portal.calcOne">Ley de Ohm, divisores, RC y pasivos</li>
+              <li data-i18n="portal.calcTwo">Bus DC, NTC, condensadores y bobinados</li>
+              <li data-i18n="portal.calcThree">Resultados con unidades, fórmulas y advertencias</li>
+            </ul>
+          </div>
+          <a class="tool-button" href="calculadoras.html">
+            <span data-i18n="portal.calcOpen">Abrir calculadoras</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+
+        <article class="tool-card tool-card-components">
+          <div class="tool-icon components-icon" aria-hidden="true">
+            <span>REF</span>
+            <i></i><i></i><i></i>
+          </div>
+          <div class="tool-copy">
+            <span class="tool-badge" data-i18n="portal.compBadge">Base documental</span>
+            <h3 data-i18n="portal.compTitle">Referencias de componentes</h3>
+            <p data-i18n="portal.compText">Busca referencias, fabricantes, encapsulados, marcados, patillajes y parámetros para identificar el componente real.</p>
+            <ul>
+              <li data-i18n="portal.compOne">4.137 referencias y 6.489 parámetros</li>
+              <li data-i18n="portal.compTwo">810 fichas oficiales o revisadas</li>
+              <li data-i18n="portal.compThree">Los candidatos históricos se muestran con advertencia</li>
+            </ul>
+          </div>
+          <a class="tool-button" href="componentes.html">
+            <span data-i18n="portal.compOpen">Buscar componentes</span>
+            <span aria-hidden="true">→</span>
+          </a>
         </article>
       </div>
     </section>
