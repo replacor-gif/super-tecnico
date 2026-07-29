@@ -706,7 +706,11 @@ function bindMediaButtons() {
     els.imageDialog.showModal();
   }));
 }
-function scopeLabel(v) { return ({indoor:'Unidad interior',outdoor:'Unidad exterior',general:'General',unknown:'Ámbito no especificado'}[v] || v || ''); }
+function scopeLabel(v) { return ({
+  indoor:'Unidad interior', outdoor:'Unidad exterior', controller:'Mando o controlador',
+  system:'Sistema', general:'General', mixed:'Varios ámbitos',
+  unknown:'Ámbito no especificado'
+}[v] || v || ''); }
 function sourceKind(v) { return ({official:'Dato oficial',calculated:'Valor calculado',workshop_experience:'Experiencia de taller',technical_hypothesis:'Hipótesis técnica'}[v] || v || ''); }
 function confidenceLabel(v) { return ({high:'alta',medium:'media',low:'baja',unknown:'no indicada'}[v] || v || ''); }
 function indicationLabel(v) { return ({

@@ -70,6 +70,8 @@ class StaticSiteTests(unittest.TestCase):
         cls.tcl_web = cls.tcl / "web"
         cls.mhi = cls.dist / "data" / "brands" / "mitsubishi-heavy-industries"
         cls.mhi_web = cls.mhi / "web"
+        cls.aux = cls.dist / "data" / "brands" / "aux-air"
+        cls.aux_web = cls.aux / "web"
 
     @classmethod
     def tearDownClass(cls):
@@ -80,7 +82,7 @@ class StaticSiteTests(unittest.TestCase):
         brands = {item["slug"]: item for item in manifest["brands"]}
         self.assertEqual(
             set(brands),
-            {"daikin", "fujitsu-general", "gree", "haier", "hisense", "lg", "midea", "mitsubishi-electric", "mitsubishi-heavy-industries", "panasonic", "samsung", "tcl", "toshiba"},
+            {"aux-air", "daikin", "fujitsu-general", "gree", "haier", "hisense", "lg", "midea", "mitsubishi-electric", "mitsubishi-heavy-industries", "panasonic", "samsung", "tcl", "toshiba"},
         )
         self.assertEqual(brands["fujitsu-general"]["counts"], {
             "categories": 18,
@@ -172,6 +174,13 @@ class StaticSiteTests(unittest.TestCase):
             "variants": 100,
             "errors": 110,
             "search_entries": 210,
+        })
+        self.assertEqual(brands["aux-air"]["counts"], {
+            "categories": 16,
+            "topics": 37,
+            "variants": 107,
+            "errors": 98,
+            "search_entries": 205,
         })
 
     def test_search_examples_are_present(self):
@@ -463,6 +472,35 @@ class StaticSiteTests(unittest.TestCase):
             "E36-1", "E37-5", "E43-2", "E54-2", "E58-1", "WAIT",
         }.issubset({item["code_display"] for item in mhi_errors}))
 
+        aux_entries = load(self.aux_web / "search.json")
+        for query in (
+            "D1 D2 D3",
+            "E8 display placa",
+            "E8 temperatura exterior",
+            "E8 sonda descarga",
+            "H1 drenaje alta presion",
+            "CHECK ARV",
+            "12V GND A B",
+            "bomba cassette A5",
+            "9 destellos E9",
+            "black box 30 minutos",
+            "50K 3950",
+            "bus 420 642 V",
+            "SWING FUNCTION 5 segundos",
+            "CL TIMER 5 segundos",
+        ):
+            with self.subTest(brand="aux-air", query=query):
+                self.assertTrue(contains_query(aux_entries, query))
+
+        aux_errors = load(self.aux_web / "errors" / "index.json")
+        self.assertEqual(len(aux_errors), 98)
+        self.assertTrue({
+            "E0", "E4", "E5", "5E", "E8", "E9", "EA", "Eb",
+            "F0", "F1", "F8", "H1", "H2", "H4", "J2", "J3",
+            "A5", "AA", "AE", "AJ", "P2", "P3", "L0", "LA",
+            "31", "36", "47",
+        }.issubset({item["code_display"] for item in aux_errors}))
+
     def test_media_is_not_published_or_referenced(self):
         self.assertFalse((self.brand / "media").exists())
         self.assertFalse((self.daikin / "media").exists())
@@ -476,6 +514,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse((self.hisense / "media").exists())
         self.assertFalse((self.tcl / "media").exists())
         self.assertFalse((self.mhi / "media").exists())
+        self.assertFalse((self.aux / "media").exists())
         self.assertEqual(self.report["checks"]["media_files"], 0)
         self.assertGreaterEqual(self.report["checks"]["media_references_removed"], 26)
 
@@ -492,6 +531,7 @@ class StaticSiteTests(unittest.TestCase):
             + list(self.hisense_web.rglob("*.json"))
             + list(self.tcl_web.rglob("*.json"))
             + list(self.mhi_web.rglob("*.json"))
+            + list(self.aux_web.rglob("*.json"))
         ):
             data = load(path)
             pending = [data]
@@ -720,6 +760,74 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse(any(self.mhi.rglob("*.pdf")))
         self.assertFalse(any(self.mhi.rglob("*.db")))
         self.assertFalse(any(self.mhi.rglob("*.sqlite")))
+
+    def test_aux_reference_v1_led_tables_quality_and_code_layers(self):
+        split_topic = load(self.aux_web / "topics" / "2.json")
+        self.assertEqual(split_topic["slug"], "split-d1-d2-d3-master")
+        split_patterns = split_topic["variants"][0]["led_patterns"]
+        self.assertEqual(len(split_patterns), 27)
+        self.assertEqual(
+            [row["code_display"] for row in split_patterns],
+            [f"Patrón {value:02d}" for value in range(1, 28)],
+        )
+        pattern_10 = next(row for row in split_patterns if row["code_display"] == "Patrón 10")
+        self.assertEqual(
+            [(row["label"], row["state"]) for row in pattern_10["led_indicators"]],
+            [("D1", "blink"), ("D2", "on"), ("D3", "on")],
+        )
+
+        commercial_topic = load(self.aux_web / "topics" / "3.json")
+        self.assertEqual(commercial_topic["slug"], "commercial-led-master")
+        self.assertEqual([len(row["led_patterns"]) for row in commercial_topic["variants"]], [7, 6])
+        e9_high = next(
+            row
+            for row in commercial_topic["variants"][1]["led_patterns"]
+            if row["code_display"] == "E9 alta"
+        )
+        self.assertEqual(
+            [row["detail"] for row in e9_high["led_indicators"]],
+            ["9 destellos y 2 s apagado", "1 destello y 2 s apagado"],
+        )
+
+        arv_topic = load(self.aux_web / "topics" / "4.json")
+        self.assertEqual(arv_topic["slug"], "arv-indicator-code")
+        arv_patterns = arv_topic["variants"][0]["led_patterns"]
+        self.assertEqual(len(arv_patterns), 9)
+        self.assertEqual(
+            [row["code_display"] for row in arv_patterns],
+            ["A1–AF", "C1–CF", "E1–EF", "H1–HF", "F1–FF", "J1–JF", "31–3F", "41–4F", "51–5F"],
+        )
+
+        details = [
+            load(path)
+            for path in self.aux_web.joinpath("errors", "details").glob("*.json")
+        ]
+        e8 = next(row for row in details if row["code_display"] == "E8")
+        self.assertEqual(len(e8["interpretations"]), 3)
+        self.assertTrue(any("display" in row["title"].lower() for row in e8["interpretations"]))
+        self.assertTrue(any("temperatura exterior" in row["title"].lower() for row in e8["interpretations"]))
+        self.assertTrue(any("descarga" in row["title"].lower() for row in e8["interpretations"]))
+
+        for code, minimum in (("E1", 3), ("E3", 4), ("F1", 3), ("H1", 2), ("H4", 2)):
+            row = next(item for item in details if item["code_display"] == code)
+            self.assertGreaterEqual(len(row["interpretations"]), minimum, code)
+
+        expected = audit_brand(ROOT / "data" / "brands" / "aux-air")
+        actual = load(ROOT / "data" / "brands" / "aux-air" / "web" / "quality.json")
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual["errors"]["status_counts"], {"complete": 142})
+        self.assertEqual(actual["technical_variants"]["status_counts"], {"complete": 107})
+        self.assertEqual(actual["errors"]["component_coverage"]["exact_page"], {"count": 142, "percent": 100.0})
+
+        sources = load(self.aux_web / "sources.json")
+        self.assertEqual(len(sources), 8)
+        self.assertTrue(all(source["status"] == "reviewed" for source in sources))
+        public_text = "\n".join(path.read_text(encoding="utf-8") for path in self.aux.rglob("*.json"))
+        self.assertNotIn("tmp\\aux", public_text)
+        self.assertNotIn("tmp/aux", public_text)
+        self.assertFalse(any(self.aux.rglob("*.pdf")))
+        self.assertFalse(any(self.aux.rglob("*.db")))
+        self.assertFalse(any(self.aux.rglob("*.sqlite")))
 
     def test_field_navigation_uses_dashboard_accordions_and_quick_search(self):
         html = (self.dist / "index.html").read_text(encoding="utf-8")

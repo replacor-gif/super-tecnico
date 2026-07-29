@@ -6,6 +6,7 @@ Guía técnica estática para consulta por marca, código, categoría, tema y va
 
 ## Marcas disponibles
 
+- **AUX:** split, Light Commercial, cassette/conductos, multisplit, mando XK y ARV/VRF; separa display interior, mando, pilotos exteriores D1/D2/D3, placa comercial y código ARV por indicadores.
 - **Fujitsu / General:** referencia ampliada de split, multisplit, cassette y Airstage VRF.
 - **Daikin:** Sky Air, cassette, multisplit, VRV y mandos BRC/Madoka.
 - **Gree:** split, U-Match, FLEXX, GMV y mandos cableados.
