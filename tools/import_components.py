@@ -19,6 +19,7 @@ SUPPLEMENTS_PATH = Path(__file__).resolve().parents[1] / "data" / "component_add
 QUALITY_ORDER = {
     "oficial": 7,
     "oficial_serie": 6,
+    "oficial_indice": 5,
     "oficial_importado": 5,
     "oficial_familia": 4,
     "curado": 3,
@@ -321,6 +322,7 @@ def build(database: Path, output: Path) -> dict[str, Any]:
                         "id", "part_number", "manufacturer", "category", "subtype",
                         "description", "packages", "markings", "aliases", "quality",
                         "quality_rank", "confidence", "official", "generic",
+                        "record_level",
                         "voltage_max_v", "current_max_a", "power_max_w",
                         "rds_on_max_ohm", "frequency_hz",
                     )
@@ -334,11 +336,14 @@ def build(database: Path, output: Path) -> dict[str, Any]:
                 supplement_markings += len(detail.get("marking_details") or [])
                 if detail.get("manufacturer"):
                     manufacturers.append(str(detail["manufacturer"]))
+                if detail.get("category"):
+                    categories.append(str(detail["category"]))
                 package_names.extend(
                     str(value) for value in (detail.get("packages") or []) if public_label(value)
                 )
 
         manufacturers = sorted(set(manufacturers), key=str.casefold)
+        categories = sorted(set(categories), key=str.casefold)
         package_names = sorted(set(package_names), key=str.casefold)
         catalogue.sort(
             key=lambda item: (

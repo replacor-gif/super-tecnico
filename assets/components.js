@@ -57,6 +57,8 @@
       loadingDetail: 'Cargando ficha completa…',
       detailError: 'No se pudo cargar la ficha completa.',
       confirmed: 'Confirmado',
+      indexRecord: 'Ficha índice oficial',
+      indexRecordInfo: 'Esta referencia está confirmada en un catálogo oficial. La ficha es mínima y puede no incluir todavía valores eléctricos, encapsulado o patillaje.',
       high: 'Alta confianza',
       probable: 'Probable',
       pending: 'Pendiente de verificar',
@@ -113,6 +115,7 @@
       textMatch: 'Document match', open: 'Open record',
       loadingDetail: 'Loading full record…', detailError: 'The full record could not be loaded.',
       confirmed: 'Confirmed', high: 'High confidence', probable: 'Probable', pending: 'Pending verification',
+      indexRecord: 'Official index record', indexRecordInfo: 'This reference is confirmed in an official catalogue. The record is minimal and may not yet include electrical values, package or pinout.',
       pendingWarning: 'Historical record pending verification. Use it to locate candidates and check manufacturer, package, pinout and datasheet before deciding.',
       substitutionWarning: 'This record is informative. It does not imply equivalence or a direct replacement.',
       identification: 'Identification', electrical: 'Electrical data', packagesPinout: 'Packages and pinout',
@@ -147,6 +150,7 @@
       textMatch: 'Coincidência documental', open: 'Abrir ficha',
       loadingDetail: 'A carregar ficha completa…', detailError: 'Não foi possível carregar a ficha completa.',
       confirmed: 'Confirmado', high: 'Alta confiança', probable: 'Provável', pending: 'Pendente de verificação',
+      indexRecord: 'Ficha de índice oficial', indexRecordInfo: 'Esta referência está confirmada num catálogo oficial. A ficha é mínima e pode ainda não incluir valores elétricos, encapsulamento ou pinagem.',
       pendingWarning: 'Registo histórico pendente de verificação. Use-o para localizar candidatos e confirme fabricante, encapsulamento, pinagem e datasheet.',
       substitutionWarning: 'A ficha é informativa. Não implica equivalência nem substituição direta.',
       identification: 'Identificação', electrical: 'Dados elétricos', packagesPinout: 'Encapsulamentos e pinagem',
@@ -181,6 +185,7 @@
       textMatch: 'Correspondance documentaire', open: 'Ouvrir la fiche',
       loadingDetail: 'Chargement de la fiche complète…', detailError: 'Impossible de charger la fiche complète.',
       confirmed: 'Confirmé', high: 'Confiance élevée', probable: 'Probable', pending: 'À vérifier',
+      indexRecord: 'Fiche d’index officielle', indexRecordInfo: 'Cette référence est confirmée dans un catalogue officiel. La fiche est minimale et peut ne pas encore inclure les valeurs électriques, le boîtier ou le brochage.',
       pendingWarning: 'Fiche historique en attente de vérification. Utilisez-la pour trouver des candidats puis vérifiez fabricant, boîtier, brochage et datasheet.',
       substitutionWarning: 'Cette fiche est informative. Elle n’implique ni équivalence ni remplacement direct.',
       identification: 'Identification', electrical: 'Données électriques', packagesPinout: 'Boîtiers et brochage',
@@ -356,6 +361,7 @@
           <span class="result-reference">
             <strong>${escapeHtml(item.part_number)}</strong>
             <span class="quality-badge ${quality.className}">${escapeHtml(quality.label)}</span>
+            ${item.record_level === 'indice' ? `<span class="meta-chip">${escapeHtml(tr('indexRecord'))}</span>` : ''}
             <span class="meta-chip">${escapeHtml(entry.reason)}</span>
           </span>
           <p>${escapeHtml(item.manufacturer || '—')} · ${escapeHtml(item.category || '—')}${description ? ` · ${escapeHtml(description)}` : ''}</p>
@@ -439,6 +445,7 @@
       ${item.subtype ? `<p><strong>${escapeHtml(tr('subtype'))}:</strong> ${escapeHtml(item.subtype)}</p>` : ''}
       ${item.lifecycle_status ? `<p><strong>${escapeHtml(tr('lifecycle'))}:</strong> ${escapeHtml(item.lifecycle_status)}</p>` : ''}
       <p><strong>${escapeHtml(tr('confidence'))}:</strong> ${formatNumber(Number(item.confidence || 0) * 100, 1)} % · <span class="quality-badge ${quality.className}">${escapeHtml(quality.label)}</span></p>
+      ${item.record_level === 'indice' ? `<p><strong>${escapeHtml(tr('indexRecord'))}:</strong> ${escapeHtml(tr('indexRecordInfo'))}</p>` : ''}
       <p>${escapeHtml(tr('exactManufacturer'))}</p>`;
     const packageRows = (item.package_details || []).map(value => `<li><strong>${escapeHtml(value.name)}</strong>${value.pin_count ? ` · ${escapeHtml(value.pin_count)} pins` : ''}${value.mount_type ? ` · ${escapeHtml(value.mount_type)}` : ''}${value.pinout_variant ? ` · ${escapeHtml(value.pinout_variant)}` : ''}</li>`).join('');
     const pinoutRows = (item.pinouts || []).length ? `<div class="table-wrap"><table><thead><tr><th>${escapeHtml(tr('package'))}</th><th>${escapeHtml(tr('pin'))}</th><th>${escapeHtml(tr('symbol'))}</th><th>${escapeHtml(tr('role'))}</th></tr></thead><tbody>${item.pinouts.map(pin => `<tr><td>${escapeHtml(pin.package || '')}</td><td>${escapeHtml(pin.pin_number)}</td><td>${escapeHtml(pin.pin_symbol || '')}</td><td>${escapeHtml(pin.function_es || '')}</td></tr>`).join('')}</tbody></table></div>` : '';
@@ -454,7 +461,7 @@
     const verificationBody = (item.verification || []).map(entry => `<li>${escapeHtml(entry.reason_es)} · ${escapeHtml(entry.status)}</li>`).join('');
     const firstMarking = item.markings?.[0];
     return `
-      ${item.quality === 'histórico_extraído' ? `<div class="detail-warning"><strong>${escapeHtml(tr('pending'))}</strong><p>${escapeHtml(tr('pendingWarning'))}</p></div>` : `<div class="detail-warning"><strong>${escapeHtml(tr('important'))}</strong><p>${escapeHtml(tr('substitutionWarning'))}</p></div>`}
+      ${item.quality === 'histórico_extraído' ? `<div class="detail-warning"><strong>${escapeHtml(tr('pending'))}</strong><p>${escapeHtml(tr('pendingWarning'))}</p></div>` : item.record_level === 'indice' ? `<div class="detail-warning"><strong>${escapeHtml(tr('indexRecord'))}</strong><p>${escapeHtml(tr('indexRecordInfo'))}</p></div>` : `<div class="detail-warning"><strong>${escapeHtml(tr('important'))}</strong><p>${escapeHtml(tr('substitutionWarning'))}</p></div>`}
       <div class="detail-grid">
         ${detailSection(tr('identification'), identification, true)}
         ${detailSection(tr('electrical'), renderSpecifications(item.specifications || []), true)}

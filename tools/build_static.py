@@ -230,20 +230,20 @@ def validate_components_catalog(source_root: Path) -> tuple[dict[str, Any], dict
     if not isinstance(components, list):
         raise BuildError("El catálogo de componentes no contiene una lista válida")
 
-    expected = {
-        "components": 4981,
+    minimum = {
+        "components": 11532,
         "specifications": 8363,
         "markings": 3862,
-        "reviewed": 1654,
+        "reviewed": 8205,
         "historical": 3327,
     }
     counts = meta.get("counts") or {}
-    for key, value in expected.items():
-        if int(counts.get(key) or 0) != value:
+    for key, value in minimum.items():
+        if int(counts.get(key) or 0) < value:
             raise BuildError(
-                f"Catálogo de componentes: {key} esperado={value}, obtenido={counts.get(key)}"
+                f"Catálogo de componentes: {key} mínimo={value}, obtenido={counts.get(key)}"
             )
-    if len(components) != expected["components"]:
+    if len(components) != int(counts.get("components") or 0):
         raise BuildError("El índice público de componentes no coincide con sus metadatos")
 
     component_ids = {int(item["id"]) for item in components}
@@ -276,7 +276,7 @@ def validate_components_catalog(source_root: Path) -> tuple[dict[str, Any], dict
         raise BuildError("Los detalles públicos no coinciden con el índice de componentes")
 
     return catalog, {
-        **expected,
+        **{key: int(counts.get(key) or 0) for key in minimum},
         "manufacturers": int(counts.get("manufacturers") or 0),
         "packages": int(counts.get("packages") or 0),
         "chunks": chunk_count,

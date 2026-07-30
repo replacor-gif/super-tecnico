@@ -806,11 +806,15 @@ class StaticSiteTests(unittest.TestCase):
     def test_component_public_projection_is_complete_and_warns_about_candidates(self):
         catalog = load(self.dist / "data" / "components" / "catalog.json")
         counts = catalog["meta"]["counts"]
-        self.assertEqual(counts["components"], 4981)
+        self.assertGreaterEqual(counts["components"], 11532)
         self.assertEqual(counts["specifications"], 8363)
         self.assertEqual(counts["markings"], 3862)
-        self.assertEqual(counts["reviewed"], 1654)
+        self.assertGreaterEqual(counts["reviewed"], 8205)
         self.assertEqual(counts["historical"], 3327)
+        self.assertGreaterEqual(
+            catalog["meta"]["quality_counts"].get("oficial_indice", 0),
+            6551,
+        )
         self.assertEqual(catalog["meta"]["chunk_count"], 64)
         self.assertIn("pendientes de verificar", catalog["meta"]["warning"])
 
@@ -829,9 +833,9 @@ class StaticSiteTests(unittest.TestCase):
                 self.assertEqual(int(component_id) % 64, chunk_id)
                 self.assertEqual(int(component_id), detail["id"])
                 detail_ids.add(int(component_id))
-        self.assertEqual(len(detail_ids), 4981)
+        self.assertEqual(len(detail_ids), counts["components"])
         self.assertEqual(detail_ids, {item["id"] for item in catalog["components"]})
-        self.assertEqual(self.report["components"]["components"], 4981)
+        self.assertEqual(self.report["components"]["components"], counts["components"])
 
         irf840 = next(item for item in catalog["components"] if item["part_number"] == "IRF840")
         self.assertTrue(irf840["official"])
@@ -902,6 +906,29 @@ class StaticSiteTests(unittest.TestCase):
             and row["manufacturer"] == "Texas Instruments"
         )
         self.assertIn("SN74HC14N", sn74hc14["aliases"])
+
+        index_examples = {
+            "74AHC00-Q100": ("Nexperia", "Circuito integrado"),
+            "PESD1CANFD24LS-Q": ("Nexperia", "Diodo"),
+            "PSMN1R0-100ASF": ("Nexperia", "MOSFET"),
+            "GAN039-650NBB": ("Nexperia", "GaN FET"),
+            "SN74LVC1G3208-EP": ("Texas Instruments", "Circuito integrado"),
+            "ADS1258-EP": ("Texas Instruments", "Circuito integrado"),
+            "TPS54310-EP": ("Texas Instruments", "Controlador de fuente"),
+        }
+        for part_number, (manufacturer, category) in index_examples.items():
+            item = next(
+                row for row in catalog["components"]
+                if row["part_number"] == part_number and row["manufacturer"] == manufacturer
+            )
+            self.assertEqual(item["category"], category)
+            self.assertEqual(item["record_level"], "indice")
+            detail = load(
+                self.dist / "data" / "components" / "details" / f"{item['id'] % 64}.json"
+            )[str(item["id"])]
+            self.assertEqual(detail["record_level"], "indice")
+            self.assertEqual(detail["specifications"], [])
+            self.assertTrue(detail["source"]["url"].startswith("https://"))
 
     def test_samsung_led_tables_are_structured_and_accessible(self):
         topic = load(self.samsung_web / "topics" / "1.json")

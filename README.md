@@ -14,7 +14,7 @@ Portal técnico estático con herramientas independientes. La publicación es:
 
 El identificador SMD publica 439 candidatos de seis fabricantes, todos con marcaje, encapsulado, patillaje, parámetros eléctricos y una fuente oficial. Cuando un código tiene varios significados, muestra todos los candidatos cerrados y no selecciona ninguno automáticamente.
 
-La base de referencias publica 4.981 componentes y 8.363 parámetros. Separa 1.654 fichas oficiales o revisadas de 3.327 candidatos históricos pendientes de contrastar. Además de IPM, MOSFET y drivers, incluye lógica 74HC, 74HCT, 74LS, CD4000, HEF4000 y HCF4000, temporizadores 555, operacionales, comparadores, reguladores y controladores habituales. Reconoce referencias base, sufijos de encapsulado y posibles errores de escritura sin presentar ninguna coincidencia como sustitución automática.
+La base de referencias publica 11.532 componentes y 8.363 parámetros. Separa 8.205 fichas oficiales, revisadas o confirmadas en índices de fabricante de 3.327 candidatos históricos pendientes de contrastar. Para priorizar cobertura, admite dos niveles: ficha desarrollada y ficha índice oficial. La primera contiene parámetros cuando están documentados; la segunda confirma referencia, fabricante, familia, categoría, catálogo y página sin inventar valores que todavía no se hayan extraído. La ampliación masiva inicial incorpora 6.551 referencias de los catálogos oficiales de Nexperia y Texas Instruments, además de IPM, MOSFET, lógica, temporizadores, operacionales, reguladores y drivers ya desarrollados. Ninguna coincidencia se presenta como sustitución automática.
 
 ## Versión beta e idiomas
 
