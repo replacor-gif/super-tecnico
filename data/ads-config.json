@@ -1,0 +1,14 @@
+{
+  "enabled": false,
+  "publisher_id": "",
+  "auto_ads": false,
+  "consent_provider": "google-cmp",
+  "slots": {
+    "portal-after-tools": "",
+    "hvac-home": "",
+    "hvac-after-content": "",
+    "smd-after-search": "",
+    "components-after-search": "",
+    "calculators-after-tools": ""
+  }
+}

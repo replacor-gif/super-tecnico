@@ -748,6 +748,50 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("function localizedText", script)
         self.assertIn("record.translations?.[language]?.[field]", script)
 
+    def test_adsense_is_prepared_but_remains_disabled_without_real_credentials(self):
+        config = load(self.dist / "data" / "ads-config.json")
+        self.assertFalse(config["enabled"])
+        self.assertEqual(config["publisher_id"], "")
+        self.assertEqual(config["consent_provider"], "google-cmp")
+        self.assertFalse((self.dist / "ads.txt").exists())
+        self.assertEqual(
+            self.report["advertising"],
+            {
+                "enabled": False,
+                "publisher_configured": False,
+                "auto_ads": False,
+                "consent_provider": "google-cmp",
+                "manual_slots": 0,
+                "ads_txt": False,
+            },
+        )
+
+        ads_script = (self.dist / "assets" / "ads.js").read_text(encoding="utf-8")
+        self.assertIn("config.enabled !== true", ads_script)
+        self.assertIn("pagead2.googlesyndication.com", ads_script)
+        self.assertNotRegex(ads_script, r"ca-pub-\d+")
+
+        pages = {
+            name: (self.dist / name).read_text(encoding="utf-8")
+            for name in (
+                "index.html",
+                "climatizacion.html",
+                "smd.html",
+                "calculadoras.html",
+                "componentes.html",
+                "feedback.html",
+            )
+        }
+        for name, html in pages.items():
+            with self.subTest(page=name):
+                self.assertIn("assets/ads.js", html)
+        self.assertIn('data-ad-placement="portal-after-tools"', pages["index.html"])
+        self.assertIn('data-ad-placement="home"', pages["climatizacion.html"])
+        self.assertIn('data-ad-placement="smd-after-search"', pages["smd.html"])
+        self.assertIn('data-ad-placement="calculators-after-tools"', pages["calculadoras.html"])
+        self.assertIn('data-ad-placement="components-after-search"', pages["componentes.html"])
+        self.assertNotIn("data-ad-placement=", pages["feedback.html"])
+
     def test_beta_multilingual_shell_and_feedback_are_public(self):
         pages = {
             name: (self.dist / name).read_text(encoding="utf-8")

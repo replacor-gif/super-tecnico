@@ -13,6 +13,8 @@ from typing import Any
 
 
 SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,63}$")
+AD_PUBLISHER_RE = re.compile(r"^ca-pub-\d+$")
+AD_SLOT_RE = re.compile(r"^\d+$")
 PUBLIC_MEDIA_SUFFIXES = {".png", ".jpg", ".jpeg", ".webp", ".gif"}
 FORBIDDEN_SUFFIXES = {".db", ".sqlite", ".sqlite3", ".php", ".py", ".md"}
 FORBIDDEN_NAMES = {".htaccess"}
@@ -153,6 +155,53 @@ def validate_public_tree(output: Path) -> None:
             raise BuildError(f"El artefacto contiene un archivo prohibido: {path.relative_to(output)}")
         if path.suffix.lower() == ".json":
             read_json(path)
+
+
+def validate_advertising_configuration(source_root: Path, output: Path) -> dict[str, Any]:
+    config = read_json(source_root / "data" / "ads-config.json")
+    enabled = config.get("enabled") is True
+    publisher_id = str(config.get("publisher_id") or "").strip()
+    auto_ads = config.get("auto_ads") is True
+    consent_provider = str(config.get("consent_provider") or "").strip()
+    slots = config.get("slots") or {}
+
+    if not isinstance(slots, dict):
+        raise BuildError("La configuración publicitaria no contiene un mapa de espacios válido")
+    invalid_slots = [
+        name
+        for name, value in slots.items()
+        if str(value or "").strip() and not AD_SLOT_RE.fullmatch(str(value).strip())
+    ]
+    if invalid_slots:
+        raise BuildError(
+            "Identificadores de espacios publicitarios no válidos: "
+            + ", ".join(sorted(invalid_slots))
+        )
+    if publisher_id and not AD_PUBLISHER_RE.fullmatch(publisher_id):
+        raise BuildError("El identificador de editor de AdSense no tiene formato ca-pub-…")
+    if enabled and not publisher_id:
+        raise BuildError("No se puede activar AdSense sin identificador de editor")
+    if enabled and consent_provider != "google-cmp":
+        raise BuildError("La publicidad solo puede activarse con una CMP configurada")
+    if enabled and not auto_ads and not any(str(value or "").strip() for value in slots.values()):
+        raise BuildError("AdSense está activo, pero no hay anuncios automáticos ni espacios manuales")
+
+    if publisher_id:
+        ads_txt_publisher = publisher_id.removeprefix("ca-")
+        (output / "ads.txt").write_text(
+            f"google.com, {ads_txt_publisher}, DIRECT, f08c47fec0942fa0\n",
+            encoding="utf-8",
+            newline="\n",
+        )
+
+    return {
+        "enabled": enabled,
+        "publisher_configured": bool(publisher_id),
+        "auto_ads": auto_ads,
+        "consent_provider": consent_provider or None,
+        "manual_slots": sum(bool(str(value or "").strip()) for value in slots.values()),
+        "ads_txt": bool(publisher_id),
+    }
 
 
 def validate_smd_catalog(source_root: Path) -> tuple[dict[str, Any], dict[str, int]]:
@@ -358,6 +407,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "componentes.html",
         "feedback.html",
         "assets/app.js",
+        "assets/ads.js",
         "assets/calculations.js",
         "assets/calculators.css",
         "assets/calculators.js",
@@ -373,6 +423,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "assets/styles.css",
         "assets/super-tecnico-logo.png",
         "assets/libro-electronica-inverter-replacor-portada.png",
+        "data/ads-config.json",
         "recursos/libro-electronica-inverter-replacor.pdf",
     ):
         source = source_root / required
@@ -383,6 +434,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         shutil.copy2(source, target)
 
     (output / ".nojekyll").write_text("", encoding="utf-8")
+    advertising = validate_advertising_configuration(source_root, output)
     brands_root = source_root / "data" / "brands"
     manifest: list[dict[str, Any]] = []
     counters = {"json_files": 0, "media_files": 0, "media_references_removed": 0}
@@ -437,6 +489,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "smd": smd_stats,
         "components": components_stats,
         "oem_pcb": oem_stats,
+        "advertising": advertising,
         "checks": counters,
     }
     write_json(output / "build-report.json", report)

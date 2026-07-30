@@ -27,6 +27,17 @@ Super Técnico se publica expresamente como una **beta en construcción**. Todas
 
 La interfaz es multilingüe. Las fichas técnicas conservan durante la beta el texto español revisado hasta que cada traducción técnica se valide, evitando que una traducción automática altere valores, protecciones o procedimientos.
 
+## Publicidad
+
+La integración de AdSense está centralizada en `data/ads-config.json` y permanece
+desactivada mientras no exista un identificador real `ca-pub-…`. La aplicación
+no descarga scripts publicitarios ni muestra espacios vacíos en ese estado.
+
+Al configurar el editor, el constructor valida la CMP, los identificadores de
+espacio y genera `ads.txt` automáticamente. Los anuncios están reservados para
+las páginas de contenido técnico; el formulario de sugerencias no contiene
+emplazamientos publicitarios.
+
 ## Marcas disponibles
 
 - **Aermec:** enfriadoras y bombas de calor con controles Moducontrol, pCO y plataformas WFN/WFI; separa mensajes textuales cuando el fabricante no publica un número universal.
