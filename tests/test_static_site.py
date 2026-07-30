@@ -748,21 +748,24 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("function localizedText", script)
         self.assertIn("record.translations?.[language]?.[field]", script)
 
-    def test_adsense_is_prepared_but_remains_disabled_without_real_credentials(self):
+    def test_adsense_publisher_is_configured_but_ads_remain_disabled(self):
         config = load(self.dist / "data" / "ads-config.json")
         self.assertFalse(config["enabled"])
-        self.assertEqual(config["publisher_id"], "")
+        self.assertEqual(config["publisher_id"], "ca-pub-6950924617837531")
         self.assertEqual(config["consent_provider"], "google-cmp")
-        self.assertFalse((self.dist / "ads.txt").exists())
+        self.assertEqual(
+            (self.dist / "ads.txt").read_text(encoding="utf-8").strip(),
+            "google.com, pub-6950924617837531, DIRECT, f08c47fec0942fa0",
+        )
         self.assertEqual(
             self.report["advertising"],
             {
                 "enabled": False,
-                "publisher_configured": False,
+                "publisher_configured": True,
                 "auto_ads": False,
                 "consent_provider": "google-cmp",
                 "manual_slots": 0,
-                "ads_txt": False,
+                "ads_txt": True,
             },
         )
 
@@ -785,6 +788,11 @@ class StaticSiteTests(unittest.TestCase):
         for name, html in pages.items():
             with self.subTest(page=name):
                 self.assertIn("assets/ads.js", html)
+                self.assertIn(
+                    '<meta name="google-adsense-account" '
+                    'content="ca-pub-6950924617837531">',
+                    html,
+                )
         self.assertIn('data-ad-placement="portal-after-tools"', pages["index.html"])
         self.assertIn('data-ad-placement="home"', pages["climatizacion.html"])
         self.assertIn('data-ad-placement="smd-after-search"', pages["smd.html"])
