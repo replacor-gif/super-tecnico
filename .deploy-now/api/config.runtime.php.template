@@ -1,0 +1,13 @@
+<?php
+return [
+    'db_host' => '$IONOS_DB_HOST',
+    'db_port' => '3306',
+    'db_name' => '$IONOS_DB_NAME',
+    'db_user' => '$IONOS_DB_USERNAME',
+    'db_password' => '$IONOS_DB_PASSWORD',
+    'app_secret' => '$ST_APP_SECRET',
+    'admin_password_hash' => '$ST_ADMIN_PASSWORD_HASH',
+    'allowed_origins' => '$ST_ALLOWED_ORIGINS',
+    'turnstile_secret' => '$ST_TURNSTILE_SECRET',
+    'require_turnstile' => '$ST_REQUIRE_TURNSTILE' === '1',
+];

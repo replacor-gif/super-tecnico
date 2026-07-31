@@ -4,8 +4,8 @@ __pycache__/
 *.db
 *.sqlite
 *.sqlite3
-*.php
 .htaccess
+api/config.runtime.php
 data/brands/*/media/
 test-artifacts/
 server.*.log

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="google-adsense-account" content="ca-pub-6950924617837531">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Casos reales de averías electrónicas organizados por la referencia de la placa.">
+  <meta name="theme-color" content="#173242">
+  <title>Averías reales por placa | Super Técnico</title>
+  <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
+  <link rel="stylesheet" href="assets/faults.css?v=1">
+  <script src="assets/i18n.js?v=5" defer></script>
+  <script src="assets/community-api.js?v=1" defer></script>
+  <script src="assets/faults.js?v=1" defer></script>
+</head>
+<body>
+  <header class="fault-header"><a href="index.html"><img src="assets/super-tecnico-logo.png" alt=""><span><strong>Super Técnico</strong><small data-fault-i18n="subtitle">Averías reales por placa</small><span class="beta-badge" data-i18n="common.betaBadge">BETA · En construcción</span></span></a><nav><a href="climatizacion.html" data-i18n="common.hvac">Climatización</a><a href="index.html" data-i18n="common.tools">Todas las herramientas</a></nav></header>
+  <main>
+    <section class="fault-hero"><p class="eyebrow" data-fault-i18n="eyebrow">Experiencia técnica moderada</p><h1 data-fault-i18n="title">Busca por la referencia de la placa</h1><p data-fault-i18n="intro">Consulta síntomas y soluciones aportados por técnicos. Son casos reales revisados, no procedimientos oficiales ni diagnósticos garantizados.</p></section>
+    <section class="fault-workspace">
+      <div class="fault-tabs" role="tablist"><button class="is-active" type="button" data-view="search" data-fault-i18n="searchTab">Buscar casos</button><button type="button" data-view="submit" data-fault-i18n="submitTab">Aportar un caso</button></div>
+      <section id="searchView" class="fault-view">
+        <form id="faultSearchForm" class="fault-search"><label for="faultQuery" data-fault-i18n="reference">Referencia o modelo impreso en la placa</label><div><input id="faultQuery" type="search" autocomplete="off" spellcheck="false" placeholder="KFR-35GW / 17122000012345" required><button type="submit" data-i18n="common.search">Buscar</button></div><small data-fault-i18n="searchHelp">Puedes escribirla con o sin espacios, guiones o barras.</small></form>
+        <div id="faultStatus" class="fault-status"></div><div id="faultResults" class="fault-results"><div class="empty-state"><strong>PCB</strong><h2 data-fault-i18n="emptyTitle">Introduce primero la referencia de la placa</h2><p data-fault-i18n="emptyText">No mostramos todos los casos de golpe para que la consulta sea rápida y precisa.</p></div></div>
+      </section>
+      <section id="submitView" class="fault-view" hidden>
+        <div class="section-heading"><p class="eyebrow" data-fault-i18n="contribute">Aportación sin cuenta</p><h2 data-fault-i18n="submitTitle">Documenta una reparación confirmada</h2><p data-fault-i18n="pendingNote">La aportación quedará pendiente y no será pública hasta que la revisemos.</p></div>
+        <form id="faultForm" class="fault-form">
+          <div class="two-cols"><label><span data-fault-i18n="boardReference">Referencia de la placa *</span><input name="board_reference" maxlength="120" required></label><label><span data-fault-i18n="nickname">Apodo *</span><input name="nickname" maxlength="40" required></label></div>
+          <div class="two-cols"><label><span data-fault-i18n="brand">Marca observada</span><input name="brand" maxlength="80"></label><label><span data-fault-i18n="equipment">Tipo de equipo</span><input name="equipment_type" maxlength="80" placeholder="Split, conductos, cassette, VRF…"></label></div>
+          <label><span data-fault-i18n="symptom">Síntoma comprobado *</span><textarea name="symptom" minlength="12" maxlength="1800" required></textarea></label>
+          <label><span data-fault-i18n="solution">Solución confirmada *</span><textarea name="solution" minlength="12" maxlength="2400" required></textarea></label>
+          <label><span data-fault-i18n="notes">Observaciones útiles</span><textarea name="notes" maxlength="1200"></textarea></label>
+          <button type="submit" data-fault-i18n="send">Enviar para revisión</button><p id="faultFormStatus" role="status"></p>
+        </form>
+      </section>
+    </section>
+    <aside class="community-warning"><strong data-fault-i18n="important">Importante</strong><p data-fault-i18n="warning">Contrasta siempre el modelo, esquema y medidas de seguridad. Una coincidencia de placa no demuestra que todas sus versiones sean eléctricamente iguales.</p></aside>
+    <aside class="ad-slot" data-ad-placement="faults-after-results" aria-label="Publicidad" hidden></aside>
+  </main>
+  <dialog id="alternativeDialog"><form id="alternativeForm" method="dialog"><button class="dialog-close" type="button" data-close>×</button><h2 data-fault-i18n="alternativeTitle">Aportar otra solución</h2><input type="hidden" name="case_id"><label><span data-fault-i18n="nickname">Apodo *</span><input name="nickname" maxlength="40" required></label><label><span data-fault-i18n="solution">Solución confirmada *</span><textarea name="solution" minlength="12" maxlength="2400" required></textarea></label><button type="submit" data-fault-i18n="sendReview">Enviar para revisión</button><p id="alternativeStatus" role="status"></p></form></dialog>
+  <footer class="st-page-footer"><span>Super Técnico · REPLACOR</span><nav class="st-legal-links"><a href="https://www.replacor.com/aviso-legal/" target="_blank" rel="noopener">Aviso legal</a><a href="https://www.replacor.com/politica-de-privacidad/" target="_blank" rel="noopener">Política de privacidad</a></nav></footer><script src="assets/ads.js?v=1" defer></script>
+</body>
+</html>

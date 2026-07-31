@@ -11,6 +11,9 @@ Portal técnico estático con herramientas independientes. La publicación es:
 - **Identificador SMD:** búsqueda por marcaje o referencia con filtros opcionales de encapsulado, patillas, fabricante, tipo y designador de placa.
 - **Calculadoras técnicas:** 12 herramientas de electrónica y climatización con unidades, fórmulas y advertencias.
 - **Referencias de componentes:** consulta por referencia, marcado, fabricante, categoría, encapsulado y parámetros eléctricos.
+- **Comparador documental:** contraste lado a lado de referencias reales y búsqueda conservadora de candidatos MOSFET, IGBT y diodos rápidos revisados.
+- **Averías reales por placa:** casos aportados por técnicos, buscables por referencia de PCB y publicados únicamente tras moderación.
+- **Ideas y mejoras:** propuestas públicas, apoyos de la comunidad y aportaciones privadas pendientes de revisión.
 
 El identificador SMD publica 439 candidatos de seis fabricantes, todos con marcaje, encapsulado, patillaje, parámetros eléctricos y una fuente oficial. Cuando un código tiene varios significados, muestra todos los candidatos cerrados y no selecciona ninguno automáticamente.
 
@@ -23,7 +26,7 @@ Super Técnico se publica expresamente como una **beta en construcción**. Todas
 - aviso permanente de revisión y uso responsable;
 - selector persistente de español, inglés, portugués y francés;
 - acceso al formulario de errores, sugerencias, traducciones e información faltante;
-- envío voluntario mediante el programa de correo del técnico a `info@replacor.com`, sin almacenar el formulario en GitHub Pages.
+- formulario moderado cuando la aplicación está desplegada en IONOS y enlace alternativo a `info@replacor.com` cuando se consulta la versión estática.
 
 La interfaz es multilingüe. Las fichas técnicas conservan durante la beta el texto español revisado hasta que cada traducción técnica se valide, evitando que una traducción automática altere valores, protecciones o procedimientos.
 
@@ -113,6 +116,21 @@ El flujo `.github/workflows/pages.yml`:
 4. Publica el artefacto mediante GitHub Pages.
 
 En el repositorio, seleccionar **Settings → Pages → Source: GitHub Actions** una sola vez.
+
+GitHub Pages recibe exclusivamente el resultado estático: no contiene PHP, panel de moderación, esquema SQL, credenciales ni bases privadas. El comparador funciona allí con los datos públicos; los módulos colaborativos muestran un aviso hasta utilizar el despliegue PHP.
+
+## IONOS Deploy Now PHP
+
+La versión completa utiliza el contrato **IONOS Deploy Now PHP Project** y su MariaDB incluida. La carpeta `.deploy-now/` contiene la plantilla de configuración y ejecuta la migración del esquema después de cada despliegue.
+
+Las credenciales de MariaDB se inyectan automáticamente por IONOS. En el proyecto deben configurarse además, como variables protegidas:
+
+- `ST_APP_SECRET`: cadena aleatoria larga para anonimizar apoyos y aplicar límites.
+- `ST_ADMIN_PASSWORD_HASH`: resultado de `password_hash` de la contraseña de moderación.
+- `ST_ALLOWED_ORIGINS`: orígenes adicionales separados por comas; puede quedar vacío si todo se sirve desde el mismo dominio.
+- `ST_TURNSTILE_SECRET` y `ST_REQUIRE_TURNSTILE`: opcionales; la beta comienza con límites de frecuencia del servidor.
+
+El panel privado está en `moderacion.html`, lleva `noindex`, exige sesión segura y no se enlaza desde la web pública. Permite revisar, publicar, rechazar y exportar registros a JSON o CSV.
 
 ## Integración con REPLACOR
 

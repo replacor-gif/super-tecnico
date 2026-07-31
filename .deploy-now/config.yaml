@@ -1,0 +1,3 @@
+runtime:
+  post-deployment-remote-commands:
+    - /usr/bin/php8.3-cli $HOME/htdocs/api/migrate.php

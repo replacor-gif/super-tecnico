@@ -145,6 +145,7 @@ class StaticSiteTests(unittest.TestCase):
             "errors": 222,
             "search_entries": 308,
         })
+
         self.assertEqual(brands["lg"]["counts"], {
             "categories": 15,
             "topics": 23,
@@ -264,6 +265,45 @@ class StaticSiteTests(unittest.TestCase):
                     "errors": errors,
                     "search_entries": search_entries,
                 })
+
+    def test_new_community_and_comparator_modules_are_public_safe(self):
+        for relative in (
+            "comparador.html",
+            "averias.html",
+            "feedback.html",
+            "assets/comparator.js",
+            "assets/community-api.js",
+            "assets/faults.js",
+            "assets/feedback.js",
+        ):
+            self.assertTrue((self.dist / relative).is_file(), relative)
+
+        portal = (self.dist / "index.html").read_text(encoding="utf-8")
+        self.assertIn('href="comparador.html"', portal)
+        self.assertIn('href="averias.html"', portal)
+        self.assertIn('href="feedback.html"', portal)
+
+        comparator = (self.dist / "assets" / "comparator.js").read_text(encoding="utf-8")
+        self.assertNotIn("ST-MOS", comparator)
+        self.assertIn("supportsAutomatic", comparator)
+        self.assertIn("technology(original)!==technology(candidate)", comparator)
+
+        self.assertFalse((self.dist / "moderacion.html").exists())
+        self.assertFalse((self.dist / "api").exists())
+
+    def test_private_backend_is_present_only_in_source(self):
+        for relative in (
+            "api/index.php",
+            "api/bootstrap.php",
+            "api/migrate.php",
+            "database/schema.sql",
+            ".deploy-now/config.yaml",
+            ".deploy-now/api/config.runtime.php.template",
+        ):
+            self.assertTrue((ROOT / relative).is_file(), relative)
+        runtime = (ROOT / ".deploy-now" / "api" / "config.runtime.php.template").read_text(encoding="utf-8")
+        self.assertIn("$IONOS_DB_HOST", runtime)
+        self.assertNotRegex(runtime, r"(?i)(password|secret)'\s*=>\s*'[^'$][^']+")
 
     def test_industrial_manufacturers_v1_are_complete_searchable_and_public_safe(self):
         expectations = {

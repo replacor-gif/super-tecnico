@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="google-adsense-account" content="ca-pub-6950924617837531">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compara dos referencias electrónicas y revisa sus diferencias documentadas antes de valorar una sustitución.">
+  <meta name="theme-color" content="#173242">
+  <title>Comparador de componentes | Super Técnico</title>
+  <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
+  <link rel="stylesheet" href="assets/comparator.css?v=1">
+  <script src="assets/i18n.js?v=5" defer></script>
+  <script src="assets/comparator.js?v=1" defer></script>
+</head>
+<body>
+  <header class="module-header">
+    <a class="module-brand" href="index.html"><img src="assets/super-tecnico-logo.png" alt=""><span><strong>Super Técnico</strong><small data-cmp-i18n="subtitle">Comparador documental</small><span class="beta-badge" data-i18n="common.betaBadge">BETA · En construcción</span></span></a>
+    <nav><a href="componentes.html" data-cmp-i18n="references">Referencias</a><a href="index.html" data-i18n="common.tools">Todas las herramientas</a></nav>
+  </header>
+  <main>
+    <section class="compare-hero">
+      <p class="eyebrow" data-cmp-i18n="eyebrow">Electrónica · contraste técnico</p>
+      <h1 data-cmp-i18n="title">Compara dos componentes antes de sustituir</h1>
+      <p data-cmp-i18n="intro">La aplicación muestra coincidencias, diferencias y datos ausentes. Nunca garantiza que un componente sea sustituto directo.</p>
+      <div id="databaseStatus" class="database-status"><span></span><strong data-cmp-i18n="loading">Cargando base de componentes…</strong></div>
+    </section>
+
+    <section class="compare-workspace">
+      <div class="mode-tabs" role="tablist">
+        <button class="is-active" type="button" data-mode="manual" role="tab" aria-selected="true" data-cmp-i18n="manual">Comparación manual</button>
+        <button type="button" data-mode="automatic" role="tab" aria-selected="false" data-cmp-i18n="automatic">Buscar candidatos</button>
+      </div>
+
+      <section id="manualPanel" class="mode-panel">
+        <div class="section-heading"><span class="step-number">1</span><div><h2 data-cmp-i18n="chooseTwo">Selecciona las dos referencias</h2><p data-cmp-i18n="chooseTwoText">Escribe la referencia completa y elige una coincidencia de la lista.</p></div></div>
+        <form id="manualForm" class="compare-form">
+          <div class="reference-picker"><label for="originalInput" data-cmp-i18n="original">Componente original</label><input id="originalInput" type="search" autocomplete="off" placeholder="IRFP460" required><div id="originalSuggestions" class="suggestions" hidden></div><div id="originalSelected" class="selected-reference"></div></div>
+          <span class="compare-arrow" aria-hidden="true">⇄</span>
+          <div class="reference-picker"><label for="candidateInput" data-cmp-i18n="candidate">Componente candidato</label><input id="candidateInput" type="search" autocomplete="off" placeholder="STW20N60M2" required><div id="candidateSuggestions" class="suggestions" hidden></div><div id="candidateSelected" class="selected-reference"></div></div>
+          <button type="submit" data-cmp-i18n="compare">Comparar datos</button>
+        </form>
+      </section>
+
+      <section id="automaticPanel" class="mode-panel" hidden>
+        <div class="section-heading"><span class="step-number">1</span><div><h2 data-cmp-i18n="findCandidates">Busca candidatos documentales</h2><p data-cmp-i18n="findCandidatesText">Solo se incluyen familias y fichas con suficientes datos revisados. El técnico debe validar siempre condiciones, patillaje y montaje.</p></div></div>
+        <form id="automaticForm" class="automatic-form"><div class="reference-picker"><label for="automaticInput" data-cmp-i18n="reference">Referencia original</label><input id="automaticInput" type="search" autocomplete="off" placeholder="IRFP460" required><div id="automaticSuggestions" class="suggestions" hidden></div><div id="automaticSelected" class="selected-reference"></div></div><button type="submit" data-cmp-i18n="searchCandidates">Buscar candidatos</button></form>
+        <div id="automaticResults"></div>
+      </section>
+    </section>
+
+    <section id="comparisonResults" class="comparison-results" hidden aria-live="polite"></section>
+    <aside class="safety-panel"><strong data-cmp-i18n="warningTitle">Comprobación obligatoria</strong><p data-cmp-i18n="warningText">Confirma la hoja de datos exacta del fabricante, encapsulado, patillaje, condiciones térmicas, circuito de puerta y función en la placa. Un dato ausente nunca significa compatible.</p></aside>
+    <aside class="ad-slot" data-ad-placement="comparator-after-results" aria-label="Publicidad" hidden></aside>
+  </main>
+  <footer class="st-page-footer"><span>Super Técnico · REPLACOR</span><nav class="st-legal-links"><a href="https://www.replacor.com/aviso-legal/" target="_blank" rel="noopener">Aviso legal</a><a href="https://www.replacor.com/politica-de-privacidad/" target="_blank" rel="noopener">Política de privacidad</a></nav></footer>
+  <script src="assets/ads.js?v=1" defer></script>
+</body>
+</html>
