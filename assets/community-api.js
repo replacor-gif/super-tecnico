@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const API_ENDPOINT = document.documentElement.dataset.apiEndpoint || 'api/index.php';
+  const API_ENDPOINT = document.documentElement.dataset.apiEndpoint || 'https://home-5020945339.app-ionos.space/super-tecnico/api/index.php';
   const CLIENT_KEY = 'st.community.client.v1';
 
   function clientToken() {
@@ -20,7 +20,7 @@
     });
     const init = {
       method: options.method || (options.body ? 'POST' : 'GET'),
-      credentials: 'include',
+      credentials: 'omit',
       headers: {'X-ST-Client': clientToken(), ...(options.headers || {})},
     };
     if (options.body) {
