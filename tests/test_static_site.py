@@ -305,6 +305,27 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("$IONOS_DB_HOST", runtime)
         self.assertNotRegex(runtime, r"(?i)(password|secret)'\s*=>\s*'[^'$][^']+")
 
+    def test_discreet_public_page_counter_is_on_every_page(self):
+        pages = (
+            "index.html",
+            "climatizacion.html",
+            "smd.html",
+            "calculadoras.html",
+            "componentes.html",
+            "comparador.html",
+            "averias.html",
+            "feedback.html",
+        )
+        for name in pages:
+            with self.subTest(page=name):
+                html = (self.dist / name).read_text(encoding="utf-8")
+                self.assertIn("assets/page-counter.js", html)
+
+        script = (self.dist / "assets" / "page-counter.js").read_text(encoding="utf-8")
+        self.assertIn("action', 'page-view'", script)
+        self.assertIn("st-page-counter", script)
+        self.assertIn("Visitas:", script)
+
     def test_industrial_manufacturers_v1_are_complete_searchable_and_public_safe(self):
         expectations = {
             "carrier": ("10091", "17001", "Lenscan", "SmartVu"),

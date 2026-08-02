@@ -424,6 +424,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "assets/feedback.css",
         "assets/feedback.js",
         "assets/i18n.js",
+        "assets/page-counter.js",
         "assets/portal.css",
         "assets/smd.css",
         "assets/smd.js",

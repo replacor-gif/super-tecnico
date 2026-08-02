@@ -188,8 +188,23 @@
   text-align: center;
 }
 
+.st-page-counter {
+  display: block;
+  width: max-content;
+  margin: .55rem auto 0;
+  padding: .18rem .5rem;
+  border: 1px solid #d8e1e7;
+  border-radius: 999px;
+  color: #74818a;
+  background: rgba(255, 255, 255, .55);
+  font-size: .68rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.35;
+}
+
 @media print {
   .ad-slot,
+  .st-page-counter,
   .st-page-footer {
     display: none !important;
   }
