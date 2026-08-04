@@ -219,15 +219,72 @@
     };
   }
 
-  function rectifiedBus(vac, diodeDrop = 0.9, diodeCount = 2, mainsHz = 50, current = 0, capacitance = 0) {
+  function rectifiedBus(vac, diodeDrop = 0.9, diodeCount = 2, mainsHz = 50, current = 0, capacitance = 0, topology = 'single') {
     if (![vac, diodeDrop, diodeCount, mainsHz, current, capacitance].every(v => Number.isFinite(v) && v >= 0)) throw new Error('Valores no válidos.');
+    if (!['single', 'three'].includes(topology)) throw new Error('Topología de red no válida.');
     const peak = vac * Math.SQRT2;
     const noLoad = Math.max(0, peak - diodeDrop * diodeCount);
-    const rippleFrequency = mainsHz * 2;
+    const rippleFrequency = mainsHz * (topology === 'three' ? 6 : 2);
+    const averageRectified = Math.max(0, (topology === 'three' ? 1.35 : 0.9) * vac - diodeDrop * diodeCount);
     const ripple = current > 0 && capacitance > 0 ? current / (rippleFrequency * capacitance) : 0;
     const approximateLoaded = Math.max(0, noLoad - ripple / 2);
     const minimum = Math.max(0, noLoad - ripple);
-    return { peak, noLoad, rippleFrequency, ripple, approximateLoaded, minimum };
+    return { topology, peak, noLoad, averageRectified, rippleFrequency, ripple, approximateLoaded, minimum };
+  }
+
+  function ledArray(vs, vf, current, ledsSeries = 1, parallelBranches = 1) {
+    const values = [vs, vf, current, ledsSeries, parallelBranches].map(Number);
+    if (!values.every(Number.isFinite) || vs <= 0 || vf <= 0 || current <= 0) throw new Error('Tensión y corriente deben ser mayores que cero.');
+    if (!Number.isInteger(ledsSeries) || ledsSeries < 1 || !Number.isInteger(parallelBranches) || parallelBranches < 1) throw new Error('La cantidad de LED y ramas debe ser un número entero positivo.');
+    const ledVoltage = vf * ledsSeries;
+    const resistorVoltage = vs - ledVoltage;
+    if (resistorVoltage <= 0) throw new Error('La alimentación debe superar la suma de las tensiones directas de los LED de cada rama.');
+    const resistance = resistorVoltage / current;
+    const resistorPower = resistorVoltage * current;
+    return {
+      ledVoltage, resistorVoltage, resistance, resistorPower,
+      totalCurrent: current * parallelBranches,
+      totalPower: vs * current * parallelBranches,
+      totalLeds: ledsSeries * parallelBranches,
+      resistorsRequired: parallelBranches
+    };
+  }
+
+  function zenerResistor(vs, vz, loadCurrent, zenerCurrent) {
+    [vs, vz, loadCurrent, zenerCurrent].forEach(v => { if (!Number.isFinite(v) || v < 0) throw new Error('Introduce valores válidos y no negativos.'); });
+    if (vs <= vz) throw new Error('La tensión de entrada debe ser mayor que la tensión Zener.');
+    if (zenerCurrent <= 0) throw new Error('La corriente mínima del Zener debe ser mayor que cero.');
+    const sourceCurrent = loadCurrent + zenerCurrent;
+    const resistorVoltage = vs - vz;
+    const resistance = resistorVoltage / sourceCurrent;
+    const resistorPower = resistorVoltage * sourceCurrent;
+    const zenerPowerAtLoad = vz * zenerCurrent;
+    const zenerPowerNoLoad = vz * sourceCurrent;
+    return { sourceCurrent, resistorVoltage, resistance, resistorPower, zenerPowerAtLoad, zenerPowerNoLoad };
+  }
+
+  function timer555Astable(ra, rb, capacitance) {
+    [ra, rb, capacitance].forEach(v => { if (!Number.isFinite(v) || v <= 0) throw new Error('RA, RB y C deben ser mayores que cero.'); });
+    const high = Math.LN2 * (ra + rb) * capacitance;
+    const low = Math.LN2 * rb * capacitance;
+    const period = high + low;
+    return {
+      high, low, period,
+      frequency: 1 / period,
+      duty: high / period * 100
+    };
+  }
+
+  function timer555Bistable(vcc, setPullup, resetPulldown) {
+    [vcc, setPullup, resetPulldown].forEach(v => { if (!Number.isFinite(v) || v <= 0) throw new Error('VCC y las resistencias deben ser mayores que cero.'); });
+    return {
+      setThreshold: vcc / 3,
+      resetThreshold: vcc * 2 / 3,
+      setButtonCurrent: vcc / setPullup,
+      resetButtonCurrent: vcc / resetPulldown,
+      setPullPower: vcc * vcc / setPullup,
+      resetPullPower: vcc * vcc / resetPulldown
+    };
   }
 
   function capacitorHealth(nominal, measured, tolerance = 5) {
@@ -285,7 +342,8 @@
   return {
     parseEngineering, formatEngineering, ohmsLaw, resistorColors,
     smdResistorCode, capacitorCode, equivalent, voltageDivider, rcTime,
-    rectifiedBus, capacitorHealth, ntcTemperatureFromResistance,
+    rectifiedBus, ledArray, zenerResistor, timer555Astable, timer555Bistable,
+    capacitorHealth, ntcTemperatureFromResistance,
     ntcResistanceFromTemperature, windingBalance, frequencyData,
     constants: { EIA96_VALUES, EIA96_MULTIPLIERS, COLOR_DIGITS, COLOR_MULTIPLIERS, COLOR_TOLERANCES }
   };

@@ -274,6 +274,7 @@ class StaticSiteTests(unittest.TestCase):
             "assets/comparator.js",
             "assets/community-api.js",
             "assets/faults.js",
+            "assets/faults-browse.css",
             "assets/feedback.js",
         ):
             self.assertTrue((self.dist / relative).is_file(), relative)
@@ -287,6 +288,12 @@ class StaticSiteTests(unittest.TestCase):
         self.assertNotIn("ST-MOS", comparator)
         self.assertIn("supportsAutomatic", comparator)
         self.assertIn("technology(original)!==technology(candidate)", comparator)
+
+        faults_html = (self.dist / "averias.html").read_text(encoding="utf-8")
+        faults_js = (self.dist / "assets" / "faults.js").read_text(encoding="utf-8")
+        self.assertIn('data-view="browse"', faults_html)
+        self.assertIn("fault-browse", faults_js)
+        self.assertIn("browseBrand", faults_js)
 
         self.assertFalse((self.dist / "moderacion.html").exists())
         self.assertFalse((self.dist / "api").exists())
@@ -910,7 +917,11 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("data/components/details/", components_js)
         self.assertIn("function editDistance(", components_js)
         self.assertIn("nearPart:", components_js)
-        self.assertEqual(len(re.findall(r"\bid:\s*['\"][a-z]+['\"]", calculators_js)), 12)
+        self.assertEqual(len(re.findall(r"\bid:\s*['\"][a-z0-9]+['\"]", calculators_js)), 15)
+        for tool_id in ("led", "zener", "timer555", "busdc"):
+            self.assertIn(f"id:'{tool_id}'", calculators_js)
+        self.assertIn("Trifásica", calculators_js)
+        self.assertIn("circuit-diagram", calculators_js)
         self.assertIn("st:languagechange", calculators_js)
         self.assertIn("st:languagechange", components_js)
         self.assertIn("BETA", calculators)

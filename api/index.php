@@ -53,6 +53,93 @@ try {
         st_json(['ok' => true, 'items' => array_values($cases)]);
     }
 
+    if ($action === 'fault-browse' && $method === 'GET') {
+        $page = max(1, (int) ($_GET['page'] ?? 1));
+        $perPage = min(24, max(6, (int) ($_GET['per_page'] ?? 12)));
+        $brand = trim((string) ($_GET['brand'] ?? ''));
+        $equipment = trim((string) ($_GET['equipment'] ?? ''));
+        $query = trim((string) ($_GET['q'] ?? ''));
+        $where = ["c.status = 'published'", "EXISTS (SELECT 1 FROM st_fault_solutions sx WHERE sx.fault_case_id = c.id AND sx.status = 'published')"];
+        $params = [];
+        if ($brand !== '') {
+            $where[] = 'c.brand = ?';
+            $params[] = $brand;
+        }
+        if ($equipment !== '') {
+            $where[] = 'c.equipment_type = ?';
+            $params[] = $equipment;
+        }
+        if ($query !== '') {
+            $where[] = '(c.board_reference_normalized LIKE ? OR c.brand LIKE ? OR c.equipment_type LIKE ? OR c.symptom LIKE ?)';
+            $like = '%' . $query . '%';
+            $params[] = '%' . st_normalize($query) . '%';
+            $params[] = $like;
+            $params[] = $like;
+            $params[] = $like;
+        }
+        $whereSql = implode(' AND ', $where);
+        $countStmt = st_db()->prepare("SELECT COUNT(*) FROM st_fault_cases c WHERE $whereSql");
+        $countStmt->execute($params);
+        $total = (int) $countStmt->fetchColumn();
+        $pages = max(1, (int) ceil($total / $perPage));
+        $page = min($page, $pages);
+        $offset = ($page - 1) * $perPage;
+        $caseStmt = st_db()->prepare(
+            "SELECT c.id, c.board_reference, c.brand, c.equipment_type, c.symptom, c.notes, c.nickname, c.published_at
+             FROM st_fault_cases c
+             WHERE $whereSql
+             ORDER BY COALESCE(c.brand, ''), c.board_reference_normalized, c.published_at DESC
+             LIMIT $perPage OFFSET $offset"
+        );
+        $caseStmt->execute($params);
+        $rows = $caseStmt->fetchAll();
+        $cases = [];
+        $ids = [];
+        foreach ($rows as $row) {
+            $id = (int) $row['id'];
+            $ids[] = $id;
+            $cases[$id] = [
+                'id' => $id,
+                'board_reference' => $row['board_reference'],
+                'brand' => $row['brand'],
+                'equipment_type' => $row['equipment_type'],
+                'symptom' => $row['symptom'],
+                'notes' => $row['notes'],
+                'nickname' => $row['nickname'],
+                'published_at' => $row['published_at'],
+                'solutions' => [],
+            ];
+        }
+        if ($ids) {
+            $placeholders = implode(',', array_fill(0, count($ids), '?'));
+            $solutionStmt = st_db()->prepare(
+                "SELECT id, fault_case_id, solution, nickname, confirmations_count
+                 FROM st_fault_solutions
+                 WHERE status = 'published' AND fault_case_id IN ($placeholders)
+                 ORDER BY confirmations_count DESC, published_at DESC"
+            );
+            $solutionStmt->execute($ids);
+            foreach ($solutionStmt->fetchAll() as $solution) {
+                $caseId = (int) $solution['fault_case_id'];
+                $cases[$caseId]['solutions'][] = [
+                    'id' => (int) $solution['id'],
+                    'solution' => $solution['solution'],
+                    'nickname' => $solution['nickname'],
+                    'confirmations' => (int) $solution['confirmations_count'],
+                ];
+            }
+        }
+        $facetSql = "FROM st_fault_cases c WHERE c.status = 'published' AND EXISTS (SELECT 1 FROM st_fault_solutions sx WHERE sx.fault_case_id = c.id AND sx.status = 'published')";
+        $brands = st_db()->query("SELECT DISTINCT c.brand $facetSql AND c.brand IS NOT NULL AND c.brand <> '' ORDER BY c.brand")->fetchAll(PDO::FETCH_COLUMN);
+        $equipmentTypes = st_db()->query("SELECT DISTINCT c.equipment_type $facetSql AND c.equipment_type IS NOT NULL AND c.equipment_type <> '' ORDER BY c.equipment_type")->fetchAll(PDO::FETCH_COLUMN);
+        st_json([
+            'ok' => true,
+            'items' => array_values($cases),
+            'pagination' => ['page' => $page, 'pages' => $pages, 'per_page' => $perPage, 'total' => $total],
+            'filters' => ['brands' => $brands, 'equipment_types' => $equipmentTypes],
+        ]);
+    }
+
     if ($action === 'fault-submit' && $method === 'POST') {
         $body = st_body();
         st_verify_turnstile($body);

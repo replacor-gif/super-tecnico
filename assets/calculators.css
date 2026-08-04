@@ -244,6 +244,15 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); box-sha
 .notice.ok { border-left-color: var(--ok); background: rgba(98,214,154,.08); }
 .notice.danger { border-left-color: var(--danger); background: rgba(240,113,120,.09); }
 .formula { margin-top: 13px; color: var(--muted); font: .82rem ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.circuit-diagram { margin: 0 0 22px; padding: 12px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: color-mix(in srgb, var(--surface-2) 82%, transparent); }
+.circuit-diagram svg { display: block; width: 100%; min-width: 520px; height: auto; color: var(--text); }
+.circuit-diagram .wire { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.circuit-diagram .component { fill: var(--surface); stroke: var(--warning); stroke-width: 3; }
+.circuit-diagram .symbol { fill: none; stroke: var(--warning); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.circuit-diagram .chip { fill: var(--surface); stroke: var(--accent); stroke-width: 4; }
+.circuit-diagram .switch { fill: var(--surface); stroke: var(--warning); stroke-width: 3; }
+.circuit-diagram text { fill: currentColor; font: 700 16px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.circuit-diagram .chip-label { font-size: 24px; font-weight: 900; }
 .calculator-footer { display: flex; gap: 9px; justify-content: flex-end; padding-top: 14px; flex-wrap: wrap; }
 .resistor-visual { display: flex; align-items: center; justify-content: center; min-height: 100px; margin: 7px 0 18px; }
 .resistor-body { position: relative; width: min(330px, 72%); height: 66px; background: #d7b27b; border-radius: 32px; box-shadow: inset 0 -9px 14px rgba(75,42,8,.18); }

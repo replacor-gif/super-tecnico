@@ -9,20 +9,32 @@
   <title>Averías reales por placa | Super Técnico</title>
   <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
   <link rel="stylesheet" href="assets/common.css?v=1">
-  <link rel="stylesheet" href="assets/faults.css?v=1">
+  <link rel="stylesheet" href="assets/faults.css?v=2">
+  <link rel="stylesheet" href="assets/faults-browse.css?v=1">
   <script src="assets/i18n.js?v=5" defer></script>
   <script src="assets/community-api.js?v=1" defer></script>
-  <script src="assets/faults.js?v=1" defer></script>
+  <script src="assets/faults.js?v=2" defer></script>
 </head>
 <body>
   <header class="fault-header"><a href="index.html"><img src="assets/super-tecnico-logo.png" alt=""><span><strong>Super Técnico</strong><small data-fault-i18n="subtitle">Averías reales por placa</small><span class="beta-badge" data-i18n="common.betaBadge">BETA · En construcción</span></span></a><nav><a href="climatizacion.html" data-i18n="common.hvac">Climatización</a><a href="index.html" data-i18n="common.tools">Todas las herramientas</a></nav></header>
   <main>
     <section class="fault-hero"><p class="eyebrow" data-fault-i18n="eyebrow">Experiencia técnica moderada</p><h1 data-fault-i18n="title">Busca por la referencia de la placa</h1><p data-fault-i18n="intro">Consulta síntomas y soluciones aportados por técnicos. Son casos reales revisados, no procedimientos oficiales ni diagnósticos garantizados.</p></section>
     <section class="fault-workspace">
-      <div class="fault-tabs" role="tablist"><button class="is-active" type="button" data-view="search" data-fault-i18n="searchTab">Buscar casos</button><button type="button" data-view="submit" data-fault-i18n="submitTab">Aportar un caso</button></div>
+      <div class="fault-tabs" role="tablist"><button class="is-active" type="button" data-view="search" data-fault-i18n="searchTab">Buscar referencia</button><button type="button" data-view="browse" data-fault-i18n="browseTab">Explorar averías</button><button type="button" data-view="submit" data-fault-i18n="submitTab">Aportar un caso</button></div>
       <section id="searchView" class="fault-view">
         <form id="faultSearchForm" class="fault-search"><label for="faultQuery" data-fault-i18n="reference">Referencia o modelo impreso en la placa</label><div><input id="faultQuery" type="search" autocomplete="off" spellcheck="false" placeholder="KFR-35GW / 17122000012345" required><button type="submit" data-i18n="common.search">Buscar</button></div><small data-fault-i18n="searchHelp">Puedes escribirla con o sin espacios, guiones o barras.</small></form>
         <div id="faultStatus" class="fault-status"></div><div id="faultResults" class="fault-results"><div class="empty-state"><strong>PCB</strong><h2 data-fault-i18n="emptyTitle">Introduce primero la referencia de la placa</h2><p data-fault-i18n="emptyText">No mostramos todos los casos de golpe para que la consulta sea rápida y precisa.</p></div></div>
+      </section>
+      <section id="browseView" class="fault-view" hidden>
+        <div class="section-heading"><p class="eyebrow" data-fault-i18n="browseEyebrow">CASOS PUBLICADOS</p><h2 data-fault-i18n="browseTitle">Explora todas las averías revisadas</h2><p data-fault-i18n="browseText">Filtra por marca, tipo de equipo o texto. Las fichas aparecen cerradas para que puedas comparar antes de abrir.</p></div>
+        <form id="faultBrowseForm" class="fault-browse-filters">
+          <label><span data-fault-i18n="browseSearch">Referencia, síntoma o palabra</span><input id="browseQuery" type="search" autocomplete="off"></label>
+          <label><span data-fault-i18n="browseBrand">Marca</span><select id="browseBrand"><option value="" data-fault-i18n="allBrands">Todas las marcas</option></select></label>
+          <label><span data-fault-i18n="browseEquipment">Tipo de equipo</span><select id="browseEquipment"><option value="" data-fault-i18n="allEquipment">Todos los equipos</option></select></label>
+          <button type="submit" data-fault-i18n="applyFilters">Aplicar filtros</button>
+        </form>
+        <div id="browseStatus" class="fault-status"></div><div id="browseResults" class="fault-results"></div>
+        <nav id="browsePagination" class="fault-pagination" aria-label="Paginación" hidden><button id="browsePrevious" type="button" data-fault-i18n="previous">Anterior</button><span id="browsePage"></span><button id="browseNext" type="button" data-fault-i18n="next">Siguiente</button></nav>
       </section>
       <section id="submitView" class="fault-view" hidden>
         <div class="section-heading"><p class="eyebrow" data-fault-i18n="contribute">Aportación sin cuenta</p><h2 data-fault-i18n="submitTitle">Documenta una reparación confirmada</h2><p data-fault-i18n="pendingNote">La aportación quedará pendiente y no será pública hasta que la revisemos.</p></div>

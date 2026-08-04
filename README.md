@@ -9,10 +9,10 @@ Portal técnico estático con herramientas independientes. La publicación es:
 - **Biblioteca técnica HVAC:** consulta por marca, código, categoría, tema y variante.
 - **Identificador OEM de placas HVAC:** cuando falta la marca comercial, relaciona el código impreso en la PCB con 21 plataformas posibles y enlaza el error con la base del fabricante electrónico disponible.
 - **Identificador SMD:** búsqueda por marcaje o referencia con filtros opcionales de encapsulado, patillas, fabricante, tipo y designador de placa.
-- **Calculadoras técnicas:** 12 herramientas de electrónica y climatización con unidades, fórmulas y advertencias.
+- **Calculadoras técnicas:** 15 herramientas de electrónica y climatización con unidades, fórmulas, esquemas y advertencias; incluye LED, Zener, 555 y bus DC monofásico/trifásico.
 - **Referencias de componentes:** consulta por referencia, marcado, fabricante, categoría, encapsulado y parámetros eléctricos.
 - **Comparador documental:** contraste lado a lado de referencias reales y búsqueda conservadora de candidatos MOSFET, IGBT y diodos rápidos revisados.
-- **Averías reales por placa:** casos aportados por técnicos, buscables por referencia de PCB y publicados únicamente tras moderación.
+- **Averías reales por placa:** casos aportados por técnicos, buscables por referencia o explorables mediante filtros de marca y equipo; se publican únicamente tras moderación.
 - **Ideas y mejoras:** propuestas públicas, apoyos de la comunidad y aportaciones privadas pendientes de revisión.
 
 El identificador SMD publica 439 candidatos de seis fabricantes, todos con marcaje, encapsulado, patillaje, parámetros eléctricos y una fuente oficial. Cuando un código tiene varios significados, muestra todos los candidatos cerrados y no selecciona ninguno automáticamente.
