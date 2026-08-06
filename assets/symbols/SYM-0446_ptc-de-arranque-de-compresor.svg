@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-labelledby="title desc">
+<title id="title">PTC de arranque de compresor</title><desc id="desc">Representación didáctica: PTC de arranque de compresor</desc>
+<rect width="200" height="150" fill="#f8fafc"/><g fill="none" stroke="#132f3f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M25 70h45m60 0h45"/><rect x="70" y="58" width="60" height="24"/><path d="M82 88l36-36"/><text x="100" y="105">PTC</text></g>
+<g fill="#132f3f" font-family="Arial,sans-serif" font-size="13" font-weight="700" text-anchor="middle"><text x="100" y="18">PTC de arranque de compresor</text><text x="100" y="137">Línea, marcha y arranque según conjunto</text></g></svg>

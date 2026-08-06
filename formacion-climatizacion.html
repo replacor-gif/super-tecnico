@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="google-adsense-account" content="ca-pub-6950924617837531">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Curso interactivo y biblioteca de consulta técnica sobre componentes, control y diagnóstico de climatización.">
+  <meta name="theme-color" content="#102f42">
+  <title>Curso técnico de climatización | Super Técnico</title>
+  <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
+  <link rel="stylesheet" href="assets/training.css?v=1">
+  <script src="assets/i18n.js?v=7" defer></script>
+</head>
+<body>
+  <header class="training-header">
+    <a class="training-brand" href="index.html" aria-label="Volver al menú de Super Técnico">
+      <img src="assets/super-tecnico-logo.png" alt="">
+      <span><strong>Super Técnico</strong><small data-training-i18n="subtitle">Formación técnica en climatización</small><span class="beta-badge" data-i18n="common.betaBadge">BETA · En construcción</span></span>
+    </a>
+    <nav aria-label="Navegación"><a href="index.html" data-i18n="common.tools">Todas las herramientas</a><a href="climatizacion.html" data-training-i18n="errorLibrary">Errores por fabricante</a></nav>
+  </header>
+
+  <main>
+    <section class="training-hero">
+      <div>
+        <p class="eyebrow" data-training-i18n="eyebrow">Colección técnica REPLACOR</p>
+        <h1 data-training-i18n="title">Aprende o consulta exactamente lo que necesitas</h1>
+        <p data-training-i18n="intro">Recorre la formación completa por módulos o entra directamente en un componente, síntoma, medición o procedimiento de taller.</p>
+      </div>
+      <dl class="training-stats" aria-label="Cobertura del curso">
+        <div><dt id="moduleCount">—</dt><dd data-training-i18n="modules">módulos</dd></div>
+        <div><dt id="pageCount">—</dt><dd data-training-i18n="pages">páginas de origen</dd></div>
+        <div><dt id="chapterCount">—</dt><dd data-training-i18n="chapters">capítulos</dd></div>
+        <div><dt id="figureCount">—</dt><dd data-training-i18n="figures">figuras</dd></div>
+      </dl>
+    </section>
+
+    <nav class="training-tabs" aria-label="Apartados del curso" role="tablist">
+      <button type="button" role="tab" aria-selected="true" data-view="course"><span aria-hidden="true">▤</span><span data-training-i18n="courseTab">Curso por módulos</span></button>
+      <button type="button" role="tab" aria-selected="false" data-view="lookup"><span aria-hidden="true">⌕</span><span data-training-i18n="lookupTab">Consulta rápida</span></button>
+      <button type="button" role="tab" aria-selected="false" data-view="saved"><span aria-hidden="true">★</span><span data-training-i18n="savedTab">Guardados y progreso</span></button>
+    </nav>
+
+    <section id="courseView" class="training-view" data-panel="course">
+      <div id="courseDashboard">
+        <div class="view-heading">
+          <div><p class="eyebrow" data-training-i18n="courseEyebrow">Ruta formativa flexible</p><h2 data-training-i18n="courseTitle">Elige un módulo para empezar</h2></div>
+          <div class="overall-progress"><span data-training-i18n="progress">Progreso</span><strong id="overallProgressText">0 / 0</strong><div class="progress-track"><i id="overallProgressBar"></i></div><button id="resumeTraining" type="button" data-training-i18n="resume">Continuar donde lo dejé</button></div>
+        </div>
+        <div id="moduleGrid" class="module-grid"></div>
+      </div>
+
+      <article id="chapterWorkspace" class="chapter-workspace" hidden>
+        <div class="workspace-topbar">
+          <button id="backToModules" class="secondary" type="button" data-training-i18n="backModules">← Volver a los módulos</button>
+          <div class="workspace-actions"><button id="bookmarkChapter" type="button" aria-pressed="false">☆ <span data-training-i18n="save">Guardar</span></button><button id="completeChapter" type="button" aria-pressed="false">✓ <span data-training-i18n="complete">Marcar completado</span></button></div>
+        </div>
+        <div class="chapter-layout">
+          <aside class="chapter-sidebar">
+            <p class="eyebrow" id="sidebarModuleLabel"></p>
+            <label><span data-training-i18n="chooseChapter">Ir al capítulo</span><select id="chapterSelect"></select></label>
+            <div id="chapterList" class="chapter-list"></div>
+          </aside>
+          <div class="chapter-main">
+            <nav id="chapterBreadcrumb" class="chapter-breadcrumb" aria-label="Ruta"></nav>
+            <div class="chapter-title-row"><div><p id="chapterPosition" class="chapter-position"></p><h2 id="chapterTitle"></h2></div><span id="chapterWordCount" class="reading-time"></span></div>
+            <div id="chapterFacets" class="chapter-facets"></div>
+            <div id="chapterContent" class="chapter-content"></div>
+            <nav class="chapter-pagination" aria-label="Capítulos"><button id="previousChapter" type="button">← <span data-training-i18n="previous">Anterior</span></button><button id="nextChapter" type="button"><span data-training-i18n="next">Siguiente</span> →</button></nav>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="lookupView" class="training-view" data-panel="lookup" hidden>
+      <div class="view-heading"><div><p class="eyebrow" data-training-i18n="lookupEyebrow">Acceso directo</p><h2 data-training-i18n="lookupTitle">Busca por problema, componente o medida</h2></div><p data-training-i18n="lookupText">Primero verás todas las coincidencias. Ningún capítulo se abre automáticamente.</p></div>
+      <form id="trainingSearchForm" class="training-filters" autocomplete="off">
+        <label class="wide-field"><span data-training-i18n="query">¿Qué necesitas consultar?</span><input id="trainingQuery" type="search" placeholder="Ejemplos: EEV, motor BLDC, retorno de líquido, medir NTC…" data-training-i18n-placeholder="queryPlaceholder"></label>
+        <label><span data-training-i18n="module">Módulo</span><select id="moduleFilter"><option value="" data-training-i18n="allModules">Todos los módulos</option></select></label>
+        <label><span data-training-i18n="area">Área técnica</span><select id="facetFilter"><option value="" data-training-i18n="allAreas">Todas las áreas</option></select></label>
+        <button type="submit" data-training-i18n="search">Buscar</button><button id="clearTrainingSearch" class="secondary" type="button" data-training-i18n="clear">Limpiar</button>
+      </form>
+      <div class="lookup-toolbar"><p id="lookupStatus" aria-live="polite"></p><label><span data-training-i18n="sort">Orden</span><select id="lookupSort"><option value="relevance" data-training-i18n="relevance">Relevancia</option><option value="module" data-training-i18n="byModule">Por módulo</option><option value="title" data-training-i18n="alphabetical">Alfabético</option></select></label></div>
+      <div id="lookupResults" class="lookup-results"></div>
+      <button id="loadMoreTraining" class="load-more" type="button" hidden data-training-i18n="showMore">Mostrar más</button>
+    </section>
+
+    <section id="savedView" class="training-view" data-panel="saved" hidden>
+      <div class="view-heading"><div><p class="eyebrow" data-training-i18n="savedEyebrow">Tu espacio</p><h2 data-training-i18n="savedTitle">Capítulos guardados y avance</h2></div><p data-training-i18n="savedText">El progreso se guarda únicamente en este dispositivo.</p></div>
+      <div class="saved-summary"><div><strong id="completedCount">0</strong><span data-training-i18n="completedChapters">capítulos completados</span></div><div><strong id="savedCount">0</strong><span data-training-i18n="savedChapters">capítulos guardados</span></div></div>
+      <div id="savedResults" class="lookup-results"></div>
+    </section>
+
+    <aside class="training-notice"><strong data-training-i18n="important">Importante</strong><p data-training-i18n="notice">El contenido explica principios y procedimientos generales. Confirma siempre valores, conexiones y secuencias específicas con el manual OEM del equipo.</p></aside>
+    <aside class="ad-slot" data-ad-placement="training-after-content" aria-label="Publicidad" hidden></aside>
+  </main>
+
+  <dialog id="figureDialog" class="figure-dialog"><button type="button" data-close aria-label="Cerrar">×</button><img id="figureDialogImage" alt=""><p id="figureDialogCaption"></p></dialog>
+
+  <footer class="st-page-footer"><a href="index.html">Super Técnico</a><span> · </span><span data-training-i18n="footer">Formación técnica REPLACOR</span><nav class="st-legal-links" aria-label="Información legal"><a href="https://www.replacor.com/aviso-legal/" target="_blank" rel="noopener">Aviso legal</a><a href="https://www.replacor.com/politica-de-privacidad/" target="_blank" rel="noopener">Política de privacidad</a></nav></footer>
+  <script src="assets/training.js?v=1" defer></script>
+  <script src="assets/ads.js?v=1" defer></script>
+  <script src="assets/page-counter.js?v=1" defer></script>
+</body>
+</html>

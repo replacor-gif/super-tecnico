@@ -271,6 +271,8 @@ class StaticSiteTests(unittest.TestCase):
             "comparador.html",
             "averias.html",
             "feedback.html",
+            "simbolos.html",
+            "formacion-climatizacion.html",
             "assets/comparator.js",
             "assets/community-api.js",
             "assets/faults.js",
@@ -288,6 +290,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertNotIn("ST-MOS", comparator)
         self.assertIn("supportsAutomatic", comparator)
         self.assertIn("technology(original)!==technology(candidate)", comparator)
+        self.assertIn("Number(item.quality_rank||0)>=2", comparator)
 
         faults_html = (self.dist / "averias.html").read_text(encoding="utf-8")
         faults_js = (self.dist / "assets" / "faults.js").read_text(encoding="utf-8")
@@ -816,9 +819,9 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("function localizedText", script)
         self.assertIn("record.translations?.[language]?.[field]", script)
 
-    def test_adsense_publisher_is_configured_but_ads_remain_disabled(self):
+    def test_adsense_publisher_and_discreet_manual_slots_are_enabled(self):
         config = load(self.dist / "data" / "ads-config.json")
-        self.assertFalse(config["enabled"])
+        self.assertTrue(config["enabled"])
         self.assertEqual(config["publisher_id"], "ca-pub-6950924617837531")
         self.assertEqual(config["consent_provider"], "google-cmp")
         self.assertEqual(
@@ -828,11 +831,11 @@ class StaticSiteTests(unittest.TestCase):
         self.assertEqual(
             self.report["advertising"],
             {
-                "enabled": False,
+                "enabled": True,
                 "publisher_configured": True,
                 "auto_ads": False,
                 "consent_provider": "google-cmp",
-                "manual_slots": 0,
+                "manual_slots": 9,
                 "ads_txt": True,
             },
         )
@@ -930,14 +933,23 @@ class StaticSiteTests(unittest.TestCase):
     def test_component_public_projection_is_complete_and_warns_about_candidates(self):
         catalog = load(self.dist / "data" / "components" / "catalog.json")
         counts = catalog["meta"]["counts"]
-        self.assertGreaterEqual(counts["components"], 11532)
+        self.assertGreaterEqual(counts["components"], 38618)
         self.assertEqual(counts["specifications"], 8363)
         self.assertEqual(counts["markings"], 3862)
         self.assertGreaterEqual(counts["reviewed"], 8205)
         self.assertEqual(counts["historical"], 3327)
+        self.assertEqual(counts["reference_only"], 27086)
         self.assertGreaterEqual(
             catalog["meta"]["quality_counts"].get("oficial_indice", 0),
             6551,
+        )
+        self.assertEqual(
+            catalog["meta"]["quality_counts"].get("índice_fabricante", 0),
+            6136,
+        )
+        self.assertEqual(
+            catalog["meta"]["quality_counts"].get("índice_referencia", 0),
+            20950,
         )
         self.assertEqual(catalog["meta"]["chunk_count"], 64)
         self.assertIn("pendientes de verificar", catalog["meta"]["warning"])
@@ -1053,6 +1065,31 @@ class StaticSiteTests(unittest.TestCase):
             self.assertEqual(detail["record_level"], "indice")
             self.assertEqual(detail["specifications"], [])
             self.assertTrue(detail["source"]["url"].startswith("https://"))
+
+        expanded_index_examples = {
+            "ULN2003": ("Driver de potencia", "Texas Instruments"),
+            "FSBB20CH60": ("Módulo de potencia IPM", None),
+            "SKiiP 1814 GB12E4-3DUHP": ("Módulo de potencia IPM", None),
+        }
+        for part_number, (category, manufacturer) in expanded_index_examples.items():
+            item = next(row for row in catalog["components"] if row["part_number"] == part_number)
+            self.assertEqual(item["category"], category)
+            self.assertEqual(item["manufacturer"], manufacturer)
+            self.assertEqual(item["record_level"], "indice")
+            self.assertEqual(item["quality_rank"], 1)
+            self.assertFalse(item["official"])
+            detail = load(
+                self.dist / "data" / "components" / "details" / f"{item['id'] % 64}.json"
+            )[str(item["id"])]
+            self.assertEqual(detail["specifications"], [])
+            self.assertEqual(detail["pinouts"], [])
+            self.assertTrue(detail["verification"])
+
+        # A reviewed exact record must never be replaced by the broad index.
+        self.assertEqual(
+            len([row for row in catalog["components"] if row["part_number"] == "IRF840"]),
+            1,
+        )
 
     def test_samsung_led_tables_are_structured_and_accessible(self):
         topic = load(self.samsung_web / "topics" / "1.json")
@@ -2838,6 +2875,86 @@ class StaticSiteTests(unittest.TestCase):
             ".task-card-oem",
         ):
             self.assertIn(marker, styles)
+
+    def test_symbol_library_and_interactive_course_are_complete(self):
+        catalog = load(self.dist / "data" / "symbols" / "catalog.json")
+        course = load(self.dist / "data" / "symbols" / "course.json")
+        symbols = catalog["symbols"]
+        lessons = [lesson for module in course["modules"] for lesson in module["lessons"]]
+
+        self.assertEqual(catalog["count"], 460)
+        self.assertEqual(len(symbols), 460)
+        self.assertEqual(len({item["id"] for item in symbols}), 460)
+        self.assertEqual(course["module_count"], 6)
+        self.assertEqual(course["lesson_count"], 24)
+        self.assertEqual(len(lessons), 24)
+        self.assertTrue(all(item["descripcion"] and item["interpretacion"] for item in symbols))
+        self.assertTrue(all(lesson["steps"] and lesson["quiz"] for lesson in lessons))
+        self.assertTrue(all((self.dist / item["archivo_svg"]).is_file() for item in symbols))
+        self.assertTrue(all((self.dist / lesson["archivo_svg"]).is_file() for lesson in lessons))
+
+        by_name = {item["nombre"]: item for item in symbols}
+        for name in (
+            "Conexión Kelvin de cuatro hilos",
+            "Fusible rearmable PTC",
+            "Compresor monofásico C-R-S",
+            "MOSFET SiC canal N",
+            "Bus Modbus RTU sobre RS-485",
+            "Bus BACnet MS/TP",
+        ):
+            self.assertIn(name, by_name)
+
+        html = (self.dist / "simbolos.html").read_text(encoding="utf-8")
+        script = (self.dist / "assets" / "symbols.js").read_text(encoding="utf-8")
+        portal = (self.dist / "index.html").read_text(encoding="utf-8")
+        for marker in ('data-view="library"', 'data-view="course"', 'data-view="trainer"'):
+            self.assertIn(marker, html)
+        for marker in ("st.symbolCourseProgress", "newTrainerQuestion", "data-quiz-answer"):
+            self.assertIn(marker, script)
+        self.assertIn('href="simbolos.html"', portal)
+        self.assertEqual(self.report["symbols"], {"symbols": 460, "lessons": 24, "modules": 6})
+
+    def test_hvac_training_course_is_complete_searchable_and_public_safe(self):
+        collection = load(self.dist / "data" / "training" / "collection.json")
+        modules = collection["modules"]
+        chapters = [chapter for module in modules for chapter in module["chapters"]]
+        blocks = [block for chapter in chapters for block in chapter["blocks"]]
+        figures = [block for block in blocks if block["type"] == "figure"]
+        tables = [block for block in blocks if block["type"] == "table"]
+
+        self.assertEqual(collection["stats"]["modules"], 7)
+        self.assertEqual(collection["stats"]["pages"], 209)
+        self.assertEqual(len(chapters), 167)
+        self.assertEqual(len({chapter["id"] for chapter in chapters}), 167)
+        self.assertEqual(len(figures), 158)
+        self.assertEqual(len(tables), 132)
+        self.assertTrue(all((self.dist / figure["src"]).is_file() for figure in figures))
+        self.assertTrue(all(chapter["search"] and chapter["word_count"] for chapter in chapters))
+
+        searchable = " ".join(chapter["search"] for chapter in chapters)
+        for query in (
+            "valvula expansion electronica",
+            "motor bldc",
+            "termistor ntc",
+            "presostato",
+            "valvula cuatro vias",
+            "intercambiador placas",
+            "compresor inverter",
+        ):
+            self.assertIn(query.split()[0], searchable)
+
+        html = (self.dist / "formacion-climatizacion.html").read_text(encoding="utf-8")
+        script = (self.dist / "assets" / "training.js").read_text(encoding="utf-8")
+        portal = (self.dist / "index.html").read_text(encoding="utf-8")
+        for marker in ('data-view="course"', 'data-view="lookup"', 'data-view="saved"'):
+            self.assertIn(marker, html)
+        for marker in ("st.training.completed", "st.training.bookmarks", "runLookup", "renderBlocks"):
+            self.assertIn(marker, script)
+        self.assertIn('href="formacion-climatizacion.html"', portal)
+        self.assertEqual(
+            {key: self.report["training"][key] for key in ("modules", "pages", "chapters", "figures", "tables")},
+            {"modules": 7, "pages": 209, "chapters": 167, "figures": 158, "tables": 132},
+        )
 
 
 if __name__ == "__main__":

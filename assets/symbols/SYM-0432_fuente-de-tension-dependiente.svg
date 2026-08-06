@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-labelledby="title desc">
+<title id="title">Fuente de tensión dependiente</title><desc id="desc">Representación didáctica: Fuente de tensión dependiente</desc>
+<rect width="200" height="150" fill="#f8fafc"/><g fill="none" stroke="#132f3f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M100 28l52 42-52 42-52-42z"/><text x="100" y="62">+</text><text x="100" y="88">−</text><path d="M20 70h28m104 0h28"/></g>
+<g fill="#132f3f" font-family="Arial,sans-serif" font-size="13" font-weight="700" text-anchor="middle"><text x="100" y="18">Fuente de tensión dependiente</text><text x="100" y="137">Salida +/− y variable de control</text></g></svg>

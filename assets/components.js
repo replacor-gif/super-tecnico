@@ -337,7 +337,7 @@
     if (els.category.value && item.category !== els.category.value) return false;
     if (els.manufacturer.value && item.manufacturer !== els.manufacturer.value) return false;
     if (els.package.value && !(item.packages || []).includes(els.package.value)) return false;
-    if (els.reviewed.checked && item.quality === 'histórico_extraído') return false;
+    if (els.reviewed.checked && (item.quality === 'histórico_extraído' || (item.record_level === 'indice' && !item.official))) return false;
     const minimumVoltage = Number(els.voltage.value);
     if (els.voltage.value && (!Number.isFinite(Number(item.voltage_max_v)) || Number(item.voltage_max_v) < minimumVoltage)) return false;
     const minimumCurrent = Number(els.current.value);

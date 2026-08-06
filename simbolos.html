@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="google-adsense-account" content="ca-pub-6950924617837531">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Biblioteca profesional de simbología eléctrica y electrónica con curso interactivo de interpretación de esquemas para técnicos.">
+  <meta name="theme-color" content="#102f42">
+  <title>Simbología y curso de esquemas | Super Técnico</title>
+  <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
+  <link rel="stylesheet" href="assets/symbols.css?v=1">
+  <script src="assets/i18n.js?v=6" defer></script>
+</head>
+<body>
+  <header class="symbols-header">
+    <a class="symbols-brand" href="index.html" aria-label="Volver al menú de Super Técnico">
+      <img src="assets/super-tecnico-logo.png" alt="">
+      <span><strong>Super Técnico</strong><small data-symbol-i18n="subtitle">Simbología y lectura de esquemas</small><span class="beta-badge" data-i18n="common.betaBadge">BETA · En construcción</span></span>
+    </a>
+    <nav aria-label="Navegación"><a href="index.html" data-i18n="common.tools">Todas las herramientas</a><a href="calculadoras.html" data-symbol-i18n="calculators">Calculadoras</a></nav>
+  </header>
+
+  <main>
+    <section class="symbols-hero">
+      <div><p class="eyebrow" data-symbol-i18n="eyebrow">Electrónica · aprendizaje visual</p><h1 data-symbol-i18n="title">Entiende lo que te está diciendo el esquema</h1><p data-symbol-i18n="intro">Busca símbolos, aprende a seguir cada bloque y practica con ejercicios progresivos orientados al diagnóstico real.</p></div>
+      <dl class="symbol-stats" aria-label="Cobertura"><div><dt id="symbolCount">—</dt><dd data-symbol-i18n="symbols">símbolos</dd></div><div><dt id="lessonCount">—</dt><dd data-symbol-i18n="lessons">lecciones</dd></div><div><dt id="moduleCount">—</dt><dd data-symbol-i18n="modules">módulos</dd></div></dl>
+    </section>
+
+    <nav class="symbols-tabs" aria-label="Apartados" role="tablist">
+      <button type="button" role="tab" aria-selected="true" data-view="library"><span aria-hidden="true">⌕</span><span data-symbol-i18n="libraryTab">Biblioteca de símbolos</span></button>
+      <button type="button" role="tab" aria-selected="false" data-view="course"><span aria-hidden="true">▤</span><span data-symbol-i18n="courseTab">Curso interactivo</span></button>
+      <button type="button" role="tab" aria-selected="false" data-view="trainer"><span aria-hidden="true">✓</span><span data-symbol-i18n="trainerTab">Entrenamiento</span></button>
+    </nav>
+
+    <section id="libraryView" class="symbol-view" data-panel="library">
+      <div class="view-heading"><div><p class="eyebrow" data-symbol-i18n="libraryEyebrow">Consulta rápida</p><h2 data-symbol-i18n="libraryTitle">Encuentra el símbolo por nombre, función o designador</h2></div><p data-symbol-i18n="libraryText">Ninguna ficha se abre sola. Compara primero las posibilidades y consulta solo la que necesites.</p></div>
+      <form id="symbolSearchForm" class="symbol-filters" autocomplete="off">
+        <label class="wide-field"><span data-symbol-i18n="query">Buscar símbolo o función</span><input id="symbolQuery" type="search" placeholder="Ejemplos: IPM, Q, presostato, bus DC, masa…" data-symbol-i18n-placeholder="queryPlaceholder"></label>
+        <label><span data-symbol-i18n="category">Categoría</span><select id="symbolCategory"><option value="" data-symbol-i18n="allCategories">Todas las categorías</option></select></label>
+        <label><span data-symbol-i18n="level">Nivel</span><select id="symbolLevel"><option value="" data-symbol-i18n="allLevels">Todos los niveles</option><option>Básico</option><option>Intermedio</option></select></label>
+        <label><span data-symbol-i18n="scope">Aplicación</span><select id="symbolHvac"><option value="" data-symbol-i18n="allScopes">General y climatización</option><option value="Sí" data-symbol-i18n="hvacOnly">Climatización</option><option value="No" data-symbol-i18n="generalOnly">General</option></select></label>
+        <button type="submit" data-symbol-i18n="search">Buscar</button>
+        <button id="clearSymbolFilters" class="secondary" type="button" data-symbol-i18n="clear">Limpiar</button>
+      </form>
+      <div class="results-toolbar"><p id="symbolStatus" aria-live="polite" data-symbol-i18n="loading">Cargando biblioteca…</p><label><span data-symbol-i18n="sort">Orden</span><select id="symbolSort"><option value="relevance" data-symbol-i18n="relevance">Relevancia</option><option value="name" data-symbol-i18n="alphabetical">Alfabético</option><option value="category" data-symbol-i18n="byCategory">Por categoría</option></select></label></div>
+      <div id="symbolGrid" class="symbol-grid"></div>
+      <button id="loadMoreSymbols" class="load-more" type="button" hidden data-symbol-i18n="showMore">Mostrar más resultados</button>
+    </section>
+
+    <section id="courseView" class="symbol-view" data-panel="course" hidden>
+      <div id="courseDashboard">
+        <div class="course-overview"><div><p class="eyebrow" data-symbol-i18n="courseEyebrow">Formación progresiva</p><h2 data-symbol-i18n="courseTitle">Interpretación práctica de diagramas y esquemas</h2><p data-symbol-i18n="courseText">Empieza por lo básico o entra directamente en potencia, fuentes e inverter. Tu progreso queda guardado en este dispositivo.</p></div><div class="progress-card"><span data-symbol-i18n="progress">Progreso</span><strong id="courseProgressText">0 / 24</strong><div class="progress-track"><i id="courseProgressBar"></i></div><button id="resumeCourse" type="button" data-symbol-i18n="resume">Continuar curso</button></div></div>
+        <div id="courseModules" class="course-modules"></div>
+      </div>
+      <article id="lessonWorkspace" class="lesson-workspace" hidden></article>
+    </section>
+
+    <section id="trainerView" class="symbol-view" data-panel="trainer" hidden>
+      <div class="trainer-intro"><div><p class="eyebrow" data-symbol-i18n="trainerEyebrow">Práctica libre</p><h2 data-symbol-i18n="trainerTitle">Reconoce símbolos sin memorizar listas</h2><p data-symbol-i18n="trainerText">Observa la forma, piensa qué conecta y elige la función. Puedes practicar tantas veces como quieras.</p></div><div class="trainer-score"><span data-symbol-i18n="score">Puntuación</span><strong><span id="trainerHits">0</span> / <span id="trainerAttempts">0</span></strong></div></div>
+      <div class="trainer-card"><img id="trainerImage" alt="Símbolo a identificar"><p id="trainerPrompt" data-symbol-i18n="trainerPrompt">¿Qué representa este símbolo?</p><div id="trainerOptions" class="trainer-options"></div><div id="trainerFeedback" class="trainer-feedback" aria-live="polite"></div><button id="nextTrainer" type="button" hidden data-symbol-i18n="nextQuestion">Siguiente símbolo</button></div>
+    </section>
+
+    <aside class="symbol-safety"><strong data-symbol-i18n="important">Importante</strong><p data-symbol-i18n="safety">Los dibujos son representaciones didácticas. Pueden existir variantes IEC, ANSI/IEEE, nacionales o del fabricante. Confirma siempre la leyenda y las medidas de seguridad del equipo.</p></aside>
+    <aside class="ad-slot" data-ad-placement="symbols-after-content" aria-label="Publicidad" hidden></aside>
+  </main>
+
+  <dialog id="symbolDialog" class="symbol-dialog"><div class="dialog-head"><div><span id="dialogId"></span><h2 id="dialogTitle"></h2></div><button type="button" data-close aria-label="Cerrar">×</button></div><div class="dialog-body"><div class="dialog-visual"><img id="dialogImage" alt=""><div id="dialogBadges" class="symbol-badges"></div></div><div id="dialogDetails" class="dialog-details"></div></div></dialog>
+
+  <footer class="st-page-footer"><a href="index.html">Super Técnico</a><span> · </span><span data-symbol-i18n="footer">Biblioteca didáctica para técnicos</span><nav class="st-legal-links" aria-label="Información legal"><a href="https://www.replacor.com/aviso-legal/" target="_blank" rel="noopener">Aviso legal</a><a href="https://www.replacor.com/politica-de-privacidad/" target="_blank" rel="noopener">Política de privacidad</a></nav></footer>
+  <script src="assets/symbols.js?v=1" defer></script>
+  <script src="assets/ads.js?v=1" defer></script>
+  <script src="assets/page-counter.js?v=1" defer></script>
+</body>
+</html>

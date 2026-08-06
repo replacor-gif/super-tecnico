@@ -1,14 +1,18 @@
 {
-  "enabled": false,
+  "enabled": true,
   "publisher_id": "ca-pub-6950924617837531",
   "auto_ads": false,
   "consent_provider": "google-cmp",
   "slots": {
-    "portal-after-tools": "",
-    "hvac-home": "",
-    "hvac-after-content": "",
-    "smd-after-search": "",
-    "components-after-search": "",
-    "calculators-after-tools": ""
+    "portal-after-tools": "1736113839",
+    "home": "",
+    "after-content": "1736113839",
+    "faults-after-results": "1736113839",
+    "smd-after-search": "1736113839",
+    "components-after-search": "1736113839",
+    "comparator-after-results": "1736113839",
+    "calculators-after-tools": "1736113839",
+    "symbols-after-content": "1736113839",
+    "training-after-content": "1736113839"
   }
 }

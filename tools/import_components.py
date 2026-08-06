@@ -25,6 +25,8 @@ QUALITY_ORDER = {
     "curado": 3,
     "curado_serie": 2,
     "histórico_extraído": 1,
+    "índice_fabricante": 1,
+    "índice_referencia": 1,
 }
 
 
@@ -299,6 +301,7 @@ def build(database: Path, output: Path) -> dict[str, Any]:
         supplements_sha256 = None
         supplement_specifications = 0
         supplement_markings = 0
+        supplement_reference_only = 0
         if SUPPLEMENTS_PATH.is_file():
             supplements_sha256 = hashlib.sha256(SUPPLEMENTS_PATH.read_bytes()).hexdigest()
             supplements = json.loads(SUPPLEMENTS_PATH.read_text(encoding="utf-8"))
@@ -331,7 +334,10 @@ def build(database: Path, output: Path) -> dict[str, Any]:
                 chunks[component_id % CHUNK_COUNT][str(component_id)] = detail
                 existing_ids.add(component_id)
                 quality_counts[str(detail.get("quality") or "curado")] += 1
-                reviewed += 1
+                if detail.get("record_level") == "indice" and not detail.get("official"):
+                    supplement_reference_only += 1
+                else:
+                    reviewed += 1
                 supplement_specifications += len(detail.get("specifications") or [])
                 supplement_markings += len(detail.get("marking_details") or [])
                 if detail.get("manufacturer"):
@@ -381,6 +387,7 @@ def build(database: Path, output: Path) -> dict[str, Any]:
                 "packages": len(package_names),
                 "reviewed": reviewed,
                 "historical": historical,
+                "reference_only": supplement_reference_only,
             },
             "quality_counts": dict(sorted(quality_counts.items())),
             "chunk_count": CHUNK_COUNT,

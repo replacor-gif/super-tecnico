@@ -130,13 +130,30 @@
 
 @media (max-width: 460px) {
   .st-beta-bar {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: .55rem;
+    padding: .65rem;
   }
 
-  .st-beta-bar p,
-  .st-beta-feedback,
-  .st-language-control {
+  .st-beta-bar strong {
+    grid-column: 1 / -1;
+  }
+
+  .st-beta-bar p {
+    display: none;
+  }
+
+  .st-beta-feedback {
     grid-column: 1;
+    grid-row: auto;
+    min-height: 42px;
+    padding-inline: .55rem;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .st-language-control {
+    grid-column: 2;
     grid-row: auto;
   }
 

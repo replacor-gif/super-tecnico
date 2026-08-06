@@ -408,6 +408,8 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "comparador.html",
         "averias.html",
         "feedback.html",
+        "simbolos.html",
+        "formacion-climatizacion.html",
         "assets/app.js",
         "assets/ads.js",
         "assets/calculations.js",
@@ -429,6 +431,10 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "assets/portal.css",
         "assets/smd.css",
         "assets/smd.js",
+        "assets/symbols.css",
+        "assets/symbols.js",
+        "assets/training.css",
+        "assets/training.js",
         "assets/styles.css",
         "assets/super-tecnico-logo.png",
         "assets/libro-electronica-inverter-replacor-portada.png",
@@ -441,6 +447,81 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         target = output / required
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, target)
+
+    symbols_catalog = read_json(source_root / "data" / "symbols" / "catalog.json")
+    symbols_course = read_json(source_root / "data" / "symbols" / "course.json")
+    symbols = symbols_catalog.get("symbols") or []
+    modules = symbols_course.get("modules") or []
+    lessons = [lesson for module in modules for lesson in (module.get("lessons") or [])]
+    if len(symbols) < 460 or len({item.get("id") for item in symbols}) != len(symbols):
+        raise BuildError("La biblioteca pública de símbolos está incompleta o contiene ID duplicados")
+    if len(modules) < 6 or len(lessons) < 24 or len({item.get("id") for item in lessons}) != len(lessons):
+        raise BuildError("El curso de esquemas está incompleto o contiene lecciones duplicadas")
+    for item in symbols:
+        if not all(item.get(key) for key in ("id", "nombre", "categoria", "descripcion", "interpretacion", "archivo_svg")):
+            raise BuildError(f"Ficha de símbolo incompleta: {item.get('id')}")
+        source = str(item.get("fuente") or "")
+        if source and not source.startswith("https://"):
+            raise BuildError(f"Fuente no segura en {item.get('id')}")
+        asset = source_root / str(item["archivo_svg"])
+        if not asset.is_file():
+            raise BuildError(f"Falta la imagen de {item.get('id')}: {item['archivo_svg']}")
+    for lesson in lessons:
+        if not lesson.get("steps") or not lesson.get("quiz") or not (source_root / str(lesson.get("archivo_svg"))).is_file():
+            raise BuildError(f"Lección interactiva incompleta: {lesson.get('id')}")
+    write_json(output / "data" / "symbols" / "catalog.json", symbols_catalog)
+    write_json(output / "data" / "symbols" / "course.json", symbols_course)
+    write_json(output / "data" / "symbols" / "index.json", read_json(source_root / "data" / "symbols" / "index.json"))
+    symbols_asset_output = output / "assets" / "symbols"
+    symbols_asset_output.mkdir(parents=True, exist_ok=True)
+    for path in sorted((source_root / "assets" / "symbols").glob("*.svg")):
+        shutil.copy2(path, symbols_asset_output / path.name)
+
+    training = read_json(source_root / "data" / "training" / "collection.json")
+    training_stats = training.get("stats") or {}
+    expected_training = {
+        "modules": 7,
+        "pages": 209,
+        "chapters": 167,
+        "figures": 158,
+        "tables": 132,
+    }
+    for key, expected in expected_training.items():
+        if int(training_stats.get(key) or 0) != expected:
+            raise BuildError(
+                f"Curso de climatización: {key} esperado={expected}, obtenido={training_stats.get(key)}"
+            )
+    training_modules = training.get("modules") or []
+    training_chapters = [
+        chapter
+        for module in training_modules
+        for chapter in (module.get("chapters") or [])
+    ]
+    chapter_ids = [str(chapter.get("id") or "") for chapter in training_chapters]
+    if len(chapter_ids) != len(set(chapter_ids)) or any(not value for value in chapter_ids):
+        raise BuildError("El curso de climatización contiene capítulos sin ID o duplicados")
+    figure_paths = {
+        str(block.get("src"))
+        for chapter in training_chapters
+        for block in (chapter.get("blocks") or [])
+        if block.get("type") == "figure"
+    }
+    if len(figure_paths) != expected_training["figures"]:
+        raise BuildError("El curso no referencia exactamente las 158 figuras publicables")
+    for figure in figure_paths:
+        if not figure.startswith("assets/training/") or not (source_root / figure).is_file():
+            raise BuildError(f"Figura de formación ausente o insegura: {figure}")
+    write_json(output / "data" / "training" / "collection.json", training)
+    write_json(
+        output / "data" / "training" / "build-report.json",
+        read_json(source_root / "data" / "training" / "build-report.json"),
+    )
+    training_assets = output / "assets" / "training"
+    training_assets.mkdir(parents=True, exist_ok=True)
+    for path in sorted((source_root / "assets" / "training").rglob("*.png")):
+        target = training_assets / path.relative_to(source_root / "assets" / "training")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(path, target)
 
     (output / ".nojekyll").write_text("", encoding="utf-8")
     advertising = validate_advertising_configuration(source_root, output)
@@ -498,6 +579,8 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "smd": smd_stats,
         "components": components_stats,
         "oem_pcb": oem_stats,
+        "symbols": {"symbols": len(symbols), "lessons": len(lessons), "modules": len(modules)},
+        "training": training_stats,
         "advertising": advertising,
         "checks": counters,
     }

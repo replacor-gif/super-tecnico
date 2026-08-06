@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-labelledby="title desc">
+<title id="title">Sonda de tensión</title><desc id="desc">Representación didáctica: Sonda de tensión</desc>
+<rect width="200" height="150" fill="#f8fafc"/><g fill="none" stroke="#132f3f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M25 70h60"/><circle cx="110" cy="70" r="25"/><text x="110" y="77">V</text><path d="M85 70h-8m58 0h40"/></g>
+<g fill="#132f3f" font-family="Arial,sans-serif" font-size="13" font-weight="700" text-anchor="middle"><text x="100" y="18">Sonda de tensión</text><text x="100" y="137">Punto y referencia</text></g></svg>

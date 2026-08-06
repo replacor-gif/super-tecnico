@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-labelledby="title desc">
+<title id="title">Lazo de corriente 4-20 mA</title><desc id="desc">Representación didáctica: Lazo de corriente 4-20 mA</desc>
+<rect width="200" height="150" fill="#f8fafc"/><g fill="none" stroke="#132f3f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 70h45m70 0h45"/><rect x="65" y="42" width="70" height="56" rx="6"/><text x="100" y="68">SIGNAL</text><text x="100" y="87">I/O</text></g>
+<g fill="#132f3f" font-family="Arial,sans-serif" font-size="13" font-weight="700" text-anchor="middle"><text x="100" y="18">Lazo de corriente 4-20 mA</text><text x="100" y="137">Loop + y Loop −</text></g></svg>

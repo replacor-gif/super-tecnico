@@ -35,6 +35,46 @@ const cache = new Map();
 const fileCache = new Map();
 const installedBrands = new Map();
 
+const uiMessages = {
+  es: {
+    recent:'Consultado recientemente', stepTwo:'Paso 2', need:'¿Qué necesitas hacer?', quickIntro:'Para consultar una avería, elige directamente el código. Para otro trabajo técnico, abre uno de los accesos.',
+    errorCode:'Código de error', selectCodes:'Selecciona uno de los {count} códigos', noCodes:'No hay códigos publicados', openRecord:'Abrir ficha',
+    noBrand:'¿No aparece la marca comercial?', noBrandHint:'Localiza el fabricante probable por el código impreso en la placa y consulta después el error.',
+    topicPlaceholder:'Selecciona un tema', categoryPlaceholder:'Selecciona una categoría', noTopics:'Sin temas publicados.', searchCode:'Buscar código o significado',
+    viewLibrary:'Ver todos los apartados técnicos ({count})', libraryKept:'No se ha eliminado información.', libraryHelp:'Aquí siguen disponibles todos los temas, errores, procedimientos, programaciones, pruebas y valores técnicos de la marca, organizados por categorías.',
+    categoriesStatus:'{categories} categorías disponibles · {errors} errores · {records} fichas técnicas', loadingQuick:'Preparando accesos rápidos…', loadingCategories:'Cargando categorías…',
+  },
+  en: {
+    recent:'Recently viewed', stepTwo:'Step 2', need:'What do you need to do?', quickIntro:'To check a fault, select its code directly. For other technical work, open one of the shortcuts.',
+    errorCode:'Error code', selectCodes:'Select one of {count} codes', noCodes:'No published codes', openRecord:'Open record',
+    noBrand:'Commercial brand not listed?', noBrandHint:'Use the code printed on the PCB to identify the likely manufacturer, then check the error.',
+    topicPlaceholder:'Select a topic', categoryPlaceholder:'Select a category', noTopics:'No published topics.', searchCode:'Search code or meaning',
+    viewLibrary:'View the complete technical library ({count})', libraryKept:'No information has been removed.', libraryHelp:'All topics, errors, procedures, settings, tests and technical values remain available, organised by category.',
+    categoriesStatus:'{categories} categories · {errors} errors · {records} technical records', loadingQuick:'Preparing shortcuts…', loadingCategories:'Loading categories…',
+  },
+  pt: {
+    recent:'Consultado recentemente', stepTwo:'Passo 2', need:'O que precisa de fazer?', quickIntro:'Para consultar uma avaria, selecione diretamente o código. Para outro trabalho técnico, abra um dos atalhos.',
+    errorCode:'Código de erro', selectCodes:'Selecione um dos {count} códigos', noCodes:'Sem códigos publicados', openRecord:'Abrir ficha',
+    noBrand:'A marca comercial não aparece?', noBrandHint:'Identifique o provável fabricante pelo código impresso na placa e consulte depois o erro.',
+    topicPlaceholder:'Selecione um tema', categoryPlaceholder:'Selecione uma categoria', noTopics:'Sem temas publicados.', searchCode:'Procurar código ou significado',
+    viewLibrary:'Ver toda a biblioteca técnica ({count})', libraryKept:'Nenhuma informação foi eliminada.', libraryHelp:'Todos os temas, erros, procedimentos, programações, testes e valores técnicos continuam disponíveis por categoria.',
+    categoriesStatus:'{categories} categorias · {errors} erros · {records} fichas técnicas', loadingQuick:'A preparar atalhos…', loadingCategories:'A carregar categorias…',
+  },
+  fr: {
+    recent:'Consulté récemment', stepTwo:'Étape 2', need:'Que devez-vous faire ?', quickIntro:'Pour consulter une panne, sélectionnez directement le code. Pour une autre intervention, ouvrez un raccourci.',
+    errorCode:'Code erreur', selectCodes:'Sélectionnez un des {count} codes', noCodes:'Aucun code publié', openRecord:'Ouvrir la fiche',
+    noBrand:'La marque commerciale est absente ?', noBrandHint:'Identifiez le fabricant probable grâce au code imprimé sur la carte, puis consultez le code erreur.',
+    topicPlaceholder:'Sélectionnez un thème', categoryPlaceholder:'Sélectionnez une catégorie', noTopics:'Aucun thème publié.', searchCode:'Rechercher un code ou une signification',
+    viewLibrary:'Voir toute la bibliothèque technique ({count})', libraryKept:'Aucune information n’a été supprimée.', libraryHelp:'Tous les thèmes, erreurs, procédures, réglages, essais et valeurs techniques restent disponibles par catégorie.',
+    categoriesStatus:'{categories} catégories · {errors} erreurs · {records} fiches techniques', loadingQuick:'Préparation des raccourcis…', loadingCategories:'Chargement des catégories…',
+  },
+};
+function ui(key, variables={}) {
+  const language = window.ST_I18N?.language || 'es';
+  const template = uiMessages[language]?.[key] || uiMessages.es[key] || key;
+  return Object.entries(variables).reduce((text, [name, value]) => text.replaceAll(`{${name}}`, String(value)), template);
+}
+
 function esc(value) {
   return String(value ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
 }
@@ -270,7 +310,7 @@ function rememberRecent(item) {
 function renderRecents() {
   const rows = readRecents();
   if (!rows.length) return '';
-  return `<section class="recent-panel context-panel"><h2>Consultado recientemente</h2><div class="recent-list">${rows.map(row => `<button type="button" class="recent-link" ${row.type === 'error' ? `data-open-error="${row.id}"` : `data-open-variant="${row.id}"`}>${row.code ? `<span class="code-badge">${esc(row.code)}</span>` : ''}${esc(row.title)}</button>`).join('')}</div></section>`;
+  return `<section class="recent-panel context-panel"><h2>${esc(ui('recent'))}</h2><div class="recent-list">${rows.map(row => `<button type="button" class="recent-link" ${row.type === 'error' ? `data-open-error="${row.id}"` : `data-open-variant="${row.id}"`}>${row.code ? `<span class="code-badge">${esc(row.code)}</span>` : ''}${esc(row.title)}</button>`).join('')}</div></section>`;
 }
 
 const primaryAccess = [
@@ -281,6 +321,11 @@ const primaryAccess = [
   {slug:'component_checks', label:'Comprobar componentes', hint:'Sondas, ventiladores, bombas, válvulas y electrónica', icon:'CMP'},
   {slug:'technical_values', label:'Valores técnicos', hint:'Tensiones, resistencias, presiones y tablas', icon:'VAL'},
 ];
+const primaryAccessTranslations = {
+  en:{errors:['Errors and protections','Select a code and review every documented meaning'],diagnostic_access:['Retrieve codes','Controllers, displays, boards, history and subcodes'],service_modes:['Forced operation and tests','Test Run, Pump Down and service functions'],configuration:['Settings and programming','Controllers, switches, parameters and addresses'],component_checks:['Check components','Sensors, fans, pumps, valves and electronics'],technical_values:['Technical values','Voltages, resistances, pressures and tables']},
+  pt:{errors:['Erros e proteções','Selecione um código e reveja todos os significados documentados'],diagnostic_access:['Obter códigos','Comandos, displays, placas, históricos e subcódigos'],service_modes:['Marchas forçadas e testes','Test Run, Pump Down e funções de serviço'],configuration:['Programação e ajustes','Comandos, interruptores, parâmetros e endereços'],component_checks:['Verificar componentes','Sondas, ventiladores, bombas, válvulas e eletrónica'],technical_values:['Valores técnicos','Tensões, resistências, pressões e tabelas']},
+  fr:{errors:['Erreurs et protections','Sélectionnez un code et consultez toutes les significations documentées'],diagnostic_access:['Obtenir les codes','Commandes, afficheurs, cartes, historiques et sous-codes'],service_modes:['Marches forcées et essais','Test Run, Pump Down et fonctions de service'],configuration:['Programmation et réglages','Commandes, commutateurs, paramètres et adresses'],component_checks:['Contrôler les composants','Sondes, ventilateurs, pompes, vannes et électronique'],technical_values:['Valeurs techniques','Tensions, résistances, pressions et tableaux']},
+};
 
 function errorCatalogOptions(catalog, placeholder='Selecciona un código de error') {
   const rows = [...catalog].sort((a, b) => String(a.code_display || '').localeCompare(
@@ -299,28 +344,32 @@ function renderQuickAccess() {
   const availableCategories = new Map(state.categories.map(category => [category.slug, category]));
   const taskButtons = primaryAccess
     .filter(item => availableCategories.has(item.slug))
-    .map(item => `<button type="button" class="task-card" data-open-category="${esc(item.slug)}">
+    .map(item => {
+      const category = availableCategories.get(item.slug);
+      const translated = primaryAccessTranslations[window.ST_I18N?.language]?.[item.slug];
+      return `<button type="button" class="task-card" data-open-category="${esc(item.slug)}">
       <span class="task-icon">${esc(item.icon)}</span>
-      <span><strong>${esc(item.label)}</strong><small>${esc(item.hint)}</small></span>
-    </button>`).join('') + `<button type="button" class="task-card task-card-oem" data-open-oem>
+      <span><strong>${esc(translated?.[0] || localizedText(category, 'name', item.label))}</strong><small>${esc(translated?.[1] || localizedText(category, 'description', item.hint))}</small></span>
+    </button>`;
+    }).join('') + `<button type="button" class="task-card task-card-oem" data-open-oem>
       <span class="task-icon">PCB</span>
-      <span><strong>¿No aparece la marca comercial?</strong><small>Localiza el fabricante probable por el código impreso en la placa y consulta después el error.</small></span>
+      <span><strong>${esc(ui('noBrand'))}</strong><small>${esc(ui('noBrandHint'))}</small></span>
     </button>`;
   const errorCount = state.errorCatalog.length;
   els.quickAccess.innerHTML = `
     <div class="quick-access-heading">
-      <span class="step-label">Paso 2</span>
-      <h2>¿Qué necesitas hacer?</h2>
-      <p>Para consultar una avería, elige directamente el código. Para otro trabajo técnico, abre uno de los accesos.</p>
+      <span class="step-label">${esc(ui('stepTwo'))}</span>
+      <h2>${esc(ui('need'))}</h2>
+      <p>${esc(ui('quickIntro'))}</p>
     </div>
     <form id="quickErrorForm" class="quick-error-form">
       <div class="field">
-        <label for="quickErrorSelect">Código de error</label>
+        <label for="quickErrorSelect">${esc(ui('errorCode'))}</label>
         <select id="quickErrorSelect" ${errorCount ? '' : 'disabled'}>
-          ${errorCatalogOptions(state.errorCatalog, errorCount ? `Selecciona uno de los ${errorCount} códigos` : 'No hay códigos publicados')}
+          ${errorCatalogOptions(state.errorCatalog, errorCount ? ui('selectCodes', {count:errorCount}) : ui('noCodes'))}
         </select>
       </div>
-      <button id="quickErrorButton" type="submit" disabled>Abrir ficha</button>
+      <button id="quickErrorButton" type="submit" disabled>${esc(ui('openRecord'))}</button>
     </form>
     <div class="task-grid">${taskButtons}</div>`;
 
@@ -337,7 +386,7 @@ function renderBrandDashboard() {
   state.category = null;
   state.topic = null;
   els.category.value = '';
-  els.topic.innerHTML = '<option value="">Selecciona un tema</option>';
+  els.topic.innerHTML = `<option value="">${esc(ui('topicPlaceholder'))}</option>`;
   els.topic.disabled = true;
   setBreadcrumb(state.brandName);
   els.context.classList.add('hidden');
@@ -345,14 +394,14 @@ function renderBrandDashboard() {
     const topics = category.topics || [];
     const topicButtons = topics.map(topic => `<button type="button" class="topic-link" data-open-topic="${topic.id}"><span>${esc(localizedText(topic, 'title'))}</span><small>${esc(countLabel(topic.variant_count, 'ficha'))}</small></button>`).join('');
     const primary = category.slug === 'errors'
-      ? `<button type="button" class="category-primary" data-open-category="errors">Buscar código o significado</button>`
+      ? `<button type="button" class="category-primary" data-open-category="errors">${esc(ui('searchCode'))}</button>`
       : '';
-    return `<details class="category-card" ${category.slug === 'errors' ? 'open' : ''}>
+    return `<details class="category-card">
       <summary><span class="category-icon">${esc(categoryIcon(category.slug))}</span><span><span class="category-title">${esc(localizedText(category, 'name'))}</span><span class="category-description">${esc(localizedText(category, 'description'))}</span></span><span class="category-count">${esc(countLabel(category.variant_count, 'ficha'))}</span></summary>
-      <div class="topic-menu">${topicButtons || '<p class="empty">Sin temas publicados.</p>'}</div>${primary}
+      <div class="topic-menu">${topicButtons || `<p class="empty">${esc(ui('noTopics'))}</p>`}</div>${primary}
     </details>`;
   }).join('');
-  els.content.innerHTML = `${renderRecents()}<details class="library-explorer"><summary>Ver todos los apartados técnicos (${state.categories.length})</summary><div class="library-explorer-body"><p><strong>No se ha eliminado información.</strong> Aquí siguen disponibles todos los temas, errores, procedimientos, programaciones, pruebas y valores técnicos de la marca, organizados por categorías.</p><section class="category-grid">${cards}</section></div></details>`;
+  els.content.innerHTML = `${renderRecents()}<details class="library-explorer"><summary>${esc(ui('viewLibrary', {count:state.categories.length}))}</summary><div class="library-explorer-body"><p><strong>${esc(ui('libraryKept'))}</strong> ${esc(ui('libraryHelp'))}</p><section class="category-grid">${cards}</section></div></details>`;
 }
 
 function showHome() {
@@ -382,8 +431,8 @@ async function selectBrand(slug) {
   const option = els.brand.selectedOptions[0];
   state.brandName = option?.textContent || slug;
   els.category.disabled = true; els.topic.disabled = true;
-  if (els.quickAccess) els.quickAccess.innerHTML = '<div class="loading">Preparando accesos rápidos…</div>';
-  loading('Cargando categorías…');
+  if (els.quickAccess) els.quickAccess.innerHTML = `<div class="loading">${esc(ui('loadingQuick'))}</div>`;
+  loading(ui('loadingCategories'));
   try {
     const [data, errorData] = await Promise.all([
       api('categories', {brand:slug}),
@@ -391,13 +440,13 @@ async function selectBrand(slug) {
     ]);
     state.categories = data.categories;
     state.errorCatalog = errorData.errors || [];
-    els.category.innerHTML = '<option value="">Selecciona una categoría</option>' + data.categories.map(c => `<option value="${esc(c.slug)}">${esc(c.name)} (${c.variant_count || 0})</option>`).join('');
+    els.category.innerHTML = `<option value="">${esc(ui('categoryPlaceholder'))}</option>` + data.categories.map(c => `<option value="${esc(c.slug)}">${esc(localizedText(c, 'name'))} (${c.variant_count || 0})</option>`).join('');
     els.category.disabled = false;
     const remembered = localStorage.getItem(`st.category.${slug}`);
     els.category.value = data.categories.some(c => c.slug === remembered) ? remembered : '';
     const counts = state.brandInfo?.counts || {};
     els.brandStatus.removeAttribute('data-i18n');
-    els.brandStatus.textContent = `${data.categories.length} categorías disponibles · ${counts.errors || 0} errores · ${counts.variants || 0} fichas técnicas`;
+    els.brandStatus.textContent = ui('categoriesStatus', {categories:data.categories.length, errors:counts.errors || 0, records:counts.variants || 0});
     renderQuickAccess();
     renderBrandDashboard();
   } catch (error) { showError(error); }
@@ -1014,6 +1063,17 @@ document.addEventListener('click', event => {
   const topicButton = event.target.closest('[data-open-topic]'); if (topicButton) selectTopic(topicButton.dataset.openTopic);
   const errorButton = event.target.closest('[data-open-error]'); if (errorButton) openError(errorButton.dataset.openError);
   const variantButton = event.target.closest('[data-open-variant]'); if (variantButton) openVariant(variantButton.dataset.openVariant);
+});
+
+document.addEventListener('st:languagechange', () => {
+  if (!state.brand || !state.categories.length) return;
+  const selectedCategory = els.category.value;
+  els.category.innerHTML = `<option value="">${esc(ui('categoryPlaceholder'))}</option>` + state.categories.map(category => `<option value="${esc(category.slug)}">${esc(localizedText(category, 'name'))} (${category.variant_count || 0})</option>`).join('');
+  els.category.value = selectedCategory;
+  const counts = state.brandInfo?.counts || {};
+  els.brandStatus.textContent = ui('categoriesStatus', {categories:state.categories.length, errors:counts.errors || 0, records:counts.variants || 0});
+  renderQuickAccess();
+  if (els.context.classList.contains('hidden')) renderBrandDashboard();
 });
 
 init();

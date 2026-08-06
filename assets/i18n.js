@@ -27,6 +27,9 @@
       'common.source': 'Fuente',
       'common.sources': 'Fuentes documentales',
       'common.noData': 'Dato no disponible',
+      'common.clear': 'Limpiar',
+      'common.legal': 'Aviso legal',
+      'common.privacy': 'Política de privacidad',
       'portal.eyebrow': 'Biblioteca técnica en crecimiento',
       'portal.title': '¿Qué necesitas consultar?',
       'portal.intro': 'Elige una herramienta. Cada apartado conserva su propia información y está preparado para incorporar nuevas utilidades sin mezclar contenidos.',
@@ -58,12 +61,14 @@
       'portal.compBadge': 'Base documental',
       'portal.compTitle': 'Referencias de componentes',
       'portal.compText': 'Busca referencias, fabricantes, encapsulados, marcados, patillajes y parámetros para identificar el componente real.',
-      'portal.compOne': '11.532 referencias y 8.363 parámetros',
+      'portal.compOne': '38.618 referencias y 8.363 parámetros',
       'portal.compTwo': '8.205 fichas oficiales o revisadas',
       'portal.compThree': 'Los candidatos históricos se muestran con advertencia',
       'portal.compOpen': 'Buscar componentes',
       'portal.compareBadge': 'Contraste técnico', 'portal.compareTitle': 'Comparador de componentes', 'portal.compareText': 'Compara dos referencias con los datos reales de la biblioteca y descubre diferencias críticas o información pendiente.', 'portal.compareOne': 'Tabla completa lado a lado', 'portal.compareTwo': 'Nunca garantiza una sustitución directa', 'portal.compareThree': 'Candidatos solo con datos suficientes', 'portal.compareOpen': 'Abrir comparador',
       'portal.faultBadge': 'Casos reales', 'portal.faultTitle': 'Averías reales por placa', 'portal.faultText': 'Busca por la referencia de la placa y consulta síntomas, reparaciones confirmadas y soluciones alternativas revisadas.', 'portal.faultOne': 'Búsqueda tolerante a espacios y guiones', 'portal.faultTwo': 'Aportaciones moderadas antes de publicarse', 'portal.faultThree': 'Confirmaciones de otros técnicos', 'portal.faultOpen': 'Buscar averías reales',
+      'portal.trainingBadge': 'Formación profesional', 'portal.trainingTitle': 'Curso técnico de climatización', 'portal.trainingText': 'Formación y consulta rápida sobre componentes, control electrónico, mediciones y diagnóstico de taller.', 'portal.trainingOne': '7 módulos y 209 páginas de contenido', 'portal.trainingTwo': '167 capítulos, 132 tablas y 158 figuras', 'portal.trainingThree': 'Buscador, guardados y progreso por capítulo', 'portal.trainingOpen': 'Abrir curso de climatización',
+      'portal.symbolBadge': 'Formación técnica', 'portal.symbolTitle': 'Simbología y lectura de esquemas', 'portal.symbolText': 'Biblioteca visual y curso interactivo para reconocer símbolos, seguir circuitos y comprender diagramas eléctricos y electrónicos.', 'portal.symbolOne': '460 símbolos documentados', 'portal.symbolTwo': '24 lecciones en 6 módulos progresivos', 'portal.symbolThree': 'Ejercicios, cuestionarios y progreso guardado', 'portal.symbolOpen': 'Abrir simbología y curso',
       'portal.ideaBadge': 'Comunidad', 'portal.ideaTitle': 'Ideas, errores y mejoras', 'portal.ideaText': 'Propón cambios, comunica datos incorrectos y apoya las mejoras que consideres más útiles.', 'portal.ideaOne': 'Sin necesidad de crear una cuenta', 'portal.ideaTwo': 'Propuestas revisadas y con estado visible', 'portal.ideaThree': 'Panel privado de moderación', 'portal.ideaOpen': 'Abrir ideas y mejoras',
       'calc.subtitle': 'Calculadoras técnicas',
       'calc.print': 'Imprimir',
@@ -228,6 +233,9 @@
       'common.source': 'Source',
       'common.sources': 'Document sources',
       'common.noData': 'Not available',
+      'common.clear': 'Clear',
+      'common.legal': 'Legal notice',
+      'common.privacy': 'Privacy policy',
       'portal.eyebrow': 'A growing technical library',
       'portal.title': 'What do you need to check?',
       'portal.intro': 'Choose a tool. Each section keeps its own information and is ready for new utilities without mixing content.',
@@ -259,12 +267,14 @@
       'portal.compBadge': 'Reference database',
       'portal.compTitle': 'Component references',
       'portal.compText': 'Search part numbers, manufacturers, packages, markings, pinouts and parameters to identify the actual component.',
-      'portal.compOne': '11,532 references and 8,363 parameters',
+      'portal.compOne': '38,618 references and 8,363 parameters',
       'portal.compTwo': '8,205 official or reviewed records',
       'portal.compThree': 'Historical candidates are clearly flagged',
       'portal.compOpen': 'Search components',
       'portal.compareBadge': 'Technical cross-check', 'portal.compareTitle': 'Component comparator', 'portal.compareText': 'Compare two references using real library data and identify critical differences or missing information.', 'portal.compareOne': 'Full side-by-side table', 'portal.compareTwo': 'Never guarantees a direct replacement', 'portal.compareThree': 'Candidates only with sufficient data', 'portal.compareOpen': 'Open comparator',
       'portal.faultBadge': 'Real cases', 'portal.faultTitle': 'Real faults by board', 'portal.faultText': 'Search by board reference and review symptoms, confirmed repairs and moderated alternative solutions.', 'portal.faultOne': 'Search ignores spaces and hyphens', 'portal.faultTwo': 'Contributions are moderated before publication', 'portal.faultThree': 'Confirmations from other technicians', 'portal.faultOpen': 'Search real faults',
+      'portal.trainingBadge': 'Professional training', 'portal.trainingTitle': 'HVAC technical course', 'portal.trainingText': 'Training and quick reference on components, electronic control, measurements and workshop diagnostics.', 'portal.trainingOne': '7 modules and 209 pages of content', 'portal.trainingTwo': '167 chapters, 132 tables and 158 figures', 'portal.trainingThree': 'Search, saved chapters and per-chapter progress', 'portal.trainingOpen': 'Open HVAC course',
+      'portal.symbolBadge': 'Technical training', 'portal.symbolTitle': 'Symbols and schematic reading', 'portal.symbolText': 'A visual library and interactive course to recognise symbols, trace circuits and understand electrical and electronic diagrams.', 'portal.symbolOne': '460 documented symbols', 'portal.symbolTwo': '24 lessons in 6 progressive modules', 'portal.symbolThree': 'Exercises, quizzes and saved progress', 'portal.symbolOpen': 'Open symbols and course',
       'portal.ideaBadge': 'Community', 'portal.ideaTitle': 'Ideas, errors and improvements', 'portal.ideaText': 'Suggest changes, report incorrect data and support the improvements you find most useful.', 'portal.ideaOne': 'No account required', 'portal.ideaTwo': 'Reviewed proposals with visible status', 'portal.ideaThree': 'Private moderation panel', 'portal.ideaOpen': 'Open ideas and improvements',
       'calc.subtitle': 'Technical calculators',
       'calc.print': 'Print',
@@ -429,6 +439,9 @@
       'common.source': 'Fonte',
       'common.sources': 'Fontes documentais',
       'common.noData': 'Não disponível',
+      'common.clear': 'Limpar',
+      'common.legal': 'Aviso legal',
+      'common.privacy': 'Política de privacidade',
       'portal.eyebrow': 'Biblioteca técnica em crescimento',
       'portal.title': 'O que precisa de consultar?',
       'portal.intro': 'Escolha uma ferramenta. Cada área mantém a sua informação e está preparada para novas utilidades sem misturar conteúdos.',
@@ -460,12 +473,14 @@
       'portal.compBadge': 'Base documental',
       'portal.compTitle': 'Referências de componentes',
       'portal.compText': 'Pesquise referências, fabricantes, encapsulamentos, marcações, pinagens e parâmetros para identificar o componente real.',
-      'portal.compOne': '11.532 referências e 8.363 parâmetros',
+      'portal.compOne': '38.618 referências e 8.363 parâmetros',
       'portal.compTwo': '8.205 fichas oficiais ou revistas',
       'portal.compThree': 'Os candidatos históricos são assinalados',
       'portal.compOpen': 'Pesquisar componentes',
       'portal.compareBadge': 'Verificação técnica', 'portal.compareTitle': 'Comparador de componentes', 'portal.compareText': 'Compare duas referências com dados reais e identifique diferenças críticas ou informação em falta.', 'portal.compareOne': 'Tabela completa lado a lado', 'portal.compareTwo': 'Nunca garante substituição direta', 'portal.compareThree': 'Candidatos apenas com dados suficientes', 'portal.compareOpen': 'Abrir comparador',
       'portal.faultBadge': 'Casos reais', 'portal.faultTitle': 'Avarias reais por placa', 'portal.faultText': 'Procure pela referência da placa e consulte sintomas, reparações e soluções alternativas moderadas.', 'portal.faultOne': 'Pesquisa tolerante a espaços e hífenes', 'portal.faultTwo': 'Contribuições moderadas antes da publicação', 'portal.faultThree': 'Confirmações de outros técnicos', 'portal.faultOpen': 'Procurar avarias reais',
+      'portal.trainingBadge': 'Formação profissional', 'portal.trainingTitle': 'Curso técnico de climatização', 'portal.trainingText': 'Formação e consulta rápida sobre componentes, controlo eletrónico, medições e diagnóstico de oficina.', 'portal.trainingOne': '7 módulos e 209 páginas de conteúdo', 'portal.trainingTwo': '167 capítulos, 132 tabelas e 158 figuras', 'portal.trainingThree': 'Pesquisa, guardados e progresso por capítulo', 'portal.trainingOpen': 'Abrir curso de climatização',
+      'portal.symbolBadge': 'Formação técnica', 'portal.symbolTitle': 'Simbologia e leitura de esquemas', 'portal.symbolText': 'Biblioteca visual e curso interativo para reconhecer símbolos, seguir circuitos e compreender diagramas elétricos e eletrónicos.', 'portal.symbolOne': '460 símbolos documentados', 'portal.symbolTwo': '24 lições em 6 módulos progressivos', 'portal.symbolThree': 'Exercícios, questionários e progresso guardado', 'portal.symbolOpen': 'Abrir simbologia e curso',
       'portal.ideaBadge': 'Comunidade', 'portal.ideaTitle': 'Ideias, erros e melhorias', 'portal.ideaText': 'Proponha alterações, comunique dados incorretos e apoie as melhorias mais úteis.', 'portal.ideaOne': 'Sem necessidade de conta', 'portal.ideaTwo': 'Propostas revistas com estado visível', 'portal.ideaThree': 'Painel privado de moderação', 'portal.ideaOpen': 'Abrir ideias e melhorias',
       'calc.subtitle': 'Calculadoras técnicas',
       'calc.print': 'Imprimir',
@@ -630,6 +645,9 @@
       'common.source': 'Source',
       'common.sources': 'Sources documentaires',
       'common.noData': 'Non disponible',
+      'common.clear': 'Effacer',
+      'common.legal': 'Mentions légales',
+      'common.privacy': 'Politique de confidentialité',
       'portal.eyebrow': 'Bibliothèque technique en développement',
       'portal.title': 'Que souhaitez-vous consulter ?',
       'portal.intro': 'Choisissez un outil. Chaque rubrique conserve ses informations et peut accueillir de nouveaux outils sans mélanger les contenus.',
@@ -661,12 +679,14 @@
       'portal.compBadge': 'Base documentaire',
       'portal.compTitle': 'Références de composants',
       'portal.compText': 'Recherchez références, fabricants, boîtiers, marquages, brochages et paramètres afin d’identifier le composant réel.',
-      'portal.compOne': '11 532 références et 8 363 paramètres',
+      'portal.compOne': '38 618 références et 8 363 paramètres',
       'portal.compTwo': '8 205 fiches officielles ou vérifiées',
       'portal.compThree': 'Les candidats historiques sont clairement signalés',
       'portal.compOpen': 'Rechercher des composants',
       'portal.compareBadge': 'Vérification technique', 'portal.compareTitle': 'Comparateur de composants', 'portal.compareText': 'Comparez deux références avec les données réelles et identifiez les écarts critiques ou informations manquantes.', 'portal.compareOne': 'Tableau complet côte à côte', 'portal.compareTwo': 'Ne garantit jamais un remplacement direct', 'portal.compareThree': 'Candidats avec données suffisantes uniquement', 'portal.compareOpen': 'Ouvrir le comparateur',
       'portal.faultBadge': 'Cas réels', 'portal.faultTitle': 'Pannes réelles par carte', 'portal.faultText': 'Recherchez par référence de carte et consultez symptômes, réparations et solutions alternatives vérifiées.', 'portal.faultOne': 'Recherche tolérante aux espaces et tirets', 'portal.faultTwo': 'Contributions modérées avant publication', 'portal.faultThree': 'Confirmations d’autres techniciens', 'portal.faultOpen': 'Rechercher les pannes',
+      'portal.trainingBadge': 'Formation professionnelle', 'portal.trainingTitle': 'Cours technique de climatisation', 'portal.trainingText': 'Formation et consultation rapide sur les composants, la commande électronique, les mesures et le diagnostic en atelier.', 'portal.trainingOne': '7 modules et 209 pages de contenu', 'portal.trainingTwo': '167 chapitres, 132 tableaux et 158 figures', 'portal.trainingThree': 'Recherche, favoris et progression par chapitre', 'portal.trainingOpen': 'Ouvrir le cours de climatisation',
+      'portal.symbolBadge': 'Formation technique', 'portal.symbolTitle': 'Symboles et lecture de schémas', 'portal.symbolText': 'Bibliothèque visuelle et cours interactif pour reconnaître les symboles, suivre les circuits et comprendre les diagrammes électriques et électroniques.', 'portal.symbolOne': '460 symboles documentés', 'portal.symbolTwo': '24 leçons en 6 modules progressifs', 'portal.symbolThree': 'Exercices, quiz et progression enregistrée', 'portal.symbolOpen': 'Ouvrir symboles et cours',
       'portal.ideaBadge': 'Communauté', 'portal.ideaTitle': 'Idées, erreurs et améliorations', 'portal.ideaText': 'Proposez des changements, signalez les données incorrectes et soutenez les améliorations utiles.', 'portal.ideaOne': 'Sans création de compte', 'portal.ideaTwo': 'Propositions vérifiées avec état visible', 'portal.ideaThree': 'Panneau de modération privé', 'portal.ideaOpen': 'Ouvrir idées et améliorations',
       'calc.subtitle': 'Calculatrices techniques',
       'calc.print': 'Imprimer',
@@ -842,6 +862,11 @@
     root.querySelectorAll('[data-i18n-aria]').forEach(element => {
       element.setAttribute('aria-label', t(element.dataset.i18nAria));
     });
+    root.querySelectorAll('.st-legal-links a').forEach(element => {
+      const href = element.getAttribute('href') || '';
+      if (href.includes('aviso-legal')) element.textContent = t('common.legal');
+      if (href.includes('politica-de-privacidad')) element.textContent = t('common.privacy');
+    });
   }
 
   function renderBetaBar() {
@@ -854,6 +879,7 @@
       const main = document.querySelector('main');
       document.body.insertBefore(bar, main || document.body.firstChild);
     }
+    bar.setAttribute('aria-label', t('common.betaTitle'));
     bar.innerHTML = `
       <strong>${t('common.betaTitle')}</strong>
       <p>${t('common.betaText')}</p>
