@@ -1,11 +1,13 @@
 (() => {
   'use strict';
 
-  const API_ENDPOINT = 'https://home-5020945339.app-ionos.space/super-tecnico/api/index.php';
+  const API_ENDPOINT = new URL('api/index.php', document.baseURI).href;
   const CLIENT_KEY = 'st.community.client.v1';
 
   function pageKey() {
-    const file = location.pathname.split('/').filter(Boolean).pop() || 'index';
+    const file = location.pathname.endsWith('/')
+      ? 'index'
+      : location.pathname.split('/').filter(Boolean).pop() || 'index';
     const key = file.replace(/\.html?$/i, '').toLowerCase();
     return key === 'index' ? 'inicio' : key.replace(/[^a-z0-9-]/g, '-').slice(0, 64);
   }
@@ -22,15 +24,25 @@
   function showCounter(views) {
     const footer = document.querySelector('body > footer:last-of-type') || document.querySelector('.st-page-footer');
     if (!footer) return;
-    const counter = document.createElement('span');
+    const counter = footer.querySelector('.st-page-counter') || document.createElement('span');
+    const labels = {
+      es: ['Visitas', 'visitas a esta página'],
+      en: ['Views', 'views of this page'],
+      pt: ['Visitas', 'visitas a esta página'],
+      fr: ['Vues', 'vues de cette page'],
+    };
+    const language = (document.documentElement.lang || 'es').slice(0, 2).toLowerCase();
+    const [shortLabel, ariaLabel] = labels[language] || labels.es;
+    const locale = language === 'en' ? 'en-US' : language === 'pt' ? 'pt-PT' : language === 'fr' ? 'fr-FR' : 'es-ES';
+    const formattedViews = Number(views).toLocaleString(locale);
     counter.className = 'st-page-counter';
-    counter.textContent = `Visitas: ${Number(views).toLocaleString('es-ES')}`;
-    counter.setAttribute('aria-label', `${Number(views).toLocaleString('es-ES')} visitas a esta página`);
-    footer.append(counter);
+    counter.textContent = `${shortLabel}: ${formattedViews}`;
+    counter.setAttribute('aria-label', `${formattedViews} ${ariaLabel}`);
+    if (!counter.isConnected) footer.append(counter);
   }
 
   async function count() {
-    const url = new URL(API_ENDPOINT);
+    const url = new URL(API_ENDPOINT, window.location.href);
     url.searchParams.set('action', 'page-view');
     const token = clientToken();
     try {

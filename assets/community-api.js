@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const API_ENDPOINT = document.documentElement.dataset.apiEndpoint || 'https://home-5020945339.app-ionos.space/super-tecnico/api/index.php';
+  const API_ENDPOINT = document.documentElement.dataset.apiEndpoint || new URL('api/index.php', document.baseURI).href;
   const CLIENT_KEY = 'st.community.client.v1';
 
   function clientToken() {

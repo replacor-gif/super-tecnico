@@ -6,14 +6,14 @@
   const SLOT_RE = /^\d+$/;
 
   function loadAdSenseScript(publisherId) {
-    const existing = document.querySelector('script[data-super-tecnico-adsense]');
+    const existing = document.getElementById('super-tecnico-adsense');
     if (existing) return Promise.resolve(existing);
 
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.async = true;
       script.crossOrigin = 'anonymous';
-      script.dataset.superTecnicoAdsense = 'true';
+      script.id = 'super-tecnico-adsense';
       script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(publisherId)}`;
       script.addEventListener('load', () => resolve(script), {once: true});
       script.addEventListener('error', reject, {once: true});

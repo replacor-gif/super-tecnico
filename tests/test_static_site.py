@@ -273,6 +273,8 @@ class StaticSiteTests(unittest.TestCase):
             "feedback.html",
             "simbolos.html",
             "formacion-climatizacion.html",
+            "simbolos.html",
+            "formacion-climatizacion.html",
             "assets/comparator.js",
             "assets/community-api.js",
             "assets/faults.js",
@@ -332,9 +334,14 @@ class StaticSiteTests(unittest.TestCase):
                 self.assertIn("assets/page-counter.js", html)
 
         script = (self.dist / "assets" / "page-counter.js").read_text(encoding="utf-8")
+        community_script = (self.dist / "assets" / "community-api.js").read_text(encoding="utf-8")
         self.assertIn("action', 'page-view'", script)
         self.assertIn("st-page-counter", script)
-        self.assertIn("Visitas:", script)
+        self.assertIn("new URL('api/index.php', document.baseURI).href", script)
+        self.assertIn("location.pathname.endsWith('/')", script)
+        self.assertIn("new URL('api/index.php', document.baseURI).href", community_script)
+        self.assertNotIn("home-5020945339.app-ionos.space", script)
+        self.assertNotIn("home-5020945339.app-ionos.space", community_script)
 
     def test_industrial_manufacturers_v1_are_complete_searchable_and_public_safe(self):
         expectations = {
