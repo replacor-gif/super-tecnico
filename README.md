@@ -90,6 +90,7 @@ Los candidatos históricos se publican únicamente como índices factuales de lo
 ```bash
 python -m unittest discover -s tests -v
 node tests/test_calculations.js
+node tests/test_datasheet_finder.js
 python tools/build_static.py --source . --output dist
 python -m http.server 8080 --directory dist
 ```

@@ -34,6 +34,9 @@ jobs:
       - name: Verificar fórmulas de las calculadoras
         run: node tests/test_calculations.js
 
+      - name: Verificar buscador universal de datasheets
+        run: node tests/test_datasheet_finder.js
+
       - name: Construir sitio público
         run: python tools/build_static.py --source . --output dist
 

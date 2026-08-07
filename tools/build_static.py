@@ -419,6 +419,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "assets/common.css",
         "assets/components.css",
         "assets/components.js",
+        "assets/datasheet-finder.js",
         "assets/comparator.css",
         "assets/comparator.js",
         "assets/community-api.js",
