@@ -4,7 +4,7 @@ Fecha de revisión: 7 de agosto de 2026.
 
 ## Resultado
 
-La colección se integra como una biblioteca de consulta independiente llamada **Electrónica de placas**. No se presenta en el orden numérico de los documentos: el técnico puede entrar por síntoma, por bloque funcional, por búsqueda directa o por la biblioteca completa.
+La colección se integra como una enciclopedia formativa independiente llamada **Enciclopedia de electrónica**. No se presenta en el orden numérico de los documentos: el técnico elige libremente un tema, un área de conocimiento o un capítulo, y utiliza la búsqueda solo como acceso secundario.
 
 La versión generada contiene:
 
@@ -14,7 +14,6 @@ La versión generada contiene:
 - 397 figuras de contenido.
 - 235 tablas útiles.
 - 54.283 palabras indexadas, incluidas las tablas.
-- 8 recorridos por síntomas.
 - 11 bloques funcionales.
 - 5 enlaces directos a herramientas relacionadas de Super Técnico.
 
@@ -29,17 +28,15 @@ La versión generada contiene:
 
 ## Criterio de organización
 
-### Entrada por síntoma
+### Enciclopedia por temas
 
-Placa muerta; fusible o lámpara serie; arranca y se para; comunicación; sobrecorriente real o falsa; salida que no actúa; compresor inverter que no arranca; e intermitencias, ruido o fallos fantasma.
+Los 23 temas aparecen como módulos de aprendizaje. Se ordenan pedagógicamente desde resistencias, diodos, transistores y magnéticos hasta fuentes, medida, control, comunicaciones, potencia, PFC, IPM y diagnóstico global.
 
-### Entrada por bloque de placa
+### Entrada por área de conocimiento
 
 Diagnóstico y método; fuentes y raíles; medida; comunicaciones; control y firmware; acondicionamiento de señal; aislamiento; salidas y actuadores; inverter y potencia; protección y compatibilidad electromagnética; y componentes pasivos.
 
-### Biblioteca completa
-
-Permite filtrar por bloque y nivel. La numeración original se conserva internamente para trazabilidad, pero no condiciona el recorrido del técnico.
+La numeración original se conserva internamente para trazabilidad, pero no condiciona el recorrido del técnico.
 
 ## Decisiones editoriales importantes
 
@@ -52,8 +49,8 @@ Permite filtrar por bloque y nivel. La numeración original se conserva internam
 
 ## Presentación en la aplicación
 
-- Buscador único con resultados ordenados por relevancia y sin abrir automáticamente el primero.
-- Fichas plegables para evitar sobrecarga visual.
+- La enciclopedia por temas es la pantalla inicial; el buscador queda en una pestaña secundaria y nunca abre automáticamente el primer resultado.
+- Fichas por tema con nivel, contenido y progreso para evitar sobrecarga visual.
 - Lector con índice lateral, selector de apartado, anterior/siguiente, guardados y progreso.
 - Imágenes ampliables y tablas adaptables a móvil.
 - Interfaz en español, inglés, portugués y francés; el contenido técnico permanece revisado en español en esta primera integración.
@@ -69,4 +66,3 @@ Los originales DOCX y PDF no forman parte de la compilación pública. Se public
 - 59 pruebas unitarias y de estructura superadas.
 - Prueba funcional en Chrome superada: carga, búsqueda `ULN2003`, apertura del lector, filtros, traducción de interfaz y vista móvil.
 - Comprobación visual de escritorio y móvil superada.
-

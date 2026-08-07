@@ -9,7 +9,7 @@
     chapters: new Map(),
     activeModule: null,
     activeChapter: null,
-    previousView: 'routes',
+    previousView: 'library',
     bookmarks: loadSet('st.electronics.bookmarks'),
     completed: loadSet('st.electronics.completed'),
   };
@@ -29,6 +29,52 @@
     },
   };
 
+  Object.assign(ui.es, {
+    eyebrow:'Enciclopedia técnica REPLACOR', title:'Aprende electrónica de placas a tu ritmo',
+    intro:'Elige cualquier tema y profundiza hasta donde necesites. Puedes comenzar por los fundamentos, estudiar un bloque completo o consultar directamente un capítulo concreto.',
+    modules:'temas', chapters:'capítulos', libraryTab:'Enciclopedia por temas', groupsTab:'Áreas de electrónica', lookupTab:'Consulta rápida', savedTab:'Guardados y progreso',
+    allContent:'Ruta formativa flexible', libraryTitle:'Elige un tema para empezar', libraryIntro:'Los temas están ordenados desde los fundamentos hasta la electrónica inverter y el diagnóstico completo.',
+    boardMap:'Mapa de conocimientos', groupsTitle:'Explora la electrónica por áreas', groupsIntro:'Entra en el área que quieras estudiar; no necesitas seguir un recorrido obligatorio.',
+    quickLookup:'Consulta rápida', searchTitle:'Busca un concepto, componente o medida', searchIntro:'La búsqueda es una ayuda secundaria para llegar directamente a un apartado de la enciclopedia.',
+    searchPlaceholder:'Ejemplos: ULN2003, PFC, optoacoplador, bus DC, comparador…', block:'Área', allBlocks:'Todas las áreas',
+    personal:'Tu espacio de aprendizaje', savedTitle:'Guardados y progreso', savedIntro:'Retoma el estudio o vuelve a los apartados que quieras conservar.',
+    progressLabel:'Tu progreso', resume:'Continuar donde lo dejé', completedSections:'apartados estudiados', savedSections:'apartados guardados',
+    openTopic:'Estudiar tema', complete:'Marcar como estudiado', markConsulted:'Marcar estudiado', consulted:'✓ Estudiado', progress:'estudiados', sections:'apartados'
+  });
+  Object.assign(ui.en, {
+    eyebrow:'REPLACOR technical encyclopedia', title:'Learn circuit-board electronics at your own pace',
+    intro:'Choose any topic and go as deep as you need. Start with fundamentals, study a complete area or open a specific chapter.',
+    libraryTab:'Encyclopedia by topic', groupsTab:'Electronics areas', lookupTab:'Quick lookup', savedTab:'Saved and progress',
+    allContent:'Flexible learning path', libraryTitle:'Choose a topic to begin', libraryIntro:'Topics are ordered from fundamentals through inverter electronics and complete diagnosis.',
+    boardMap:'Knowledge map', groupsTitle:'Explore electronics by area', groupsIntro:'Study any area you choose; there is no mandatory route.',
+    searchTitle:'Search for a concept, component or measurement', searchIntro:'Search is a secondary aid for opening a specific encyclopedia section.',
+    searchPlaceholder:'Examples: ULN2003, PFC, optocoupler, DC bus, comparator…', block:'Area', allBlocks:'All areas',
+    personal:'Your learning space', savedTitle:'Saved and progress', savedIntro:'Resume learning or revisit saved sections.',
+    progressLabel:'Your progress', resume:'Continue where I stopped', completedSections:'studied sections', savedSections:'saved sections', openTopic:'Study topic', complete:'Mark as studied', markConsulted:'Mark studied', consulted:'✓ Studied', progress:'studied'
+  });
+  Object.assign(ui.pt, {
+    eyebrow:'Enciclopédia técnica REPLACOR', title:'Aprenda eletrónica de placas ao seu ritmo',
+    intro:'Escolha qualquer tema e aprofunde até onde precisar. Comece pelos fundamentos, estude uma área completa ou abra um capítulo específico.',
+    libraryTab:'Enciclopédia por temas', groupsTab:'Áreas de eletrónica', lookupTab:'Consulta rápida', savedTab:'Guardados e progresso',
+    allContent:'Percurso formativo flexível', libraryTitle:'Escolha um tema para começar', libraryIntro:'Os temas estão ordenados dos fundamentos à eletrónica inverter e ao diagnóstico completo.',
+    boardMap:'Mapa de conhecimentos', groupsTitle:'Explore a eletrónica por áreas', groupsIntro:'Estude a área que quiser; não existe um percurso obrigatório.',
+    searchTitle:'Procure um conceito, componente ou medição', searchIntro:'A pesquisa é uma ajuda secundária para abrir uma secção da enciclopédia.',
+    searchPlaceholder:'Exemplos: ULN2003, PFC, optoacoplador, bus DC, comparador…', block:'Área', allBlocks:'Todas as áreas',
+    personal:'O seu espaço de aprendizagem', savedTitle:'Guardados e progresso', savedIntro:'Retome o estudo ou volte às secções guardadas.',
+    progressLabel:'O seu progresso', resume:'Continuar onde parei', completedSections:'secções estudadas', savedSections:'secções guardadas', openTopic:'Estudar tema', complete:'Marcar como estudado', markConsulted:'Marcar estudado', consulted:'✓ Estudado', progress:'estudados'
+  });
+  Object.assign(ui.fr, {
+    eyebrow:'Encyclopédie technique REPLACOR', title:'Apprenez l’électronique des cartes à votre rythme',
+    intro:'Choisissez un thème et approfondissez selon vos besoins. Commencez par les bases, étudiez un domaine ou ouvrez un chapitre précis.',
+    libraryTab:'Encyclopédie par thèmes', groupsTab:'Domaines électroniques', lookupTab:'Recherche rapide', savedTab:'Favoris et progression',
+    allContent:'Parcours flexible', libraryTitle:'Choisissez un thème pour commencer', libraryIntro:'Les thèmes vont des bases à l’électronique inverter et au diagnostic complet.',
+    boardMap:'Carte des connaissances', groupsTitle:'Explorez l’électronique par domaines', groupsIntro:'Étudiez le domaine de votre choix, sans parcours obligatoire.',
+    searchTitle:'Recherchez un concept, composant ou relevé', searchIntro:'La recherche est un accès secondaire vers une section précise de l’encyclopédie.',
+    searchPlaceholder:'Exemples : ULN2003, PFC, optocoupleur, bus DC, comparateur…', block:'Domaine', allBlocks:'Tous les domaines',
+    personal:'Votre espace d’apprentissage', savedTitle:'Favoris et progression', savedIntro:'Reprenez votre étude ou consultez les sections enregistrées.',
+    progressLabel:'Votre progression', resume:'Continuer où je me suis arrêté', completedSections:'sections étudiées', savedSections:'sections enregistrées', openTopic:'Étudier le thème', complete:'Marquer étudié', markConsulted:'Marquer étudié', consulted:'✓ Étudié', progress:'étudiés'
+  });
+
   function language() { return window.ST_I18N?.language || 'es'; }
   function t(key) { return ui[language()]?.[key] || ui.es[key] || key; }
   function loadSet(key) { try { return new Set(JSON.parse(localStorage.getItem(key) || '[]')); } catch (_) { return new Set(); } }
@@ -40,7 +86,7 @@
   function translateUi() {
     $$('[data-el-i18n]').forEach(node => { node.textContent = t(node.dataset.elI18n); });
     $$('[data-el-i18n-placeholder]').forEach(node => node.setAttribute('placeholder', t(node.dataset.elI18nPlaceholder)));
-    renderRoutes(); renderGroups(); renderLibrary(); renderSaved(); renderTools();
+    renderGroups(); renderLibrary(); renderSaved(); renderTools(); updateLearningProgress();
     if (state.activeModule && state.activeChapter) renderReader(state.activeModule.id, state.activeChapter.id, false);
   }
 
@@ -60,11 +106,27 @@
   }
 
   function moduleCard(module, action = t('openTopic')) {
+    const done = module.chapters.filter(chapter => state.completed.has(chapter.id)).length;
+    const percent = module.chapters.length ? Math.round((done / module.chapters.length) * 100) : 0;
     return `<article class="el-module-card" data-module="${module.id}">
       <div class="el-module-badge"><span class="el-module-icon">${escapeHtml(module.icon)}</span><span class="el-module-meta">${levelLabel(module.level)} · ${module.pages} ${t('pages')}</span></div>
       <h3>${escapeHtml(module.title)}</h3><p>${escapeHtml(module.summary)}</p>
       <span class="el-module-meta">${module.stats.chapters} ${t('sections')} · ${module.stats.figures} ${t('figures')} · ${module.stats.tables} ${t('tables')}</span>
+      <div class="el-module-progress" aria-label="${done} / ${module.chapters.length}"><i style="width:${percent}%"></i></div>
       <button type="button" data-open-module="${module.id}">${action}</button></article>`;
+  }
+
+  function updateLearningProgress() {
+    if (!state.collection) return;
+    const total = state.chapters.size;
+    const done = [...state.completed].filter(id => state.chapters.has(id)).length;
+    const percent = total ? Math.round((done / total) * 100) : 0;
+    if ($('#elOverallProgressText')) $('#elOverallProgressText').textContent = `${done} / ${total}`;
+    if ($('#elOverallProgressBar')) $('#elOverallProgressBar').style.width = `${percent}%`;
+    if ($('#elCompletedCount')) $('#elCompletedCount').textContent = done.toLocaleString();
+    if ($('#elSavedCount')) $('#elSavedCount').textContent = [...state.bookmarks].filter(id => state.chapters.has(id)).length.toLocaleString();
+    const resume = $('#elResume');
+    if (resume) resume.disabled = !state.chapters.has(localStorage.getItem('st.electronics.last'));
   }
 
   function renderRoutes() {
@@ -104,7 +166,6 @@
     state.previousView = view;
     $('#elReader').hidden = true;
     $('.el-tabs').hidden = false;
-    $('.el-search-panel').hidden = false;
     $('.el-tools-section').hidden = false;
     $$('.el-view[data-panel]').forEach(panel => { panel.hidden = panel.dataset.panel !== view; });
     $$('.el-tabs [role="tab"]').forEach(tab => tab.setAttribute('aria-selected', String(tab.dataset.view === view)));
@@ -114,7 +175,7 @@
   }
 
   function showRecommendations(title, ids) {
-    state.previousView = $$('.el-tabs [aria-selected="true"]')[0]?.dataset.view || 'routes';
+    state.previousView = $$('.el-tabs [aria-selected="true"]')[0]?.dataset.view || 'library';
     $$('.el-view[data-panel]').forEach(panel => { panel.hidden = true; });
     $('#elSearchResults').hidden = false;
     $('#elSearchResultsTitle').textContent = title;
@@ -135,7 +196,7 @@
       if (score) results.push({module,chapter,score});
     });
     results.sort((a,b) => b.score - a.score || a.chapter.title.localeCompare(b.chapter.title));
-    state.previousView = $$('.el-tabs [aria-selected="true"]')[0]?.dataset.view || 'routes';
+    state.previousView = $$('.el-tabs [aria-selected="true"]')[0]?.dataset.view || 'lookup';
     $$('.el-view[data-panel]').forEach(panel => { panel.hidden = true; });
     $('#elSearchResults').hidden = false;
     $('#elSearchResultsTitle').textContent = `${t('resultsFor')} “${query}” (${results.length})`;
@@ -191,14 +252,15 @@
     if (!state.collection) return;
     const entries = [...state.bookmarks].map(id => state.chapters.get(id)).filter(Boolean);
     $('#elSavedList').innerHTML = entries.length ? entries.map(({module,chapter}) => `<button class="el-result" type="button" data-open-chapter="${chapter.id}"><strong>${escapeHtml(chapter.title)}</strong><span>${escapeHtml(module.title)}</span></button>`).join('') : `<p>${t('noSaved')}</p>`;
+    updateLearningProgress();
   }
 
   function bindEvents() {
     document.addEventListener('click', event => {
       const tab = event.target.closest('[data-view]'); if (tab) return setView(tab.dataset.view);
       const routeButton = event.target.closest('[data-open-route]'); if (routeButton) { const route = state.collection.routes.find(item => item.id === routeButton.dataset.openRoute); return showRecommendations(route.title, route.modules); }
-      const groupButton = event.target.closest('[data-open-group]'); if (groupButton) { const group = state.collection.groups.find(item => item.id === groupButton.dataset.openGroup); return showRecommendations(group.title, state.collection.modules.filter(module => module.group === group.id).map(module => module.id)); }
-      const moduleButton = event.target.closest('[data-open-module]'); if (moduleButton) return renderReader(moduleButton.dataset.openModule, state.modules.get(moduleButton.dataset.openModule)?.chapters[0]?.id);
+      const groupButton = event.target.closest('[data-open-group]'); if (groupButton) { $('#elGroupFilter').value = groupButton.dataset.openGroup; setView('library'); return renderLibrary(); }
+      const moduleButton = event.target.closest('[data-open-module]'); if (moduleButton) { state.previousView = $$('.el-tabs [aria-selected="true"]')[0]?.dataset.view || 'library'; return renderReader(moduleButton.dataset.openModule, state.modules.get(moduleButton.dataset.openModule)?.chapters[0]?.id); }
       const chapterButton = event.target.closest('[data-open-chapter]'); if (chapterButton) return openChapter(chapterButton.dataset.openChapter);
       const navChapter = event.target.closest('[data-reader-chapter]'); if (navChapter) return renderReader(state.activeModule.id, navChapter.dataset.readerChapter);
       const example = event.target.closest('.el-search-examples button'); if (example) { $('#elSearch').value = example.textContent; return runSearch(example.textContent); }
@@ -207,12 +269,13 @@
     $('#elSearchForm').addEventListener('submit', event => { event.preventDefault(); runSearch($('#elSearch').value.trim()); });
     $('#elCloseSearch').addEventListener('click', () => setView(state.previousView));
     $('#elGroupFilter').addEventListener('change', renderLibrary); $('#elLevelFilter').addEventListener('change', renderLibrary);
+    $('#elResume').addEventListener('click', () => openChapter(localStorage.getItem('st.electronics.last')));
     $('#elReaderBack').addEventListener('click', () => setView(state.previousView));
     $('#elChapterSelect').addEventListener('change', event => renderReader(state.activeModule.id, event.target.value));
     $('#elPrevious').addEventListener('click', () => { const i = state.activeModule.chapters.indexOf(state.activeChapter); if (i > 0) renderReader(state.activeModule.id, state.activeModule.chapters[i - 1].id); });
     $('#elNext').addEventListener('click', () => { const i = state.activeModule.chapters.indexOf(state.activeChapter); if (i < state.activeModule.chapters.length - 1) renderReader(state.activeModule.id, state.activeModule.chapters[i + 1].id); });
     $('#elBookmark').addEventListener('click', () => { const id = state.activeChapter.id; state.bookmarks.has(id) ? state.bookmarks.delete(id) : state.bookmarks.add(id); saveSet('st.electronics.bookmarks', state.bookmarks); renderReader(state.activeModule.id,id,false); renderSaved(); });
-    $('#elComplete').addEventListener('click', () => { const id = state.activeChapter.id; state.completed.has(id) ? state.completed.delete(id) : state.completed.add(id); saveSet('st.electronics.completed', state.completed); renderReader(state.activeModule.id,id,false); });
+    $('#elComplete').addEventListener('click', () => { const id = state.activeChapter.id; state.completed.has(id) ? state.completed.delete(id) : state.completed.add(id); saveSet('st.electronics.completed', state.completed); renderReader(state.activeModule.id,id,false); renderLibrary(); updateLearningProgress(); });
     $('#elFigureDialog button').addEventListener('click', () => $('#elFigureDialog').close());
     document.addEventListener('st:languagechange', translateUi);
   }

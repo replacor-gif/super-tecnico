@@ -20,10 +20,13 @@ const assert = require('node:assert/strict');
   console.log('loaded');
 
   assert.equal(await page.locator('#elModuleCount').textContent(), '23');
-  assert.equal(await page.locator('.el-route-card').count(), 8);
+  assert.equal(await page.locator('#elModuleGrid .el-module-card').count(), 23);
+  assert.ok((await page.locator('#elModuleGrid .el-module-card h3').first().textContent()).includes('Resistencias'));
   assert.equal(await page.locator('.el-group-card').count(), 11);
   assert.equal(await page.locator('#elToolLinks .el-tool-card').count(), 5);
+  await page.screenshot({path:'test-artifacts/electronics-home.png', fullPage:true});
 
+  await page.locator('[data-view="lookup"]').click();
   await page.locator('#elSearch').fill('ULN2003');
   await page.locator('#elSearchForm button').click();
   console.log('searched');
@@ -45,7 +48,7 @@ const assert = require('node:assert/strict');
 
   await page.evaluate(() => localStorage.setItem('st.language','en'));
   await page.reload({waitUntil:'networkidle'});
-  assert.equal(await page.locator('[data-el-i18n="routesTab"]').textContent(), 'By symptom');
+  assert.equal(await page.locator('[data-el-i18n="libraryTab"]').textContent(), 'Encyclopedia by topic');
   console.log('translation');
 
   await page.setViewportSize({width:390,height:844});

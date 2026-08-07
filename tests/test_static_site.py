@@ -2963,7 +2963,7 @@ class StaticSiteTests(unittest.TestCase):
             {"modules": 7, "pages": 209, "chapters": 167, "figures": 158, "tables": 132},
         )
 
-    def test_electronics_library_is_complete_routed_and_searchable(self):
+    def test_electronics_encyclopedia_is_complete_ordered_and_searchable(self):
         collection = load(self.dist / "data" / "electronics" / "collection.json")
         modules = collection["modules"]
         chapters = [chapter for module in modules for chapter in module["chapters"]]
@@ -2982,6 +2982,8 @@ class StaticSiteTests(unittest.TestCase):
         self.assertTrue(all((self.dist / figure["src"]).is_file() for figure in figures))
         self.assertTrue(all(chapter["search"] and chapter["word_count"] for chapter in chapters))
         self.assertTrue(all(module["editorial_notes"] and module["related"] for module in modules))
+        self.assertEqual([module["id"] for module in modules[:4]], ["28", "23", "24", "29"])
+        self.assertEqual(modules[-1]["id"], "30")
 
         searchable = " ".join(chapter["search"] for chapter in chapters)
         for query in ("fuente", "bus dc", "comunicacion", "uln2003", "microcontrolador", "ipm", "sin esquema"):
@@ -2990,8 +2992,9 @@ class StaticSiteTests(unittest.TestCase):
         html = (self.dist / "electronica-placas.html").read_text(encoding="utf-8")
         script = (self.dist / "assets" / "electronics.js").read_text(encoding="utf-8")
         portal = (self.dist / "index.html").read_text(encoding="utf-8")
-        for marker in ('data-view="routes"', 'data-view="groups"', 'data-view="library"', 'data-view="saved"'):
+        for marker in ('data-view="library"', 'data-view="groups"', 'data-view="lookup"', 'data-view="saved"'):
             self.assertIn(marker, html)
+        self.assertNotIn('data-view="routes"', html)
         for marker in ("st.electronics.completed", "st.electronics.bookmarks", "runSearch", "renderBlock"):
             self.assertIn(marker, script)
         self.assertIn('href="electronica-placas.html"', portal)

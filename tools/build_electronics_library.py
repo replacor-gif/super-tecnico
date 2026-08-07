@@ -45,6 +45,13 @@ MODULE_DETAILS: dict[str, dict[str, Any]] = {
     "30": {"group": "diagnostico", "icon": "PCB", "level": "intermedio", "summary": "Método universal para mapear alimentación, control, entradas, salidas e inverter."},
 }
 
+# Orden didáctico: fundamentos y componentes, bloques de señal y control,
+# potencia/inverter y, al final, el método global de diagnóstico.
+PEDAGOGICAL_ORDER = [
+    "28", "23", "24", "29", "21", "17", "22", "08", "12", "13", "15",
+    "19", "18", "16", "20", "09", "14", "11", "25", "26", "10", "27", "30",
+]
+
 GROUPS = [
     {"id": "diagnostico", "title": "Diagnóstico y método", "summary": "Empieza aquí cuando no tienes esquema o todavía no sabes qué bloque falla."},
     {"id": "alimentacion", "title": "Alimentación y rails", "summary": "Desde la fuente auxiliar hasta los reguladores locales y el desacoplo."},
@@ -338,9 +345,11 @@ def build(source: Path, project: Path) -> dict[str, Any]:
         shutil.rmtree(assets)
     assets.mkdir(parents=True)
     modules = [extract_module(meta, source, project) for meta in manifest["modulos"]]
+    order = {module_id: index for index, module_id in enumerate(PEDAGOGICAL_ORDER)}
+    modules.sort(key=lambda module: order.get(module["id"], len(order)))
     collection = {
         "schema_version": "1.0",
-        "title": "Electrónica de placas",
+        "title": "Enciclopedia práctica de electrónica de placas",
         "language": "es-ES",
         "source_date": manifest.get("fecha_paquete"),
         "notice": "Biblioteca general de reparación. El manual de servicio y el datasheet exactos prevalecen sobre cualquier orientación general.",

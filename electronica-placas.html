@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="google-adsense-account" content="ca-pub-6950924617837531">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Biblioteca interactiva para diagnosticar y reparar la electrónica de placas de climatización: fuentes, mediciones, comunicaciones, control e inverter.">
+  <meta name="description" content="Enciclopedia interactiva para aprender electrónica de placas: componentes, alimentación, medición, señal, control, comunicaciones y potencia inverter.">
   <meta name="theme-color" content="#102d3f">
-  <title>Electrónica de placas | Super Técnico</title>
+  <title>Enciclopedia de electrónica | Super Técnico</title>
   <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
   <link rel="stylesheet" href="assets/common.css?v=1">
   <link rel="stylesheet" href="assets/electronics.css?v=1">
@@ -24,9 +24,9 @@
   <main>
     <section class="el-hero">
       <div>
-        <p class="eyebrow" data-el-i18n="eyebrow">Biblioteca técnica REPLACOR</p>
-        <h1 data-el-i18n="title">Encuentra el bloque, la medida o el procedimiento que necesitas</h1>
-        <p data-el-i18n="intro">Empieza por un síntoma, sigue el recorrido de la placa o busca directamente cualquier concepto. No necesitas conocer el número del artículo.</p>
+        <p class="eyebrow" data-el-i18n="eyebrow">Enciclopedia técnica REPLACOR</p>
+        <h1 data-el-i18n="title">Aprende electrónica de placas a tu ritmo</h1>
+        <p data-el-i18n="intro">Elige cualquier tema y profundiza hasta donde necesites. Puedes comenzar por los fundamentos, estudiar un bloque completo o consultar directamente un capítulo concreto.</p>
       </div>
       <dl class="el-stats" aria-label="Cobertura de la biblioteca">
         <div><dt id="elModuleCount">—</dt><dd data-el-i18n="modules">temas técnicos</dd></div>
@@ -41,44 +41,42 @@
       <p id="elSafetyText">Hay tensiones letales y nodos flotantes. Descarga condensadores, identifica HOT/COLD y utiliza instrumentos adecuados.</p>
     </aside>
 
-    <section class="el-search-panel" aria-labelledby="elSearchTitle">
-      <div><p class="eyebrow" data-el-i18n="quickLookup">Consulta rápida</p><h2 id="elSearchTitle" data-el-i18n="searchTitle">¿Qué estás intentando localizar o reparar?</h2></div>
-      <form id="elSearchForm" role="search">
-        <label class="sr-only" for="elSearch" data-el-i18n="searchLabel">Buscar en electrónica</label>
-        <input id="elSearch" type="search" autocomplete="off" data-el-i18n-placeholder="searchPlaceholder" placeholder="Ejemplos: fuente muerta, bus DC, ULN2003, reset, comunicación, IPM…">
-        <button type="submit" data-el-i18n="searchButton">Buscar</button>
-      </form>
-      <div class="el-search-examples"><span data-el-i18n="try">Prueba:</span><button type="button">placa muerta</button><button type="button">arranca y se para</button><button type="button">error comunicación</button><button type="button">relé no actúa</button></div>
-    </section>
-
     <nav class="el-tabs" aria-label="Formas de consulta" role="tablist">
-      <button type="button" role="tab" aria-selected="true" data-view="routes" data-el-i18n="routesTab">Por síntoma</button>
-      <button type="button" role="tab" aria-selected="false" data-view="groups" data-el-i18n="groupsTab">Por bloque de la placa</button>
-      <button type="button" role="tab" aria-selected="false" data-view="library" data-el-i18n="libraryTab">Biblioteca completa</button>
-      <button type="button" role="tab" aria-selected="false" data-view="saved" data-el-i18n="savedTab">Guardados</button>
+      <button type="button" role="tab" aria-selected="true" data-view="library" data-el-i18n="libraryTab">Enciclopedia por temas</button>
+      <button type="button" role="tab" aria-selected="false" data-view="groups" data-el-i18n="groupsTab">Áreas de electrónica</button>
+      <button type="button" role="tab" aria-selected="false" data-view="lookup" data-el-i18n="lookupTab">Consulta rápida</button>
+      <button type="button" role="tab" aria-selected="false" data-view="saved" data-el-i18n="savedTab">Guardados y progreso</button>
     </nav>
 
-    <section id="elRoutesView" class="el-view" data-panel="routes">
-      <div class="el-view-heading"><div><p class="eyebrow" data-el-i18n="symptoms">Diagnóstico orientado</p><h2 data-el-i18n="routesTitle">Empieza por lo que hace la placa</h2><p data-el-i18n="routesIntro">Cada ruta coloca primero los temas que conviene comprobar, sin afirmar automáticamente cuál es la avería.</p></div></div>
-      <div id="elRouteGrid" class="el-card-grid"></div>
-    </section>
-
-    <section id="elGroupsView" class="el-view" data-panel="groups" hidden>
-      <div class="el-view-heading"><div><p class="eyebrow" data-el-i18n="boardMap">Mapa funcional</p><h2 data-el-i18n="groupsTitle">Sigue el recorrido de energía, señal y control</h2></div></div>
-      <div id="elGroupGrid" class="el-group-grid"></div>
-    </section>
-
-    <section id="elLibraryView" class="el-view" data-panel="library" hidden>
-      <div class="el-view-heading"><div><p class="eyebrow" data-el-i18n="allContent">Todo el contenido</p><h2 data-el-i18n="libraryTitle">Filtra los temas técnicos</h2></div></div>
+    <section id="elLibraryView" class="el-view" data-panel="library">
+      <div class="el-view-heading"><div><p class="eyebrow" data-el-i18n="allContent">Ruta formativa flexible</p><h2 data-el-i18n="libraryTitle">Elige un tema para empezar</h2><p data-el-i18n="libraryIntro">Los temas están ordenados desde los fundamentos hasta la electrónica inverter y el diagnóstico completo.</p></div><div class="el-overall-progress"><span data-el-i18n="progressLabel">Tu progreso</span><strong id="elOverallProgressText">0 / 678</strong><div class="el-progress-track"><i id="elOverallProgressBar"></i></div><button id="elResume" type="button" data-el-i18n="resume">Continuar donde lo dejé</button></div></div>
       <div class="el-filters">
-        <label><span data-el-i18n="block">Bloque</span><select id="elGroupFilter"><option value="" data-el-i18n="allBlocks">Todos los bloques</option></select></label>
+        <label><span data-el-i18n="block">Área</span><select id="elGroupFilter"><option value="" data-el-i18n="allBlocks">Todas las áreas</option></select></label>
         <label><span data-el-i18n="level">Nivel</span><select id="elLevelFilter"><option value="" data-el-i18n="allLevels">Todos los niveles</option><option value="basico">Básico</option><option value="intermedio">Intermedio</option><option value="avanzado">Avanzado</option></select></label>
       </div>
       <div id="elModuleGrid" class="el-module-grid"></div>
     </section>
 
+    <section id="elGroupsView" class="el-view" data-panel="groups" hidden>
+      <div class="el-view-heading"><div><p class="eyebrow" data-el-i18n="boardMap">Mapa de conocimientos</p><h2 data-el-i18n="groupsTitle">Explora la electrónica por áreas</h2><p data-el-i18n="groupsIntro">Entra en el área que quieras estudiar; no necesitas seguir un recorrido obligatorio.</p></div></div>
+      <div id="elGroupGrid" class="el-group-grid"></div>
+    </section>
+
+    <section id="elLookupView" class="el-view" data-panel="lookup" hidden>
+      <div class="el-search-panel" aria-labelledby="elSearchTitle">
+        <div><p class="eyebrow" data-el-i18n="quickLookup">Consulta rápida</p><h2 id="elSearchTitle" data-el-i18n="searchTitle">Busca un concepto, componente o medida</h2><p data-el-i18n="searchIntro">La búsqueda es una ayuda secundaria para llegar directamente a un apartado de la enciclopedia.</p></div>
+        <form id="elSearchForm" role="search">
+          <label class="sr-only" for="elSearch" data-el-i18n="searchLabel">Buscar en electrónica</label>
+          <input id="elSearch" type="search" autocomplete="off" data-el-i18n-placeholder="searchPlaceholder" placeholder="Ejemplos: ULN2003, PFC, optoacoplador, bus DC, comparador…">
+          <button type="submit" data-el-i18n="searchButton">Buscar</button>
+        </form>
+        <div class="el-search-examples"><span data-el-i18n="try">Prueba:</span><button type="button">fuente conmutada</button><button type="button">optoacoplador</button><button type="button">ULN2003</button><button type="button">IPM</button></div>
+      </div>
+    </section>
+
     <section id="elSavedView" class="el-view" data-panel="saved" hidden>
-      <div class="el-view-heading"><div><p class="eyebrow" data-el-i18n="personal">Tu consulta</p><h2 data-el-i18n="savedTitle">Apartados guardados</h2></div></div>
+      <div class="el-view-heading"><div><p class="eyebrow" data-el-i18n="personal">Tu espacio de aprendizaje</p><h2 data-el-i18n="savedTitle">Guardados y progreso</h2><p data-el-i18n="savedIntro">Retoma el estudio o vuelve a los apartados que quieras conservar.</p></div></div>
+      <div class="el-saved-summary"><div><strong id="elCompletedCount">0</strong><span data-el-i18n="completedSections">apartados consultados</span></div><div><strong id="elSavedCount">0</strong><span data-el-i18n="savedSections">apartados guardados</span></div></div>
       <div id="elSavedList"></div>
     </section>
 
