@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="google-adsense-account" content="ca-pub-6950924617837531">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Biblioteca interactiva para diagnosticar y reparar la electrónica de placas de climatización: fuentes, mediciones, comunicaciones, control e inverter.">
+  <meta name="theme-color" content="#102d3f">
+  <title>Electrónica de placas | Super Técnico</title>
+  <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
+  <link rel="stylesheet" href="assets/electronics.css?v=1">
+  <script src="assets/i18n.js?v=7" defer></script>
+</head>
+<body>
+  <header class="el-header">
+    <a class="el-brand" href="index.html" aria-label="Volver al menú de Super Técnico">
+      <img src="assets/super-tecnico-logo.png" alt="">
+      <span><strong>Super Técnico</strong><small data-el-i18n="subtitle">Electrónica de placas</small><span class="beta-badge" data-i18n="common.betaBadge">BETA · En construcción</span></span>
+    </a>
+    <nav aria-label="Navegación"><a href="index.html" data-i18n="common.tools">Todas las herramientas</a><a href="componentes.html" data-el-i18n="components">Componentes</a></nav>
+  </header>
+
+  <main>
+    <section class="el-hero">
+      <div>
+        <p class="eyebrow" data-el-i18n="eyebrow">Biblioteca técnica REPLACOR</p>
+        <h1 data-el-i18n="title">Encuentra el bloque, la medida o el procedimiento que necesitas</h1>
+        <p data-el-i18n="intro">Empieza por un síntoma, sigue el recorrido de la placa o busca directamente cualquier concepto. No necesitas conocer el número del artículo.</p>
+      </div>
+      <dl class="el-stats" aria-label="Cobertura de la biblioteca">
+        <div><dt id="elModuleCount">—</dt><dd data-el-i18n="modules">temas técnicos</dd></div>
+        <div><dt id="elChapterCount">—</dt><dd data-el-i18n="chapters">apartados</dd></div>
+        <div><dt id="elFigureCount">—</dt><dd data-el-i18n="figures">figuras</dd></div>
+        <div><dt id="elTableCount">—</dt><dd data-el-i18n="tables">tablas</dd></div>
+      </dl>
+    </section>
+
+    <aside class="el-safety" role="note">
+      <strong data-el-i18n="safetyTitle">Antes de medir</strong>
+      <p id="elSafetyText">Hay tensiones letales y nodos flotantes. Descarga condensadores, identifica HOT/COLD y utiliza instrumentos adecuados.</p>
+    </aside>
+
+    <section class="el-search-panel" aria-labelledby="elSearchTitle">
+      <div><p class="eyebrow" data-el-i18n="quickLookup">Consulta rápida</p><h2 id="elSearchTitle" data-el-i18n="searchTitle">¿Qué estás intentando localizar o reparar?</h2></div>
+      <form id="elSearchForm" role="search">
+        <label class="sr-only" for="elSearch" data-el-i18n="searchLabel">Buscar en electrónica</label>
+        <input id="elSearch" type="search" autocomplete="off" data-el-i18n-placeholder="searchPlaceholder" placeholder="Ejemplos: fuente muerta, bus DC, ULN2003, reset, comunicación, IPM…">
+        <button type="submit" data-el-i18n="searchButton">Buscar</button>
+      </form>
+      <div class="el-search-examples"><span data-el-i18n="try">Prueba:</span><button type="button">placa muerta</button><button type="button">arranca y se para</button><button type="button">error comunicación</button><button type="button">relé no actúa</button></div>
+    </section>
+
+    <nav class="el-tabs" aria-label="Formas de consulta" role="tablist">
+      <button type="button" role="tab" aria-selected="true" data-view="routes" data-el-i18n="routesTab">Por síntoma</button>
+      <button type="button" role="tab" aria-selected="false" data-view="groups" data-el-i18n="groupsTab">Por bloque de la placa</button>
+      <button type="button" role="tab" aria-selected="false" data-view="library" data-el-i18n="libraryTab">Biblioteca completa</button>
+      <button type="button" role="tab" aria-selected="false" data-view="saved" data-el-i18n="savedTab">Guardados</button>
+    </nav>
+
+    <section id="elRoutesView" class="el-view" data-panel="routes">
+      <div class="el-view-heading"><div><p class="eyebrow" data-el-i18n="symptoms">Diagnóstico orientado</p><h2 data-el-i18n="routesTitle">Empieza por lo que hace la placa</h2><p data-el-i18n="routesIntro">Cada ruta coloca primero los temas que conviene comprobar, sin afirmar automáticamente cuál es la avería.</p></div></div>
+      <div id="elRouteGrid" class="el-card-grid"></div>
+    </section>
+
+    <section id="elGroupsView" class="el-view" data-panel="groups" hidden>
+      <div class="el-view-heading"><div><p class="eyebrow" data-el-i18n="boardMap">Mapa funcional</p><h2 data-el-i18n="groupsTitle">Sigue el recorrido de energía, señal y control</h2></div></div>
+      <div id="elGroupGrid" class="el-group-grid"></div>
+    </section>
+
+    <section id="elLibraryView" class="el-view" data-panel="library" hidden>
+      <div class="el-view-heading"><div><p class="eyebrow" data-el-i18n="allContent">Todo el contenido</p><h2 data-el-i18n="libraryTitle">Filtra los temas técnicos</h2></div></div>
+      <div class="el-filters">
+        <label><span data-el-i18n="block">Bloque</span><select id="elGroupFilter"><option value="" data-el-i18n="allBlocks">Todos los bloques</option></select></label>
+        <label><span data-el-i18n="level">Nivel</span><select id="elLevelFilter"><option value="" data-el-i18n="allLevels">Todos los niveles</option><option value="basico">Básico</option><option value="intermedio">Intermedio</option><option value="avanzado">Avanzado</option></select></label>
+      </div>
+      <div id="elModuleGrid" class="el-module-grid"></div>
+    </section>
+
+    <section id="elSavedView" class="el-view" data-panel="saved" hidden>
+      <div class="el-view-heading"><div><p class="eyebrow" data-el-i18n="personal">Tu consulta</p><h2 data-el-i18n="savedTitle">Apartados guardados</h2></div></div>
+      <div id="elSavedList"></div>
+    </section>
+
+    <section id="elSearchResults" class="el-view el-results" hidden aria-live="polite">
+      <div class="el-view-heading"><div><p class="eyebrow" data-el-i18n="results">Resultados</p><h2 id="elSearchResultsTitle"></h2></div><button id="elCloseSearch" class="el-secondary" type="button" data-el-i18n="closeResults">Cerrar resultados</button></div>
+      <div id="elResultsList"></div>
+    </section>
+
+    <section id="elReader" class="el-reader" hidden>
+      <div class="el-reader-top">
+        <button id="elReaderBack" class="el-secondary" type="button" data-el-i18n="back">← Volver</button>
+        <nav id="elBreadcrumb" aria-label="Migas de pan"></nav>
+      </div>
+      <header id="elModuleHeader" class="el-module-header"></header>
+      <aside id="elEditorialNotes" class="el-editorial-notes"></aside>
+      <div class="el-reader-layout">
+        <aside class="el-chapter-nav">
+          <label for="elChapterSelect" data-el-i18n="chooseSection">Elige un apartado</label>
+          <select id="elChapterSelect"></select>
+          <div id="elChapterList"></div>
+        </aside>
+        <article class="el-article">
+          <div class="el-article-toolbar"><button id="elBookmark" type="button"></button><span id="elProgressText"></span></div>
+          <h2 id="elChapterTitle"></h2>
+          <div id="elChapterContent"></div>
+          <nav class="el-chapter-controls"><button id="elPrevious" type="button" data-el-i18n="previous">Anterior</button><button id="elComplete" type="button" data-el-i18n="complete">Marcar consultado</button><button id="elNext" type="button" data-el-i18n="next">Siguiente</button></nav>
+        </article>
+      </div>
+      <section class="el-related"><h2 data-el-i18n="related">Continúa por aquí</h2><div id="elRelatedModules" class="el-module-grid"></div></section>
+      <details class="el-sources"><summary data-el-i18n="sources">Fuentes técnicas del tema</summary><div id="elSources"></div></details>
+    </section>
+
+    <section class="el-tools-section">
+      <div class="el-view-heading"><div><p class="eyebrow" data-el-i18n="connected">Herramientas conectadas</p><h2 data-el-i18n="toolsTitle">Pasa de la explicación a la comprobación</h2></div></div>
+      <div id="elToolLinks" class="el-tool-grid"></div>
+    </section>
+
+    <aside class="ad-slot" data-ad-placement="electronics-library" aria-label="Publicidad" hidden></aside>
+  </main>
+
+  <dialog id="elFigureDialog"><button type="button" aria-label="Cerrar">×</button><img id="elFigureImage" alt=""><p id="elFigureCaption"></p></dialog>
+
+  <footer><p>Super Técnico · Proyecto técnico de REPLACOR</p><p data-el-i18n="footer">Información orientativa: confirma siempre el manual y el datasheet exactos.</p><nav class="st-legal-links" aria-label="Información legal"><a href="https://www.replacor.com/aviso-legal/" target="_blank" rel="noopener">Aviso legal</a><a href="https://www.replacor.com/politica-de-privacidad/" target="_blank" rel="noopener">Política de privacidad</a></nav></footer>
+  <script src="assets/electronics.js?v=1" defer></script>
+  <script src="assets/ads.js?v=1" defer></script>
+  <script src="assets/page-counter.js?v=1" defer></script>
+</body>
+</html>

@@ -2963,6 +2963,43 @@ class StaticSiteTests(unittest.TestCase):
             {"modules": 7, "pages": 209, "chapters": 167, "figures": 158, "tables": 132},
         )
 
+    def test_electronics_library_is_complete_routed_and_searchable(self):
+        collection = load(self.dist / "data" / "electronics" / "collection.json")
+        modules = collection["modules"]
+        chapters = [chapter for module in modules for chapter in module["chapters"]]
+        blocks = [block for chapter in chapters for block in chapter["blocks"]]
+        figures = [block for block in blocks if block["type"] == "figure"]
+        tables = [block for block in blocks if block["type"] == "table"]
+
+        self.assertEqual(collection["stats"]["modules"], 23)
+        self.assertEqual(collection["stats"]["pages"], 399)
+        self.assertEqual(len(chapters), 678)
+        self.assertEqual(len({chapter["id"] for chapter in chapters}), 678)
+        self.assertEqual(len(figures), 397)
+        self.assertEqual(len(tables), 235)
+        self.assertEqual(len(collection["routes"]), 8)
+        self.assertGreaterEqual(len(collection["groups"]), 10)
+        self.assertTrue(all((self.dist / figure["src"]).is_file() for figure in figures))
+        self.assertTrue(all(chapter["search"] and chapter["word_count"] for chapter in chapters))
+        self.assertTrue(all(module["editorial_notes"] and module["related"] for module in modules))
+
+        searchable = " ".join(chapter["search"] for chapter in chapters)
+        for query in ("fuente", "bus dc", "comunicacion", "uln2003", "microcontrolador", "ipm", "sin esquema"):
+            self.assertIn(query.split()[0], searchable)
+
+        html = (self.dist / "electronica-placas.html").read_text(encoding="utf-8")
+        script = (self.dist / "assets" / "electronics.js").read_text(encoding="utf-8")
+        portal = (self.dist / "index.html").read_text(encoding="utf-8")
+        for marker in ('data-view="routes"', 'data-view="groups"', 'data-view="library"', 'data-view="saved"'):
+            self.assertIn(marker, html)
+        for marker in ("st.electronics.completed", "st.electronics.bookmarks", "runSearch", "renderBlock"):
+            self.assertIn(marker, script)
+        self.assertIn('href="electronica-placas.html"', portal)
+        self.assertEqual(
+            {key: self.report["electronics"][key] for key in ("modules", "pages", "chapters", "figures", "tables")},
+            {"modules": 23, "pages": 399, "chapters": 678, "figures": 397, "tables": 235},
+        )
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

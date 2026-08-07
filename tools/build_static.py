@@ -410,6 +410,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "feedback.html",
         "simbolos.html",
         "formacion-climatizacion.html",
+        "electronica-placas.html",
         "assets/app.js",
         "assets/ads.js",
         "assets/calculations.js",
@@ -426,6 +427,8 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "assets/faults.js",
         "assets/feedback.css",
         "assets/feedback.js",
+        "assets/electronics.css",
+        "assets/electronics.js",
         "assets/i18n.js",
         "assets/page-counter.js",
         "assets/portal.css",
@@ -523,6 +526,54 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(path, target)
 
+    electronics = read_json(source_root / "data" / "electronics" / "collection.json")
+    electronics_stats = electronics.get("stats") or {}
+    expected_electronics = {
+        "modules": 23,
+        "pages": 399,
+        "chapters": 678,
+        "figures": 397,
+        "tables": 235,
+    }
+    for key, expected in expected_electronics.items():
+        if int(electronics_stats.get(key) or 0) != expected:
+            raise BuildError(
+                f"Electrónica de placas: {key} esperado={expected}, obtenido={electronics_stats.get(key)}"
+            )
+    electronics_modules = electronics.get("modules") or []
+    electronics_chapters = [
+        chapter
+        for module in electronics_modules
+        for chapter in (module.get("chapters") or [])
+    ]
+    electronics_ids = [str(chapter.get("id") or "") for chapter in electronics_chapters]
+    if len(electronics_ids) != len(set(electronics_ids)) or any(not value for value in electronics_ids):
+        raise BuildError("La biblioteca de electrónica contiene apartados sin ID o duplicados")
+    electronics_figures = {
+        str(block.get("src"))
+        for chapter in electronics_chapters
+        for block in (chapter.get("blocks") or [])
+        if block.get("type") == "figure"
+    }
+    if len(electronics_figures) != expected_electronics["figures"]:
+        raise BuildError("La biblioteca de electrónica no referencia exactamente sus 397 figuras")
+    for figure in electronics_figures:
+        if not figure.startswith("assets/electronics/") or not (source_root / figure).is_file():
+            raise BuildError(f"Figura de electrónica ausente o insegura: {figure}")
+    if len(electronics.get("routes") or []) < 8 or len(electronics.get("groups") or []) < 10:
+        raise BuildError("Faltan rutas o bloques funcionales en electrónica")
+    write_json(output / "data" / "electronics" / "collection.json", electronics)
+    write_json(
+        output / "data" / "electronics" / "build-report.json",
+        read_json(source_root / "data" / "electronics" / "build-report.json"),
+    )
+    electronics_assets = output / "assets" / "electronics"
+    electronics_assets.mkdir(parents=True, exist_ok=True)
+    for path in sorted((source_root / "assets" / "electronics").rglob("*.png")):
+        target = electronics_assets / path.relative_to(source_root / "assets" / "electronics")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(path, target)
+
     (output / ".nojekyll").write_text("", encoding="utf-8")
     advertising = validate_advertising_configuration(source_root, output)
     brands_root = source_root / "data" / "brands"
@@ -581,6 +632,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "oem_pcb": oem_stats,
         "symbols": {"symbols": len(symbols), "lessons": len(lessons), "modules": len(modules)},
         "training": training_stats,
+        "electronics": electronics_stats,
         "advertising": advertising,
         "checks": counters,
     }

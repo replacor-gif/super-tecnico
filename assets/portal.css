@@ -374,11 +374,13 @@ h1 {
 .tool-card-faults .tool-badge { color: #0c6680; background: #e5f4f8; }
 .tool-card-ideas .tool-badge { color: #6b4aa0; background: #f0eafb; }
 .tool-card-training .tool-badge { color: #075f5c; background: #dff3f0; }
+.tool-card-electronics .tool-badge { color: #8a3f12; background: #fff0dd; }
 .text-icon { display: grid; place-items: center; color: #fff; background: #0c6d8b; font-size: 1.35rem; font-weight: 950; letter-spacing: .04em; }
 .tool-card-comparator .text-icon { background: #c87517; font-size: 2.1rem; }
 .tool-card-faults .text-icon { background: #0c7b91; font-size: .92rem; }
 .tool-card-ideas .text-icon { background: #7150a7; font-size: .75rem; }
 .tool-card-training .text-icon { background: linear-gradient(145deg, #0d7d78, #154d64); font-size: .68rem; }
+.tool-card-electronics .text-icon { background: linear-gradient(145deg, #b15a17, #753b19); font-size: .72rem; }
 
 .tool-card h3 {
   margin-bottom: 12px;
@@ -443,6 +445,7 @@ h1 {
 .tool-card-faults .tool-button { background: #0b7188; }
 .tool-card-ideas .tool-button { background: #674698; }
 .tool-card-training .tool-button { background: #086963; }
+.tool-card-electronics .tool-button { background: #9a4b14; }
 
 .calculator-icon {
   padding: 11px;
