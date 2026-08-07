@@ -14,7 +14,10 @@ const {chromium} = require('playwright');
   await page.goto(base, {waitUntil: 'networkidle'});
   await page.locator('#componentQuery').fill('NE555');
   await page.locator('#componentSearchForm').evaluate(form => form.requestSubmit());
-  await page.locator('.datasheet-finder').waitFor();
+  await page.locator('.component-result').first().waitFor();
+  assert.equal(await page.locator('.datasheet-finder:visible').count(), 0);
+  await page.locator('.datasheet-option > summary').click();
+  await page.locator('.datasheet-finder:visible').waitFor();
   const providers = await page.locator('.datasheet-source strong').allTextContents();
   for (const name of ['Mouser', 'DigiKey', 'Farnell', 'TME', 'Octopart', 'Google PDF']) {
     assert.ok(providers.includes(name), `Missing ${name}`);
@@ -24,8 +27,11 @@ const {chromium} = require('playwright');
 
   await page.locator('#componentQuery').fill('REFERENCIA-NO-CATALOGADA-123');
   await page.locator('#componentSearchForm').evaluate(form => form.requestSubmit());
-  await page.locator('.datasheet-finder').waitFor();
+  await page.locator('.component-empty').waitFor();
   assert.equal(await page.locator('.component-result').count(), 0);
+  assert.equal(await page.locator('.datasheet-finder:visible').count(), 0);
+  await page.locator('.datasheet-option > summary').click();
+  await page.locator('.datasheet-finder:visible').waitFor();
   assert.equal(await page.locator('.datasheet-source').count(), 6);
 
   await page.setViewportSize({width: 390, height: 844});

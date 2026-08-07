@@ -9,6 +9,8 @@
       broad: 'Búsqueda amplia', local: 'Documento registrado', open: 'Consultar',
       warning: 'Confirma siempre fabricante, sufijo, encapsulado y revisión antes de usar los valores.',
       known: 'Documento ya localizado en Super Técnico', sources: 'Fuentes de consulta',
+      optional: '¿Necesitas ampliar la información? Buscar datasheet',
+      optionalHint: 'Opción secundaria · abre fuentes externas',
     },
     en: {
       title: 'Datasheets and documentation',
@@ -17,6 +19,8 @@
       broad: 'Broad search', local: 'Registered document', open: 'Open',
       warning: 'Always confirm manufacturer, suffix, package and revision before using any value.',
       known: 'Document already located by Super Técnico', sources: 'Search sources',
+      optional: 'Need more information? Search for a datasheet',
+      optionalHint: 'Secondary option · opens external sources',
     },
     pt: {
       title: 'Datasheets e documentação',
@@ -25,6 +29,8 @@
       broad: 'Pesquisa ampla', local: 'Documento registado', open: 'Consultar',
       warning: 'Confirme sempre fabricante, sufixo, encapsulamento e revisão antes de utilizar os valores.',
       known: 'Documento já localizado pelo Super Técnico', sources: 'Fontes de consulta',
+      optional: 'Precisa de mais informação? Procurar datasheet',
+      optionalHint: 'Opção secundária · abre fontes externas',
     },
     fr: {
       title: 'Datasheets et documentation',
@@ -33,6 +39,8 @@
       broad: 'Recherche étendue', local: 'Document enregistré', open: 'Consulter',
       warning: 'Vérifiez toujours fabricant, suffixe, boîtier et révision avant d’utiliser les valeurs.',
       known: 'Document déjà localisé par Super Técnico', sources: 'Sources de recherche',
+      optional: 'Besoin de plus d’informations ? Rechercher un datasheet',
+      optionalHint: 'Option secondaire · ouvre des sources externes',
     },
   };
 
@@ -116,5 +124,14 @@
     </section>`;
   }
 
-  window.ST_DATASHEETS = {render, sources};
+  function renderOptional(partNumber, manufacturer = '', knownUrl = '') {
+    const part = cleaned(partNumber);
+    if (!part) return '';
+    return `<details class="datasheet-option">
+      <summary><span><strong>${esc(t('optional'))}</strong><small>${esc(t('optionalHint'))}</small></span><span aria-hidden="true">+</span></summary>
+      ${render(part, manufacturer, knownUrl)}
+    </details>`;
+  }
+
+  window.ST_DATASHEETS = {render, renderOptional, sources};
 })();

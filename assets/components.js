@@ -380,21 +380,21 @@
   function renderResults() {
     const total = state.results.length;
     const exact = state.results.find(entry => entry.kind === 'part' || entry.kind === 'alias');
-    const datasheetPanel = window.ST_DATASHEETS?.render(
+    const datasheetOption = window.ST_DATASHEETS?.renderOptional(
       exact?.item?.part_number || state.query,
       exact?.item?.manufacturer || els.manufacturer.value,
       '',
     ) || '';
     if (!total) {
-      els.results.innerHTML = `${datasheetPanel}<div class="component-empty"><div class="component-symbol" aria-hidden="true">?</div><h2>${escapeHtml(tr('noResults'))}</h2><p>${escapeHtml(tr('noResultsText'))}</p></div>`;
+      els.results.innerHTML = `<div class="component-empty"><div class="component-symbol" aria-hidden="true">?</div><h2>${escapeHtml(tr('noResults'))}</h2><p>${escapeHtml(tr('noResultsText'))}</p></div>${datasheetOption}`;
       return;
     }
     const visible = state.results.slice(0, 60);
     els.results.innerHTML = `
-      ${datasheetPanel}
       <div class="results-heading"><div><h2>${escapeHtml(tr('results', {count: total, query: state.query}))}</h2><p>${escapeHtml(tr('substitutionWarning'))}</p></div></div>
       <div class="result-list">${visible.map(resultMarkup).join('')}</div>
-      ${total > visible.length ? `<p class="results-limit">${escapeHtml(tr('limited', {shown: visible.length, total}))}</p>` : ''}`;
+      ${total > visible.length ? `<p class="results-limit">${escapeHtml(tr('limited', {shown: visible.length, total}))}</p>` : ''}
+      ${datasheetOption}`;
   }
   function runSearch() {
     if (!state.catalog) return;
@@ -464,7 +464,7 @@
       ${source.title ? `<p><strong>${escapeHtml(source.title)}</strong>${source.publisher ? ` · ${escapeHtml(source.publisher)}` : ''}${source.type ? ` · ${escapeHtml(source.type)}` : ''}</p>` : ''}
       ${source.url ? `<a class="source-link" href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(tr('sourceOpen'))}</a>` : ''}
       ${item.datasheet_url ? `<a class="source-link" href="${escapeHtml(item.datasheet_url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(tr('datasheet'))}</a>` : ''}` : '';
-    const sourceBody = `${recordedSource}${window.ST_DATASHEETS?.render(item.part_number, item.manufacturer, item.datasheet_url, true) || ''}`;
+    const datasheetBody = window.ST_DATASHEETS?.render(item.part_number, item.manufacturer, item.datasheet_url, true) || '';
     const relatedBody = (item.equivalents || []).map(related => `<li><strong>${escapeHtml(related.part_number)}</strong>${related.manufacturer ? ` · ${escapeHtml(related.manufacturer)}` : ''} · ${escapeHtml(tr('compatibility'))}: ${escapeHtml(related.compatibility_level)}${related.notes_es ? ` · ${escapeHtml(related.notes_es)}` : ''}</li>`).join('');
     const verificationBody = (item.verification || []).map(entry => `<li>${escapeHtml(entry.reason_es)} · ${escapeHtml(entry.status)}</li>`).join('');
     const firstMarking = item.markings?.[0];
@@ -476,7 +476,8 @@
         ${detailSection(tr('packagesPinout'), packageBody)}
         ${detailSection(tr('markings'), markingBody ? `<ul>${markingBody}</ul>${firstMarking ? `<a class="smd-cross-link" href="smd.html?q=${encodeURIComponent(firstMarking)}">${escapeHtml(tr('compareSmd'))}</a>` : ''}` : '')}
         ${detailSection(tr('applications'), applicationsBody ? `<ul>${applicationsBody}</ul>` : '')}
-        ${detailSection(tr('source'), sourceBody)}
+        ${detailSection(tr('source'), recordedSource)}
+        ${detailSection(tr('datasheet'), datasheetBody)}
         ${detailSection(tr('related'), relatedBody ? `<ul>${relatedBody}</ul>` : '')}
         ${detailSection(tr('verification'), verificationBody ? `<ul>${verificationBody}</ul>` : '')}
       </div>`;

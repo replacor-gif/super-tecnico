@@ -323,6 +323,15 @@ th { color: #435d6a; background: #eef4f6; }
 .datasheet-caution { margin-bottom: 0 !important; padding-top: 11px; border-top: 1px solid var(--line); font-size: .76rem !important; }
 .datasheet-compact { margin: 14px 0 0; padding: 15px; border-radius: 14px; box-shadow: none; }
 .datasheet-compact .datasheet-sources { grid-template-columns: 1fr; }
+.datasheet-option { margin-top: 15px; border: 1px solid #b9d8e4; border-radius: 16px; background: #f7fbfc; overflow: hidden; }
+.datasheet-option > summary { padding: 15px 17px; display: flex; align-items: center; justify-content: space-between; gap: 12px; list-style: none; color: var(--blue); }
+.datasheet-option > summary::-webkit-details-marker { display: none; }
+.datasheet-option > summary > span:first-child { display: grid; }
+.datasheet-option > summary strong { font-size: .9rem; }
+.datasheet-option > summary small { color: var(--muted); font-size: .72rem; font-weight: 650; }
+.datasheet-option > summary > span:last-child { font-size: 1.15rem; font-weight: 900; }
+.datasheet-option[open] > summary > span:last-child { transform: rotate(45deg); }
+.datasheet-option > .datasheet-finder { margin: 0 14px 14px; box-shadow: none; }
 
 .component-guide { display: grid; gap: 16px; position: sticky; top: 18px; }
 .component-guide section { padding: 22px; }
