@@ -3,6 +3,7 @@
 
   const API_ENDPOINT = new URL('api/index.php', document.baseURI).href;
   const CLIENT_KEY = 'st.community.client.v1';
+  const ELECTROIA_PATH = 'archivo-tecnico-47097e44267b9cb111636b84823f1d47/';
 
   function pageKey() {
     const file = location.pathname.endsWith('/')
@@ -21,10 +22,28 @@
     return token;
   }
 
-  function showCounter(views) {
+  function footerTools() {
     const footer = document.querySelector('body > footer:last-of-type') || document.querySelector('.st-page-footer');
-    if (!footer) return;
-    const counter = footer.querySelector('.st-page-counter') || document.createElement('span');
+    if (!footer) return null;
+    let tools = footer.querySelector('.st-footer-tools');
+    if (tools) return tools;
+
+    tools = document.createElement('div');
+    tools.className = 'st-footer-tools';
+    const access = document.createElement('a');
+    access.className = 'st-electro-access';
+    access.href = ELECTROIA_PATH;
+    access.textContent = 'Ω';
+    access.setAttribute('aria-label', 'Ω');
+    tools.append(access);
+    footer.append(tools);
+    return tools;
+  }
+
+  function showCounter(views) {
+    const tools = footerTools();
+    if (!tools) return;
+    const counter = tools.querySelector('.st-page-counter') || document.createElement('span');
     const labels = {
       es: ['Visitas', 'visitas a esta página'],
       en: ['Views', 'views of this page'],
@@ -38,7 +57,7 @@
     counter.className = 'st-page-counter';
     counter.textContent = `${shortLabel}: ${formattedViews}`;
     counter.setAttribute('aria-label', `${formattedViews} ${ariaLabel}`);
-    if (!counter.isConnected) footer.append(counter);
+    if (!counter.isConnected) tools.prepend(counter);
   }
 
   async function count() {
@@ -59,6 +78,11 @@
     }
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', count, {once: true});
-  else count();
+  function start() {
+    footerTools();
+    count();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, {once: true});
+  else start();
 })();
