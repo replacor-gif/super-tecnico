@@ -3,6 +3,7 @@
 
   const API_ENDPOINT = 'https://home-5020945339.app-ionos.space/super-tecnico/api/index.php';
   const CLIENT_KEY = 'st.community.client.v1';
+  const ELECTROIA_PATH = 'archivo-tecnico-47097e44267b9cb111636b84823f1d47/';
 
   function pageKey() {
     const file = location.pathname.split('/').filter(Boolean).pop() || 'index';
@@ -19,14 +20,32 @@
     return token;
   }
 
-  function showCounter(views) {
+  function footerTools() {
     const footer = document.querySelector('body > footer:last-of-type') || document.querySelector('.st-page-footer');
-    if (!footer) return;
+    if (!footer) return null;
+    let tools = footer.querySelector('.st-footer-tools');
+    if (tools) return tools;
+
+    tools = document.createElement('div');
+    tools.className = 'st-footer-tools';
+    const access = document.createElement('a');
+    access.className = 'st-electro-access';
+    access.href = ELECTROIA_PATH;
+    access.textContent = 'Ω';
+    access.setAttribute('aria-label', 'Ω');
+    tools.append(access);
+    footer.append(tools);
+    return tools;
+  }
+
+  function showCounter(views) {
+    const tools = footerTools();
+    if (!tools) return;
     const counter = document.createElement('span');
     counter.className = 'st-page-counter';
     counter.textContent = `Visitas: ${Number(views).toLocaleString('es-ES')}`;
     counter.setAttribute('aria-label', `${Number(views).toLocaleString('es-ES')} visitas a esta página`);
-    footer.append(counter);
+    tools.prepend(counter);
   }
 
   async function count() {
@@ -47,6 +66,11 @@
     }
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', count, {once: true});
-  else count();
+  function start() {
+    footerTools();
+    count();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, {once: true});
+  else start();
 })();

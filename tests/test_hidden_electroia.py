@@ -19,6 +19,14 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn("noindex,nofollow,noarchive,nosnippet,noimageindex", html)
         self.assertIn('<script src="engine.js"></script>', html)
 
+    def test_omega_access_is_added_below_the_page_counter(self):
+        counter = (ROOT / "assets" / "page-counter.js").read_text(encoding="utf-8")
+        styles = (ROOT / "assets" / "common.css").read_text(encoding="utf-8")
+        self.assertIn(f"const ELECTROIA_PATH = '{ROUTE}/';", counter)
+        self.assertIn("access.textContent = 'Ω'", counter)
+        self.assertIn("tools.prepend(counter)", counter)
+        self.assertIn(".st-electro-access", styles)
+
     def test_lab_uses_public_component_and_symbol_databases(self):
         app = (ROOT / ROUTE / "app.js").read_text(encoding="utf-8")
         engine = (ROOT / ROUTE / "engine.js").read_text(encoding="utf-8")
