@@ -1,11 +1,28 @@
 <?php
 declare(strict_types=1);
 require __DIR__ . '/bootstrap.php';
+require __DIR__ . '/electroia.php';
 
 $action = preg_replace('/[^a-z0-9-]/', '', strtolower((string) ($_GET['action'] ?? 'health')));
 $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
 
 try {
+    if ($action === 'electroia-status' && $method === 'GET') {
+        st_json(st_electroia_status());
+    }
+
+    if ($action === 'electroia-analyze' && $method === 'POST') {
+        $body = st_body();
+        $request = st_text($body, 'request', 8, 500);
+        st_rate_limit('electroia-analyze', st_client_hash($body), 30, 3600);
+        try {
+            st_json(st_electroia_analyze($request));
+        } catch (RuntimeException $error) {
+            error_log('ElectroIA analysis: ' . $error->getMessage());
+            st_json(['ok' => false, 'error' => 'ai_unavailable', 'local_fallback' => true], 503);
+        }
+    }
+
     if ($action === 'health' && $method === 'GET') {
         st_db()->query('SELECT 1');
         st_json(['ok' => true, 'service' => 'super-tecnico-api', 'version' => '1.0']);

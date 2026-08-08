@@ -307,6 +307,7 @@ class StaticSiteTests(unittest.TestCase):
         for relative in (
             "api/index.php",
             "api/bootstrap.php",
+            "api/electroia.php",
             "api/migrate.php",
             "database/schema.sql",
             ".deploy-now/config.yaml",

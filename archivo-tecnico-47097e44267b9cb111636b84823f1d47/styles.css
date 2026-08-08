@@ -84,6 +84,17 @@ button { color: inherit; }
   letter-spacing: 0.02em;
 }
 
+.case-pill b { font-weight: 750; }
+.case-pill em { font-style: normal; }
+.case-pill.local span {
+  background: #929a96;
+  box-shadow: 0 0 0 3px rgba(92, 102, 97, .12);
+}
+.case-pill.ai span {
+  background: #78ad25;
+  box-shadow: 0 0 0 3px rgba(120, 173, 37, .14);
+}
+
 .case-pill span {
   width: 7px;
   height: 7px;
@@ -359,8 +370,10 @@ kbd { font: inherit; border: 1px solid var(--line); border-radius: 4px; padding:
 
 @media (max-width: 520px) {
   main { width: min(100% - 28px, 1160px); }
-  .case-pill { font-size: 0; }
+  .case-pill { font-size: 10px; padding: 7px 9px; }
+  .case-pill em { display: none; }
   .case-pill span { margin: 0; }
+  .case-pill b { margin-left: 6px; }
   h1 { font-size: 47px; }
   .prompt-card { padding: 19px 17px 14px; }
   .prompt-row { align-items: flex-end; }

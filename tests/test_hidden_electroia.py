@@ -35,6 +35,20 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn('circuit_model', engine)
         self.assertIn('SYM-0080', engine)
 
+    def test_private_ai_backend_has_a_safe_local_fallback(self):
+        app = (ROOT / ROUTE / "app.js").read_text(encoding="utf-8")
+        backend = (ROOT / "api" / "electroia.php").read_text(encoding="utf-8")
+        api = (ROOT / "api" / "index.php").read_text(encoding="utf-8")
+        self.assertIn('new URL("../api/index.php", document.baseURI)', app)
+        self.assertIn('ElectroEngine.analyze(body.request)', app)
+        self.assertIn("electroia-status", api)
+        self.assertIn("electroia-analyze", api)
+        self.assertIn("https://api.openai.com/v1/responses", backend)
+        self.assertIn("'type' => 'json_schema'", backend)
+        self.assertIn("'strict' => true", backend)
+        self.assertIn("'store' => false", backend)
+        self.assertNotRegex(app, r"sk-[A-Za-z0-9_-]{12,}")
+
     def test_static_build_includes_the_hidden_lab(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             output = Path(temp_dir) / "dist"

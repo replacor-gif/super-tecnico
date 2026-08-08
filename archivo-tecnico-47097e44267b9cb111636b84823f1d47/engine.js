@@ -509,6 +509,7 @@ const ElectroEngine = (function () {
     design(requestText, answers, resources) {
       return { ok: true, design: generateDesign(String(requestText || ""), answers || {}, resources || {}) };
     },
+    buildQuestions,
     extractRequest,
   };
 })();

@@ -5,10 +5,13 @@ const state = {
   index: 0,
   answers: {},
   resourcesPromise: null,
+  intelligenceConfigured: false,
+  analysisSource: "local",
 };
 
 const $ = (selector) => document.querySelector(selector);
 const views = [$("#introView"), $("#questionsView"), $("#resultView")];
+const PRIVATE_API_URL = new URL("../api/index.php", document.baseURI);
 
 function showView(view) {
   views.forEach((item) => item.classList.toggle("active", item === view));
@@ -25,6 +28,63 @@ async function fetchJson(url, label) {
   const response = await fetch(url, { cache: "force-cache" });
   if (!response.ok) throw new Error(`No se ha podido cargar ${label} (${response.status})`);
   return response.json();
+}
+
+function clientToken() {
+  try {
+    const key = "st-electroia-client";
+    const existing = window.localStorage.getItem(key);
+    if (existing) return existing;
+    const created = window.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    window.localStorage.setItem(key, created);
+    return created;
+  } catch (_error) {
+    return "private-lab";
+  }
+}
+
+function setEngineMode(mode) {
+  const usingAi = mode === "ai";
+  $("#engineStatus").classList.toggle("ai", usingAi);
+  $("#engineStatus").classList.toggle("local", !usingAi);
+  $("#engineStatusLabel").textContent = usingAi ? "IA privada" : "Motor local";
+  $("#privacyStatus").lastChild.textContent = usingAi
+    ? " Petición cifrada al motor privado"
+    : " Tu petición se procesa localmente";
+}
+
+async function initializeIntelligence() {
+  const url = new URL(PRIVATE_API_URL);
+  url.searchParams.set("action", "electroia-status");
+  try {
+    const response = await fetch(url, { cache: "no-store", credentials: "same-origin" });
+    const data = response.ok ? await response.json() : null;
+    state.intelligenceConfigured = data?.engine?.configured === true;
+  } catch (_error) {
+    state.intelligenceConfigured = false;
+  }
+  setEngineMode(state.intelligenceConfigured ? "ai" : "local");
+}
+
+async function analyzeWithPrivateAi(request) {
+  const url = new URL(PRIVATE_API_URL);
+  url.searchParams.set("action", "electroia-analyze");
+  const response = await fetch(url, {
+    method: "POST",
+    credentials: "same-origin",
+    cache: "no-store",
+    headers: {
+      "Content-Type": "application/json",
+      "X-ST-Client": clientToken(),
+    },
+    body: JSON.stringify({ request, client_token: clientToken() }),
+  });
+  const data = await response.json().catch(() => null);
+  if (!response.ok || !data?.ok || !data?.extracted) throw new Error("private_ai_unavailable");
+  return {
+    ...data,
+    questions: data.can_design ? ElectroEngine.buildQuestions(data.extracted) : [],
+  };
 }
 
 function loadDesignResources() {
@@ -57,7 +117,21 @@ function loadDesignResources() {
 async function api(path, body) {
   await new Promise((resolve) => window.setTimeout(resolve, 180));
   if (typeof ElectroEngine === "undefined") throw new Error("El motor de diseño no está disponible");
-  if (path === "/api/analyze") return ElectroEngine.analyze(body.request);
+  if (path === "/api/analyze") {
+    if (state.intelligenceConfigured) {
+      try {
+        const result = await analyzeWithPrivateAi(body.request);
+        state.analysisSource = "openai";
+        setEngineMode("ai");
+        return result;
+      } catch (_error) {
+        state.intelligenceConfigured = false;
+        setEngineMode("local");
+      }
+    }
+    state.analysisSource = "local";
+    return { ...ElectroEngine.analyze(body.request), source: "local", can_design: true };
+  }
   if (path === "/api/design") {
     const resources = await loadDesignResources();
     return ElectroEngine.design(body.request, body.answers, resources);
@@ -71,6 +145,9 @@ $("#requestForm").addEventListener("submit", async (event) => {
   setLoading(true);
   try {
     const data = await api("/api/analyze", { request });
+    if (data.can_design === false) {
+      throw new Error(`He entendido tu idea: ${data.understanding} El diseño automático de este caso será uno de los próximos módulos; ahora mismo está activo el controlador de relé.`);
+    }
     state.request = request;
     state.extracted = data.extracted;
     state.questions = data.questions;
@@ -222,6 +299,7 @@ $("#startOver").addEventListener("click", () => {
 function renderDesign(design) {
   $("#designTitle").textContent = design.title;
   $("#designSummary").textContent = design.summary;
+  $("#databaseMeta").textContent = state.analysisSource === "openai" ? "IA + DATOS REALES" : "MOTOR LOCAL + DATOS REALES";
 
   const banner = $("#statusBanner");
   banner.className = `status-banner ${design.status}`;
@@ -378,3 +456,5 @@ function escapeHtml(value) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
+
+initializeIntelligence();

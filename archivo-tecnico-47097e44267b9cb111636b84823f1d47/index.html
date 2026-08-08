@@ -17,7 +17,9 @@
         <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
         <span>Super Técnico <span>· ElectroIA</span></span>
       </a>
-      <div class="case-pill"><span></span> Prototipo · Caso 001</div>
+      <div id="engineStatus" class="case-pill local">
+        <span></span><b id="engineStatusLabel">Motor local</b><em> · Caso 001</em>
+      </div>
     </header>
 
     <main>
@@ -39,7 +41,7 @@
           </div>
           <div class="prompt-footer">
             <span><kbd>Enter</kbd> para continuar</span>
-            <span class="privacy"><i></i> Tus datos se procesan localmente</span>
+            <span id="privacyStatus" class="privacy"><i></i> Tu petición se procesa localmente</span>
           </div>
         </form>
 
@@ -125,7 +127,7 @@
 
         <div class="evidence-grid">
           <article class="panel database-card">
-            <div class="panel-title"><span>Bases utilizadas</span><small>DATOS REALES</small></div>
+            <div class="panel-title"><span>Bases utilizadas</span><small id="databaseMeta">DATOS REALES</small></div>
             <div id="databaseSummary" class="database-summary"></div>
           </article>
           <article class="panel model-card">
