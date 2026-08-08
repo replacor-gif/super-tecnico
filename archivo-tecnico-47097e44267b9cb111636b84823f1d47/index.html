@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#101415" />
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex" />
+    <meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet,noimageindex" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Laboratorio privado — Super Técnico</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="ElectroIA, inicio">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Super Técnico <span>· ElectroIA</span></span>
+      </a>
+      <div class="case-pill"><span></span> Prototipo · Caso 001</div>
+    </header>
+
+    <main>
+      <section id="introView" class="view intro-view active">
+        <div class="eyebrow">Electrónica en lenguaje humano</div>
+        <h1>Cuéntame qué quieres<br /><em>hacer funcionar.</em></h1>
+        <p class="lede">
+          No necesitas saber de componentes. Describe el resultado y te haré únicamente
+          las preguntas imprescindibles.
+        </p>
+
+        <form id="requestForm" class="prompt-card">
+          <label for="requestInput">¿Qué quieres construir?</label>
+          <div class="prompt-row">
+            <textarea id="requestInput" rows="2" maxlength="500" required>Quiero encender un relé de 12 V utilizando una señal de 5 V.</textarea>
+            <button type="submit" class="arrow-button" aria-label="Analizar petición">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </button>
+          </div>
+          <div class="prompt-footer">
+            <span><kbd>Enter</kbd> para continuar</span>
+            <span class="privacy"><i></i> Tus datos se procesan localmente</span>
+          </div>
+        </form>
+
+        <div class="example-row">
+          <span>Prueba con:</span>
+          <button class="example" type="button">Relé de 12 V con señal de 5 V</button>
+        </div>
+
+        <div class="process-strip" aria-label="Proceso de diseño">
+          <div><b>01</b><span><strong>Describe</strong>Tu idea, sin tecnicismos</span></div>
+          <div><b>02</b><span><strong>Aclara</strong>Solo lo necesario</span></div>
+          <div><b>03</b><span><strong>Construye</strong>Circuito y componentes</span></div>
+        </div>
+      </section>
+
+      <section id="questionsView" class="view questions-view" aria-live="polite">
+        <div class="flow-header">
+          <button id="backToIntro" class="text-button" type="button">← Cambiar petición</button>
+          <span id="progressText">Pregunta 1 de 5</span>
+        </div>
+        <div class="progress-track"><i id="progressBar"></i></div>
+
+        <div class="conversation-layout">
+          <aside class="request-summary">
+            <span>Tu petición</span>
+            <blockquote id="requestSummary"></blockquote>
+            <div class="detected-box">
+              <span class="detected-dot"></span>
+              <div><b>Entendido</b><small id="detectedText">Relé detectado</small></div>
+            </div>
+          </aside>
+
+          <div class="question-stage">
+            <div id="questionMount"></div>
+            <div id="questionError" class="form-error" role="alert"></div>
+            <div class="question-actions">
+              <button id="previousQuestion" class="secondary-button" type="button">Anterior</button>
+              <button id="nextQuestion" class="primary-button" type="button">Siguiente <span>→</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="resultView" class="view result-view" aria-live="polite">
+        <div class="result-heading">
+          <div>
+            <div class="eyebrow">Primera propuesta técnica</div>
+            <h2 id="designTitle">Circuito generado</h2>
+            <p id="designSummary"></p>
+          </div>
+          <button id="startOver" class="secondary-button" type="button">Nueva idea</button>
+        </div>
+
+        <div id="statusBanner" class="status-banner"></div>
+
+        <div class="result-grid">
+          <article class="schematic-card panel">
+            <div class="panel-title"><span>Esquema funcional</span><small>VISTA PREVIA</small></div>
+            <div id="schematic" class="schematic"></div>
+            <div class="schematic-legend">
+              <span><i class="green"></i> Control</span>
+              <span><i class="orange"></i> Potencia</span>
+              <span><i class="grey"></i> Masa</span>
+            </div>
+          </article>
+
+          <article class="panel decisions-card">
+            <div class="panel-title"><span>Por qué funciona</span><small>DECISIONES</small></div>
+            <ol id="decisionsList"></ol>
+          </article>
+        </div>
+
+        <div class="details-grid">
+          <article class="panel">
+            <div class="panel-title"><span>Lista de componentes</span><small>BOM</small></div>
+            <div id="componentsList" class="components-list"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-title"><span>Cómo conectarlo</span><small>PASO A PASO</small></div>
+            <ol id="connectionsList" class="connections-list"></ol>
+          </article>
+        </div>
+
+        <article class="warning-panel">
+          <div class="warning-icon">!</div>
+          <div><h3>Antes de montar</h3><ul id="warningsList"></ul></div>
+        </article>
+      </section>
+    </main>
+
+    <div id="loadingOverlay" class="loading-overlay" aria-hidden="true">
+      <div class="loader"><i></i><i></i><i></i></div>
+      <p>Traduciendo tu idea a electrónica…</p>
+    </div>
+
+    <script src="engine.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
