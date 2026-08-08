@@ -4,6 +4,7 @@ const state = {
   questions: [],
   index: 0,
   answers: {},
+  resourcesPromise: null,
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -14,16 +15,53 @@ function showView(view) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function setLoading(visible) {
+function setLoading(visible, message = "Traduciendo tu idea a electrónica…") {
   $("#loadingOverlay").classList.toggle("visible", visible);
   $("#loadingOverlay").setAttribute("aria-hidden", String(!visible));
+  $("#loadingOverlay p").textContent = message;
+}
+
+async function fetchJson(url, label) {
+  const response = await fetch(url, { cache: "force-cache" });
+  if (!response.ok) throw new Error(`No se ha podido cargar ${label} (${response.status})`);
+  return response.json();
+}
+
+function loadDesignResources() {
+  if (!state.resourcesPromise) {
+    state.resourcesPromise = Promise.all([
+      fetchJson("../data/components/catalog.json", "la base de componentes"),
+      fetchJson("../data/symbols/catalog.json", "la base de simbología"),
+    ]).then(([componentCatalog, symbolCatalog]) => {
+      if (!Array.isArray(componentCatalog.components) || !Array.isArray(symbolCatalog.symbols)) {
+        throw new Error("Las bases públicas no tienen el formato esperado");
+      }
+      return {
+        components: componentCatalog.components,
+        component_meta: componentCatalog.meta || {},
+        symbols: symbolCatalog.symbols,
+        symbol_meta: {
+          version: symbolCatalog.version,
+          count: symbolCatalog.count,
+          generated_from: symbolCatalog.generated_from,
+        },
+      };
+    }).catch((error) => {
+      state.resourcesPromise = null;
+      throw error;
+    });
+  }
+  return state.resourcesPromise;
 }
 
 async function api(path, body) {
-  await new Promise((resolve) => window.setTimeout(resolve, 220));
+  await new Promise((resolve) => window.setTimeout(resolve, 180));
   if (typeof ElectroEngine === "undefined") throw new Error("El motor de diseño no está disponible");
   if (path === "/api/analyze") return ElectroEngine.analyze(body.request);
-  if (path === "/api/design") return ElectroEngine.design(body.request, body.answers);
+  if (path === "/api/design") {
+    const resources = await loadDesignResources();
+    return ElectroEngine.design(body.request, body.answers, resources);
+  }
   throw new Error("Operación desconocida");
 }
 
@@ -76,7 +114,7 @@ function renderQuestion() {
   const card = document.createElement("div");
   card.className = "question-card";
   card.innerHTML = `
-    <div class="question-number">0${state.index + 1}</div>
+    <div class="question-number">${String(state.index + 1).padStart(2, "0")}</div>
     <h2>${escapeHtml(question.label)}</h2>
     <p class="question-help">${escapeHtml(question.help || "")}</p>
   `;
@@ -154,7 +192,7 @@ $("#nextQuestion").addEventListener("click", async () => {
     return;
   }
 
-  setLoading(true);
+  setLoading(true, "Consultando componentes y construyendo el esquema…");
   try {
     const data = await api("/api/design", { request: state.request, answers: state.answers });
     renderDesign(data.design);
@@ -188,89 +226,148 @@ function renderDesign(design) {
   const banner = $("#statusBanner");
   banner.className = `status-banner ${design.status}`;
   banner.innerHTML = design.status === "ready"
-    ? "<b>Propuesta lista para revisar.</b> Ya tenemos los valores esenciales para seleccionar los componentes."
-    : `<b>Diseño provisional.</b> ${design.provisional_reasons.map(escapeHtml).join(" ")}`;
+    ? "<b>Propuesta lista para revisar.</b> Los datos esenciales y las referencias están confirmados."
+    : `<b>Diseño provisional y honesto.</b> ${design.provisional_reasons.map(escapeHtml).join(" ")}`;
 
   $("#decisionsList").innerHTML = design.decisions.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
-  $("#componentsList").innerHTML = design.components.map((item) => `
-    <div class="component">
-      <span class="component-ref">${escapeHtml(item.ref)}</span>
-      <b>${escapeHtml(item.name)}</b>
-      <small>${escapeHtml(item.spec)}</small>
-    </div>
-  `).join("");
+  $("#componentsList").innerHTML = design.components.map((item) => {
+    const metadata = item.source_kind === "catalog"
+      ? `<span>${escapeHtml(item.manufacturer || "Fabricante no indicado")} · ID ${escapeHtml(item.database_id)} · confianza ${Math.round(Number(item.confidence || 0) * 100)}%</span>`
+      : item.calculation
+        ? `<span>${escapeHtml(item.calculation)}</span>`
+        : "";
+    return `
+      <div class="component">
+        <span class="component-ref">${escapeHtml(item.ref)}</span>
+        <div class="component-name">
+          <b>${escapeHtml(item.name)}</b>
+          <em class="source-badge ${escapeHtml(item.source_kind)}">${escapeHtml(item.source_label)}</em>
+        </div>
+        <small>${escapeHtml(item.spec)}${metadata}</small>
+      </div>
+    `;
+  }).join("");
   $("#connectionsList").innerHTML = design.connections.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
   $("#warningsList").innerHTML = design.warnings.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
-  $("#schematic").innerHTML = buildSchematic(design.values);
+  $("#schematic").innerHTML = buildSchematic(design);
+  renderDatabaseSummary(design.database);
+  renderCircuitModel(design.circuit_model);
 }
 
-function buildSchematic(values) {
+function renderDatabaseSummary(database) {
+  $("#databaseSummary").innerHTML = `
+    <div><b>${formatNumber(database.component_records)}</b><span>componentes consultables</span><small>versión ${escapeHtml(database.component_version)}</small></div>
+    <div><b>${formatNumber(database.symbol_records)}</b><span>símbolos normalizados</span><small>versión ${escapeHtml(database.symbol_version)}</small></div>
+    <div><b>${database.selected_catalog_components}</b><span>piezas tomadas de catálogo</span><small>${database.calculated_values} valores calculados · ${database.pending_specifications} por elegir</small></div>
+  `;
+}
+
+function renderCircuitModel(model) {
+  $("#modelMeta").textContent = `Modelo ${model.schema_version} · ${model.topology}`;
+  $("#netsList").innerHTML = model.nets.map((net) => `
+    <div class="net-row">
+      <span>${escapeHtml(net.id)}</span>
+      <b>${escapeHtml(net.label)}</b>
+      <small>${net.connections.map(escapeHtml).join(" · ")}</small>
+    </div>
+  `).join("");
+}
+
+function symbolAsset(design, symbolId) {
+  return design.symbol_manifest.find((item) => item.id === symbolId)?.asset || "";
+}
+
+function symbolImage(design, symbolId, x, y, width = 132, height = 72, options = {}) {
+  const asset = symbolAsset(design, symbolId);
+  if (!asset) return `<rect class="missing-symbol" x="${x}" y="${y}" width="${width}" height="${height}" rx="7"/>`;
+  const image = `<image href="${escapeHtml(asset)}" x="0" y="0" width="${width}" height="${height}" preserveAspectRatio="none"/>`;
+  if (options.flip) return `<g transform="translate(${x + width} ${y}) scale(-1 1)">${image}</g>`;
+  return `<g transform="translate(${x} ${y})">${image}</g>`;
+}
+
+function buildSchematic(design) {
+  const values = design.values;
   const signal = `${values.signal_voltage} V`;
   const relay = `${values.relay_voltage} V${values.coil_type === "dc" ? " CC" : ""}`;
-  const isolation = values.isolated;
+  const q1 = design.components.find((item) => item.ref === "Q1");
+  const q1Name = q1?.part_number || "MOSFET por elegir";
+  const isolated = values.isolated;
+  const controlStart = isolated ? 248 : 185;
+
   return `
-  <svg viewBox="0 0 760 390" role="img" aria-label="Esquema funcional de control de un relé con MOSFET">
+  <svg viewBox="0 0 900 510" role="img" aria-label="Esquema eléctrico estructurado de control de un relé con MOSFET">
     <defs>
-      <filter id="soft"><feDropShadow dx="0" dy="5" stdDeviation="7" flood-opacity=".08"/></filter>
-      <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4 0 8z" fill="#77a426"/></marker>
+      <filter id="soft"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity=".07"/></filter>
+      <marker id="controlArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4 0 8z" fill="#77a426"/></marker>
     </defs>
     <style>
-      .wire{fill:none;stroke:#7b8581;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}.control{stroke:#77a426}.power{stroke:#ef7540}.box{fill:#fffefa;stroke:#b8bcb8;stroke-width:1.3}.t{font:600 13px Inter,Arial,sans-serif;fill:#262a29}.s{font:11px Inter,Arial,sans-serif;fill:#707875}.ref{font:700 10px ui-monospace,monospace;fill:#62841f}.node{fill:#1f2422}.plus{font:700 17px Inter,Arial,sans-serif;fill:#ef7540}
+      .wire{fill:none;stroke:#66706c;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.control{stroke:#77a426}.power{stroke:#ef7540}.box{fill:#fffefa;stroke:#b8bcb8;stroke-width:1.3}.pending{fill:#fff8ed;stroke:#d49a57;stroke-dasharray:5 4}.t{font:600 13px Inter,Arial,sans-serif;fill:#262a29}.s{font:11px Inter,Arial,sans-serif;fill:#707875}.ref{font:700 10px ui-monospace,monospace;fill:#62841f}.net{font:700 9px ui-monospace,monospace;fill:#a84c26}.node{fill:#1f2422}.missing-symbol{fill:#fff4e4;stroke:#cf7e31;stroke-dasharray:4 3}
     </style>
 
-    <text class="ref" x="30" y="36">CONTROL</text>
-    <rect class="box" filter="url(#soft)" x="28" y="58" rx="11" width="142" height="82"/>
-    <text class="t" x="47" y="88">Salida digital</text>
-    <text class="s" x="47" y="112">Señal ${signal}</text>
-    <circle cx="170" cy="99" r="4" fill="#77a426"/>
+    <text class="ref" x="34" y="35">CONTROL</text>
+    <rect class="box" filter="url(#soft)" x="32" y="62" rx="11" width="142" height="76"/>
+    <text class="t" x="49" y="90">Salida digital</text>
+    <text class="s" x="49" y="113">Señal ${escapeHtml(signal)}</text>
+    <circle cx="174" cy="101" r="4" fill="#77a426"/>
+    <path class="wire control" d="M178 101H${controlStart}" marker-end="url(#controlArrow)"/>
+    ${isolated ? `
+      <rect class="pending" x="250" y="61" rx="9" width="126" height="80"/>
+      ${symbolImage(design, "SYM-0097", 250, 64, 126, 69)}
+      <text class="ref" x="259" y="57">U1 · OPTO PENDIENTE</text>
+      <text class="s" x="260" y="151">faltan referencia y fuente aislada</text>
+      <path class="wire control" d="M376 101H405"/>
+    ` : ""}
 
-    <path class="wire control" d="M174 99H250" marker-end="url(#arrow)"/>
-    <rect class="box" x="253" y="82" rx="6" width="74" height="34"/>
-    <text class="ref" x="264" y="103">R1 · 100Ω</text>
-    ${isolation ? `
-      <path class="wire control" d="M327 99H363"/>
-      <rect class="box" x="363" y="60" rx="9" width="96" height="78"/>
-      <text class="ref" x="378" y="88">U1 · OPTO</text>
-      <text class="s" x="378" y="111">aislamiento</text>
-      <path class="wire control" d="M459 99H499"/>
-    ` : `<path class="wire control" d="M327 99H499"/>`}
+    <text class="ref" x="${isolated ? 405 : 185}" y="78">R1 · 100 Ω</text>
+    ${symbolImage(design, "SYM-0023", isolated ? 390 : 170, 65)}
+    <path class="wire control" d="M${isolated ? 510 : 290} 101H565"/>
+    <circle class="node" cx="565" cy="101" r="4"/>
+    <text class="net" x="515" y="91">GATE</text>
 
-    <text class="ref" x="480" y="36">ETAPA DE POTENCIA</text>
-    <circle class="node" cx="500" cy="99" r="4"/>
-    <path class="wire" d="M500 99V164"/>
-    <rect class="box" filter="url(#soft)" x="463" y="164" rx="10" width="76" height="80"/>
-    <text class="ref" x="482" y="190">Q1</text>
-    <text class="t" x="475" y="213">MOSFET</text>
-    <text class="s" x="478" y="231">N lógico</text>
+    <text class="ref" x="466" y="35">ETAPA DE POTENCIA · SÍMBOLOS REPLACOR</text>
+    <text class="net" x="460" y="52">VRELAY_PLUS</text>
+    ${symbolImage(design, "SYM-0014", 394, 0)}
+    <path class="wire power" d="M460 60V106H507"/>
 
-    <path class="wire" d="M500 244V310H500"/>
-    <path class="wire" d="M475 310H525M483 318H517M491 326H509"/>
-    <text class="s" x="535" y="319">GND</text>
-    ${isolation ? "" : `<path class="wire" d="M98 140V310H475"/><circle class="node" cx="98" cy="140" r="3"/><text class="s" x="37" y="303">Masa común</text>`}
+    <text class="ref" x="520" y="83">K1 · BOBINA ${escapeHtml(relay)}</text>
+    ${symbolImage(design, "SYM-0119", 495, 70)}
+    <path class="wire power" d="M507 106V178"/>
+    <path class="wire power" d="M615 106V178"/>
+    <circle class="node" cx="507" cy="106" r="4"/>
+    <circle class="node" cx="615" cy="106" r="4"/>
 
-    <path class="wire power" d="M500 164V135H590V100"/>
-    <rect class="box" filter="url(#soft)" x="555" y="55" rx="10" width="125" height="62"/>
-    <text class="ref" x="571" y="80">K1 · BOBINA</text>
-    <path d="M575 97c8-18 16 18 24 0s16 18 24 0 16 18 24 0" fill="none" stroke="#ef7540" stroke-width="2"/>
-    <path class="wire power" d="M618 55V28H704"/>
-    <text class="plus" x="708" y="34">+ ${relay}</text>
+    <text class="ref" x="520" y="161">D1 · 1N4007</text>
+    ${symbolImage(design, "SYM-0057", 495, 142, 132, 72, { flip: true })}
+    <text class="s" x="488" y="198">K</text><text class="s" x="622" y="198">A</text>
+    <path class="wire power" d="M615 178V252H667"/>
+    <text class="net" x="622" y="230">COIL_LOW</text>
 
-    <path class="wire" d="M555 128H680V55"/>
-    <rect class="box" x="574" y="121" rx="5" width="70" height="27"/>
-    <text class="ref" x="584" y="139">D1 · 1N4007</text>
-    <text class="s" x="651" y="143">banda ↑</text>
+    <text class="ref" x="676" y="237">Q1 · ${escapeHtml(q1Name)}</text>
+    ${symbolImage(design, "SYM-0080", 550, 240)}
+    <path class="wire control" d="M565 101V276"/>
+    <path class="wire" d="M667 300V410"/>
 
-    <path class="wire" d="M500 99H420V278"/>
-    <rect class="box" x="384" y="278" rx="5" width="72" height="30"/>
-    <text class="ref" x="395" y="297">R2 · 100k</text>
-    <path class="wire" d="M420 308V318H475"/>
+    <text class="ref" x="413" y="333">R2 · 100 kΩ</text>
+    ${symbolImage(design, "SYM-0023", 400, 320)}
+    <path class="wire" d="M520 356H545V276H565"/>
+    <path class="wire" d="M412 356V430H667V410"/>
+    <circle class="node" cx="565" cy="276" r="4"/>
+    ${symbolImage(design, "SYM-0010", 601, 398)}
+    <text class="net" x="680" y="439">GND</text>
 
-    <rect x="561" y="194" width="153" height="92" rx="10" fill="#f3f1e9" stroke="#b8bcb8" stroke-dasharray="5 4"/>
-    <text class="ref" x="578" y="218">CONTACTOS DEL RELÉ</text>
-    <circle class="node" cx="586" cy="252" r="4"/><circle class="node" cx="688" cy="252" r="4"/>
-    <path class="wire power" d="M590 252L673 226"/>
-    <text class="s" x="596" y="275">Circuito de la carga</text>
+    <rect class="box" x="704" y="70" width="164" height="148" rx="12" filter="url(#soft)"/>
+    <text class="ref" x="721" y="94">K1.1 · CONTACTO NO</text>
+    ${symbolImage(design, "SYM-0120", 719, 98, 132, 72)}
+    <text class="s" x="722" y="191">Carga: circuito separado</text>
+    <text class="s" x="722" y="207">Dimensionado pendiente</text>
+
+    <rect x="32" y="456" width="836" height="34" rx="8" fill="#f3f1e9" stroke="#d6d8d3"/>
+    <text class="s" x="49" y="478">Las redes mostradas proceden del modelo eléctrico: CTRL_OUT → GATE → Q1 · VRELAY_PLUS → K1/D1 · COIL_LOW → Q1 · GND común.</text>
   </svg>`;
+}
+
+function formatNumber(value) {
+  return new Intl.NumberFormat("es-ES").format(Number(value || 0));
 }
 
 function escapeHtml(value) {

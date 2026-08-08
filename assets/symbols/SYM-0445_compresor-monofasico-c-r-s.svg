@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-labelledby="title desc">
+<title id="title">Compresor monofásico C-R-S</title><desc id="desc">Representación didáctica: Compresor monofásico C-R-S</desc>
+<rect width="200" height="150" fill="#f8fafc"/><g fill="none" stroke="#132f3f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="70" r="44"/><text x="100" y="64">COMP</text><text x="100" y="84">C R S</text><path d="M20 70h36m88 0h36"/></g>
+<g fill="#132f3f" font-family="Arial,sans-serif" font-size="13" font-weight="700" text-anchor="middle"><text x="100" y="18">Compresor monofásico C-R-S</text><text x="100" y="137">C, R, S</text></g></svg>

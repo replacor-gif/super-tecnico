@@ -271,6 +271,57 @@ def validate_smd_catalog(source_root: Path) -> tuple[dict[str, Any], dict[str, i
     return catalog, stats
 
 
+def validate_symbols_catalog(source_root: Path) -> tuple[dict[str, Any], dict[str, int]]:
+    catalog = read_json(source_root / "data" / "symbols" / "catalog.json")
+    course = read_json(source_root / "data" / "symbols" / "course.json")
+    symbols = catalog.get("symbols") or []
+    modules = course.get("modules") or []
+    lessons = [lesson for module in modules for lesson in (module.get("lessons") or [])]
+    if not isinstance(symbols, list):
+        raise BuildError("La biblioteca de símbolos no contiene una lista válida")
+    if len(symbols) < 460 or int(catalog.get("count") or 0) != len(symbols):
+        raise BuildError("La biblioteca pública de símbolos está incompleta")
+
+    symbol_ids = [str(item.get("id") or "") for item in symbols]
+    if any(not symbol_id for symbol_id in symbol_ids) or len(symbol_ids) != len(set(symbol_ids)):
+        raise BuildError("La biblioteca pública de símbolos contiene ID vacíos o duplicados")
+
+    required_ids = {
+        "SYM-0010",
+        "SYM-0014",
+        "SYM-0023",
+        "SYM-0057",
+        "SYM-0080",
+        "SYM-0097",
+        "SYM-0119",
+        "SYM-0120",
+    }
+    for item in symbols:
+        if not all(item.get(key) for key in ("id", "nombre", "categoria", "descripcion", "archivo_svg")):
+            raise BuildError(f"Ficha de símbolo incompleta: {item.get('id')}")
+        source_url = str(item.get("fuente") or "")
+        if source_url and not source_url.startswith("https://"):
+            raise BuildError(f"Fuente no segura en {item.get('id')}")
+        asset = source_root / str(item["archivo_svg"])
+        if not asset.is_file():
+            raise BuildError(f"Falta la imagen de {item.get('id')}: {item['archivo_svg']}")
+    if not required_ids.issubset(set(symbol_ids)):
+        raise BuildError("Faltan símbolos esenciales para el laboratorio ElectroIA")
+    if len(modules) < 6 or len(lessons) < 24:
+        raise BuildError("El curso asociado a la biblioteca de símbolos está incompleto")
+    for lesson in lessons:
+        asset = source_root / str(lesson.get("archivo_svg") or "")
+        if not lesson.get("steps") or not lesson.get("quiz") or not asset.is_file():
+            raise BuildError(f"Lección de simbología incompleta: {lesson.get('id')}")
+
+    return catalog, {
+        "symbols": len(symbols),
+        "version": str(catalog.get("version") or ""),
+        "modules": len(modules),
+        "lessons": len(lessons),
+    }
+
+
 def validate_components_catalog(source_root: Path) -> tuple[dict[str, Any], dict[str, int]]:
     components_root = source_root / "data" / "components"
     catalog = read_json(components_root / "catalog.json")
@@ -488,6 +539,20 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
     })
     smd_catalog, smd_stats = validate_smd_catalog(source_root)
     write_json(output / "data" / "smd" / "catalog.json", smd_catalog)
+    symbols_catalog, symbols_stats = validate_symbols_catalog(source_root)
+    write_json(output / "data" / "symbols" / "catalog.json", symbols_catalog)
+    write_json(
+        output / "data" / "symbols" / "course.json",
+        read_json(source_root / "data" / "symbols" / "course.json"),
+    )
+    write_json(
+        output / "data" / "symbols" / "index.json",
+        read_json(source_root / "data" / "symbols" / "index.json"),
+    )
+    symbols_asset_output = output / "assets" / "symbols"
+    symbols_asset_output.mkdir(parents=True, exist_ok=True)
+    for path in sorted((source_root / "assets" / "symbols").glob("*.svg")):
+        shutil.copy2(path, symbols_asset_output / path.name)
     components_catalog, components_stats = validate_components_catalog(source_root)
     write_json(output / "data" / "components" / "catalog.json", components_catalog)
     components_details = source_root / "data" / "components" / "details"
@@ -500,6 +565,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "generated_at_utc": generated_at,
         "brands": manifest,
         "smd": smd_stats,
+        "symbols": symbols_stats,
         "components": components_stats,
         "oem_pcb": oem_stats,
         "advertising": advertising,

@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-labelledby="title desc">
+<title id="title">Bobina Rogowski</title><desc id="desc">Representación didáctica: Bobina Rogowski</desc>
+<rect width="200" height="150" fill="#f8fafc"/><g fill="none" stroke="#132f3f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 70h35c0-18 22-18 22 0s22 18 22 0 22-18 22 0 22 18 22 0h37"/></g>
+<g fill="#132f3f" font-family="Arial,sans-serif" font-size="13" font-weight="700" text-anchor="middle"><text x="100" y="18">Bobina Rogowski</text><text x="100" y="137">Bobina e integrador</text></g></svg>

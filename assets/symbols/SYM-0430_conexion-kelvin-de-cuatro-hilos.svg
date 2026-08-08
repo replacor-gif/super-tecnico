@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-labelledby="title desc">
+<title id="title">Conexión Kelvin de cuatro hilos</title><desc id="desc">Representación didáctica: Conexión Kelvin de cuatro hilos</desc>
+<rect width="200" height="150" fill="#f8fafc"/><g fill="none" stroke="#132f3f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M24 48h55m0 0h55M24 92h55m0 0h55"/><circle cx="79" cy="48" r="4"/><circle cx="79" cy="92" r="4"/><path d="M79 48v44"/></g>
+<g fill="#132f3f" font-family="Arial,sans-serif" font-size="13" font-weight="700" text-anchor="middle"><text x="100" y="18">Conexión Kelvin de cuatro hilos</text><text x="100" y="137">I+, I−, S+, S−</text></g></svg>

@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-labelledby="title desc">
+<title id="title">Sensor de corriente aislado por shunt</title><desc id="desc">Representación didáctica: Sensor de corriente aislado por shunt</desc>
+<rect width="200" height="150" fill="#f8fafc"/><g fill="none" stroke="#132f3f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="70" r="42"/><path d="M58 70H20m160 0h-38"/><path d="M77 86l14-34 13 34 15-34"/></g>
+<g fill="#132f3f" font-family="Arial,sans-serif" font-size="13" font-weight="700" text-anchor="middle"><text x="100" y="18">Sensor de corriente aislado por shunt</text><text x="100" y="137">IN+, IN−, alimentación primaria/secundaria, OUT</text></g></svg>

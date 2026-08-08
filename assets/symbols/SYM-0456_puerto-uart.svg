@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-labelledby="title desc">
+<title id="title">Puerto UART</title><desc id="desc">Representación didáctica: Puerto UART</desc>
+<rect width="200" height="150" fill="#f8fafc"/><g fill="none" stroke="#132f3f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 50h40m80 0h40M20 90h40m80 0h40"/><rect x="60" y="30" width="80" height="80" rx="7"/><text x="100" y="65">BUS</text><text x="100" y="86">DATA</text></g>
+<g fill="#132f3f" font-family="Arial,sans-serif" font-size="13" font-weight="700" text-anchor="middle"><text x="100" y="18">Puerto UART</text><text x="100" y="137">TX, RX, GND y opcional VCC</text></g></svg>
