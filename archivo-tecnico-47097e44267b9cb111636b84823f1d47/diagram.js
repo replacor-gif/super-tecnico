@@ -40,13 +40,13 @@ const ElectroDiagram = (function () {
       </g>`;
   }
 
-  function relayCoil(x, y, ref, value) {
+  function relayCoil(x, y, ref, value, showRef = true) {
     return `
       <g data-symbol-id="SYM-0119" aria-label="${esc(ref)} ${esc(value)}">
         <path class="wire power" d="M${x} ${y + 40}h34M${x + 156} ${y + 40}h34"/>
         <rect class="symbol" x="${x + 34}" y="${y + 10}" width="122" height="60" rx="29"/>
         <text class="coil-letter" x="${x + 95}" y="${y + 48}">K</text>
-        <text class="ref" x="${x + 95}" y="${y - 8}">${esc(ref)} · BOBINA</text>
+        ${showRef ? `<text class="ref" x="${x + 95}" y="${y - 8}">${esc(ref)} · BOBINA</text>` : ""}
       </g>`;
   }
 
@@ -100,16 +100,12 @@ const ElectroDiagram = (function () {
     const resistorGate = part(model, "R1");
     const resistorPull = part(model, "R2");
     const load = part(model, "LOAD1");
-    const isolated = Boolean(values.isolated);
     const relayVoltage = `${values.relay_voltage} V`;
     const signalVoltage = `${values.signal_voltage} V`;
-    const sourceEnd = isolated ? 240 : 140;
-    const resistorStart = isolated ? 240 : 140;
-    const resistorWidth = isolated ? 100 : 200;
 
     return `
       <svg class="electrical-diagram" viewBox="0 0 620 710" role="img"
-        data-model-version="${esc(model.schema_version || "")}" data-topology="${esc(model.topology || "")}" 
+        data-model-version="${esc(model.schema_version || "")}" data-topology="${esc(model.topology || "")}"
         aria-label="Esquema eléctrico de un relé de ${esc(relayVoltage)} controlado con ${esc(signalVoltage)}">
         <style>
           .wire{fill:none;stroke:#26302c;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}.wire.signal{stroke:#648d1c}.wire.power{stroke:#d96735}.wire.load{stroke:#59635f}.symbol{fill:#fffefa;stroke:#26302c;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}.accent{fill:none;stroke:#648d1c;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.node{fill:#26302c}.terminal{fill:#fffefa;stroke:#26302c;stroke-width:2.8}.section{font:800 12px Inter,Arial,sans-serif;letter-spacing:1.7px;fill:#6b756f}.ref{font:800 15px Inter,Arial,sans-serif;text-anchor:middle;fill:#28312d}.ref.left{text-anchor:start}.value{font:600 14px Inter,Arial,sans-serif;text-anchor:middle;fill:#5d6863}.value.left{text-anchor:start}.pin{font:700 11px ui-monospace,monospace;fill:#7a847f}.label{font:750 16px Inter,Arial,sans-serif;fill:#28312d}.note{font:500 13px Inter,Arial,sans-serif;fill:#68726d}.coil-letter{font:800 22px Inter,Arial,sans-serif;text-anchor:middle;fill:#28312d}.block{fill:#f9f7ef;stroke:#aab2ad;stroke-width:2}.pending{fill:#fff6e8;stroke:#c77a35;stroke-width:2;stroke-dasharray:6 5}.divider{stroke:#ccd1cd;stroke-width:1.5;stroke-dasharray:5 7}
@@ -132,15 +128,8 @@ const ElectroDiagram = (function () {
         <text class="label" x="80" y="310" text-anchor="middle">CONTROL</text>
         <text class="note" x="80" y="333" text-anchor="middle">Salida ${esc(signalVoltage)}</text>
         <circle class="node" cx="140" cy="315" r="5"/>
-        <path class="wire signal" d="M140 315H${sourceEnd}"/>
-        ${isolated ? `
-          <rect class="pending" x="150" y="275" width="90" height="80" rx="9" data-symbol-id="SYM-0097"/>
-          <text class="ref" x="195" y="307">U1</text>
-          <text class="note" x="195" y="330" text-anchor="middle">Aislamiento</text>
-          <text class="pin" x="158" y="371">POR ELEGIR</text>
-        ` : ""}
-        ${resistorHorizontal(resistorStart, 315, resistorWidth, "R1", resistorGate.value || "100 Ω")}
-        <path class="wire signal" d="M${resistorStart + resistorWidth} 315h10v15"/>
+        ${resistorHorizontal(140, 315, 200, "R1", resistorGate.value || "100 Ω")}
+        <path class="wire signal" d="M340 315h10v15"/>
         <circle class="node" cx="350" cy="330" r="5"/>
         ${resistorVertical(335, 330, 130, "R2", resistorPull.value || "100 kΩ")}
         <path class="wire" d="M335 330h15M335 460h175"/>
@@ -170,11 +159,106 @@ const ElectroDiagram = (function () {
       </svg>`;
   }
 
+  function renderIsolatedRelayDriver(design) {
+    const model = design.circuit_model || {};
+    const values = design.values || {};
+    const relay = part(model, "K1");
+    const diode = part(model, "D1");
+    const mosfet = part(model, "Q1");
+    const resistorGate = part(model, "R1");
+    const resistorPull = part(model, "R2");
+    const resistorInput = part(model, "R3");
+    const optocoupler = part(model, "U1");
+    const load = part(model, "LOAD1");
+    const relayVoltage = `${values.relay_voltage} V`;
+    const signalVoltage = `${values.signal_voltage} V`;
+
+    return `
+      <svg class="electrical-diagram" viewBox="0 0 620 930" role="img"
+        data-model-version="${esc(model.schema_version || "")}" data-topology="${esc(model.topology || "")}"
+        aria-label="Esquema eléctrico aislado de un relé de ${esc(relayVoltage)} controlado con ${esc(signalVoltage)}">
+        <style>
+          .wire{fill:none;stroke:#26302c;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}.wire.signal{stroke:#648d1c}.wire.power{stroke:#d96735}.wire.load{stroke:#59635f}.symbol{fill:#fffefa;stroke:#26302c;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}.accent{fill:none;stroke:#648d1c;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.node{fill:#26302c}.terminal{fill:#fffefa;stroke:#26302c;stroke-width:2.8}.section{font:800 12px Inter,Arial,sans-serif;letter-spacing:1.7px;fill:#6b756f}.ref{font:800 15px Inter,Arial,sans-serif;text-anchor:middle;fill:#28312d}.ref.left{text-anchor:start}.value{font:600 14px Inter,Arial,sans-serif;text-anchor:middle;fill:#5d6863}.value.left{text-anchor:start}.pin{font:700 11px ui-monospace,monospace;fill:#7a847f}.label{font:750 16px Inter,Arial,sans-serif;fill:#28312d}.note{font:500 13px Inter,Arial,sans-serif;fill:#68726d}.coil-letter{font:800 22px Inter,Arial,sans-serif;text-anchor:middle;fill:#28312d}.block{fill:#fffefa;stroke:#aab2ad;stroke-width:2}.control-zone{fill:#f4f8eb;stroke:#b8ca91;stroke-width:2}.relay-zone{fill:#fff7ef;stroke:#e3b89d;stroke-width:2}.barrier{fill:#edf0ee;stroke:#a7afab;stroke-width:1.5;stroke-dasharray:7 6}.divider{stroke:#ccd1cd;stroke-width:1.5;stroke-dasharray:5 7}
+        </style>
+
+        <rect class="control-zone" x="20" y="18" width="580" height="212" rx="14"/>
+        <text class="section" x="38" y="47">LADO DE CONTROL · ${esc(signalVoltage)}</text>
+        <rect class="block" x="35" y="92" width="105" height="68" rx="10"/>
+        <text class="label" x="87" y="120" text-anchor="middle">CONTROL</text>
+        <text class="note" x="87" y="144" text-anchor="middle">Salida ${esc(signalVoltage)}</text>
+        <circle class="node" cx="140" cy="128" r="5"/>
+        ${resistorHorizontal(140, 128, 150, "R3", resistorInput.value || values.isolation_input_resistor || "820 Ω")}
+
+        <rect class="block" x="308" y="67" width="237" height="124" rx="12" data-symbol-id="SYM-0097"/>
+        <text class="ref" x="426" y="58">U1 · ${esc(optocoupler.value || "PC817")}</text>
+        <path class="wire signal" d="M290 128h38M446 128h57v46"/>
+        <path class="symbol" d="M402 104L348 128l54 24zM414 102v52"/>
+        <path class="accent" d="M380 92l18 -18m-4 1l4 -1l-1 5M397 101l18 -18m-4 1l4 -1l-1 5"/>
+        <text class="pin" x="326" y="118">A</text><text class="pin" x="423" y="118">K</text>
+        <text class="note" x="426" y="178" text-anchor="middle">LED de entrada</text>
+        <path class="wire" d="M503 174v12"/>
+        <path class="wire" d="M503 186v10m-24 0h48m-38 10h28m-19 10h10"/>
+        <text class="note" x="438" y="215">0 V CONTROL</text>
+
+        <rect class="barrier" x="20" y="245" width="580" height="54" rx="9"/>
+        <text class="section" x="310" y="266" text-anchor="middle">BARRERA DE AISLAMIENTO</text>
+        <text class="note" x="310" y="287" text-anchor="middle">NO UNIR LAS DOS MASAS</text>
+
+        <rect class="relay-zone" x="20" y="315" width="580" height="382" rx="14"/>
+        <text class="section" x="38" y="343">LADO DEL RELÉ · ${esc(relayVoltage)}</text>
+
+        <rect class="block" x="35" y="370" width="155" height="132" rx="11" data-symbol-id="SYM-0097"/>
+        <text class="ref" x="112" y="362">U1 · SALIDA</text>
+        <path class="symbol" d="M94 405v62M103 421l47 -31M103 447l47 30"/>
+        <path class="accent" d="M58 417l25 12m-9 -12l9 12l-13 2M58 444l25 12m-9 -12l9 12l-13 2"/>
+        <path class="wire power" d="M150 390v-20"/>
+        <path class="wire signal" d="M150 477v-32h40"/>
+        <text class="pin" x="157" y="398">C</text><text class="pin" x="157" y="470">E</text>
+        <text class="note" x="112" y="493" text-anchor="middle">Fototransistor</text>
+
+        <circle class="terminal" cx="230" cy="370" r="7"/>
+        <text class="label" x="206" y="393">+${esc(relayVoltage)}</text>
+        <path class="wire power" d="M150 370h180"/>
+        <text class="ref" x="425" y="343">K1 · BOBINA</text>
+        ${relayCoil(330, 330, "K1", relay.value || `Bobina ${relayVoltage}`, false)}
+        <path class="wire power" d="M330 370v100M520 370v140"/>
+        ${diodeHorizontal(330, 470, "D1", diode.value || "Diodo de rueda libre")}
+        <circle class="node" cx="330" cy="470" r="5"/>
+        <circle class="node" cx="520" cy="470" r="5"/>
+
+        ${resistorHorizontal(190, 445, 160, "R1", resistorGate.value || "100 Ω")}
+        <path class="wire signal" d="M350 445v115h10"/>
+        <circle class="node" cx="360" cy="560" r="5"/>
+        ${resistorVertical(345, 560, 90, "R2", resistorPull.value || "100 kΩ")}
+        <path class="wire" d="M345 560h15M345 650h193"/>
+        ${mosfetN(360, 500, "Q1", mosfet.value || "MOSFET N lógico")}
+        <path class="wire power" d="M520 510h18"/>
+        <path class="wire" d="M538 610v40"/>
+        <circle class="node" cx="538" cy="650" r="5"/>
+        <path class="wire" d="M500 650v13m-24 0h48m-38 10h28m-19 10h10"/>
+        <text class="note" x="420" y="684">0 V RELÉ</text>
+
+        <line class="divider" x1="24" y1="720" x2="596" y2="720"/>
+        <text class="section" x="24" y="750">CONTACTOS PARA LA CARGA · CIRCUITO SEPARADO</text>
+        <rect class="block" x="20" y="768" width="576" height="140" rx="12"/>
+        <circle class="terminal" cx="58" cy="840" r="7"/>
+        <text class="note" x="40" y="879">Entrada</text>
+        <path class="wire load" d="M65 840h55"/>
+        ${contactNo(120, 840, "K1.1")}
+        <path class="wire load" d="M310 840h42"/>
+        <rect class="symbol" x="352" y="800" width="174" height="80" rx="9"/>
+        <text class="label" x="439" y="830" text-anchor="middle">CARGA</text>
+        <text class="note" x="439" y="855" text-anchor="middle">${esc(String(load.value || "Equipo a controlar").slice(0, 28))}</text>
+        <path class="wire load" d="M526 840h30"/>
+        <circle class="terminal" cx="563" cy="840" r="7"/>
+        <text class="note" x="538" y="879">Retorno</text>
+      </svg>`;
+  }
+
   function render(design) {
     const topology = design?.circuit_model?.topology || "";
-    if (topology === "low_side_relay_driver" || topology === "isolated_low_side_relay_driver") {
-      return renderRelayDriver(design);
-    }
+    if (topology === "low_side_relay_driver") return renderRelayDriver(design);
+    if (topology === "isolated_low_side_relay_driver") return renderIsolatedRelayDriver(design);
     throw new Error("El modelo eléctrico todavía no tiene un formato de diagrama compatible");
   }
 

@@ -45,18 +45,32 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertNotIn("Modelo eléctrico interno", html)
         self.assertIn("renderPublicResult(data.design)", app)
         self.assertIn("ElectroDiagram.render(design)", app)
-        public_renderer = app.split("function renderPublicResult", 1)[1].split("function renderDesign", 1)[0]
+        public_renderer = app.split("function renderPublicResult", 1)[1].split("function escapeHtml", 1)[0]
         self.assertNotIn("item.calculation", public_renderer)
         self.assertNotIn("design.decisions", public_renderer)
+        self.assertNotIn("function renderDesign", app)
+        self.assertNotIn("decisions", engine := (ROOT / ROUTE / "engine.js").read_text(encoding="utf-8"))
         self.assertIn("design.circuit_model", diagram)
         self.assertIn('data-symbol-id="SYM-0119"', diagram)
+
+    def test_isolation_has_two_real_separate_domains(self):
+        engine = (ROOT / ROUTE / "engine.js").read_text(encoding="utf-8")
+        diagram = (ROOT / ROUTE / "diagram.js").read_text(encoding="utf-8")
+        self.assertIn('resources.componentsByPart.get("PC817")', engine)
+        self.assertIn('{ id: "GND_CONTROL"', engine)
+        self.assertIn('{ id: "GND_RELAY"', engine)
+        self.assertIn('pins: { A: "CTRL_LED", K: "GND_CONTROL", C: "VRELAY_PLUS", E: "ISO_OUT" }', engine)
+        self.assertIn('ref: "R3"', engine)
+        self.assertNotIn('status: "incomplete"', engine)
+        self.assertIn("function renderIsolatedRelayDriver", diagram)
+        self.assertIn("NO UNIR LAS DOS MASAS", diagram)
 
     def test_model_is_ready_for_future_photo_or_sketch_input(self):
         engine = (ROOT / ROUTE / "engine.js").read_text(encoding="utf-8")
         diagram = (ROOT / ROUTE / "diagram.js").read_text(encoding="utf-8")
         self.assertIn('future: ["image", "hand_drawn_sketch"]', engine)
         self.assertIn('{ ref: "LOAD1"', engine)
-        self.assertIn('schema_version: "0.3"', engine)
+        self.assertIn('schema_version: "0.4"', engine)
         self.assertNotIn("requestText", diagram)
 
     def test_private_pin_is_verified_only_on_the_server(self):

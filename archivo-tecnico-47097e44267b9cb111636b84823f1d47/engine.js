@@ -20,6 +20,33 @@ const ElectroEngine = (function () {
     return parsed;
   }
 
+  const E12_VALUES = [10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82];
+
+  function e12AtLeast(target) {
+    const safeTarget = Math.max(10, Number(target) || 10);
+    const exponent = Math.floor(Math.log10(safeTarget)) - 1;
+    const scale = 10 ** exponent;
+    const normalized = safeTarget / scale;
+    const selected = E12_VALUES.find((value) => value >= normalized);
+    return selected ? selected * scale : 100 * scale;
+  }
+
+  function formatResistance(ohms) {
+    if (ohms >= 1000) {
+      const kilo = ohms / 1000;
+      return `${Number.isInteger(kilo) ? kilo : kilo.toFixed(1)} kΩ`;
+    }
+    return `${Math.round(ohms)} Ω`;
+  }
+
+  function isolationInputResistor(signalVoltage) {
+    const targetCurrentA = 0.005;
+    const ledForwardVoltage = 1.2;
+    const minimumOhms = (Math.max(signalVoltage, ledForwardVoltage + 0.5) - ledForwardVoltage) / targetCurrentA;
+    const ohms = e12AtLeast(minimumOhms);
+    return { ohms, label: formatResistance(ohms) };
+  }
+
   function extractRequest(text) {
     const normalized = String(text || "").toLowerCase().replace(/\s+/g, " ").trim();
     const relayPresent = /(?:^|[^a-záéíóúüñ])(?:rel[eé]|relevador)(?=$|[^a-záéíóúüñ])/i.test(normalized);
@@ -242,28 +269,20 @@ const ElectroEngine = (function () {
   }
 
   function createCircuitModel(values, componentMap) {
-    const controlInputNode = values.isolated ? "ISO_OUT" : "CTRL_OUT";
-    const nodes = [
-      { id: "CTRL_OUT", label: `Señal de control ${values.signal_voltage} V`, kind: "signal" },
-      { id: "GATE", label: "Puerta Q1", kind: "signal" },
-      { id: "VRELAY_PLUS", label: `+${values.relay_voltage} V bobina`, kind: "power" },
-      { id: "COIL_LOW", label: "Retorno conmutado de bobina", kind: "power" },
-      { id: "GND", label: "0 V / masa común", kind: "reference" },
+    const loadNodes = [
       { id: "LOAD_COM", label: "Entrada del circuito de carga", kind: "load" },
       { id: "LOAD_NO", label: "Salida conmutada del relé", kind: "load" },
       { id: "LOAD_RETURN", label: "Retorno del circuito de carga", kind: "load" },
     ];
-    if (values.isolated) nodes.splice(1, 0, { id: "ISO_OUT", label: "Salida aislada pendiente", kind: "signal" });
-
-    const parts = [
-      { ref: "R1", symbol_id: REQUIRED_SYMBOLS.resistor, value: "100 Ω", pins: { "1": controlInputNode, "2": "GATE" } },
-      { ref: "R2", symbol_id: REQUIRED_SYMBOLS.resistor, value: "100 kΩ", pins: { "1": "GATE", "2": "GND" } },
+    const powerParts = [
+      { ref: "R1", symbol_id: REQUIRED_SYMBOLS.resistor, value: "100 Ω", pins: { "1": values.isolated ? "ISO_OUT" : "CTRL_OUT", "2": "GATE" } },
+      { ref: "R2", symbol_id: REQUIRED_SYMBOLS.resistor, value: "100 kΩ", pins: { "1": "GATE", "2": "GND_RELAY" } },
       {
         ref: "Q1",
         symbol_id: REQUIRED_SYMBOLS.mosfet,
         component_id: componentMap.Q1?.database_id || null,
         value: componentMap.Q1?.part_number || "MOSFET N lógico",
-        pins: { G: "GATE", D: "COIL_LOW", S: "GND" },
+        pins: { G: "GATE", D: "COIL_LOW", S: "GND_RELAY" },
       },
       {
         ref: "K1",
@@ -278,44 +297,76 @@ const ElectroEngine = (function () {
         value: componentMap.D1?.part_number || "Diodo de rueda libre",
         pins: { K: "VRELAY_PLUS", A: "COIL_LOW" },
       },
-      { ref: "PS1", symbol_id: REQUIRED_SYMBOLS.power, value: `${values.relay_voltage} V CC`, pins: { "+": "VRELAY_PLUS", "-": "GND" } },
-      { ref: "GND1", symbol_id: REQUIRED_SYMBOLS.ground, value: "0 V", pins: { "1": "GND" } },
+      { ref: "PS1", symbol_id: REQUIRED_SYMBOLS.power, value: `${values.relay_voltage} V CC`, pins: { "+": "VRELAY_PLUS", "-": "GND_RELAY" } },
+      { ref: "GND1", symbol_id: REQUIRED_SYMBOLS.ground, value: "0 V relé", pins: { "1": "GND_RELAY" } },
       { ref: "K1.1", symbol_id: REQUIRED_SYMBOLS.relayContact, value: "Contacto NO", pins: { COM: "LOAD_COM", NO: "LOAD_NO" } },
       { ref: "LOAD1", symbol_id: null, value: values.load_kind, pins: { "1": "LOAD_NO", "2": "LOAD_RETURN" } },
     ];
-    if (values.isolated) {
-      parts.unshift({
-        ref: "U1",
-        symbol_id: REQUIRED_SYMBOLS.optocoupler,
-        value: "Etapa optoacoplada por seleccionar",
-        status: "incomplete",
-        pins: { IN: "CTRL_OUT", OUT: "ISO_OUT" },
-      });
-    }
-
-    const nets = [
-      {
-        id: "CTRL_OUT",
-        label: `Control ${values.signal_voltage} V`,
-        connections: values.isolated ? ["PORT1.OUT", "U1.IN"] : ["PORT1.OUT", "R1.1"],
-      },
+    const powerNets = [
       { id: "GATE", label: "Mando de puerta", connections: ["R1.2", "R2.1", "Q1.G"] },
-      { id: "VRELAY_PLUS", label: `+${values.relay_voltage} V`, connections: ["PS1.+", "K1.A1", "D1.K"] },
+      { id: "VRELAY_PLUS", label: `+${values.relay_voltage} V lado relé`, connections: values.isolated ? ["PS1.+", "K1.A1", "D1.K", "U1.C"] : ["PS1.+", "K1.A1", "D1.K"] },
       { id: "COIL_LOW", label: "Bobina / drenador", connections: ["K1.A2", "D1.A", "Q1.D"] },
-      { id: "GND", label: "0 V", connections: ["PS1.-", "Q1.S", "R2.2", "GND1.1"] },
+      { id: "GND_RELAY", label: "0 V lado relé", connections: ["PS1.-", "Q1.S", "R2.2", "GND1.1"] },
       { id: "LOAD_COM", label: "Entrada de carga", connections: ["PORT2.IN", "K1.1.COM"] },
       { id: "LOAD_NO", label: "Salida conmutada", connections: ["K1.1.NO", "LOAD1.1"] },
       { id: "LOAD_RETURN", label: "Retorno de carga", connections: ["LOAD1.2", "PORT2.RETURN"] },
     ];
-    if (values.isolated) nets.splice(1, 0, { id: "ISO_OUT", label: "Salida aislada incompleta", connections: ["U1.OUT", "R1.1"] });
+
+    if (!values.isolated) {
+      return {
+        schema_version: "0.4",
+        topology: "low_side_relay_driver",
+        input_contract: { current: "text", future: ["image", "hand_drawn_sketch"] },
+        nodes: [
+          { id: "CTRL_OUT", label: `Señal de control ${values.signal_voltage} V`, kind: "signal" },
+          { id: "GATE", label: "Puerta Q1", kind: "signal" },
+          { id: "VRELAY_PLUS", label: `+${values.relay_voltage} V bobina`, kind: "power" },
+          { id: "COIL_LOW", label: "Retorno conmutado de bobina", kind: "power" },
+          { id: "GND_RELAY", label: "0 V / masa común", kind: "reference" },
+          ...loadNodes,
+        ],
+        parts: powerParts,
+        nets: [
+          { id: "CTRL_OUT", label: `Control ${values.signal_voltage} V`, connections: ["PORT1.OUT", "R1.1"] },
+          ...powerNets,
+        ],
+      };
+    }
 
     return {
-      schema_version: "0.3",
-      topology: values.isolated ? "isolated_low_side_relay_driver" : "low_side_relay_driver",
+      schema_version: "0.4",
+      topology: "isolated_low_side_relay_driver",
       input_contract: { current: "text", future: ["image", "hand_drawn_sketch"] },
-      nodes,
-      parts,
-      nets,
+      nodes: [
+        { id: "CTRL_OUT", label: `Señal de control ${values.signal_voltage} V`, kind: "signal" },
+        { id: "CTRL_LED", label: "Entrada LED del optoacoplador", kind: "signal" },
+        { id: "GND_CONTROL", label: "0 V lado control", kind: "reference" },
+        { id: "ISO_OUT", label: "Salida aislada hacia la puerta", kind: "signal" },
+        { id: "GATE", label: "Puerta Q1", kind: "signal" },
+        { id: "VRELAY_PLUS", label: `+${values.relay_voltage} V lado relé`, kind: "power" },
+        { id: "COIL_LOW", label: "Retorno conmutado de bobina", kind: "power" },
+        { id: "GND_RELAY", label: "0 V lado relé", kind: "reference" },
+        ...loadNodes,
+      ],
+      parts: [
+        { ref: "R3", symbol_id: REQUIRED_SYMBOLS.resistor, value: values.isolation_input_resistor_label, pins: { "1": "CTRL_OUT", "2": "CTRL_LED" } },
+        {
+          ref: "U1",
+          symbol_id: REQUIRED_SYMBOLS.optocoupler,
+          component_id: componentMap.U1?.database_id || null,
+          value: componentMap.U1?.part_number || "PC817",
+          pins: { A: "CTRL_LED", K: "GND_CONTROL", C: "VRELAY_PLUS", E: "ISO_OUT" },
+        },
+        { ref: "GND2", symbol_id: REQUIRED_SYMBOLS.ground, value: "0 V control", pins: { "1": "GND_CONTROL" } },
+        ...powerParts,
+      ],
+      nets: [
+        { id: "CTRL_OUT", label: `Control ${values.signal_voltage} V`, connections: ["PORT1.OUT", "R3.1"] },
+        { id: "CTRL_LED", label: "Corriente LED U1", connections: ["R3.2", "U1.A"] },
+        { id: "GND_CONTROL", label: "0 V lado control", connections: ["U1.K", "PORT1.GND", "GND2.1"] },
+        { id: "ISO_OUT", label: "Salida aislada", connections: ["U1.E", "R1.1"] },
+        ...powerNets,
+      ],
     };
   }
 
@@ -354,6 +405,10 @@ const ElectroEngine = (function () {
     const mosfetSelection = chooseMosfet(resources, relayVoltage, signalVoltage, coilCurrent);
     const mosfet = mosfetSelection.candidate;
     const diode = resources.componentsByPart.get("1N4007") || null;
+    const optocoupler = isolation
+      ? (resources.componentsByPart.get("PC817") || resources.componentsByPart.get("EL817") || null)
+      : null;
+    const isolationResistor = isolation ? isolationInputResistor(signalVoltage) : null;
 
     if (!mosfet) {
       provisionalReasons.push(`No hay en el catálogo un MOSFET lógico que cumpla VDS ≥ ${mosfetSelection.minimumVoltage.toFixed(0)} V e ID ≥ ${mosfetSelection.minimumCurrent.toFixed(1)} A.`);
@@ -361,7 +416,8 @@ const ElectroEngine = (function () {
       provisionalReasons.push(`Q1 es candidato de catálogo, pero hay que confirmar en su ficha RDS(on) a VGS = ${signalLabel} y su patillaje real.`);
     }
     if (!diode) provisionalReasons.push("No se encontró el 1N4007 en la base pública de componentes.");
-    if (isolation) provisionalReasons.push("El aislamiento necesita seleccionar un optoacoplador y una alimentación aislada compatibles antes de montar.");
+    if (isolation && !optocoupler) provisionalReasons.push("No se encontró un optoacoplador PC817/EL817 verificable en la base pública.");
+    if (isolation && optocoupler) provisionalReasons.push("Confirma el patillaje y el CTR de U1 en la ficha exacta antes de montarlo.");
 
     const components = [];
     components.push(specificationComponent(
@@ -405,10 +461,41 @@ const ElectroEngine = (function () {
     components.push(
       calculatedComponent("R1", "Resistencia de puerta 100 Ω", "¼ W, valor normalizado", "Limita el pico de corriente de carga de la puerta.", { symbol_id: REQUIRED_SYMBOLS.resistor }),
       calculatedComponent("R2", "Resistencia de 100 kΩ", "¼ W, valor normalizado", "Mantiene Q1 apagado mientras la salida de control está flotante.", { symbol_id: REQUIRED_SYMBOLS.resistor }),
-      specificationComponent("PS1", `Fuente de ${relayLabel}`, "Debe entregar la corriente de la bobina con margen y compartir masa si no hay aislamiento", { symbol_id: REQUIRED_SYMBOLS.power })
+      specificationComponent(
+        "PS1",
+        `Fuente de ${relayLabel}`,
+        isolation
+          ? "Debe entregar la corriente de la bobina con margen; su negativo pertenece solo al lado del relé"
+          : "Debe entregar la corriente de la bobina con margen y compartir masa con el control",
+        { symbol_id: REQUIRED_SYMBOLS.power }
+      )
     );
     if (isolation) {
-      components.splice(2, 0, specificationComponent("U1", "Etapa optoacoplada", "CTR, resistencia LED y alimentación del lado aislado pendientes de calcular"));
+      const isolationComponents = [];
+      if (optocoupler) {
+        isolationComponents.push(catalogComponent(
+          optocoupler,
+          "U1",
+          `${optocoupler.part_number} — optoacoplador de fototransistor`,
+          `${(optocoupler.packages || []).join(", ")} · confirma CTR y patillaje en la ficha exacta`,
+          { symbol_id: REQUIRED_SYMBOLS.optocoupler }
+        ));
+      } else {
+        isolationComponents.push(specificationComponent(
+          "U1",
+          "PC817 o EL817 — optoacoplador",
+          "Fototransistor, encapsulado DIP-4; confirma CTR y patillaje",
+          { symbol_id: REQUIRED_SYMBOLS.optocoupler }
+        ));
+      }
+      isolationComponents.push(calculatedComponent(
+        "R3",
+        `Resistencia de entrada ${isolationResistor.label}`,
+        "¼ W, valor normalizado",
+        "Limita la corriente del LED de U1.",
+        { symbol_id: REQUIRED_SYMBOLS.resistor }
+      ));
+      components.splice(2, 0, ...isolationComponents);
     }
 
     const componentMap = Object.fromEntries(components.map((item) => [item.ref, item]));
@@ -416,6 +503,7 @@ const ElectroEngine = (function () {
       relay_voltage: relayVoltage,
       signal_voltage: signalVoltage,
       isolated: isolation,
+      isolation_input_resistor_label: isolationResistor?.label || null,
       load_kind: loadKind,
     }, componentMap);
 
@@ -434,17 +522,24 @@ const ElectroEngine = (function () {
       provisionalReasons.push(`Faltan ${missingSymbols.length} símbolos requeridos en la biblioteca pública.`);
     }
 
-    const connections = [
+    const connections = isolation ? [
+      `Lado de control: lleva la señal de ${signalLabel} a R3 (${isolationResistor.label}) y de R3 al ánodo A de U1.`,
+      "Lado de control: conecta el cátodo K de U1 al 0 V del controlador.",
+      `Lado del relé: conecta +${relayLabel} a K1.A1, al cátodo de D1 y al colector C de U1.`,
+      "Lado del relé: conecta el emisor E de U1 a R1 y desde R1 a la puerta G de Q1.",
+      "Conecta R2 entre la puerta G de Q1 y el negativo de la fuente del relé.",
+      "Conecta K1.A2 al ánodo de D1 y al drenador D de Q1; conecta la fuente S de Q1 al negativo del relé.",
+      "Mantén separadas las dos masas: no unas el 0 V del control con el negativo de la fuente del relé.",
+      "Cablea la carga únicamente en COM y NO/NC de K1, nunca en los terminales de bobina A1/A2.",
+    ] : [
       `Conecta +${relayLabel} a K1.A1 y al cátodo de D1 (el lado de la banda).`,
       "Conecta K1.A2 al ánodo de D1 y al drenador D de Q1.",
       "Conecta la fuente S de Q1 al negativo de la alimentación.",
-      isolation
-        ? `Lleva la señal de ${signalLabel} a la entrada de la etapa optoacoplada; su salida gobernará la puerta de Q1.`
-        : `Lleva la señal de ${signalLabel} a R1 y desde R1 a la puerta G de Q1.`,
+      `Lleva la señal de ${signalLabel} a R1 y desde R1 a la puerta G de Q1.`,
       "Conecta R2 entre la puerta G de Q1 y masa.",
+      "Une la masa del controlador con el negativo de la fuente del relé.",
+      "Cablea la carga únicamente en COM y NO/NC de K1, nunca en los terminales de bobina A1/A2.",
     ];
-    if (!isolation) connections.push("Une la masa del controlador con el negativo de la fuente del relé.");
-    connections.push("Cablea la carga únicamente en COM y NO/NC de K1, nunca en los terminales de bobina A1/A2.");
 
     const warnings = [
       "No conectes la bobina del relé directamente a un pin del microcontrolador.",
@@ -452,30 +547,23 @@ const ElectroEngine = (function () {
       "Los valores máximos de catálogo no equivalen a condiciones de uso; revisa temperatura, disipación y tensión de puerta.",
     ];
     if (coilType === "unknown") warnings.unshift("No montes D1 hasta comprobar que la bobina está marcada como DC o CC.");
+    if (isolation) warnings.unshift("No unas las masas de control y relé: hacerlo anula el aislamiento eléctrico.");
     if (["230", "220", "red", "enchufe", "mains", "ac"].some((term) => loadKind.toLowerCase().includes(term))) {
       warnings.unshift("La carga parece usar tensión de red. No montes esa parte en protoboard; requiere caja, fusible, distancias de seguridad y revisión profesional.");
     }
 
-    const decisions = [
-      `La bobina necesita ${relayLabel}, pero la orden solo entrega ${signalLabel}; se añade una etapa de potencia de lado bajo.`,
-      mosfet
-        ? `Q1 se ha filtrado en la base real por canal N lógico, VDS ≥ ${mosfetSelection.minimumVoltage.toFixed(0)} V e ID ≥ ${mosfetSelection.minimumCurrent.toFixed(1)} A.`
-        : "Q1 queda como especificación porque ningún registro cumple los márgenes mínimos.",
-      diode
-        ? `D1 corresponde al registro ${diode.id} del catálogo y protege contra el pico de desconexión de la bobina.`
-        : "D1 queda como especificación pendiente.",
-      "Las conexiones se guardan también como nodos y redes; el dibujo ya no es solo una ilustración.",
-    ];
     if (controller === "micro_3v3" && signalVoltage > 3.6) {
-      decisions.push("La placa indicada suele trabajar a 3,3 V; conviene confirmar que la señal realmente alcanza la tensión introducida.");
+      warnings.unshift("La placa indicada suele trabajar a 3,3 V; confirma que la salida realmente alcanza la tensión introducida.");
     }
 
     const componentCount = Number(resources.componentMeta?.counts?.components || resources.components.length);
     const symbolCount = Number(resources.symbolMeta?.count || resources.symbols.length);
     return {
       status: provisionalReasons.length ? "provisional" : "ready",
-      title: `Driver para relé de ${relayTypeLabel} controlado con ${signalLabel}`,
-      summary: `Etapa de control para accionar ${loadKind}, seleccionada contra las bases públicas de Super Técnico.`,
+      title: `${isolation ? "Driver aislado" : "Driver"} para relé de ${relayTypeLabel} controlado con ${signalLabel}`,
+      summary: isolation
+        ? `Control y relé separados eléctricamente para accionar ${loadKind}.`
+        : `Etapa de control para accionar ${loadKind}, seleccionada contra las bases públicas de Super Técnico.`,
       values: {
         relay_voltage: relayVoltage,
         signal_voltage: signalVoltage,
@@ -484,11 +572,11 @@ const ElectroEngine = (function () {
         load_current_a: loadCurrent,
         contact_rating_a: contactRating,
         isolated: isolation,
+        isolation_input_resistor: isolationResistor?.label || null,
       },
       components,
       connections,
       warnings,
-      decisions,
       provisional_reasons: [...new Set(provisionalReasons)],
       circuit_model: circuitModel,
       symbol_manifest: symbolManifest,

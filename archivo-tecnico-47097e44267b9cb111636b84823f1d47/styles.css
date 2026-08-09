@@ -378,11 +378,6 @@ kbd { font: inherit; border: 1px solid var(--line); border-radius: 4px; padding:
 .expanded-schematic { min-width: 760px; padding: 24px; background: var(--paper); }
 .expanded-schematic svg { display: block; width: 760px; height: auto; margin: 0 auto; }
 
-.decisions-card ol { margin: 0; padding: 6px 23px 20px; list-style: none; counter-reset: decisions; }
-.decisions-card li { position: relative; padding: 19px 0 19px 40px; border-bottom: 1px solid var(--line); color: #515a56; font-size: 13px; line-height: 1.5; counter-increment: decisions; }
-.decisions-card li:last-child { border: 0; }
-.decisions-card li::before { content: counter(decisions, decimal-leading-zero); position: absolute; left: 0; top: 19px; font: italic 13px Georgia, serif; color: #78942f; }
-
 .components-list { padding: 0 20px 10px; }
 .component { display: grid; grid-template-columns: 38px minmax(130px, .75fr) 1.25fr; gap: 13px; align-items: start; padding: 15px 0; border-bottom: 1px solid var(--line); }
 .component:last-child { border-bottom: 0; }
