@@ -38,7 +38,7 @@ function createServer() {
   server.registerTool(
     "electroia_analyze_request",
     {
-      description: "Extrae tensiones y preguntas pendientes de una petición textual para el Caso 001.",
+      description: "Distingue los Casos 001 y 002 y devuelve los datos detectados y las preguntas pendientes.",
       inputSchema: z.object({
         request: z.string().min(8).max(500),
       }),
@@ -75,6 +75,32 @@ function createServer() {
     async (args) => {
       try {
         return toolResult(await callElectroIATool("electroia_generate_relay_driver", args));
+      } catch (error) {
+        return toolError(error);
+      }
+    }
+  );
+
+  server.registerTool(
+    "electroia_generate_temperature_fan",
+    {
+      description: "Genera un controlador de ventilador DC por temperatura con histéresis y devuelve esquema, BOM y advertencias.",
+      inputSchema: z.object({
+        request: z.string().max(500).optional(),
+        fan_voltage: z.number().min(3).max(30),
+        fan_current_a: z.number().positive().max(20).nullable().optional(),
+        turn_on_temperature_c: z.number().positive().max(120),
+        hysteresis_c: z.number().min(1).max(20),
+        fan_type: z.enum(["dc_2wire", "unknown"]),
+        source: z.object({
+          kind: z.enum(["text", "image_analysis", "hand_drawn_sketch_analysis"]),
+          note: z.string().max(500).optional(),
+        }).optional(),
+      }),
+    },
+    async (args) => {
+      try {
+        return toolResult(await callElectroIATool("electroia_generate_temperature_fan", args));
       } catch (error) {
         return toolError(error);
       }

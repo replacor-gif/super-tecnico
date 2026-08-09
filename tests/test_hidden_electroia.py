@@ -97,6 +97,7 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn('new URL("../api/index.php", document.baseURI)', app)
         self.assertIn('ElectroEngine.callTool("electroia_analyze_request"', app)
         self.assertIn('ElectroEngine.callTool("electroia_generate_relay_driver"', app)
+        self.assertIn('ElectroEngine.callTool("electroia_generate_temperature_fan"', app)
         self.assertIn("function callTool", engine)
         self.assertIn("electroia-status", api)
         self.assertIn("electroia-tools", api)
@@ -107,6 +108,7 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn('"embedded_ai_model": false', manifest)
         self.assertIn('"billing_required_by_electroia": false', manifest)
         self.assertIn('"electroia_generate_relay_driver"', manifest)
+        self.assertIn('"electroia_generate_temperature_fan"', manifest)
         self.assertIn('server.registerTool(', server)
         self.assertIn('serveStdio(createServer)', server)
         for content in (app, backend, api, manifest, server):

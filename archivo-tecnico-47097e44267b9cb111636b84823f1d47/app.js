@@ -151,6 +151,17 @@ async function api(path, body) {
   if (path === "/api/design") {
     const resources = await loadDesignResources();
     const extracted = ElectroEngine.extractRequest(body.request);
+    if (extracted.project_type === "temperature_fan_controller") {
+      return ElectroEngine.callTool("electroia_generate_temperature_fan", {
+        request: body.request,
+        fan_voltage: body.answers.fan_voltage ?? extracted.fan_voltage,
+        fan_current_a: body.answers.fan_current_a === "unknown" ? null : Number(body.answers.fan_current_a),
+        turn_on_temperature_c: body.answers.turn_on_temperature_c ?? extracted.turn_on_temperature_c,
+        hysteresis_c: Number(body.answers.hysteresis_c),
+        fan_type: body.answers.fan_type,
+        source: { kind: "text" },
+      }, resources);
+    }
     return ElectroEngine.callTool("electroia_generate_relay_driver", {
       request: body.request,
       relay_voltage: body.answers.relay_voltage ?? extracted.relay_voltage,
@@ -174,7 +185,7 @@ $("#requestForm").addEventListener("submit", async (event) => {
   try {
     const data = await api("/api/analyze", { request });
     if (data.can_design === false) {
-      throw new Error(`He entendido tu idea: ${data.understanding} El diseño automático de este caso será uno de los próximos módulos; ahora mismo está activo el controlador de relé.`);
+      throw new Error("Esta petición todavía no pertenece a uno de los circuitos disponibles.");
     }
     state.request = request;
     state.extracted = data.extracted;
@@ -185,7 +196,11 @@ $("#requestForm").addEventListener("submit", async (event) => {
     const bits = [];
     if (data.extracted.relay_voltage) bits.push(`bobina de ${data.extracted.relay_voltage} V`);
     if (data.extracted.signal_voltage) bits.push(`control de ${data.extracted.signal_voltage} V`);
-    $("#detectedText").textContent = bits.length ? bits.join(" · ") : "Relé detectado";
+    if (data.extracted.fan_voltage) bits.push(`ventilador de ${data.extracted.fan_voltage} V`);
+    if (data.extracted.turn_on_temperature_c) bits.push(`encendido a ${data.extracted.turn_on_temperature_c} °C`);
+    $("#detectedText").textContent = bits.length
+      ? bits.join(" · ")
+      : data.extracted.project_type === "temperature_fan_controller" ? "Control térmico detectado" : "Relé detectado";
     renderQuestion();
     showView($("#questionsView"));
   } catch (error) {
@@ -202,9 +217,11 @@ $("#requestInput").addEventListener("keydown", (event) => {
   }
 });
 
-$(".example").addEventListener("click", () => {
-  $("#requestInput").value = "Quiero encender un relé de 12 V utilizando una señal de 5 V.";
-  $("#requestInput").focus();
+document.querySelectorAll(".example").forEach((button) => {
+  button.addEventListener("click", () => {
+    $("#requestInput").value = button.dataset.request || button.textContent.trim();
+    $("#requestInput").focus();
+  });
 });
 
 function renderQuestion() {

@@ -10,6 +10,10 @@ const ElectroEngine = (function () {
     optocoupler: "SYM-0097",
     relayCoil: "SYM-0119",
     relayContact: "SYM-0120",
+    thermistor: "SYM-0031",
+    capacitor: "SYM-0035",
+    fan: "SYM-0156",
+    comparator: "SYM-0184",
   };
 
   function parseNumber(value, label, optional = false) {
@@ -50,8 +54,12 @@ const ElectroEngine = (function () {
   function extractRequest(text) {
     const normalized = String(text || "").toLowerCase().replace(/\s+/g, " ").trim();
     const relayPresent = /(?:^|[^a-záéíóúüñ])(?:rel[eé]|relevador)(?=$|[^a-záéíóúüñ])/i.test(normalized);
+    const fanPresent = /\b(?:ventilador|abanico|fan)\b/i.test(normalized);
+    const temperatureIntent = /(?:temperatura|calor|caliente|grados|°\s*c|celsius)/i.test(normalized);
     let relayVoltage = null;
     let signalVoltage = null;
+    let fanVoltage = null;
+    let turnOnTemperature = null;
 
     const relayPatterns = [
       /(?:rel[eé]|relevador)(?:\s+\S+){0,3}?\s+(\d+(?:[.,]\d+)?)\s*v/i,
@@ -77,26 +85,56 @@ const ElectroEngine = (function () {
       }
     }
 
+    const fanPatterns = [
+      /(?:ventilador|abanico|fan)(?:\s+\S+){0,3}?\s+(\d+(?:[.,]\d+)?)\s*v/i,
+      /(\d+(?:[.,]\d+)?)\s*v(?:\s+\S+){0,3}?\s+(?:ventilador|abanico|fan)/i,
+    ];
+    const temperaturePatterns = [
+      /(?:a partir de|cuando (?:llegue|pase|supere)?|sobre|a)\s*(?:los\s*)?(\d+(?:[.,]\d+)?)\s*(?:°\s*)?(?:c|grados|celsius)/i,
+      /(\d+(?:[.,]\d+)?)\s*(?:°\s*c|grados(?:\s+celsius)?)/i,
+    ];
+    for (const pattern of fanPatterns) {
+      const match = normalized.match(pattern);
+      if (match) {
+        fanVoltage = parseNumber(match[1], "La tensión del ventilador");
+        break;
+      }
+    }
+    for (const pattern of temperaturePatterns) {
+      const match = normalized.match(pattern);
+      if (match) {
+        turnOnTemperature = parseNumber(match[1], "La temperatura de encendido");
+        break;
+      }
+    }
+
     const voltages = Array.from(
       normalized.matchAll(/(\d+(?:[.,]\d+)?)\s*v/gi),
       (match) => Number(match[1].replace(",", "."))
     );
     if (relayPresent && relayVoltage === null && voltages.length) relayVoltage = voltages[0];
     if (relayPresent && signalVoltage === null && voltages.length > 1) signalVoltage = voltages[voltages.length - 1];
+    if (fanPresent && fanVoltage === null && voltages.length) fanVoltage = voltages[0];
 
     let confidence = 0.25;
-    if (relayPresent) confidence += 0.35;
-    if (relayVoltage !== null) confidence += 0.2;
-    if (signalVoltage !== null) confidence += 0.2;
+    if (relayPresent || fanPresent) confidence += 0.3;
+    if (relayVoltage !== null || fanVoltage !== null) confidence += 0.2;
+    if (signalVoltage !== null || turnOnTemperature !== null) confidence += 0.2;
+    if (fanPresent && temperatureIntent) confidence += 0.05;
+    const projectType = fanPresent && temperatureIntent
+      ? "temperature_fan_controller"
+      : relayPresent ? "relay_driver" : "unknown";
     return {
-      project_type: relayPresent ? "relay_driver" : "unknown",
+      project_type: projectType,
       relay_voltage: relayVoltage,
       signal_voltage: signalVoltage,
+      fan_voltage: fanVoltage,
+      turn_on_temperature_c: turnOnTemperature,
       confidence: Math.min(confidence, 1),
     };
   }
 
-  function buildQuestions(extracted) {
+  function buildRelayQuestions(extracted) {
     const questions = [];
     if (extracted.relay_voltage === null) {
       questions.push({
@@ -187,6 +225,75 @@ const ElectroEngine = (function () {
       }
     );
     return questions;
+  }
+
+  function buildFanQuestions(extracted) {
+    const questions = [];
+    if (extracted.fan_voltage === null) {
+      questions.push({
+        id: "fan_voltage",
+        label: "¿A qué tensión funciona el ventilador?",
+        help: "Mira su etiqueta: lo más habitual es 5 V, 12 V o 24 V DC.",
+        type: "number",
+        unit: "V",
+        required: true,
+      });
+    }
+    if (extracted.turn_on_temperature_c === null) {
+      questions.push({
+        id: "turn_on_temperature_c",
+        label: "¿A qué temperatura quieres que se encienda?",
+        help: "Indica la temperatura del aire o de la superficie que vas a vigilar.",
+        type: "number",
+        unit: "°C",
+        required: true,
+      });
+    }
+    questions.push(
+      {
+        id: "fan_current_a",
+        label: "¿Cuánta corriente consume el ventilador?",
+        help: "Suele aparecer en la etiqueta. Si no lo sabes, la propuesta usará un margen conservador.",
+        type: "choice",
+        options: [
+          { value: "unknown", label: "No lo sé" },
+          { value: "0.15", label: "Hasta 0,15 A" },
+          { value: "0.5", label: "Entre 0,15 y 0,5 A" },
+          { value: "1", label: "Entre 0,5 y 1 A" },
+        ],
+        required: true,
+      },
+      {
+        id: "hysteresis_c",
+        label: "¿Cuánto debe bajar la temperatura antes de apagarse?",
+        help: "Esta diferencia evita que el ventilador esté arrancando y parando continuamente.",
+        type: "choice",
+        options: [
+          { value: "3", label: "3 °C · recomendado" },
+          { value: "2", label: "2 °C · respuesta rápida" },
+          { value: "5", label: "5 °C · más estabilidad" },
+        ],
+        required: true,
+      },
+      {
+        id: "fan_type",
+        label: "¿El ventilador es de dos cables y corriente continua?",
+        help: "Este circuito regula ventiladores DC sencillos conectando y desconectando su alimentación.",
+        type: "choice",
+        options: [
+          { value: "dc_2wire", label: "Sí, tiene dos cables" },
+          { value: "unknown", label: "No lo sé todavía" },
+          { value: "pwm_4wire", label: "No, tiene cuatro cables / PWM" },
+        ],
+        required: true,
+      }
+    );
+    return questions;
+  }
+
+  function buildQuestions(extracted) {
+    if (extracted.project_type === "temperature_fan_controller") return buildFanQuestions(extracted);
+    return buildRelayQuestions(extracted);
   }
 
   function normalizeResources(resources) {
@@ -370,7 +477,7 @@ const ElectroEngine = (function () {
     };
   }
 
-  function generateDesign(requestText, rawAnswers, rawResources) {
+  function generateRelayDesign(requestText, rawAnswers, rawResources) {
     const resources = normalizeResources(rawResources);
     if (!resources.components.length || !resources.symbols.length) {
       throw new Error("No se han podido cargar las bases públicas de componentes y simbología");
@@ -592,6 +699,195 @@ const ElectroEngine = (function () {
     };
   }
 
+  function generateTemperatureFanDesign(requestText, rawAnswers, rawResources) {
+    const resources = normalizeResources(rawResources);
+    if (!resources.components.length || !resources.symbols.length) {
+      throw new Error("No se han podido cargar las bases públicas de componentes y simbología");
+    }
+
+    const extracted = extractRequest(requestText);
+    const fanVoltage = parseNumber(rawAnswers.fan_voltage ?? extracted.fan_voltage, "La tensión del ventilador");
+    if (fanVoltage < 3 || fanVoltage > 30) {
+      throw new Error("El Caso 002 admite ventiladores de corriente continua entre 3 V y 30 V.");
+    }
+    const turnOnTemperature = parseNumber(
+      rawAnswers.turn_on_temperature_c ?? extracted.turn_on_temperature_c,
+      "La temperatura de encendido"
+    );
+    if (turnOnTemperature > 120) throw new Error("La temperatura de encendido debe ser de 120 °C o menos.");
+    const hysteresis = parseNumber(rawAnswers.hysteresis_c, "La diferencia de apagado");
+    const turnOffTemperature = turnOnTemperature - hysteresis;
+    if (turnOffTemperature < -20) throw new Error("La temperatura de apagado resultante es demasiado baja.");
+
+    const fanType = String(rawAnswers.fan_type || "unknown");
+    if (fanType === "pwm_4wire") {
+      throw new Error("Un ventilador de cuatro cables necesita control PWM específico. No debe conectarse con este esquema de dos cables.");
+    }
+    const fanCurrentAnswer = String(rawAnswers.fan_current_a ?? "unknown");
+    const fanCurrent = fanCurrentAnswer === "unknown"
+      ? null
+      : parseNumber(fanCurrentAnswer, "La corriente del ventilador");
+
+    const ntcNominal = 10000;
+    const ntcBeta = 3950;
+    const fixedResistance = 10000;
+    const kelvin = turnOnTemperature + 273.15;
+    const ntcAtThreshold = ntcNominal * Math.exp(ntcBeta * ((1 / kelvin) - (1 / 298.15)));
+    const referenceVoltage = fanVoltage * ntcAtThreshold / (ntcAtThreshold + fixedResistance);
+    const potPercent = Math.max(1, Math.min(99, (referenceVoltage / fanVoltage) * 100));
+    const offKelvin = turnOffTemperature + 273.15;
+    const ntcAtOff = ntcNominal * Math.exp(ntcBeta * ((1 / offKelvin) - (1 / 298.15)));
+    const sensorAtOff = fanVoltage * ntcAtOff / (ntcAtOff + fixedResistance);
+    const desiredFeedback = Math.max(0.01, sensorAtOff - referenceVoltage);
+    const potFraction = referenceVoltage / fanVoltage;
+    const referenceResistance = 10000 * potFraction * (1 - potFraction);
+    const rawFeedbackResistance = Math.max(47000, Math.min(2200000, ((fanVoltage - referenceVoltage) * referenceResistance / desiredFeedback) - referenceResistance));
+    const feedbackResistance = e12AtLeast(rawFeedbackResistance);
+    const feedbackLabel = formatResistance(feedbackResistance);
+
+    const selectionCurrentMa = (fanCurrent || 1) * 1000;
+    const mosfetSelection = chooseMosfet(resources, fanVoltage, Math.min(fanVoltage, 12), selectionCurrentMa);
+    const mosfet = mosfetSelection.candidate;
+    const comparator = resources.componentsByPart.get("LM393") || resources.componentsByPart.get("LM2903") || null;
+    const diode = resources.componentsByPart.get("1N4007") || null;
+    const provisionalReasons = [];
+    if (fanType === "unknown") provisionalReasons.push("Falta confirmar que el ventilador sea DC de dos cables.");
+    if (fanCurrent === null) provisionalReasons.push("Falta confirmar el consumo real del ventilador.");
+    provisionalReasons.push("Hay que confirmar la curva y la tolerancia del NTC exacto antes del ajuste final.");
+    if (!mosfet) provisionalReasons.push("No se encontró un MOSFET de catálogo con margen suficiente.");
+    else provisionalReasons.push("Confirma el patillaje y la disipación de Q1 en la ficha exacta.");
+    if (!comparator) provisionalReasons.push("No se encontró LM393/LM2903 en la base pública.");
+    if (!diode) provisionalReasons.push("No se encontró el diodo 1N4007 en la base pública.");
+
+    const components = [
+      specificationComponent("FAN1", `Ventilador DC de ${fanVoltage} V`, fanCurrent === null ? "Dos cables; consumo por confirmar" : `Dos cables; consumo nominal ≤ ${fanCurrent.toFixed(2)} A`, { symbol_id: REQUIRED_SYMBOLS.fan }),
+      specificationComponent("TH1", "Termistor NTC 10 kΩ", "10 kΩ a 25 °C · B ≈ 3950 K · tolerancia ≤ 5 %", { symbol_id: REQUIRED_SYMBOLS.thermistor }),
+      specificationComponent("RV1", "Potenciómetro lineal 10 kΩ", `Ajuste inicial aproximado al ${potPercent.toFixed(0)} % del recorrido`, { symbol_id: REQUIRED_SYMBOLS.resistor }),
+      calculatedComponent("R1", "Resistencia de 10 kΩ", "¼ W, 1 %", "Completa el divisor del sensor.", { symbol_id: REQUIRED_SYMBOLS.resistor }),
+      calculatedComponent("R2", "Resistencia de 10 kΩ", "¼ W, 1 %", "Eleva la salida de colector abierto del comparador.", { symbol_id: REQUIRED_SYMBOLS.resistor }),
+      calculatedComponent("R3", "Resistencia de puerta 100 Ω", "¼ W", "Limita el pico de carga de la puerta.", { symbol_id: REQUIRED_SYMBOLS.resistor }),
+      calculatedComponent("R4", "Resistencia de 100 kΩ", "¼ W", "Mantiene el MOSFET apagado al arrancar.", { symbol_id: REQUIRED_SYMBOLS.resistor }),
+      calculatedComponent("R5", `Resistencia de histéresis ${feedbackLabel}`, "¼ W, valor normalizado", `Aproxima una diferencia de ${hysteresis} °C.`, { symbol_id: REQUIRED_SYMBOLS.resistor }),
+      calculatedComponent("C1", "Condensador de 100 nF", "Cerámico, ≥ 50 V", "Desacopla la alimentación del comparador.", { symbol_id: REQUIRED_SYMBOLS.capacitor }),
+      specificationComponent("PS1", `Fuente de ${fanVoltage} V DC`, fanCurrent === null ? "Corriente por confirmar; añade margen para el arranque" : `Capacidad recomendada ≥ ${Math.max(0.5, fanCurrent * 1.5).toFixed(2)} A`, { symbol_id: REQUIRED_SYMBOLS.power }),
+    ];
+    if (comparator) {
+      components.splice(2, 0, catalogComponent(comparator, "U1", `${comparator.part_number} — comparador doble`, `${(comparator.packages || []).join(", ")} · salida de colector abierto`, { symbol_id: REQUIRED_SYMBOLS.comparator }));
+    } else {
+      components.splice(2, 0, specificationComponent("U1", "LM393 o LM2903", "Comparador de colector abierto; usar una de sus dos secciones", { symbol_id: REQUIRED_SYMBOLS.comparator }));
+    }
+    if (mosfet) {
+      components.push(catalogComponent(mosfet, "Q1", `${mosfet.part_number} — MOSFET N`, `VDS ${mosfet.voltage_max_v} V · ID máx. ${mosfet.current_max_a} A · ${(mosfet.packages || []).join(", ")}`, { symbol_id: REQUIRED_SYMBOLS.mosfet }));
+    } else {
+      components.push(specificationComponent("Q1", "MOSFET N de nivel lógico", `VDS ≥ ${mosfetSelection.minimumVoltage.toFixed(0)} V · ID ≥ ${mosfetSelection.minimumCurrent.toFixed(1)} A`, { symbol_id: REQUIRED_SYMBOLS.mosfet }));
+    }
+    if (diode) {
+      components.push(catalogComponent(diode, "D1", `${diode.part_number} — protección del ventilador`, `${diode.voltage_max_v} V · ${diode.current_max_a} A · banda hacia el positivo`, { symbol_id: REQUIRED_SYMBOLS.diode }));
+    } else {
+      components.push(specificationComponent("D1", "Diodo de protección", "IF ≥ corriente del ventilador; VRRM ≥ tensión de alimentación", { symbol_id: REQUIRED_SYMBOLS.diode }));
+    }
+
+    const componentMap = Object.fromEntries(components.map((item) => [item.ref, item]));
+    const circuitModel = {
+      schema_version: "0.5",
+      topology: "thermostatic_dc_fan_controller",
+      input_contract: { current: ["text", "image_analysis", "hand_drawn_sketch_analysis"] },
+      nodes: [
+        { id: "VIN", label: `+${fanVoltage} V`, kind: "power" },
+        { id: "TEMP_SENSE", label: "Temperatura medida", kind: "signal" },
+        { id: "TEMP_REF", label: `Umbral ${turnOnTemperature} °C`, kind: "signal" },
+        { id: "COMP_OUT", label: "Orden de ventilación", kind: "signal" },
+        { id: "GATE", label: "Puerta Q1", kind: "signal" },
+        { id: "FAN_LOW", label: "Retorno conmutado del ventilador", kind: "power" },
+        { id: "GND", label: "0 V", kind: "reference" },
+      ],
+      parts: [
+        { ref: "PS1", symbol_id: REQUIRED_SYMBOLS.power, value: `${fanVoltage} V DC`, pins: { "+": "VIN", "-": "GND" } },
+        { ref: "R1", symbol_id: REQUIRED_SYMBOLS.resistor, value: "10 kΩ", pins: { "1": "VIN", "2": "TEMP_SENSE" } },
+        { ref: "TH1", symbol_id: REQUIRED_SYMBOLS.thermistor, value: "NTC 10 kΩ B3950", pins: { "1": "TEMP_SENSE", "2": "GND" } },
+        { ref: "RV1", symbol_id: REQUIRED_SYMBOLS.resistor, value: "10 kΩ AJUSTE", pins: { "1": "VIN", "2": "TEMP_REF", "3": "GND" } },
+        { ref: "U1", symbol_id: REQUIRED_SYMBOLS.comparator, component_id: componentMap.U1?.database_id || null, value: componentMap.U1?.part_number || "LM393", pins: { "+": "TEMP_REF", "-": "TEMP_SENSE", OUT: "COMP_OUT", VCC: "VIN", GND: "GND" } },
+        { ref: "R2", symbol_id: REQUIRED_SYMBOLS.resistor, value: "10 kΩ", pins: { "1": "VIN", "2": "COMP_OUT" } },
+        { ref: "R5", symbol_id: REQUIRED_SYMBOLS.resistor, value: feedbackLabel, pins: { "1": "COMP_OUT", "2": "TEMP_REF" } },
+        { ref: "R3", symbol_id: REQUIRED_SYMBOLS.resistor, value: "100 Ω", pins: { "1": "COMP_OUT", "2": "GATE" } },
+        { ref: "R4", symbol_id: REQUIRED_SYMBOLS.resistor, value: "100 kΩ", pins: { "1": "GATE", "2": "GND" } },
+        { ref: "Q1", symbol_id: REQUIRED_SYMBOLS.mosfet, component_id: componentMap.Q1?.database_id || null, value: componentMap.Q1?.part_number || "MOSFET N", pins: { G: "GATE", D: "FAN_LOW", S: "GND" } },
+        { ref: "FAN1", symbol_id: REQUIRED_SYMBOLS.fan, value: `${fanVoltage} V DC`, pins: { "+": "VIN", "-": "FAN_LOW" } },
+        { ref: "D1", symbol_id: REQUIRED_SYMBOLS.diode, component_id: componentMap.D1?.database_id || null, value: componentMap.D1?.part_number || "Diodo", pins: { K: "VIN", A: "FAN_LOW" } },
+        { ref: "C1", symbol_id: REQUIRED_SYMBOLS.capacitor, value: "100 nF", pins: { "1": "VIN", "2": "GND" } },
+        { ref: "GND1", symbol_id: REQUIRED_SYMBOLS.ground, value: "0 V", pins: { "1": "GND" } },
+      ],
+      nets: [
+        { id: "VIN", connections: ["PS1.+", "R1.1", "RV1.1", "U1.VCC", "R2.1", "FAN1.+", "D1.K", "C1.1"] },
+        { id: "TEMP_SENSE", connections: ["R1.2", "TH1.1", "U1.-"] },
+        { id: "TEMP_REF", connections: ["RV1.2", "U1.+", "R5.2"] },
+        { id: "COMP_OUT", connections: ["U1.OUT", "R2.2", "R5.1", "R3.1"] },
+        { id: "GATE", connections: ["R3.2", "R4.1", "Q1.G"] },
+        { id: "FAN_LOW", connections: ["FAN1.-", "D1.A", "Q1.D"] },
+        { id: "GND", connections: ["PS1.-", "TH1.2", "RV1.3", "U1.GND", "R4.2", "Q1.S", "C1.2", "GND1.1"] },
+      ],
+    };
+
+    const symbolIds = [...new Set(circuitModel.parts.map((part) => part.symbol_id).filter(Boolean))];
+    const symbolManifest = symbolIds.map((id) => {
+      const symbol = resources.symbolsById.get(id);
+      return symbol ? { id: symbol.id, name: symbol.nombre, standard: symbol.norma, asset: `../${symbol.archivo_svg}` }
+        : { id, name: "Símbolo no encontrado", standard: "", asset: null };
+    });
+    if (symbolManifest.some((item) => !item.asset)) provisionalReasons.push("Faltan símbolos requeridos en la biblioteca pública.");
+
+    const connections = [
+      `Conecta la fuente de ${fanVoltage} V a FAN1, R1, RV1, U1 y R2; une todos los puntos de 0 V indicados.`,
+      "Forma el sensor con R1 hacia el positivo y TH1 hacia 0 V; su unión entra en el terminal − de U1.",
+      `Ajusta RV1 hasta que el ventilador se encienda al alcanzar ${turnOnTemperature} °C.`,
+      `R5 (${feedbackLabel}) devuelve una pequeña parte de la salida al ajuste de referencia para que se apague cerca de ${turnOffTemperature} °C.`,
+      "Lleva la salida de U1 a la puerta de Q1 mediante R3; coloca R4 entre puerta y 0 V.",
+      "Conecta el negativo del ventilador al drenador D de Q1 y la fuente S de Q1 a 0 V.",
+      "Coloca D1 en paralelo con el ventilador: cátodo o banda al positivo y ánodo al drenador de Q1.",
+      "Coloca C1 junto a los pines de alimentación de U1.",
+    ];
+    const warnings = [
+      "Confirma el patillaje físico de U1 y Q1 antes de montar; el dibujo muestra la función, no el orden real de las patas.",
+      "El NTC debe tocar o medir el punto cuya temperatura quieres controlar y quedar alejado del aire caliente expulsado por el propio ventilador.",
+      "Haz el ajuste final de RV1 con un termómetro de referencia.",
+    ];
+    if (fanType === "unknown") warnings.unshift("Confirma que el ventilador sea DC de dos cables antes de conectarlo.");
+    if (fanCurrent === null) warnings.unshift("Mide o consulta el consumo del ventilador para confirmar Q1, D1 y la fuente.");
+
+    const componentCount = Number(resources.componentMeta?.counts?.components || resources.components.length);
+    const symbolCount = Number(resources.symbolMeta?.count || resources.symbols.length);
+    return {
+      status: provisionalReasons.length ? "provisional" : "ready",
+      title: `Control de ventilador de ${fanVoltage} V por temperatura`,
+      summary: `Enciende el ventilador a ${turnOnTemperature} °C y evita oscilaciones apagándolo cerca de ${turnOffTemperature} °C.`,
+      values: {
+        fan_voltage: fanVoltage,
+        fan_current_a: fanCurrent,
+        fan_type: fanType,
+        turn_on_temperature_c: turnOnTemperature,
+        turn_off_temperature_c: turnOffTemperature,
+        hysteresis_c: hysteresis,
+        reference_voltage_v: Number(referenceVoltage.toFixed(3)),
+        feedback_resistance: feedbackLabel,
+      },
+      components,
+      connections,
+      warnings,
+      provisional_reasons: [...new Set(provisionalReasons)],
+      circuit_model: circuitModel,
+      symbol_manifest: symbolManifest,
+      database: {
+        component_records: componentCount,
+        component_version: resources.componentMeta?.data_version || "sin versión",
+        symbol_records: symbolCount,
+        symbol_version: resources.symbolMeta?.version || "sin versión",
+        selected_catalog_components: components.filter((item) => item.source_kind === "catalog").length,
+        calculated_values: components.filter((item) => item.source_kind === "calculated").length,
+        pending_specifications: components.filter((item) => item.source_kind === "specification").length,
+      },
+    };
+  }
+
   function callTool(name, rawArguments, resources) {
     const tool = String(name || "");
     const args = rawArguments && typeof rawArguments === "object" ? rawArguments : {};
@@ -600,8 +896,8 @@ const ElectroEngine = (function () {
       const request = String(args.request || "").trim();
       if (request.length < 8) throw new Error("Cuéntame un poco más sobre lo que quieres construir");
       const extracted = extractRequest(request);
-      if (extracted.project_type !== "relay_driver") {
-        throw new Error("Esta versión de ElectroIA admite por ahora el controlador de relé DC.");
+      if (!["relay_driver", "temperature_fan_controller"].includes(extracted.project_type)) {
+        throw new Error("Esta versión admite controladores de relé DC y ventiladores DC por temperatura.");
       }
       return {
         ok: true,
@@ -631,7 +927,27 @@ const ElectroEngine = (function () {
         tool,
         provider_neutral: true,
         source: args.source || { kind: "text" },
-        design: generateDesign(request, answers, resources || {}),
+        design: generateRelayDesign(request, answers, resources || {}),
+      };
+    }
+
+    if (tool === "electroia_generate_temperature_fan") {
+      const fanVoltage = args.fan_voltage;
+      const turnOnTemperature = args.turn_on_temperature_c;
+      const request = String(args.request || `Encender un ventilador de ${fanVoltage} V a ${turnOnTemperature} °C.`);
+      const answers = {
+        fan_voltage: fanVoltage,
+        turn_on_temperature_c: turnOnTemperature,
+        fan_current_a: args.fan_current_a ?? "unknown",
+        hysteresis_c: args.hysteresis_c,
+        fan_type: args.fan_type,
+      };
+      return {
+        ok: true,
+        tool,
+        provider_neutral: true,
+        source: args.source || { kind: "text" },
+        design: generateTemperatureFanDesign(request, answers, resources || {}),
       };
     }
 
@@ -643,13 +959,18 @@ const ElectroEngine = (function () {
       const request = String(requestText || "").trim();
       if (request.length < 8) throw new Error("Cuéntame un poco más sobre lo que quieres construir");
       const extracted = extractRequest(request);
-      if (extracted.project_type !== "relay_driver") {
-        throw new Error("Este primer prototipo todavía está aprendiendo. Prueba con una petición sobre controlar un relé.");
+      if (!["relay_driver", "temperature_fan_controller"].includes(extracted.project_type)) {
+        throw new Error("Prueba con un relé DC o un ventilador DC controlado por temperatura.");
       }
       return { ok: true, extracted, questions: buildQuestions(extracted) };
     },
     design(requestText, answers, resources) {
-      return { ok: true, design: generateDesign(String(requestText || ""), answers || {}, resources || {}) };
+      const request = String(requestText || "");
+      const extracted = extractRequest(request);
+      const design = extracted.project_type === "temperature_fan_controller"
+        ? generateTemperatureFanDesign(request, answers || {}, resources || {})
+        : generateRelayDesign(request, answers || {}, resources || {});
+      return { ok: true, design };
     },
     callTool,
     buildQuestions,

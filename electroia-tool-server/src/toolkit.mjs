@@ -55,7 +55,7 @@ export async function callElectroIATool(tool, rawArguments = {}) {
     return engine.callTool(name, args);
   }
 
-  if (name === "electroia_generate_relay_driver") {
+  if (["electroia_generate_relay_driver", "electroia_generate_temperature_fan"].includes(name)) {
     const resources = await loadResources();
     return engine.callTool(name, args, resources);
   }

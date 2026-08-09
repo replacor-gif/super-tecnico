@@ -6,11 +6,12 @@
   "provider_neutral": true,
   "embedded_ai_model": false,
   "billing_required_by_electroia": false,
-  "design_model_version": "0.4",
+  "design_model_version": "0.5",
   "capabilities": {
     "current_topologies": [
       "low_side_relay_driver",
-      "isolated_low_side_relay_driver"
+      "isolated_low_side_relay_driver",
+      "thermostatic_dc_fan_controller"
     ],
     "inputs": [
       "structured_json",
@@ -36,7 +37,7 @@
     },
     {
       "name": "electroia_analyze_request",
-      "description": "Extrae los datos básicos de una petición textual para el Caso 001 y devuelve únicamente las preguntas que faltan.",
+      "description": "Distingue los Casos 001 y 002, extrae los datos disponibles y devuelve únicamente las preguntas que faltan.",
       "input_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -104,6 +105,64 @@
           },
           "isolation": {
             "type": "boolean"
+          },
+          "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": ["text", "image_analysis", "hand_drawn_sketch_analysis"]
+              },
+              "note": {
+                "type": "string",
+                "maxLength": 500
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "electroia_generate_temperature_fan",
+      "description": "Genera y valida un controlador de ventilador DC por temperatura con NTC, comparador, histéresis, MOSFET y protección inductiva.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "fan_voltage",
+          "turn_on_temperature_c",
+          "hysteresis_c",
+          "fan_type"
+        ],
+        "properties": {
+          "request": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "fan_voltage": {
+            "type": "number",
+            "minimum": 3,
+            "maximum": 30
+          },
+          "fan_current_a": {
+            "type": ["number", "null"],
+            "exclusiveMinimum": 0,
+            "maximum": 20
+          },
+          "turn_on_temperature_c": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 120
+          },
+          "hysteresis_c": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 20
+          },
+          "fan_type": {
+            "type": "string",
+            "enum": ["dc_2wire", "unknown"]
           },
           "source": {
             "type": "object",

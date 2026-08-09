@@ -252,7 +252,7 @@ textarea {
 
 kbd { font: inherit; border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; }
 .privacy i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #8fb43c; margin-right: 5px; }
-.example-row { margin-top: 16px; display: flex; align-items: center; gap: 8px; color: #8a918e; font-size: 12px; }
+.example-row { margin-top: 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: #8a918e; font-size: 12px; }
 .example { border: 0; padding: 7px 10px; border-radius: 6px; background: rgba(23, 26, 26, .06); cursor: pointer; }
 .example:hover { background: rgba(23, 26, 26, .1); }
 

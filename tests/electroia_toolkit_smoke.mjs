@@ -1,5 +1,9 @@
 import assert from "node:assert/strict";
+import { createRequire } from "node:module";
 import { callElectroIATool, manifest } from "../electroia-tool-server/src/toolkit.mjs";
+
+const require = createRequire(import.meta.url);
+const diagram = require("../archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagram.js");
 
 assert.equal(manifest.provider_neutral, true);
 assert.equal(manifest.embedded_ai_model, false);
@@ -31,5 +35,49 @@ assert.equal(generated.design.circuit_model.topology, "isolated_low_side_relay_d
 assert.equal(generated.design.circuit_model.schema_version, "0.4");
 assert.ok(generated.design.components.some((item) => item.part_number === "PC817"));
 assert.ok(generated.design.warnings.some((item) => item.includes("masas")));
+
+const fanAnalysis = await callElectroIATool("electroia_analyze_request", {
+  request: "Quiero que un ventilador de 12 V se encienda cuando llegue a 40 °C.",
+});
+assert.equal(fanAnalysis.ok, true);
+assert.equal(fanAnalysis.extracted.project_type, "temperature_fan_controller");
+assert.equal(fanAnalysis.extracted.fan_voltage, 12);
+assert.equal(fanAnalysis.extracted.turn_on_temperature_c, 40);
+
+const fanGenerated = await callElectroIATool("electroia_generate_temperature_fan", {
+  fan_voltage: 12,
+  fan_current_a: 0.35,
+  turn_on_temperature_c: 40,
+  hysteresis_c: 3,
+  fan_type: "dc_2wire",
+  source: { kind: "image_analysis" },
+});
+assert.equal(fanGenerated.ok, true);
+assert.equal(fanGenerated.design.circuit_model.topology, "thermostatic_dc_fan_controller");
+assert.equal(fanGenerated.design.circuit_model.schema_version, "0.5");
+assert.equal(fanGenerated.design.values.turn_off_temperature_c, 37);
+assert.ok(fanGenerated.design.components.some((item) => item.part_number === "LM393"));
+assert.ok(fanGenerated.design.symbol_manifest.some((item) => item.id === "SYM-0156" && item.asset));
+const comparatorPart = fanGenerated.design.circuit_model.parts.find((item) => item.ref === "U1");
+assert.equal(comparatorPart.pins["+"], "TEMP_REF");
+assert.equal(comparatorPart.pins["-"], "TEMP_SENSE");
+assert.deepEqual(
+  fanGenerated.design.circuit_model.nets.find((item) => item.id === "TEMP_REF").connections,
+  ["RV1.2", "U1.+", "R5.2"]
+);
+const fanSvg = diagram.render(fanGenerated.design);
+assert.match(fanSvg, /1 · MEDIR TEMPERATURA/);
+assert.match(fanSvg, /2 · DECIDIR SIN OSCILAR/);
+assert.match(fanSvg, /3 · MOVER EL VENTILADOR/);
+await assert.rejects(
+  callElectroIATool("electroia_generate_temperature_fan", {
+    fan_voltage: 12,
+    fan_current_a: 0.3,
+    turn_on_temperature_c: 40,
+    hysteresis_c: 3,
+    fan_type: "pwm_4wire",
+  }),
+  /cuatro cables/
+);
 
 process.stdout.write("ElectroIA provider-neutral toolkit smoke: OK\n");

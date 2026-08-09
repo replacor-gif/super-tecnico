@@ -255,12 +255,151 @@ const ElectroDiagram = (function () {
       </svg>`;
   }
 
+  function renderTemperatureFanController(design) {
+    const model = design.circuit_model || {};
+    const values = design.values || {};
+    const thermistor = part(model, "TH1");
+    const comparator = part(model, "U1");
+    const mosfet = part(model, "Q1");
+    const fan = part(model, "FAN1");
+    const diode = part(model, "D1");
+    const feedback = part(model, "R5");
+    const fanVoltage = `${values.fan_voltage} V`;
+    const turnOn = `${values.turn_on_temperature_c} °C`;
+    const turnOff = `${values.turn_off_temperature_c} °C`;
+
+    return `
+      <svg class="electrical-diagram fan-temperature-diagram" viewBox="0 0 900 560" role="img"
+        data-model-version="${esc(model.schema_version || "")}" data-topology="${esc(model.topology || "")}"
+        aria-label="Esquema de un ventilador de ${esc(fanVoltage)} controlado por temperatura">
+        <style>
+          .wire{fill:none;stroke:#26302c;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.wire.signal{stroke:#648d1c}.wire.power{stroke:#d96735}.symbol{fill:#fffefa;stroke:#26302c;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.node{fill:#26302c}.section{font:800 12px Inter,Arial,sans-serif;letter-spacing:1.6px;fill:#6b756f}.ref{font:800 14px Inter,Arial,sans-serif;text-anchor:middle;fill:#28312d}.value{font:600 13px Inter,Arial,sans-serif;text-anchor:middle;fill:#5d6863}.label{font:800 16px Inter,Arial,sans-serif;fill:#28312d}.note{font:600 12px Inter,Arial,sans-serif;fill:#68726d}.pin{font:800 11px ui-monospace,monospace;fill:#7a847f}.zone{fill:#fffefa;stroke:#d1d6d2;stroke-width:2}.sensor-zone{fill:#f4f8eb;stroke:#b8ca91}.decision-zone{fill:#f7f7f3}.power-zone{fill:#fff7ef;stroke:#e3b89d}.rail-label{font:800 14px Inter,Arial,sans-serif;fill:#d05f31}.status-box{fill:#edf3df;stroke:#9fb96a;stroke-width:2}.fan-blade{fill:#dbe7c1;stroke:#26302c;stroke-width:2}
+        </style>
+
+        <text class="label" x="42" y="35">+${esc(fanVoltage)} DC</text>
+        <path class="wire power" d="M42 58H858"/>
+        <path class="wire" d="M42 510H858"/>
+        <text class="label" x="42" y="540">0 V</text>
+
+        <rect class="zone sensor-zone" x="25" y="82" width="280" height="390" rx="16"/>
+        <text class="section" x="45" y="112">1 · MEDIR TEMPERATURA</text>
+        <g data-symbol-id="SYM-0023" aria-label="R1 10 kΩ">
+          <path class="wire power" d="M125 58v65"/>
+          <rect class="symbol" x="105" y="123" width="40" height="92" rx="4"/>
+          <path class="wire signal" d="M125 215v45"/>
+          <text class="ref" x="125" y="238">R1</text>
+          <text class="value" x="125" y="282">10 kΩ</text>
+        </g>
+        <circle class="node" cx="125" cy="260" r="5"/>
+        <g data-symbol-id="SYM-0031" aria-label="TH1 ${esc(thermistor.value || "NTC 10 kΩ")}">
+          <path class="wire" d="M125 300v24"/>
+          <rect class="symbol" x="107" y="324" width="36" height="72" rx="3"/>
+          <path class="wire signal" d="M94 334l62 58m-4 -16l4 16l-16 -3"/>
+          <path class="wire" d="M125 396v114"/>
+          <text class="ref" x="125" y="418">TH1</text>
+          <text class="value" x="125" y="438">${esc(thermistor.value || "NTC 10 kΩ")}</text>
+        </g>
+        <path class="wire signal" d="M125 260h55V130h150v112h52"/>
+        <path d="M235 130h20" style="fill:none;stroke:#f4f8eb;stroke-width:10"/>
+        <path class="wire signal" d="M235 130q10 -15 20 0"/>
+        <text class="note" x="46" y="466">TH1 baja su resistencia al calentarse</text>
+
+        <g data-symbol-id="SYM-0023" aria-label="RV1 ajuste de temperatura">
+          <path class="wire power" d="M245 58v92"/>
+          <rect class="symbol" x="226" y="150" width="38" height="170" rx="4"/>
+          <path class="wire" d="M245 320v190"/>
+          <path class="wire signal" d="M264 275h118"/>
+          <path class="wire signal" d="M280 254l-16 21l20 7"/>
+          <text class="ref" x="245" y="345">RV1</text>
+          <text class="value" x="245" y="365">AJUSTE ${esc(turnOn)}</text>
+        </g>
+
+        <rect class="zone decision-zone" x="325" y="82" width="260" height="390" rx="16"/>
+        <text class="section" x="345" y="112">2 · DECIDIR SIN OSCILAR</text>
+        <g data-symbol-id="SYM-0184" aria-label="U1 ${esc(comparator.value || "LM393")}">
+          <path class="symbol" d="M382 182v156l160 -78z"/>
+          <text class="pin" x="388" y="232">−</text>
+          <text class="pin" x="388" y="294">+</text>
+          <text class="ref" x="462" y="220">U1 · ${esc(comparator.value || "LM393")}</text>
+          <text class="value" x="462" y="245">COMPARADOR</text>
+        </g>
+        <path class="wire signal" d="M542 260h48"/>
+        <circle class="node" cx="570" cy="260" r="5"/>
+        <g data-symbol-id="SYM-0023" aria-label="R2 pull-up 10 kΩ">
+          <path class="wire power" d="M570 58v32"/>
+          <rect class="symbol" x="554" y="90" width="32" height="70" rx="3"/>
+          <path class="wire signal" d="M570 160v100"/>
+          <text class="ref" x="526" y="181">R2</text>
+          <text class="value" x="522" y="202">10 kΩ</text>
+        </g>
+        <g data-symbol-id="SYM-0023" aria-label="R5 ${esc(feedback.value || values.feedback_resistance || "470 kΩ")}">
+          <path class="wire signal" d="M570 260v90h-60"/>
+          <rect class="symbol" x="430" y="336" width="80" height="28" rx="3"/>
+          <path class="wire signal" d="M430 350h-48v-75"/>
+          <text class="ref" x="470" y="329">R5</text>
+        </g>
+        <rect class="status-box" x="360" y="365" width="190" height="72" rx="10"/>
+        <text class="label" x="455" y="394" text-anchor="middle">ENCIENDE ${esc(turnOn)}</text>
+        <text class="note" x="455" y="418" text-anchor="middle">APAGA CERCA DE ${esc(turnOff)}</text>
+        <text class="note" x="455" y="458" text-anchor="middle">R5 ${esc(feedback.value || values.feedback_resistance || "470 kΩ")} evita arranques repetidos</text>
+
+        <rect class="zone power-zone" x="605" y="82" width="270" height="390" rx="16"/>
+        <text class="section" x="625" y="112">3 · MOVER EL VENTILADOR</text>
+        <g data-symbol-id="SYM-0035" aria-label="C1 100 nF">
+          <path class="wire power" d="M635 58v82"/>
+          <path class="symbol" d="M615 140h40M615 154h40"/>
+          <path class="wire" d="M635 154v34m-22 0h44m-34 10h24m-17 10h10"/>
+          <text class="note" x="610" y="225">C1 · 100 nF</text>
+        </g>
+        <g data-symbol-id="SYM-0156" aria-label="FAN1 ${esc(fan.value || fanVoltage)}">
+          <path class="wire power" d="M745 58v72"/>
+          <circle class="symbol" cx="745" cy="190" r="58"/>
+          <circle class="node" cx="745" cy="190" r="7"/>
+          <path class="fan-blade" d="M745 183c8 -42 50 -32 42 -3c-5 18 -25 20 -42 10z"/>
+          <path class="fan-blade" d="M752 190c42 8 32 50 3 42c-18 -5 -20 -25 -10 -42z"/>
+          <path class="fan-blade" d="M745 197c-8 42 -50 32 -42 3c5 -18 25 -20 42 -10z"/>
+          <text class="ref" x="745" y="272">FAN1 · ${esc(fan.value || fanVoltage)}</text>
+        </g>
+        <path class="wire power" d="M745 248v72"/>
+        <g data-symbol-id="SYM-0080" aria-label="Q1 ${esc(mosfet.value || "MOSFET N")}">
+          <rect class="symbol" x="710" y="320" width="70" height="96" rx="8"/>
+          <text class="ref" x="745" y="354">Q1</text>
+          <text class="value" x="745" y="378">MOSFET N</text>
+          <text class="pin" x="690" y="375">G</text><text class="pin" x="748" y="315">D</text><text class="pin" x="748" y="436">S</text>
+          <path class="wire" d="M745 416v94"/>
+        </g>
+        <g data-symbol-id="SYM-0023" aria-label="R3 100 Ω">
+          <path class="wire signal" d="M570 260v108h40"/>
+          <rect class="symbol" x="610" y="354" width="64" height="28" rx="3"/>
+          <path class="wire signal" d="M674 368h36"/>
+          <text class="ref" x="642" y="342">R3</text>
+          <text class="value" x="642" y="404">100 Ω</text>
+        </g>
+        <g data-symbol-id="SYM-0023" aria-label="R4 100 kΩ">
+          <path class="wire" d="M690 368v24"/>
+          <rect class="symbol" x="675" y="392" width="30" height="58" rx="3"/>
+          <path class="wire" d="M690 450v60"/>
+          <text class="note" x="620" y="470">R4 · 100 kΩ</text>
+        </g>
+        <g data-symbol-id="SYM-0057" aria-label="D1 ${esc(diode.value || "Diodo de protección")}">
+          <path class="wire power" d="M835 58v92M835 230v90H745"/>
+          <path class="symbol" d="M813 155h44l-22 42zM811 205h48"/>
+          <text class="ref" x="835" y="248">D1</text>
+          <text class="note" x="817" y="137">BANDA +</text>
+        </g>
+      </svg>`;
+  }
+
   function render(design) {
     const topology = design?.circuit_model?.topology || "";
     if (topology === "low_side_relay_driver") return renderRelayDriver(design);
     if (topology === "isolated_low_side_relay_driver") return renderIsolatedRelayDriver(design);
+    if (topology === "thermostatic_dc_fan_controller") return renderTemperatureFanController(design);
     throw new Error("El modelo eléctrico todavía no tiene un formato de diagrama compatible");
   }
 
   return { render };
 })();
+
+if (typeof globalThis !== "undefined") globalThis.ElectroDiagram = ElectroDiagram;
+if (typeof module !== "undefined" && module.exports) module.exports = ElectroDiagram;
