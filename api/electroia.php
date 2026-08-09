@@ -3,19 +3,21 @@ declare(strict_types=1);
 
 function st_electroia_pin_hash(): string
 {
-    return trim((string) st_config('electroia_pin_hash'));
+    $hash = trim((string) st_config('electroia_pin_hash'));
+    return str_starts_with($hash, '$2y$') || str_starts_with($hash, '$argon2') ? $hash : '';
 }
 
 function st_electroia_start_session(): void
 {
     if (session_status() === PHP_SESSION_ACTIVE) return;
-    $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
-        || ((string) ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
+    $lifetime = 30 * 86400;
+    ini_set('session.gc_maxlifetime', (string) $lifetime);
+    ini_set('session.use_strict_mode', '1');
     session_name('st_electroia');
     session_set_cookie_params([
-        'lifetime' => 86400,
+        'lifetime' => $lifetime,
         'path' => '/',
-        'secure' => $secure,
+        'secure' => true,
         'httponly' => true,
         'samesite' => 'Strict',
     ]);
@@ -26,7 +28,8 @@ function st_electroia_is_unlocked(): bool
 {
     if (st_electroia_pin_hash() === '') return true;
     st_electroia_start_session();
-    return !empty($_SESSION['st_electroia_unlocked']);
+    $unlockedAt = (int) ($_SESSION['electroia_unlocked_at'] ?? 0);
+    return ($_SESSION['electroia_unlocked'] ?? false) === true && $unlockedAt > time() - (30 * 86400);
 }
 
 function st_electroia_access_status(): array
@@ -38,10 +41,12 @@ function st_electroia_access_status(): array
 function st_electroia_unlock(string $pin): bool
 {
     $hash = st_electroia_pin_hash();
-    if ($hash !== '' && !password_verify($pin, $hash)) return false;
+    if ($hash === '') return true;
+    if (!password_verify($pin, $hash)) return false;
     st_electroia_start_session();
     session_regenerate_id(true);
     $_SESSION['st_electroia_unlocked'] = true;
+    $_SESSION['electroia_unlocked_at'] = time();
     return true;
 }
 
