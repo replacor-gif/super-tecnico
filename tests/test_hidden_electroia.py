@@ -101,6 +101,8 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn("electroia-status", api)
         self.assertIn("electroia-tools", api)
         self.assertIn("provider_neutral", backend)
+        self.assertIn("st_electroia_access_cookie_is_valid", backend)
+        self.assertIn("hash_hmac('sha256'", backend)
         self.assertIn('"provider_neutral": true', manifest)
         self.assertIn('"embedded_ai_model": false', manifest)
         self.assertIn('"billing_required_by_electroia": false', manifest)
