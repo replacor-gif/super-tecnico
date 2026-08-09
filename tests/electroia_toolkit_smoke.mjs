@@ -17,9 +17,47 @@ assert.equal(diagramContract.contract.responsibility, "render_only");
 assert.equal(diagramContract.contract.calculates_values, false);
 assert.equal(diagramContract.contract.selects_components, false);
 assert.equal(diagramContract.contract.grid_pitch_mil, 50);
-assert.equal(diagramContract.symbol_registry.symbols.length, 50);
-for (const symbolId of ["SYM-0006", "SYM-0011", "SYM-0110", "SYM-0123", "SYM-0129", "SYM-0130", "SYM-0151", "SYM-0299", "SYM-0387", "SYM-0390"]) {
+assert.equal(diagramContract.symbol_registry.symbols.length, 463);
+assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.catalog_id).length, 460);
+assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "engine_reviewed").length, 47);
+assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "auto_draft").length, 413);
+assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "engine_internal").length, 3);
+for (const symbolId of ["SYM-0001", "SYM-0006", "SYM-0011", "SYM-0110", "SYM-0123", "SYM-0129", "SYM-0130", "SYM-0151", "SYM-0299", "SYM-0387", "SYM-0390", "SYM-0460"]) {
   assert.ok(diagramContract.symbol_registry.symbols.some((symbol) => symbol.id === symbolId), symbolId);
+}
+
+const draftDiagram = await callElectroIATool("electroia_render_diagram", {
+  document: {
+    schema_version: "1.0",
+    document_kind: "circuit_diagram",
+    standard_profile: "IEC_EXPERIMENTAL",
+    title: "Prueba de símbolo provisional",
+    components: [
+      { ref: "W1", symbol_id: "SYM-0001", position: { x: 4, y: 4 } },
+      { ref: "W2", symbol_id: "SYM-0001", position: { x: 12, y: 4 } },
+    ],
+    nets: [{ id: "N1", connections: ["W1.2", "W2.1"] }],
+  },
+});
+assert.equal(draftDiagram.ok, true);
+assert.ok(draftDiagram.diagram.diagnostics.warnings.some((item) => item.code === "AUTO_DRAFT_SYMBOL"));
+assert.match(draftDiagram.diagram.svg, /class="component review-auto_draft"/);
+assert.match(draftDiagram.diagram.svg, /data-review-status="auto_draft"/);
+
+for (const symbol of diagramContract.symbol_registry.symbols) {
+  const firstPort = Object.keys(symbol.ports)[0];
+  const rendered = await callElectroIATool("electroia_render_diagram", {
+    document: {
+      schema_version: "1.0",
+      document_kind: "circuit_diagram",
+      standard_profile: "IEC_EXPERIMENTAL",
+      title: symbol.name,
+      components: [{ ref: "X1", symbol_id: symbol.id, position: { x: 6, y: 6 } }],
+      nets: [{ id: "N1", show_label: false, connections: [`X1.${firstPort}`] }],
+    },
+  });
+  assert.equal(rendered.ok, true, symbol.id);
+  assert.match(rendered.diagram.svg, new RegExp(`data-symbol-id="${symbol.id}"`));
 }
 
 const motorStarterDocument = JSON.parse(await readFile(

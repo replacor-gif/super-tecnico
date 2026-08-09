@@ -6,7 +6,7 @@
   "provider_neutral": true,
   "embedded_ai_model": false,
   "billing_required_by_electroia": false,
-  "diagram_engine_version": "1.2.0-alpha.1",
+  "diagram_engine_version": "1.3.0-alpha.1",
   "diagram_contract_version": "1.0",
   "design_model_version": "0.5",
   "core_policy": {
@@ -36,8 +36,13 @@
     "document_kinds": ["circuit_diagram", "single_line_diagram", "multi_line_diagram"],
     "grid_pitch_mil": 50,
     "single_canvas_default": true,
-    "normalized_symbol_count": 50,
+    "normalized_symbol_count": 460,
     "catalog_symbol_count": 460,
+    "engine_symbol_count": 463,
+    "reviewed_catalog_symbol_count": 47,
+    "auto_draft_catalog_symbol_count": 413,
+    "internal_template_count": 3,
+    "symbol_quality_policy": "Los símbolos auto_draft son utilizables como estructura provisional, se dibujan diferenciados y generan una advertencia hasta su revisión gráfica.",
     "current_legacy_topologies": [
       "low_side_relay_driver",
       "isolated_low_side_relay_driver",

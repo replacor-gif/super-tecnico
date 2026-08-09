@@ -1,3 +1,4 @@
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -18,6 +19,7 @@ class HiddenElectroIATests(unittest.TestCase):
         html = (ROOT / ROUTE / "index.html").read_text(encoding="utf-8")
         self.assertIn("noindex,nofollow,noarchive,nosnippet,noimageindex", html)
         self.assertIn('<script src="engine.js"></script>', html)
+        self.assertIn('<script src="diagram-symbol-library.js"></script>', html)
         self.assertIn('<script src="diagram-core.js"></script>', html)
         self.assertIn('<script src="diagram.js"></script>', html)
 
@@ -112,8 +114,8 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn('"electroia_generate_temperature_fan"', manifest)
         self.assertIn('"electroia_get_diagram_contract"', manifest)
         self.assertIn('"electroia_render_diagram"', manifest)
-        self.assertIn('"diagram_engine_version": "1.2.0-alpha.1"', manifest)
-        self.assertIn('"normalized_symbol_count": 50', manifest)
+        self.assertIn('"diagram_engine_version": "1.3.0-alpha.1"', manifest)
+        self.assertIn('"normalized_symbol_count": 460', manifest)
         self.assertIn('"calculates_values"', manifest)
         self.assertIn('server.registerTool(', server)
         self.assertIn('serveStdio(createServer)', server)
@@ -126,16 +128,28 @@ class HiddenElectroIATests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             output = Path(temp_dir) / "dist"
             build(ROOT, output)
-            for filename in ("index.html", "styles.css", "engine.js", "diagram-core.js", "diagram.js", "app.js"):
+            for filename in ("index.html", "styles.css", "engine.js", "diagram-symbol-library.js", "diagram-core.js", "diagram.js", "app.js"):
                 self.assertTrue((output / ROUTE / filename).is_file(), filename)
             self.assertTrue((output / "data" / "symbols" / "catalog.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "tool-manifest.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "diagram-document.schema.json").is_file())
+            self.assertTrue((output / "data" / "electroia" / "symbol-library.json").is_file())
+            self.assertTrue((output / "data" / "electroia" / "symbol-normalization-report.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "examples" / "motor-starter-direct.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "examples" / "distribution-board-single-line.json").is_file())
             self.assertTrue(
                 (output / "assets" / "symbols" / "SYM-0080_mosfet-n-con-diodo-de-cuerpo.svg").is_file()
             )
+
+    def test_complete_symbol_library_is_normalized_and_quality_labeled(self):
+        library = json.loads((ROOT / "data" / "electroia" / "symbol-library.json").read_text(encoding="utf-8"))
+        report = json.loads((ROOT / "data" / "electroia" / "symbol-normalization-report.json").read_text(encoding="utf-8"))
+        catalog_symbols = [item for item in library["symbols"] if item["catalog_id"]]
+        self.assertEqual(len(catalog_symbols), 460)
+        self.assertEqual(library["engine_symbol_count"], 463)
+        self.assertTrue(all(item["ports"] for item in library["symbols"]))
+        self.assertEqual(report["catalog_status_counts"], {"auto_draft": 413, "engine_reviewed": 47})
+        self.assertEqual(report["coverage_percent"], 100)
 
 
 if __name__ == "__main__":

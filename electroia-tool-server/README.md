@@ -17,6 +17,11 @@ La IA llamante decide la topología, los valores y los componentes. La herramien
 `electroia_render_diagram` recibe símbolos, terminales y redes ya decididos, comprueba
 su conectividad y devuelve un SVG sobre una rejilla común.
 
+La biblioteca externa contiene las 460 fichas del catálogo y 3 elementos auxiliares
+del motor. Cada definición indica su calidad: 47 símbolos del catálogo tienen geometría
+revisada individualmente y 413 son borradores normalizados por familias. El motor
+los distingue gráficamente y avisa cuando se utiliza uno pendiente de revisión.
+
 Los generadores de relé y ventilador se conservan como adaptadores de demostración.
 No forman parte del núcleo gráfico y pueden ser sustituidos por cualquier IA que
 entregue el contrato neutral `1.0`.

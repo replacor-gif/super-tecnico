@@ -1,0 +1,1425 @@
+{
+  "schema_version": "1.0",
+  "symbols": [
+    {
+      "id": "SYM-0006",
+      "catalog_id": "SYM-0006",
+      "name": "Conector fuera de página",
+      "kind": "offpage_connector",
+      "designator": "",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 4,
+      "ports": {
+        "1": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0010",
+      "catalog_id": "SYM-0010",
+      "name": "Masa de señal",
+      "kind": "ground",
+      "designator": "GND",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 4,
+      "height": 4,
+      "ports": {
+        "1": {
+          "x": 0,
+          "y": -2,
+          "side": "north",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0011",
+      "catalog_id": "SYM-0011",
+      "name": "Tierra de protección",
+      "kind": "protective_earth",
+      "designator": "PE",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 4,
+      "height": 4,
+      "ports": {
+        "1": {
+          "x": 0,
+          "y": -2,
+          "side": "north",
+          "electrical_type": "protective_earth"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0012",
+      "catalog_id": "SYM-0012",
+      "name": "Tierra funcional",
+      "kind": "functional_earth",
+      "designator": "FE",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 4,
+      "height": 4,
+      "ports": {
+        "1": {
+          "x": 0,
+          "y": -2,
+          "side": "north",
+          "electrical_type": "functional_earth"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0014",
+      "catalog_id": "SYM-0014",
+      "name": "Alimentación positiva",
+      "kind": "power_port",
+      "designator": "V",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 4,
+      "height": 4,
+      "ports": {
+        "1": {
+          "x": 0,
+          "y": 2,
+          "side": "south",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0018",
+      "catalog_id": "SYM-0018",
+      "name": "Fuente de tensión continua",
+      "kind": "source_dc",
+      "designator": "PS",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 5,
+      "height": 6,
+      "ports": {
+        "+": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_out"
+        },
+        "-": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0019",
+      "catalog_id": "SYM-0019",
+      "name": "Fuente de tensión alterna",
+      "kind": "source_ac",
+      "designator": "V",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 5,
+      "height": 6,
+      "ports": {
+        "L": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_out"
+        },
+        "N": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0023",
+      "catalog_id": "SYM-0023",
+      "name": "Resistencia IEC",
+      "kind": "resistor_iec",
+      "designator": "R",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 2,
+      "ports": {
+        "1": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "2": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0026",
+      "catalog_id": "SYM-0026",
+      "name": "Potenciómetro",
+      "kind": "potentiometer",
+      "designator": "RV",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 6,
+      "ports": {
+        "1": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "passive"
+        },
+        "2": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "3": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0031",
+      "catalog_id": "SYM-0031",
+      "name": "Termistor NTC",
+      "kind": "thermistor_ntc",
+      "designator": "TH",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 3,
+      "ports": {
+        "1": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "2": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0035",
+      "catalog_id": "SYM-0035",
+      "name": "Condensador no polarizado",
+      "kind": "capacitor",
+      "designator": "C",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 3,
+      "ports": {
+        "1": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "2": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0048",
+      "catalog_id": "SYM-0048",
+      "name": "Transformador",
+      "kind": "transformer",
+      "designator": "T",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 7,
+      "ports": {
+        "PRI": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "SEC": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0057",
+      "catalog_id": "SYM-0057",
+      "name": "Diodo rectificador",
+      "kind": "diode",
+      "designator": "D",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 3,
+      "ports": {
+        "A": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "K": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0080",
+      "catalog_id": "SYM-0080",
+      "name": "MOSFET N",
+      "kind": "mosfet_n",
+      "designator": "Q",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 7,
+      "ports": {
+        "G": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "D": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "passive"
+        },
+        "S": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0097",
+      "catalog_id": "SYM-0097",
+      "name": "Optoacoplador de fototransistor",
+      "kind": "optocoupler",
+      "designator": "U",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "A": {
+          "x": -4,
+          "y": -2,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "K": {
+          "x": -4,
+          "y": 2,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "C": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "E": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0106",
+      "catalog_id": "SYM-0106",
+      "name": "Interruptor SPST abierto",
+      "kind": "switch_no",
+      "designator": "S",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 3,
+      "ports": {
+        "COM": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "NO": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0110",
+      "catalog_id": "SYM-0110",
+      "name": "Pulsador normalmente abierto",
+      "kind": "pushbutton_no",
+      "designator": "S",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 4,
+      "ports": {
+        "1": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "2": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0111",
+      "catalog_id": "SYM-0111",
+      "name": "Pulsador normalmente cerrado",
+      "kind": "pushbutton_nc",
+      "designator": "S",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 4,
+      "ports": {
+        "1": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "2": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0112",
+      "catalog_id": "SYM-0112",
+      "name": "Final de carrera",
+      "kind": "limit_switch",
+      "designator": "S",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 5,
+      "ports": {
+        "COM": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "NO": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0117",
+      "catalog_id": "SYM-0117",
+      "name": "Selector rotativo",
+      "kind": "selector_switch",
+      "designator": "S",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 5,
+      "ports": {
+        "COM": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "OUT": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0119",
+      "catalog_id": "SYM-0119",
+      "name": "Relé — bobina",
+      "kind": "relay_coil",
+      "designator": "K",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 3,
+      "ports": {
+        "A1": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "A2": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0120",
+      "catalog_id": "SYM-0120",
+      "name": "Relé — contacto normalmente abierto",
+      "kind": "contact_no",
+      "designator": "K",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 3,
+      "ports": {
+        "COM": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "NO": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0121",
+      "catalog_id": "SYM-0121",
+      "name": "Relé — contacto normalmente cerrado",
+      "kind": "contact_nc",
+      "designator": "K",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 3,
+      "ports": {
+        "COM": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "NC": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0123",
+      "catalog_id": "SYM-0123",
+      "name": "Contactor trifásico",
+      "kind": "contactor_3p",
+      "designator": "KM",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 7,
+      "ports": {
+        "1L1": {
+          "x": -4,
+          "y": -2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "3L2": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "5L3": {
+          "x": -4,
+          "y": 2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "2T1": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "4T2": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "6T3": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0126",
+      "catalog_id": "SYM-0126",
+      "name": "Fusible",
+      "kind": "fuse",
+      "designator": "F",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 3,
+      "ports": {
+        "1": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "2": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0128",
+      "catalog_id": "SYM-0128",
+      "name": "Disyuntor",
+      "kind": "circuit_breaker",
+      "designator": "QF",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 4,
+      "ports": {
+        "IN": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "OUT": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0129",
+      "catalog_id": "SYM-0129",
+      "name": "Interruptor diferencial",
+      "kind": "residual_current_device",
+      "designator": "FI",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 5,
+      "ports": {
+        "IN": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "OUT": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0130",
+      "catalog_id": "SYM-0130",
+      "name": "Relé térmico de sobrecarga",
+      "kind": "overload_3p",
+      "designator": "FR",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 7,
+      "ports": {
+        "1L1": {
+          "x": -4,
+          "y": -2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "3L2": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "5L3": {
+          "x": -4,
+          "y": 2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "2T1": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "4T2": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "6T3": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0150",
+      "catalog_id": "SYM-0150",
+      "name": "Motor AC monofásico",
+      "kind": "motor_1phase",
+      "designator": "M",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "L": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "N": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_in"
+        },
+        "PE": {
+          "x": 0,
+          "y": 4,
+          "side": "south",
+          "electrical_type": "protective_earth"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0151",
+      "catalog_id": "SYM-0151",
+      "name": "Motor trifásico",
+      "kind": "motor_3phase",
+      "designator": "M",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "U": {
+          "x": -2,
+          "y": -4,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "V": {
+          "x": 0,
+          "y": -4,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "W": {
+          "x": 2,
+          "y": -4,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "PE": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "protective_earth"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0156",
+      "catalog_id": "SYM-0156",
+      "name": "Ventilador",
+      "kind": "fan",
+      "designator": "FAN",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 7,
+      "ports": {
+        "+": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "-": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "power_in"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0157",
+      "catalog_id": "SYM-0157",
+      "name": "Bomba",
+      "kind": "pump",
+      "designator": "P",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 7,
+      "ports": {
+        "L": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "N": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_in"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0184",
+      "catalog_id": "SYM-0184",
+      "name": "Comparador",
+      "kind": "comparator",
+      "designator": "U",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 7,
+      "ports": {
+        "-": {
+          "x": -3,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "+": {
+          "x": -3,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "OUT": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "open_collector"
+        },
+        "VCC": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "power_in"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0258",
+      "catalog_id": "SYM-0258",
+      "name": "Bornera",
+      "kind": "terminal_block",
+      "designator": "X",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 4,
+      "height": 4,
+      "ports": {
+        "1": {
+          "x": -2,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "2": {
+          "x": 2,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0296",
+      "catalog_id": "SYM-0296",
+      "name": "Luminaria",
+      "kind": "lamp",
+      "designator": "H",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 6,
+      "ports": {
+        "1": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "2": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_in"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0297",
+      "catalog_id": "SYM-0297",
+      "name": "Toma de corriente",
+      "kind": "socket_outlet",
+      "designator": "X",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 6,
+      "ports": {
+        "SUPPLY": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0298",
+      "catalog_id": "SYM-0298",
+      "name": "Caja de derivación",
+      "kind": "junction_box",
+      "designator": "JB",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 7,
+      "ports": {
+        "IN": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "OUT1": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "OUT2": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "OUT3": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0299",
+      "catalog_id": "SYM-0299",
+      "name": "Cuadro eléctrico",
+      "kind": "distribution_board",
+      "designator": "DB",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 9,
+      "ports": {
+        "IN": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "OUT1": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "OUT2": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "OUT3": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0380",
+      "catalog_id": "SYM-0380",
+      "name": "Seccionador",
+      "kind": "isolator",
+      "designator": "QS",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 3,
+      "ports": {
+        "1": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "2": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0381",
+      "catalog_id": "SYM-0381",
+      "name": "Parada de emergencia",
+      "kind": "emergency_stop_nc",
+      "designator": "S",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 5,
+      "ports": {
+        "1": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "2": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0382",
+      "catalog_id": "SYM-0382",
+      "name": "Contacto auxiliar de contactor",
+      "kind": "aux_contact_no",
+      "designator": "KM",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 3,
+      "ports": {
+        "COM": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "NO": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0385",
+      "catalog_id": "SYM-0385",
+      "name": "Magnetotérmico unipolar",
+      "kind": "mcb_1p",
+      "designator": "QF",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 4,
+      "ports": {
+        "IN": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "OUT": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0386",
+      "catalog_id": "SYM-0386",
+      "name": "Magnetotérmico bipolar",
+      "kind": "mcb_2p",
+      "designator": "QF",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 5,
+      "ports": {
+        "IN": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "OUT": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0387",
+      "catalog_id": "SYM-0387",
+      "name": "Magnetotérmico tripolar",
+      "kind": "circuit_breaker_3p",
+      "designator": "QF",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 7,
+      "ports": {
+        "1L1": {
+          "x": -4,
+          "y": -2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "3L2": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "5L3": {
+          "x": -4,
+          "y": 2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "2T1": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "4T2": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "6T3": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0388",
+      "catalog_id": "SYM-0388",
+      "name": "Magnetotérmico tetrapolar",
+      "kind": "mcb_4p",
+      "designator": "QF",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 5,
+      "ports": {
+        "IN": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "OUT": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0390",
+      "catalog_id": "SYM-0390",
+      "name": "Contador de energía",
+      "kind": "energy_meter",
+      "designator": "EM",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 7,
+      "ports": {
+        "IN": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "OUT": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "SYM-0391",
+      "catalog_id": "SYM-0391",
+      "name": "Transformador de aislamiento",
+      "kind": "isolation_transformer",
+      "designator": "T",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 7,
+      "ports": {
+        "PRI": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "SEC": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft"
+    },
+    {
+      "id": "ST-GENERIC-2P",
+      "catalog_id": null,
+      "name": "Carga genérica",
+      "kind": "generic_2p",
+      "designator": "X",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 5,
+      "ports": {
+        "1": {
+          "x": -3,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "2": {
+          "x": 3,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "internal"
+    },
+    {
+      "id": "ST-CONTROL-PORT",
+      "catalog_id": null,
+      "name": "Puerto de control",
+      "kind": "connector_2p",
+      "designator": "PORT",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 5,
+      "ports": {
+        "OUT": {
+          "x": 3,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "GND": {
+          "x": 3,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "power_in"
+        }
+      },
+      "review_status": "internal"
+    },
+    {
+      "id": "ST-LOAD-PORT",
+      "catalog_id": null,
+      "name": "Puerto del circuito de carga",
+      "kind": "connector_2p",
+      "designator": "PORT",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 5,
+      "ports": {
+        "IN": {
+          "x": 3,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "passive"
+        },
+        "RETURN": {
+          "x": 3,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "internal"
+    }
+  ]
+}

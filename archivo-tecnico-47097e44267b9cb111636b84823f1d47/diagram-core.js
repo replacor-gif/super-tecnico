@@ -1,12 +1,12 @@
 "use strict";
 
 const ElectroDiagramCore = (() => {
-  const ENGINE_VERSION = "1.2.0-alpha.1";
+  const ENGINE_VERSION = "1.3.0-alpha.1";
   const CONTRACT_VERSION = "1.0";
   const GRID_PITCH_MIL = 50;
   const UNIT = 24;
 
-  const SYMBOLS = Object.freeze({
+  const BUILTIN_SYMBOLS = Object.freeze({
     "SYM-0006": symbol("SYM-0006", "Conector fuera de página", "offpage_connector", "", 6, 4, {
       "1": port(3, 0, "east", "passive"),
     }),
@@ -229,6 +229,22 @@ const ElectroDiagramCore = (() => {
     }),
   });
 
+  function loadExternalSymbols() {
+    if (typeof globalThis !== "undefined" && globalThis.ElectroDiagramSymbols) {
+      return globalThis.ElectroDiagramSymbols;
+    }
+    if (typeof require === "function") {
+      try {
+        return require("./diagram-symbol-library.js");
+      } catch (_error) {
+        return {};
+      }
+    }
+    return {};
+  }
+
+  const SYMBOLS = Object.freeze({ ...BUILTIN_SYMBOLS, ...loadExternalSymbols() });
+
   function port(x, y, side, electricalType) {
     return { x, y, side, electrical_type: electricalType };
   }
@@ -264,7 +280,7 @@ const ElectroDiagramCore = (() => {
 
   function getRegistry() {
     return {
-      version: "0.3",
+      version: "0.4",
       engine_version: ENGINE_VERSION,
       standard_profile: "IEC_EXPERIMENTAL",
       grid_pitch_mil: GRID_PITCH_MIL,
@@ -310,6 +326,13 @@ const ElectroDiagramCore = (() => {
       byRef.set(ref, component);
       const definition = SYMBOLS[component.symbol_id];
       if (!definition) errors.push(diagnostic("UNKNOWN_SYMBOL", `El símbolo ${component.symbol_id || "vacío"} no está normalizado.`, ref));
+      if (definition?.review_status === "auto_draft") {
+        warnings.push(diagnostic(
+          "AUTO_DRAFT_SYMBOL",
+          `${ref} usa ${definition.name}, normalizado provisionalmente por familia y pendiente de revisión gráfica.`,
+          ref,
+        ));
+      }
       if (component.position) {
         if (!Number.isInteger(component.position.x) || !Number.isInteger(component.position.y)) {
           errors.push(diagnostic("OFF_GRID", `${ref} no está colocado en coordenadas enteras de rejilla.`, ref));
@@ -678,7 +701,7 @@ const ElectroDiagramCore = (() => {
       data-document-kind="${escapeXml(document.document_kind)}" data-standard-profile="${escapeXml(document.standard_profile)}"
       data-grid-pitch-mil="${GRID_PITCH_MIL}" data-pages="1" aria-label="${escapeXml(document.title)}">
       <style>
-        .sheet{fill:#fff;stroke:#222a27;stroke-width:2}.wire{fill:none;stroke:#26302c;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.electroia-core-diagram[data-document-kind="single_line_diagram"] .wire{stroke-width:3.2}.net-protective_earth{stroke-width:3}.junction{fill:#26302c}.bridge-gap{fill:none;stroke:#fff;stroke-width:8}.relationship{fill:none;stroke:#7d8782;stroke-width:2;stroke-dasharray:8 6}.symbol-line{fill:none;stroke:#202824;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.symbol-fill{fill:#fff;stroke:#202824;stroke-width:2.6}.symbol-accent{fill:none;stroke:#202824;stroke-width:2}.symbol-linkage{fill:none;stroke:#68736d;stroke-width:1.8;stroke-dasharray:5 4}.component-ref{font:700 15px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.component-value{font:500 12px Inter,Arial,sans-serif;fill:#58625d;text-anchor:middle}.net-label{font:700 11px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#47504c;paint-order:stroke;stroke:#fff;stroke-width:5;stroke-linejoin:round}.polarity{font:800 14px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.title-main{font:800 13px Inter,Arial,sans-serif;fill:#202824}.title-small{font:600 10px Inter,Arial,sans-serif;fill:#59635e}.title-rule{stroke:#202824;stroke-width:1.4}.standard-note{font:700 10px Inter,Arial,sans-serif;fill:#606a65;letter-spacing:.8px}.document-note{font:800 10px Inter,Arial,sans-serif;fill:#8a3d25}
+        .sheet{fill:#fff;stroke:#222a27;stroke-width:2}.wire{fill:none;stroke:#26302c;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.electroia-core-diagram[data-document-kind="single_line_diagram"] .wire{stroke-width:3.2}.net-protective_earth{stroke-width:3}.junction{fill:#26302c}.bridge-gap{fill:none;stroke:#fff;stroke-width:8}.relationship{fill:none;stroke:#7d8782;stroke-width:2;stroke-dasharray:8 6}.symbol-line{fill:none;stroke:#202824;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.symbol-fill{fill:#fff;stroke:#202824;stroke-width:2.6}.symbol-accent{fill:none;stroke:#202824;stroke-width:2}.symbol-linkage{fill:none;stroke:#68736d;stroke-width:1.8;stroke-dasharray:5 4}.component-ref{font:700 15px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.component-value{font:500 12px Inter,Arial,sans-serif;fill:#58625d;text-anchor:middle}.net-label{font:700 11px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#47504c;paint-order:stroke;stroke:#fff;stroke-width:5;stroke-linejoin:round}.polarity{font:800 14px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.title-main{font:800 13px Inter,Arial,sans-serif;fill:#202824}.title-small{font:600 10px Inter,Arial,sans-serif;fill:#59635e}.title-rule{stroke:#202824;stroke-width:1.4}.standard-note{font:700 10px Inter,Arial,sans-serif;fill:#606a65;letter-spacing:.8px}.document-note{font:800 10px Inter,Arial,sans-serif;fill:#8a3d25}.family-code{font:800 15px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.draft-badge{display:none;font:800 9px Inter,Arial,sans-serif;fill:#a64b2a;text-anchor:end}.review-auto_draft .symbol-fill{stroke:#a64b2a;stroke-dasharray:6 4}.review-auto_draft .draft-badge{display:block}
       </style>
       <rect class="sheet" x="8" y="8" width="${width - 16}" height="${height - 16}"/>
       ${gridPattern}
@@ -691,8 +714,8 @@ const ElectroDiagramCore = (() => {
         <rect class="symbol-line" x="${titleBlockX}" y="${titleBlockY}" width="${titleBlockWidth}" height="64"/>
         <line class="title-rule" x1="${titleBlockX + titleBlockWidth * 0.7}" y1="${titleBlockY}" x2="${titleBlockX + titleBlockWidth * 0.7}" y2="${titleBlockY + 64}"/>
         <line class="title-rule" x1="${titleBlockX + titleBlockWidth * 0.7}" y1="${titleBlockY + 32}" x2="${titleBlockX + titleBlockWidth}" y2="${titleBlockY + 32}"/>
-        <text class="title-main" x="${titleBlockX + 12}" y="${titleBlockY + 26}">${escapeXml(document.title)}</text>
-        <text class="title-small" x="${titleBlockX + 12}" y="${titleBlockY + 48}">${escapeXml(document.document_id)}</text>
+        <text class="title-main" x="${titleBlockX + 12}" y="${titleBlockY + 26}">${escapeXml(shortText(document.title, 39))}</text>
+        <text class="title-small" x="${titleBlockX + 12}" y="${titleBlockY + 48}">${escapeXml(shortText(document.document_id, 42))}</text>
         <text class="title-small" x="${titleBlockX + titleBlockWidth * 0.7 + 10}" y="${titleBlockY + 20}">REV. ${escapeXml(document.revision)}</text>
         <text class="title-small" x="${titleBlockX + titleBlockWidth * 0.7 + 10}" y="${titleBlockY + 52}">HOJA 1 / 1</text>
       </g>
@@ -728,13 +751,13 @@ const ElectroDiagramCore = (() => {
     const x = mapX(component.position.x);
     const y = mapY(component.position.y);
     const scaleX = component.mirror ? -1 : 1;
-    const body = drawSymbolBody(definition.kind);
+    const body = drawSymbolBody(definition.kind, definition);
     const rotated = [90, 270].includes(component.rotation || 0);
     const halfWidth = (rotated ? definition.height : definition.width) / 2;
     const halfHeight = (rotated ? definition.width : definition.height) / 2;
     const labelPosition = component.label_position || "below";
     const label = componentLabel(component, x, y, halfWidth, halfHeight, labelPosition);
-    return `<g class="component" data-ref="${escapeXml(component.ref)}" data-symbol-id="${escapeXml(component.symbol_id)}">
+    return `<g class="component review-${escapeXml(definition.review_status || "unknown")}" data-ref="${escapeXml(component.ref)}" data-symbol-id="${escapeXml(component.symbol_id)}" data-review-status="${escapeXml(definition.review_status || "unknown")}">
       <g transform="translate(${x} ${y}) rotate(${component.rotation || 0}) scale(${scaleX} 1)">${body}</g>
       ${label}
     </g>`;
@@ -763,9 +786,16 @@ const ElectroDiagramCore = (() => {
     return text.length > limit ? `${text.slice(0, limit - 1)}…` : text;
   }
 
-  function drawSymbolBody(kind) {
+  function drawSymbolBody(kind, definition) {
     const u = UNIT;
     const line = (x1, y1, x2, y2, className = "symbol-line") => `<path class="${className}" d="M${x1 * u} ${y1 * u}L${x2 * u} ${y2 * u}"/>`;
+    const familyKinds = new Set([
+      "generic_1p", "generic_2p", "generic_3p", "generic_4p", "connector_block",
+      "digital_block", "functional_block", "sensor_block", "semiconductor_block",
+      "machine_block", "protection_block", "power_block", "isolation_block",
+      "installation_block", "meter_block", "source_block",
+    ]);
+    if (familyKinds.has(kind)) return drawFamilyBlock(definition, line);
     if (kind === "offpage_connector") {
       return `<path class="symbol-fill" d="M${-2.2 * u} ${-1.2 * u}H${1.45 * u}L${2.65 * u} 0L${1.45 * u} ${1.2 * u}H${-2.2 * u}Z"/>${line(2.65, 0, 3, 0)}`;
     }
@@ -901,6 +931,30 @@ const ElectroDiagramCore = (() => {
       return `<rect class="symbol-fill" x="${-2.3 * u}" y="${-2 * u}" width="${4.6 * u}" height="${4 * u}" rx="5"/>${line(2.3, -1, 3, -1)}${line(2.3, 1, 3, 1)}<circle cx="${2.05 * u}" cy="${-1 * u}" r="4" fill="#202824"/><circle cx="${2.05 * u}" cy="${1 * u}" r="4" fill="#202824"/>`;
     }
     return `${line(-3, 0, -1.65, 0)}<rect class="symbol-fill" x="${-1.65 * u}" y="${-1.35 * u}" width="${3.3 * u}" height="${2.7 * u}" rx="5"/>${line(1.65, 0, 3, 0)}`;
+  }
+
+  function drawFamilyBlock(definition, line) {
+    const u = UNIT;
+    const halfWidth = Math.max(1.4, definition.width / 2 - 1.2);
+    const halfHeight = Math.max(1.2, definition.height / 2 - 0.8);
+    const leads = Object.values(definition.ports || {}).map((terminal) => {
+      if (terminal.side === "west") return line(terminal.x, terminal.y, -halfWidth, terminal.y);
+      if (terminal.side === "east") return line(halfWidth, terminal.y, terminal.x, terminal.y);
+      if (terminal.side === "north") return line(terminal.x, terminal.y, terminal.x, -halfHeight);
+      return line(terminal.x, halfHeight, terminal.x, terminal.y);
+    }).join("");
+    const codes = {
+      connector_block: "X", digital_block: "&", functional_block: "ƒ",
+      sensor_block: "S", semiconductor_block: "Q", machine_block: "M",
+      protection_block: "P", power_block: "W", isolation_block: "ISO",
+      installation_block: "I", meter_block: "M", source_block: "±",
+      generic_1p: "·", generic_2p: "X", generic_3p: "X", generic_4p: "X",
+    };
+    const round = ["sensor_block", "machine_block", "meter_block", "source_block"].includes(definition.kind);
+    const body = round
+      ? `<ellipse class="symbol-fill" cx="0" cy="0" rx="${halfWidth * u}" ry="${halfHeight * u}"/>`
+      : `<rect class="symbol-fill" x="${-halfWidth * u}" y="${-halfHeight * u}" width="${halfWidth * 2 * u}" height="${halfHeight * 2 * u}" rx="5"/>`;
+    return `${leads}${body}<text class="family-code" x="0" y="5">${escapeXml(codes[definition.kind] || "X")}</text><text class="draft-badge" x="${(halfWidth - 0.25) * u}" y="${(-halfHeight + 0.55) * u}">D</text>`;
   }
 
   function getContract() {
