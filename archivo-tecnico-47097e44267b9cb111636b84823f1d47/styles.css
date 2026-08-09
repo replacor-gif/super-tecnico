@@ -363,7 +363,7 @@ kbd { font: inherit; border: 1px solid var(--line); border-radius: 4px; padding:
 .panel-title small { font-size: 9px; letter-spacing: .13em; color: #8b928e; }
 .schematic { min-height: 620px; display: grid; place-items: center; padding: 24px; overflow: auto; background-image: linear-gradient(rgba(34,39,37,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(34,39,37,.035) 1px, transparent 1px); background-size: 19px 19px; }
 .schematic svg { width: 100%; max-width: 1180px; height: auto; overflow: visible; }
-.schematic .electroia-core-diagram { min-width: 960px; }
+.schematic .electroia-core-diagram { min-width: 0; }
 .schematic-legend { padding: 12px 20px; display: flex; gap: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; }
 .schematic-legend i { display: inline-block; width: 14px; height: 2px; vertical-align: 3px; margin-right: 5px; }
 .schematic-legend .green { background: #76a523; }.schematic-legend .orange { background: var(--orange); }.schematic-legend .grey { background: #7a8380; }
