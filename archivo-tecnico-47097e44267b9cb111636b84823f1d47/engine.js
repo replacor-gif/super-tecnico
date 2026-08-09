@@ -249,6 +249,9 @@ const ElectroEngine = (function () {
       { id: "VRELAY_PLUS", label: `+${values.relay_voltage} V bobina`, kind: "power" },
       { id: "COIL_LOW", label: "Retorno conmutado de bobina", kind: "power" },
       { id: "GND", label: "0 V / masa común", kind: "reference" },
+      { id: "LOAD_COM", label: "Entrada del circuito de carga", kind: "load" },
+      { id: "LOAD_NO", label: "Salida conmutada del relé", kind: "load" },
+      { id: "LOAD_RETURN", label: "Retorno del circuito de carga", kind: "load" },
     ];
     if (values.isolated) nodes.splice(1, 0, { id: "ISO_OUT", label: "Salida aislada pendiente", kind: "signal" });
 
@@ -278,6 +281,7 @@ const ElectroEngine = (function () {
       { ref: "PS1", symbol_id: REQUIRED_SYMBOLS.power, value: `${values.relay_voltage} V CC`, pins: { "+": "VRELAY_PLUS", "-": "GND" } },
       { ref: "GND1", symbol_id: REQUIRED_SYMBOLS.ground, value: "0 V", pins: { "1": "GND" } },
       { ref: "K1.1", symbol_id: REQUIRED_SYMBOLS.relayContact, value: "Contacto NO", pins: { COM: "LOAD_COM", NO: "LOAD_NO" } },
+      { ref: "LOAD1", symbol_id: null, value: values.load_kind, pins: { "1": "LOAD_NO", "2": "LOAD_RETURN" } },
     ];
     if (values.isolated) {
       parts.unshift({
@@ -299,13 +303,16 @@ const ElectroEngine = (function () {
       { id: "VRELAY_PLUS", label: `+${values.relay_voltage} V`, connections: ["PS1.+", "K1.A1", "D1.K"] },
       { id: "COIL_LOW", label: "Bobina / drenador", connections: ["K1.A2", "D1.A", "Q1.D"] },
       { id: "GND", label: "0 V", connections: ["PS1.-", "Q1.S", "R2.2", "GND1.1"] },
-      { id: "LOAD_CONTACT", label: "Contacto aislado para la carga", connections: ["K1.1.COM", "K1.1.NO"] },
+      { id: "LOAD_COM", label: "Entrada de carga", connections: ["PORT2.IN", "K1.1.COM"] },
+      { id: "LOAD_NO", label: "Salida conmutada", connections: ["K1.1.NO", "LOAD1.1"] },
+      { id: "LOAD_RETURN", label: "Retorno de carga", connections: ["LOAD1.2", "PORT2.RETURN"] },
     ];
     if (values.isolated) nets.splice(1, 0, { id: "ISO_OUT", label: "Salida aislada incompleta", connections: ["U1.OUT", "R1.1"] });
 
     return {
-      schema_version: "0.2",
+      schema_version: "0.3",
       topology: values.isolated ? "isolated_low_side_relay_driver" : "low_side_relay_driver",
+      input_contract: { current: "text", future: ["image", "hand_drawn_sketch"] },
       nodes,
       parts,
       nets,
@@ -409,6 +416,7 @@ const ElectroEngine = (function () {
       relay_voltage: relayVoltage,
       signal_voltage: signalVoltage,
       isolated: isolation,
+      load_kind: loadKind,
     }, componentMap);
 
     const symbolIds = [...new Set(circuitModel.parts.map((part) => part.symbol_id).filter(Boolean))];

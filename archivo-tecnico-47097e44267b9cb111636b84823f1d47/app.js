@@ -7,6 +7,7 @@ const state = {
   resourcesPromise: null,
   intelligenceConfigured: false,
   analysisSource: "local",
+  accessReady: false,
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -52,6 +53,69 @@ function setEngineMode(mode) {
     ? " Petición cifrada al motor privado"
     : " Tu petición se procesa localmente";
 }
+
+function enterPrivateLab() {
+  if (state.accessReady) return;
+  state.accessReady = true;
+  document.body.classList.remove("access-checking");
+  $("#pinGate").hidden = true;
+  initializeIntelligence();
+}
+
+function showPinGate(message = "") {
+  document.body.classList.remove("access-checking");
+  $("#pinGate").hidden = false;
+  $("#pinError").textContent = message;
+  window.setTimeout(() => $("#pinInput").focus(), 50);
+}
+
+async function initializeAccess() {
+  const url = new URL(PRIVATE_API_URL);
+  url.searchParams.set("action", "electroia-access");
+  try {
+    const response = await fetch(url, { cache: "no-store", credentials: "same-origin" });
+    if (response.status === 404) {
+      enterPrivateLab();
+      return;
+    }
+    const data = response.ok ? await response.json() : null;
+    if (!data?.ok) throw new Error("access_check_failed");
+    if (data.required && !data.unlocked) showPinGate();
+    else enterPrivateLab();
+  } catch (_error) {
+    showPinGate("No se ha podido comprobar el acceso. Inténtalo de nuevo en unos segundos.");
+  }
+}
+
+$("#pinForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const pin = $("#pinInput").value.trim();
+  $("#pinError").textContent = "";
+  const button = $("#pinForm button");
+  button.disabled = true;
+  try {
+    const url = new URL(PRIVATE_API_URL);
+    url.searchParams.set("action", "electroia-unlock");
+    const response = await fetch(url, {
+      method: "POST",
+      credentials: "same-origin",
+      cache: "no-store",
+      headers: { "Content-Type": "application/json", "X-ST-Client": clientToken() },
+      body: JSON.stringify({ pin, client_token: clientToken() }),
+    });
+    const data = await response.json().catch(() => null);
+    if (!response.ok || !data?.unlocked) {
+      showPinGate(response.status === 429 ? "Demasiados intentos. Espera unos minutos." : "PIN incorrecto.");
+      return;
+    }
+    $("#pinInput").value = "";
+    enterPrivateLab();
+  } catch (_error) {
+    showPinGate("No se ha podido comprobar el PIN.");
+  } finally {
+    button.disabled = false;
+  }
+});
 
 async function initializeIntelligence() {
   const url = new URL(PRIVATE_API_URL);
@@ -272,7 +336,7 @@ $("#nextQuestion").addEventListener("click", async () => {
   setLoading(true, "Consultando componentes y construyendo el esquema…");
   try {
     const data = await api("/api/design", { request: state.request, answers: state.answers });
-    renderDesign(data.design);
+    renderPublicResult(data.design);
     showView($("#resultView"));
   } catch (error) {
     $("#questionError").textContent = error.message;
@@ -294,6 +358,43 @@ $("#startOver").addEventListener("click", () => {
   state.answers = {};
   showView($("#introView"));
   $("#requestInput").focus();
+});
+
+function renderPublicResult(design) {
+  $("#designTitle").textContent = design.title;
+  $("#designSummary").textContent = design.summary;
+
+  const banner = $("#statusBanner");
+  banner.className = `status-banner ${design.status}`;
+  banner.innerHTML = design.status === "ready"
+    ? "<b>Circuito preparado.</b> Revisa las conexiones antes de montarlo."
+    : "<b>Esquema generado.</b> Confirma las piezas marcadas como «por confirmar» antes de montarlo.";
+
+  $("#componentsList").innerHTML = design.components.map((item) => {
+    const pending = item.source_kind === "specification"
+      ? '<em class="result-status">Por confirmar</em>'
+      : "";
+    return `
+      <div class="component">
+        <span class="component-ref">${escapeHtml(item.ref)}</span>
+        <div class="component-name"><b>${escapeHtml(item.name)}</b>${pending}</div>
+        <small>${escapeHtml(item.spec)}</small>
+      </div>
+    `;
+  }).join("");
+  $("#connectionsList").innerHTML = design.connections.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+  $("#warningsList").innerHTML = design.warnings.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+
+  if (typeof ElectroDiagram === "undefined") throw new Error("El generador de esquemas no está disponible");
+  const schematic = ElectroDiagram.render(design);
+  $("#schematic").innerHTML = schematic;
+  $("#expandedSchematic").innerHTML = schematic;
+}
+
+$("#expandDiagram").addEventListener("click", () => $("#diagramDialog").showModal());
+$("#closeDiagram").addEventListener("click", () => $("#diagramDialog").close());
+$("#diagramDialog").addEventListener("click", (event) => {
+  if (event.target === $("#diagramDialog")) $("#diagramDialog").close();
 });
 
 function renderDesign(design) {
@@ -457,4 +558,4 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
-initializeIntelligence();
+initializeAccess();

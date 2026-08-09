@@ -10,7 +10,23 @@
     <title>Laboratorio privado — Super Técnico</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body class="access-checking">
+    <section id="pinGate" class="pin-gate" hidden aria-labelledby="pinTitle">
+      <div class="pin-card">
+        <span class="pin-mark" aria-hidden="true">Ω</span>
+        <div class="eyebrow">Laboratorio privado</div>
+        <h1 id="pinTitle">Introduce tu PIN</h1>
+        <p>Este acceso protege las pruebas privadas de ElectroIA.</p>
+        <form id="pinForm">
+          <label for="pinInput">PIN de cuatro cifras</label>
+          <div class="pin-row">
+            <input id="pinInput" name="pin" type="password" inputmode="numeric" autocomplete="current-password" pattern="[0-9]{4}" maxlength="4" required />
+            <button type="submit" class="primary-button">Entrar <span>→</span></button>
+          </div>
+          <div id="pinError" class="form-error" role="alert"></div>
+        </form>
+      </div>
+    </section>
     <div class="noise" aria-hidden="true"></div>
     <header class="topbar">
       <a class="brand" href="#" aria-label="ElectroIA, inicio">
@@ -48,6 +64,11 @@
         <div class="example-row">
           <span>Prueba con:</span>
           <button class="example" type="button">Relé de 12 V con señal de 5 V</button>
+        </div>
+
+        <div class="input-modes" aria-label="Formas de iniciar un diseño">
+          <span class="active">Descripción escrita</span>
+          <span>Foto o boceto a mano · próxima fase</span>
         </div>
 
         <div class="process-strip" aria-label="Proceso de diseño">
@@ -97,20 +118,18 @@
 
         <div id="statusBanner" class="status-banner"></div>
 
-        <div class="result-grid">
+        <div class="result-grid result-grid-single">
           <article class="schematic-card panel">
-            <div class="panel-title"><span>Esquema eléctrico generado</span><small>SÍMBOLOS REPLACOR</small></div>
+            <div class="panel-title">
+              <span>Esquema eléctrico</span>
+              <button id="expandDiagram" class="diagram-button" type="button">Ampliar</button>
+            </div>
             <div id="schematic" class="schematic"></div>
             <div class="schematic-legend">
               <span><i class="green"></i> Control</span>
               <span><i class="orange"></i> Potencia</span>
               <span><i class="grey"></i> Masa</span>
             </div>
-          </article>
-
-          <article class="panel decisions-card">
-            <div class="panel-title"><span>Por qué funciona</span><small>DECISIONES</small></div>
-            <ol id="decisionsList"></ol>
           </article>
         </div>
 
@@ -125,17 +144,6 @@
           </article>
         </div>
 
-        <div class="evidence-grid">
-          <article class="panel database-card">
-            <div class="panel-title"><span>Bases utilizadas</span><small id="databaseMeta">DATOS REALES</small></div>
-            <div id="databaseSummary" class="database-summary"></div>
-          </article>
-          <article class="panel model-card">
-            <div class="panel-title"><span>Modelo eléctrico interno</span><small id="modelMeta">NODOS Y REDES</small></div>
-            <div id="netsList" class="nets-list"></div>
-          </article>
-        </div>
-
         <article class="warning-panel">
           <div class="warning-icon">!</div>
           <div><h3>Antes de montar</h3><ul id="warningsList"></ul></div>
@@ -143,12 +151,21 @@
       </section>
     </main>
 
+    <dialog id="diagramDialog" class="diagram-dialog" aria-labelledby="diagramDialogTitle">
+      <div class="diagram-dialog-head">
+        <div><span>ElectroIA</span><h2 id="diagramDialogTitle">Esquema ampliado</h2></div>
+        <button id="closeDiagram" type="button" aria-label="Cerrar esquema ampliado">×</button>
+      </div>
+      <div id="expandedSchematic" class="expanded-schematic"></div>
+    </dialog>
+
     <div id="loadingOverlay" class="loading-overlay" aria-hidden="true">
       <div class="loader"><i></i><i></i><i></i></div>
       <p>Traduciendo tu idea a electrónica…</p>
     </div>
 
     <script src="engine.js"></script>
+    <script src="diagram.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

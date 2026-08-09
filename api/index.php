@@ -7,11 +7,26 @@ $action = preg_replace('/[^a-z0-9-]/', '', strtolower((string) ($_GET['action'] 
 $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
 
 try {
+    if ($action === 'electroia-access' && $method === 'GET') {
+        st_json(st_electroia_access_status());
+    }
+
+    if ($action === 'electroia-unlock' && $method === 'POST') {
+        $body = st_body();
+        st_rate_limit('electroia-unlock', st_client_hash($body), 10, 1800);
+        $pin = st_text($body, 'pin', 4, 4);
+        if (preg_match('/^[0-9]{4}$/', $pin) !== 1) st_json(['ok' => false, 'error' => 'invalid_pin'], 422);
+        if (!st_electroia_unlock($pin)) st_json(['ok' => false, 'error' => 'invalid_pin'], 401);
+        st_json(['ok' => true, 'unlocked' => true]);
+    }
+
     if ($action === 'electroia-status' && $method === 'GET') {
+        st_require_electroia_access();
         st_json(st_electroia_status());
     }
 
     if ($action === 'electroia-analyze' && $method === 'POST') {
+        st_require_electroia_access();
         $body = st_body();
         $request = st_text($body, 'request', 8, 500);
         st_rate_limit('electroia-analyze', st_client_hash($body), 30, 3600);

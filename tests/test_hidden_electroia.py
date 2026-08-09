@@ -18,6 +18,7 @@ class HiddenElectroIATests(unittest.TestCase):
         html = (ROOT / ROUTE / "index.html").read_text(encoding="utf-8")
         self.assertIn("noindex,nofollow,noarchive,nosnippet,noimageindex", html)
         self.assertIn('<script src="engine.js"></script>', html)
+        self.assertIn('<script src="diagram.js"></script>', html)
 
     def test_omega_access_is_added_below_the_page_counter(self):
         counter = (ROOT / "assets" / "page-counter.js").read_text(encoding="utf-8")
@@ -34,6 +35,43 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn('../data/symbols/catalog.json', app)
         self.assertIn('circuit_model', engine)
         self.assertIn('SYM-0080', engine)
+
+    def test_result_shows_outcomes_without_internal_calculations(self):
+        html = (ROOT / ROUTE / "index.html").read_text(encoding="utf-8")
+        app = (ROOT / ROUTE / "app.js").read_text(encoding="utf-8")
+        diagram = (ROOT / ROUTE / "diagram.js").read_text(encoding="utf-8")
+        self.assertNotIn("Por qué funciona", html)
+        self.assertNotIn("Bases utilizadas", html)
+        self.assertNotIn("Modelo eléctrico interno", html)
+        self.assertIn("renderPublicResult(data.design)", app)
+        self.assertIn("ElectroDiagram.render(design)", app)
+        public_renderer = app.split("function renderPublicResult", 1)[1].split("function renderDesign", 1)[0]
+        self.assertNotIn("item.calculation", public_renderer)
+        self.assertNotIn("design.decisions", public_renderer)
+        self.assertIn("design.circuit_model", diagram)
+        self.assertIn('data-symbol-id="SYM-0119"', diagram)
+
+    def test_model_is_ready_for_future_photo_or_sketch_input(self):
+        engine = (ROOT / ROUTE / "engine.js").read_text(encoding="utf-8")
+        diagram = (ROOT / ROUTE / "diagram.js").read_text(encoding="utf-8")
+        self.assertIn('future: ["image", "hand_drawn_sketch"]', engine)
+        self.assertIn('{ ref: "LOAD1"', engine)
+        self.assertIn('schema_version: "0.3"', engine)
+        self.assertNotIn("requestText", diagram)
+
+    def test_private_pin_is_verified_only_on_the_server(self):
+        html = (ROOT / ROUTE / "index.html").read_text(encoding="utf-8")
+        app = (ROOT / ROUTE / "app.js").read_text(encoding="utf-8")
+        backend = (ROOT / "api" / "electroia.php").read_text(encoding="utf-8")
+        api = (ROOT / "api" / "index.php").read_text(encoding="utf-8")
+        runtime = (ROOT / ".deploy-now" / "api" / "config.runtime.php.template").read_text(encoding="utf-8")
+        self.assertIn('id="pinGate"', html)
+        self.assertIn("electroia-access", app)
+        self.assertIn("electroia-unlock", api)
+        self.assertIn("password_verify", backend)
+        self.assertIn("ST_ELECTROIA_PIN_HASH", runtime)
+        for content in (html, app, backend, api, runtime):
+            self.assertNotIn("4097", content)
 
     def test_private_ai_backend_has_a_safe_local_fallback(self):
         app = (ROOT / ROUTE / "app.js").read_text(encoding="utf-8")
@@ -53,7 +91,7 @@ class HiddenElectroIATests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             output = Path(temp_dir) / "dist"
             build(ROOT, output)
-            for filename in ("index.html", "styles.css", "engine.js", "app.js"):
+            for filename in ("index.html", "styles.css", "engine.js", "diagram.js", "app.js"):
                 self.assertTrue((output / ROUTE / filename).is_file(), filename)
             self.assertTrue((output / "data" / "symbols" / "catalog.json").is_file())
             self.assertTrue(
