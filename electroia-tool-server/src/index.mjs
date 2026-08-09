@@ -18,7 +18,7 @@ function toolError(error) {
 }
 
 function createServer() {
-  const server = new McpServer({ name: "electroia-tools", version: "0.2.0" });
+  const server = new McpServer({ name: "electroia-tools", version: "0.3.0" });
 
   server.registerTool(
     "electroia_get_capabilities",
@@ -62,6 +62,8 @@ function createServer() {
     grid: z.object({ pitch_mil: z.literal(50).optional(), show: z.boolean().optional() }).optional(),
     components: z.array(z.object({
       ref: z.string().min(1).max(32),
+      display_ref: z.string().max(32).optional(),
+      device_id: z.string().max(32).optional(),
       symbol_id: z.string().min(3).max(64),
       value: z.string().max(120).optional(),
       position: positionSchema.optional(),

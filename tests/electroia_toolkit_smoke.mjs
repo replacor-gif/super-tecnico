@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { callElectroIATool, manifest } from "../electroia-tool-server/src/toolkit.mjs";
 
@@ -16,7 +17,25 @@ assert.equal(diagramContract.contract.responsibility, "render_only");
 assert.equal(diagramContract.contract.calculates_values, false);
 assert.equal(diagramContract.contract.selects_components, false);
 assert.equal(diagramContract.contract.grid_pitch_mil, 50);
-assert.ok(diagramContract.symbol_registry.symbols.length >= 15);
+assert.equal(diagramContract.symbol_registry.symbols.length, 33);
+for (const symbolId of ["SYM-0011", "SYM-0110", "SYM-0123", "SYM-0130", "SYM-0151", "SYM-0387"]) {
+  assert.ok(diagramContract.symbol_registry.symbols.some((symbol) => symbol.id === symbolId), symbolId);
+}
+
+const motorStarterDocument = JSON.parse(await readFile(
+  new URL("../data/electroia/examples/motor-starter-direct.json", import.meta.url),
+  "utf8"
+));
+const motorStarter = await callElectroIATool("electroia_render_diagram", { document: motorStarterDocument });
+assert.equal(motorStarter.ok, true);
+assert.equal(motorStarter.diagram.document.document_kind, "multi_line_diagram");
+assert.equal(motorStarter.diagram.diagnostics.metrics.symbols, 18);
+assert.equal(motorStarter.diagram.diagnostics.metrics.pages, 1);
+assert.equal(motorStarter.diagram.diagnostics.metrics.off_grid_terminals, 0);
+assert.match(motorStarter.diagram.svg, /data-symbol-id="SYM-0387"/);
+assert.match(motorStarter.diagram.svg, /data-symbol-id="SYM-0151"/);
+assert.match(motorStarter.diagram.svg, />KM1</);
+assert.doesNotMatch(motorStarter.diagram.svg, /class="zone/);
 
 const neutralDiagram = await callElectroIATool("electroia_render_diagram", {
   document: {

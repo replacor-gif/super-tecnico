@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "document_kind": "multi_line_diagram",
+  "standard_profile": "IEC_EXPERIMENTAL",
+  "title": "Arranque directo de motor 3~",
+  "document_id": "ELECTROIA-PATTERN-MOTOR-001",
+  "revision": "A",
+  "notes": [
+    "ESQUEMA PATRÓN: POTENCIA Y MANDO EN UN SOLO LIENZO",
+    "KM1 Y FR1 CONSERVAN LA MISMA REFERENCIA ENTRE SUS UNIDADES"
+  ],
+  "grid": {
+    "pitch_mil": 50,
+    "show": true
+  },
+  "layout": {
+    "direction": "top_to_bottom",
+    "single_canvas": true
+  },
+  "components": [
+    { "ref": "X1L1", "display_ref": "L1", "device_id": "X1", "symbol_id": "SYM-0258", "position": { "x": 30, "y": 2 }, "rotation": 90, "label_position": "above" },
+    { "ref": "X1L2", "display_ref": "L2", "device_id": "X1", "symbol_id": "SYM-0258", "position": { "x": 28, "y": 2 }, "rotation": 90, "label_position": "above" },
+    { "ref": "X1L3", "display_ref": "L3", "device_id": "X1", "symbol_id": "SYM-0258", "position": { "x": 26, "y": 2 }, "rotation": 90, "label_position": "above" },
+    { "ref": "QF1", "symbol_id": "SYM-0387", "value": "Protección tripolar", "position": { "x": 28, "y": 8 }, "rotation": 90, "label_position": "right" },
+    { "ref": "KM1P", "display_ref": "KM1", "device_id": "KM1", "symbol_id": "SYM-0123", "value": "Contactos de potencia", "position": { "x": 28, "y": 17 }, "rotation": 90, "label_position": "right" },
+    { "ref": "FR1P", "display_ref": "FR1", "device_id": "FR1", "symbol_id": "SYM-0130", "value": "Relé térmico", "position": { "x": 28, "y": 26 }, "rotation": 90, "label_position": "right" },
+    { "ref": "M1", "symbol_id": "SYM-0151", "value": "Motor 3~", "position": { "x": 28, "y": 37 }, "label_position": "below" },
+    { "ref": "PE1", "display_ref": "PE", "symbol_id": "SYM-0011", "value": "Protección", "position": { "x": 36, "y": 43 }, "label_position": "right" },
+
+    { "ref": "XL", "display_ref": "X2:L", "symbol_id": "SYM-0258", "value": "Mando L", "position": { "x": 2, "y": 49 }, "label_position": "above" },
+    { "ref": "F2", "symbol_id": "SYM-0126", "value": "Protección de mando", "position": { "x": 7, "y": 49 }, "label_position": "above" },
+    { "ref": "S0", "symbol_id": "SYM-0381", "value": "Parada de emergencia", "position": { "x": 14, "y": 49 }, "label_position": "above" },
+    { "ref": "S1", "symbol_id": "SYM-0111", "value": "Paro NC", "position": { "x": 21, "y": 49 }, "label_position": "above" },
+    { "ref": "FR1C", "display_ref": "FR1", "device_id": "FR1", "symbol_id": "SYM-0121", "value": "95-96 NC", "position": { "x": 28, "y": 49 }, "label_position": "above" },
+    { "ref": "S2", "symbol_id": "SYM-0110", "value": "Marcha NO", "position": { "x": 36, "y": 49 }, "label_position": "above" },
+    { "ref": "KM1C", "display_ref": "KM1", "device_id": "KM1", "symbol_id": "SYM-0119", "value": "Bobina A1-A2", "position": { "x": 48, "y": 49 }, "label_position": "above" },
+    { "ref": "XN", "display_ref": "X2:N", "symbol_id": "SYM-0258", "value": "Mando N", "position": { "x": 55, "y": 49 }, "label_position": "above" },
+    { "ref": "KM1A", "display_ref": "KM1", "device_id": "KM1", "symbol_id": "SYM-0382", "value": "13-14 enclavamiento", "position": { "x": 36, "y": 55 }, "label_position": "below" },
+    { "ref": "H1", "symbol_id": "SYM-0296", "value": "Motor en marcha", "position": { "x": 48, "y": 55 }, "label_position": "below" }
+  ],
+  "nets": [
+    { "id": "L1", "label": "L1", "role": "power", "show_label": false, "connections": ["X1L1.1", "X1L1.2", "QF1.1L1"] },
+    { "id": "L2", "label": "L2", "role": "power", "show_label": false, "connections": ["X1L2.1", "X1L2.2", "QF1.3L2"] },
+    { "id": "L3", "label": "L3", "role": "power", "show_label": false, "connections": ["X1L3.1", "X1L3.2", "QF1.5L3"] },
+    { "id": "QF1_T1", "role": "power", "show_label": false, "connections": ["QF1.2T1", "KM1P.1L1"] },
+    { "id": "QF1_T2", "role": "power", "show_label": false, "connections": ["QF1.4T2", "KM1P.3L2"] },
+    { "id": "QF1_T3", "role": "power", "show_label": false, "connections": ["QF1.6T3", "KM1P.5L3"] },
+    { "id": "KM1_T1", "role": "power", "show_label": false, "connections": ["KM1P.2T1", "FR1P.1L1"] },
+    { "id": "KM1_T2", "role": "power", "show_label": false, "connections": ["KM1P.4T2", "FR1P.3L2"] },
+    { "id": "KM1_T3", "role": "power", "show_label": false, "connections": ["KM1P.6T3", "FR1P.5L3"] },
+    { "id": "MOTOR_U", "role": "power", "show_label": false, "connections": ["FR1P.6T3", "M1.U"] },
+    { "id": "MOTOR_V", "role": "power", "show_label": false, "connections": ["FR1P.4T2", "M1.V"] },
+    { "id": "MOTOR_W", "role": "power", "show_label": false, "connections": ["FR1P.2T1", "M1.W"] },
+    { "id": "PE", "label": "PE", "role": "protective_earth", "show_label": false, "connections": ["M1.PE", "PE1.1"] },
+
+    { "id": "CTRL_L", "label": "L mando", "role": "signal", "show_label": false, "connections": ["XL.1", "XL.2", "F2.1"] },
+    { "id": "CTRL_FUSED", "role": "signal", "show_label": false, "connections": ["F2.2", "S0.1"] },
+    { "id": "CTRL_SAFE", "role": "signal", "show_label": false, "connections": ["S0.2", "S1.1"] },
+    { "id": "CTRL_STOPPED", "role": "signal", "show_label": false, "connections": ["S1.2", "FR1C.COM"] },
+    { "id": "CTRL_READY", "role": "signal", "show_label": false, "connections": ["FR1C.NC", "S2.1", "KM1A.COM"] },
+    { "id": "CTRL_RUN", "role": "signal", "show_label": false, "connections": ["S2.2", "KM1A.NO", "KM1C.A1", "H1.1"] },
+    { "id": "CTRL_N", "label": "N mando", "role": "signal", "show_label": false, "connections": ["KM1C.A2", "H1.2", "XN.1", "XN.2"] }
+  ]
+}

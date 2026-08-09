@@ -1,7 +1,7 @@
 "use strict";
 
 const ElectroDiagramCore = (() => {
-  const ENGINE_VERSION = "1.0.0-alpha.1";
+  const ENGINE_VERSION = "1.1.0-alpha.1";
   const CONTRACT_VERSION = "1.0";
   const GRID_PITCH_MIL = 50;
   const UNIT = 24;
@@ -10,12 +10,19 @@ const ElectroDiagramCore = (() => {
     "SYM-0010": symbol("SYM-0010", "Masa de señal", "ground", "GND", 4, 4, {
       "1": port(0, -2, "north", "passive"),
     }),
+    "SYM-0011": symbol("SYM-0011", "Tierra de protección", "protective_earth", "PE", 4, 4, {
+      "1": port(0, -2, "north", "protective_earth"),
+    }),
     "SYM-0014": symbol("SYM-0014", "Alimentación positiva", "power_port", "V", 4, 4, {
       "1": port(0, 2, "south", "power_out"),
     }),
     "SYM-0018": symbol("SYM-0018", "Fuente de tensión continua", "source_dc", "PS", 5, 6, {
       "+": port(0, -3, "north", "power_out"),
       "-": port(0, 3, "south", "power_out"),
+    }),
+    "SYM-0019": symbol("SYM-0019", "Fuente de tensión alterna", "source_ac", "V", 5, 6, {
+      L: port(0, -3, "north", "power_out"),
+      N: port(0, 3, "south", "power_out"),
     }),
     "SYM-0023": symbol("SYM-0023", "Resistencia IEC", "resistor_iec", "R", 6, 2, {
       "1": port(-3, 0, "west", "passive"),
@@ -49,6 +56,18 @@ const ElectroDiagramCore = (() => {
       C: port(4, -2, "east", "output"),
       E: port(4, 2, "east", "output"),
     }),
+    "SYM-0106": symbol("SYM-0106", "Interruptor SPST abierto", "switch_no", "S", 7, 3, {
+      COM: port(-3, 0, "west", "passive"),
+      NO: port(3, 0, "east", "passive"),
+    }),
+    "SYM-0110": symbol("SYM-0110", "Pulsador normalmente abierto", "pushbutton_no", "S", 7, 4, {
+      "1": port(-3, 0, "west", "passive"),
+      "2": port(3, 0, "east", "passive"),
+    }),
+    "SYM-0111": symbol("SYM-0111", "Pulsador normalmente cerrado", "pushbutton_nc", "S", 7, 4, {
+      "1": port(-3, 0, "west", "passive"),
+      "2": port(3, 0, "east", "passive"),
+    }),
     "SYM-0119": symbol("SYM-0119", "Relé — bobina", "relay_coil", "K", 6, 3, {
       A1: port(-3, 0, "west", "passive"),
       A2: port(3, 0, "east", "passive"),
@@ -56,6 +75,36 @@ const ElectroDiagramCore = (() => {
     "SYM-0120": symbol("SYM-0120", "Relé — contacto normalmente abierto", "contact_no", "K", 7, 3, {
       COM: port(-3, 0, "west", "passive"),
       NO: port(3, 0, "east", "passive"),
+    }),
+    "SYM-0121": symbol("SYM-0121", "Relé — contacto normalmente cerrado", "contact_nc", "K", 7, 3, {
+      COM: port(-3, 0, "west", "passive"),
+      NC: port(3, 0, "east", "passive"),
+    }),
+    "SYM-0123": symbol("SYM-0123", "Contactor trifásico", "contactor_3p", "KM", 8, 7, {
+      "1L1": port(-4, -2, "west", "power_in"),
+      "3L2": port(-4, 0, "west", "power_in"),
+      "5L3": port(-4, 2, "west", "power_in"),
+      "2T1": port(4, -2, "east", "power_out"),
+      "4T2": port(4, 0, "east", "power_out"),
+      "6T3": port(4, 2, "east", "power_out"),
+    }),
+    "SYM-0126": symbol("SYM-0126", "Fusible", "fuse", "F", 6, 3, {
+      "1": port(-3, 0, "west", "passive"),
+      "2": port(3, 0, "east", "passive"),
+    }),
+    "SYM-0130": symbol("SYM-0130", "Relé térmico de sobrecarga", "overload_3p", "FR", 8, 7, {
+      "1L1": port(-4, -2, "west", "power_in"),
+      "3L2": port(-4, 0, "west", "power_in"),
+      "5L3": port(-4, 2, "west", "power_in"),
+      "2T1": port(4, -2, "east", "power_out"),
+      "4T2": port(4, 0, "east", "power_out"),
+      "6T3": port(4, 2, "east", "power_out"),
+    }),
+    "SYM-0151": symbol("SYM-0151", "Motor trifásico", "motor_3phase", "M", 8, 8, {
+      U: port(-2, -4, "north", "power_in"),
+      V: port(0, -4, "north", "power_in"),
+      W: port(2, -4, "north", "power_in"),
+      PE: port(4, 2, "east", "protective_earth"),
     }),
     "SYM-0156": symbol("SYM-0156", "Ventilador", "fan", "FAN", 7, 7, {
       "+": port(0, -3, "north", "power_in"),
@@ -67,6 +116,34 @@ const ElectroDiagramCore = (() => {
       OUT: port(3, 0, "east", "open_collector"),
       VCC: port(0, -3, "north", "power_in"),
       GND: port(0, 3, "south", "power_in"),
+    }),
+    "SYM-0258": symbol("SYM-0258", "Bornera", "terminal_block", "X", 4, 4, {
+      "1": port(-2, 0, "west", "passive"),
+      "2": port(2, 0, "east", "passive"),
+    }),
+    "SYM-0296": symbol("SYM-0296", "Luminaria", "lamp", "H", 6, 6, {
+      "1": port(-3, 0, "west", "power_in"),
+      "2": port(3, 0, "east", "power_in"),
+    }),
+    "SYM-0380": symbol("SYM-0380", "Seccionador", "isolator", "QS", 7, 3, {
+      "1": port(-3, 0, "west", "passive"),
+      "2": port(3, 0, "east", "passive"),
+    }),
+    "SYM-0381": symbol("SYM-0381", "Parada de emergencia", "emergency_stop_nc", "S", 7, 5, {
+      "1": port(-3, 0, "west", "passive"),
+      "2": port(3, 0, "east", "passive"),
+    }),
+    "SYM-0382": symbol("SYM-0382", "Contacto auxiliar de contactor", "aux_contact_no", "KM", 7, 3, {
+      COM: port(-3, 0, "west", "passive"),
+      NO: port(3, 0, "east", "passive"),
+    }),
+    "SYM-0387": symbol("SYM-0387", "Magnetotérmico tripolar", "circuit_breaker_3p", "QF", 8, 7, {
+      "1L1": port(-4, -2, "west", "power_in"),
+      "3L2": port(-4, 0, "west", "power_in"),
+      "5L3": port(-4, 2, "west", "power_in"),
+      "2T1": port(4, -2, "east", "power_out"),
+      "4T2": port(4, 0, "east", "power_out"),
+      "6T3": port(4, 2, "east", "power_out"),
     }),
     "ST-GENERIC-2P": symbol("ST-GENERIC-2P", "Carga genérica", "generic_2p", "X", 7, 5, {
       "1": port(-3, 0, "west", "passive"),
@@ -117,7 +194,7 @@ const ElectroDiagramCore = (() => {
 
   function getRegistry() {
     return {
-      version: "0.1",
+      version: "0.2",
       engine_version: ENGINE_VERSION,
       standard_profile: "IEC_EXPERIMENTAL",
       grid_pitch_mil: GRID_PITCH_MIL,
@@ -335,7 +412,7 @@ const ElectroDiagramCore = (() => {
       const net = document.nets[netIndex];
       const points = net.connections.map((item) => terminals.get(item)).filter(Boolean);
       if (!points.length) continue;
-      if (["power", "ground", "protective_earth"].includes(net.role)) {
+      if (["power", "ground", "protective_earth"].includes(net.role) && points.length > 2) {
         const railY = net.role === "power" ? minTerminalY - 4 - netIndex % 2 : maxTerminalY + 4 + netIndex % 2;
         const minX = Math.min(...points.map((item) => item.x));
         const maxX = Math.max(...points.map((item) => item.x));
@@ -531,7 +608,7 @@ const ElectroDiagramCore = (() => {
       data-document-kind="${escapeXml(document.document_kind)}" data-standard-profile="${escapeXml(document.standard_profile)}"
       data-grid-pitch-mil="${GRID_PITCH_MIL}" data-pages="1" aria-label="${escapeXml(document.title)}">
       <style>
-        .sheet{fill:#fff;stroke:#222a27;stroke-width:2}.wire{fill:none;stroke:#26302c;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.net-protective_earth{stroke-width:3}.junction{fill:#26302c}.bridge-gap{fill:none;stroke:#fff;stroke-width:8}.relationship{fill:none;stroke:#7d8782;stroke-width:2;stroke-dasharray:8 6}.symbol-line{fill:none;stroke:#202824;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.symbol-fill{fill:#fff;stroke:#202824;stroke-width:2.6}.symbol-accent{fill:none;stroke:#202824;stroke-width:2}.component-ref{font:700 15px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.component-value{font:500 12px Inter,Arial,sans-serif;fill:#58625d;text-anchor:middle}.net-label{font:700 11px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#47504c;paint-order:stroke;stroke:#fff;stroke-width:5;stroke-linejoin:round}.polarity{font:800 14px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.title-main{font:800 13px Inter,Arial,sans-serif;fill:#202824}.title-small{font:600 10px Inter,Arial,sans-serif;fill:#59635e}.title-rule{stroke:#202824;stroke-width:1.4}.standard-note{font:700 10px Inter,Arial,sans-serif;fill:#606a65;letter-spacing:.8px}.document-note{font:800 10px Inter,Arial,sans-serif;fill:#8a3d25}
+        .sheet{fill:#fff;stroke:#222a27;stroke-width:2}.wire{fill:none;stroke:#26302c;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.net-protective_earth{stroke-width:3}.junction{fill:#26302c}.bridge-gap{fill:none;stroke:#fff;stroke-width:8}.relationship{fill:none;stroke:#7d8782;stroke-width:2;stroke-dasharray:8 6}.symbol-line{fill:none;stroke:#202824;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.symbol-fill{fill:#fff;stroke:#202824;stroke-width:2.6}.symbol-accent{fill:none;stroke:#202824;stroke-width:2}.symbol-linkage{fill:none;stroke:#68736d;stroke-width:1.8;stroke-dasharray:5 4}.component-ref{font:700 15px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.component-value{font:500 12px Inter,Arial,sans-serif;fill:#58625d;text-anchor:middle}.net-label{font:700 11px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#47504c;paint-order:stroke;stroke:#fff;stroke-width:5;stroke-linejoin:round}.polarity{font:800 14px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.title-main{font:800 13px Inter,Arial,sans-serif;fill:#202824}.title-small{font:600 10px Inter,Arial,sans-serif;fill:#59635e}.title-rule{stroke:#202824;stroke-width:1.4}.standard-note{font:700 10px Inter,Arial,sans-serif;fill:#606a65;letter-spacing:.8px}.document-note{font:800 10px Inter,Arial,sans-serif;fill:#8a3d25}
       </style>
       <rect class="sheet" x="8" y="8" width="${width - 16}" height="${height - 16}"/>
       ${gridPattern}
@@ -595,19 +672,20 @@ const ElectroDiagramCore = (() => {
 
   function componentLabel(component, x, y, halfWidth, halfHeight, position) {
     const value = shortText(component.value, 28);
+    const displayRef = component.display_ref || component.ref;
     if (position === "inside") {
-      return `<text class="component-ref" x="${x}" y="${y - 4}">${escapeXml(component.ref)}</text>${value ? `<text class="component-value" x="${x}" y="${y + 14}">${escapeXml(value)}</text>` : ""}`;
+      return `<text class="component-ref" x="${x}" y="${y - 4}">${escapeXml(displayRef)}</text>${value ? `<text class="component-value" x="${x}" y="${y + 14}">${escapeXml(value)}</text>` : ""}`;
     }
     if (position === "left" || position === "right") {
       const right = position === "right";
       const labelX = x + (right ? 1 : -1) * (halfWidth + 0.8) * UNIT;
       const anchor = right ? "start" : "end";
-      return `<text class="component-ref" style="text-anchor:${anchor}" x="${labelX}" y="${y - 3}">${escapeXml(component.ref)}</text>${value ? `<text class="component-value" style="text-anchor:${anchor}" x="${labelX}" y="${y + 15}">${escapeXml(value)}</text>` : ""}`;
+      return `<text class="component-ref" style="text-anchor:${anchor}" x="${labelX}" y="${y - 3}">${escapeXml(displayRef)}</text>${value ? `<text class="component-value" style="text-anchor:${anchor}" x="${labelX}" y="${y + 15}">${escapeXml(value)}</text>` : ""}`;
     }
     const above = position === "above";
     const firstY = y + (above ? -1 : 1) * (halfHeight + 0.8) * UNIT;
     const valueY = above ? firstY - 17 : firstY + 17;
-    return `${value ? `<text class="component-value" x="${x}" y="${valueY}">${escapeXml(value)}</text>` : ""}<text class="component-ref" x="${x}" y="${firstY}">${escapeXml(component.ref)}</text>`;
+    return `${value ? `<text class="component-value" x="${x}" y="${valueY}">${escapeXml(value)}</text>` : ""}<text class="component-ref" x="${x}" y="${firstY}">${escapeXml(displayRef)}</text>`;
   }
 
   function shortText(value, limit) {
@@ -633,8 +711,14 @@ const ElectroDiagramCore = (() => {
     if (kind === "source_dc") {
       return `${line(0, -3, 0, -1.55)}<circle class="symbol-fill" cx="0" cy="0" r="${1.55 * u}"/>${line(0, 1.55, 0, 3)}<text class="polarity" x="0" y="${-0.55 * u}">+</text><text class="polarity" x="0" y="${0.85 * u}">−</text>`;
     }
+    if (kind === "source_ac") {
+      return `${line(0, -3, 0, -1.55)}<circle class="symbol-fill" cx="0" cy="0" r="${1.55 * u}"/>${line(0, 1.55, 0, 3)}<path class="symbol-line" d="M${-0.85 * u} 0C${-0.55 * u} ${-0.75 * u},${-0.2 * u} ${-0.75 * u},0 0S${0.55 * u} ${0.75 * u},${0.85 * u} 0"/>`;
+    }
     if (kind === "ground") {
       return `${line(0, -2, 0, -0.55)}${line(-1.2, -0.55, 1.2, -0.55)}${line(-0.78, 0, 0.78, 0)}${line(-0.35, 0.55, 0.35, 0.55)}`;
+    }
+    if (kind === "protective_earth") {
+      return `${line(0, -2, 0, -0.7)}${line(-1.25, -0.7, 1.25, -0.7)}${line(-0.82, -0.7, 0, 0.1)}${line(0.82, -0.7, 0, 0.1)}${line(-0.48, -0.7, 0, -0.22)}${line(0.48, -0.7, 0, -0.22)}`;
     }
     if (kind === "power_port") {
       return `${line(0, 2, 0, 0)}<path class="symbol-line" d="M${-0.7 * u} 0L0 ${-0.85 * u}L${0.7 * u} 0"/>`;
@@ -654,8 +738,48 @@ const ElectroDiagramCore = (() => {
     if (kind === "relay_coil") {
       return `${line(-3, 0, -1.35, 0)}<rect class="symbol-fill" x="${-1.35 * u}" y="${-0.8 * u}" width="${2.7 * u}" height="${1.6 * u}" rx="4"/>${line(1.35, 0, 3, 0)}`;
     }
+    if (kind === "fuse") {
+      return `${line(-3, 0, -1.4, 0)}<rect class="symbol-fill" x="${-1.4 * u}" y="${-0.58 * u}" width="${2.8 * u}" height="${1.16 * u}"/>${line(-1.05, 0.4, 1.05, -0.4, "symbol-accent")}${line(1.4, 0, 3, 0)}`;
+    }
     if (kind === "contact_no") {
       return `${line(-3, 0, -1.15, 0)}${line(1.15, 0, 3, 0)}<circle cx="${-1.15 * u}" cy="0" r="4" fill="#202824"/><circle cx="${1.15 * u}" cy="0" r="4" fill="#202824"/>${line(-1.05, -0.08, 0.85, -1.25)}`;
+    }
+    if (kind === "contact_nc") {
+      return `${line(-3, 0, -1.15, 0)}${line(1.15, 0, 3, 0)}<circle cx="${-1.15 * u}" cy="0" r="4" fill="#202824"/><circle cx="${1.15 * u}" cy="0" r="4" fill="#202824"/>${line(-1.05, -0.08, 1.05, -0.08)}${line(-0.25, -0.7, 0.25, 0.7, "symbol-accent")}`;
+    }
+    if (kind === "switch_no" || kind === "isolator") {
+      const grip = kind === "isolator" ? `${line(-0.15, -1.15, 0.45, -1.8, "symbol-accent")}` : "";
+      return `${line(-3, 0, -1.15, 0)}${line(1.15, 0, 3, 0)}<circle cx="${-1.15 * u}" cy="0" r="4" fill="#202824"/><circle cx="${1.15 * u}" cy="0" r="4" fill="#202824"/>${line(-1.05, -0.08, 0.85, -1.25)}${grip}`;
+    }
+    if (kind === "pushbutton_no" || kind === "pushbutton_nc") {
+      const contact = kind === "pushbutton_nc"
+        ? line(-1.05, -0.08, 1.05, -0.08)
+        : line(-1.05, -0.08, 0.85, -1.25);
+      return `${line(-3, 0, -1.15, 0)}${line(1.15, 0, 3, 0)}<circle cx="${-1.15 * u}" cy="0" r="4" fill="#202824"/><circle cx="${1.15 * u}" cy="0" r="4" fill="#202824"/>${contact}${line(0, -2, 0, -0.8, "symbol-accent")}${line(-0.8, -2, 0.8, -2, "symbol-accent")}`;
+    }
+    if (kind === "emergency_stop_nc") {
+      return `${line(-3, 0, -1.15, 0)}${line(1.15, 0, 3, 0)}<circle cx="${-1.15 * u}" cy="0" r="4" fill="#202824"/><circle cx="${1.15 * u}" cy="0" r="4" fill="#202824"/>${line(-1.05, -0.08, 1.05, -0.08)}${line(0, -2.3, 0, -0.8, "symbol-accent")}<path class="symbol-accent" d="M${-0.95 * u} ${-2.3 * u}Q0 ${-3 * u} ${0.95 * u} ${-2.3 * u}Z"/>`;
+    }
+    if (kind === "aux_contact_no") {
+      return `${line(-3, 0, -1.15, 0)}${line(1.15, 0, 3, 0)}<circle cx="${-1.15 * u}" cy="0" r="4" fill="#202824"/><circle cx="${1.15 * u}" cy="0" r="4" fill="#202824"/>${line(-1.05, -0.08, 0.85, -1.25)}${line(0, -1.75, 0, -1.25, "symbol-accent")}`;
+    }
+    if (kind === "contactor_3p" || kind === "circuit_breaker_3p") {
+      const poles = [-2, 0, 2].map((offset) => `${line(-4, offset, -1.2, offset)}${line(1.2, offset, 4, offset)}<circle cx="${-1.2 * u}" cy="${offset * u}" r="4" fill="#202824"/><circle cx="${1.2 * u}" cy="${offset * u}" r="4" fill="#202824"/>${line(-1.05, offset - 0.08, 0.9, offset - 0.85)}`).join("");
+      const linkage = line(0, -2.65, 0, 2.65, "symbol-linkage");
+      const trip = kind === "circuit_breaker_3p" ? `<path class="symbol-accent" d="M${0.35 * u} ${-3 * u}h${0.9 * u}v${0.75 * u}"/>` : "";
+      return `${poles}${linkage}${trip}`;
+    }
+    if (kind === "overload_3p") {
+      return [-2, 0, 2].map((offset) => `${line(-4, offset, -1.45, offset)}<rect class="symbol-fill" x="${-1.45 * u}" y="${(offset - 0.48) * u}" width="${2.9 * u}" height="${0.96 * u}" rx="3"/>${line(-0.95, offset + 0.28, 0.95, offset - 0.28, "symbol-accent")}${line(1.45, offset, 4, offset)}`).join("") + line(0, -2.8, 0, 2.8, "symbol-accent");
+    }
+    if (kind === "motor_3phase") {
+      return `${line(-2, -4, -2, -2.3)}${line(0, -4, 0, -2.45)}${line(2, -4, 2, -2.3)}<circle class="symbol-fill" cx="0" cy="0" r="${2.45 * u}"/>${line(2.12, 1.22, 4, 2)}<text class="polarity" x="0" y="${-0.15 * u}">M</text><text class="component-value" x="0" y="${0.85 * u}">3~</text>`;
+    }
+    if (kind === "terminal_block") {
+      return `${line(-2, 0, -0.82, 0)}<rect class="symbol-fill" x="${-0.82 * u}" y="${-0.82 * u}" width="${1.64 * u}" height="${1.64 * u}"/><circle class="symbol-accent" cx="0" cy="0" r="${0.38 * u}"/>${line(0.82, 0, 2, 0)}`;
+    }
+    if (kind === "lamp") {
+      return `${line(-3, 0, -1.55, 0)}<circle class="symbol-fill" cx="0" cy="0" r="${1.55 * u}"/>${line(1.55, 0, 3, 0)}${line(-1.05, -1.05, 1.05, 1.05, "symbol-accent")}${line(-1.05, 1.05, 1.05, -1.05, "symbol-accent")}`;
     }
     if (kind === "optocoupler") {
       return `<rect class="symbol-fill" x="${-2.7 * u}" y="${-2.65 * u}" width="${5.4 * u}" height="${5.3 * u}" rx="5"/>${line(0, -2.35, 0, 2.35, "symbol-accent")}${line(-4, -2, -2.25, -2)}${line(-4, 2, -2.25, 2)}<path class="symbol-line" d="M${-2.25 * u} ${-2.65 * u}V${-1.35 * u}L${-1.2 * u} ${-2 * u}Z"/>${line(-1.1, -2.65, -1.1, -1.35)}${line(-1.7, -1.15, -0.45, -0.35, "symbol-accent")}${line(-1.7, 0, -0.45, 0.8, "symbol-accent")}${line(2.25, -2, 4, -2)}${line(2.25, 2, 4, 2)}${line(1.15, -1.1, 2.25, -2)}${line(1.15, 1.1, 2.25, 2)}${line(1.15, -1.1, 1.15, 1.1)}`;

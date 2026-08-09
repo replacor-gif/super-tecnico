@@ -218,11 +218,50 @@ $("#requestInput").addEventListener("keydown", (event) => {
 });
 
 document.querySelectorAll(".example").forEach((button) => {
-  button.addEventListener("click", () => {
+  button.addEventListener("click", async () => {
+    if (button.dataset.diagramExample) {
+      setLoading(true, "Validando el esquema patrón y trazando potencia y mando…");
+      try {
+        const document = await fetchJson(button.dataset.diagramExample, "el esquema patrón");
+        renderPublicResult(publicDesignFromDiagramDocument(document));
+        showView($("#resultView"));
+      } catch (error) {
+        alert(error.message);
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
     $("#requestInput").value = button.dataset.request || button.textContent.trim();
     $("#requestInput").focus();
   });
 });
+
+function publicDesignFromDiagramDocument(document) {
+  if (typeof ElectroDiagramCore === "undefined") throw new Error("El registro normalizado no está disponible");
+  const registry = new Map(ElectroDiagramCore.getRegistry().symbols.map((symbol) => [symbol.id, symbol]));
+  return {
+    title: document.title,
+    summary: "Esquema patrón de arranque directo con potencia, mando, enclavamiento, parada de emergencia y protección térmica en una sola hoja.",
+    status: "provisional",
+    components: document.components.map((component) => {
+      const symbol = registry.get(component.symbol_id);
+      return {
+        ref: component.display_ref || component.ref,
+        name: symbol?.name || component.symbol_id,
+        spec: component.value || "Símbolo normalizado sobre rejilla de 50 mil",
+        source_kind: "normalized_symbol",
+      };
+    }),
+    connections: document.nets.map((net) => `${net.label || net.id}: ${net.connections.join(" · ")}`),
+    warnings: [
+      "Es un patrón gráfico: la IA o el proyectista debe aportar tensiones, calibres, protecciones y referencias reales.",
+      "Antes del montaje deben verificarse la normativa aplicable, la coordinación de protecciones y los datos de placa del motor.",
+    ],
+    circuit_model: { schema_version: "1.0", topology: "direct_on_line_motor_starter" },
+    diagram_document: document,
+  };
+}
 
 function renderQuestion() {
   const question = state.questions[state.index];

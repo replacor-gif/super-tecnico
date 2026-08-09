@@ -97,6 +97,8 @@ El motor aporta:
 
 La base educativa de Super Técnico conserva 460 fichas y sus SVG de consulta. No todos esos SVG son todavía símbolos CAD: muchos carecen de terminales tipados y puntos de conexión normalizados.
 
+La versión 1.1 dispone de 33 símbolos operativos. El primer lote eléctrico incorpora tierra de protección, fuente alterna, interruptores y pulsadores, contactos NC y auxiliares, contactor tripolar, fusible, relé térmico, motor trifásico, bornera, luminaria, seccionador, parada de emergencia y magnetotérmico tripolar.
+
 La migración se realiza sin perder la ficha existente:
 
 1. se enlaza el `catalog_id` actual;
@@ -114,4 +116,3 @@ La migración se realiza sin perder la ficha existente:
 - un único lienzo salvo división explícita y justificada;
 - resultado determinista para la misma entrada;
 - diagnóstico estructurado de errores, advertencias y métricas.
-

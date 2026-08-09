@@ -536,8 +536,19 @@ const ElectroDiagram = (function () {
     );
   }
 
+  function renderNeutralDocument(design) {
+    if (!DiagramCore) throw new Error("El núcleo gráfico normalizado no está disponible");
+    const model = design.circuit_model || {};
+    const result = DiagramCore.render(design.diagram_document);
+    return result.svg.replace(
+      '<svg class="electrical-diagram',
+      `<svg data-model-version="${esc(model.schema_version || "1.0")}" data-topology="${esc(model.topology || "neutral_diagram_document")}" class="electrical-diagram`
+    );
+  }
+
   function render(design) {
     const topology = design?.circuit_model?.topology || "";
+    if (design?.diagram_document) return renderNeutralDocument(design);
     if (topology === "low_side_relay_driver") return renderRelayDriverOnGrid(design);
     if (topology === "isolated_low_side_relay_driver") return renderRelayDriverOnGrid(design);
     if (topology === "thermostatic_dc_fan_controller") return renderTemperatureFanControllerOnGrid(design);
