@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "document_kind": "single_line_diagram",
+  "standard_profile": "IEC_EXPERIMENTAL",
+  "title": "Cuadro unifilar 230 V",
+  "document_id": "ELECTROIA-PATTERN-SLD-001",
+  "revision": "A",
+  "notes": [
+    "ESQUEMA PATRÓN UNIFILAR: UNA LÍNEA RESUME LOS CONDUCTORES DEL CIRCUITO",
+    "CALIBRES, CURVAS Y SENSIBILIDADES DEBEN SER APORTADOS POR LA IA O EL PROYECTISTA"
+  ],
+  "grid": {
+    "pitch_mil": 50,
+    "show": true
+  },
+  "layout": {
+    "direction": "left_to_right",
+    "single_canvas": true
+  },
+  "components": [
+    { "ref": "GRID1", "display_ref": "RED", "symbol_id": "SYM-0006", "value": "230 V 1~", "position": { "x": 2, "y": 12 }, "label_position": "above" },
+    { "ref": "EM1", "symbol_id": "SYM-0390", "value": "Contador de energía", "position": { "x": 10, "y": 12 }, "label_position": "below" },
+    { "ref": "QG1", "symbol_id": "SYM-0386", "value": "Protección general 2P", "position": { "x": 19, "y": 12 }, "label_position": "below" },
+    { "ref": "FI1", "symbol_id": "SYM-0129", "value": "Diferencial 2P", "position": { "x": 27, "y": 12 }, "label_position": "below" },
+    { "ref": "DB1", "symbol_id": "SYM-0299", "value": "Cuadro de distribución", "position": { "x": 36, "y": 12 }, "label_position": "below" },
+
+    { "ref": "QF1", "symbol_id": "SYM-0385", "value": "Alumbrado", "position": { "x": 46, "y": 7 }, "label_position": "above" },
+    { "ref": "QF2", "symbol_id": "SYM-0385", "value": "Tomas de corriente", "position": { "x": 46, "y": 12 }, "label_position": "below" },
+    { "ref": "QF3", "symbol_id": "SYM-0385", "value": "Climatización", "position": { "x": 46, "y": 17 }, "label_position": "below" },
+
+    { "ref": "C1", "display_ref": "C1", "symbol_id": "SYM-0006", "value": "3 conductores", "position": { "x": 54, "y": 7 }, "rotation": 180, "label_position": "above" },
+    { "ref": "C2", "display_ref": "C2", "symbol_id": "SYM-0006", "value": "3 conductores", "position": { "x": 54, "y": 12 }, "rotation": 180, "label_position": "right" },
+    { "ref": "C3", "display_ref": "C3", "symbol_id": "SYM-0006", "value": "3 conductores", "position": { "x": 54, "y": 17 }, "rotation": 180, "label_position": "below" }
+  ],
+  "nets": [
+    { "id": "INCOMING", "label": "Entrada", "role": "signal", "conductors": 3, "show_label": true, "label_position": { "x": 6, "y": 10 }, "connections": ["GRID1.1", "EM1.IN"] },
+    { "id": "METERED", "label": "Salida contador", "role": "signal", "conductors": 3, "show_label": false, "connections": ["EM1.OUT", "QG1.IN"] },
+    { "id": "MAIN_PROTECTED", "label": "Protección general", "role": "signal", "conductors": 3, "show_label": false, "connections": ["QG1.OUT", "FI1.IN"] },
+    { "id": "RCD_OUT", "label": "Salida diferencial", "role": "signal", "conductors": 3, "show_label": false, "connections": ["FI1.OUT", "DB1.IN"] },
+
+    { "id": "FEED_LIGHT", "label": "Derivación alumbrado", "role": "signal", "conductors": 3, "show_label": false, "connections": ["DB1.OUT1", "QF1.IN"] },
+    { "id": "FEED_SOCKET", "label": "Derivación tomas", "role": "signal", "conductors": 3, "show_label": false, "connections": ["DB1.OUT2", "QF2.IN"] },
+    { "id": "FEED_HVAC", "label": "Derivación climatización", "role": "signal", "conductors": 3, "show_label": false, "connections": ["DB1.OUT3", "QF3.IN"] },
+
+    { "id": "OUT_LIGHT", "label": "Alumbrado", "role": "signal", "conductors": 3, "show_label": false, "connections": ["QF1.OUT", "C1.1"] },
+    { "id": "OUT_SOCKET", "label": "Tomas", "role": "signal", "conductors": 3, "show_label": false, "connections": ["QF2.OUT", "C2.1"] },
+    { "id": "OUT_HVAC", "label": "Climatización", "role": "signal", "conductors": 3, "show_label": false, "connections": ["QF3.OUT", "C3.1"] }
+  ]
+}

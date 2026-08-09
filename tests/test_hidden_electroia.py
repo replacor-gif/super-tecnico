@@ -112,8 +112,8 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn('"electroia_generate_temperature_fan"', manifest)
         self.assertIn('"electroia_get_diagram_contract"', manifest)
         self.assertIn('"electroia_render_diagram"', manifest)
-        self.assertIn('"diagram_engine_version": "1.1.0-alpha.1"', manifest)
-        self.assertIn('"normalized_symbol_count": 33', manifest)
+        self.assertIn('"diagram_engine_version": "1.2.0-alpha.1"', manifest)
+        self.assertIn('"normalized_symbol_count": 50', manifest)
         self.assertIn('"calculates_values"', manifest)
         self.assertIn('server.registerTool(', server)
         self.assertIn('serveStdio(createServer)', server)
@@ -132,6 +132,7 @@ class HiddenElectroIATests(unittest.TestCase):
             self.assertTrue((output / "data" / "electroia" / "tool-manifest.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "diagram-document.schema.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "examples" / "motor-starter-direct.json").is_file())
+            self.assertTrue((output / "data" / "electroia" / "examples" / "distribution-board-single-line.json").is_file())
             self.assertTrue(
                 (output / "assets" / "symbols" / "SYM-0080_mosfet-n-con-diodo-de-cuerpo.svg").is_file()
             )

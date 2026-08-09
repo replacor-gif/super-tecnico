@@ -637,6 +637,10 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         output / "data" / "electroia" / "examples" / "motor-starter-direct.json",
         read_json(source_root / "data" / "electroia" / "examples" / "motor-starter-direct.json"),
     )
+    write_json(
+        output / "data" / "electroia" / "examples" / "distribution-board-single-line.json",
+        read_json(source_root / "data" / "electroia" / "examples" / "distribution-board-single-line.json"),
+    )
     components_details = source_root / "data" / "components" / "details"
     for path in sorted(components_details.glob("*.json")):
         write_json(output / "data" / "components" / "details" / path.name, read_json(path))

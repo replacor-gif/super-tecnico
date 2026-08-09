@@ -6,7 +6,7 @@
   "provider_neutral": true,
   "embedded_ai_model": false,
   "billing_required_by_electroia": false,
-  "diagram_engine_version": "1.1.0-alpha.1",
+  "diagram_engine_version": "1.2.0-alpha.1",
   "diagram_contract_version": "1.0",
   "design_model_version": "0.5",
   "core_policy": {
@@ -36,13 +36,14 @@
     "document_kinds": ["circuit_diagram", "single_line_diagram", "multi_line_diagram"],
     "grid_pitch_mil": 50,
     "single_canvas_default": true,
-    "normalized_symbol_count": 33,
+    "normalized_symbol_count": 50,
     "catalog_symbol_count": 460,
     "current_legacy_topologies": [
       "low_side_relay_driver",
       "isolated_low_side_relay_driver",
       "thermostatic_dc_fan_controller",
-      "direct_on_line_motor_starter"
+      "direct_on_line_motor_starter",
+      "residential_distribution_single_line"
     ],
     "inputs": [
       "structured_diagram_json",

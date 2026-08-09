@@ -240,9 +240,12 @@ document.querySelectorAll(".example").forEach((button) => {
 function publicDesignFromDiagramDocument(document) {
   if (typeof ElectroDiagramCore === "undefined") throw new Error("El registro normalizado no está disponible");
   const registry = new Map(ElectroDiagramCore.getRegistry().symbols.map((symbol) => [symbol.id, symbol]));
+  const singleLine = document.document_kind === "single_line_diagram";
   return {
     title: document.title,
-    summary: "Esquema patrón de arranque directo con potencia, mando, enclavamiento, parada de emergencia y protección térmica en una sola hoja.",
+    summary: singleLine
+      ? "Esquema patrón unifilar con alimentación, contador, protección general, diferencial y tres circuitos derivados en una sola hoja."
+      : "Esquema patrón de arranque directo con potencia, mando, enclavamiento, parada de emergencia y protección térmica en una sola hoja.",
     status: "provisional",
     components: document.components.map((component) => {
       const symbol = registry.get(component.symbol_id);
@@ -255,10 +258,15 @@ function publicDesignFromDiagramDocument(document) {
     }),
     connections: document.nets.map((net) => `${net.label || net.id}: ${net.connections.join(" · ")}`),
     warnings: [
-      "Es un patrón gráfico: la IA o el proyectista debe aportar tensiones, calibres, protecciones y referencias reales.",
-      "Antes del montaje deben verificarse la normativa aplicable, la coordinación de protecciones y los datos de placa del motor.",
+      "Es un patrón gráfico: la IA o el proyectista debe aportar tensiones, secciones, calibres, protecciones y referencias reales.",
+      singleLine
+        ? "Antes del montaje deben verificarse la normativa aplicable, la previsión de cargas, la selectividad y la protección de cada circuito."
+        : "Antes del montaje deben verificarse la normativa aplicable, la coordinación de protecciones y los datos de placa del motor.",
     ],
-    circuit_model: { schema_version: "1.0", topology: "direct_on_line_motor_starter" },
+    circuit_model: {
+      schema_version: "1.0",
+      topology: singleLine ? "residential_distribution_single_line" : "direct_on_line_motor_starter",
+    },
     diagram_document: document,
   };
 }

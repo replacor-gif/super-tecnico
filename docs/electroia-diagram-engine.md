@@ -97,7 +97,9 @@ El motor aporta:
 
 La base educativa de Super Técnico conserva 460 fichas y sus SVG de consulta. No todos esos SVG son todavía símbolos CAD: muchos carecen de terminales tipados y puntos de conexión normalizados.
 
-La versión 1.1 dispone de 33 símbolos operativos. El primer lote eléctrico incorpora tierra de protección, fuente alterna, interruptores y pulsadores, contactos NC y auxiliares, contactor tripolar, fusible, relé térmico, motor trifásico, bornera, luminaria, seccionador, parada de emergencia y magnetotérmico tripolar.
+La versión 1.2 dispone de 50 símbolos operativos. Al primer lote de maniobra se suman conectores de continuidad, tierra funcional, transformadores, final de carrera, selector, disyuntor, diferencial, motor monofásico, bomba, toma, caja de derivación, cuadro, magnetotérmicos de uno, dos y cuatro polos y contador de energía.
+
+El primer patrón unifilar representa una alimentación monofásica, contador, protección general, diferencial y tres circuitos derivados. Cada red declara explícitamente cuántos conductores resume la línea.
 
 La migración se realiza sin perder la ficha existente:
 

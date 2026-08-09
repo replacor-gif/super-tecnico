@@ -17,8 +17,8 @@ assert.equal(diagramContract.contract.responsibility, "render_only");
 assert.equal(diagramContract.contract.calculates_values, false);
 assert.equal(diagramContract.contract.selects_components, false);
 assert.equal(diagramContract.contract.grid_pitch_mil, 50);
-assert.equal(diagramContract.symbol_registry.symbols.length, 33);
-for (const symbolId of ["SYM-0011", "SYM-0110", "SYM-0123", "SYM-0130", "SYM-0151", "SYM-0387"]) {
+assert.equal(diagramContract.symbol_registry.symbols.length, 50);
+for (const symbolId of ["SYM-0006", "SYM-0011", "SYM-0110", "SYM-0123", "SYM-0129", "SYM-0130", "SYM-0151", "SYM-0299", "SYM-0387", "SYM-0390"]) {
   assert.ok(diagramContract.symbol_registry.symbols.some((symbol) => symbol.id === symbolId), symbolId);
 }
 
@@ -36,6 +36,24 @@ assert.match(motorStarter.diagram.svg, /data-symbol-id="SYM-0387"/);
 assert.match(motorStarter.diagram.svg, /data-symbol-id="SYM-0151"/);
 assert.match(motorStarter.diagram.svg, />KM1</);
 assert.doesNotMatch(motorStarter.diagram.svg, /class="zone/);
+
+const singleLineDocument = JSON.parse(await readFile(
+  new URL("../data/electroia/examples/distribution-board-single-line.json", import.meta.url),
+  "utf8"
+));
+const singleLine = await callElectroIATool("electroia_render_diagram", { document: singleLineDocument });
+assert.equal(singleLine.ok, true);
+assert.equal(singleLine.diagram.document.document_kind, "single_line_diagram");
+assert.equal(singleLine.diagram.diagnostics.metrics.symbols, 11);
+assert.equal(singleLine.diagram.diagnostics.metrics.nets, 10);
+assert.equal(singleLine.diagram.diagnostics.metrics.terminals, 20);
+assert.equal(singleLine.diagram.diagnostics.metrics.pages, 1);
+assert.equal(singleLine.diagram.diagnostics.metrics.off_grid_terminals, 0);
+assert.match(singleLine.diagram.svg, /data-document-kind="single_line_diagram"/);
+assert.match(singleLine.diagram.svg, /data-symbol-id="SYM-0299"/);
+assert.match(singleLine.diagram.svg, /data-symbol-id="SYM-0390"/);
+assert.match(singleLine.diagram.svg, /3 conductores/);
+assert.doesNotMatch(singleLine.diagram.svg, /class="zone/);
 
 const neutralDiagram = await callElectroIATool("electroia_render_diagram", {
   document: {
