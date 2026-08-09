@@ -1,18 +1,25 @@
 # ElectroIA Tool Server
 
-ElectroIA es un motor electrónico neutral. No contiene un modelo de IA, no necesita
-una clave de un proveedor y no genera cargos de inferencia por sí mismo.
+ElectroIA es un motor gráfico electrotécnico neutral. No contiene un modelo de IA,
+no necesita una clave de un proveedor y no genera cargos de inferencia por sí mismo.
 
 La IA conectada interpreta la intención del usuario o una fotografía y llama a una
 de estas herramientas:
 
 - `electroia_get_capabilities`
+- `electroia_get_diagram_contract`
+- `electroia_render_diagram`
 - `electroia_analyze_request`
 - `electroia_generate_relay_driver`
 - `electroia_generate_temperature_fan`
 
-El resultado incluye el modelo eléctrico estructurado, la lista de componentes,
-las conexiones, las advertencias y el manifiesto de símbolos necesario para dibujar.
+La IA llamante decide la topología, los valores y los componentes. La herramienta
+`electroia_render_diagram` recibe símbolos, terminales y redes ya decididos, comprueba
+su conectividad y devuelve un SVG sobre una rejilla común.
+
+Los generadores de relé y ventilador se conservan como adaptadores de demostración.
+No forman parte del núcleo gráfico y pueden ser sustituidos por cualquier IA que
+entregue el contrato neutral `1.0`.
 
 ## Ejecutar como MCP
 
@@ -58,8 +65,9 @@ El adaptador CLI no necesita el SDK MCP. Recibe por `stdin`:
 ```
 
 La fotografía o el boceto pertenece a la capa de la IA que dispone de visión. Esa IA
-extrae los campos anteriores y ElectroIA se ocupa de validarlos y generar el circuito.
+extrae símbolos, terminales y redes; ElectroIA se ocupa de validarlos y dibujar el plano.
 
 El Caso 002 admite ventiladores DC de dos cables entre 3 V y 30 V. La herramienta
 recibe la temperatura de encendido y la histéresis deseada, y devuelve un circuito
-con NTC, comparador, MOSFET, protección y esquema dividido en bloques legibles.
+con NTC, comparador, MOSFET y protección. El adaptador entrega ese circuito al nuevo
+motor, que lo dibuja en un único lienzo normalizado.

@@ -361,8 +361,9 @@ kbd { font: inherit; border: 1px solid var(--line); border-radius: 4px; padding:
 .panel { border: 1px solid var(--line); border-radius: 15px; background: rgba(255, 254, 250, .68); overflow: hidden; }
 .panel-title { padding: 17px 20px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-weight: 780; font-size: 13px; }
 .panel-title small { font-size: 9px; letter-spacing: .13em; color: #8b928e; }
-.schematic { min-height: 620px; display: grid; place-items: center; padding: 24px; background-image: linear-gradient(rgba(34,39,37,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(34,39,37,.035) 1px, transparent 1px); background-size: 19px 19px; }
-.schematic svg { width: 100%; max-width: 760px; height: auto; overflow: visible; }
+.schematic { min-height: 620px; display: grid; place-items: center; padding: 24px; overflow: auto; background-image: linear-gradient(rgba(34,39,37,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(34,39,37,.035) 1px, transparent 1px); background-size: 19px 19px; }
+.schematic svg { width: 100%; max-width: 1180px; height: auto; overflow: visible; }
+.schematic .electroia-core-diagram { min-width: 960px; }
 .schematic-legend { padding: 12px 20px; display: flex; gap: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; }
 .schematic-legend i { display: inline-block; width: 14px; height: 2px; vertical-align: 3px; margin-right: 5px; }
 .schematic-legend .green { background: #76a523; }.schematic-legend .orange { background: var(--orange); }.schematic-legend .grey { background: #7a8380; }
@@ -375,8 +376,8 @@ kbd { font: inherit; border: 1px solid var(--line); border-radius: 4px; padding:
 .diagram-dialog-head span { color: #6b8c27; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .13em; }
 .diagram-dialog-head h2 { margin: 3px 0 0; font-size: 20px; }
 .diagram-dialog-head button { width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 50%; background: transparent; font-size: 24px; cursor: pointer; }
-.expanded-schematic { min-width: 760px; padding: 24px; background: var(--paper); }
-.expanded-schematic svg { display: block; width: 760px; height: auto; margin: 0 auto; }
+.expanded-schematic { min-width: 1180px; padding: 24px; background: var(--paper); }
+.expanded-schematic svg { display: block; width: 1180px; max-width: none; height: auto; margin: 0 auto; }
 
 .components-list { padding: 0 20px 10px; }
 .component { display: grid; grid-template-columns: 38px minmax(130px, .75fr) 1.25fr; gap: 13px; align-items: start; padding: 15px 0; border-bottom: 1px solid var(--line); }

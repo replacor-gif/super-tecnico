@@ -1,34 +1,61 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "name": "electroia-tools",
-  "title": "ElectroIA — motor electrónico neutral",
-  "description": "Herramientas deterministas para analizar requisitos y generar circuitos electrónicos utilizando las bases de componentes y símbolos de Super Técnico.",
+  "title": "ElectroIA — motor gráfico electrotécnico neutral",
+  "description": "Herramientas deterministas para validar y dibujar documentos electrotécnicos definidos por una IA o aplicación externa.",
   "provider_neutral": true,
   "embedded_ai_model": false,
   "billing_required_by_electroia": false,
+  "diagram_engine_version": "1.0.0-alpha.1",
+  "diagram_contract_version": "1.0",
   "design_model_version": "0.5",
+  "core_policy": {
+    "calculates_values": false,
+    "selects_components": false,
+    "renders_only": true
+  },
+  "responsibilities": {
+    "diagram_engine": [
+      "validate_document",
+      "resolve_normalized_symbols",
+      "place_on_common_grid",
+      "route_orthogonal_connections",
+      "render_single_canvas_svg",
+      "report_diagnostics"
+    ],
+    "calling_ai": [
+      "understand_user_intent",
+      "choose_topology",
+      "calculate_values",
+      "select_components",
+      "provide_symbols_terminals_and_nets"
+    ]
+  },
   "capabilities": {
-    "current_topologies": [
+    "standard_profiles": ["IEC_EXPERIMENTAL"],
+    "document_kinds": ["circuit_diagram", "single_line_diagram", "multi_line_diagram"],
+    "grid_pitch_mil": 50,
+    "single_canvas_default": true,
+    "normalized_symbol_count": 17,
+    "catalog_symbol_count": 460,
+    "current_legacy_topologies": [
       "low_side_relay_driver",
       "isolated_low_side_relay_driver",
       "thermostatic_dc_fan_controller"
     ],
     "inputs": [
-      "structured_json",
-      "spanish_text_for_case_001",
-      "image_analysis",
-      "hand_drawn_sketch_analysis"
+      "structured_diagram_json",
+      "spanish_text_through_legacy_adapters",
+      "image_analysis_from_external_ai",
+      "hand_drawn_sketch_analysis_from_external_ai"
     ],
-    "raw_inputs_not_yet_supported": [
-      "raw_photo",
-      "raw_hand_drawn_sketch"
-    ],
-    "image_contract": "La IA que ve la imagen extrae los requisitos y conexiones; ElectroIA valida y genera el circuito estructurado."
+    "raw_inputs_not_yet_supported": ["raw_photo", "raw_hand_drawn_sketch"],
+    "image_contract": "La IA que ve la imagen extrae símbolos, terminales y redes; ElectroIA valida y dibuja el documento estructurado."
   },
   "tools": [
     {
       "name": "electroia_get_capabilities",
-      "description": "Devuelve las topologías, entradas y límites que admite esta versión de ElectroIA.",
+      "description": "Devuelve las capacidades, responsabilidades y límites de esta versión.",
       "input_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -36,8 +63,31 @@
       }
     },
     {
+      "name": "electroia_get_diagram_contract",
+      "description": "Devuelve el contrato neutral, la rejilla y las definiciones de símbolos ya normalizadas.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      }
+    },
+    {
+      "name": "electroia_render_diagram",
+      "description": "Valida símbolos, terminales y redes y devuelve un plano SVG. No calcula ni selecciona componentes.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["document"],
+        "properties": {
+          "document": {
+            "$ref": "diagram-document.schema.json"
+          }
+        }
+      }
+    },
+    {
       "name": "electroia_analyze_request",
-      "description": "Distingue los Casos 001 y 002, extrae los datos disponibles y devuelve únicamente las preguntas que faltan.",
+      "description": "Adaptador temporal que distingue los Casos 001 y 002 y devuelve las preguntas pendientes.",
       "input_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -53,71 +103,27 @@
     },
     {
       "name": "electroia_generate_relay_driver",
-      "description": "Genera, valida y dimensiona un controlador de relé DC, aislado o no aislado, y devuelve circuito, BOM, conexiones y advertencias.",
+      "description": "Adaptador temporal que genera un controlador de relé DC para demostrar el motor gráfico.",
       "input_schema": {
         "type": "object",
         "additionalProperties": false,
-        "required": [
-          "relay_voltage",
-          "signal_voltage",
-          "controller",
-          "coil_type",
-          "load_kind",
-          "isolation"
-        ],
+        "required": ["relay_voltage", "signal_voltage", "controller", "coil_type", "load_kind", "isolation"],
         "properties": {
-          "request": {
-            "type": "string",
-            "maxLength": 500
-          },
-          "relay_voltage": {
-            "type": "number",
-            "exclusiveMinimum": 0,
-            "maximum": 1000
-          },
-          "signal_voltage": {
-            "type": "number",
-            "exclusiveMinimum": 0,
-            "maximum": 100
-          },
-          "controller": {
-            "type": "string",
-            "enum": ["arduino", "micro_3v3", "sensor", "unknown"]
-          },
-          "coil_type": {
-            "type": "string",
-            "enum": ["dc", "ac", "unknown"]
-          },
-          "coil_current_ma": {
-            "type": ["number", "null"],
-            "exclusiveMinimum": 0,
-            "maximum": 5000
-          },
-          "load_kind": {
-            "type": "string",
-            "minLength": 2,
-            "maxLength": 180
-          },
-          "load_current_a": {
-            "type": ["number", "null"],
-            "exclusiveMinimum": 0,
-            "maximum": 1000
-          },
-          "isolation": {
-            "type": "boolean"
-          },
+          "request": { "type": "string", "maxLength": 500 },
+          "relay_voltage": { "type": "number", "exclusiveMinimum": 0, "maximum": 1000 },
+          "signal_voltage": { "type": "number", "exclusiveMinimum": 0, "maximum": 100 },
+          "controller": { "type": "string", "enum": ["arduino", "micro_3v3", "sensor", "unknown"] },
+          "coil_type": { "type": "string", "enum": ["dc", "ac", "unknown"] },
+          "coil_current_ma": { "type": ["number", "null"], "exclusiveMinimum": 0, "maximum": 5000 },
+          "load_kind": { "type": "string", "minLength": 2, "maxLength": 180 },
+          "load_current_a": { "type": ["number", "null"], "exclusiveMinimum": 0, "maximum": 1000 },
+          "isolation": { "type": "boolean" },
           "source": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
-              "kind": {
-                "type": "string",
-                "enum": ["text", "image_analysis", "hand_drawn_sketch_analysis"]
-              },
-              "note": {
-                "type": "string",
-                "maxLength": 500
-              }
+              "kind": { "type": "string", "enum": ["text", "image_analysis", "hand_drawn_sketch_analysis"] },
+              "note": { "type": "string", "maxLength": 500 }
             }
           }
         }
@@ -125,57 +131,24 @@
     },
     {
       "name": "electroia_generate_temperature_fan",
-      "description": "Genera y valida un controlador de ventilador DC por temperatura con NTC, comparador, histéresis, MOSFET y protección inductiva.",
+      "description": "Adaptador temporal que genera un controlador de ventilador DC para demostrar el motor gráfico.",
       "input_schema": {
         "type": "object",
         "additionalProperties": false,
-        "required": [
-          "fan_voltage",
-          "turn_on_temperature_c",
-          "hysteresis_c",
-          "fan_type"
-        ],
+        "required": ["fan_voltage", "turn_on_temperature_c", "hysteresis_c", "fan_type"],
         "properties": {
-          "request": {
-            "type": "string",
-            "maxLength": 500
-          },
-          "fan_voltage": {
-            "type": "number",
-            "minimum": 3,
-            "maximum": 30
-          },
-          "fan_current_a": {
-            "type": ["number", "null"],
-            "exclusiveMinimum": 0,
-            "maximum": 20
-          },
-          "turn_on_temperature_c": {
-            "type": "number",
-            "exclusiveMinimum": 0,
-            "maximum": 120
-          },
-          "hysteresis_c": {
-            "type": "number",
-            "minimum": 1,
-            "maximum": 20
-          },
-          "fan_type": {
-            "type": "string",
-            "enum": ["dc_2wire", "unknown"]
-          },
+          "request": { "type": "string", "maxLength": 500 },
+          "fan_voltage": { "type": "number", "minimum": 3, "maximum": 30 },
+          "fan_current_a": { "type": ["number", "null"], "exclusiveMinimum": 0, "maximum": 20 },
+          "turn_on_temperature_c": { "type": "number", "exclusiveMinimum": 0, "maximum": 120 },
+          "hysteresis_c": { "type": "number", "minimum": 1, "maximum": 20 },
+          "fan_type": { "type": "string", "enum": ["dc_2wire", "unknown"] },
           "source": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
-              "kind": {
-                "type": "string",
-                "enum": ["text", "image_analysis", "hand_drawn_sketch_analysis"]
-              },
-              "note": {
-                "type": "string",
-                "maxLength": 500
-              }
+              "kind": { "type": "string", "enum": ["text", "image_analysis", "hand_drawn_sketch_analysis"] },
+              "note": { "type": "string", "maxLength": 500 }
             }
           }
         }

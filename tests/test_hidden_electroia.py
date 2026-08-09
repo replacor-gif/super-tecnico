@@ -18,6 +18,7 @@ class HiddenElectroIATests(unittest.TestCase):
         html = (ROOT / ROUTE / "index.html").read_text(encoding="utf-8")
         self.assertIn("noindex,nofollow,noarchive,nosnippet,noimageindex", html)
         self.assertIn('<script src="engine.js"></script>', html)
+        self.assertIn('<script src="diagram-core.js"></script>', html)
         self.assertIn('<script src="diagram.js"></script>', html)
 
     def test_omega_access_is_added_below_the_page_counter(self):
@@ -109,6 +110,10 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn('"billing_required_by_electroia": false', manifest)
         self.assertIn('"electroia_generate_relay_driver"', manifest)
         self.assertIn('"electroia_generate_temperature_fan"', manifest)
+        self.assertIn('"electroia_get_diagram_contract"', manifest)
+        self.assertIn('"electroia_render_diagram"', manifest)
+        self.assertIn('"diagram_engine_version": "1.0.0-alpha.1"', manifest)
+        self.assertIn('"calculates_values"', manifest)
         self.assertIn('server.registerTool(', server)
         self.assertIn('serveStdio(createServer)', server)
         for content in (app, backend, api, manifest, server):
@@ -120,10 +125,11 @@ class HiddenElectroIATests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             output = Path(temp_dir) / "dist"
             build(ROOT, output)
-            for filename in ("index.html", "styles.css", "engine.js", "diagram.js", "app.js"):
+            for filename in ("index.html", "styles.css", "engine.js", "diagram-core.js", "diagram.js", "app.js"):
                 self.assertTrue((output / ROUTE / filename).is_file(), filename)
             self.assertTrue((output / "data" / "symbols" / "catalog.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "tool-manifest.json").is_file())
+            self.assertTrue((output / "data" / "electroia" / "diagram-document.schema.json").is_file())
             self.assertTrue(
                 (output / "assets" / "symbols" / "SYM-0080_mosfet-n-con-diodo-de-cuerpo.svg").is_file()
             )

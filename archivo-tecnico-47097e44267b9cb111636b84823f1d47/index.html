@@ -34,17 +34,17 @@
         <span>Super Técnico <span>· ElectroIA</span></span>
       </a>
       <div id="engineStatus" class="case-pill local">
-        <span></span><b id="engineStatusLabel">Herramienta neutral</b><em> · Casos 001–002</em>
+        <span></span><b id="engineStatusLabel">Motor gráfico neutral</b><em> · Núcleo 1.0</em>
       </div>
     </header>
 
     <main>
       <section id="introView" class="view intro-view active">
-        <div class="eyebrow">Motor electrónico para personas e IA</div>
-        <h1>Cuéntame qué quieres<br /><em>hacer funcionar.</em></h1>
+        <div class="eyebrow">Motor de diagramas para cualquier IA</div>
+        <h1>De una red eléctrica<br /><em>a un plano legible.</em></h1>
         <p class="lede">
-          Este banco prueba el mismo motor determinista que cualquier IA podrá invocar.
-          Describe el resultado y ElectroIA pedirá únicamente los datos necesarios.
+          La IA decide el circuito; ElectroIA normaliza símbolos y terminales, comprueba las redes
+          y dibuja todo sobre una única rejilla.
         </p>
 
         <form id="requestForm" class="prompt-card">
@@ -57,7 +57,7 @@
           </div>
           <div class="prompt-footer">
             <span><kbd>Enter</kbd> para continuar</span>
-            <span id="privacyStatus" class="privacy"><i></i> Motor electrónico local · sin IA integrada</span>
+            <span id="privacyStatus" class="privacy"><i></i> Adaptador de prueba local · sin IA integrada</span>
           </div>
         </form>
 
@@ -73,9 +73,9 @@
         </div>
 
         <div class="process-strip" aria-label="Proceso de diseño">
-          <div><b>01</b><span><strong>Especifica</strong>Una persona o cualquier IA</span></div>
-          <div><b>02</b><span><strong>Valida</strong>Reglas y bases electrónicas</span></div>
-          <div><b>03</b><span><strong>Genera</strong>Circuito y componentes</span></div>
+          <div><b>01</b><span><strong>Define</strong>La IA entrega símbolos y redes</span></div>
+          <div><b>02</b><span><strong>Comprueba</strong>Terminales, rejilla y uniones</span></div>
+          <div><b>03</b><span><strong>Dibuja</strong>Un único plano normalizado</span></div>
         </div>
       </section>
 
@@ -110,7 +110,7 @@
       <section id="resultView" class="view result-view" aria-live="polite">
         <div class="result-heading">
           <div>
-            <div class="eyebrow">Primera propuesta técnica</div>
+            <div class="eyebrow">Plano generado por el motor gráfico</div>
             <h2 id="designTitle">Circuito generado</h2>
             <p id="designSummary"></p>
           </div>
@@ -122,14 +122,14 @@
         <div class="result-grid result-grid-single">
           <article class="schematic-card panel">
             <div class="panel-title">
-              <span>Esquema eléctrico</span>
+              <span>Plano electrotécnico</span>
               <button id="expandDiagram" class="diagram-button" type="button">Ampliar</button>
             </div>
             <div id="schematic" class="schematic"></div>
             <div class="schematic-legend">
-              <span><i class="green"></i> Control</span>
-              <span><i class="orange"></i> Potencia</span>
-              <span><i class="grey"></i> Masa</span>
+              <span>Rejilla normalizada de 50 mil</span>
+              <span>Nodos explícitos</span>
+              <span>Una hoja</span>
             </div>
           </article>
         </div>
@@ -154,7 +154,7 @@
 
     <dialog id="diagramDialog" class="diagram-dialog" aria-labelledby="diagramDialogTitle">
       <div class="diagram-dialog-head">
-        <div><span>ElectroIA</span><h2 id="diagramDialogTitle">Esquema ampliado</h2></div>
+        <div><span>ElectroIA</span><h2 id="diagramDialogTitle">Plano ampliado</h2></div>
         <button id="closeDiagram" type="button" aria-label="Cerrar esquema ampliado">×</button>
       </div>
       <div id="expandedSchematic" class="expanded-schematic"></div>
@@ -162,10 +162,11 @@
 
     <div id="loadingOverlay" class="loading-overlay" aria-hidden="true">
       <div class="loader"><i></i><i></i><i></i></div>
-      <p>Traduciendo tu idea a electrónica…</p>
+      <p>Validando redes y trazando el plano…</p>
     </div>
 
     <script src="engine.js"></script>
+    <script src="diagram-core.js"></script>
     <script src="diagram.js"></script>
     <script src="app.js"></script>
   </body>

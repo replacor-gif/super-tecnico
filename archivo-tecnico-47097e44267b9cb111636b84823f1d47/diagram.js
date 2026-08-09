@@ -1,6 +1,10 @@
 const ElectroDiagram = (function () {
   "use strict";
 
+  const DiagramCore = typeof globalThis !== "undefined" && globalThis.ElectroDiagramCore
+    ? globalThis.ElectroDiagramCore
+    : (typeof require === "function" ? require("./diagram-core.js") : null);
+
   function esc(value) {
     return String(value ?? "")
       .replaceAll("&", "&amp;")
@@ -390,11 +394,153 @@ const ElectroDiagram = (function () {
       </svg>`;
   }
 
+  function renderTemperatureFanControllerOnGrid(design) {
+    if (!DiagramCore) throw new Error("El núcleo gráfico normalizado no está disponible");
+    const model = design.circuit_model || {};
+    const values = design.values || {};
+    const parts = new Map((model.parts || []).map((item) => [item.ref, item]));
+    const positions = {
+      PS1: { x: 2, y: 10, symbol_id: "SYM-0018", rotation: 0, label_position: "left" },
+      R1: { x: 8, y: 5, symbol_id: "SYM-0023", rotation: 90, label_position: "left" },
+      TH1: { x: 8, y: 11, symbol_id: "SYM-0031", rotation: 90, label_position: "right" },
+      RV1: { x: 16, y: 8, symbol_id: "SYM-0026", rotation: 0, label_position: "left" },
+      U1: { x: 26, y: 8, symbol_id: "SYM-0184", rotation: 0, label_position: "inside" },
+      R2: { x: 32, y: 5, symbol_id: "SYM-0023", rotation: 90, label_position: "right" },
+      R5: { x: 27, y: 15, symbol_id: "SYM-0023", rotation: 0, label_position: "below" },
+      R3: { x: 37, y: 13, symbol_id: "SYM-0023", rotation: 0, label_position: "above" },
+      R4: { x: 40, y: 16, symbol_id: "SYM-0023", rotation: 90, label_position: "right" },
+      Q1: { x: 44, y: 13, symbol_id: "SYM-0080", rotation: 0, label_position: "right" },
+      FAN1: { x: 44, y: 5, symbol_id: "SYM-0156", rotation: 0, label_position: "left" },
+      D1: { x: 51, y: 5, symbol_id: "SYM-0057", rotation: 270, label_position: "right" },
+      C1: { x: 58, y: 5, symbol_id: "SYM-0035", rotation: 90, label_position: "right" },
+    };
+    const components = Object.entries(positions).map(([ref, layout]) => {
+      const item = parts.get(ref) || {};
+      return {
+        ref,
+        symbol_id: layout.symbol_id,
+        value: item.value || "",
+        position: { x: layout.x, y: layout.y },
+        rotation: layout.rotation,
+        label_position: layout.label_position,
+      };
+    });
+    const allowedRefs = new Set(components.map((item) => item.ref));
+    const nets = (model.nets || []).map((net) => ({
+      id: net.id,
+      label: net.id === "VIN" ? `+${values.fan_voltage} V DC` : net.id === "GND" ? "0 V" : net.id,
+      role: net.id === "VIN" ? "power" : net.id === "GND" ? "ground" : "signal",
+      show_label: ["VIN", "GND", "TEMP_SENSE", "TEMP_REF"].includes(net.id),
+      label_position: net.id === "TEMP_SENSE" ? { x: 9, y: 8 } : net.id === "TEMP_REF" ? { x: 18, y: 8 } : undefined,
+      connections: (net.connections || []).filter((connection) => {
+        const separator = connection.lastIndexOf(".");
+        return separator > 0 && allowedRefs.has(connection.slice(0, separator));
+      }),
+    })).filter((net) => net.connections.length > 0);
+    const document = {
+      schema_version: "1.0",
+      document_kind: "circuit_diagram",
+      standard_profile: "IEC_EXPERIMENTAL",
+      title: `Control de ventilador ${values.fan_voltage} V por temperatura`,
+      document_id: "ELECTROIA-CASE-002",
+      revision: "A",
+      grid: { pitch_mil: 50, show: true },
+      layout: { direction: "left_to_right", single_canvas: true },
+      components,
+      nets,
+    };
+    const result = DiagramCore.render(document);
+    return result.svg.replace(
+      '<svg class="electrical-diagram',
+      `<svg data-model-version="${esc(model.schema_version || "")}" data-topology="${esc(model.topology || "")}" class="electrical-diagram`
+    );
+  }
+
+  function renderRelayDriverOnGrid(design) {
+    if (!DiagramCore) throw new Error("El núcleo gráfico normalizado no está disponible");
+    const model = design.circuit_model || {};
+    const values = design.values || {};
+    const isolated = model.topology === "isolated_low_side_relay_driver";
+    const parts = new Map((model.parts || []).map((item) => [item.ref, item]));
+    const common = isolated ? {
+      PORT1: { x: 2, y: 12, symbol_id: "ST-CONTROL-PORT", rotation: 0, label_position: "below", value: `Control ${values.signal_voltage} V` },
+      R3: { x: 9, y: 10, symbol_id: "SYM-0023", rotation: 0, label_position: "above" },
+      U1: { x: 16, y: 12, symbol_id: "SYM-0097", rotation: 0, label_position: "inside" },
+      R1: { x: 25, y: 14, symbol_id: "SYM-0023", rotation: 0, label_position: "above" },
+      R2: { x: 30, y: 19, symbol_id: "SYM-0023", rotation: 90, label_position: "right" },
+      Q1: { x: 34, y: 15, symbol_id: "SYM-0080", rotation: 0, label_position: "right" },
+      K1: { x: 34, y: 5, symbol_id: "SYM-0119", rotation: 90, label_position: "left" },
+      D1: { x: 40, y: 5, symbol_id: "SYM-0057", rotation: 270, label_position: "right" },
+      PS1: { x: 52, y: 15, symbol_id: "SYM-0018", rotation: 0, label_position: "right" },
+      PORT2: { x: 26, y: 29, symbol_id: "ST-LOAD-PORT", rotation: 0, label_position: "below", value: "Circuito de carga" },
+      "K1.1": { x: 34, y: 28, symbol_id: "SYM-0120", rotation: 0, label_position: "above" },
+      LOAD1: { x: 43, y: 28, symbol_id: "ST-GENERIC-2P", rotation: 90, label_position: "right" },
+    } : {
+      PORT1: { x: 2, y: 10, symbol_id: "ST-CONTROL-PORT", rotation: 0, label_position: "below", value: `Control ${values.signal_voltage} V` },
+      R1: { x: 10, y: 10, symbol_id: "SYM-0023", rotation: 0, label_position: "above" },
+      R2: { x: 15, y: 16, symbol_id: "SYM-0023", rotation: 90, label_position: "right" },
+      Q1: { x: 20, y: 12, symbol_id: "SYM-0080", rotation: 0, label_position: "right" },
+      K1: { x: 20, y: 4, symbol_id: "SYM-0119", rotation: 90, label_position: "left" },
+      D1: { x: 26, y: 4, symbol_id: "SYM-0057", rotation: 270, label_position: "right" },
+      PS1: { x: 40, y: 12, symbol_id: "SYM-0018", rotation: 0, label_position: "right" },
+      PORT2: { x: 12, y: 25, symbol_id: "ST-LOAD-PORT", rotation: 0, label_position: "below", value: "Circuito de carga" },
+      "K1.1": { x: 20, y: 24, symbol_id: "SYM-0120", rotation: 0, label_position: "above" },
+      LOAD1: { x: 29, y: 24, symbol_id: "ST-GENERIC-2P", rotation: 90, label_position: "right" },
+    };
+    const components = Object.entries(common).map(([ref, layout]) => ({
+      ref,
+      symbol_id: layout.symbol_id,
+      value: layout.value || parts.get(ref)?.value || "",
+      position: { x: layout.x, y: layout.y },
+      rotation: layout.rotation,
+      label_position: layout.label_position,
+    }));
+    const allowedRefs = new Set(components.map((item) => item.ref));
+    const nets = (model.nets || []).map((net) => {
+      const connections = (net.connections || []).filter((connection) => {
+        const separator = connection.lastIndexOf(".");
+        return separator > 0 && allowedRefs.has(connection.slice(0, separator));
+      });
+      if (!isolated && net.id === "GND_RELAY" && !connections.includes("PORT1.GND")) connections.push("PORT1.GND");
+      return {
+        id: net.id,
+        label: net.label || net.id,
+        role: net.id === "VRELAY_PLUS" ? "power" : net.id.startsWith("GND_") ? "ground" : "signal",
+        show_label: ["CTRL_OUT", "VRELAY_PLUS", "GND_RELAY", "GND_CONTROL", "LOAD_COM"].includes(net.id),
+        connections,
+      };
+    }).filter((net) => net.connections.length > 0);
+    const document = {
+      schema_version: "1.0",
+      document_kind: "circuit_diagram",
+      standard_profile: "IEC_EXPERIMENTAL",
+      title: `Control de relé ${values.relay_voltage} V${isolated ? " con aislamiento" : ""}`,
+      document_id: isolated ? "ELECTROIA-CASE-001-ISO" : "ELECTROIA-CASE-001",
+      revision: "A",
+      notes: isolated ? ["DOMINIOS AISLADOS: NO UNIR GND_CONTROL Y GND_RELAY"] : [],
+      grid: { pitch_mil: 50, show: true },
+      layout: { direction: "left_to_right", single_canvas: true },
+      components,
+      nets,
+      relationships: [{
+        from: "K1",
+        to: "K1.1",
+        kind: "mechanical",
+        via: isolated ? [{ x: 37, y: 5 }, { x: 37, y: 28 }] : [{ x: 23, y: 4 }, { x: 23, y: 24 }],
+      }],
+    };
+    const result = DiagramCore.render(document);
+    return result.svg.replace(
+      '<svg class="electrical-diagram',
+      `<svg data-model-version="${esc(model.schema_version || "")}" data-topology="${esc(model.topology || "")}" class="electrical-diagram`
+    );
+  }
+
   function render(design) {
     const topology = design?.circuit_model?.topology || "";
-    if (topology === "low_side_relay_driver") return renderRelayDriver(design);
-    if (topology === "isolated_low_side_relay_driver") return renderIsolatedRelayDriver(design);
-    if (topology === "thermostatic_dc_fan_controller") return renderTemperatureFanController(design);
+    if (topology === "low_side_relay_driver") return renderRelayDriverOnGrid(design);
+    if (topology === "isolated_low_side_relay_driver") return renderRelayDriverOnGrid(design);
+    if (topology === "thermostatic_dc_fan_controller") return renderTemperatureFanControllerOnGrid(design);
     throw new Error("El modelo eléctrico todavía no tiene un formato de diagrama compatible");
   }
 

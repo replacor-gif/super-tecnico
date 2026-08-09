@@ -411,6 +411,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/index.html",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/styles.css",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/engine.js",
+        "archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagram-core.js",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagram.js",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/app.js",
         "simbolos.html",
@@ -627,6 +628,10 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
     write_json(
         output / "data" / "electroia" / "tool-manifest.json",
         read_json(source_root / "data" / "electroia" / "tool-manifest.json"),
+    )
+    write_json(
+        output / "data" / "electroia" / "diagram-document.schema.json",
+        read_json(source_root / "data" / "electroia" / "diagram-document.schema.json"),
     )
     components_details = source_root / "data" / "components" / "details"
     for path in sorted(components_details.glob("*.json")):

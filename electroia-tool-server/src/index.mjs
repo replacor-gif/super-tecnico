@@ -18,7 +18,7 @@ function toolError(error) {
 }
 
 function createServer() {
-  const server = new McpServer({ name: "electroia-tools", version: "0.1.0" });
+  const server = new McpServer({ name: "electroia-tools", version: "0.2.0" });
 
   server.registerTool(
     "electroia_get_capabilities",
@@ -29,6 +29,77 @@ function createServer() {
     async () => {
       try {
         return toolResult(await callElectroIATool("electroia_get_capabilities", {}));
+      } catch (error) {
+        return toolError(error);
+      }
+    }
+  );
+
+  server.registerTool(
+    "electroia_get_diagram_contract",
+    {
+      description: "Devuelve el contrato neutral del motor gráfico, la rejilla y los símbolos que ya tienen terminales normalizados.",
+      inputSchema: z.object({}),
+    },
+    async () => {
+      try {
+        return toolResult(await callElectroIATool("electroia_get_diagram_contract", {}));
+      } catch (error) {
+        return toolError(error);
+      }
+    }
+  );
+
+  const positionSchema = z.object({ x: z.number().int().min(0).max(500), y: z.number().int().min(0).max(500) });
+  const diagramDocumentSchema = z.object({
+    schema_version: z.literal("1.0"),
+    document_kind: z.enum(["circuit_diagram", "single_line_diagram", "multi_line_diagram"]),
+    standard_profile: z.literal("IEC_EXPERIMENTAL"),
+    title: z.string().min(1).max(160),
+    document_id: z.string().max(80).optional(),
+    revision: z.string().max(20).optional(),
+    notes: z.array(z.string().max(160)).max(6).optional(),
+    grid: z.object({ pitch_mil: z.literal(50).optional(), show: z.boolean().optional() }).optional(),
+    components: z.array(z.object({
+      ref: z.string().min(1).max(32),
+      symbol_id: z.string().min(3).max(64),
+      value: z.string().max(120).optional(),
+      position: positionSchema.optional(),
+      rotation: z.union([z.literal(0), z.literal(90), z.literal(180), z.literal(270)]).optional(),
+      mirror: z.boolean().optional(),
+      label_position: z.enum(["below", "above", "left", "right", "inside"]).optional(),
+      role: z.string().max(60).optional(),
+    })).min(1),
+    nets: z.array(z.object({
+      id: z.string().min(1).max(64),
+      label: z.string().max(80).optional(),
+      show_label: z.boolean().optional(),
+      label_position: positionSchema.optional(),
+      role: z.enum(["signal", "power", "ground", "protective_earth", "bus"]).optional(),
+      conductors: z.number().int().min(1).max(99).optional(),
+      connections: z.array(z.string().min(3).max(80)).min(1),
+    })).min(1),
+    relationships: z.array(z.object({
+      from: z.string().min(1).max(32),
+      to: z.string().min(1).max(32),
+      kind: z.enum(["mechanical", "functional"]),
+      via: z.array(positionSchema).optional(),
+    })).optional(),
+    layout: z.object({
+      direction: z.enum(["left_to_right", "top_to_bottom"]).optional(),
+      single_canvas: z.literal(true).optional(),
+    }).optional(),
+  });
+
+  server.registerTool(
+    "electroia_render_diagram",
+    {
+      description: "Valida símbolos, terminales y redes y genera un plano SVG sobre una rejilla común. No calcula ni selecciona componentes.",
+      inputSchema: z.object({ document: diagramDocumentSchema }),
+    },
+    async (args) => {
+      try {
+        return toolResult(await callElectroIATool("electroia_render_diagram", args));
       } catch (error) {
         return toolError(error);
       }
@@ -111,4 +182,4 @@ function createServer() {
 }
 
 void serveStdio(createServer);
-console.error("ElectroIA MCP listo: motor electrónico neutral, sin IA integrada.");
+console.error("ElectroIA MCP listo: motor gráfico electrotécnico neutral, sin IA integrada.");

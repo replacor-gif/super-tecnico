@@ -8,6 +8,7 @@ const SERVER_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const PROJECT_ROOT = resolve(SERVER_ROOT, "..");
 const ROUTE = "archivo-tecnico-47097e44267b9cb111636b84823f1d47";
 const engine = require(join(PROJECT_ROOT, ROUTE, "engine.js"));
+const diagramCore = require(join(PROJECT_ROOT, ROUTE, "diagram-core.js"));
 
 const manifestPath = join(PROJECT_ROOT, "data", "electroia", "tool-manifest.json");
 const componentPath = join(PROJECT_ROOT, "data", "components", "catalog.json");
@@ -49,6 +50,19 @@ export async function callElectroIATool(tool, rawArguments = {}) {
 
   if (name === "electroia_get_capabilities") {
     return { ok: true, tool: name, manifest };
+  }
+
+  if (name === "electroia_get_diagram_contract") {
+    return {
+      ok: true,
+      tool: name,
+      contract: diagramCore.getContract(),
+      symbol_registry: diagramCore.getRegistry(),
+    };
+  }
+
+  if (name === "electroia_render_diagram") {
+    return { ok: true, tool: name, diagram: diagramCore.render(args.document) };
   }
 
   if (name === "electroia_analyze_request") {

@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://super-tecnico.local/schemas/electroia-diagram-document-1.0.json",
+  "title": "ElectroIA neutral diagram document",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "document_kind", "standard_profile", "title", "components", "nets"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "document_kind": {
+      "enum": ["circuit_diagram", "single_line_diagram", "multi_line_diagram"]
+    },
+    "standard_profile": { "enum": ["IEC_EXPERIMENTAL"] },
+    "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+    "document_id": { "type": "string", "maxLength": 80 },
+    "revision": { "type": "string", "maxLength": 20 },
+    "notes": {
+      "type": "array",
+      "maxItems": 6,
+      "items": { "type": "string", "maxLength": 160 }
+    },
+    "grid": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pitch_mil": { "const": 50 },
+        "show": { "type": "boolean" }
+      }
+    },
+    "components": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ref", "symbol_id"],
+        "properties": {
+          "ref": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,31}$" },
+          "symbol_id": { "type": "string", "minLength": 3, "maxLength": 64 },
+          "value": { "type": "string", "maxLength": 120 },
+          "position": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["x", "y"],
+            "properties": {
+              "x": { "type": "integer", "minimum": 0, "maximum": 500 },
+              "y": { "type": "integer", "minimum": 0, "maximum": 500 }
+            }
+          },
+          "rotation": { "enum": [0, 90, 180, 270] },
+          "mirror": { "type": "boolean" },
+          "label_position": { "enum": ["below", "above", "left", "right", "inside"] },
+          "role": { "type": "string", "maxLength": 60 }
+        }
+      }
+    },
+    "nets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "connections"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9_+.-]{1,64}$" },
+          "label": { "type": "string", "maxLength": 80 },
+          "show_label": { "type": "boolean" },
+          "label_position": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["x", "y"],
+            "properties": {
+              "x": { "type": "integer", "minimum": 0, "maximum": 500 },
+              "y": { "type": "integer", "minimum": 0, "maximum": 500 }
+            }
+          },
+          "role": { "enum": ["signal", "power", "ground", "protective_earth", "bus"] },
+          "conductors": { "type": "integer", "minimum": 1, "maximum": 99 },
+          "connections": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,31}\\.[A-Za-z0-9_+.-]{1,24}$"
+            }
+          }
+        }
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["from", "to", "kind"],
+        "properties": {
+          "from": { "type": "string", "maxLength": 32 },
+          "to": { "type": "string", "maxLength": 32 },
+          "kind": { "enum": ["mechanical", "functional"] },
+          "via": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["x", "y"],
+              "properties": {
+                "x": { "type": "integer", "minimum": 0, "maximum": 500 },
+                "y": { "type": "integer", "minimum": 0, "maximum": 500 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "direction": { "enum": ["left_to_right", "top_to_bottom"] },
+        "single_canvas": { "const": true }
+      }
+    }
+  }
+}

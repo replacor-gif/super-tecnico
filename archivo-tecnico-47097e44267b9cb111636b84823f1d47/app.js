@@ -17,7 +17,7 @@ function showView(view) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function setLoading(visible, message = "Traduciendo tu idea a electrónica…") {
+function setLoading(visible, message = "Validando redes y trazando el plano…") {
   $("#loadingOverlay").classList.toggle("visible", visible);
   $("#loadingOverlay").setAttribute("aria-hidden", String(!visible));
   $("#loadingOverlay p").textContent = message;
@@ -45,8 +45,8 @@ function clientToken() {
 function setToolMode() {
   $("#engineStatus").classList.remove("ai");
   $("#engineStatus").classList.add("local");
-  $("#engineStatusLabel").textContent = "Herramienta neutral";
-  $("#privacyStatus").lastChild.textContent = " Motor electrónico local · sin IA integrada";
+  $("#engineStatusLabel").textContent = "Motor gráfico neutral";
+  $("#privacyStatus").lastChild.textContent = " Motor gráfico local · sin IA integrada";
 }
 
 function enterPrivateLab() {
@@ -314,7 +314,7 @@ $("#nextQuestion").addEventListener("click", async () => {
     return;
   }
 
-  setLoading(true, "Consultando componentes y construyendo el esquema…");
+  setLoading(true, "Preparando el documento y trazando el plano…");
   try {
     const data = await api("/api/design", { request: state.request, answers: state.answers });
     renderPublicResult(data.design);

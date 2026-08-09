@@ -8,6 +8,42 @@ const diagram = require("../archivo-tecnico-47097e44267b9cb111636b84823f1d47/dia
 assert.equal(manifest.provider_neutral, true);
 assert.equal(manifest.embedded_ai_model, false);
 assert.equal(manifest.billing_required_by_electroia, false);
+assert.equal(manifest.diagram_contract_version, "1.0");
+
+const diagramContract = await callElectroIATool("electroia_get_diagram_contract", {});
+assert.equal(diagramContract.ok, true);
+assert.equal(diagramContract.contract.responsibility, "render_only");
+assert.equal(diagramContract.contract.calculates_values, false);
+assert.equal(diagramContract.contract.selects_components, false);
+assert.equal(diagramContract.contract.grid_pitch_mil, 50);
+assert.ok(diagramContract.symbol_registry.symbols.length >= 15);
+
+const neutralDiagram = await callElectroIATool("electroia_render_diagram", {
+  document: {
+    schema_version: "1.0",
+    document_kind: "circuit_diagram",
+    standard_profile: "IEC_EXPERIMENTAL",
+    title: "Prueba neutral",
+    grid: { pitch_mil: 50, show: true },
+    layout: { single_canvas: true },
+    components: [
+      { ref: "PS1", symbol_id: "SYM-0018", value: "12 V", position: { x: 2, y: 6 } },
+      { ref: "R1", symbol_id: "SYM-0023", value: "1 kΩ", position: { x: 8, y: 3 }, rotation: 90 },
+      { ref: "LOAD1", symbol_id: "ST-GENERIC-2P", value: "Carga", position: { x: 14, y: 7 }, rotation: 90 },
+    ],
+    nets: [
+      { id: "VCC", role: "power", connections: ["PS1.+", "R1.1"] },
+      { id: "OUT", role: "signal", connections: ["R1.2", "LOAD1.1"] },
+      { id: "GND", role: "ground", connections: ["LOAD1.2", "PS1.-"] },
+    ],
+  },
+});
+assert.equal(neutralDiagram.ok, true);
+assert.equal(neutralDiagram.diagram.diagnostics.metrics.pages, 1);
+assert.equal(neutralDiagram.diagram.diagnostics.metrics.single_canvas, true);
+assert.equal(neutralDiagram.diagram.diagnostics.metrics.off_grid_terminals, 0);
+assert.match(neutralDiagram.diagram.svg, /data-grid-pitch-mil="50"/);
+assert.match(neutralDiagram.diagram.svg, /LIENZO ÚNICO/);
 
 const analysis = await callElectroIATool("electroia_analyze_request", {
   request: "Quiero encender un relé de 12 V utilizando una señal de 5 V.",
@@ -35,6 +71,11 @@ assert.equal(generated.design.circuit_model.topology, "isolated_low_side_relay_d
 assert.equal(generated.design.circuit_model.schema_version, "0.4");
 assert.ok(generated.design.components.some((item) => item.part_number === "PC817"));
 assert.ok(generated.design.warnings.some((item) => item.includes("masas")));
+const relaySvg = diagram.render(generated.design);
+assert.match(relaySvg, /data-topology="isolated_low_side_relay_driver"/);
+assert.match(relaySvg, /data-contract-version="1.0"/);
+assert.match(relaySvg, /NO UNIR GND_CONTROL Y GND_RELAY/);
+assert.doesNotMatch(relaySvg, /class="domain/);
 
 const fanAnalysis = await callElectroIATool("electroia_analyze_request", {
   request: "Quiero que un ventilador de 12 V se encienda cuando llegue a 40 °C.",
@@ -66,9 +107,11 @@ assert.deepEqual(
   ["RV1.2", "U1.+", "R5.2"]
 );
 const fanSvg = diagram.render(fanGenerated.design);
-assert.match(fanSvg, /1 · MEDIR TEMPERATURA/);
-assert.match(fanSvg, /2 · DECIDIR SIN OSCILAR/);
-assert.match(fanSvg, /3 · MOVER EL VENTILADOR/);
+assert.match(fanSvg, /data-topology="thermostatic_dc_fan_controller"/);
+assert.match(fanSvg, /data-contract-version="1.0"/);
+assert.match(fanSvg, /data-grid-pitch-mil="50"/);
+assert.match(fanSvg, /Control de ventilador 12 V por temperatura/);
+assert.doesNotMatch(fanSvg, /class="zone/);
 await assert.rejects(
   callElectroIATool("electroia_generate_temperature_fan", {
     fan_voltage: 12,

@@ -1,9 +1,9 @@
 {
   "name": "electroia-tool-server",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "Servidor MCP neutral para utilizar el motor electrónico de ElectroIA desde cualquier IA compatible.",
+  "description": "Servidor MCP neutral para generar diagramas electrotécnicos desde cualquier IA compatible.",
   "scripts": {
     "start": "node src/index.mjs",
     "tool": "node src/cli.mjs",
