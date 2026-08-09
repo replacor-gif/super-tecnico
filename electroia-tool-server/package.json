@@ -1,0 +1,19 @@
+{
+  "name": "electroia-tool-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Servidor MCP neutral para utilizar el motor electrónico de ElectroIA desde cualquier IA compatible.",
+  "scripts": {
+    "start": "node src/index.mjs",
+    "tool": "node src/cli.mjs",
+    "smoke": "node ../tests/electroia_toolkit_smoke.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.0.0",
+    "zod": "4.4.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

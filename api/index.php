@@ -25,26 +25,9 @@ try {
         st_json(st_electroia_status());
     }
 
-    if ($action === 'electroia-analyze' && $method === 'POST') {
+    if ($action === 'electroia-tools' && $method === 'GET') {
         st_require_electroia_access();
-        $body = st_body();
-        $request = st_text($body, 'request', 8, 500);
-        st_rate_limit('electroia-analyze', st_client_hash($body), 30, 3600);
-        try {
-            st_json(st_electroia_analyze($request));
-        } catch (RuntimeException $error) {
-            $diagnostic = $error->getMessage();
-            if (preg_match('/^ai_[a-z0-9_.:-]{1,120}$/i', $diagnostic) !== 1) {
-                $diagnostic = 'ai_unavailable';
-            }
-            error_log('ElectroIA analysis: ' . $diagnostic);
-            st_json([
-                'ok' => false,
-                'error' => 'ai_unavailable',
-                'diagnostic' => $diagnostic,
-                'local_fallback' => true,
-            ], 503);
-        }
+        st_json(st_electroia_tool_manifest());
     }
 
     if ($action === 'health' && $method === 'GET') {

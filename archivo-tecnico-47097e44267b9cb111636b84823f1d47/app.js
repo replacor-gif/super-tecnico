@@ -5,8 +5,6 @@ const state = {
   index: 0,
   answers: {},
   resourcesPromise: null,
-  intelligenceConfigured: false,
-  analysisSource: "local",
   accessReady: false,
 };
 
@@ -44,14 +42,11 @@ function clientToken() {
   }
 }
 
-function setEngineMode(mode) {
-  const usingAi = mode === "ai";
-  $("#engineStatus").classList.toggle("ai", usingAi);
-  $("#engineStatus").classList.toggle("local", !usingAi);
-  $("#engineStatusLabel").textContent = usingAi ? "IA privada" : "Motor local";
-  $("#privacyStatus").lastChild.textContent = usingAi
-    ? " Petición cifrada al motor privado"
-    : " Tu petición se procesa localmente";
+function setToolMode() {
+  $("#engineStatus").classList.remove("ai");
+  $("#engineStatus").classList.add("local");
+  $("#engineStatusLabel").textContent = "Herramienta neutral";
+  $("#privacyStatus").lastChild.textContent = " Motor electrónico local · sin IA integrada";
 }
 
 function enterPrivateLab() {
@@ -59,7 +54,7 @@ function enterPrivateLab() {
   state.accessReady = true;
   document.body.classList.remove("access-checking");
   $("#pinGate").hidden = true;
-  initializeIntelligence();
+  setToolMode();
 }
 
 function showPinGate(message = "") {
@@ -117,40 +112,6 @@ $("#pinForm").addEventListener("submit", async (event) => {
   }
 });
 
-async function initializeIntelligence() {
-  const url = new URL(PRIVATE_API_URL);
-  url.searchParams.set("action", "electroia-status");
-  try {
-    const response = await fetch(url, { cache: "no-store", credentials: "same-origin" });
-    const data = response.ok ? await response.json() : null;
-    state.intelligenceConfigured = data?.engine?.configured === true;
-  } catch (_error) {
-    state.intelligenceConfigured = false;
-  }
-  setEngineMode(state.intelligenceConfigured ? "ai" : "local");
-}
-
-async function analyzeWithPrivateAi(request) {
-  const url = new URL(PRIVATE_API_URL);
-  url.searchParams.set("action", "electroia-analyze");
-  const response = await fetch(url, {
-    method: "POST",
-    credentials: "same-origin",
-    cache: "no-store",
-    headers: {
-      "Content-Type": "application/json",
-      "X-ST-Client": clientToken(),
-    },
-    body: JSON.stringify({ request, client_token: clientToken() }),
-  });
-  const data = await response.json().catch(() => null);
-  if (!response.ok || !data?.ok || !data?.extracted) throw new Error("private_ai_unavailable");
-  return {
-    ...data,
-    questions: data.can_design ? ElectroEngine.buildQuestions(data.extracted) : [],
-  };
-}
-
 function loadDesignResources() {
   if (!state.resourcesPromise) {
     state.resourcesPromise = Promise.all([
@@ -182,23 +143,26 @@ async function api(path, body) {
   await new Promise((resolve) => window.setTimeout(resolve, 180));
   if (typeof ElectroEngine === "undefined") throw new Error("El motor de diseño no está disponible");
   if (path === "/api/analyze") {
-    if (state.intelligenceConfigured) {
-      try {
-        const result = await analyzeWithPrivateAi(body.request);
-        state.analysisSource = "openai";
-        setEngineMode("ai");
-        return result;
-      } catch (_error) {
-        state.intelligenceConfigured = false;
-        setEngineMode("local");
-      }
-    }
-    state.analysisSource = "local";
-    return { ...ElectroEngine.analyze(body.request), source: "local", can_design: true };
+    return {
+      ...ElectroEngine.callTool("electroia_analyze_request", { request: body.request }),
+      can_design: true,
+    };
   }
   if (path === "/api/design") {
     const resources = await loadDesignResources();
-    return ElectroEngine.design(body.request, body.answers, resources);
+    const extracted = ElectroEngine.extractRequest(body.request);
+    return ElectroEngine.callTool("electroia_generate_relay_driver", {
+      request: body.request,
+      relay_voltage: body.answers.relay_voltage ?? extracted.relay_voltage,
+      signal_voltage: body.answers.signal_voltage ?? extracted.signal_voltage,
+      controller: body.answers.controller,
+      coil_type: body.answers.coil_type,
+      coil_current_ma: body.answers.coil_current_ma === "unknown" ? null : Number(body.answers.coil_current_ma),
+      load_kind: body.answers.load_kind,
+      load_current_a: body.answers.load_current_a ? Number(body.answers.load_current_a) : null,
+      isolation: body.answers.isolation === "yes",
+      source: { kind: "text" },
+    }, resources);
   }
   throw new Error("Operación desconocida");
 }

@@ -592,6 +592,52 @@ const ElectroEngine = (function () {
     };
   }
 
+  function callTool(name, rawArguments, resources) {
+    const tool = String(name || "");
+    const args = rawArguments && typeof rawArguments === "object" ? rawArguments : {};
+
+    if (tool === "electroia_analyze_request") {
+      const request = String(args.request || "").trim();
+      if (request.length < 8) throw new Error("Cuéntame un poco más sobre lo que quieres construir");
+      const extracted = extractRequest(request);
+      if (extracted.project_type !== "relay_driver") {
+        throw new Error("Esta versión de ElectroIA admite por ahora el controlador de relé DC.");
+      }
+      return {
+        ok: true,
+        tool,
+        provider_neutral: true,
+        extracted,
+        questions: buildQuestions(extracted),
+      };
+    }
+
+    if (tool === "electroia_generate_relay_driver") {
+      const relayVoltage = args.relay_voltage;
+      const signalVoltage = args.signal_voltage;
+      const request = String(args.request || `Controlar un relé de ${relayVoltage} V con una señal de ${signalVoltage} V.`);
+      const answers = {
+        relay_voltage: relayVoltage,
+        signal_voltage: signalVoltage,
+        controller: args.controller,
+        coil_type: args.coil_type,
+        coil_current_ma: args.coil_current_ma ?? "unknown",
+        load_kind: args.load_kind,
+        load_current_a: args.load_current_a ?? "",
+        isolation: args.isolation === true || args.isolation === "yes" ? "yes" : "no",
+      };
+      return {
+        ok: true,
+        tool,
+        provider_neutral: true,
+        source: args.source || { kind: "text" },
+        design: generateDesign(request, answers, resources || {}),
+      };
+    }
+
+    throw new Error(`Herramienta desconocida: ${tool}`);
+  }
+
   return {
     analyze(requestText) {
       const request = String(requestText || "").trim();
@@ -605,7 +651,11 @@ const ElectroEngine = (function () {
     design(requestText, answers, resources) {
       return { ok: true, design: generateDesign(String(requestText || ""), answers || {}, resources || {}) };
     },
+    callTool,
     buildQuestions,
     extractRequest,
   };
 })();
+
+if (typeof globalThis !== "undefined") globalThis.ElectroEngine = ElectroEngine;
+if (typeof module !== "undefined" && module.exports) module.exports = ElectroEngine;

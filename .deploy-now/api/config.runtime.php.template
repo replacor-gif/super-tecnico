@@ -10,7 +10,5 @@ return [
     'allowed_origins' => '$ST_ALLOWED_ORIGINS',
     'turnstile_secret' => '$ST_TURNSTILE_SECRET',
     'require_turnstile' => '$ST_REQUIRE_TURNSTILE' === '1',
-    'openai_api_key' => '$OPENAI_API_KEY',
-    'openai_model' => '$OPENAI_MODEL',
     'electroia_pin_hash' => '$ST_ELECTROIA_PIN_HASH',
 ];

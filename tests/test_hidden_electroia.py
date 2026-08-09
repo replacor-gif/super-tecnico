@@ -87,18 +87,29 @@ class HiddenElectroIATests(unittest.TestCase):
         for content in (html, app, backend, api, runtime):
             self.assertNotIn("4097", content)
 
-    def test_private_ai_backend_has_a_safe_local_fallback(self):
+    def test_provider_neutral_tool_has_no_embedded_ai_or_billing(self):
         app = (ROOT / ROUTE / "app.js").read_text(encoding="utf-8")
+        engine = (ROOT / ROUTE / "engine.js").read_text(encoding="utf-8")
         backend = (ROOT / "api" / "electroia.php").read_text(encoding="utf-8")
         api = (ROOT / "api" / "index.php").read_text(encoding="utf-8")
+        manifest = (ROOT / "data" / "electroia" / "tool-manifest.json").read_text(encoding="utf-8")
+        server = (ROOT / "electroia-tool-server" / "src" / "index.mjs").read_text(encoding="utf-8")
         self.assertIn('new URL("../api/index.php", document.baseURI)', app)
-        self.assertIn('ElectroEngine.analyze(body.request)', app)
+        self.assertIn('ElectroEngine.callTool("electroia_analyze_request"', app)
+        self.assertIn('ElectroEngine.callTool("electroia_generate_relay_driver"', app)
+        self.assertIn("function callTool", engine)
         self.assertIn("electroia-status", api)
-        self.assertIn("electroia-analyze", api)
-        self.assertIn("https://api.openai.com/v1/responses", backend)
-        self.assertIn("'type' => 'json_schema'", backend)
-        self.assertIn("'strict' => true", backend)
-        self.assertIn("'store' => false", backend)
+        self.assertIn("electroia-tools", api)
+        self.assertIn("provider_neutral", backend)
+        self.assertIn('"provider_neutral": true', manifest)
+        self.assertIn('"embedded_ai_model": false', manifest)
+        self.assertIn('"billing_required_by_electroia": false', manifest)
+        self.assertIn('"electroia_generate_relay_driver"', manifest)
+        self.assertIn('server.registerTool(', server)
+        self.assertIn('serveStdio(createServer)', server)
+        for content in (app, backend, api, manifest, server):
+            self.assertNotIn("api.openai.com", content)
+            self.assertNotIn("OPENAI_API_KEY", content)
         self.assertNotRegex(app, r"sk-[A-Za-z0-9_-]{12,}")
 
     def test_static_build_includes_the_hidden_lab(self):
@@ -108,6 +119,7 @@ class HiddenElectroIATests(unittest.TestCase):
             for filename in ("index.html", "styles.css", "engine.js", "diagram.js", "app.js"):
                 self.assertTrue((output / ROUTE / filename).is_file(), filename)
             self.assertTrue((output / "data" / "symbols" / "catalog.json").is_file())
+            self.assertTrue((output / "data" / "electroia" / "tool-manifest.json").is_file())
             self.assertTrue(
                 (output / "assets" / "symbols" / "SYM-0080_mosfet-n-con-diodo-de-cuerpo.svg").is_file()
             )

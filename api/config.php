@@ -21,7 +21,5 @@ return array_merge([
     'allowed_origins' => st_env('ST_ALLOWED_ORIGINS'),
     'turnstile_secret' => st_env('ST_TURNSTILE_SECRET'),
     'require_turnstile' => st_env('ST_REQUIRE_TURNSTILE', '0') === '1',
-    'openai_api_key' => st_env('OPENAI_API_KEY'),
-    'openai_model' => st_env('OPENAI_MODEL', 'gpt-5.6'),
     'electroia_pin_hash' => st_env('ST_ELECTROIA_PIN_HASH'),
 ], is_array($runtime) ? $runtime : []);

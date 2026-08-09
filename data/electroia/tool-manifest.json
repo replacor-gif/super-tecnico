@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0",
+  "name": "electroia-tools",
+  "title": "ElectroIA — motor electrónico neutral",
+  "description": "Herramientas deterministas para analizar requisitos y generar circuitos electrónicos utilizando las bases de componentes y símbolos de Super Técnico.",
+  "provider_neutral": true,
+  "embedded_ai_model": false,
+  "billing_required_by_electroia": false,
+  "design_model_version": "0.4",
+  "capabilities": {
+    "current_topologies": [
+      "low_side_relay_driver",
+      "isolated_low_side_relay_driver"
+    ],
+    "inputs": [
+      "structured_json",
+      "spanish_text_for_case_001",
+      "image_analysis",
+      "hand_drawn_sketch_analysis"
+    ],
+    "raw_inputs_not_yet_supported": [
+      "raw_photo",
+      "raw_hand_drawn_sketch"
+    ],
+    "image_contract": "La IA que ve la imagen extrae los requisitos y conexiones; ElectroIA valida y genera el circuito estructurado."
+  },
+  "tools": [
+    {
+      "name": "electroia_get_capabilities",
+      "description": "Devuelve las topologías, entradas y límites que admite esta versión de ElectroIA.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {}
+      }
+    },
+    {
+      "name": "electroia_analyze_request",
+      "description": "Extrae los datos básicos de una petición textual para el Caso 001 y devuelve únicamente las preguntas que faltan.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["request"],
+        "properties": {
+          "request": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 500
+          }
+        }
+      }
+    },
+    {
+      "name": "electroia_generate_relay_driver",
+      "description": "Genera, valida y dimensiona un controlador de relé DC, aislado o no aislado, y devuelve circuito, BOM, conexiones y advertencias.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "relay_voltage",
+          "signal_voltage",
+          "controller",
+          "coil_type",
+          "load_kind",
+          "isolation"
+        ],
+        "properties": {
+          "request": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "relay_voltage": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 1000
+          },
+          "signal_voltage": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 100
+          },
+          "controller": {
+            "type": "string",
+            "enum": ["arduino", "micro_3v3", "sensor", "unknown"]
+          },
+          "coil_type": {
+            "type": "string",
+            "enum": ["dc", "ac", "unknown"]
+          },
+          "coil_current_ma": {
+            "type": ["number", "null"],
+            "exclusiveMinimum": 0,
+            "maximum": 5000
+          },
+          "load_kind": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 180
+          },
+          "load_current_a": {
+            "type": ["number", "null"],
+            "exclusiveMinimum": 0,
+            "maximum": 1000
+          },
+          "isolation": {
+            "type": "boolean"
+          },
+          "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": ["text", "image_analysis", "hand_drawn_sketch_analysis"]
+              },
+              "note": {
+                "type": "string",
+                "maxLength": 500
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

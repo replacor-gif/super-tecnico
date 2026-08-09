@@ -624,6 +624,10 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
     write_json(output / "data" / "smd" / "catalog.json", smd_catalog)
     components_catalog, components_stats = validate_components_catalog(source_root)
     write_json(output / "data" / "components" / "catalog.json", components_catalog)
+    write_json(
+        output / "data" / "electroia" / "tool-manifest.json",
+        read_json(source_root / "data" / "electroia" / "tool-manifest.json"),
+    )
     components_details = source_root / "data" / "components" / "details"
     for path in sorted(components_details.glob("*.json")):
         write_json(output / "data" / "components" / "details" / path.name, read_json(path))
