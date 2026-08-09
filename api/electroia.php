@@ -193,8 +193,16 @@ function st_electroia_openai_request(array $payload, string $apiKey): array
         throw new RuntimeException('ai_network_error');
     }
     if ($status < 200 || $status >= 300) {
-        error_log('ElectroIA OpenAI HTTP status: ' . $status);
-        throw new RuntimeException('ai_upstream_error');
+        $errorCode = 'unknown';
+        $errorPayload = json_decode($raw, true);
+        $candidate = is_array($errorPayload)
+            ? ($errorPayload['error']['code'] ?? $errorPayload['error']['type'] ?? '')
+            : '';
+        if (is_string($candidate) && preg_match('/^[a-z0-9_.-]{1,80}$/i', $candidate) === 1) {
+            $errorCode = strtolower($candidate);
+        }
+        error_log('ElectroIA OpenAI HTTP status: ' . $status . ' code: ' . $errorCode);
+        throw new RuntimeException('ai_upstream_error:' . $status . ':' . $errorCode);
     }
     $decoded = json_decode($raw, true);
     if (!is_array($decoded)) throw new RuntimeException('ai_invalid_response');

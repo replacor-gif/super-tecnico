@@ -33,8 +33,17 @@ try {
         try {
             st_json(st_electroia_analyze($request));
         } catch (RuntimeException $error) {
-            error_log('ElectroIA analysis: ' . $error->getMessage());
-            st_json(['ok' => false, 'error' => 'ai_unavailable', 'local_fallback' => true], 503);
+            $diagnostic = $error->getMessage();
+            if (preg_match('/^ai_[a-z0-9_.:-]{1,120}$/i', $diagnostic) !== 1) {
+                $diagnostic = 'ai_unavailable';
+            }
+            error_log('ElectroIA analysis: ' . $diagnostic);
+            st_json([
+                'ok' => false,
+                'error' => 'ai_unavailable',
+                'diagnostic' => $diagnostic,
+                'local_fallback' => true,
+            ], 503);
         }
     }
 
