@@ -288,11 +288,11 @@ const ElectroDiagram = (function () {
           <rect class="symbol" x="105" y="123" width="40" height="92" rx="4"/>
           <path class="wire signal" d="M125 215v45"/>
           <text class="ref" x="125" y="238">R1</text>
-          <text class="value" x="125" y="282">10 kΩ</text>
+          <text class="value" x="82" y="282">10 kΩ</text>
         </g>
         <circle class="node" cx="125" cy="260" r="5"/>
         <g data-symbol-id="SYM-0031" aria-label="TH1 ${esc(thermistor.value || "NTC 10 kΩ")}">
-          <path class="wire" d="M125 300v24"/>
+          <path class="wire signal" d="M125 260v64"/>
           <rect class="symbol" x="107" y="324" width="36" height="72" rx="3"/>
           <path class="wire signal" d="M94 334l62 58m-4 -16l4 16l-16 -3"/>
           <path class="wire" d="M125 396v114"/>
