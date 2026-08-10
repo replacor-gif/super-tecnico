@@ -113,8 +113,10 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn('"electroia_generate_relay_driver"', manifest)
         self.assertIn('"electroia_generate_temperature_fan"', manifest)
         self.assertIn('"electroia_get_diagram_contract"', manifest)
+        self.assertIn('"electroia_search_symbols"', manifest)
+        self.assertIn('"electroia_get_symbol"', manifest)
         self.assertIn('"electroia_render_diagram"', manifest)
-        self.assertIn('"diagram_engine_version": "1.3.0-alpha.1"', manifest)
+        self.assertIn('"diagram_engine_version": "1.4.0-alpha.1"', manifest)
         self.assertIn('"normalized_symbol_count": 460', manifest)
         self.assertIn('"calculates_values"', manifest)
         self.assertIn('server.registerTool(', server)
@@ -133,6 +135,8 @@ class HiddenElectroIATests(unittest.TestCase):
             self.assertTrue((output / "data" / "symbols" / "catalog.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "tool-manifest.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "diagram-document.schema.json").is_file())
+            self.assertTrue((output / "data" / "electroia" / "discovery.json").is_file())
+            self.assertTrue((output / "data" / "electroia" / "discovery.openapi.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "symbol-library.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "symbol-normalization-report.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "examples" / "motor-starter-direct.json").is_file())
@@ -140,6 +144,8 @@ class HiddenElectroIATests(unittest.TestCase):
             self.assertTrue(
                 (output / "assets" / "symbols" / "SYM-0080_mosfet-n-con-diodo-de-cuerpo.svg").is_file()
             )
+            self.assertTrue((output / "llms.txt").is_file())
+            self.assertTrue((output / "electroia-tool-server" / "server.json").is_file())
 
     def test_complete_symbol_library_is_normalized_and_quality_labeled(self):
         library = json.loads((ROOT / "data" / "electroia" / "symbol-library.json").read_text(encoding="utf-8"))
@@ -148,8 +154,28 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertEqual(len(catalog_symbols), 460)
         self.assertEqual(library["engine_symbol_count"], 463)
         self.assertTrue(all(item["ports"] for item in library["symbols"]))
-        self.assertEqual(report["catalog_status_counts"], {"auto_draft": 413, "engine_reviewed": 47})
+        self.assertEqual(report["catalog_status_counts"], {"auto_draft": 400, "engine_reviewed": 60})
+        self.assertIn("Conexiones y referencias", report["fully_reviewed_categories"])
+        self.assertEqual(
+            report["category_quality"]["Conexiones y referencias"],
+            {"total": 17, "engine_reviewed": 17, "auto_draft": 0},
+        )
         self.assertEqual(report["coverage_percent"], 100)
+
+    def test_ai_discovery_files_are_consistent_and_keep_remote_execution_private(self):
+        discovery = json.loads((ROOT / "data" / "electroia" / "discovery.json").read_text(encoding="utf-8"))
+        openapi = json.loads((ROOT / "data" / "electroia" / "discovery.openapi.json").read_text(encoding="utf-8"))
+        server = json.loads((ROOT / "electroia-tool-server" / "server.json").read_text(encoding="utf-8"))
+        llms = (ROOT / "llms.txt").read_text(encoding="utf-8")
+        self.assertEqual(discovery["status"], "private_preview")
+        self.assertEqual(discovery["quality"]["reviewed_catalog_symbols"], 60)
+        self.assertEqual(discovery["interfaces"]["remote_mcp"]["status"], "planned")
+        self.assertFalse(discovery["security"]["remote_public_execution"])
+        self.assertEqual(openapi["openapi"], "3.1.0")
+        self.assertNotIn("electroia_render_diagram", json.dumps(openapi))
+        self.assertEqual(server["name"], "io.github.replacor-gif/electroia-diagrams")
+        self.assertEqual(server["version"], "0.6.0")
+        self.assertNotIn("4097", llms)
 
 
 if __name__ == "__main__":

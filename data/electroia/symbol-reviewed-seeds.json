@@ -1344,6 +1344,193 @@
       "review_status": "draft"
     },
     {
+      "id": "SYM-0001",
+      "name": "Conductor / cable",
+      "kind": "wire",
+      "designator": "W",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 2,
+      "ports": {
+        "1": { "x": -3, "y": 0, "side": "west", "electrical_type": "passive" },
+        "2": { "x": 3, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0002",
+      "name": "Unión eléctrica con nodo",
+      "kind": "junction_symbol",
+      "designator": "J",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 6,
+      "ports": {
+        "W": { "x": -3, "y": 0, "side": "west", "electrical_type": "passive" },
+        "E": { "x": 3, "y": 0, "side": "east", "electrical_type": "passive" },
+        "N": { "x": 0, "y": -3, "side": "north", "electrical_type": "passive" },
+        "S": { "x": 0, "y": 3, "side": "south", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0003",
+      "name": "Cruce sin conexión",
+      "kind": "cross_no_connection",
+      "designator": "X",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 6,
+      "ports": {
+        "W": { "x": -3, "y": 0, "side": "west", "electrical_type": "passive" },
+        "E": { "x": 3, "y": 0, "side": "east", "electrical_type": "passive" },
+        "N": { "x": 0, "y": -3, "side": "north", "electrical_type": "passive" },
+        "S": { "x": 0, "y": 3, "side": "south", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0004",
+      "name": "Bus de señales",
+      "kind": "signal_bus",
+      "designator": "BUS",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "IN": { "x": -4, "y": 0, "side": "west", "electrical_type": "passive" },
+        "OUT": { "x": 4, "y": 0, "side": "east", "electrical_type": "passive" },
+        "TAP1": { "x": -1, "y": -3, "side": "north", "electrical_type": "passive" },
+        "TAP2": { "x": 1, "y": -3, "side": "north", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0005",
+      "name": "Etiqueta de red",
+      "kind": "net_label",
+      "designator": "NET",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 3,
+      "ports": {
+        "1": { "x": -3, "y": 0, "side": "west", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0007",
+      "name": "Punto de prueba",
+      "kind": "test_point",
+      "designator": "TP",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 4,
+      "height": 5,
+      "ports": {
+        "1": { "x": 0, "y": 2, "side": "south", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0008",
+      "name": "Jumper / puente",
+      "kind": "jumper",
+      "designator": "JP",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 3,
+      "ports": {
+        "1": { "x": -3, "y": 0, "side": "west", "electrical_type": "passive" },
+        "2": { "x": 3, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0009",
+      "name": "Blindaje",
+      "kind": "shield",
+      "designator": "SH",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "IN": { "x": -4, "y": 0, "side": "west", "electrical_type": "passive" },
+        "OUT": { "x": 4, "y": 0, "side": "east", "electrical_type": "passive" },
+        "SHIELD": { "x": 2, "y": 3, "side": "south", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0013",
+      "name": "Chasis",
+      "kind": "chassis_ground",
+      "designator": "CH",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 4,
+      "height": 4,
+      "ports": {
+        "1": { "x": 0, "y": -2, "side": "north", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0428",
+      "name": "Marca de no conectado",
+      "kind": "no_connect",
+      "designator": "NC",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 4,
+      "height": 3,
+      "ports": {
+        "1": { "x": -2, "y": 0, "side": "west", "electrical_type": "no_connect" }
+      }
+    },
+    {
+      "id": "SYM-0429",
+      "name": "Net tie / unión controlada de redes",
+      "kind": "net_tie",
+      "designator": "NT",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 3,
+      "ports": {
+        "A": { "x": -3, "y": 0, "side": "west", "electrical_type": "passive" },
+        "B": { "x": 3, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0430",
+      "name": "Conexión Kelvin de cuatro hilos",
+      "kind": "kelvin_4wire",
+      "designator": "KEL",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 5,
+      "ports": {
+        "I+": { "x": -4, "y": -1, "side": "west", "electrical_type": "passive" },
+        "S+": { "x": -4, "y": 1, "side": "west", "electrical_type": "passive" },
+        "I-": { "x": 4, "y": -1, "side": "east", "electrical_type": "passive" },
+        "S-": { "x": 4, "y": 1, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0431",
+      "name": "Barrera de aislamiento galvánico",
+      "kind": "isolation_barrier",
+      "designator": "ISO",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 4,
+      "height": 8,
+      "ports": {
+        "SIDE_A": { "x": -2, "y": 0, "side": "west", "electrical_type": "passive" },
+        "SIDE_B": { "x": 2, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
       "id": "ST-GENERIC-2P",
       "catalog_id": null,
       "name": "Carga genérica",

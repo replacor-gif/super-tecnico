@@ -1,7 +1,7 @@
 "use strict";
 
 const ElectroDiagramCore = (() => {
-  const ENGINE_VERSION = "1.3.0-alpha.1";
+  const ENGINE_VERSION = "1.4.0-alpha.1";
   const CONTRACT_VERSION = "1.0";
   const GRID_PITCH_MIL = 50;
   const UNIT = 24;
@@ -701,7 +701,7 @@ const ElectroDiagramCore = (() => {
       data-document-kind="${escapeXml(document.document_kind)}" data-standard-profile="${escapeXml(document.standard_profile)}"
       data-grid-pitch-mil="${GRID_PITCH_MIL}" data-pages="1" aria-label="${escapeXml(document.title)}">
       <style>
-        .sheet{fill:#fff;stroke:#222a27;stroke-width:2}.wire{fill:none;stroke:#26302c;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.electroia-core-diagram[data-document-kind="single_line_diagram"] .wire{stroke-width:3.2}.net-protective_earth{stroke-width:3}.junction{fill:#26302c}.bridge-gap{fill:none;stroke:#fff;stroke-width:8}.relationship{fill:none;stroke:#7d8782;stroke-width:2;stroke-dasharray:8 6}.symbol-line{fill:none;stroke:#202824;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.symbol-fill{fill:#fff;stroke:#202824;stroke-width:2.6}.symbol-accent{fill:none;stroke:#202824;stroke-width:2}.symbol-linkage{fill:none;stroke:#68736d;stroke-width:1.8;stroke-dasharray:5 4}.component-ref{font:700 15px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.component-value{font:500 12px Inter,Arial,sans-serif;fill:#58625d;text-anchor:middle}.net-label{font:700 11px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#47504c;paint-order:stroke;stroke:#fff;stroke-width:5;stroke-linejoin:round}.polarity{font:800 14px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.title-main{font:800 13px Inter,Arial,sans-serif;fill:#202824}.title-small{font:600 10px Inter,Arial,sans-serif;fill:#59635e}.title-rule{stroke:#202824;stroke-width:1.4}.standard-note{font:700 10px Inter,Arial,sans-serif;fill:#606a65;letter-spacing:.8px}.document-note{font:800 10px Inter,Arial,sans-serif;fill:#8a3d25}.family-code{font:800 15px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.draft-badge{display:none;font:800 9px Inter,Arial,sans-serif;fill:#a64b2a;text-anchor:end}.review-auto_draft .symbol-fill{stroke:#a64b2a;stroke-dasharray:6 4}.review-auto_draft .draft-badge{display:block}
+        .sheet{fill:#fff;stroke:#222a27;stroke-width:2}.wire{fill:none;stroke:#26302c;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.electroia-core-diagram[data-document-kind="single_line_diagram"] .wire{stroke-width:3.2}.net-protective_earth{stroke-width:3}.junction{fill:#26302c}.bridge-gap{fill:none;stroke:#fff;stroke-width:8}.relationship{fill:none;stroke:#7d8782;stroke-width:2;stroke-dasharray:8 6}.symbol-line{fill:none;stroke:#202824;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.symbol-bus{fill:none;stroke:#202824;stroke-width:6;stroke-linecap:round}.symbol-fill{fill:#fff;stroke:#202824;stroke-width:2.6}.symbol-accent{fill:none;stroke:#202824;stroke-width:2}.symbol-linkage{fill:none;stroke:#68736d;stroke-width:1.8;stroke-dasharray:5 4}.component-ref{font:700 15px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.component-value{font:500 12px Inter,Arial,sans-serif;fill:#58625d;text-anchor:middle}.net-label{font:700 11px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#47504c;paint-order:stroke;stroke:#fff;stroke-width:5;stroke-linejoin:round}.polarity{font:800 14px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.title-main{font:800 13px Inter,Arial,sans-serif;fill:#202824}.title-small{font:600 10px Inter,Arial,sans-serif;fill:#59635e}.title-rule{stroke:#202824;stroke-width:1.4}.standard-note{font:700 10px Inter,Arial,sans-serif;fill:#606a65;letter-spacing:.8px}.document-note{font:800 10px Inter,Arial,sans-serif;fill:#8a3d25}.family-code{font:800 15px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.draft-badge{display:none;font:800 9px Inter,Arial,sans-serif;fill:#a64b2a;text-anchor:end}.review-auto_draft .symbol-fill{stroke:#a64b2a;stroke-dasharray:6 4}.review-auto_draft .draft-badge{display:block}
       </style>
       <rect class="sheet" x="8" y="8" width="${width - 16}" height="${height - 16}"/>
       ${gridPattern}
@@ -796,6 +796,45 @@ const ElectroDiagramCore = (() => {
       "installation_block", "meter_block", "source_block",
     ]);
     if (familyKinds.has(kind)) return drawFamilyBlock(definition, line);
+    if (kind === "wire") {
+      return line(-3, 0, 3, 0);
+    }
+    if (kind === "junction_symbol") {
+      return `${line(-3, 0, 3, 0)}${line(0, -3, 0, 3)}<circle cx="0" cy="0" r="5" fill="#202824"/>`;
+    }
+    if (kind === "cross_no_connection") {
+      return `${line(0, -3, 0, 3)}<path class="symbol-line" d="M${-3 * u} 0H${-0.8 * u}Q0 ${-1.35 * u} ${0.8 * u} 0H${3 * u}"/>`;
+    }
+    if (kind === "signal_bus") {
+      return `<path class="symbol-bus" d="M${-4 * u} 0H${4 * u}"/>${line(-1, -3, -1, -0.15)}${line(1, -3, 1, -0.15)}`;
+    }
+    if (kind === "net_label") {
+      return `${line(-3, 0, -2.25, 0)}<path class="symbol-fill" d="M${-2.25 * u} ${-0.8 * u}H${1.6 * u}L${2.55 * u} 0L${1.6 * u} ${0.8 * u}H${-2.25 * u}Z"/><text class="component-value" x="${-0.15 * u}" y="4">NET</text>`;
+    }
+    if (kind === "test_point") {
+      return `${line(0, 2, 0, 0.7)}<circle class="symbol-fill" cx="0" cy="0" r="${0.7 * u}"/><circle cx="0" cy="0" r="4" fill="#202824"/>`;
+    }
+    if (kind === "jumper") {
+      return `${line(-3, 0, -1.3, 0)}${line(1.3, 0, 3, 0)}<circle class="symbol-fill" cx="${-1.05 * u}" cy="0" r="6"/><circle class="symbol-fill" cx="${1.05 * u}" cy="0" r="6"/>${line(-0.8, -0.45, 0.8, -0.45, "symbol-accent")}`;
+    }
+    if (kind === "shield") {
+      return `${line(-4, 0, 4, 0)}<rect class="symbol-accent" x="${-2.7 * u}" y="${-1.45 * u}" width="${5.4 * u}" height="${2.9 * u}" rx="16"/>${line(2, 1.45, 2, 3, "symbol-accent")}`;
+    }
+    if (kind === "chassis_ground") {
+      return `${line(0, -2, 0, -0.55)}${line(-1.35, -0.55, 1.35, -0.55)}${line(-0.9, -0.55, -1.4, 0.25)}${line(-0.3, -0.55, -0.8, 0.25)}${line(0.3, -0.55, -0.2, 0.25)}${line(0.9, -0.55, 0.4, 0.25)}`;
+    }
+    if (kind === "no_connect") {
+      return `${line(-2, 0, -0.4, 0)}${line(-0.35, -0.65, 0.95, 0.65)}${line(0.95, -0.65, -0.35, 0.65)}`;
+    }
+    if (kind === "net_tie") {
+      return `${line(-3, 0, -0.75, 0)}${line(0.75, 0, 3, 0)}<rect class="symbol-fill" x="${-0.75 * u}" y="${-0.42 * u}" width="${1.5 * u}" height="${0.84 * u}" rx="4"/>`;
+    }
+    if (kind === "kelvin_4wire") {
+      return `${line(-4, -1, -1.25, -1)}<rect class="symbol-fill" x="${-1.25 * u}" y="${-1.48 * u}" width="${2.5 * u}" height="${0.96 * u}"/>${line(1.25, -1, 4, -1)}${line(-4, 1, -1.25, 1)}${line(-1.25, 1, -1.25, -0.52)}${line(1.25, -0.52, 1.25, 1)}${line(1.25, 1, 4, 1)}<circle cx="${-1.25 * u}" cy="${-1 * u}" r="4" fill="#202824"/><circle cx="${1.25 * u}" cy="${-1 * u}" r="4" fill="#202824"/>`;
+    }
+    if (kind === "isolation_barrier") {
+      return `${line(-2, 0, -0.55, 0)}${line(0.55, 0, 2, 0)}${line(-0.2, -3.2, -0.2, 3.2, "symbol-linkage")}${line(0.2, -3.2, 0.2, 3.2, "symbol-linkage")}`;
+    }
     if (kind === "offpage_connector") {
       return `<path class="symbol-fill" d="M${-2.2 * u} ${-1.2 * u}H${1.45 * u}L${2.65 * u} 0L${1.45 * u} ${1.2 * u}H${-2.2 * u}Z"/>${line(2.65, 0, 3, 0)}`;
     }

@@ -8,6 +8,8 @@ de estas herramientas:
 
 - `electroia_get_capabilities`
 - `electroia_get_diagram_contract`
+- `electroia_search_symbols`
+- `electroia_get_symbol`
 - `electroia_render_diagram`
 - `electroia_analyze_request`
 - `electroia_generate_relay_driver`
@@ -18,8 +20,9 @@ La IA llamante decide la topología, los valores y los componentes. La herramien
 su conectividad y devuelve un SVG sobre una rejilla común.
 
 La biblioteca externa contiene las 460 fichas del catálogo y 3 elementos auxiliares
-del motor. Cada definición indica su calidad: 47 símbolos del catálogo tienen geometría
-revisada individualmente y 413 son borradores normalizados por familias. El motor
+del motor. Cada definición indica su calidad: 60 símbolos del catálogo tienen geometría
+revisada individualmente y 400 son borradores normalizados por familias. La familia
+de conexiones y referencias ya está revisada por completo. El motor
 los distingue gráficamente y avisa cuando se utiliza uno pendiente de revisión.
 
 Los generadores de relé y ventilador se conservan como adaptadores de demostración.

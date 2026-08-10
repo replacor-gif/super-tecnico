@@ -1,0 +1,61 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ElectroIA Discovery API",
+    "version": "0.1.0",
+    "description": "Read-only discovery contracts for the ElectroIA private preview. Diagram execution is currently provided through the local MCP stdio server, not through this HTTP description."
+  },
+  "servers": [
+    { "url": "https://app.replacor.com/super-tecnico" }
+  ],
+  "paths": {
+    "/data/electroia/discovery.json": {
+      "get": {
+        "operationId": "getElectroIADiscovery",
+        "summary": "Get machine-readable ElectroIA discovery metadata",
+        "responses": {
+          "200": {
+            "description": "Discovery document",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          }
+        }
+      }
+    },
+    "/data/electroia/tool-manifest.json": {
+      "get": {
+        "operationId": "getElectroIAToolManifest",
+        "summary": "Get tools, responsibilities and input schemas",
+        "responses": {
+          "200": {
+            "description": "Tool manifest",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          }
+        }
+      }
+    },
+    "/data/electroia/diagram-document.schema.json": {
+      "get": {
+        "operationId": "getElectroIADiagramSchema",
+        "summary": "Get the neutral structured-diagram JSON Schema",
+        "responses": {
+          "200": {
+            "description": "JSON Schema",
+            "content": { "application/schema+json": { "schema": { "type": "object" } } }
+          }
+        }
+      }
+    },
+    "/data/electroia/symbol-library.json": {
+      "get": {
+        "operationId": "getElectroIASymbolLibrary",
+        "summary": "Get normalized symbol definitions and quality status",
+        "responses": {
+          "200": {
+            "description": "Normalized symbol library",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          }
+        }
+      }
+    }
+  }
+}

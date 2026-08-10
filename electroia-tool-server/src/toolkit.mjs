@@ -44,6 +44,31 @@ function ensureObject(value, label) {
   return value;
 }
 
+function folded(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+function symbolSummary(symbol) {
+  return {
+    id: symbol.id,
+    name: symbol.name,
+    kind: symbol.kind,
+    designator: symbol.designator,
+    category: symbol.category || "",
+    subcategory: symbol.subcategory || "",
+    aliases: symbol.aliases || "",
+    review_status: symbol.review_status,
+    terminals: Object.entries(symbol.ports || {}).map(([name, definition]) => ({
+      name,
+      side: definition.side,
+      electrical_type: definition.electrical_type,
+    })),
+  };
+}
+
 export async function callElectroIATool(tool, rawArguments = {}) {
   const name = String(tool || "");
   const args = ensureObject(rawArguments, "arguments");
@@ -59,6 +84,39 @@ export async function callElectroIATool(tool, rawArguments = {}) {
       contract: diagramCore.getContract(),
       symbol_registry: diagramCore.getRegistry(),
     };
+  }
+
+  if (name === "electroia_search_symbols") {
+    const query = folded(args.query).trim();
+    if (!query) throw new Error("query debe contener al menos un término de búsqueda");
+    const category = folded(args.category).trim();
+    const status = String(args.review_status || "").trim();
+    const limit = Math.max(1, Math.min(50, Number.isInteger(args.limit) ? args.limit : 12));
+    const matches = diagramCore.getRegistry().symbols.filter((symbol) => {
+      const haystack = folded([
+        symbol.id, symbol.name, symbol.kind, symbol.designator,
+        symbol.category, symbol.subcategory, symbol.catalog_drawing_type,
+        symbol.aliases, symbol.keywords, symbol.description, symbol.interpretation,
+      ].join(" "));
+      if (!haystack.includes(query)) return false;
+      if (category && !folded(`${symbol.category} ${symbol.subcategory}`).includes(category)) return false;
+      if (status && symbol.review_status !== status) return false;
+      return true;
+    });
+    return {
+      ok: true,
+      tool: name,
+      query: args.query,
+      total: matches.length,
+      symbols: matches.slice(0, limit).map(symbolSummary),
+    };
+  }
+
+  if (name === "electroia_get_symbol") {
+    const symbolId = String(args.symbol_id || "").trim().toUpperCase();
+    const symbol = diagramCore.getRegistry().symbols.find((item) => item.id === symbolId);
+    if (!symbol) throw new Error(`Símbolo no encontrado: ${symbolId || "vacío"}`);
+    return { ok: true, tool: name, symbol };
   }
 
   if (name === "electroia_render_diagram") {

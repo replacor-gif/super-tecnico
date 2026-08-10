@@ -408,6 +408,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "comparador.html",
         "averias.html",
         "feedback.html",
+        "llms.txt",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/index.html",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/styles.css",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/engine.js",
@@ -415,6 +416,12 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagram-core.js",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagram.js",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/app.js",
+        "electroia-tool-server/package.json",
+        "electroia-tool-server/pnpm-lock.yaml",
+        "electroia-tool-server/server.json",
+        "electroia-tool-server/src/cli.mjs",
+        "electroia-tool-server/src/index.mjs",
+        "electroia-tool-server/src/toolkit.mjs",
         "simbolos.html",
         "formacion-climatizacion.html",
         "electronica-placas.html",
@@ -633,6 +640,14 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
     write_json(
         output / "data" / "electroia" / "diagram-document.schema.json",
         read_json(source_root / "data" / "electroia" / "diagram-document.schema.json"),
+    )
+    write_json(
+        output / "data" / "electroia" / "discovery.json",
+        read_json(source_root / "data" / "electroia" / "discovery.json"),
+    )
+    write_json(
+        output / "data" / "electroia" / "discovery.openapi.json",
+        read_json(source_root / "data" / "electroia" / "discovery.openapi.json"),
     )
     write_json(
         output / "data" / "electroia" / "symbol-library.json",

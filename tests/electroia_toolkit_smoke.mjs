@@ -19,13 +19,31 @@ assert.equal(diagramContract.contract.selects_components, false);
 assert.equal(diagramContract.contract.grid_pitch_mil, 50);
 assert.equal(diagramContract.symbol_registry.symbols.length, 463);
 assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.catalog_id).length, 460);
-assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "engine_reviewed").length, 47);
-assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "auto_draft").length, 413);
+assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "engine_reviewed").length, 60);
+assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "auto_draft").length, 400);
 assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "engine_internal").length, 3);
 for (const symbolId of ["SYM-0001", "SYM-0006", "SYM-0011", "SYM-0110", "SYM-0123", "SYM-0129", "SYM-0130", "SYM-0151", "SYM-0299", "SYM-0387", "SYM-0390", "SYM-0460"]) {
   assert.ok(diagramContract.symbol_registry.symbols.some((symbol) => symbol.id === symbolId), symbolId);
 }
 
+const kelvinSearch = await callElectroIATool("electroia_search_symbols", {
+  query: "kelvin",
+  category: "conexiones",
+  review_status: "engine_reviewed",
+});
+assert.equal(kelvinSearch.ok, true);
+assert.equal(kelvinSearch.total, 1);
+assert.equal(kelvinSearch.symbols[0].id, "SYM-0430");
+assert.deepEqual(kelvinSearch.symbols[0].terminals.map((item) => item.name), ["I+", "S+", "I-", "S-"]);
+const kelvinSymbol = await callElectroIATool("electroia_get_symbol", { symbol_id: "sym-0430" });
+assert.equal(kelvinSymbol.symbol.kind, "kelvin_4wire");
+assert.equal(kelvinSymbol.symbol.review_status, "engine_reviewed");
+const aliasSearch = await callElectroIATool("electroia_search_symbols", { query: "empalme" });
+assert.ok(aliasSearch.symbols.some((item) => item.id === "SYM-0002"));
+await assert.rejects(callElectroIATool("electroia_get_symbol", { symbol_id: "SYM-9999" }), /no encontrado/);
+
+const autoDraftSymbol = diagramContract.symbol_registry.symbols.find((symbol) => symbol.review_status === "auto_draft");
+const autoDraftPort = Object.keys(autoDraftSymbol.ports)[0];
 const draftDiagram = await callElectroIATool("electroia_render_diagram", {
   document: {
     schema_version: "1.0",
@@ -33,10 +51,10 @@ const draftDiagram = await callElectroIATool("electroia_render_diagram", {
     standard_profile: "IEC_EXPERIMENTAL",
     title: "Prueba de símbolo provisional",
     components: [
-      { ref: "W1", symbol_id: "SYM-0001", position: { x: 4, y: 4 } },
-      { ref: "W2", symbol_id: "SYM-0001", position: { x: 12, y: 4 } },
+      { ref: "W1", symbol_id: autoDraftSymbol.id, position: { x: 4, y: 4 } },
+      { ref: "W2", symbol_id: autoDraftSymbol.id, position: { x: 12, y: 4 } },
     ],
-    nets: [{ id: "N1", connections: ["W1.2", "W2.1"] }],
+    nets: [{ id: "N1", connections: [`W1.${autoDraftPort}`, `W2.${autoDraftPort}`] }],
   },
 });
 assert.equal(draftDiagram.ok, true);

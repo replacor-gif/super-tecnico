@@ -1,0 +1,21 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.replacor-gif/electroia-diagrams",
+  "title": "ElectroIA Diagram Engine",
+  "description": "Validates and renders structured electrical diagrams as deterministic SVG.",
+  "version": "0.6.0",
+  "websiteUrl": "https://github.com/replacor-gif/super-tecnico/tree/agent/intuitive-navigation/electroia-tool-server",
+  "repository": {
+    "url": "https://github.com/replacor-gif/super-tecnico",
+    "source": "github",
+    "id": "1302023702",
+    "subfolder": "electroia-tool-server"
+  },
+  "_meta": {
+    "io.modelcontextprotocol.registry/publisher-provided": {
+      "status": "private-preview",
+      "distributionReady": false,
+      "note": "Metadata prepared for validation. Add a published package or remote transport before registry publication."
+    }
+  }
+}

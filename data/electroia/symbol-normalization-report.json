@@ -5,24 +5,26 @@
   "engine_symbols": 463,
   "symbols_with_ports": 463,
   "status_counts": {
-    "auto_draft": 413,
+    "auto_draft": 400,
     "engine_internal": 3,
-    "engine_reviewed": 47
+    "engine_reviewed": 60
   },
   "catalog_status_counts": {
-    "auto_draft": 413,
-    "engine_reviewed": 47
+    "auto_draft": 400,
+    "engine_reviewed": 60
   },
   "family_counts": {
     "aux_contact_no": 1,
     "capacitor": 1,
+    "chassis_ground": 1,
     "circuit_breaker": 1,
     "circuit_breaker_3p": 1,
     "comparator": 1,
-    "connector_block": 31,
+    "connector_block": 18,
     "contact_nc": 1,
     "contact_no": 1,
     "contactor_3p": 1,
+    "cross_no_connection": 1,
     "digital_block": 73,
     "diode": 1,
     "distribution_board": 1,
@@ -36,10 +38,14 @@
     "generic_3p": 6,
     "ground": 1,
     "installation_block": 8,
+    "isolation_barrier": 1,
     "isolation_block": 9,
     "isolation_transformer": 1,
     "isolator": 1,
+    "jumper": 1,
     "junction_box": 1,
+    "junction_symbol": 1,
+    "kelvin_4wire": 1,
     "lamp": 1,
     "limit_switch": 1,
     "machine_block": 14,
@@ -50,6 +56,9 @@
     "mosfet_n": 1,
     "motor_1phase": 1,
     "motor_3phase": 1,
+    "net_label": 1,
+    "net_tie": 1,
+    "no_connect": 1,
     "offpage_connector": 1,
     "optocoupler": 1,
     "overload_3p": 1,
@@ -67,15 +76,104 @@
     "selector_switch": 1,
     "semiconductor_block": 41,
     "sensor_block": 42,
+    "shield": 1,
+    "signal_bus": 1,
     "socket_outlet": 1,
     "source_ac": 1,
     "source_block": 4,
     "source_dc": 1,
     "switch_no": 1,
     "terminal_block": 1,
+    "test_point": 1,
     "thermistor_ntc": 1,
-    "transformer": 1
+    "transformer": 1,
+    "wire": 1
   },
+  "category_quality": {
+    "Circuitos integrados funcionales": {
+      "total": 50,
+      "engine_reviewed": 1,
+      "auto_draft": 49
+    },
+    "Componentes pasivos": {
+      "total": 34,
+      "engine_reviewed": 5,
+      "auto_draft": 29
+    },
+    "Conectores y comunicaciones": {
+      "total": 19,
+      "engine_reviewed": 1,
+      "auto_draft": 18
+    },
+    "Conexiones y referencias": {
+      "total": 17,
+      "engine_reviewed": 17,
+      "auto_draft": 0
+    },
+    "Dispositivos especiales": {
+      "total": 5,
+      "engine_reviewed": 0,
+      "auto_draft": 5
+    },
+    "Electrónica digital": {
+      "total": 73,
+      "engine_reviewed": 0,
+      "auto_draft": 73
+    },
+    "Fuentes y alimentación": {
+      "total": 11,
+      "engine_reviewed": 3,
+      "auto_draft": 8
+    },
+    "Instalaciones y señalización": {
+      "total": 21,
+      "engine_reviewed": 13,
+      "auto_draft": 8
+    },
+    "Medida e indicación": {
+      "total": 12,
+      "engine_reviewed": 0,
+      "auto_draft": 12
+    },
+    "Máquinas y actuadores": {
+      "total": 18,
+      "engine_reviewed": 4,
+      "auto_draft": 14
+    },
+    "Optoelectrónica y aislamiento": {
+      "total": 10,
+      "engine_reviewed": 1,
+      "auto_draft": 9
+    },
+    "Potencia y climatización": {
+      "total": 66,
+      "engine_reviewed": 0,
+      "auto_draft": 66
+    },
+    "Protecciones eléctricas": {
+      "total": 16,
+      "engine_reviewed": 4,
+      "auto_draft": 12
+    },
+    "Relés, interruptores y actuadores": {
+      "total": 23,
+      "engine_reviewed": 9,
+      "auto_draft": 14
+    },
+    "Semiconductores discretos": {
+      "total": 43,
+      "engine_reviewed": 2,
+      "auto_draft": 41
+    },
+    "Sensores y transductores": {
+      "total": 42,
+      "engine_reviewed": 0,
+      "auto_draft": 42
+    }
+  },
+  "fully_reviewed_categories": [
+    "Conexiones y referencias"
+  ],
   "coverage_percent": 100,
   "quality_policy": {
     "engine_reviewed": "Geometría y terminales revisados en el motor experimental.",

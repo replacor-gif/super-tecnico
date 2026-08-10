@@ -143,6 +143,11 @@ def normalize_record(record: dict, reviewed: dict | None) -> dict:
             "designator": record.get("designador") or reviewed.get("designator") or "X",
             "category": record.get("categoria") or "",
             "subcategory": record.get("subcategoria") or "",
+            "aliases": record.get("alias") or "",
+            "keywords": record.get("etiquetas") or "",
+            "description": record.get("descripcion") or "",
+            "interpretation": record.get("interpretacion") or "",
+            "catalog_standard": record.get("norma") or "",
             "catalog_drawing_type": record.get("tipo_dibujo") or "",
             "source_asset": record.get("archivo_svg") or "",
             "review_status": "engine_reviewed",
@@ -162,6 +167,11 @@ def normalize_record(record: dict, reviewed: dict | None) -> dict:
         "designator": record.get("designador") or "X",
         "category": record.get("categoria") or "",
         "subcategory": record.get("subcategoria") or "",
+        "aliases": record.get("alias") or "",
+        "keywords": record.get("etiquetas") or "",
+        "description": record.get("descripcion") or "",
+        "interpretation": record.get("interpretacion") or "",
+        "catalog_standard": record.get("norma") or "",
         "catalog_drawing_type": record.get("tipo_dibujo") or "",
         "standard_profile": "IEC_EXPERIMENTAL",
         "grid_pitch_mil": 50,
@@ -206,9 +216,14 @@ def build_outputs() -> tuple[str, str, str]:
     status_counts = Counter(item["review_status"] for item in symbols)
     catalog_status_counts = Counter(item["review_status"] for item in catalog_symbols)
     family_counts = Counter(item.get("geometry_template") or item["kind"] for item in catalog_symbols)
+    category_quality = {}
+    for item in catalog_symbols:
+        quality = category_quality.setdefault(item["category"], {"total": 0, "engine_reviewed": 0, "auto_draft": 0})
+        quality["total"] += 1
+        quality[item["review_status"]] += 1
     library = {
         "schema_version": "1.0",
-        "library_version": "0.4",
+        "library_version": "0.5",
         "engine_contract_version": "1.0",
         "standard_profile": "IEC_EXPERIMENTAL",
         "grid_pitch_mil": 50,
@@ -228,6 +243,10 @@ def build_outputs() -> tuple[str, str, str]:
         "status_counts": dict(sorted(status_counts.items())),
         "catalog_status_counts": dict(sorted(catalog_status_counts.items())),
         "family_counts": dict(sorted(family_counts.items())),
+        "category_quality": dict(sorted(category_quality.items())),
+        "fully_reviewed_categories": sorted(
+            category for category, quality in category_quality.items() if quality["auto_draft"] == 0
+        ),
         "coverage_percent": 100,
         "quality_policy": {
             "engine_reviewed": "Geometría y terminales revisados en el motor experimental.",

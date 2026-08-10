@@ -6,7 +6,7 @@
   "provider_neutral": true,
   "embedded_ai_model": false,
   "billing_required_by_electroia": false,
-  "diagram_engine_version": "1.3.0-alpha.1",
+  "diagram_engine_version": "1.4.0-alpha.1",
   "diagram_contract_version": "1.0",
   "design_model_version": "0.5",
   "core_policy": {
@@ -39,10 +39,11 @@
     "normalized_symbol_count": 460,
     "catalog_symbol_count": 460,
     "engine_symbol_count": 463,
-    "reviewed_catalog_symbol_count": 47,
-    "auto_draft_catalog_symbol_count": 413,
+    "reviewed_catalog_symbol_count": 60,
+    "auto_draft_catalog_symbol_count": 400,
     "internal_template_count": 3,
     "symbol_quality_policy": "Los símbolos auto_draft son utilizables como estructura provisional, se dibujan diferenciados y generan una advertencia hasta su revisión gráfica.",
+    "reviewed_families": ["connections_and_references"],
     "current_legacy_topologies": [
       "low_side_relay_driver",
       "isolated_low_side_relay_driver",
@@ -58,6 +59,15 @@
     ],
     "raw_inputs_not_yet_supported": ["raw_photo", "raw_hand_drawn_sketch"],
     "image_contract": "La IA que ve la imagen extrae símbolos, terminales y redes; ElectroIA valida y dibuja el documento estructurado."
+  },
+  "discovery": {
+    "status": "private_preview",
+    "llms_path": "llms.txt",
+    "machine_manifest_path": "data/electroia/discovery.json",
+    "openapi_path": "data/electroia/discovery.openapi.json",
+    "mcp_server_metadata_path": "electroia-tool-server/server.json",
+    "remote_mcp_available": false,
+    "local_mcp_available": true
   },
   "tools": [
     {
@@ -76,6 +86,33 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {}
+      }
+    },
+    {
+      "name": "electroia_search_symbols",
+      "description": "Busca símbolos normalizados por nombre, tipo o categoría y devuelve sus terminales y estado de revisión.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["query"],
+        "properties": {
+          "query": { "type": "string", "minLength": 1, "maxLength": 100 },
+          "category": { "type": "string", "minLength": 1, "maxLength": 100 },
+          "review_status": { "type": "string", "enum": ["engine_reviewed", "auto_draft", "engine_internal"] },
+          "limit": { "type": "integer", "minimum": 1, "maximum": 50, "default": 12 }
+        }
+      }
+    },
+    {
+      "name": "electroia_get_symbol",
+      "description": "Devuelve la definición exacta, dimensiones y terminales de un símbolo normalizado.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["symbol_id"],
+        "properties": {
+          "symbol_id": { "type": "string", "minLength": 3, "maxLength": 64 }
+        }
       }
     },
     {

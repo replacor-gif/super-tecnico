@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "name": "ElectroIA",
+  "title": "Motor neutral de diagramas electrotécnicos para IAs",
+  "status": "private_preview",
+  "provider_neutral": true,
+  "embedded_ai_model": false,
+  "purpose": "Validar símbolos, terminales y redes decididos por una IA y generar un SVG determinista sobre una rejilla común.",
+  "responsibility_boundary": {
+    "calling_ai": [
+      "interpret_user_or_image",
+      "choose_topology",
+      "calculate_values",
+      "select_components",
+      "submit_structured_diagram"
+    ],
+    "electroia": [
+      "search_normalized_symbols",
+      "validate_document",
+      "route_orthogonal_connections",
+      "render_single_canvas_svg",
+      "report_quality_and_connectivity_diagnostics"
+    ]
+  },
+  "interfaces": {
+    "mcp_stdio": {
+      "status": "source_available",
+      "transport": "stdio",
+      "metadata": "../../electroia-tool-server/server.json",
+      "source": "https://github.com/replacor-gif/super-tecnico/tree/agent/intuitive-navigation/electroia-tool-server"
+    },
+    "browser_javascript": {
+      "status": "private_preview",
+      "engine": "../../archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagram-core.js",
+      "symbol_library": "../../archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagram-symbol-library.js"
+    },
+    "remote_mcp": {
+      "status": "planned",
+      "transport": "streamable-http"
+    }
+  },
+  "contracts": {
+    "tool_manifest": "tool-manifest.json",
+    "diagram_schema": "diagram-document.schema.json",
+    "symbol_library": "symbol-library.json",
+    "normalization_report": "symbol-normalization-report.json",
+    "openapi_discovery": "discovery.openapi.json"
+  },
+  "quality": {
+    "catalog_symbols": 460,
+    "reviewed_catalog_symbols": 60,
+    "auto_draft_catalog_symbols": 400,
+    "reviewed_families": ["connections_and_references"],
+    "draft_policy": "An auto_draft symbol is usable only as provisional structure and always produces a warning."
+  },
+  "recommended_ai_workflow": [
+    "electroia_get_capabilities",
+    "electroia_search_symbols",
+    "electroia_get_symbol",
+    "electroia_render_diagram"
+  ],
+  "security": {
+    "preview_access": "private",
+    "credentials_in_discovery_files": false,
+    "remote_public_execution": false
+  }
+}

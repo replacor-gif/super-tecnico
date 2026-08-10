@@ -18,7 +18,7 @@ function toolError(error) {
 }
 
 function createServer() {
-  const server = new McpServer({ name: "electroia-tools", version: "0.5.0" });
+  const server = new McpServer({ name: "electroia-tools", version: "0.6.0" });
 
   server.registerTool(
     "electroia_get_capabilities",
@@ -44,6 +44,41 @@ function createServer() {
     async () => {
       try {
         return toolResult(await callElectroIATool("electroia_get_diagram_contract", {}));
+      } catch (error) {
+        return toolError(error);
+      }
+    }
+  );
+
+  server.registerTool(
+    "electroia_search_symbols",
+    {
+      description: "Busca símbolos normalizados por nombre, tipo o categoría y devuelve sus terminales y estado de revisión.",
+      inputSchema: z.object({
+        query: z.string().min(1).max(100),
+        category: z.string().min(1).max(100).optional(),
+        review_status: z.enum(["engine_reviewed", "auto_draft", "engine_internal"]).optional(),
+        limit: z.number().int().min(1).max(50).optional(),
+      }),
+    },
+    async (args) => {
+      try {
+        return toolResult(await callElectroIATool("electroia_search_symbols", args));
+      } catch (error) {
+        return toolError(error);
+      }
+    }
+  );
+
+  server.registerTool(
+    "electroia_get_symbol",
+    {
+      description: "Devuelve la definición exacta, dimensiones y terminales de un símbolo normalizado.",
+      inputSchema: z.object({ symbol_id: z.string().min(3).max(64) }),
+    },
+    async (args) => {
+      try {
+        return toolResult(await callElectroIATool("electroia_get_symbol", args));
       } catch (error) {
         return toolError(error);
       }
