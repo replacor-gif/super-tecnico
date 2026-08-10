@@ -56,6 +56,7 @@
       ntc: ['NTC Beta calculator', 'Estimate temperature or resistance with the Beta approximation.'],
       windings: ['Winding balance', 'Compare three phase resistances and calculate deviation from the mean.'],
       frequency: ['Frequency, period and RPM', 'Convert frequency to period, pulse-derived speed and synchronous speed.'],
+      ducts: ['Air duct sizing', 'Sizes a rectangular duct section by section and suggests grilles and equivalent round ducts.'],
     },
     pt: {
       ohm: ['Lei de Ohm e potência', 'Calcula tensão, corrente, resistência e potência a partir de dois valores conhecidos.'],
@@ -73,6 +74,7 @@
       ntc: ['Calculadora NTC por Beta', 'Estima temperatura ou resistência com a aproximação Beta.'],
       windings: ['Equilíbrio de enrolamentos', 'Compara três resistências de fase e calcula o desvio à média.'],
       frequency: ['Frequência, período e RPM', 'Converte frequência em período, velocidade por pulsos e velocidade síncrona.'],
+      ducts: ['Dimensionamento de condutas', 'Dimensiona uma conduta retangular por troços e sugere grelhas e equivalências circulares.'],
     },
     fr: {
       ohm: ['Loi d’Ohm et puissance', 'Calcule tension, courant, résistance et puissance à partir de deux valeurs connues.'],
@@ -90,6 +92,7 @@
       ntc: ['Calculatrice NTC Beta', 'Estime la température ou la résistance avec l’approximation Beta.'],
       windings: ['Équilibre des bobinages', 'Compare trois résistances de phase et calcule l’écart à la moyenne.'],
       frequency: ['Fréquence, période et tr/min', 'Convertit la fréquence en période et en vitesses par impulsions ou synchrones.'],
+      ducts: ['Dimensionnement des gaines', 'Dimensionne une gaine rectangulaire par tronçons et propose grilles et équivalents circulaires.'],
     },
   };
   function language() { return window.ST_I18N?.language || 'es'; }
@@ -102,7 +105,7 @@
   const toolIcons = {
     ohm: 'Ω', colors: '▥', smdr: 'SMD', capcode: 'µF',
     equivalent: 'Σ', divider: '÷', rc: 'τ', led: 'LED', zener: 'Vz', timer555: '555', busdc: 'DC',
-    caphealth: '%', ntc: '°C', windings: '3Φ', frequency: 'Hz'
+    caphealth: '%', ntc: '°C', windings: '3Φ', frequency: 'Hz', ducts: '▰'
   };
 
   const unitFactors = {
@@ -257,6 +260,33 @@
       init(panel){panel.querySelector('.load-example').onclick=()=>{document.getElementById('w1').value='1.82';document.getElementById('w2').value='1.79';document.getElementById('w3').value='2.08';};panel.querySelector('.calculate').onclick=()=>{try{const vals=[scaled('w1','w1U'),scaled('w2','w2U'),scaled('w3','w3U')];const r=C.windingBalance(vals);panel.result.innerHTML=result(r.status,[metric('Media',C.formatEngineering(r.average,'Ω')),metric('Desviación máxima',`${r.maxDeviation.toLocaleString('es-ES',{maximumFractionDigits:2})} %`),metric('Diferencia máx.-mín.',`${r.spread.toLocaleString('es-ES',{maximumFractionDigits:2})} %`),metric('U-V',`${r.deviations[0].toLocaleString('es-ES',{maximumFractionDigits:2})} %`),metric('V-W',`${r.deviations[1].toLocaleString('es-ES',{maximumFractionDigits:2})} %`),metric('W-U',`${r.deviations[2].toLocaleString('es-ES',{maximumFractionDigits:2})} %`)],'La resistencia de los cables, la temperatura del compresor y la resolución del instrumento pueden alterar mucho medidas tan bajas. Compensa las puntas y confirma aislamiento a masa.',r.severity); }catch(e){showError(panel.result,e);}};}
     },
     {
+      id:'ducts', category:'Climatización', title:'Dimensionado de conductos de aire',
+      description:'Calcula el caudal y reduce un conducto rectangular tramo a tramo, con rejillas y equivalencias circulares normalizadas.',
+      body:()=>`<div class="method-note"><strong>Método práctico REPLACOR</strong><span>Preparado a partir de experiencia en instalaciones habituales y reforzado con control de velocidad y medidas normalizadas.</span></div><div class="form-grid">${selectField('Punto de partida','ductMode',[['direct','Ya conozco el caudal'],['room','Calcularlo desde el local']])}<div class="field" id="ductDirectWrap"><label for="ductAirflow">Caudal del ramal</label><div class="input-group"><input id="ductAirflow" inputmode="decimal" value="2500"><select><option>m³/h</option></select></div></div><div class="field full" id="ductRoomWrap" hidden><div class="form-grid three">${field('Ancho del local (m)','ductRoomWidth','10','number','min="0.1" step="0.1"')}${field('Largo del local (m)','ductRoomLength','8','number','min="0.1" step="0.1"')}${field('Alto del local (m)','ductRoomHeight','3','number','min="0.1" step="0.1"')}${field('Renovaciones por hora','ductAirChanges','8','number','min="0.1" step="0.1"')}${field('Minutos en marcha','ductRunMinutes','60','number','min="1" max="60" step="1"')}${field('Minutos parado','ductStopMinutes','0','number','min="0" step="1"')}${field('Caudal adicional (m³/h)','ductExtraAirflow','0','number','min="0" step="10"')}</div></div>${field('Número de rejillas del ramal','ductOutlets','8','number','min="1" max="30" step="1"')}${field('Altura común del conducto (cm)','ductHeight','25','number','min="10" max="150" step="5"')}${field('Anchura de cada rejilla (cm)','ductGrilleWidth','35','number','min="10" max="200" step="5"')}${selectField('Tipo de lamas','ductGrilleType',[['double','Lamas dobles'],['simple','Lamas simples']])}</div><details class="advanced-settings"><summary>Ajustes profesionales</summary><div class="form-grid">${field('Velocidad objetivo del conducto (m/s)','ductVelocity','3.7','number','min="0.8" max="12" step="0.1"')}${field('Velocidad de rejilla personalizada (m/s)','ductGrilleVelocity','','number','min="0.5" max="6" step="0.1"')}<div class="field full"><small>Si dejas vacía la velocidad de rejilla se aplican los valores prácticos del Excel: aproximadamente 2,5 m/s para lamas simples y 1,9 m/s para lamas dobles.</small></div></div></details>${actions()}`,
+      init(panel){
+        const mode=document.getElementById('ductMode');
+        const updateMode=()=>{const room=mode.value==='room';document.getElementById('ductDirectWrap').hidden=room;document.getElementById('ductRoomWrap').hidden=!room;};
+        mode.onchange=updateMode;
+        panel.querySelector('.load-example').onclick=()=>{mode.value='direct';document.getElementById('ductAirflow').value='2500';document.getElementById('ductOutlets').value='8';document.getElementById('ductHeight').value='25';document.getElementById('ductGrilleWidth').value='35';document.getElementById('ductGrilleType').value='double';document.getElementById('ductVelocity').value='3.7';document.getElementById('ductGrilleVelocity').value='';updateMode();};
+        panel.querySelector('.calculate').onclick=()=>{try{
+          let airflow=n('ductAirflow');
+          let roomData=null;
+          if(mode.value==='room'){
+            roomData=C.ventilationAirflow(n('ductRoomWidth'),n('ductRoomLength'),n('ductRoomHeight'),n('ductAirChanges'),n('ductRunMinutes'),n('ductStopMinutes'),n('ductExtraAirflow'));
+            airflow=roomData.airflowM3h;
+          }
+          const customGrilleVelocity=document.getElementById('ductGrilleVelocity').value.trim();
+          const r=C.ductSizing({airflowM3h:airflow,outletCount:n('ductOutlets'),ductHeightCm:n('ductHeight'),ductVelocityMps:n('ductVelocity'),grilleWidthCm:n('ductGrilleWidth'),grilleType:document.getElementById('ductGrilleType').value,grilleVelocityMps:customGrilleVelocity?n('ductGrilleVelocity'):null});
+          const fmt=(value,decimals=1)=>value.toLocaleString('es-ES',{maximumFractionDigits:decimals,minimumFractionDigits:decimals});
+          const metrics=[metric('Caudal de cálculo',`${fmt(r.airflowM3h,0)} m³/h`),metric('Caudal por rejilla',`${fmt(r.outletAirflowM3h,0)} m³/h`),metric('Velocidad real de entrada',`${fmt(r.mainSection.actualVelocityMps,2)} m/s`),metric('Rejilla orientativa',`${fmt(r.grilleWidthCm,0)} × ${fmt(r.recommendedGrilleHeightCm,0)} cm`),metric('Circular liso equivalente',`Ø ${fmt(r.mainSection.smoothRoundMm,0)} mm`),metric('Circular flexible/rugoso',`Ø ${fmt(r.mainSection.roughRoundMm,0)} mm`)];
+          if(roomData){metrics.unshift(metric('Volumen del local',`${fmt(roomData.roomVolumeM3,1)} m³`),metric('Marcha efectiva',`${fmt(roomData.activeMinutesPerHour,0)} min/h`));}
+          const rows=r.sections.map((section,index)=>`<div class="duct-section-row" role="row"><strong class="duct-section-name">${index===0?'Entrada':`Tras salida ${index}`}</strong><span><small>Caudal</small>${fmt(section.remainingAirflowM3h,0)} m³/h</span><span><small>Rectangular</small><b>${fmt(section.recommendedWidthCm,0)} × ${fmt(section.ductHeightCm,0)} cm</b></span><span><small>Velocidad</small>${fmt(section.actualVelocityMps,2)} m/s</span><span><small>Circular liso</small>Ø ${fmt(section.smoothRoundMm,0)} mm</span><span><small>Flexible/rugoso</small>Ø ${fmt(section.roughRoundMm,0)} mm</span></div>`).join('');
+          panel.result.innerHTML=result(`${fmt(r.mainSection.recommendedWidthCm,0)} × ${fmt(r.mainSection.ductHeightCm,0)} cm`,metrics,`${r.status}. Predimensionado orientativo: antes de fabricar, comprueba pérdidas de carga, codos, longitud equivalente, nivel sonoro, equilibrado y curva disponible del ventilador.`,r.severity)+`<section class="duct-sections"><div class="duct-sections-heading"><strong>Reducción por tramos</strong><span>Medidas redondeadas hacia arriba</span></div><div class="duct-section-list" role="table" aria-label="Reducción del conducto por tramos">${rows}</div></section>`;
+        }catch(e){showError(panel.result,e);}};
+        updateMode();
+      }
+    },
+    {
       id:'frequency', category:'Señales y motores', title:'Frecuencia, periodo y RPM',
       description:'Convierte frecuencia a periodo, velocidad por pulsos y velocidad síncrona por pares de polos.',
       body:()=>`<div class="form-grid three">${unitField('Frecuencia','freq','50','freqU',['Hz','kHz'])}${field('Pulsos por revolución','ppr','2','number','min="0.0001" step="0.1"')}${field('Pares de polos','polePairs','2','number','min="0.5" step="0.5"')}</div>${actions()}`,
@@ -269,7 +299,7 @@
     ['Fundamentos', t => t.id === 'ohm'],
     ['Identificación', t => ['colors','smdr','capcode'].includes(t.id)],
     ['Pasivos y circuitos', t => ['equivalent','divider','rc','led','zener','timer555','caphealth'].includes(t.id)],
-    ['Aire acondicionado', t => ['busdc','ntc','windings','frequency'].includes(t.id)]
+    ['Aire acondicionado', t => ['busdc','ntc','windings','frequency','ducts'].includes(t.id)]
   ];
 
   function groupForTool(tool) {

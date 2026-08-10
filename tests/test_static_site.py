@@ -929,8 +929,8 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("data/components/details/", components_js)
         self.assertIn("function editDistance(", components_js)
         self.assertIn("nearPart:", components_js)
-        self.assertEqual(len(re.findall(r"\bid:\s*['\"][a-z0-9]+['\"]", calculators_js)), 15)
-        for tool_id in ("led", "zener", "timer555", "busdc"):
+        self.assertEqual(len(re.findall(r"\bid:\s*['\"][a-z0-9]+['\"]", calculators_js)), 16)
+        for tool_id in ("led", "zener", "timer555", "busdc", "ducts"):
             self.assertIn(f"id:'{tool_id}'", calculators_js)
         self.assertIn("Trifásica", calculators_js)
         self.assertIn("circuit-diagram", calculators_js)

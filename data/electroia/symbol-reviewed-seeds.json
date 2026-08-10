@@ -1531,6 +1531,176 @@
       }
     },
     {
+      "id": "SYM-0127",
+      "name": "Fusible térmico",
+      "kind": "thermal_fuse",
+      "designator": "TF",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 4,
+      "ports": {
+        "1": { "x": -3, "y": 0, "side": "west", "electrical_type": "passive" },
+        "2": { "x": 3, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0131",
+      "name": "Descargador de gas",
+      "kind": "gas_discharge_tube",
+      "designator": "GDT",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 4,
+      "ports": {
+        "1": { "x": -3, "y": 0, "side": "west", "electrical_type": "passive" },
+        "2": { "x": 3, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0132",
+      "name": "Pararrayos / descargador",
+      "kind": "surge_protection_device",
+      "designator": "SPD",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 4,
+      "ports": {
+        "1": { "x": -3, "y": 0, "side": "west", "electrical_type": "passive" },
+        "2": { "x": 3, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0133",
+      "name": "Protector ESD",
+      "kind": "esd_protector",
+      "designator": "D",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 4,
+      "ports": {
+        "1": { "x": -3, "y": 0, "side": "west", "electrical_type": "passive" },
+        "2": { "x": 3, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0134",
+      "name": "eFuse",
+      "kind": "efuse",
+      "designator": "U",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "IN": { "x": -4, "y": 0, "side": "west", "electrical_type": "power_in" },
+        "OUT": { "x": 4, "y": 0, "side": "east", "electrical_type": "power_out" },
+        "GND": { "x": 0, "y": 3, "side": "south", "electrical_type": "power_in" }
+      }
+    },
+    {
+      "id": "SYM-0135",
+      "name": "Crowbar con SCR",
+      "kind": "crowbar_scr",
+      "designator": "Q",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 6,
+      "ports": {
+        "A": { "x": -3, "y": 0, "side": "west", "electrical_type": "passive" },
+        "K": { "x": 3, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0136",
+      "name": "Limitador de corriente de arranque NTC",
+      "kind": "inrush_limiter_ntc",
+      "designator": "NTC",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 4,
+      "ports": {
+        "1": { "x": -3, "y": 0, "side": "west", "electrical_type": "passive" },
+        "2": { "x": 3, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0137",
+      "name": "Relé de tensión",
+      "kind": "voltage_relay",
+      "designator": "K",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "COM": { "x": -4, "y": 0, "side": "west", "electrical_type": "input" },
+        "NO": { "x": 4, "y": -1, "side": "east", "electrical_type": "output" },
+        "NC": { "x": 4, "y": 1, "side": "east", "electrical_type": "output" }
+      }
+    },
+    {
+      "id": "SYM-0138",
+      "name": "Protección contra inversión",
+      "kind": "reverse_polarity_protection",
+      "designator": "Q/D",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 4,
+      "ports": {
+        "IN": { "x": -3, "y": 0, "side": "west", "electrical_type": "power_in" },
+        "OUT": { "x": 3, "y": 0, "side": "east", "electrical_type": "power_out" }
+      }
+    },
+    {
+      "id": "SYM-0436",
+      "name": "Fusible rearmable PTC",
+      "kind": "resettable_fuse_ptc",
+      "designator": "F/RT",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 4,
+      "ports": {
+        "1": { "x": -3, "y": 0, "side": "west", "electrical_type": "passive" },
+        "2": { "x": 3, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0437",
+      "name": "Descargador de chispa",
+      "kind": "spark_gap",
+      "designator": "SG",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 4,
+      "ports": {
+        "1": { "x": -3, "y": 0, "side": "west", "electrical_type": "passive" },
+        "2": { "x": 3, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0447",
+      "name": "Protector térmico Klixon",
+      "kind": "thermal_protector_klixon",
+      "designator": "OL",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 6,
+      "height": 4,
+      "ports": {
+        "1": { "x": -3, "y": 0, "side": "west", "electrical_type": "passive" },
+        "2": { "x": 3, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
       "id": "ST-GENERIC-2P",
       "catalog_id": null,
       "name": "Carga genérica",

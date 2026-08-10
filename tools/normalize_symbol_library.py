@@ -223,7 +223,7 @@ def build_outputs() -> tuple[str, str, str]:
         quality[item["review_status"]] += 1
     library = {
         "schema_version": "1.0",
-        "library_version": "0.5",
+        "library_version": "0.6",
         "engine_contract_version": "1.0",
         "standard_profile": "IEC_EXPERIMENTAL",
         "grid_pitch_mil": 50,

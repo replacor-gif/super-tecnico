@@ -34,6 +34,29 @@ near(C.ntcResistanceFromTemperature(25, 10000, 3950), 10000, 1e-8);
 assert.equal(C.windingBalance([1, 1, 1]).status, 'Equilibrado');
 near(C.frequencyData(50, 2, 2).rpmFromPulses, 1500);
 near(C.frequencyData(50, 2, 2).synchronousRpm, 1500);
+const roomAir = C.ventilationAirflow(10, 8, 3, 8, 60, 0, 0);
+near(roomAir.roomVolumeM3, 240);
+near(roomAir.airflowM3h, 1920);
+const cycledAir = C.ventilationAirflow(10, 8, 3, 8, 45, 15, 100);
+near(cycledAir.activeFraction, 0.75);
+near(cycledAir.airflowM3h, 2660);
+const duct = C.ductSizing({
+  airflowM3h: 2500,
+  outletCount: 8,
+  ductHeightCm: 25,
+  ductVelocityMps: 3.7,
+  grilleWidthCm: 35,
+  grilleType: 'double',
+});
+assert.equal(duct.sections.length, 8);
+assert.equal(duct.mainSection.recommendedWidthCm, 80);
+assert.equal(duct.mainSection.smoothRoundMm, 500);
+assert.equal(duct.mainSection.roughRoundMm, 630);
+assert.equal(duct.recommendedGrilleHeightCm, 15);
+near(duct.outletAirflowM3h, 312.5);
+near(duct.mainSection.actualVelocityMps, 2500 / (0.8 * 0.25 * 3600));
+assert.equal(duct.sections[7].recommendedWidthCm, 10);
+assert.equal(duct.status, 'Velocidad equilibrada');
 
 assert.throws(() => C.equivalent([1000, Number.NaN], 'R', 'series'));
 assert.throws(() => C.ohmsLaw('VR', 230, 0));
@@ -42,5 +65,7 @@ assert.throws(() => C.ntcTemperatureFromResistance(-1, 10000, 3950));
 assert.throws(() => C.windingBalance([1, 1, 0]));
 assert.throws(() => C.ledArray(5, 3, 0.02, 2, 1));
 assert.throws(() => C.zenerResistor(5, 5.1, 0.01, 0.005));
+assert.throws(() => C.ventilationAirflow(0, 8, 3, 8));
+assert.throws(() => C.ductSizing({ airflowM3h: 2500, outletCount: 0, ductHeightCm: 25, grilleWidthCm: 35 }));
 
 console.log('Calculadoras: pruebas superadas.');

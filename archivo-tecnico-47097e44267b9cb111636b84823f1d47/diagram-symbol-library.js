@@ -4793,19 +4793,9 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0127": {
     "id": "SYM-0127",
-    "catalog_id": "SYM-0127",
     "name": "Fusible térmico",
-    "kind": "protection_block",
-    "geometry_template": "protection_block",
+    "kind": "thermal_fuse",
     "designator": "TF",
-    "category": "Protecciones eléctricas",
-    "subcategory": "Protección",
-    "aliases": "thermal cutoff",
-    "keywords": "protección fusible sobretensión sobrecorriente",
-    "description": "Se abre de forma irreversible por temperatura.",
-    "interpretation": "Comprueba si protege en serie, en paralelo o desconectando mediante un elemento de control.",
-    "catalog_standard": "Común / educativa",
-    "catalog_drawing_type": "thermal_fuse",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -4824,9 +4814,18 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0127_fusible-termico.svg"
+    "catalog_id": "SYM-0127",
+    "category": "Protecciones eléctricas",
+    "subcategory": "Protección",
+    "aliases": "thermal cutoff",
+    "keywords": "protección fusible sobretensión sobrecorriente",
+    "description": "Se abre de forma irreversible por temperatura.",
+    "interpretation": "Comprueba si protege en serie, en paralelo o desconectando mediante un elemento de control.",
+    "catalog_standard": "Común / educativa",
+    "catalog_drawing_type": "thermal_fuse",
+    "source_asset": "assets/symbols/SYM-0127_fusible-termico.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0128": {
     "id": "SYM-0128",
@@ -4962,11 +4961,28 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0131": {
     "id": "SYM-0131",
-    "catalog_id": "SYM-0131",
     "name": "Descargador de gas",
-    "kind": "protection_block",
-    "geometry_template": "protection_block",
+    "kind": "gas_discharge_tube",
     "designator": "GDT",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 4,
+    "ports": {
+      "1": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 3,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "catalog_id": "SYM-0131",
     "category": "Protecciones eléctricas",
     "subcategory": "Protección",
     "aliases": "gas discharge tube",
@@ -4975,6 +4991,15 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Comprueba si protege en serie, en paralelo o desconectando mediante un elemento de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gdt",
+    "source_asset": "assets/symbols/SYM-0131_descargador-de-gas.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0132": {
+    "id": "SYM-0132",
+    "name": "Pararrayos / descargador",
+    "kind": "surge_protection_device",
+    "designator": "SPD",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -4993,17 +5018,7 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0131_descargador-de-gas.svg"
-  },
-  "SYM-0132": {
-    "id": "SYM-0132",
     "catalog_id": "SYM-0132",
-    "name": "Pararrayos / descargador",
-    "kind": "protection_block",
-    "geometry_template": "protection_block",
-    "designator": "SPD",
     "category": "Protecciones eléctricas",
     "subcategory": "Protección",
     "aliases": "surge protection",
@@ -5012,6 +5027,15 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Comprueba si protege en serie, en paralelo o desconectando mediante un elemento de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "surge_arrester",
+    "source_asset": "assets/symbols/SYM-0132_pararrayos-descargador.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0133": {
+    "id": "SYM-0133",
+    "name": "Protector ESD",
+    "kind": "esd_protector",
+    "designator": "D",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -5030,17 +5054,7 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0132_pararrayos-descargador.svg"
-  },
-  "SYM-0133": {
-    "id": "SYM-0133",
     "catalog_id": "SYM-0133",
-    "name": "Protector ESD",
-    "kind": "protection_block",
-    "geometry_template": "protection_block",
-    "designator": "D",
     "category": "Protecciones eléctricas",
     "subcategory": "Protección",
     "aliases": "ESD array",
@@ -5049,35 +5063,40 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Comprueba si protege en serie, en paralelo o desconectando mediante un elemento de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "esd",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0133_protector-esd.svg"
+    "source_asset": "assets/symbols/SYM-0133_protector-esd.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0134": {
     "id": "SYM-0134",
-    "catalog_id": "SYM-0134",
     "name": "eFuse",
-    "kind": "protection_block",
-    "geometry_template": "protection_block",
+    "kind": "efuse",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "power_in"
+      }
+    },
+    "catalog_id": "SYM-0134",
     "category": "Protecciones eléctricas",
     "subcategory": "Protección",
     "aliases": "electronic fuse",
@@ -5086,35 +5105,34 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Comprueba si protege en serie, en paralelo o desconectando mediante un elemento de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "efuse",
+    "source_asset": "assets/symbols/SYM-0134_efuse.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0135": {
+    "id": "SYM-0135",
+    "name": "Crowbar con SCR",
+    "kind": "crowbar_scr",
+    "designator": "Q",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
+    "width": 7,
+    "height": 6,
     "ports": {
-      "1": {
+      "A": {
         "x": -3,
         "y": 0,
         "side": "west",
         "electrical_type": "passive"
       },
-      "2": {
+      "K": {
         "x": 3,
         "y": 0,
         "side": "east",
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0134_efuse.svg"
-  },
-  "SYM-0135": {
-    "id": "SYM-0135",
     "catalog_id": "SYM-0135",
-    "name": "Crowbar con SCR",
-    "kind": "protection_block",
-    "geometry_template": "protection_block",
-    "designator": "Q",
     "category": "Protecciones eléctricas",
     "subcategory": "Protección",
     "aliases": "crowbar",
@@ -5123,6 +5141,15 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Comprueba si protege en serie, en paralelo o desconectando mediante un elemento de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "crowbar",
+    "source_asset": "assets/symbols/SYM-0135_crowbar-con-scr.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0136": {
+    "id": "SYM-0136",
+    "name": "Limitador de corriente de arranque NTC",
+    "kind": "inrush_limiter_ntc",
+    "designator": "NTC",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -5141,17 +5168,7 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0135_crowbar-con-scr.svg"
-  },
-  "SYM-0136": {
-    "id": "SYM-0136",
     "catalog_id": "SYM-0136",
-    "name": "Limitador de corriente de arranque NTC",
-    "kind": "protection_block",
-    "geometry_template": "protection_block",
-    "designator": "NTC",
     "category": "Protecciones eléctricas",
     "subcategory": "Protección",
     "aliases": "inrush limiter",
@@ -5160,43 +5177,15 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Comprueba si protege en serie, en paralelo o desconectando mediante un elemento de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "inrush_ntc",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0136_limitador-de-corriente-de-arranque-ntc.svg"
+    "source_asset": "assets/symbols/SYM-0136_limitador-de-corriente-de-arranque-ntc.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0137": {
     "id": "SYM-0137",
-    "catalog_id": "SYM-0137",
     "name": "Relé de tensión",
-    "kind": "protection_block",
-    "geometry_template": "protection_block",
+    "kind": "voltage_relay",
     "designator": "K",
-    "category": "Protecciones eléctricas",
-    "subcategory": "Protección",
-    "aliases": "monitor voltage",
-    "keywords": "protección fusible sobretensión sobrecorriente",
-    "description": "Actúa cuando la tensión sale de límites.",
-    "interpretation": "Comprueba si protege en serie, en paralelo o desconectando mediante un elemento de control.",
-    "catalog_standard": "Común / educativa",
-    "catalog_drawing_type": "voltage_relay",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -5221,17 +5210,43 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0137_rele-de-tension.svg"
+    "catalog_id": "SYM-0137",
+    "category": "Protecciones eléctricas",
+    "subcategory": "Protección",
+    "aliases": "monitor voltage",
+    "keywords": "protección fusible sobretensión sobrecorriente",
+    "description": "Actúa cuando la tensión sale de límites.",
+    "interpretation": "Comprueba si protege en serie, en paralelo o desconectando mediante un elemento de control.",
+    "catalog_standard": "Común / educativa",
+    "catalog_drawing_type": "voltage_relay",
+    "source_asset": "assets/symbols/SYM-0137_rele-de-tension.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0138": {
     "id": "SYM-0138",
-    "catalog_id": "SYM-0138",
     "name": "Protección contra inversión",
-    "kind": "protection_block",
-    "geometry_template": "protection_block",
+    "kind": "reverse_polarity_protection",
     "designator": "Q/D",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 7,
+    "height": 4,
+    "ports": {
+      "IN": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "OUT": {
+        "x": 3,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "catalog_id": "SYM-0138",
     "category": "Protecciones eléctricas",
     "subcategory": "Protección",
     "aliases": "reverse polarity",
@@ -5240,27 +5255,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Comprueba si protege en serie, en paralelo o desconectando mediante un elemento de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "reverse_protection",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0138_proteccion-contra-inversion.svg"
+    "source_asset": "assets/symbols/SYM-0138_proteccion-contra-inversion.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0139": {
     "id": "SYM-0139",
@@ -17244,62 +17241,9 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0436": {
     "id": "SYM-0436",
-    "catalog_id": "SYM-0436",
     "name": "Fusible rearmable PTC",
-    "kind": "protection_block",
-    "geometry_template": "protection_block",
+    "kind": "resettable_fuse_ptc",
     "designator": "F/RT",
-    "category": "Protecciones eléctricas",
-    "subcategory": "Sobrecorriente",
-    "aliases": "polyfuse, PPTC, polyswitch",
-    "keywords": "pptc polyfuse fusible rearmable ptc",
-    "description": "Protección resistiva que aumenta fuertemente su resistencia al calentarse por sobrecorriente.",
-    "interpretation": "No se abre como un fusible convencional; queda en alta resistencia hasta enfriarse.",
-    "catalog_standard": "Común / educativa",
-    "catalog_drawing_type": "ptc_fuse",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0436_fusible-rearmable-ptc.svg"
-  },
-  "SYM-0437": {
-    "id": "SYM-0437",
-    "catalog_id": "SYM-0437",
-    "name": "Descargador de chispa",
-    "kind": "protection_block",
-    "geometry_template": "protection_block",
-    "designator": "SG",
-    "category": "Protecciones eléctricas",
-    "subcategory": "Sobretensión",
-    "aliases": "spark gap, gap de descarga",
-    "keywords": "spark gap chispa arco sobretension",
-    "description": "Dos electrodos separados que conducen al superar su tensión de cebado.",
-    "interpretation": "Normalmente está abierto y deriva impulsos de alta energía al producirse el arco.",
-    "catalog_standard": "Común / educativa",
-    "catalog_drawing_type": "spark",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -17318,9 +17262,54 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0437_descargador-de-chispa.svg"
+    "catalog_id": "SYM-0436",
+    "category": "Protecciones eléctricas",
+    "subcategory": "Sobrecorriente",
+    "aliases": "polyfuse, PPTC, polyswitch",
+    "keywords": "pptc polyfuse fusible rearmable ptc",
+    "description": "Protección resistiva que aumenta fuertemente su resistencia al calentarse por sobrecorriente.",
+    "interpretation": "No se abre como un fusible convencional; queda en alta resistencia hasta enfriarse.",
+    "catalog_standard": "Común / educativa",
+    "catalog_drawing_type": "ptc_fuse",
+    "source_asset": "assets/symbols/SYM-0436_fusible-rearmable-ptc.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0437": {
+    "id": "SYM-0437",
+    "name": "Descargador de chispa",
+    "kind": "spark_gap",
+    "designator": "SG",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 4,
+    "ports": {
+      "1": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 3,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "catalog_id": "SYM-0437",
+    "category": "Protecciones eléctricas",
+    "subcategory": "Sobretensión",
+    "aliases": "spark gap, gap de descarga",
+    "keywords": "spark gap chispa arco sobretension",
+    "description": "Dos electrodos separados que conducen al superar su tensión de cebado.",
+    "interpretation": "Normalmente está abierto y deriva impulsos de alta energía al producirse el arco.",
+    "catalog_standard": "Común / educativa",
+    "catalog_drawing_type": "spark",
+    "source_asset": "assets/symbols/SYM-0437_descargador-de-chispa.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0438": {
     "id": "SYM-0438",
@@ -17663,11 +17652,28 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0447": {
     "id": "SYM-0447",
-    "catalog_id": "SYM-0447",
     "name": "Protector térmico Klixon",
-    "kind": "protection_block",
-    "geometry_template": "protection_block",
+    "kind": "thermal_protector_klixon",
     "designator": "OL",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 4,
+    "ports": {
+      "1": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 3,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "catalog_id": "SYM-0447",
     "category": "Protecciones eléctricas",
     "subcategory": "Protección térmica",
     "aliases": "overload, klixon, protector compresor",
@@ -17676,33 +17682,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Puede rearmarse automáticamente al enfriarse y aparentar una avería intermitente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "protector",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0447_protector-termico-klixon.svg"
+    "source_asset": "assets/symbols/SYM-0447_protector-termico-klixon.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0448": {
     "id": "SYM-0448",

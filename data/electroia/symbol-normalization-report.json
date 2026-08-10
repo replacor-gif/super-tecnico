@@ -5,13 +5,13 @@
   "engine_symbols": 463,
   "symbols_with_ports": 463,
   "status_counts": {
-    "auto_draft": 400,
+    "auto_draft": 388,
     "engine_internal": 3,
-    "engine_reviewed": 60
+    "engine_reviewed": 72
   },
   "catalog_status_counts": {
-    "auto_draft": 400,
-    "engine_reviewed": 60
+    "auto_draft": 388,
+    "engine_reviewed": 72
   },
   "family_counts": {
     "aux_contact_no": 1,
@@ -25,18 +25,23 @@
     "contact_no": 1,
     "contactor_3p": 1,
     "cross_no_connection": 1,
+    "crowbar_scr": 1,
     "digital_block": 73,
     "diode": 1,
     "distribution_board": 1,
+    "efuse": 1,
     "emergency_stop_nc": 1,
     "energy_meter": 1,
+    "esd_protector": 1,
     "fan": 1,
     "functional_block": 49,
     "functional_earth": 1,
     "fuse": 1,
+    "gas_discharge_tube": 1,
     "generic_2p": 46,
     "generic_3p": 6,
     "ground": 1,
+    "inrush_limiter_ntc": 1,
     "installation_block": 8,
     "isolation_barrier": 1,
     "isolation_block": 9,
@@ -65,14 +70,15 @@
     "potentiometer": 1,
     "power_block": 66,
     "power_port": 1,
-    "protection_block": 12,
     "protective_earth": 1,
     "pump": 1,
     "pushbutton_nc": 1,
     "pushbutton_no": 1,
     "relay_coil": 1,
+    "resettable_fuse_ptc": 1,
     "residual_current_device": 1,
     "resistor_iec": 1,
+    "reverse_polarity_protection": 1,
     "selector_switch": 1,
     "semiconductor_block": 41,
     "sensor_block": 42,
@@ -82,11 +88,16 @@
     "source_ac": 1,
     "source_block": 4,
     "source_dc": 1,
+    "spark_gap": 1,
+    "surge_protection_device": 1,
     "switch_no": 1,
     "terminal_block": 1,
     "test_point": 1,
+    "thermal_fuse": 1,
+    "thermal_protector_klixon": 1,
     "thermistor_ntc": 1,
     "transformer": 1,
+    "voltage_relay": 1,
     "wire": 1
   },
   "category_quality": {
@@ -152,8 +163,8 @@
     },
     "Protecciones eléctricas": {
       "total": 16,
-      "engine_reviewed": 4,
-      "auto_draft": 12
+      "engine_reviewed": 16,
+      "auto_draft": 0
     },
     "Relés, interruptores y actuadores": {
       "total": 23,
@@ -172,7 +183,8 @@
     }
   },
   "fully_reviewed_categories": [
-    "Conexiones y referencias"
+    "Conexiones y referencias",
+    "Protecciones eléctricas"
   ],
   "coverage_percent": 100,
   "quality_policy": {

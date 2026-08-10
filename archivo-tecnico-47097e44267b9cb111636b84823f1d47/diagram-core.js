@@ -1,7 +1,7 @@
 "use strict";
 
 const ElectroDiagramCore = (() => {
-  const ENGINE_VERSION = "1.4.0-alpha.1";
+  const ENGINE_VERSION = "1.5.0-alpha.1";
   const CONTRACT_VERSION = "1.0";
   const GRID_PITCH_MIL = 50;
   const UNIT = 24;
@@ -280,7 +280,7 @@ const ElectroDiagramCore = (() => {
 
   function getRegistry() {
     return {
-      version: "0.4",
+      version: "0.6",
       engine_version: ENGINE_VERSION,
       standard_profile: "IEC_EXPERIMENTAL",
       grid_pitch_mil: GRID_PITCH_MIL,
@@ -891,6 +891,42 @@ const ElectroDiagramCore = (() => {
     }
     if (kind === "fuse") {
       return `${line(-3, 0, -1.4, 0)}<rect class="symbol-fill" x="${-1.4 * u}" y="${-0.58 * u}" width="${2.8 * u}" height="${1.16 * u}"/>${line(-1.05, 0.4, 1.05, -0.4, "symbol-accent")}${line(1.4, 0, 3, 0)}`;
+    }
+    if (kind === "thermal_fuse") {
+      return `${line(-3, 0, -1.4, 0)}<rect class="symbol-fill" x="${-1.4 * u}" y="${-0.62 * u}" width="${2.8 * u}" height="${1.24 * u}"/>${line(-1.05, 0.4, 1.05, -0.4, "symbol-accent")}${line(1.4, 0, 3, 0)}<path class="symbol-accent" d="M${-0.45 * u} ${-1.35 * u}h${0.9 * u}M0 ${-1.35 * u}v${0.55 * u}"/>`;
+    }
+    if (kind === "gas_discharge_tube") {
+      return `${line(-3, 0, -1.35, 0)}<circle class="symbol-fill" cx="0" cy="0" r="${1.35 * u}"/>${line(1.35, 0, 3, 0)}${line(-1.05, 0, -0.35, 0)}${line(0.35, 0, 1.05, 0)}${line(-0.35, -0.72, -0.35, 0.72, "symbol-accent")}${line(0.35, -0.72, 0.35, 0.72, "symbol-accent")}`;
+    }
+    if (kind === "surge_protection_device") {
+      return `${line(-3, 0, -1.55, 0)}<rect class="symbol-fill" x="${-1.55 * u}" y="${-1.35 * u}" width="${3.1 * u}" height="${2.7 * u}" rx="4"/>${line(1.55, 0, 3, 0)}<path class="symbol-accent" d="M${0.25 * u} ${-1 * u}L${-0.55 * u} ${0.12 * u}H${0.12 * u}L${-0.25 * u} ${1 * u}L${0.75 * u} ${-0.2 * u}H${0.08 * u}Z"/>`;
+    }
+    if (kind === "esd_protector") {
+      return `${line(-3, 0, -1.45, 0)}<rect class="symbol-fill" x="${-1.45 * u}" y="${-1.25 * u}" width="${2.9 * u}" height="${2.5 * u}" rx="4"/>${line(1.45, 0, 3, 0)}<path class="symbol-accent" d="M${-0.85 * u} 0L${-0.18 * u} ${-0.7 * u}V${0.7 * u}M${0.18 * u} ${-0.7 * u}V${0.7 * u}L${0.85 * u} 0M${-0.18 * u} ${-0.7 * u}l${-0.28 * u} ${-0.3 * u}M${0.18 * u} ${0.7 * u}l${0.28 * u} ${0.3 * u}"/>`;
+    }
+    if (kind === "efuse") {
+      return `${line(-4, 0, -2.25, 0)}<rect class="symbol-fill" x="${-2.25 * u}" y="${-1.7 * u}" width="${4.5 * u}" height="${3.4 * u}" rx="5"/>${line(2.25, 0, 4, 0)}${line(0, 1.7, 0, 3)}<text class="family-code" x="0" y="5">eF</text><path class="symbol-accent" d="M${-1.45 * u} ${-0.75 * u}h${0.65 * u}M${0.8 * u} ${-0.75 * u}h${0.65 * u}"/>`;
+    }
+    if (kind === "crowbar_scr") {
+      return `${line(-3, 0, -1.15, 0)}${line(1.15, 0, 3, 0)}<path class="symbol-fill" d="M${-1.15 * u} ${-1.05 * u}L${0.55 * u} 0L${-1.15 * u} ${1.05 * u}Z"/>${line(0.65, -1.05, 0.65, 1.05)}${line(-0.05, 1.65, 0.5, 0.65, "symbol-accent")}<path class="symbol-accent" d="M${-0.45 * u} ${-1.55 * u}h${0.9 * u}"/>`;
+    }
+    if (kind === "inrush_limiter_ntc") {
+      return `${line(-3, 0, -1.4, 0)}<rect class="symbol-fill" x="${-1.4 * u}" y="${-0.62 * u}" width="${2.8 * u}" height="${1.24 * u}"/>${line(1.4, 0, 3, 0)}${line(-1.05, 1.1, 1.05, -1.1, "symbol-accent")}<text class="component-value" x="${0.95 * u}" y="${-1.15 * u}">−t</text>`;
+    }
+    if (kind === "voltage_relay") {
+      return `${line(-4, 0, -2.35, 0)}<rect class="symbol-fill" x="${-2.35 * u}" y="${-2.15 * u}" width="${4.7 * u}" height="${4.3 * u}" rx="5"/>${line(2.35, -1, 4, -1)}${line(2.35, 1, 4, 1)}<text class="family-code" x="${-0.8 * u}" y="5">U</text><circle cx="${0.35 * u}" cy="0" r="4" fill="#202824"/><circle cx="${1.55 * u}" cy="${-1 * u}" r="4" fill="#202824"/><circle cx="${1.55 * u}" cy="${1 * u}" r="4" fill="#202824"/>${line(0.45, -0.08, 1.35, -0.82, "symbol-accent")}`;
+    }
+    if (kind === "reverse_polarity_protection") {
+      return `${line(-3, 0, -1.2, 0)}<path class="symbol-fill" d="M${-1.2 * u} ${-1.05 * u}L${0.55 * u} 0L${-1.2 * u} ${1.05 * u}Z"/>${line(0.65, -1.1, 0.65, 1.1)}${line(0.65, 0, 3, 0)}<text class="polarity" x="${-1.65 * u}" y="${-0.65 * u}">+</text><path class="symbol-accent" d="M${-0.35 * u} ${-1.55 * u}h${0.7 * u}"/>`;
+    }
+    if (kind === "resettable_fuse_ptc") {
+      return `${line(-3, 0, -1.45, 0)}<rect class="symbol-fill" x="${-1.45 * u}" y="${-0.75 * u}" width="${2.9 * u}" height="${1.5 * u}" rx="8"/>${line(1.45, 0, 3, 0)}<text class="component-value" x="0" y="4">PTC</text>`;
+    }
+    if (kind === "spark_gap") {
+      return `${line(-3, 0, -0.75, 0)}${line(0.75, 0, 3, 0)}<path class="symbol-accent" d="M${-0.75 * u} ${-0.9 * u}V${0.9 * u}M${0.75 * u} ${-0.9 * u}V${0.9 * u}M${-0.25 * u} ${-1.25 * u}l${0.45 * u} ${0.45 * u}l${-0.38 * u} ${0.42 * u}"/>`;
+    }
+    if (kind === "thermal_protector_klixon") {
+      return `${line(-3, 0, -1.25, 0)}${line(1.25, 0, 3, 0)}<rect class="symbol-fill" x="${-1.55 * u}" y="${-1.15 * u}" width="${3.1 * u}" height="${2.3 * u}" rx="${1.15 * u}"/><circle cx="${-0.85 * u}" cy="0" r="4" fill="#202824"/><circle cx="${0.85 * u}" cy="0" r="4" fill="#202824"/>${line(-0.78, -0.05, 0.78, -0.05)}<path class="symbol-accent" d="M${-0.35 * u} ${-0.85 * u}q${0.35 * u} ${-0.5 * u} ${0.7 * u} 0"/>`;
     }
     if (kind === "circuit_breaker" || kind === "mcb_1p" || kind === "mcb_2p" || kind === "mcb_4p") {
       const poleText = kind === "mcb_1p" ? "1P" : kind === "mcb_2p" ? "2P" : kind === "mcb_4p" ? "4P" : "Q";
