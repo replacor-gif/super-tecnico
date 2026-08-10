@@ -3013,6 +3013,31 @@ class StaticSiteTests(unittest.TestCase):
             {"modules": 23, "pages": 399, "chapters": 678, "figures": 397, "tables": 235},
         )
 
+    def test_public_tools_share_the_professional_app_shell(self):
+        public_pages = (
+            "index.html",
+            "climatizacion.html",
+            "calculadoras.html",
+            "componentes.html",
+            "smd.html",
+            "comparador.html",
+            "averias.html",
+            "electronica-placas.html",
+            "formacion-climatizacion.html",
+            "simbolos.html",
+            "feedback.html",
+        )
+        self.assertTrue((self.dist / "assets" / "app-theme.css").is_file())
+        self.assertTrue((self.dist / "assets" / "app-shell.js").is_file())
+        for filename in public_pages:
+            html = (self.dist / filename).read_text(encoding="utf-8")
+            self.assertIn('assets/app-theme.css?v=1', html, filename)
+            self.assertIn('assets/app-shell.js?v=1', html, filename)
+
+        shell = (self.dist / "assets" / "app-shell.js").read_text(encoding="utf-8")
+        for marker in ("st-app-drawer", "st-bottom-nav", "st-drawer-search", "Calculadoras", "Componentes"):
+            self.assertIn(marker, shell)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

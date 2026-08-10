@@ -426,6 +426,8 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "formacion-climatizacion.html",
         "electronica-placas.html",
         "assets/app.js",
+        "assets/app-shell.js",
+        "assets/app-theme.css",
         "assets/ads.js",
         "assets/calculations.js",
         "assets/calculators.css",
