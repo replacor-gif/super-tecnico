@@ -252,16 +252,6 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); box-sha
 .advanced-settings summary { cursor: pointer; padding: 13px 15px; color: var(--accent); font-weight: 800; }
 .advanced-settings[open] summary { border-bottom: 1px solid var(--line); }
 .advanced-settings > .form-grid { padding: 16px; }
-.duct-sections { margin-top: 18px; }
-.duct-sections-heading { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 9px; }
-.duct-sections-heading span { color: var(--muted); font-size: .76rem; }
-.duct-section-list { overflow: hidden; border: 1px solid var(--line); border-radius: 12px; }
-.duct-section-row { display: grid; grid-template-columns: 1.05fr .9fr 1fr .8fr .9fr 1fr; align-items: center; gap: 9px; padding: 11px 12px; border-bottom: 1px solid var(--line); font-size: .8rem; }
-.duct-section-row:last-child { border-bottom: 0; }
-.duct-section-row:nth-child(even) { background: color-mix(in srgb, var(--surface-2) 72%, transparent); }
-.duct-section-row span { min-width: 0; }
-.duct-section-row small { display: block; margin-bottom: 3px; color: var(--muted); font-size: .66rem; }
-.duct-section-name { color: var(--accent); }
 .circuit-diagram { margin: 0 0 22px; padding: 12px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: color-mix(in srgb, var(--surface-2) 82%, transparent); }
 .circuit-diagram svg { display: block; width: 100%; min-width: 520px; height: auto; color: var(--text); }
 .circuit-diagram .wire { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
@@ -316,9 +306,6 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); box-sha
   .input-panel, .output-column { padding: 22px 18px 25px; }
   .form-grid, .form-grid.three { grid-template-columns: 1fr; }
   .result-grid { grid-template-columns: 1fr; }
-  .duct-sections-heading { align-items: flex-start; flex-direction: column; }
-  .duct-section-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 14px; }
-  .duct-section-name { grid-column: 1 / -1; padding-bottom: 7px; border-bottom: 1px solid var(--line); }
   .calculator-footer { justify-content: stretch; }
   .calculator-footer button { flex: 1; }
 }

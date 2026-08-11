@@ -4,7 +4,7 @@
   const tools = [
     { href: 'index.html', label: 'Inicio', short: 'Inicio', color: '#ff7a00', icon: 'home', terms: 'inicio portada herramientas' },
     { href: 'climatizacion.html', label: 'Climatización', short: 'Clima', color: '#00c8ff', icon: 'fan', terms: 'clima hvac errores códigos marcas aire acondicionado' },
-    { href: 'calculadoras.html', label: 'Calculadoras', short: 'Cálculos', color: '#ff8a00', icon: 'calculator', terms: 'cálculo conductos electricidad taller ley ohm' },
+    { href: 'calculadoras.html', label: 'Calculadoras', short: 'Cálculos', color: '#ff8a00', icon: 'calculator', terms: 'cálculo electricidad taller ley ohm electrónica' },
     { href: 'componentes.html', label: 'Componentes', short: 'Componentes', color: '#54ff82', icon: 'chip', terms: 'referencias electrónica encapsulado datasheet ficha rápida' },
     { href: 'smd.html', label: 'Identificador SMD', short: 'SMD', color: '#ff3fa7', icon: 'smd', terms: 'marcado código componente placa' },
     { href: 'averias.html', label: 'Averías reales', short: 'Averías', color: '#ffea36', icon: 'warning', terms: 'avería reparación placa síntoma solución' },

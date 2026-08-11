@@ -339,128 +339,15 @@
     return { period, rpmFromPulses, synchronousRpm, angular: 2 * Math.PI * frequency };
   }
 
-  function ventilationAirflow(widthM, lengthM, heightM, airChangesPerHour, runMinutes = 60, stopMinutes = 0, extraAirflowM3h = 0) {
-    const values = [widthM, lengthM, heightM, airChangesPerHour, runMinutes, stopMinutes, extraAirflowM3h].map(Number);
-    if (!values.every(Number.isFinite)) throw new Error('Introduce valores numéricos válidos.');
-    if ([widthM, lengthM, heightM, airChangesPerHour, runMinutes].some(value => value <= 0)) {
-      throw new Error('Las dimensiones, las renovaciones y el tiempo de marcha deben ser mayores que cero.');
-    }
-    if (stopMinutes < 0 || extraAirflowM3h < 0) throw new Error('La parada y el caudal adicional no pueden ser negativos.');
-    const roomAreaM2 = widthM * lengthM;
-    const roomVolumeM3 = roomAreaM2 * heightM;
-    const activeFraction = runMinutes / (runMinutes + stopMinutes);
-    const airflowM3h = roomVolumeM3 * airChangesPerHour / activeFraction + extraAirflowM3h;
-    return {
-      roomAreaM2,
-      roomVolumeM3,
-      activeFraction,
-      activeMinutesPerHour: activeFraction * 60,
-      airflowM3h,
-    };
-  }
-
-  const STANDARD_ROUND_DUCTS_MM = [
-    80, 100, 125, 150, 160, 180, 200, 224, 250, 280, 300, 315,
-    355, 400, 450, 500, 560, 630, 710, 800, 900, 1000, 1120, 1250,
-  ];
-
-  function roundUp(value, step) {
-    return Math.ceil((value - 1e-9) / step) * step;
-  }
-
-  function nextStandardRoundDuct(requiredMm) {
-    return STANDARD_ROUND_DUCTS_MM.find(value => value >= requiredMm) || roundUp(requiredMm, 50);
-  }
-
-  function ductSizing(options = {}) {
-    const airflowM3h = Number(options.airflowM3h);
-    const outletCount = Number(options.outletCount);
-    const ductHeightCm = Number(options.ductHeightCm);
-    const ductVelocityMps = Number(options.ductVelocityMps ?? 3.7);
-    const grilleWidthCm = Number(options.grilleWidthCm);
-    const grilleType = options.grilleType || 'double';
-    const defaultGrilleVelocity = grilleType === 'double' ? 1.9 : 2.5;
-    const grilleVelocityMps = options.grilleVelocityMps == null || options.grilleVelocityMps === ''
-      ? defaultGrilleVelocity
-      : Number(options.grilleVelocityMps);
-    const numericValues = [airflowM3h, outletCount, ductHeightCm, ductVelocityMps, grilleWidthCm, grilleVelocityMps];
-    if (!numericValues.every(Number.isFinite)) throw new Error('Introduce valores numéricos válidos.');
-    if (airflowM3h <= 0) throw new Error('El caudal debe ser mayor que cero.');
-    if (!Number.isInteger(outletCount) || outletCount < 1 || outletCount > 30) {
-      throw new Error('El número de rejillas debe ser un entero entre 1 y 30.');
-    }
-    if (ductHeightCm < 10 || ductHeightCm > 150) throw new Error('La altura del conducto debe estar entre 10 y 150 cm.');
-    if (grilleWidthCm < 10 || grilleWidthCm > 200) throw new Error('La anchura de rejilla debe estar entre 10 y 200 cm.');
-    if (ductVelocityMps < 0.8 || ductVelocityMps > 12) throw new Error('La velocidad del conducto debe estar entre 0,8 y 12 m/s.');
-    if (grilleVelocityMps < 0.5 || grilleVelocityMps > 6) throw new Error('La velocidad de rejilla debe estar entre 0,5 y 6 m/s.');
-    if (!['simple', 'double'].includes(grilleType)) throw new Error('Tipo de lamas no reconocido.');
-
-    const outletAirflowM3h = airflowM3h / outletCount;
-    const sections = [];
-    for (let index = 0; index < outletCount; index += 1) {
-      const remainingAirflowM3h = airflowM3h - outletAirflowM3h * index;
-      const requiredAreaM2 = remainingAirflowM3h / (ductVelocityMps * 3600);
-      const calculatedWidthCm = requiredAreaM2 * 10000 / ductHeightCm;
-      const recommendedWidthCm = Math.max(10, roundUp(calculatedWidthCm, 5));
-      const actualAreaM2 = (recommendedWidthCm / 100) * (ductHeightCm / 100);
-      const actualVelocityMps = remainingAirflowM3h / (actualAreaM2 * 3600);
-      const equivalentRoundMm = Math.sqrt(4 * requiredAreaM2 / Math.PI) * 1000;
-      sections.push({
-        section: index + 1,
-        remainingAirflowM3h,
-        calculatedWidthCm,
-        recommendedWidthCm,
-        ductHeightCm,
-        actualVelocityMps,
-        smoothRoundMm: nextStandardRoundDuct(equivalentRoundMm),
-        roughRoundMm: nextStandardRoundDuct(equivalentRoundMm * 1.15),
-      });
-    }
-
-    const grilleAreaM2 = outletAirflowM3h / (grilleVelocityMps * 3600);
-    const calculatedGrilleHeightCm = grilleAreaM2 * 10000 / grilleWidthCm;
-    const recommendedGrilleHeightCm = Math.max(10, roundUp(calculatedGrilleHeightCm, 5));
-    const actualGrilleVelocityMps = outletAirflowM3h /
-      ((grilleWidthCm / 100) * (recommendedGrilleHeightCm / 100) * 3600);
-    let status = 'Velocidad equilibrada';
-    let severity = 'ok';
-    if (ductVelocityMps > 4.5 && ductVelocityMps <= 6) {
-      status = 'Velocidad elevada';
-      severity = 'warn';
-    } else if (ductVelocityMps > 6) {
-      status = 'Revisar ruido y pérdidas';
-      severity = 'danger';
-    }
-
-    return {
-      airflowM3h,
-      outletCount,
-      outletAirflowM3h,
-      ductHeightCm,
-      ductVelocityMps,
-      grilleWidthCm,
-      grilleType,
-      grilleVelocityMps,
-      calculatedGrilleHeightCm,
-      recommendedGrilleHeightCm,
-      actualGrilleVelocityMps,
-      status,
-      severity,
-      mainSection: sections[0],
-      sections,
-    };
-  }
-
   return {
     parseEngineering, formatEngineering, ohmsLaw, resistorColors,
     smdResistorCode, capacitorCode, equivalent, voltageDivider, rcTime,
     rectifiedBus, ledArray, zenerResistor, timer555Astable, timer555Bistable,
     capacitorHealth, ntcTemperatureFromResistance,
     ntcResistanceFromTemperature, windingBalance, frequencyData,
-    ventilationAirflow, ductSizing,
     constants: {
       EIA96_VALUES, EIA96_MULTIPLIERS, COLOR_DIGITS, COLOR_MULTIPLIERS,
-      COLOR_TOLERANCES, STANDARD_ROUND_DUCTS_MM,
+      COLOR_TOLERANCES,
     }
   };
 });
