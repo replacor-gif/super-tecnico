@@ -2,6 +2,7 @@
 declare(strict_types=1);
 require __DIR__ . '/bootstrap.php';
 require __DIR__ . '/electroia.php';
+require __DIR__ . '/analytics.php';
 
 $action = preg_replace('/[^a-z0-9-]/', '', strtolower((string) ($_GET['action'] ?? 'health')));
 $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
@@ -32,7 +33,20 @@ try {
 
     if ($action === 'health' && $method === 'GET') {
         st_db()->query('SELECT 1');
-        st_json(['ok' => true, 'service' => 'super-tecnico-api', 'version' => '1.0']);
+        st_json(['ok' => true, 'service' => 'super-tecnico-api', 'version' => '1.2']);
+    }
+
+    if ($action === 'page-view' && $method === 'POST') {
+        $body = st_body();
+        $page = st_text($body, 'page_key', 1, 64);
+        if (preg_match('/^[a-z0-9][a-z0-9-]*$/', $page) !== 1) st_json(['ok' => false, 'error' => 'invalid_page'], 422);
+        st_rate_limit('view-' . substr(hash('sha256', $page), 0, 16), st_client_hash($body), 120, 3600);
+        st_json(['ok' => true, 'page' => $page, 'views' => st_analytics_record($page, $body)]);
+    }
+
+    if ($action === 'analytics-summary' && $method === 'GET') {
+        st_require_electroia_access();
+        st_json(st_analytics_summary((int) ($_GET['days'] ?? 30)));
     }
 
     if ($action === 'fault-search' && $method === 'GET') {

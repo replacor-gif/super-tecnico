@@ -4,95 +4,90 @@
   <meta charset="utf-8">
   <meta name="google-adsense-account" content="ca-pub-6950924617837531">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Prototipo de Super Técnico para diseñar una red de conductos de aire acondicionado por estancias y obtener un plano completo tramo a tramo.">
-  <meta name="theme-color" content="#07111c">
-  <title>Diseñador de conductos | Super Técnico</title>
+  <meta name="description" content="Editor profesional de planos para distribuir y dimensionar conductos de climatización por estancias.">
+  <meta name="theme-color" content="#050a13">
+  <title>Editor de planos y conductos | Super Técnico</title>
   <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
   <link rel="stylesheet" href="assets/common.css?v=1">
   <link rel="stylesheet" href="assets/app-theme.css?v=1">
-  <link rel="stylesheet" href="assets/duct-designer.css?v=1">
+  <link rel="stylesheet" href="assets/duct-designer.css?v=2">
   <script src="assets/i18n.js?v=6" defer></script>
   <script src="assets/app-shell.js?v=2" defer></script>
-  <script src="assets/duct-designer.js?v=1" defer></script>
+  <script src="assets/duct-designer.js?v=2" defer></script>
 </head>
 <body>
   <header class="duct-header">
     <a class="duct-brand" href="index.html" aria-label="Volver a Super Técnico">
       <img src="assets/super-tecnico-logo.png" alt="">
-      <span><strong>Super Técnico</strong><small>Diseño de instalaciones</small><span class="beta-badge">PROTOTIPO · EN PRUEBAS</span></span>
+      <span><strong>Super Técnico</strong><small>Editor de planos e instalaciones</small></span>
     </a>
-    <div class="header-actions">
-      <button id="printProject" type="button">Guardar / imprimir</button>
-      <a href="index.html">Todas las herramientas</a>
+    <div class="duct-header-actions">
+      <span class="duct-version">VERSIÓN DE PRUEBA · 0.2</span>
+      <button id="printProject" type="button">Imprimir / PDF</button>
     </div>
   </header>
 
   <main class="duct-main">
     <section class="duct-hero">
       <div>
-        <p class="duct-eyebrow">DISEÑO DE INSTALACIONES · VERSIÓN 0.1</p>
-        <h1>Diseña la red completa, no un cálculo aislado</h1>
-        <p>Añade las estancias en el mismo orden en que aparecerán desde la máquina. El plano distribuye el aire y reduce el conducto después de cada salida.</p>
-        <div class="duct-mode-row" aria-label="Modalidades del diseñador">
-          <span class="duct-mode is-active"><b>01</b> Climatización por estancias</span>
-          <span class="duct-mode is-next"><b>02</b> Ventilación y extracción <small>Próxima fase</small></span>
-        </div>
+        <p class="duct-eyebrow">PLANO A ESCALA · CÁLCULO SOBRE EL RECORRIDO REAL</p>
+        <h1>Dibuja la vivienda y construye la instalación encima</h1>
+        <p>Define las estancias, indica cuáles se climatizan y marca por dónde puede pasar el conducto. El programa reparte el caudal y dimensiona cada tramo de la red.</p>
       </div>
-      <div class="duct-hero-graphic" aria-hidden="true">
-        <svg viewBox="0 0 360 220">
-          <defs><linearGradient id="heroDuct" x1="0" x2="1"><stop stop-color="#00c8ff"/><stop offset="1" stop-color="#51ff7d"/></linearGradient></defs>
-          <path d="M180 112H48M180 112h132"/>
-          <path d="M84 112V58M132 112v58M228 112V58M276 112v58"/>
-          <rect x="137" y="78" width="86" height="68" rx="15"/>
-          <circle cx="180" cy="112" r="19"/><path class="fan" d="M180 93c12 4 15 10 7 18M199 112c-4 12-10 15-18 7M180 131c-12-4-15-10-7-18M161 112c4-12 10-15 18-7"/>
-          <rect x="50" y="39" width="68" height="30" rx="8"/><rect x="98" y="159" width="68" height="30" rx="8"/>
-          <rect x="242" y="39" width="68" height="30" rx="8"/><rect x="194" y="159" width="68" height="30" rx="8"/>
-        </svg>
+      <div class="system-tabs" aria-label="Tipo de instalación">
+        <button class="is-active" type="button"><span>01</span><strong>Climatización</strong><small>Disponible</small></button>
+        <button type="button" disabled title="Preparado para una próxima versión"><span>02</span><strong>Ventilación</strong><small>Base preparada</small></button>
       </div>
     </section>
 
-    <section class="duct-progress" aria-label="Proceso de trabajo">
-      <span class="is-current"><b>1</b> Añadir estancias</span>
-      <span><b>2</b> Ordenar salidas</span>
-      <span><b>3</b> Revisar el plano</span>
+    <section class="project-strip" aria-label="Datos generales del proyecto">
+      <label class="duct-field project-name-field"><span>Proyecto</span><input id="projectName" maxlength="70" value="Vivienda de prueba"></label>
+      <label class="duct-field"><span>Cuadrícula</span><select id="cellSize"><option value="0.25">25 cm</option><option value="0.5" selected>50 cm</option><option value="1">1 metro</option></select></label>
+      <label class="duct-field"><span>Ancho del plano</span><span class="duct-input-unit"><input id="planWidth" type="number" min="4" max="30" step="0.5"><b>m</b></span></label>
+      <label class="duct-field"><span>Fondo del plano</span><span class="duct-input-unit"><input id="planHeight" type="number" min="4" max="25" step="0.5"><b>m</b></span></label>
+      <label class="duct-field"><span>Máquina instalada <small>(opcional)</small></span><span class="duct-input-unit"><input id="machineCapacity" type="number" min="0" step="100" placeholder="Automática"><b>frg/h</b></span></label>
+      <span id="saveState" class="save-state">Guardado</span>
     </section>
 
-    <section class="duct-workspace">
-      <aside class="duct-controls" aria-label="Datos del proyecto">
-        <div class="duct-panel-heading">
-          <div><p class="duct-eyebrow">PROYECTO ACTUAL</p><h2>Datos de la instalación</h2></div>
-          <span class="save-state" id="saveState">Guardado</span>
+    <section class="workflow-strip" aria-label="Orden de trabajo">
+      <span id="workflowRooms"><b>1</b>Dibuja las estancias</span>
+      <span id="workflowMachine"><b>2</b>Coloca la máquina</span>
+      <span id="workflowRoute"><b>3</b>Traza los conductos</span>
+      <span id="workflowOutlets"><b>4</b>Coloca las rejillas</span>
+      <span id="workflowReview"><b>5</b>Revisa resultados</span>
+    </section>
+
+    <section class="designer-layout">
+      <aside class="designer-tools">
+        <div class="panel-heading">
+          <div><p class="duct-eyebrow">HERRAMIENTAS</p><h2>Construir el plano</h2></div>
+          <button id="helpToggle" class="icon-button" type="button" aria-label="Mostrar ayuda">?</button>
         </div>
 
-        <label class="duct-field duct-field-wide">
-          <span>Nombre del proyecto</span>
-          <input id="projectName" maxlength="70" value="Vivienda de prueba">
-        </label>
+        <div id="toolHelp" class="tool-help">Selecciona una herramienta y toca la cuadrícula. Para crear una habitación, marca primero una esquina y después la esquina opuesta.</div>
 
-        <div class="duct-field-grid">
-          <label class="duct-field"><span>Altura disponible del conducto</span><span class="duct-input-unit"><input id="ductHeight" type="number" min="10" max="80" step="1" value="25"><b>cm</b></span></label>
-          <label class="duct-field"><span>Altura de las rejillas</span><span class="duct-input-unit"><input id="grilleHeight" type="number" min="8" max="80" step="1" value="15"><b>cm</b></span></label>
-          <label class="duct-field duct-field-wide"><span>Capacidad de la máquina <small>(opcional)</small></span><span class="duct-input-unit"><input id="machineCapacity" type="number" min="0" step="100" placeholder="La herramienta propondrá una"><b>frg/h</b></span></label>
+        <div class="tool-palette" role="toolbar" aria-label="Herramientas del plano">
+          <button type="button" class="is-active" data-tool="select"><span class="tool-symbol">↖</span><strong>Seleccionar</strong><small>Consultar y mover</small></button>
+          <button type="button" data-tool="room"><span class="tool-symbol room-symbol">▦</span><strong>Estancia</strong><small>Dos esquinas</small></button>
+          <button type="button" data-tool="machine"><span class="tool-symbol machine-symbol">M</span><strong>Máquina</strong><small>Unidad interior</small></button>
+          <button type="button" data-tool="duct"><span class="tool-symbol duct-symbol">┗━</span><strong>Conducto</strong><small>Marca el recorrido</small></button>
+          <button type="button" data-tool="outlet"><span class="tool-symbol outlet-symbol">▥</span><strong>Rejilla</strong><small>Dentro de la estancia</small></button>
+          <button type="button" data-tool="erase"><span class="tool-symbol erase-symbol">×</span><strong>Borrar</strong><small>Elemento señalado</small></button>
         </div>
 
-        <div class="branch-editor">
-          <section class="branch-box branch-left">
-            <header><span>Ramal izquierdo</span><b id="leftCount">0</b></header>
-            <p>Ordena desde la máquina hacia el final.</p>
-            <div id="leftRooms" class="room-list"></div>
-            <button class="add-room" type="button" data-add-side="left"><span>＋</span> Añadir estancia izquierda</button>
-          </section>
-          <section class="branch-box branch-right">
-            <header><span>Ramal derecho</span><b id="rightCount">0</b></header>
-            <p>Ordena desde la máquina hacia el final.</p>
-            <div id="rightRooms" class="room-list"></div>
-            <button class="add-room" type="button" data-add-side="right"><span>＋</span> Añadir estancia derecha</button>
-          </section>
+        <div id="drawingMessage" class="drawing-message"><span></span><p>Plano listo para editar.</p></div>
+        <button id="finishRoute" class="finish-route" type="button" hidden>Finalizar este recorrido</button>
+
+        <div class="history-actions">
+          <button id="undoProject" type="button" disabled>↶ Deshacer</button>
+          <button id="redoProject" type="button" disabled>Rehacer ↷</button>
         </div>
 
         <details class="duct-advanced">
-          <summary>Criterios de diseño <span>Ajustes avanzados</span></summary>
-          <div class="duct-field-grid">
+          <summary>Criterios técnicos <span>Ajustes avanzados</span></summary>
+          <div class="advanced-fields">
+            <label class="duct-field"><span>Altura del conducto</span><span class="duct-input-unit"><input id="ductHeight" type="number" min="10" max="80" step="1" value="25"><b>cm</b></span></label>
+            <label class="duct-field"><span>Altura de rejilla</span><span class="duct-input-unit"><input id="grilleHeight" type="number" min="8" max="80" step="1" value="15"><b>cm</b></span></label>
             <label class="duct-field"><span>Demanda orientativa</span><span class="duct-input-unit"><input id="loadPerM2" type="number" min="50" max="350" step="5" value="150"><b>frg/h·m²</b></span></label>
             <label class="duct-field"><span>Caudal por 9.000 frg/h</span><span class="duct-input-unit"><input id="airflowPer9000" type="number" min="500" max="2500" step="50" value="1200"><b>m³/h</b></span></label>
             <label class="duct-field"><span>Sección por 9.000 frg/h</span><span class="duct-input-unit"><input id="areaPer9000" type="number" min="300" max="1800" step="25" value="900"><b>cm²</b></span></label>
@@ -100,69 +95,87 @@
           </div>
         </details>
 
-        <div class="duct-control-actions">
-          <button id="loadExample" class="duct-secondary" type="button">Cargar ejemplo</button>
-          <button id="clearProject" class="duct-danger" type="button">Empezar vacío</button>
+        <div class="project-actions">
+          <button id="loadExample" type="button">Cargar vivienda de ejemplo</button>
+          <button id="exportProject" type="button">Exportar proyecto</button>
+          <label class="import-project">Importar proyecto<input id="importProject" type="file" accept="application/json"></label>
+          <button id="clearProject" class="danger-action" type="button">Empezar un plano vacío</button>
         </div>
       </aside>
 
-      <section class="duct-results" aria-live="polite">
-        <div class="result-heading">
-          <div><p class="duct-eyebrow">RESULTADO DEL PROYECTO</p><h2 id="resultProjectName">Vivienda de prueba</h2></div>
-          <span class="result-status" id="resultStatus">LISTO PARA REVISAR</span>
+      <section class="plan-workspace">
+        <header class="plan-heading">
+          <div><p class="duct-eyebrow">PLANO DE LA INSTALACIÓN</p><h2 id="planProjectName">Vivienda de prueba</h2></div>
+          <div class="plan-actions">
+            <span id="activeToolLabel">Seleccionar</span>
+            <button id="zoomOut" type="button" aria-label="Alejar">−</button>
+            <button id="zoomFit" type="button">Ajustar</button>
+            <button id="zoomIn" type="button" aria-label="Acercar">＋</button>
+          </div>
+        </header>
+        <div id="planScroll" class="plan-scroll">
+          <div id="planStage" class="plan-stage" aria-label="Cuadrícula interactiva del plano"></div>
         </div>
-
-        <div class="result-summary" id="resultSummary"></div>
-        <div class="duct-alerts" id="ductAlerts"></div>
-
-        <section class="diagram-panel">
-          <header>
-            <div><h3>Plano completo de distribución</h3><p>Toca cualquier tramo o estancia para ver su resultado.</p></div>
-            <div class="diagram-tools" aria-label="Tamaño del plano">
-              <button id="zoomOut" type="button" aria-label="Reducir plano">−</button>
-              <button id="zoomFit" type="button">Ajustar</button>
-              <button id="zoomIn" type="button" aria-label="Ampliar plano">＋</button>
-            </div>
-          </header>
-          <div class="diagram-scroll" id="diagramScroll"><div id="ductDiagram" class="duct-diagram"></div></div>
-          <div id="diagramInspector" class="diagram-inspector"></div>
-          <p class="diagram-legend"><span class="legend-duct"></span> Conducto principal <span class="legend-outlet"></span> Derivación a rejilla <span class="legend-room"></span> Estancia</p>
-        </section>
-
-        <section class="section-results">
-          <div class="section-results-heading"><div><h3>Medidas por tramos</h3><p>Resultados directos para fabricar y distribuir.</p></div><span>Desde la máquina hacia el final</span></div>
-          <div id="branchResults" class="branch-results"></div>
-        </section>
-
-        <aside class="prototype-note"><strong>Versión para probar y corregir juntos</strong><p>Este primer prototipo conserva el método práctico del Excel para instalaciones habituales. Todavía no incorpora pérdidas de carga detalladas, longitudes, codos ni selección de ventilador.</p></aside>
+        <div class="plan-legend">
+          <span><i class="legend-conditioned"></i> Climatizada</span>
+          <span><i class="legend-unconditioned"></i> No climatizada</span>
+          <span><i class="legend-duct"></i> Conducto calculado</span>
+          <span><i class="legend-pending"></i> Recorrido sin carga</span>
+        </div>
+        <div id="selectionPanel" class="selection-panel"></div>
       </section>
+
+      <aside class="live-results">
+        <div class="panel-heading">
+          <div><p class="duct-eyebrow">RESULTADO EN DIRECTO</p><h2>Resumen del proyecto</h2></div>
+          <span id="resultStatus" class="result-status">EN PROCESO</span>
+        </div>
+        <div id="resultSummary" class="result-summary"></div>
+        <div id="ductAlerts" class="duct-alerts" aria-live="polite"></div>
+
+        <section class="room-overview">
+          <header><h3>Estancias</h3><span id="roomCount">0</span></header>
+          <div id="roomOverviewList"></div>
+        </section>
+      </aside>
     </section>
+
+    <section class="section-results">
+      <header>
+        <div><p class="duct-eyebrow">MEDIDAS PARA EJECUTAR</p><h2>Conductos y salidas calculados sobre el plano</h2></div>
+        <span>Las dimensiones cambian automáticamente al modificar el recorrido</span>
+      </header>
+      <div id="networkResults" class="network-results"></div>
+    </section>
+
+    <aside class="professional-note">
+      <strong>Herramienta de diseño previo</strong>
+      <p>El plano utiliza el criterio práctico configurado para instalaciones habituales. Antes de ejecutar una obra deben verificarse longitudes equivalentes, pérdidas de carga, presión disponible, aislamiento, acústica, retorno y normativa aplicable.</p>
+    </aside>
   </main>
 
   <dialog id="roomDialog" class="room-dialog">
     <form id="roomForm" method="dialog">
-      <header><div><p class="duct-eyebrow">NUEVA SALIDA</p><h2 id="roomDialogTitle">Añadir estancia</h2></div><button id="closeRoomDialog" type="button" aria-label="Cerrar">×</button></header>
+      <header><div><p class="duct-eyebrow">DATOS DE LA ESTANCIA</p><h2 id="roomDialogTitle">Nueva estancia</h2></div><button id="closeRoomDialog" type="button" aria-label="Cerrar">×</button></header>
       <input id="roomId" type="hidden">
-      <div class="side-picker" role="group" aria-label="Lado del ramal">
-        <label><input type="radio" name="roomSide" value="left"><span>← Izquierda</span></label>
-        <label><input type="radio" name="roomSide" value="right"><span>Derecha →</span></label>
+      <div class="room-form-grid">
+        <label class="duct-field"><span>Tipo de estancia</span><select id="roomType"><option value="bedroom">Dormitorio</option><option value="living">Salón / comedor</option><option value="kitchen">Cocina</option><option value="office">Oficina / despacho</option><option value="bathroom">Baño</option><option value="hallway">Pasillo / distribuidor</option><option value="utility">Lavadero / técnico</option><option value="other">Otra</option></select></label>
+        <label class="duct-field"><span>Nombre visible</span><input id="roomName" maxlength="35" required placeholder="Ejemplo: Dormitorio principal"></label>
+        <label class="condition-toggle"><input id="roomConditioned" type="checkbox" checked><span><b>Climatizar esta estancia</b><small>Se incluirá en la potencia, el caudal y la red.</small></span></label>
+        <label class="duct-field"><span>Altura de la estancia</span><span class="duct-input-unit"><input id="roomCeiling" type="number" min="1.8" max="8" step="0.1" value="2.5"><b>m</b></span></label>
+        <label class="duct-field"><span>Ocupación orientativa</span><span class="duct-input-unit"><input id="roomOccupancy" type="number" min="0" max="100" step="1" value="1"><b>pers.</b></span></label>
+        <label class="duct-field"><span>Superficie corregida <small>(opcional)</small></span><span class="duct-input-unit"><input id="roomManualArea" type="number" min="0" max="1000" step="0.1" placeholder="La calcula el plano"><b>m²</b></span></label>
+        <label class="duct-field"><span>Carga conocida <small>(opcional)</small></span><span class="duct-input-unit"><input id="roomManualLoad" type="number" min="0" step="50" placeholder="Cálculo automático"><b>frg/h</b></span></label>
       </div>
-      <label class="duct-field"><span>Nombre de la estancia</span><input id="roomName" maxlength="35" required placeholder="Ejemplo: Salón"></label>
-      <div class="duct-field-grid">
-        <label class="duct-field"><span>Ancho</span><span class="duct-input-unit"><input id="roomWidth" type="number" min="0.5" max="50" step="0.1" required><b>m</b></span></label>
-        <label class="duct-field"><span>Largo</span><span class="duct-input-unit"><input id="roomLength" type="number" min="0.5" max="50" step="0.1" required><b>m</b></span></label>
-      </div>
-      <label class="duct-field"><span>Carga conocida <small>(opcional)</small></span><span class="duct-input-unit"><input id="roomManualLoad" type="number" min="0" step="50" placeholder="Se calculará por superficie"><b>frg/h</b></span></label>
-      <p class="dialog-help">La estancia se colocará al final del ramal elegido. Después podrás cambiar su orden.</p>
-      <button class="save-room" type="submit">Guardar estancia</button>
+      <div id="roomGeometrySummary" class="room-geometry-summary"></div>
+      <div class="dialog-actions"><button id="cancelRoom" type="button">Cancelar</button><button type="submit">Guardar estancia</button></div>
     </form>
   </dialog>
 
   <footer class="st-page-footer">
-    <span>Super Técnico · REPLACOR</span>
-    <nav class="st-legal-links" aria-label="Información legal"><a href="https://www.replacor.com/aviso-legal/" target="_blank" rel="noopener">Aviso legal</a><a href="https://www.replacor.com/politica-de-privacidad/" target="_blank" rel="noopener">Política de privacidad</a></nav>
+    <strong>SUPER TÉCNICO</strong>
+    <p>Editor de instalaciones en desarrollo.</p>
   </footer>
-  <script src="assets/ads.js?v=1" defer></script>
-  <script src="assets/page-counter.js?v=2" defer></script>
+  <script src="assets/page-counter.js?v=3" defer></script>
 </body>
 </html>

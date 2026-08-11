@@ -4,6 +4,7 @@
   const API_ENDPOINT = new URL('api/index.php', document.baseURI).href;
   const CLIENT_KEY = 'st.community.client.v1';
   const ELECTROIA_PATH = 'archivo-tecnico-47097e44267b9cb111636b84823f1d47/';
+  const ANALYTICS_PATH = 'analitica-privada.html';
 
   function pageKey() {
     const file = location.pathname.endsWith('/')
@@ -33,9 +34,14 @@
     const access = document.createElement('a');
     access.className = 'st-electro-access';
     access.href = ELECTROIA_PATH;
-    access.textContent = 'Ω';
-    access.setAttribute('aria-label', 'Ω');
-    tools.append(access);
+    access.textContent = '\u03a9';
+    access.setAttribute('aria-label', 'Acceso privado a ElectroIA');
+    const analytics = document.createElement('a');
+    analytics.className = 'st-electro-access st-analytics-access';
+    analytics.href = ANALYTICS_PATH;
+    analytics.textContent = '\u03b2';
+    analytics.setAttribute('aria-label', 'Panel privado de análisis de visitas');
+    tools.append(access, analytics);
     footer.append(tools);
     return tools;
   }

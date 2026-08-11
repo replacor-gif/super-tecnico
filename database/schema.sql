@@ -97,3 +97,35 @@ CREATE TABLE IF NOT EXISTS st_moderation_log (
   PRIMARY KEY (id),
   KEY idx_moderation_entity (entity_type, entity_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS st_page_counters (
+  page_key VARCHAR(64) NOT NULL,
+  views BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (page_key)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS st_page_daily (
+  page_key VARCHAR(64) NOT NULL,
+  view_date DATE NOT NULL,
+  views BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  unique_visitors BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  mobile_views BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  tablet_views BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  desktop_views BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  internal_views BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  external_views BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  direct_views BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (page_key, view_date),
+  KEY idx_page_daily_date (view_date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS st_page_daily_visitors (
+  page_key VARCHAR(64) NOT NULL,
+  view_date DATE NOT NULL,
+  client_hash CHAR(64) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (page_key, view_date, client_hash),
+  KEY idx_daily_visitors_date (view_date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

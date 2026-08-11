@@ -27,9 +27,27 @@ class HiddenElectroIATests(unittest.TestCase):
         counter = (ROOT / "assets" / "page-counter.js").read_text(encoding="utf-8")
         styles = (ROOT / "assets" / "common.css").read_text(encoding="utf-8")
         self.assertIn(f"const ELECTROIA_PATH = '{ROUTE}/';", counter)
-        self.assertIn("access.textContent = 'Ω'", counter)
+        self.assertIn("access.textContent = '\\u03a9'", counter)
         self.assertIn("tools.prepend(counter)", counter)
         self.assertIn(".st-electro-access", styles)
+
+    def test_beta_access_opens_private_analytics_below_omega(self):
+        counter = (ROOT / "assets" / "page-counter.js").read_text(encoding="utf-8")
+        html = (ROOT / "analitica-privada.html").read_text(encoding="utf-8")
+        app = (ROOT / "assets" / "analytics.js").read_text(encoding="utf-8")
+        backend = (ROOT / "api" / "index.php").read_text(encoding="utf-8")
+        analytics_backend = (ROOT / "api" / "analytics.php").read_text(encoding="utf-8")
+        self.assertIn("const ANALYTICS_PATH = 'analitica-privada.html'", counter)
+        self.assertIn("analytics.textContent = '\\u03b2'", counter)
+        self.assertLess(counter.index("tools.append(access, analytics)"), counter.index("footer.append(tools)"))
+        self.assertIn("noindex,nofollow,noarchive,nosnippet,noimageindex", html)
+        self.assertIn("electroia-access", app)
+        self.assertIn("electroia-unlock", app)
+        self.assertIn("analytics-summary", backend)
+        self.assertIn("st_require_electroia_access", backend)
+        self.assertIn("st_page_daily", analytics_backend)
+        for content in (counter, html, app, backend, analytics_backend):
+            self.assertNotIn("4097", content)
 
     def test_lab_uses_public_component_and_symbol_databases(self):
         app = (ROOT / ROUTE / "app.js").read_text(encoding="utf-8")
@@ -145,6 +163,8 @@ class HiddenElectroIATests(unittest.TestCase):
                 (output / "assets" / "symbols" / "SYM-0080_mosfet-n-con-diodo-de-cuerpo.svg").is_file()
             )
             self.assertTrue((output / "llms.txt").is_file())
+            self.assertTrue((output / "analitica-privada.html").is_file())
+            self.assertTrue((output / "assets" / "analytics.js").is_file())
             self.assertTrue((output / "electroia-tool-server" / "server.json").is_file())
 
     def test_complete_symbol_library_is_normalized_and_quality_labeled(self):

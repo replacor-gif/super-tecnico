@@ -37,6 +37,9 @@ jobs:
       - name: Verificar diseñador de conductos
         run: node tests/test_duct_designer.js
 
+      - name: Verificar panel privado de visitas
+        run: node --check assets/analytics.js
+
       - name: Verificar buscador universal de datasheets
         run: node tests/test_datasheet_finder.js
 

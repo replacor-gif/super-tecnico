@@ -248,6 +248,12 @@
   outline: none;
 }
 
+.st-analytics-access {
+  margin-top: 0;
+  color: #71849a;
+  font-style: italic;
+}
+
 @media print {
   .ad-slot,
   .st-page-counter,

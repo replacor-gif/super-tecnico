@@ -400,6 +400,8 @@ footer, .st-page-footer { color: #78879b !important; }
 .st-page-counter { border-color: #29364a !important; color: #738197 !important; background: rgba(8,13,20,.76) !important; }
 .st-electro-access { color: #65748a !important; }
 .st-electro-access:hover, .st-electro-access:focus-visible { color: var(--st-yellow) !important; background: rgba(255,228,56,.09) !important; }
+.st-analytics-access { color: #60758f !important; }
+.st-analytics-access:hover, .st-analytics-access:focus-visible { color: var(--st-blue) !important; background: rgba(0,107,255,.1) !important; }
 .st-legal-links a { color: #91a0b5 !important; }
 .ad-slot:not([hidden]) { border-color: var(--st-line) !important; background: var(--st-panel) !important; }
 
