@@ -34,6 +34,9 @@ jobs:
       - name: Verificar fórmulas de las calculadoras
         run: node tests/test_calculations.js
 
+      - name: Verificar diseñador de conductos
+        run: node tests/test_duct_designer.js
+
       - name: Verificar buscador universal de datasheets
         run: node tests/test_datasheet_finder.js
 

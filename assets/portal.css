@@ -365,6 +365,10 @@ h1 {
   background: #f0ecff;
 }
 
+.duct-tool-icon svg { width: 72%; height: 72%; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.duct-tool-icon svg circle:first-child { fill: color-mix(in srgb, currentColor 12%, transparent); }
+.duct-tool-icon .duct-path { stroke-width: 6; }
+
 .tool-card-components .tool-badge {
   color: #08705d;
   background: #e6f8f2;

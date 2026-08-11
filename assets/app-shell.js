@@ -4,6 +4,7 @@
   const tools = [
     { href: 'index.html', label: 'Inicio', short: 'Inicio', color: '#ff7a00', icon: 'home', terms: 'inicio portada herramientas' },
     { href: 'climatizacion.html', label: 'Climatización', short: 'Clima', color: '#00c8ff', icon: 'fan', terms: 'clima hvac errores códigos marcas aire acondicionado' },
+    { href: 'conductos.html', label: 'Diseño de conductos', short: 'Conductos', color: '#51ff7d', icon: 'duct', terms: 'conductos diseño instalación estancias rejillas caudal distribución aire' },
     { href: 'calculadoras.html', label: 'Calculadoras', short: 'Cálculos', color: '#ff8a00', icon: 'calculator', terms: 'cálculo electricidad taller ley ohm electrónica' },
     { href: 'componentes.html', label: 'Componentes', short: 'Componentes', color: '#54ff82', icon: 'chip', terms: 'referencias electrónica encapsulado datasheet ficha rápida' },
     { href: 'smd.html', label: 'Identificador SMD', short: 'SMD', color: '#ff3fa7', icon: 'smd', terms: 'marcado código componente placa' },
@@ -21,6 +22,7 @@
     search: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m15.8 15.8 4.2 4.2"/></svg>',
     home: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="m7 23 17-15 17 15v18H29V29H19v12H7z"/><path class="detail" d="M13 20h22"/></svg>',
     fan: '<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="5"/><path d="M24 19c-4-9 1-14 6-13 7 2 7 12-1 17M29 24c9-4 14 1 13 6-2 7-12 7-17-1M24 29c4 9-1 14-6 13-7-2-7-12 1-17M19 24c-9 4-14-1-13-6 2-7 12-7 17 1"/><circle class="detail" cx="24" cy="24" r="19"/></svg>',
+    duct: '<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="17" y="17" width="14" height="14" rx="3"/><circle cx="24" cy="24" r="4"/><path d="M4 24h13M31 24h13M10 24V10M38 24v14M5 7h10v5H5zM33 36h10v5H33z"/><path class="detail" d="M24 20c5 2 5 6 0 8M20 24c2 5 6 5 8 0"/></svg>',
     calculator: '<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="5" width="32" height="38" rx="5"/><path d="M14 11h20v8H14zM15 26h3M24 26h3M33 26h1M15 34h3M24 34h3M33 34h1"/><path class="detail" d="M13 22h22"/></svg>',
     chip: '<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="12" y="12" width="24" height="24" rx="3"/><rect x="18" y="18" width="12" height="12" rx="1"/><path d="M17 5v7M24 5v7M31 5v7M17 36v7M24 36v7M31 36v7M5 17h7M5 24h7M5 31h7M36 17h7M36 24h7M36 31h7"/></svg>',
     smd: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 15h28v18H10zM4 18h6M4 24h6M4 30h6M38 18h6M38 24h6M38 30h6"/><path class="detail" d="M15 20h18M15 25h12M15 29h9"/></svg>',
@@ -67,12 +69,12 @@
           <button class="st-drawer-close" type="button" data-st-close aria-label="Cerrar menú">${icons.close}</button>
         </div>
         <label class="st-drawer-search"><span>${icons.search}</span><input type="search" autocomplete="off" placeholder="Buscar una herramienta…" aria-label="Buscar una herramienta"></label>
-        <div class="st-drawer-status"><span>ACCESO RÁPIDO</span><b>${tools.length} HERRAMIENTAS</b></div>
+        <div class="st-drawer-status"><span>ACCESO RÁPIDO</span><b>${tools.length - 1} HERRAMIENTAS</b></div>
         <nav class="st-drawer-grid" aria-label="Todas las herramientas">${tools.map(tool => toolLink(tool)).join('')}</nav>
         <div class="st-drawer-foot"><strong>TÉCNICA REAL.</strong><span>DECISIONES RÁPIDAS.</span></div>
       </aside>
       <nav class="st-bottom-nav" aria-label="Navegación rápida">
-        ${tools.filter(tool => ['index.html', 'climatizacion.html', 'calculadoras.html', 'componentes.html'].includes(tool.href)).map(tool => toolLink(tool, 'st-bottom-link')).join('')}
+        ${tools.filter(tool => ['index.html', 'climatizacion.html', 'conductos.html', 'calculadoras.html'].includes(tool.href)).map(tool => toolLink(tool, 'st-bottom-link')).join('')}
         <button class="st-bottom-link st-bottom-more" type="button" data-st-open style="--tool-color:#ff3fa7"><span class="st-tool-icon">${icons.menu}</span><span>Más</span></button>
       </nav>`;
     document.body.append(...shell.childNodes);

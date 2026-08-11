@@ -324,6 +324,7 @@ class StaticSiteTests(unittest.TestCase):
             "climatizacion.html",
             "smd.html",
             "calculadoras.html",
+            "conductos.html",
             "componentes.html",
             "comparador.html",
             "averias.html",
@@ -3019,6 +3020,7 @@ class StaticSiteTests(unittest.TestCase):
             "index.html",
             "climatizacion.html",
             "calculadoras.html",
+            "conductos.html",
             "componentes.html",
             "smd.html",
             "comparador.html",
@@ -3033,11 +3035,27 @@ class StaticSiteTests(unittest.TestCase):
         for filename in public_pages:
             html = (self.dist / filename).read_text(encoding="utf-8")
             self.assertIn('assets/app-theme.css?v=1', html, filename)
-            self.assertIn('assets/app-shell.js?v=1', html, filename)
+            self.assertIn('assets/app-shell.js?v=2', html, filename)
 
         shell = (self.dist / "assets" / "app-shell.js").read_text(encoding="utf-8")
         for marker in ("st-app-drawer", "st-bottom-nav", "st-drawer-search", "Calculadoras", "Componentes"):
             self.assertIn(marker, shell)
+
+    def test_duct_designer_is_an_independent_visual_project_tool(self):
+        html = (self.dist / "conductos.html").read_text(encoding="utf-8")
+        script = (self.dist / "assets" / "duct-designer.js").read_text(encoding="utf-8")
+        css = (self.dist / "assets" / "duct-designer.css").read_text(encoding="utf-8")
+        portal = (self.dist / "index.html").read_text(encoding="utf-8")
+        self.assertIn("Diseñador de conductos", html)
+        self.assertIn("Plano completo de distribución", html)
+        self.assertIn('data-add-side="left"', html)
+        self.assertIn('data-add-side="right"', html)
+        self.assertIn("calculateProject", script)
+        self.assertIn("renderDiagramSvg", script)
+        self.assertIn("st.ductDesigner.v1", script)
+        self.assertIn("duct-network-svg", css)
+        self.assertIn('href="conductos.html"', portal)
+        self.assertNotIn("ductSizing", script)
 
 
 if __name__ == "__main__":
