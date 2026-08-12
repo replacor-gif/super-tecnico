@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "status": "adopted_design_policy",
+  "objective": "Preserve reusable technical value while limiting storage, duplication and redistribution risk.",
+  "permanent": [
+    "stable_ids_and_relations",
+    "normalized_parameters_and_units",
+    "reviewed_rules_and_procedures",
+    "source_metadata_versions_and_hashes",
+    "moderated_case_outcomes",
+    "tool_and_engine_versions"
+  ],
+  "compact": [
+    "minimum_source_fragments",
+    "page_and_section_locators",
+    "answer_projections",
+    "content_hashes",
+    "regenerable_search_indexes"
+  ],
+  "heavy_documents": {
+    "default": "reference_or_external_storage",
+    "canonical_copy_allowed_when": [
+      "redistribution_is_permitted",
+      "the_source_is_operationally_important",
+      "one_canonical_copy_prevents_repeated_download_and_extraction"
+    ],
+    "rules": [
+      "never_duplicate_the_same_version",
+      "retain_source_url_version_and_hash",
+      "separate_permitted_public_texts_from_licensed_standards",
+      "remove_processing_temporaries",
+      "use_embeddings_only_after_measured_retrieval_benefit"
+    ]
+  },
+  "cache": {
+    "not_a_system_of_record": true,
+    "key_fields": ["tool_id", "tool_version", "normalized_input_hash", "source_version_set"],
+    "invalidation": ["tool_version_change", "source_content_hash_change", "review_status_change"],
+    "policies": ["ttl", "lru", "per_client_limits"]
+  },
+  "public_response": {
+    "minimum_necessary_fields_only": true,
+    "bulk_dataset_export": false,
+    "internal_compute_cost_exposed": false,
+    "source_ids_and_confidence_exposed": true
+  }
+}

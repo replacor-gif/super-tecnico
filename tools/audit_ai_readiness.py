@@ -68,6 +68,10 @@ def audit(root: Path) -> dict[str, Any]:
     training = read_json(root / "data" / "training" / "collection.json")
     electronics = read_json(root / "data" / "electronics" / "collection.json")
     frigorista = read_json(root / "data" / "frigorista" / "catalog.json")
+    regulations = read_json(root / "data" / "regulations" / "catalog.json")
+    strategy = read_json(root / "data" / "ai" / "tool-strategy.json")
+    regulation_documents = regulations.get("documents") or []
+    strategy_tools = strategy.get("tools") or []
 
     checks = [
         checkpoint("public_discovery", "Descubrimiento público para máquinas", "pass", "llms.txt y data/ai/discovery.json"),
@@ -80,6 +84,10 @@ def audit(root: Path) -> dict[str, Any]:
         checkpoint("metering", "Medición y facturación por uso", "planned", "Niveles de consumo definidos; sin contabilidad activa"),
         checkpoint("economic_benchmark", "Ahorro económico demostrado", "planned", "Plan y umbrales definidos; baseline pendiente"),
         checkpoint("anti_extraction", "Protección contra extracción masiva", "partial", "Política sin exportación masiva definida; falta aplicación en gateway remoto"),
+        checkpoint("viability_catalog", "Catálogo de viabilidad de herramientas", "pass", f"{len(strategy_tools)} propuestas evaluadas con decisión, fase, coste y riesgo"),
+        checkpoint("storage_governance", "Gobierno de almacenamiento y caché", "pass", "Política pública de copia canónica, caché versionada y respuesta mínima"),
+        checkpoint("compact_context", "Contexto técnico compacto", "partial", "Contrato definido; proyecciones remotas todavía sin ejecutar"),
+        checkpoint("validation_tools", "Validadores de medidas y respuestas", "planned", "Contratos definidos; ejecución pendiente por dominios y cobertura de reglas"),
     ]
     weights = {"pass": 2, "partial": 1, "planned": 0}
     readiness_score = round(100 * sum(weights[item["status"]] for item in checks) / (2 * len(checks)))
@@ -109,12 +117,19 @@ def audit(root: Path) -> dict[str, Any]:
             "electronics_chapters": int((electronics.get("stats") or {}).get("chapters") or 0),
             "frigorista_refrigerants": int((frigorista.get("counts") or {}).get("catalog") or 0),
             "frigorista_pt_available": int((frigorista.get("counts") or {}).get("pt_available") or 0),
+            "regulation_documents": len(regulation_documents),
+            "regulation_pages": sum(int(item.get("page_count") or 0) for item in regulation_documents),
+            "regulation_search_records": sum(int(item.get("search_records") or 0) for item in regulation_documents),
+            "strategy_tools_evaluated": len(strategy_tools),
+            "strategy_phase_one_tools": sum(int(item.get("phase") == 1) for item in strategy_tools),
         },
         "checkpoints": checks,
         "release_blockers": [
             "Implementar el gateway remoto MCP/HTTPS con autenticación y cuotas.",
             "Crear proyecciones de respuesta que nunca expongan registros maestros completos.",
             "Registrar uso, coste, latencia, cache y resultado por herramienta.",
+            "Implementar las proyecciones de contexto compacto sin exponer registros maestros.",
+            "Activar validadores solo en dominios con reglas y tolerancias revisadas.",
             "Completar el benchmark ciego antes de publicar promesas de ahorro.",
             "Definir condiciones comerciales, privacidad, soporte y proceso de alta.",
             "Validar seguridad y revisión de la plataforma antes de publicar en directorios."

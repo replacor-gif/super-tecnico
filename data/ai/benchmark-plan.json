@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "status": "baseline_pending",
   "purpose": "Demostrar con medidas que Super Técnico resuelve consultas técnicas con menos coste, menos contexto y menor riesgo que una búsqueda documental independiente.",
   "comparison_modes": [
@@ -31,6 +31,26 @@
       "id": "diagram",
       "minimum_cases": 20,
       "example": "Validar terminales y producir un SVG electrotécnico en un único lienzo"
+    },
+    {
+      "id": "compact_context",
+      "minimum_cases": 20,
+      "example": "Entregar solo el contexto aplicable con fuentes, versión y menos tokens que la búsqueda independiente"
+    },
+    {
+      "id": "measurement_validation",
+      "minimum_cases": 20,
+      "example": "Detectar unidades incorrectas, valores físicamente imposibles y contradicciones entre medidas"
+    },
+    {
+      "id": "regulation_search",
+      "minimum_cases": 20,
+      "example": "Localizar el documento, página y edición aplicables sin convertir una coincidencia en conclusión legal"
+    },
+    {
+      "id": "deterministic_calculation",
+      "minimum_cases": 30,
+      "example": "Comparar un resultado reproducible con cálculo independiente y tolerancia definida"
     }
   ],
   "metrics": [
@@ -40,10 +60,18 @@
     "input_tokens",
     "output_tokens",
     "documents_opened",
+    "searches_performed",
+    "interaction_turns",
+    "retries",
     "wall_time_ms",
     "cost_per_resolved_case",
+    "internal_tool_cost",
+    "estimated_without_tool_cost",
+    "estimated_tokens_avoided",
+    "estimated_searches_avoided",
     "response_bytes",
-    "cache_hit_rate"
+    "cache_hit_rate",
+    "measurement_contradiction_detection_rate"
   ],
   "initial_gates": {
     "coverage_preflight_max_output_tokens": 250,
@@ -51,6 +79,7 @@
     "diagnostic_answer_max_output_tokens": 1400,
     "paid_answer_provenance_percent": 100,
     "unsupported_claim_rate_max_percent": 1,
+    "minimum_economic_viability_cost_reduction_percent": 30,
     "target_cost_reduction_percent": 40,
     "target_time_reduction_percent": 60
   },

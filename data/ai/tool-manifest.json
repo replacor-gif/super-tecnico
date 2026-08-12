@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "name": "super-tecnico-ai-tools",
   "title": "Super Técnico — herramientas técnicas para IAs",
   "status": "design_contract",
@@ -12,25 +12,54 @@
     "bulk_export_allowed": false,
     "unknown_result": "Return a structured not_found or insufficient_context result; never invent a record."
   },
+  "billing_policy": {
+    "status": "planned_after_benchmark",
+    "coverage_preflight": "free",
+    "economic_classes": ["micro", "standard", "advanced", "heavy"],
+    "classification": {
+      "micro": "Unit conversions, deterministic validations and tiny calculations.",
+      "standard": "Compact knowledge, procedures and focused deterministic calculations.",
+      "advanced": "Diagnostics, case matching, next measurements and technical validation.",
+      "heavy": "Simulation and evaluation workloads only after explicit cost approval."
+    },
+    "internal_compute_cost_is_private": true,
+    "prices_published_before_benchmark": false
+  },
   "default_output_schema": {
     "type": "object",
     "additionalProperties": false,
-    "required": ["ok", "status", "request_id", "service_version", "result", "warnings"],
+    "required": ["ok", "status", "request_id", "service_version", "tool_id", "tool_version", "result", "confidence", "source_ids", "warnings", "usage"],
     "properties": {
       "ok": {"type": "boolean"},
       "status": {"type": "string", "enum": ["success", "not_found", "insufficient_context", "rejected", "error"]},
       "request_id": {"type": "string", "minLength": 8, "maxLength": 64},
       "service_version": {"type": "string"},
+      "tool_id": {"type": "string", "minLength": 3, "maxLength": 100},
+      "tool_version": {"type": "string", "minLength": 1, "maxLength": 40},
       "result": {"type": ["object", "array", "null"]},
+      "confidence": {
+        "type": ["object", "null"],
+        "additionalProperties": false,
+        "properties": {
+          "score": {"type": "number", "minimum": 0, "maximum": 1},
+          "level": {"type": "string", "enum": ["high", "medium", "low", "unknown"]},
+          "basis": {"type": "string", "maxLength": 500}
+        }
+      },
+      "source_ids": {"type": "array", "maxItems": 30, "items": {"type": "string", "maxLength": 180}},
       "warnings": {"type": "array", "maxItems": 12, "items": {"type": "string", "maxLength": 400}},
       "missing_context": {"type": "array", "maxItems": 8, "items": {"type": "string", "maxLength": 160}},
       "usage": {
         "type": "object",
         "additionalProperties": false,
+        "required": ["billing_tier", "billable_units", "cache_status"],
         "properties": {
           "billing_tier": {"type": "string"},
           "billable_units": {"type": "integer", "minimum": 0},
-          "cache_status": {"type": "string", "enum": ["hit", "miss", "not_applicable"]}
+          "cache_status": {"type": "string", "enum": ["hit", "miss", "not_applicable"]},
+          "response_bytes": {"type": "integer", "minimum": 0},
+          "estimated_tokens_avoided": {"type": ["integer", "null"], "minimum": 0},
+          "estimated_searches_avoided": {"type": ["integer", "null"], "minimum": 0}
         }
       }
     }
@@ -65,6 +94,111 @@
           "query": {"type": "string", "minLength": 2, "maxLength": 300},
           "brand": {"type": "string", "maxLength": 80},
           "model_or_family": {"type": "string", "maxLength": 120}
+        }
+      }
+    },
+    {
+      "name": "supertecnico_get_compact_context",
+      "title": "Obtener contexto técnico compacto",
+      "description": "Devuelve únicamente los registros, campos y fragmentos necesarios para un objetivo técnico concreto, con IDs, versiones, confianza y procedencia.",
+      "state": "planned",
+      "result_level": "basic",
+      "billing_tier": "metered_basic_planned",
+      "economic_class": "standard",
+      "target_output_tokens": 600,
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["domain", "query", "objective"],
+        "properties": {
+          "domain": {"type": "string", "enum": ["hvac", "refrigeration", "electronics", "components", "field_cases", "diagrams", "regulations", "drainage"]},
+          "query": {"type": "string", "minLength": 2, "maxLength": 300},
+          "objective": {"type": "string", "minLength": 3, "maxLength": 300},
+          "source_ids": {"type": "array", "maxItems": 20, "items": {"type": "string", "maxLength": 180}},
+          "max_records": {"type": "integer", "minimum": 1, "maximum": 8, "default": 4},
+          "max_output_tokens": {"type": "integer", "minimum": 200, "maximum": 1200, "default": 600}
+        }
+      }
+    },
+    {
+      "name": "supertecnico_validate_measurements",
+      "title": "Validar medidas técnicas",
+      "description": "Comprueba unidades, calidad declarada, rangos físicos y contradicciones entre medidas sin convertir estimaciones en lecturas reales.",
+      "state": "planned_domain_by_domain",
+      "result_level": "basic",
+      "billing_tier": "metered_basic_planned",
+      "economic_class": "micro",
+      "target_output_tokens": 500,
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["domain", "measurements"],
+        "properties": {
+          "domain": {"type": "string", "enum": ["refrigeration", "hvac", "electrical", "combustion", "airflow", "water"]},
+          "context": {"type": "string", "maxLength": 600},
+          "measurements": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 40,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["name", "value", "unit", "quality"],
+              "properties": {
+                "name": {"type": "string", "minLength": 1, "maxLength": 100},
+                "value": {"type": "number"},
+                "unit": {"type": "string", "minLength": 1, "maxLength": 40},
+                "quality": {"type": "string", "enum": ["measured", "machine_read", "observed_estimate", "unknown"]}
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "supertecnico_get_next_measurement",
+      "title": "Obtener la siguiente medición útil",
+      "description": "Devuelve una sola medición de alto valor para continuar el análisis; inicialmente delega en el motor frigorista.",
+      "state": "refrigeration_browser_available_remote_planned",
+      "result_level": "diagnostic",
+      "billing_tier": "metered_diagnostic_planned",
+      "economic_class": "advanced",
+      "target_output_tokens": 350,
+      "delegate": "../frigorista/tool-manifest.json#frigorista_get_next_measurement",
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["domain", "measurements"],
+        "properties": {
+          "domain": {"type": "string", "enum": ["refrigeration"]},
+          "refrigerant": {"type": "string", "minLength": 2, "maxLength": 40},
+          "goal": {"type": "string", "enum": ["pt_only", "superheat", "subcooling", "basic_system_study", "deep_analysis"], "default": "basic_system_study"},
+          "measurements": {"type": "object"}
+        }
+      }
+    },
+    {
+      "name": "supertecnico_validate_answer",
+      "title": "Validar una respuesta técnica",
+      "description": "Descompone una respuesta en afirmaciones y marca las respaldadas, contradictorias, no verificables o fuera del alcance de las fuentes aportadas.",
+      "state": "planned_after_reviewed_rule_coverage",
+      "result_level": "diagnostic",
+      "billing_tier": "metered_diagnostic_planned",
+      "economic_class": "advanced",
+      "target_output_tokens": 1000,
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["domain", "answer"],
+        "properties": {
+          "domain": {"type": "string", "enum": ["hvac", "refrigeration", "electronics", "components", "diagrams", "regulations", "drainage"]},
+          "answer": {"type": "string", "minLength": 10, "maxLength": 6000},
+          "source_ids": {"type": "array", "maxItems": 30, "items": {"type": "string", "maxLength": 180}},
+          "strictness": {"type": "string", "enum": ["safety_critical", "technical", "informational"], "default": "technical"}
         }
       }
     },

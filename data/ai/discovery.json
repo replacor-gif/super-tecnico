@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "service_version": "0.1.0",
+  "service_version": "0.2.0",
   "id": "super-tecnico-ai-gateway",
   "name": "Super Técnico para IAs",
   "title": "Conocimiento técnico verificable y diagramas deterministas para sistemas de IA",
@@ -27,6 +27,17 @@
         "component_comparison",
         "field_case_search",
         "technical_reference_search"
+      ]
+    },
+    {
+      "id": "super-tecnico-compact-validation",
+      "title": "Compact Context and Validation",
+      "status": "contract_ready_domain_execution_planned",
+      "capabilities": [
+        "minimum_context_projection",
+        "measurement_validation",
+        "next_best_measurement",
+        "technical_answer_validation"
       ]
     },
     {
@@ -132,7 +143,9 @@
     "knowledge_record_schema": "knowledge-record.schema.json",
     "openapi_design_contract": "knowledge-api-contract.openapi.json",
     "readiness_report": "readiness-report.json",
-    "benchmark_plan": "benchmark-plan.json"
+    "benchmark_plan": "benchmark-plan.json",
+    "tool_strategy": "tool-strategy.json",
+    "storage_policy": "storage-policy.json"
   },
   "discovery_channels": {
     "website": "../../ia-integracion.html",

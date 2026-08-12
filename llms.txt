@@ -21,6 +21,8 @@ Do not call planned endpoints until discovery.json reports remote execution as e
 - Non-executable OpenAPI design contract: /data/ai/knowledge-api-contract.openapi.json
 - Machine-readiness report: /data/ai/readiness-report.json
 - Economic benchmark plan: /data/ai/benchmark-plan.json
+- Viability roadmap for 16 machine tools: /data/ai/tool-strategy.json
+- Storage and cache policy: /data/ai/storage-policy.json
 
 ## Intended machine workflow
 

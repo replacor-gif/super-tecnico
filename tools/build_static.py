@@ -842,6 +842,8 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "knowledge-api-contract.openapi.json",
         "readiness-report.json",
         "benchmark-plan.json",
+        "tool-strategy.json",
+        "storage-policy.json",
     ):
         write_json(
             output / "data" / "ai" / filename,

@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-08-12T15:47:18.725585+00:00",
+  "generated_at_utc": "2026-08-12T17:43:05.838172+00:00",
   "status": "private_preview_foundation",
-  "readiness_score_percent": 50,
+  "readiness_score_percent": 54,
   "score_meaning": "Preparación contractual y de datos; no disponibilidad comercial.",
   "content_inventory": {
     "brands": 30,
@@ -22,7 +22,12 @@
     "hvac_training_chapters": 167,
     "electronics_chapters": 678,
     "frigorista_refrigerants": 71,
-    "frigorista_pt_available": 56
+    "frigorista_pt_available": 56,
+    "regulation_documents": 18,
+    "regulation_pages": 2050,
+    "regulation_search_records": 5470,
+    "strategy_tools_evaluated": 16,
+    "strategy_phase_one_tools": 5
   },
   "checkpoints": [
     {
@@ -84,12 +89,38 @@
       "title": "Protección contra extracción masiva",
       "status": "partial",
       "evidence": "Política sin exportación masiva definida; falta aplicación en gateway remoto"
+    },
+    {
+      "id": "viability_catalog",
+      "title": "Catálogo de viabilidad de herramientas",
+      "status": "pass",
+      "evidence": "16 propuestas evaluadas con decisión, fase, coste y riesgo"
+    },
+    {
+      "id": "storage_governance",
+      "title": "Gobierno de almacenamiento y caché",
+      "status": "pass",
+      "evidence": "Política pública de copia canónica, caché versionada y respuesta mínima"
+    },
+    {
+      "id": "compact_context",
+      "title": "Contexto técnico compacto",
+      "status": "partial",
+      "evidence": "Contrato definido; proyecciones remotas todavía sin ejecutar"
+    },
+    {
+      "id": "validation_tools",
+      "title": "Validadores de medidas y respuestas",
+      "status": "planned",
+      "evidence": "Contratos definidos; ejecución pendiente por dominios y cobertura de reglas"
     }
   ],
   "release_blockers": [
     "Implementar el gateway remoto MCP/HTTPS con autenticación y cuotas.",
     "Crear proyecciones de respuesta que nunca expongan registros maestros completos.",
     "Registrar uso, coste, latencia, cache y resultado por herramienta.",
+    "Implementar las proyecciones de contexto compacto sin exponer registros maestros.",
+    "Activar validadores solo en dominios con reglas y tolerancias revisadas.",
     "Completar el benchmark ciego antes de publicar promesas de ahorro.",
     "Definir condiciones comerciales, privacidad, soporte y proceso de alta.",
     "Validar seguridad y revisión de la plataforma antes de publicar en directorios."

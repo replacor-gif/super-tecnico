@@ -22,6 +22,8 @@ class AIGatewayFoundationTests(unittest.TestCase):
         self.assertIn("conexión remota todavía desactivada", html)
         self.assertIn("data/ai/discovery.json", html)
         self.assertIn("data/ai/readiness-report.json", html)
+        self.assertIn("data/ai/tool-strategy.json", html)
+        self.assertIn("data/ai/storage-policy.json", html)
         self.assertIn('href="ia-integracion.html"', home)
         self.assertNotIn("4097", html)
         self.assertNotRegex(html, r"sk-[A-Za-z0-9_-]{12,}")
@@ -44,11 +46,18 @@ class AIGatewayFoundationTests(unittest.TestCase):
         self.assertTrue(manifest["routing_policy"]["preflight_first"])
         self.assertFalse(manifest["routing_policy"]["bulk_export_allowed"])
         self.assertIn("status", manifest["default_output_schema"]["required"])
+        self.assertIn("confidence", manifest["default_output_schema"]["required"])
+        self.assertIn("source_ids", manifest["default_output_schema"]["required"])
         self.assertIn("usage", manifest["default_output_schema"]["properties"])
         self.assertEqual(tools["supertecnico_check_coverage"]["billing_tier"], "free")
         self.assertLessEqual(tools["supertecnico_check_coverage"]["target_output_tokens"], 250)
         self.assertEqual(tools["supertecnico_get_diagnostic"]["billing_tier"], "metered_diagnostic")
         self.assertIn("delegate", tools["supertecnico_render_diagram"])
+        self.assertIn("supertecnico_get_compact_context", tools)
+        self.assertIn("supertecnico_validate_measurements", tools)
+        self.assertIn("supertecnico_get_next_measurement", tools)
+        self.assertIn("supertecnico_validate_answer", tools)
+        self.assertEqual(tools["supertecnico_validate_measurements"]["economic_class"], "micro")
         self.assertTrue(all(item["annotations"]["readOnlyHint"] for item in tools.values()))
 
     def test_openapi_is_explicitly_non_executable_and_protects_database(self):
@@ -58,6 +67,10 @@ class AIGatewayFoundationTests(unittest.TestCase):
         self.assertFalse(contract["x-execution-enabled"])
         self.assertTrue(contract["x-do-not-call-until-enabled"])
         self.assertIn("ApiKeyAuth", contract["components"]["securitySchemes"])
+        self.assertIn("/knowledge/compact", contract["paths"])
+        self.assertIn("/validate/measurements", contract["paths"])
+        self.assertIn("/diagnostics/next-measurement", contract["paths"])
+        self.assertIn("/validate/answer", contract["paths"])
         self.assertFalse(discovery["security"]["database_direct_access"])
         self.assertNotIn("4097", json.dumps(contract))
 
@@ -68,6 +81,10 @@ class AIGatewayFoundationTests(unittest.TestCase):
         self.assertIn("secret_hash", sql)
         self.assertIn("st_ai_usage_events", sql)
         self.assertIn("billable_units", sql)
+        self.assertIn("input_tokens", sql)
+        self.assertIn("estimated_searches_avoided", sql)
+        self.assertIn("internal_compute_cost_microunits", sql)
+        self.assertIn("estimated_without_tool_cost_microunits", sql)
         self.assertIn("st_ai_security_events", sql)
         self.assertIn("st_ai_benchmark_runs", sql)
         self.assertNotIn("4097", sql)
@@ -89,8 +106,24 @@ class AIGatewayFoundationTests(unittest.TestCase):
         self.assertEqual(published["content_inventory"]["brands"], 30)
         self.assertEqual(published["content_inventory"]["components"], 38618)
         self.assertEqual(published["content_inventory"]["electroia_symbols"], 460)
+        self.assertEqual(published["content_inventory"]["regulation_documents"], 18)
+        self.assertEqual(published["content_inventory"]["strategy_tools_evaluated"], 16)
+        self.assertEqual(published["content_inventory"]["strategy_phase_one_tools"], 5)
         self.assertGreater(published["content_inventory"]["source_documents"], 200)
         self.assertIn("economic_benchmark", {item["id"] for item in published["checkpoints"]})
+
+    def test_strategy_evaluates_every_handoff_tool_without_building_everything(self):
+        strategy = load(ROOT / "data" / "ai" / "tool-strategy.json")
+        storage = load(ROOT / "data" / "ai" / "storage-policy.json")
+        tools = strategy["tools"]
+        self.assertEqual(strategy["status"], "adopted_as_product_roadmap")
+        self.assertFalse(strategy["implementation_policy"]["build_all_at_once"])
+        self.assertEqual(len(tools), 16)
+        self.assertEqual(len({item["id"] for item in tools}), 16)
+        self.assertTrue(all(item.get("decision") and item.get("next_step") for item in tools))
+        self.assertEqual({item["id"] for item in tools if item["phase"] == 1}, set(strategy["priority_now"]))
+        self.assertFalse(storage["public_response"]["bulk_dataset_export"])
+        self.assertFalse(storage["public_response"]["internal_compute_cost_exposed"])
 
     def test_static_build_publishes_discovery_but_not_internal_docs_or_audit_script(self):
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -106,6 +139,8 @@ class AIGatewayFoundationTests(unittest.TestCase):
                 "data/ai/knowledge-api-contract.openapi.json",
                 "data/ai/readiness-report.json",
                 "data/ai/benchmark-plan.json",
+                "data/ai/tool-strategy.json",
+                "data/ai/storage-policy.json",
             ):
                 self.assertTrue((output / path).is_file(), path)
             self.assertFalse((output / "docs" / "SUPER_TECNICO_AI_PRODUCT.md").exists())
