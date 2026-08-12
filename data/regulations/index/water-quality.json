@@ -1,7 +1,8 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "document_id": "water-quality",
   "source_sha256": "494f1c7035cfea2f9522a2f75064bde5796ee295679f0bb45245a9eb37a5b301",
+  "source_content_sha256": "354c716edde77bfb61c2cb0f07a6b29d4bf30e9dd28c1b073c893032e24480fe",
   "page_count": 92,
   "records": [
     {

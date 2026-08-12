@@ -1,0 +1,52 @@
+name: Vigilar normativa oficial
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: regulations-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v6
+
+      - name: Preparar Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Preparar lector de PDF
+        run: python -m pip install --disable-pip-version-check pypdf
+
+      - name: Comprobar fuentes oficiales
+        run: python tools/update_regulations.py
+
+      - name: Preparar informe
+        id: report
+        run: python tools/report_regulation_updates.py --github-output "$GITHUB_OUTPUT" --body regulation-alert.md
+
+      - name: Añadir resumen de la comprobación
+        run: cat regulation-alert.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Avisar mediante una incidencia de GitHub
+        if: steps.report.outputs.changes_detected == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          FINGERPRINT: ${{ steps.report.outputs.fingerprint }}
+        run: |
+          gh label create normativa --repo "$REPOSITORY" --color FF9D00 --description "Cambios en fuentes normativas" --force
+          existing="$(gh issue list --repo "$REPOSITORY" --state open --label normativa --search "$FINGERPRINT in:title" --json number --jq 'length')"
+          if [ "$existing" = "0" ]; then
+            gh issue create --repo "$REPOSITORY" --title "[Normativa][$FINGERPRINT] Revisión requerida" --body-file regulation-alert.md --label normativa
+          fi

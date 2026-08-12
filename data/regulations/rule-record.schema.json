@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://app.replacor.com/super-tecnico/data/regulations/rule-record.schema.json",
+  "title": "Super Técnico reviewed regulation rule",
+  "description": "Contract for a human-reviewed engineering rule linked to an exact official-source version.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "status",
+    "jurisdiction",
+    "domain",
+    "statement",
+    "applicability",
+    "source",
+    "locator",
+    "reviewed_at"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{4,119}$"},
+    "status": {
+      "type": "string",
+      "enum": ["draft", "reviewed_current", "source_changed_review_pending", "superseded"]
+    },
+    "jurisdiction": {"type": "string", "minLength": 2, "maxLength": 32},
+    "regional_scope": {"type": "string", "maxLength": 120},
+    "domain": {"type": "string", "minLength": 2, "maxLength": 80},
+    "statement": {"type": "string", "minLength": 10, "maxLength": 2000},
+    "applicability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["applies_when", "does_not_apply_when"],
+      "properties": {
+        "applies_when": {"type": "array", "items": {"type": "string"}},
+        "does_not_apply_when": {"type": "array", "items": {"type": "string"}},
+        "required_inputs": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["document_id", "content_sha256", "official_page_url"],
+      "properties": {
+        "document_id": {"type": "string"},
+        "content_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "official_page_url": {"type": "string", "format": "uri"}
+      }
+    },
+    "locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["page", "provision"],
+      "properties": {
+        "page": {"type": "integer", "minimum": 1},
+        "provision": {"type": "string", "minLength": 2, "maxLength": 240},
+        "quoted_excerpt": {"type": "string", "maxLength": 500}
+      }
+    },
+    "effective_from": {"type": ["string", "null"], "format": "date"},
+    "effective_to": {"type": ["string", "null"], "format": "date"},
+    "derived_value": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "value": {},
+        "unit": {"type": ["string", "null"]},
+        "derivation": {"type": "string", "enum": ["literal", "interpretation", "deterministic_calculation"]},
+        "engine_version": {"type": ["string", "null"]}
+      }
+    },
+    "reviewed_at": {"type": "string", "format": "date"},
+    "review_note": {"type": "string", "maxLength": 1000}
+  }
+}

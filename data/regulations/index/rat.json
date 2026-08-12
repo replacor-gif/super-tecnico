@@ -1,7 +1,8 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "document_id": "rat",
   "source_sha256": "d62566daa3a9c63db0b8bd86ee2bde821eb2e6046d7d7b99228f933f91aaaec1",
+  "source_content_sha256": "7f6c9dca3f4ba612bc6c59fdb4f4d2f5e72358c4eaa2d80f26b5b11a2e6a71cf",
   "page_count": 126,
   "records": [
     {

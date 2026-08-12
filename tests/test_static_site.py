@@ -3062,16 +3062,23 @@ class StaticSiteTests(unittest.TestCase):
     def test_regulation_library_is_traceable_searchable_and_public(self):
         catalog = load(self.dist / "data" / "regulations" / "catalog.json")
         self.assertEqual(catalog["jurisdiction"], "ES")
-        self.assertEqual(len(catalog["documents"]), 7)
-        self.assertGreaterEqual(self.report["regulations"]["pages"], 1000)
-        self.assertGreaterEqual(self.report["regulations"]["search_records"], 2500)
+        self.assertEqual(len(catalog["documents"]), 18)
+        self.assertTrue({
+            "ict", "gas", "pressure-equipment", "machinery-safety", "work-equipment",
+            "cte-db-he", "cte-db-si", "rsciei", "ripci", "f-gas-eu", "f-gas-es",
+        }.issubset({document["id"] for document in catalog["documents"]}))
+        self.assertGreaterEqual(self.report["regulations"]["pages"], 1700)
+        self.assertGreaterEqual(self.report["regulations"]["search_records"], 4500)
         for document in catalog["documents"]:
             with self.subTest(document=document["id"]):
                 self.assertTrue((self.dist / document["local_pdf"]).is_file())
                 index = load(self.dist / document["index_url"])
                 self.assertEqual(index["document_id"], document["id"])
                 self.assertEqual(index["source_sha256"], document["sha256"])
+                self.assertEqual(index["source_content_sha256"], document["content_sha256"])
                 self.assertEqual(len(index["records"]), document["search_records"])
+        rule_schema = load(self.dist / "data" / "regulations" / "rule-record.schema.json")
+        self.assertIn("source_changed_review_pending", rule_schema["properties"]["status"]["enum"])
         html = (self.dist / "normativa.html").read_text(encoding="utf-8")
         script = (self.dist / "assets" / "regulations.js").read_text(encoding="utf-8")
         self.assertIn('id="searchForm"', html)

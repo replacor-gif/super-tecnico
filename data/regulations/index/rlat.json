@@ -1,7 +1,8 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "document_id": "rlat",
   "source_sha256": "f198d287a3661eb39810bdb9a3b3db53179dd7ab05f4c4a035de95e65258326e",
+  "source_content_sha256": "2a0c5e54c2ade69841d5ad5c31bae4d4e31139b370fd0aa348a25efb3f21fa7e",
   "page_count": 156,
   "records": [
     {

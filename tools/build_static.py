@@ -92,7 +92,7 @@ def write_json(path: Path, data: Any) -> None:
 def validate_regulations_data(source_root: Path) -> tuple[dict[str, Any], dict[str, int]]:
     catalog = read_json(source_root / "data" / "regulations" / "catalog.json")
     documents = catalog.get("documents") or []
-    if catalog.get("jurisdiction") != "ES" or len(documents) < 7:
+    if catalog.get("jurisdiction") != "ES" or len(documents) < 18:
         raise BuildError("Normativa: el catálogo oficial está incompleto")
     ids = [str(document.get("id") or "") for document in documents]
     if any(not value for value in ids) or len(ids) != len(set(ids)):
@@ -115,13 +115,20 @@ def validate_regulations_data(source_root: Path) -> tuple[dict[str, Any], dict[s
         digest = hashlib.sha256(pdf_path.read_bytes()).hexdigest()
         if digest != document.get("sha256"):
             raise BuildError(f"Normativa: la huella del PDF ha cambiado para {document_id}")
+        content_digest = str(document.get("content_sha256") or "")
+        if len(content_digest) != 64:
+            raise BuildError(f"Normativa: falta la huella semántica para {document_id}")
 
         index_relative = Path(str(document.get("index_url") or ""))
         if index_relative.parts[:3] != ("data", "regulations", "index") or index_relative.suffix != ".json":
             raise BuildError(f"Normativa: ruta de índice insegura para {document_id}")
         index = read_json(source_root / index_relative)
         records = index.get("records") or []
-        if index.get("document_id") != document_id or index.get("source_sha256") != digest:
+        if (
+            index.get("document_id") != document_id
+            or index.get("source_sha256") != digest
+            or index.get("source_content_sha256") != content_digest
+        ):
             raise BuildError(f"Normativa: índice desincronizado para {document_id}")
         if int(index.get("page_count") or 0) != int(document.get("page_count") or 0):
             raise BuildError(f"Normativa: páginas desincronizadas para {document_id}")
@@ -780,6 +787,10 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
     write_json(
         output / "data" / "regulations" / "update-report.json",
         read_json(source_root / "data" / "regulations" / "update-report.json"),
+    )
+    write_json(
+        output / "data" / "regulations" / "rule-record.schema.json",
+        read_json(source_root / "data" / "regulations" / "rule-record.schema.json"),
     )
     for document in regulations_catalog["documents"]:
         index_relative = Path(document["index_url"])

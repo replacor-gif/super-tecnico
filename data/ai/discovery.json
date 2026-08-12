@@ -64,7 +64,10 @@
         "full_text_search",
         "page_level_provenance",
         "official_source_links",
-        "source_change_detection"
+        "source_change_detection",
+        "semantic_change_detection",
+        "reviewed_rule_contract",
+        "affected_tool_alerts"
       ],
       "discovery": "../regulations/tool-manifest.json"
     },

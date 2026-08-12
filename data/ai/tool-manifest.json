@@ -177,7 +177,7 @@
     {
       "name": "supertecnico_search_regulations",
       "title": "Buscar normativa oficial",
-      "description": "Localiza texto dentro de reglamentos oficiales y devuelve documento, página, edición y fuente sin convertir la coincidencia en una conclusión legal automática.",
+      "description": "Localiza texto dentro de reglamentos oficiales y devuelve documento, página, huellas de fuente y estado de revisión sin convertir una coincidencia en una conclusión legal automática.",
       "state": "browser_available_remote_planned",
       "result_level": "basic",
       "billing_tier": "metered_basic_planned",
@@ -191,6 +191,8 @@
         "properties": {
           "query": {"type": "string", "minLength": 2, "maxLength": 300},
           "document_id": {"type": "string", "maxLength": 64},
+          "evidence_level": {"type": "string", "enum": ["document_hit", "reviewed_rule", "deterministic_result"], "default": "document_hit"},
+          "jurisdiction": {"type": "string", "enum": ["ES"], "default": "ES"},
           "limit": {"type": "integer", "minimum": 1, "maximum": 30, "default": 10}
         }
       }

@@ -1,7 +1,8 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "document_id": "rebt",
   "source_sha256": "e101577e04e6f17ee249f8839be680cfde326028faa5a71889c83d9663964f96",
+  "source_content_sha256": "830319eb61916d8c50a21ce4c77ebca4a58346f7b03211a29b2f4676ac8965cb",
   "page_count": 288,
   "records": [
     {

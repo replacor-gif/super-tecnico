@@ -36,7 +36,7 @@
       </article>`).join('');
     el('referencedStandards').innerHTML = (catalog.referenced_not_stored || []).map(item => `<div class="rg-standard-item"><b>${escapeHtml(item.family)}</b><br><small>${escapeHtml(item.reason)}</small></div>`).join('');
 
-    const topics = ['caída de tensión', 'puesta a tierra', 'ventilación', 'mantenimiento', 'tuberías', 'evacuación de aguas'];
+    const topics = ['ICT', 'calderas', 'automatismos', 'ventilación', 'recuperación de calor', 'extracción de humos', 'gases fluorados', 'puesta a tierra'];
     el('topicButtons').innerHTML = topics.map(topic => `<button type="button">${topic}</button>`).join('');
     el('topicButtons').querySelectorAll('button').forEach(button => button.addEventListener('click', () => {
       el('queryInput').value = button.textContent;

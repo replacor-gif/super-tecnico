@@ -59,6 +59,7 @@ The browser engine already performs deterministic P/T, superheat and subcooling 
 - Machine contract: /data/regulations/tool-manifest.json
 
 The browser can search the stored official Spanish regulations and return the source document, page and official URL. Search hits are documentary evidence, not automatic legal conclusions. Consolidated BOE texts must be checked against the official publication and the applicable regional or local rules. UNE and IEC texts are not redistributed without a suitable licence.
+The regulation catalog includes binary and semantic source fingerprints. AI consumers must distinguish raw document hits, reviewed rules and deterministic results. When an official source changes semantically, dependent rules and calculators remain pending review until explicitly validated.
 
 ## Condensate drain entry points
 

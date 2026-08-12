@@ -43,6 +43,14 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def text_sha256(parts: list[str]) -> str:
+    digest = hashlib.sha256()
+    for part in parts:
+        digest.update(part.encode("utf-8"))
+        digest.update(b"\n")
+    return digest.hexdigest()
+
+
 def normalize_search(text: str) -> str:
     value = unicodedata.normalize("NFKD", text.casefold())
     value = "".join(character for character in value if not unicodedata.combining(character))
@@ -105,9 +113,11 @@ def page_chunks(text: str, target: int = 950, maximum: int = 1500) -> list[str]:
 def build_document_index(document: dict, pdf_path: Path) -> tuple[dict, dict]:
     reader = PdfReader(str(pdf_path), strict=False)
     records: list[dict] = []
+    semantic_pages: list[str] = []
     pages_with_text = 0
     for page_number, page in enumerate(reader.pages, start=1):
         text = clean_page_text(page.extract_text() or "")
+        semantic_pages.append(normalize_search(text))
         if text:
             pages_with_text += 1
         for chunk_number, chunk in enumerate(page_chunks(text), start=1):
@@ -119,16 +129,19 @@ def build_document_index(document: dict, pdf_path: Path) -> tuple[dict, dict]:
                 "search": normalize_search(chunk),
             })
     digest = sha256(pdf_path)
+    content_digest = text_sha256(semantic_pages)
     index_payload = {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "document_id": document["id"],
         "source_sha256": digest,
+        "source_content_sha256": content_digest,
         "page_count": len(reader.pages),
         "records": records,
     }
     metadata = {
         **document,
         "sha256": digest,
+        "content_sha256": content_digest,
         "bytes": pdf_path.stat().st_size,
         "page_count": len(reader.pages),
         "pages_with_searchable_text": pages_with_text,
@@ -167,18 +180,31 @@ def main() -> int:
         metadata, index_payload = build_document_index(document, pdf_path)
         if should_process or not (INDEX_DIR / f"{document['id']}.json").exists():
             write_json(INDEX_DIR / f"{document['id']}.json", index_payload)
-        old_hash = previous.get(document["id"], {}).get("sha256")
+        old_document = previous.get(document["id"], {})
+        old_hash = old_document.get("sha256")
+        old_content_hash = old_document.get("content_sha256")
+        source_file_changed = bool(old_hash and old_hash != metadata["sha256"])
+        content_changed = bool(old_content_hash and old_content_hash != metadata["content_sha256"])
         changes.append({
             "id": document["id"],
-            "changed": bool(old_hash and old_hash != metadata["sha256"]),
+            "short_title": document["short_title"],
+            "official_page_url": document["official_page_url"],
+            "new_document": not bool(old_document),
+            "changed": source_file_changed or content_changed,
+            "source_file_changed": source_file_changed,
+            "content_changed": content_changed,
+            "review_required": content_changed,
             "previous_sha256": old_hash,
             "sha256": metadata["sha256"],
+            "previous_content_sha256": old_content_hash,
+            "content_sha256": metadata["content_sha256"],
+            "affected_tools": document.get("related_tools", []),
         })
         catalog_documents.append(metadata)
 
     generated_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
     catalog = {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "generated_at_utc": generated_at,
         "jurisdiction": source_payload["jurisdiction"],
         "verified_at": source_payload["verified_at"],
@@ -191,6 +217,7 @@ def main() -> int:
         "generated_at_utc": generated_at,
         "documents": changes,
         "manual_rule_review_required_when_changed": True,
+        "publication_policy": "Official source files and indexes may be refreshed automatically. Extracted engineering rules remain blocked until a human review is recorded.",
     })
     print(json.dumps({"documents": len(catalog_documents), "changes": changes}, ensure_ascii=False, indent=2))
     return 0

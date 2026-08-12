@@ -1,48 +1,357 @@
 {
-  "generated_at_utc": "2026-08-12T16:29:07+00:00",
+  "generated_at_utc": "2026-08-12T17:22:12+00:00",
   "documents": [
     {
       "id": "rebt",
+      "short_title": "REBT",
+      "official_page_url": "https://www.boe.es/eli/es/rd/2002/08/02/842/con",
+      "new_document": false,
       "changed": false,
-      "previous_sha256": null,
-      "sha256": "e101577e04e6f17ee249f8839be680cfde326028faa5a71889c83d9663964f96"
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "e101577e04e6f17ee249f8839be680cfde326028faa5a71889c83d9663964f96",
+      "sha256": "e101577e04e6f17ee249f8839be680cfde326028faa5a71889c83d9663964f96",
+      "previous_content_sha256": "830319eb61916d8c50a21ce4c77ebca4a58346f7b03211a29b2f4676ac8965cb",
+      "content_sha256": "830319eb61916d8c50a21ce4c77ebca4a58346f7b03211a29b2f4676ac8965cb",
+      "affected_tools": [
+        "electrical_hvacr",
+        "electrical_boards",
+        "electroia"
+      ]
     },
     {
       "id": "rite",
+      "short_title": "RITE",
+      "official_page_url": "https://www.boe.es/eli/es/rd/2007/07/20/1027/con",
+      "new_document": false,
       "changed": false,
-      "previous_sha256": null,
-      "sha256": "ad1680c83bf4c7f5c656af1794c32ad0669ad9f36ac293737ff3f95177ff7b26"
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "ad1680c83bf4c7f5c656af1794c32ad0669ad9f36ac293737ff3f95177ff7b26",
+      "sha256": "ad1680c83bf4c7f5c656af1794c32ad0669ad9f36ac293737ff3f95177ff7b26",
+      "previous_content_sha256": "087c21f5a2920e4a4981216b31c98bc4a639f436d7b4995f7dab2578662f950e",
+      "content_sha256": "087c21f5a2920e4a4981216b31c98bc4a639f436d7b4995f7dab2578662f950e",
+      "affected_tools": [
+        "frigorista",
+        "air_pro",
+        "ducts",
+        "ventilation",
+        "condensate_drain"
+      ]
     },
     {
       "id": "rsif",
+      "short_title": "RSIF",
+      "official_page_url": "https://www.boe.es/eli/es/rd/2019/09/27/552/con",
+      "new_document": false,
       "changed": false,
-      "previous_sha256": null,
-      "sha256": "cefb1d8f04eb21bc0a8aebee3f3421ec7f73bf1d3513d741ab06c5204b24715f"
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "cefb1d8f04eb21bc0a8aebee3f3421ec7f73bf1d3513d741ab06c5204b24715f",
+      "sha256": "cefb1d8f04eb21bc0a8aebee3f3421ec7f73bf1d3513d741ab06c5204b24715f",
+      "previous_content_sha256": "17bdc08381e0c33d7864a84dbebee27d2e4cdde438f7c38fb3044f7e481a98eb",
+      "content_sha256": "17bdc08381e0c33d7864a84dbebee27d2e4cdde438f7c38fb3044f7e481a98eb",
+      "affected_tools": [
+        "frigorista",
+        "refrigerant_piping",
+        "retrofit"
+      ]
     },
     {
       "id": "rat",
+      "short_title": "RAT",
+      "official_page_url": "https://www.boe.es/eli/es/rd/2014/05/09/337/con",
+      "new_document": false,
       "changed": false,
-      "previous_sha256": null,
-      "sha256": "d62566daa3a9c63db0b8bd86ee2bde821eb2e6046d7d7b99228f933f91aaaec1"
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "d62566daa3a9c63db0b8bd86ee2bde821eb2e6046d7d7b99228f933f91aaaec1",
+      "sha256": "d62566daa3a9c63db0b8bd86ee2bde821eb2e6046d7d7b99228f933f91aaaec1",
+      "previous_content_sha256": "7f6c9dca3f4ba612bc6c59fdb4f4d2f5e72358c4eaa2d80f26b5b11a2e6a71cf",
+      "content_sha256": "7f6c9dca3f4ba612bc6c59fdb4f4d2f5e72358c4eaa2d80f26b5b11a2e6a71cf",
+      "affected_tools": [
+        "electrical_boards",
+        "electrical_projects"
+      ]
     },
     {
       "id": "rlat",
+      "short_title": "RLAT",
+      "official_page_url": "https://www.boe.es/eli/es/rd/2008/02/15/223/con",
+      "new_document": false,
       "changed": false,
-      "previous_sha256": null,
-      "sha256": "f198d287a3661eb39810bdb9a3b3db53179dd7ab05f4c4a035de95e65258326e"
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "f198d287a3661eb39810bdb9a3b3db53179dd7ab05f4c4a035de95e65258326e",
+      "sha256": "f198d287a3661eb39810bdb9a3b3db53179dd7ab05f4c4a035de95e65258326e",
+      "previous_content_sha256": "2a0c5e54c2ade69841d5ad5c31bae4d4e31139b370fd0aa348a25efb3f21fa7e",
+      "content_sha256": "2a0c5e54c2ade69841d5ad5c31bae4d4e31139b370fd0aa348a25efb3f21fa7e",
+      "affected_tools": [
+        "electrical_projects"
+      ]
     },
     {
       "id": "cte-db-hs",
+      "short_title": "CTE DB-HS",
+      "official_page_url": "https://www.codigotecnico.org/DocumentosCTE/Salubridad.html",
+      "new_document": false,
       "changed": false,
-      "previous_sha256": null,
-      "sha256": "9552bf50f2d0cc7351dd8308e0e1c224d7ce38a95ed559f8a2863ecdcc172d42"
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "9552bf50f2d0cc7351dd8308e0e1c224d7ce38a95ed559f8a2863ecdcc172d42",
+      "sha256": "9552bf50f2d0cc7351dd8308e0e1c224d7ce38a95ed559f8a2863ecdcc172d42",
+      "previous_content_sha256": "46e4a0549c50bbcae1b3731df229de4d37d64e754f9e0e0d82b53bf7bd92a585",
+      "content_sha256": "46e4a0549c50bbcae1b3731df229de4d37d64e754f9e0e0d82b53bf7bd92a585",
+      "affected_tools": [
+        "plumbing",
+        "drainage",
+        "ventilation",
+        "condensate_drain"
+      ]
+    },
+    {
+      "id": "ict",
+      "short_title": "ICT",
+      "official_page_url": "https://www.boe.es/eli/es/rd/2011/03/11/346/con",
+      "new_document": false,
+      "changed": false,
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "5db210ed9459659da6d95be8e4be57b815f3471092ec168a9ae977c7afcc9727",
+      "sha256": "5db210ed9459659da6d95be8e4be57b815f3471092ec168a9ae977c7afcc9727",
+      "previous_content_sha256": "ba608e1a4b14f891ea18e99eb9b5e2d93c9a49a8b01607fea640a5daae37b88f",
+      "content_sha256": "ba608e1a4b14f891ea18e99eb9b5e2d93c9a49a8b01607fea640a5daae37b88f",
+      "affected_tools": [
+        "ict",
+        "telecommunications",
+        "electrical_projects"
+      ]
+    },
+    {
+      "id": "gas",
+      "short_title": "Reglamento de gas",
+      "official_page_url": "https://www.boe.es/eli/es/rd/2006/07/28/919/con",
+      "new_document": false,
+      "changed": false,
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "6e4e094b72d4c5ffbdd6e35c8202f786b1d0b26817cdcdbc745e62ada5cbafcd",
+      "sha256": "6e4e094b72d4c5ffbdd6e35c8202f786b1d0b26817cdcdbc745e62ada5cbafcd",
+      "previous_content_sha256": "084a38c90eaf2e28aa3e332b3b676f48b251151c34449867c37951fbf2075555",
+      "content_sha256": "084a38c90eaf2e28aa3e332b3b676f48b251151c34449867c37951fbf2075555",
+      "affected_tools": [
+        "boilers",
+        "gas_installations",
+        "heating",
+        "ventilation"
+      ]
+    },
+    {
+      "id": "pressure-equipment",
+      "short_title": "Equipos a presión",
+      "official_page_url": "https://www.boe.es/eli/es/rd/2021/09/21/809/con",
+      "new_document": false,
+      "changed": false,
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "f014a8729967f156160e74e51748e14b5b3758294582d846afb95bc41d3db2e6",
+      "sha256": "f014a8729967f156160e74e51748e14b5b3758294582d846afb95bc41d3db2e6",
+      "previous_content_sha256": "c01ee72842adea88e1fcdd4998b0068504690057f22abd76c0d9ab68b5e6e948",
+      "content_sha256": "c01ee72842adea88e1fcdd4998b0068504690057f22abd76c0d9ab68b5e6e948",
+      "affected_tools": [
+        "boilers",
+        "pressure_equipment",
+        "heating",
+        "industrial_maintenance"
+      ]
+    },
+    {
+      "id": "machinery-safety",
+      "short_title": "Seguridad de máquinas",
+      "official_page_url": "https://www.boe.es/eli/es/rd/2008/10/10/1644/con",
+      "new_document": false,
+      "changed": false,
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "f65795bab34a2d45426619fac02d6b352c33bdce2bb58bdd4b19bd939278dc50",
+      "sha256": "f65795bab34a2d45426619fac02d6b352c33bdce2bb58bdd4b19bd939278dc50",
+      "previous_content_sha256": "141686169d03783faf61094d79e5091ee91d8805c6a9d72166500140954cf5f1",
+      "content_sha256": "141686169d03783faf61094d79e5091ee91d8805c6a9d72166500140954cf5f1",
+      "affected_tools": [
+        "automation",
+        "electrical_boards",
+        "electroia",
+        "industrial_maintenance"
+      ]
+    },
+    {
+      "id": "work-equipment",
+      "short_title": "Equipos de trabajo",
+      "official_page_url": "https://www.boe.es/eli/es/rd/1997/07/18/1215/con",
+      "new_document": false,
+      "changed": false,
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "de4b523dbc6aefbc72c18aa9400684cabb44986ecfa5d9a1dd5b6a2146f83068",
+      "sha256": "de4b523dbc6aefbc72c18aa9400684cabb44986ecfa5d9a1dd5b6a2146f83068",
+      "previous_content_sha256": "1f600ffdfbf658c4577e025ade826eb4b2d41e32975d23dddc3e66d113218de0",
+      "content_sha256": "1f600ffdfbf658c4577e025ade826eb4b2d41e32975d23dddc3e66d113218de0",
+      "affected_tools": [
+        "automation",
+        "electrical_boards",
+        "industrial_maintenance"
+      ]
+    },
+    {
+      "id": "cte-db-he",
+      "short_title": "CTE DB-HE",
+      "official_page_url": "https://www.codigotecnico.org/DocumentosCTE/AhorroEnergia.html",
+      "new_document": false,
+      "changed": false,
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "16945033342928c4f9795e04110fd170eb7bac5a937b831740deb9ffb2564959",
+      "sha256": "16945033342928c4f9795e04110fd170eb7bac5a937b831740deb9ffb2564959",
+      "previous_content_sha256": "b11f9556bb721790a17bab31473d754f8e9639b10fde194abb35e6ea1d038c09",
+      "content_sha256": "b11f9556bb721790a17bab31473d754f8e9639b10fde194abb35e6ea1d038c09",
+      "affected_tools": [
+        "boilers",
+        "heating",
+        "ventilation",
+        "heat_recovery",
+        "energy_efficiency"
+      ]
+    },
+    {
+      "id": "cte-db-si",
+      "short_title": "CTE DB-SI",
+      "official_page_url": "https://www.codigotecnico.org/DocumentosCTE/SeguridadEnCasoDeIncendio.html",
+      "new_document": false,
+      "changed": false,
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "de8b214d7b2e5c5218b366c5185d514f0b51555e4c498f448d3cb7014abedc27",
+      "sha256": "de8b214d7b2e5c5218b366c5185d514f0b51555e4c498f448d3cb7014abedc27",
+      "previous_content_sha256": "ef3caa71e5a599f89cdf6d662be4a8a043fb0e991cbb9058285303c92cd465a9",
+      "content_sha256": "ef3caa71e5a599f89cdf6d662be4a8a043fb0e991cbb9058285303c92cd465a9",
+      "affected_tools": [
+        "fire_safety",
+        "smoke_extraction",
+        "ventilation",
+        "electrical_projects"
+      ]
+    },
+    {
+      "id": "rsciei",
+      "short_title": "RSCIEI",
+      "official_page_url": "https://www.boe.es/eli/es/rd/2025/03/04/164/con",
+      "new_document": false,
+      "changed": false,
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "85aa0af25d51e5b58d8975a4eefbf76d3f57a8933445cfe814ae9c4818a2e3e7",
+      "sha256": "85aa0af25d51e5b58d8975a4eefbf76d3f57a8933445cfe814ae9c4818a2e3e7",
+      "previous_content_sha256": "89f83465a12ff16c482e5365bd20c04f6cbc53bed126319180bb8ea4b39ae5ad",
+      "content_sha256": "89f83465a12ff16c482e5365bd20c04f6cbc53bed126319180bb8ea4b39ae5ad",
+      "affected_tools": [
+        "fire_safety",
+        "smoke_extraction",
+        "ventilation",
+        "industrial_projects"
+      ]
+    },
+    {
+      "id": "ripci",
+      "short_title": "RIPCI",
+      "official_page_url": "https://www.boe.es/eli/es/rd/2017/05/22/513/con",
+      "new_document": false,
+      "changed": false,
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "4a6718b0278d31f268433cf7706b2eb56f4a66726c94e42598ad925ee117c43b",
+      "sha256": "4a6718b0278d31f268433cf7706b2eb56f4a66726c94e42598ad925ee117c43b",
+      "previous_content_sha256": "902cd743fc83bcdac60fcf04e6eebc752ecf95de4d4788e179183846313acf0d",
+      "content_sha256": "902cd743fc83bcdac60fcf04e6eebc752ecf95de4d4788e179183846313acf0d",
+      "affected_tools": [
+        "fire_safety",
+        "smoke_extraction",
+        "electrical_projects",
+        "industrial_maintenance"
+      ]
+    },
+    {
+      "id": "f-gas-eu",
+      "short_title": "Gases fluorados UE",
+      "official_page_url": "https://eur-lex.europa.eu/eli/reg/2024/573/spa",
+      "new_document": false,
+      "changed": false,
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "2a26d0e56391e3fa02f7a7f9bc1a0dd6531d4a24ddd27f1315a87cab1eae4021",
+      "sha256": "2a26d0e56391e3fa02f7a7f9bc1a0dd6531d4a24ddd27f1315a87cab1eae4021",
+      "previous_content_sha256": "e5a80a76e30c34a31d0fb7672e034a33dc789ff01be1ed0df36b2d7bfa0c7872",
+      "content_sha256": "e5a80a76e30c34a31d0fb7672e034a33dc789ff01be1ed0df36b2d7bfa0c7872",
+      "affected_tools": [
+        "frigorista",
+        "refrigerants",
+        "retrofit",
+        "heat_pumps"
+      ]
+    },
+    {
+      "id": "f-gas-es",
+      "short_title": "Gases fluorados España",
+      "official_page_url": "https://www.boe.es/eli/es/rd/2017/02/17/115/con",
+      "new_document": false,
+      "changed": false,
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "1520a4d08f3d0de33ea35582b99bcb869bc75be21c5dd49a4cfed69eed0bd38c",
+      "sha256": "1520a4d08f3d0de33ea35582b99bcb869bc75be21c5dd49a4cfed69eed0bd38c",
+      "previous_content_sha256": "15c821bff18bc805af0acd351d8093759ccca37fe551989f8090f0b7ceeb4ddd",
+      "content_sha256": "15c821bff18bc805af0acd351d8093759ccca37fe551989f8090f0b7ceeb4ddd",
+      "affected_tools": [
+        "frigorista",
+        "refrigerants",
+        "retrofit"
+      ]
     },
     {
       "id": "water-quality",
+      "short_title": "Agua de consumo",
+      "official_page_url": "https://www.boe.es/eli/es/rd/2023/01/10/3/con",
+      "new_document": false,
       "changed": false,
-      "previous_sha256": null,
-      "sha256": "494f1c7035cfea2f9522a2f75064bde5796ee295679f0bb45245a9eb37a5b301"
+      "source_file_changed": false,
+      "content_changed": false,
+      "review_required": false,
+      "previous_sha256": "494f1c7035cfea2f9522a2f75064bde5796ee295679f0bb45245a9eb37a5b301",
+      "sha256": "494f1c7035cfea2f9522a2f75064bde5796ee295679f0bb45245a9eb37a5b301",
+      "previous_content_sha256": "354c716edde77bfb61c2cb0f07a6b29d4bf30e9dd28c1b073c893032e24480fe",
+      "content_sha256": "354c716edde77bfb61c2cb0f07a6b29d4bf30e9dd28c1b073c893032e24480fe",
+      "affected_tools": [
+        "plumbing",
+        "water_quality"
+      ]
     }
   ],
-  "manual_rule_review_required_when_changed": true
+  "manual_rule_review_required_when_changed": true,
+  "publication_policy": "Official source files and indexes may be refreshed automatically. Extracted engineering rules remain blocked until a human review is recorded."
 }

@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "id": "super-tecnico-regulation-search",
   "name": "Buscador de normativa técnica oficial",
   "status": "browser_search_available_remote_execution_planned",
@@ -12,16 +12,27 @@
     "page_level_provenance",
     "official_source_link",
     "stored_official_pdf_link",
-    "change_detection_by_sha256"
+    "change_detection_by_sha256",
+    "semantic_change_detection",
+    "dependent_tool_impact_map",
+    "reviewed_rule_record_contract"
   ],
   "result_contract": {
-    "required": ["document_id", "document_title", "page", "text", "official_page_url", "source_sha256"],
-    "notice": "Search results are documentary evidence, not an automatic legal conclusion."
+    "required": ["document_id", "document_title", "page", "text", "official_page_url", "source_sha256", "source_content_sha256"],
+    "evidence_levels": {
+      "document_hit": "Literal text found in an official source. It is evidence, not an applicability conclusion.",
+      "reviewed_rule": "Structured rule linked to an exact source fingerprint and reviewed for the stated scope.",
+      "deterministic_result": "Calculation or validation produced by a versioned engine using reviewed rules."
+    },
+    "rule_record_schema": "rule-record.schema.json",
+    "notice": "A trustworthy answer must expose its evidence level, source, locator, applicability scope and review status."
   },
   "update_workflow": {
     "registry": "sources.json",
     "command": "python tools/update_regulations.py",
-    "change_control": "A changed source hash requires review of dependent engineering rules before publication."
+    "scheduled_monitor": ".github/workflows/regulations-watch.yml",
+    "notification": "A GitHub issue identifies the changed source and affected tools.",
+    "change_control": "Official documents and indexes can refresh automatically. A semantic change blocks dependent reviewed rules until human validation."
   },
   "licensing": "Official public texts are stored. UNE and IEC standards are referenced by designation only unless licensed distribution rights exist."
 }

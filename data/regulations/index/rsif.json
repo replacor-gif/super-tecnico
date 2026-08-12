@@ -1,7 +1,8 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "document_id": "rsif",
   "source_sha256": "cefb1d8f04eb21bc0a8aebee3f3421ec7f73bf1d3513d741ab06c5204b24715f",
+  "source_content_sha256": "17bdc08381e0c33d7864a84dbebee27d2e4cdde438f7c38fb3044f7e481a98eb",
   "page_count": 203,
   "records": [
     {
