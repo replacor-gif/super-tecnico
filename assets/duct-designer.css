@@ -147,13 +147,14 @@ button { cursor: pointer; }
   cursor: pointer;
   backdrop-filter: blur(10px);
 }
-.finish-drawing input { position: absolute; opacity: 0; pointer-events: none; }
 .finish-drawing i { display: grid; place-items: center; width: 32px; height: 32px; border: 2px solid var(--duct-green); border-radius: 9px; color: transparent; font-style: normal; }
-.finish-drawing input:checked + i { color: #041109; background: var(--duct-green); }
+.finish-drawing:not(:disabled) i { color: #041109; background: var(--duct-green); }
 .finish-drawing.is-complete { border-color: rgba(255, 228, 56, .55); color: #fff8b9; background: rgba(29, 25, 5, .94); }
 .finish-drawing.is-complete i { border-color: var(--duct-yellow); }
-.finish-drawing.is-complete input:checked + i { background: var(--duct-yellow); }
-.finish-drawing:has(input:disabled) { cursor: default; opacity: .42; }
+.finish-drawing.is-complete:not(:disabled) i { background: var(--duct-yellow); }
+.finish-drawing.is-layout { border-color: rgba(0, 234, 208, .6); color: #c8fff8; background: rgba(1, 27, 25, .95); }
+.finish-drawing.is-layout i { border-color: var(--duct-cyan); background: var(--duct-cyan); }
+.finish-drawing:disabled { cursor: default; opacity: .42; }
 .plan-scroll { position: relative; min-height: 600px; max-height: 760px; overflow: auto; padding: 10px; background: #020710; scrollbar-color: #284665 #07101d; }
 .plan-stage { display: grid; place-items: center; min-width: 100%; min-height: 580px; }
 .installation-plan { display: block; height: auto; user-select: none; touch-action: manipulation; filter: drop-shadow(0 18px 28px rgba(0, 0, 0, .24)); }
@@ -170,8 +171,15 @@ button { cursor: pointer; }
 .plan-room { cursor: default; }
 .room-fill { fill: #0f2233; }
 .room-wall { fill: none; stroke: #718399; stroke-width: 5; stroke-linejoin: round; }
-.room-hatch { fill: url(#notSelected); opacity: .22; pointer-events: none; }
-#notSelected line { stroke: #9bacbf; stroke-width: 3; }
+.room-hatch { pointer-events: none; }
+.room-hatch-bedroom { fill: url(#roomHatch-bedroom); }
+.room-hatch-living { fill: url(#roomHatch-living); }
+.room-hatch-kitchen { fill: url(#roomHatch-kitchen); }
+.room-hatch-office { fill: url(#roomHatch-office); }
+.room-hatch-bathroom { fill: url(#roomHatch-bathroom); }
+.room-hatch-hallway { fill: url(#roomHatch-hallway); }
+.room-hatch-utility { fill: url(#roomHatch-utility); }
+.room-hatch-other { fill: url(#roomHatch-other); }
 .plan-room.has-grille .room-fill { fill: rgba(0, 200, 255, .1); }
 .plan-room.room-type-bedroom .room-wall { stroke: var(--duct-blue); }
 .plan-room.room-type-living .room-wall { stroke: var(--duct-yellow); }
@@ -182,16 +190,20 @@ button { cursor: pointer; }
 .plan-room.room-type-utility .room-wall { stroke: var(--duct-pink); }
 .plan-room.room-type-other .room-wall { stroke: var(--duct-green); }
 .room-number-label { fill: #e7f1fd; font-size: 28px; font-weight: 950; opacity: .8; }
-.room-area-label { fill: #b4c4d6; font-size: 11px; font-weight: 750; pointer-events: none; }
+.room-name-label { fill: #f4f8ff; font-size: 14px; font-weight: 950; letter-spacing: .5px; paint-order: stroke; stroke: #07101c; stroke-width: 5px; pointer-events: none; }
+.room-demand-label { fill: #d5e2f1; font-size: 10px; font-weight: 850; paint-order: stroke; stroke: #07101c; stroke-width: 4px; pointer-events: none; }
 .room-delete { cursor: pointer; }
 .room-delete-hit,
 .control-hit,
 .point-hit { fill: transparent; stroke: none; }
 .room-delete-button { fill: #280b13; stroke: var(--duct-danger); stroke-width: 2; }
 .room-delete path { fill: none; stroke: #ff99a7; stroke-width: 2.5; stroke-linecap: round; }
-.room-type-editor { overflow: visible; }
-.room-type-editor div { width: 100%; height: 100%; }
-.room-type-editor select {
+.room-type-editor,
+.room-load-editor { overflow: visible; }
+.room-type-editor div,
+.room-load-editor div { width: 100%; height: 100%; }
+.room-type-editor select,
+.room-load-editor select {
   width: 100%;
   height: 36px;
   padding: 0 27px 0 9px;
@@ -206,6 +218,7 @@ button { cursor: pointer; }
   box-shadow: 0 5px 16px rgba(0, 0, 0, .35);
   outline: none;
 }
+.room-load-editor select { height: 32px; border-color: var(--duct-yellow); color: #fff7ac; background: #1b1704; font-size: 10px; }
 .zone-toggle,
 .machine-toggle { cursor: pointer; filter: drop-shadow(0 0 7px rgba(0, 0, 0, .52)); }
 .zone-toggle .control-box,
@@ -225,7 +238,6 @@ button { cursor: pointer; }
 .drawing-point text { fill: #ffe875; font-size: 10px; font-weight: 950; letter-spacing: 1px; pointer-events: none; }
 .route-edge,
 .section-label,
-.plan-outlet,
 .plan-machine { pointer-events: none; }
 .route-edge { stroke: var(--duct-green); stroke-width: var(--route-width); stroke-linecap: square; filter: drop-shadow(0 0 5px rgba(81, 255, 125, .36)); }
 .route-edge.is-main { stroke: var(--duct-cyan); filter: drop-shadow(0 0 8px rgba(0, 234, 208, .48)); }
@@ -239,8 +251,19 @@ button { cursor: pointer; }
 .plan-machine path { fill: none; stroke: #ffb23f; stroke-width: 3; }
 .plan-machine text { fill: #ffc06c; font-size: 10px; font-weight: 950; letter-spacing: 1px; }
 .plan-outlet { filter: drop-shadow(0 0 5px rgba(255, 63, 167, .45)); }
+.plan-outlet.is-draggable,
+.branch-drag { cursor: grab; pointer-events: all; touch-action: none; }
+.plan-outlet.is-draggable:active,
+.branch-drag:active,
+.is-dragging-duct { cursor: grabbing; }
+.drag-hit { fill: transparent; stroke: none; }
 .plan-outlet rect { fill: #24081a; stroke: var(--duct-pink); stroke-width: 3; }
 .plan-outlet path { fill: none; stroke: #ff9bd1; stroke-width: 2; }
+.branch-drag { filter: drop-shadow(0 0 7px rgba(255, 228, 56, .72)); }
+.branch-drag > path { fill: #2b2400; stroke: var(--duct-yellow); stroke-width: 3; }
+.branch-drag > circle:not(.drag-hit) { fill: var(--duct-yellow); stroke: #2b2400; stroke-width: 2; }
+.legend-branch { background: var(--duct-yellow); }
+.legend-live { background: var(--duct-green); }
 .scale-marker line,
 .scale-marker path { stroke: #8195ad; stroke-width: 2; }
 .scale-marker text { fill: #8195ad; font-size: 10px; font-weight: 800; }

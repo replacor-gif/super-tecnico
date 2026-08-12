@@ -11,16 +11,17 @@ assert.equal(example.totals.selectedRooms, 3);
 assert.equal(example.totals.connectedRooms, 3);
 assert.equal(example.totals.areaM2, 76);
 assert.equal(example.totals.conditionedAreaM2, 46.5);
-assert.equal(example.totals.loadFg, 6975);
-assert.equal(example.totals.suggestedCapacityFg, 7000);
-assert.equal(example.totals.airflowM3h, 930);
-assert.equal(example.totals.mainDuct.widthCm, 28);
+assert.equal(example.totals.loadFg, 6000);
+assert.equal(example.totals.suggestedCapacityFg, 6000);
+assert.equal(example.totals.airflowM3h, 800);
+assert.equal(example.totals.mainDuct.widthCm, 25);
 assert.equal(example.totals.mainDuct.heightCm, 25);
 assert.ok(example.totals.hallwayLengthM > 0);
 assert.ok(example.sections.some(section => section.isMain));
 assert.ok(example.sections.some(section => !section.isMain));
 assert.ok(example.activeEdges.filter(edge => edge.environment === 'hallway').length / example.activeEdges.length > .7);
 assert.ok(example.warnings.some(item => item.level === 'ok'));
+assert.ok(example.activeEdges.every(edge => edge.widthCm % 5 === 0 && edge.heightCm % 5 === 0));
 
 const network = D.automaticNetwork(state);
 assert.equal(network.outlets.length, 3);
@@ -40,18 +41,32 @@ const internalCriteria = D.calculateProject({
   machine: { roomId: 'office', x: 3, y: 3 },
 });
 assert.equal(internalCriteria.rooms[0].areaM2, 4);
-assert.equal(internalCriteria.rooms[0].loadFg, 600);
-assert.equal(internalCriteria.rooms[0].airflowM3h, 80);
+assert.equal(internalCriteria.rooms[0].loadFg, 2000);
+assert.equal(Math.round(internalCriteria.rooms[0].airflowM3h), 267);
 assert.equal(internalCriteria.rooms[0].branchDuct.heightCm, 20);
+assert.equal(internalCriteria.rooms[0].grille.widthCm, 40);
 assert.equal(internalCriteria.rooms[0].grille.heightCm, 10);
 assert.equal(internalCriteria.state.loadPerM2, undefined);
 assert.equal(internalCriteria.state.machineCapacityFg, undefined);
 
 const duct9000 = D.sizeDuct(9000);
-assert.equal(duct9000.widthCm, 36);
+assert.equal(duct9000.widthCm, 35);
 assert.equal(duct9000.heightCm, 25);
 assert.equal(duct9000.airflowM3h, 1200);
 assert.equal(D.sizeDuct(9000, { ductHeightCm: 30 }).widthCm, 30);
+assert.equal(D.sizeDuct(9000, { ductHeightCm: 23 }).heightCm, 25);
+
+const fixedLoads = D.normalizeState({
+  phase: 'configure',
+  rooms: [
+    { id: 'bed', type: 'bedroom', conditioned: true, points: [{ x: 0, y: 0 }, { x: 3, y: 0 }, { x: 3, y: 3 }, { x: 0, y: 3 }] },
+    { id: 'office', type: 'office', conditioned: true, points: [{ x: 3, y: 0 }, { x: 6, y: 0 }, { x: 6, y: 3 }, { x: 3, y: 3 }] },
+    { id: 'living-normal', type: 'living', loadTier: 'normal', conditioned: true, points: [{ x: 0, y: 3 }, { x: 3, y: 3 }, { x: 3, y: 6 }, { x: 0, y: 6 }] },
+    { id: 'living-large', type: 'living', loadTier: 'large', conditioned: true, points: [{ x: 3, y: 3 }, { x: 6, y: 3 }, { x: 6, y: 6 }, { x: 3, y: 6 }] },
+    { id: 'kitchen-xl', type: 'kitchen', loadTier: 'veryLarge', conditioned: true, points: [{ x: 6, y: 3 }, { x: 9, y: 3 }, { x: 9, y: 6 }, { x: 6, y: 6 }] },
+  ],
+});
+assert.deepEqual(fixedLoads.rooms.map(D.loadForRoom), [1500, 2000, 3000, 4500, 6000]);
 
 const irregular = [{ x: 0, y: 0 }, { x: 5, y: 0 }, { x: 5, y: 2 }, { x: 3, y: 4 }, { x: 0, y: 3 }];
 assert.equal(D.polygonArea(irregular), 16.5);
@@ -73,11 +88,28 @@ assert.equal(legacy.machine.roomId, 'legacy');
 const drawing = D.renderPlanSvg(D.calculateProject(D.emptyState()), { drawingPoints: [{ x: 1, y: 1 }, { x: 6, y: 1 }, { x: 5, y: 5 }] });
 assert.match(drawing.svg, /class="drawing-line"/);
 assert.match(drawing.svg, /data-kind="close-polygon"/);
+const configuration = D.renderPlanSvg(D.calculateProject({ ...state, phase: 'configure' }));
+assert.match(configuration.svg, /data-kind="room-type"/);
+assert.match(configuration.svg, /data-kind="room-load"/);
+assert.match(configuration.svg, /class="zone-toggle is-checked"/);
+assert.match(configuration.svg, /class="machine-toggle is-selected"/);
 const configured = D.renderPlanSvg(example);
-assert.match(configured.svg, /data-kind="room-type"/);
-assert.match(configured.svg, /class="zone-toggle is-checked"/);
-assert.match(configured.svg, /class="machine-toggle is-selected"/);
+assert.doesNotMatch(configured.svg, /room-area-label/);
+assert.doesNotMatch(configured.svg, /data-kind="room-type"/);
+assert.match(configured.svg, /room-hatch-bedroom/);
 assert.match(configured.svg, /class="route-edge is-main through-hallway"/);
+assert.match(configured.svg, /data-kind="outlet-drag"/);
+assert.match(configured.svg, /data-kind="branch-drag"/);
 assert.match(configured.svg, /UNIDAD INTERIOR/);
+
+const movedState = D.normalizeState({
+  ...state,
+  phase: 'layout',
+  outletOverrides: { 'bed-1': { x: 4, y: 4 } },
+  branchGuides: { 'bed-1': { x: 9, y: 5 } },
+});
+const moved = D.calculateProject(movedState);
+assert.deepEqual(moved.outletMap.get('bed-1'), { id: 'outlet-bed-1', roomId: 'bed-1', x: 4, y: 4 });
+assert.deepEqual(moved.roomConnections.get('bed-1').branchHandle, { x: 9, y: 5 });
 
 console.log('Plano poligonal y red principal de conductos: pruebas superadas.');
