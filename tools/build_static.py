@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import shutil
@@ -86,6 +87,61 @@ def write_json(path: Path, data: Any) -> None:
         encoding="utf-8",
         newline="\n",
     )
+
+
+def validate_regulations_data(source_root: Path) -> tuple[dict[str, Any], dict[str, int]]:
+    catalog = read_json(source_root / "data" / "regulations" / "catalog.json")
+    documents = catalog.get("documents") or []
+    if catalog.get("jurisdiction") != "ES" or len(documents) < 7:
+        raise BuildError("Normativa: el catálogo oficial está incompleto")
+    ids = [str(document.get("id") or "") for document in documents]
+    if any(not value for value in ids) or len(ids) != len(set(ids)):
+        raise BuildError("Normativa: hay identificadores vacíos o duplicados")
+
+    totals = {"documents": len(documents), "pages": 0, "search_records": 0, "bytes": 0}
+    for document in documents:
+        document_id = document["id"]
+        if not str(document.get("official_page_url") or "").startswith("https://"):
+            raise BuildError(f"Normativa: fuente oficial insegura para {document_id}")
+        if not str(document.get("storage_policy") or "").startswith("public_official_text"):
+            raise BuildError(f"Normativa: política de almacenamiento no publicable para {document_id}")
+
+        pdf_relative = Path(str(document.get("local_pdf") or ""))
+        if pdf_relative.parts[:2] != ("recursos", "normativa") or pdf_relative.suffix.lower() != ".pdf":
+            raise BuildError(f"Normativa: ruta PDF insegura para {document_id}")
+        pdf_path = source_root / pdf_relative
+        if not pdf_path.is_file() or pdf_path.stat().st_size != int(document.get("bytes") or 0):
+            raise BuildError(f"Normativa: PDF ausente o tamaño incorrecto para {document_id}")
+        digest = hashlib.sha256(pdf_path.read_bytes()).hexdigest()
+        if digest != document.get("sha256"):
+            raise BuildError(f"Normativa: la huella del PDF ha cambiado para {document_id}")
+
+        index_relative = Path(str(document.get("index_url") or ""))
+        if index_relative.parts[:3] != ("data", "regulations", "index") or index_relative.suffix != ".json":
+            raise BuildError(f"Normativa: ruta de índice insegura para {document_id}")
+        index = read_json(source_root / index_relative)
+        records = index.get("records") or []
+        if index.get("document_id") != document_id or index.get("source_sha256") != digest:
+            raise BuildError(f"Normativa: índice desincronizado para {document_id}")
+        if int(index.get("page_count") or 0) != int(document.get("page_count") or 0):
+            raise BuildError(f"Normativa: páginas desincronizadas para {document_id}")
+        if len(records) != int(document.get("search_records") or 0):
+            raise BuildError(f"Normativa: recuento de búsquedas incorrecto para {document_id}")
+        if not records or any(
+            record.get("document_id") != document_id
+            or int(record.get("page") or 0) < 1
+            or not record.get("text")
+            or not record.get("search")
+            for record in records
+        ):
+            raise BuildError(f"Normativa: registros no válidos para {document_id}")
+        totals["pages"] += int(document["page_count"])
+        totals["search_records"] += len(records)
+        totals["bytes"] += pdf_path.stat().st_size
+
+    if totals["pages"] < 1000 or totals["search_records"] < 2500:
+        raise BuildError("Normativa: cobertura documental insuficiente")
+    return catalog, totals
 
 
 def sanitize_media(node: Any, publish_media: bool, counters: dict[str, int]) -> Any:
@@ -449,6 +505,8 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "index.html",
         "climatizacion.html",
         "frigorista.html",
+        "desagues-condensados.html",
+        "normativa.html",
         "smd.html",
         "calculadoras.html",
         "conductos.html",
@@ -487,6 +545,11 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "assets/frigorista.css",
         "assets/frigorista-engine.js",
         "assets/frigorista.js",
+        "assets/condensate-drain.css",
+        "assets/condensate-drain-engine.js",
+        "assets/condensate-drain.js",
+        "assets/regulations.css",
+        "assets/regulations.js",
         "assets/duct-designer.css",
         "assets/duct-designer.js",
         "assets/analytics.css",
@@ -708,6 +771,27 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         output / "data" / "frigorista" / "tool-manifest.json",
         read_json(source_root / "data" / "frigorista" / "tool-manifest.json"),
     )
+    regulations_catalog, regulations_stats = validate_regulations_data(source_root)
+    write_json(output / "data" / "regulations" / "catalog.json", regulations_catalog)
+    write_json(
+        output / "data" / "regulations" / "tool-manifest.json",
+        read_json(source_root / "data" / "regulations" / "tool-manifest.json"),
+    )
+    write_json(
+        output / "data" / "regulations" / "update-report.json",
+        read_json(source_root / "data" / "regulations" / "update-report.json"),
+    )
+    for document in regulations_catalog["documents"]:
+        index_relative = Path(document["index_url"])
+        write_json(output / index_relative, read_json(source_root / index_relative))
+        pdf_relative = Path(document["local_pdf"])
+        pdf_target = output / pdf_relative
+        pdf_target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source_root / pdf_relative, pdf_target)
+    write_json(
+        output / "data" / "condensate" / "tool-manifest.json",
+        read_json(source_root / "data" / "condensate" / "tool-manifest.json"),
+    )
     write_json(
         output / "data" / "electroia" / "tool-manifest.json",
         read_json(source_root / "data" / "electroia" / "tool-manifest.json"),
@@ -764,6 +848,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "smd": smd_stats,
         "components": components_stats,
         "frigorista": frigorista_stats,
+        "regulations": regulations_stats,
         "oem_pcb": oem_stats,
         "symbols": {"symbols": len(symbols), "lessons": len(lessons), "modules": len(modules)},
         "training": training_stats,

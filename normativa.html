@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="google-adsense-account" content="ca-pub-6950924617837531">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Consulta dentro de los reglamentos técnicos oficiales de electricidad, climatización, refrigeración, fontanería y saneamiento guardados en Super Técnico.">
+  <meta name="theme-color" content="#06111b">
+  <title>Normativa técnica | Super Técnico</title>
+  <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
+  <link rel="stylesheet" href="assets/app-theme.css?v=1">
+  <link rel="stylesheet" href="assets/regulations.css?v=1">
+  <style>*{min-width:0}</style>
+  <script src="assets/app-shell.js?v=4" defer></script>
+  <script src="assets/regulations.js?v=1" defer></script>
+</head>
+<body>
+  <header class="rg-header">
+    <a class="rg-brand" href="index.html" aria-label="Volver a Super Técnico"><img src="assets/super-tecnico-logo.png" alt=""><span><strong>Super Técnico</strong><small>Normativa técnica</small></span></a>
+    <a class="rg-back" href="index.html">Herramientas</a>
+  </header>
+
+  <main class="rg-main">
+    <section class="rg-hero">
+      <div><p class="rg-eyebrow">FUENTES OFICIALES · ESPAÑA</p><h1>Encuentra el punto exacto del reglamento.</h1><p>Busca en las copias oficiales guardadas y abre directamente la página que contiene el resultado.</p></div>
+      <div class="rg-book" aria-hidden="true"><i></i><i></i><b>§</b></div>
+    </section>
+
+    <section class="rg-search-panel" aria-labelledby="searchTitle">
+      <div class="rg-panel-head"><div><p class="rg-eyebrow">CONSULTA DOCUMENTAL</p><h2 id="searchTitle">¿Qué necesitas comprobar?</h2><p>Elige un reglamento para una búsqueda más rápida o consulta toda la biblioteca.</p></div><span id="catalogStatus" class="rg-status">Preparando biblioteca…</span></div>
+      <form id="searchForm" class="rg-search-form">
+        <label class="rg-query"><span>Texto, artículo o concepto</span><div><input id="queryInput" type="search" autocomplete="off" placeholder="Ejemplo: caída de tensión, ventilación, tuberías…" required><button type="submit">Buscar <span aria-hidden="true">→</span></button></div></label>
+        <label class="rg-document"><span>Buscar dentro de</span><select id="documentSelect"><option value="all">Todos los reglamentos</option></select></label>
+      </form>
+      <div id="topicButtons" class="rg-topics" aria-label="Búsquedas frecuentes"></div>
+      <p id="searchMessage" class="rg-search-message" role="status"></p>
+    </section>
+
+    <section id="resultsPanel" class="rg-results" aria-labelledby="resultsTitle" hidden>
+      <div class="rg-results-head"><div><p class="rg-eyebrow">COINCIDENCIAS</p><h2 id="resultsTitle">Resultados</h2></div><span id="resultCount"></span></div>
+      <div id="resultList" class="rg-result-list"></div>
+    </section>
+
+    <section class="rg-library" aria-labelledby="libraryTitle">
+      <div class="rg-library-head"><div><p class="rg-eyebrow">BIBLIOTECA COMÚN</p><h2 id="libraryTitle">Reglamentos disponibles</h2><p id="librarySummary">Cargando documentos oficiales…</p></div></div>
+      <div id="documentGrid" class="rg-document-grid"></div>
+      <details class="rg-standards"><summary>Normas UNE e IEC relacionadas</summary><p>Las normas técnicas comerciales se identifican para saber cuál aplica, pero no se copian ni se distribuyen sin licencia. Super Técnico enlazará su referencia y mantendrá separadas las obligaciones legales de las recomendaciones técnicas.</p><div id="referencedStandards"></div></details>
+    </section>
+
+    <aside class="rg-legal-notice"><strong>Importante</strong><p id="legalNotice">Los resultados ayudan a localizar información. La aplicación debe verificarse según la publicación oficial, la fecha del proyecto y la normativa autonómica o local que corresponda.</p></aside>
+  </main>
+
+  <footer class="st-page-footer"><span>Super Técnico · REPLACOR</span><nav class="st-legal-links" aria-label="Información legal"><a href="ia-integracion.html">Para IAs y desarrolladores</a><a href="https://www.replacor.com/aviso-legal/" target="_blank" rel="noopener">Aviso legal</a><a href="https://www.replacor.com/politica-de-privacidad/" target="_blank" rel="noopener">Privacidad</a></nav></footer>
+  <script src="assets/page-counter.js?v=2" defer></script>
+</body>
+</html>

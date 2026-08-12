@@ -10,6 +10,10 @@ Portal técnico estático con herramientas independientes. La publicación es:
 - **Identificador OEM de placas HVAC:** cuando falta la marca comercial, relaciona el código impreso en la PCB con 21 plataformas posibles y enlaza el error con la base del fabricante electrónico disponible.
 - **Identificador SMD:** búsqueda por marcaje o referencia con filtros opcionales de encapsulado, patillas, fabricante, tipo y designador de placa.
 - **Calculadoras técnicas:** 15 herramientas de electrónica y climatización con unidades, fórmulas, esquemas y advertencias; incluye LED, Zener, 555 y bus DC monofásico/trifásico.
+- **Asistente frigorista:** conversión P/T y estudio progresivo del sistema sin exigir mediciones que el técnico no tenga.
+- **Diseñador de conductos:** plano de estancias, trazado y dimensiones de la red de aire.
+- **Desagües de condensados:** caudal acumulado, pendiente, caída y diámetro interior por tramo para varias unidades.
+- **Normativa técnica:** búsqueda por página dentro de REBT, RITE, RSIF, RAT, RLAT, CTE DB-HS y criterios sanitarios del agua.
 - **Referencias de componentes:** consulta por referencia, marcado, fabricante, categoría, encapsulado y parámetros eléctricos.
 - **Comparador documental:** contraste lado a lado de referencias reales y búsqueda conservadora de candidatos MOSFET, IGBT y diodos rápidos revisados.
 - **Averías reales por placa:** casos aportados por técnicos, buscables por referencia o explorables mediante filtros de marca y equipo; se publican únicamente tras moderación.
@@ -32,6 +36,18 @@ Para regenerar el inventario de preparación:
 ```bash
 python tools/audit_ai_readiness.py
 ```
+
+Los módulos de normativa y desagües publican además contratos específicos en `data/regulations/tool-manifest.json` y `data/condensate/tool-manifest.json`. La ejecución remota sigue desactivada.
+
+## Actualizar la normativa oficial
+
+Las fuentes se administran desde `data/regulations/sources.json`. Para descargar de nuevo los PDF oficiales, extraer el texto y regenerar catálogo, índices y huellas digitales:
+
+```bash
+python tools/update_regulations.py
+```
+
+Puede limitarse a una fuente con `--document rebt` o reconstruir los índices desde las copias guardadas con `--no-download`. Si cambia una huella, `data/regulations/update-report.json` obliga a revisar manualmente las reglas de cálculo que dependan de ese documento. Los textos UNE, UNE-EN e IEC no se almacenan ni distribuyen sin licencia.
 
 El identificador SMD publica 439 candidatos de seis fabricantes, todos con marcaje, encapsulado, patillaje, parámetros eléctricos y una fuente oficial. Cuando un código tiene varios significados, muestra todos los candidatos cerrados y no selecciona ninguno automáticamente.
 
@@ -99,6 +115,7 @@ emplazamientos publicitarios.
 - Catálogo SMD público formado únicamente por registros contrastados y autorizados.
 - Proyección pública de referencias de componentes, dividida en fragmentos para cargar cada ficha bajo demanda.
 - Proyección pública de 47 patrones OEM de placas y 15 formatos ambiguos bloqueados.
+- Copias oficiales públicas de la normativa registrada, con edición, procedencia, huella e índice por página.
 - Únicamente imágenes propias o con autorización expresa.
 
 Los candidatos históricos se publican únicamente como índices factuales de localización, con su procedencia y una advertencia visible de verificación. No se publican bases SQLite, PHP, herramientas internas, manuales ni capturas de manuales no autorizadas.
@@ -109,6 +126,7 @@ Los candidatos históricos se publican únicamente como índices factuales de lo
 python -m unittest discover -s tests -v
 node tests/test_calculations.js
 node tests/test_datasheet_finder.js
+node tests/condensate_drain_engine.test.js
 python tools/build_static.py --source . --output dist
 python -m http.server 8080 --directory dist
 ```

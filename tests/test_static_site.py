@@ -326,6 +326,8 @@ class StaticSiteTests(unittest.TestCase):
             "smd.html",
             "calculadoras.html",
             "conductos.html",
+            "desagues-condensados.html",
+            "normativa.html",
             "componentes.html",
             "comparador.html",
             "averias.html",
@@ -3051,11 +3053,44 @@ class StaticSiteTests(unittest.TestCase):
         for filename in public_pages:
             html = (self.dist / filename).read_text(encoding="utf-8")
             self.assertIn('assets/app-theme.css?v=1', html, filename)
-            self.assertIn('assets/app-shell.js?v=2', html, filename)
+            self.assertIn('assets/app-shell.js?v=4', html, filename)
 
         shell = (self.dist / "assets" / "app-shell.js").read_text(encoding="utf-8")
         for marker in ("st-app-drawer", "st-bottom-nav", "st-drawer-search", "Calculadoras", "Componentes"):
             self.assertIn(marker, shell)
+
+    def test_regulation_library_is_traceable_searchable_and_public(self):
+        catalog = load(self.dist / "data" / "regulations" / "catalog.json")
+        self.assertEqual(catalog["jurisdiction"], "ES")
+        self.assertEqual(len(catalog["documents"]), 7)
+        self.assertGreaterEqual(self.report["regulations"]["pages"], 1000)
+        self.assertGreaterEqual(self.report["regulations"]["search_records"], 2500)
+        for document in catalog["documents"]:
+            with self.subTest(document=document["id"]):
+                self.assertTrue((self.dist / document["local_pdf"]).is_file())
+                index = load(self.dist / document["index_url"])
+                self.assertEqual(index["document_id"], document["id"])
+                self.assertEqual(index["source_sha256"], document["sha256"])
+                self.assertEqual(len(index["records"]), document["search_records"])
+        html = (self.dist / "normativa.html").read_text(encoding="utf-8")
+        script = (self.dist / "assets" / "regulations.js").read_text(encoding="utf-8")
+        self.assertIn('id="searchForm"', html)
+        self.assertIn('id="documentGrid"', html)
+        self.assertIn("indexCache", script)
+        self.assertIn("official_page_url", script)
+        self.assertNotIn("4097", html + script)
+
+    def test_condensate_drain_tool_exposes_assumptions_and_machine_contract(self):
+        html = (self.dist / "desagues-condensados.html").read_text(encoding="utf-8")
+        engine = (self.dist / "assets" / "condensate-drain-engine.js").read_text(encoding="utf-8")
+        manifest = load(self.dist / "data" / "condensate" / "tool-manifest.json")
+        self.assertIn('id="unitList"', html)
+        self.assertIn('id="networkDiagram"', html)
+        self.assertIn("Manning", html)
+        self.assertIn("manningHalfFullCapacityLh", engine)
+        self.assertIn("minimumConnection", engine)
+        self.assertIn("manufacturer drain connection", " ".join(manifest["limitations"]).lower())
+        self.assertIn('href="desagues-condensados.html"', (self.dist / "index.html").read_text(encoding="utf-8"))
 
     def test_duct_designer_is_an_independent_visual_project_tool(self):
         html = (self.dist / "conductos.html").read_text(encoding="utf-8")

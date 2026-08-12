@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0.0",
+  "id": "super-tecnico-condensate-drain",
+  "name": "Dimensionado preliminar de desagües de condensados",
+  "status": "browser_engine_available_remote_execution_planned",
+  "entry_point": "../../desagues-condensados.html",
+  "engine": "../../assets/condensate-drain-engine.js",
+  "input_order": "units_from_furthest_to_outlet",
+  "inputs": [
+    "units[].capacity_or_known_flow",
+    "units[].manufacturer_connection_internal_mm",
+    "units[].segment_length_m",
+    "slope_percent"
+  ],
+  "outputs": [
+    "cumulative_flow_by_segment_l_h",
+    "recommended_internal_diameter_by_segment_mm",
+    "fall_by_segment_cm",
+    "warnings_and_assumptions"
+  ],
+  "method": {
+    "estimated_condensate": "cooling_capacity_kw * latent_fraction * 3600 / 2450",
+    "gravity_capacity": "Manning equation for a half-full circular smooth pipe, with only 25 percent used as design capacity",
+    "diameter_series_internal_mm": [16, 20, 25, 32, 40, 50, 63, 75, 90, 110]
+  },
+  "limitations": [
+    "Not a certificate or automatic proof of regulatory compliance",
+    "The 25 percent usable-capacity factor is a conservative engineering reserve, not a statutory value",
+    "Manufacturer drain connection is always a minimum",
+    "Pumps, siphons, air breaks, cleaning access and local wastewater rules require project review",
+    "Direct manufacturer or measured condensate flow should replace estimates"
+  ],
+  "future_integrations": ["frigorista_psychrometrics", "installation_floorplan", "regulation_search"]
+}

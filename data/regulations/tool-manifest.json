@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "id": "super-tecnico-regulation-search",
+  "name": "Buscador de normativa técnica oficial",
+  "status": "browser_search_available_remote_execution_planned",
+  "entry_point": "../../normativa.html",
+  "catalog": "catalog.json",
+  "jurisdiction": "ES",
+  "capabilities": [
+    "regulation_catalog",
+    "accent_insensitive_full_text_search",
+    "page_level_provenance",
+    "official_source_link",
+    "stored_official_pdf_link",
+    "change_detection_by_sha256"
+  ],
+  "result_contract": {
+    "required": ["document_id", "document_title", "page", "text", "official_page_url", "source_sha256"],
+    "notice": "Search results are documentary evidence, not an automatic legal conclusion."
+  },
+  "update_workflow": {
+    "registry": "sources.json",
+    "command": "python tools/update_regulations.py",
+    "change_control": "A changed source hash requires review of dependent engineering rules before publication."
+  },
+  "licensing": "Official public texts are stored. UNE and IEC standards are referenced by designation only unless licensed distribution rights exist."
+}

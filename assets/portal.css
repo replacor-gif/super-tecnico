@@ -301,6 +301,26 @@ h1 {
   background: rgba(0, 234, 208, .09);
 }
 
+.tool-card-condensate .tool-icon {
+  color: #00161b;
+  background: linear-gradient(135deg, #00eaff, #54ff82);
+  box-shadow: 0 0 26px rgba(0, 234, 255, .28);
+}
+
+.tool-card-condensate .tool-badge {
+  color: #00798a;
+}
+
+.tool-card-regulations .tool-icon {
+  color: #211b00;
+  background: linear-gradient(135deg, #ffe438, #ff8a00);
+  box-shadow: 0 0 26px rgba(255, 228, 56, .25);
+}
+
+.tool-card-regulations .tool-badge {
+  color: #8a5600;
+}
+
 .frigorista-tool-icon svg {
   width: 64px;
   height: 64px;

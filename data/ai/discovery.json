@@ -54,6 +54,32 @@
         "next_measurement_guidance"
       ],
       "discovery": "../frigorista/discovery.json"
+    },
+    {
+      "id": "super-tecnico-regulations",
+      "title": "Normativa técnica oficial",
+      "status": "browser_search_available_remote_execution_planned",
+      "capabilities": [
+        "regulation_catalog",
+        "full_text_search",
+        "page_level_provenance",
+        "official_source_links",
+        "source_change_detection"
+      ],
+      "discovery": "../regulations/tool-manifest.json"
+    },
+    {
+      "id": "super-tecnico-condensate-drain",
+      "title": "Desagües de condensados",
+      "status": "browser_engine_available_remote_execution_planned",
+      "capabilities": [
+        "condensate_flow_estimation",
+        "known_flow_input",
+        "cumulative_branch_flow",
+        "gravity_pipe_sizing",
+        "slope_and_fall_calculation"
+      ],
+      "discovery": "../condensate/tool-manifest.json"
     }
   ],
   "access_model": {

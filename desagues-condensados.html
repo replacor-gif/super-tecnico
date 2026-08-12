@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="google-adsense-account" content="ca-pub-6950924617837531">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Dimensiona una red de desagüe de condensados con varias unidades de aire acondicionado y comprueba caudal acumulado, pendiente y diámetros por tramo.">
+  <meta name="theme-color" content="#06111b">
+  <title>Desagües de condensados | Super Técnico</title>
+  <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
+  <link rel="stylesheet" href="assets/app-theme.css?v=1">
+  <link rel="stylesheet" href="assets/condensate-drain.css?v=1">
+  <script src="assets/app-shell.js?v=4" defer></script>
+  <script src="assets/condensate-drain-engine.js?v=1" defer></script>
+  <script src="assets/condensate-drain.js?v=1" defer></script>
+</head>
+<body>
+  <header class="cd-header">
+    <a class="cd-brand" href="index.html" aria-label="Volver a Super Técnico"><img src="assets/super-tecnico-logo.png" alt=""><span><strong>Super Técnico</strong><small>Desagües de condensados</small></span></a>
+    <a class="cd-back" href="index.html">Herramientas</a>
+  </header>
+
+  <main class="cd-main">
+    <section class="cd-hero">
+      <div>
+        <p class="cd-eyebrow">CLIMATIZACIÓN · RED POR GRAVEDAD</p>
+        <h1>Une varias máquinas sin quedarte corto de desagüe.</h1>
+        <p>Coloca los equipos desde el más alejado hasta la salida. La herramienta acumula el agua de cada unidad y recalcula cada tramo.</p>
+      </div>
+      <div class="cd-hero-symbol" aria-hidden="true"><span></span><i></i><b>H₂O</b></div>
+    </section>
+
+    <section class="cd-workbench" aria-labelledby="networkTitle">
+      <div class="cd-panel-head">
+        <div><p class="cd-eyebrow">PASO ÚNICO</p><h2 id="networkTitle">Describe la línea tal como está instalada</h2><p>Los equipos se ordenan desde el final del recorrido hacia el desagüe.</p></div>
+        <button id="exampleButton" class="cd-quiet-button" type="button">Cargar ejemplo</button>
+      </div>
+
+      <div class="cd-general-row">
+        <label><span>Pendiente disponible</span><select id="slopeInput"><option value="0.5">0,5 %</option><option value="1" selected>1 %</option><option value="2">2 %</option><option value="3">3 %</option></select></label>
+        <div class="cd-order-hint"><b>Equipo más lejano</b><span aria-hidden="true">→</span><b>Salida</b></div>
+      </div>
+
+      <div id="unitList" class="cd-unit-list"></div>
+      <div class="cd-form-actions">
+        <button id="addUnitButton" class="cd-secondary-button" type="button">+ Añadir otra máquina</button>
+        <button id="calculateButton" class="cd-primary-button" type="button">Dimensionar la red <span aria-hidden="true">→</span></button>
+      </div>
+      <p id="formError" class="cd-error" role="alert" hidden></p>
+    </section>
+
+    <section id="resultPanel" class="cd-results" aria-live="polite" hidden>
+      <div class="cd-result-head"><div><p class="cd-eyebrow">RESULTADO</p><h2>Red de condensados</h2></div><span class="cd-status">CÁLCULO PRELIMINAR</span></div>
+      <div class="cd-summary-grid">
+        <article><span>Caudal de diseño total</span><strong id="totalFlow">—</strong><small>L/h, con margen</small></article>
+        <article><span>Colector final</span><strong id="collectorSize">—</strong><small>diámetro interior mínimo</small></article>
+        <article><span>Caída total</span><strong id="totalFall">—</strong><small id="totalLength">—</small></article>
+      </div>
+      <div class="cd-network-wrap"><h3>Cómo crece la red</h3><div id="networkDiagram" class="cd-network"></div></div>
+      <div class="cd-table-wrap"><table><thead><tr><th>Tramo</th><th>Agua acumulada</th><th>Tubo interior</th><th>Longitud</th><th>Caída</th></tr></thead><tbody id="segmentRows"></tbody></table></div>
+      <div id="warningList" class="cd-warnings"></div>
+    </section>
+
+    <details class="cd-method">
+      <summary>Método, límites y datos que conviene comprobar</summary>
+      <div>
+        <p>Si no conoces el caudal real, se estima desde la potencia frigorífica y una fracción latente según la humedad elegida. El dimensionado hidráulico usa Manning para tubo circular liso a media sección, pero solo aprovecha el 25 % de esa capacidad como reserva conservadora frente a suciedad, desniveles imperfectos y entrada irregular de agua.</p>
+        <p>El resultado no sustituye el dato del fabricante ni un proyecto. Comprueba diámetro real interior, sifones, ventilación o rotura de carga, registros de limpieza, bombeo cuando no exista gravedad y las normas locales de saneamiento.</p>
+      </div>
+    </details>
+  </main>
+
+  <footer class="st-page-footer"><span>Super Técnico · REPLACOR</span><nav class="st-legal-links" aria-label="Información legal"><a href="normativa.html">Normativa técnica</a><a href="ia-integracion.html">Para IAs y desarrolladores</a><a href="https://www.replacor.com/aviso-legal/" target="_blank" rel="noopener">Aviso legal</a></nav></footer>
+  <script src="assets/page-counter.js?v=2" defer></script>
+</body>
+</html>

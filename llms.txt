@@ -51,3 +51,19 @@ For diagrams, the calling AI interprets the request or image, chooses the topolo
 - Versioned refrigerant catalog: /data/frigorista/catalog.json
 
 The browser engine already performs deterministic P/T, superheat and subcooling calculations. Remote API and MCP execution remain planned; do not call them until discovery reports them as enabled.
+
+## Regulation search entry points
+
+- Human search tool: /normativa.html
+- Versioned official-document catalog: /data/regulations/catalog.json
+- Machine contract: /data/regulations/tool-manifest.json
+
+The browser can search the stored official Spanish regulations and return the source document, page and official URL. Search hits are documentary evidence, not automatic legal conclusions. Consolidated BOE texts must be checked against the official publication and the applicable regional or local rules. UNE and IEC texts are not redistributed without a suitable licence.
+
+## Condensate drain entry points
+
+- Human sizing tool: /desagues-condensados.html
+- Browser calculation engine: /assets/condensate-drain-engine.js
+- Machine contract: /data/condensate/tool-manifest.json
+
+The browser engine accumulates condensate flow from the furthest unit to the outlet and sizes each gravity segment using explicit assumptions. Prefer measured or manufacturer flow. Manufacturer connection size remains a minimum. Remote execution is planned and is not currently enabled.

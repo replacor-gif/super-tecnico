@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0.0",
+  "jurisdiction": "ES",
+  "verified_at": "2026-08-12",
+  "notice": "Los textos consolidados del BOE son informativos. Para efectos jurídicos debe comprobarse la publicación oficial y la normativa autonómica o local aplicable.",
+  "documents": [
+    {
+      "id": "rebt",
+      "short_title": "REBT",
+      "title": "Reglamento electrotécnico para baja tensión e ITC",
+      "legal_reference": "Real Decreto 842/2002",
+      "authority": "Agencia Estatal Boletín Oficial del Estado",
+      "domain": "electricidad_baja_tension",
+      "topics": ["baja tensión", "cuadros", "protecciones", "conductores", "puesta a tierra", "instalaciones interiores"],
+      "official_page_url": "https://www.boe.es/eli/es/rd/2002/08/02/842/con",
+      "pdf_url": "https://www.boe.es/buscar/pdf/2002/BOE-A-2002-18099-consolidado.pdf",
+      "last_official_update": "2025-09-03",
+      "local_pdf": "recursos/normativa/rebt.pdf",
+      "storage_policy": "public_official_text",
+      "related_tools": ["electrical_hvacr", "electrical_boards", "electroia"]
+    },
+    {
+      "id": "rite",
+      "short_title": "RITE",
+      "title": "Reglamento de Instalaciones Térmicas en los Edificios",
+      "legal_reference": "Real Decreto 1027/2007",
+      "authority": "Agencia Estatal Boletín Oficial del Estado",
+      "domain": "instalaciones_termicas",
+      "topics": ["climatización", "calefacción", "ventilación", "eficiencia", "mantenimiento", "aislamiento"],
+      "official_page_url": "https://www.boe.es/eli/es/rd/2007/07/20/1027/con",
+      "pdf_url": "https://www.boe.es/buscar/pdf/2007/BOE-A-2007-15820-consolidado.pdf",
+      "last_official_update": "2022-08-02",
+      "local_pdf": "recursos/normativa/rite.pdf",
+      "storage_policy": "public_official_text",
+      "related_tools": ["frigorista", "air_pro", "ducts", "ventilation", "condensate_drain"]
+    },
+    {
+      "id": "rsif",
+      "short_title": "RSIF",
+      "title": "Reglamento de seguridad para instalaciones frigoríficas e IF",
+      "legal_reference": "Real Decreto 552/2019",
+      "authority": "Agencia Estatal Boletín Oficial del Estado",
+      "domain": "refrigeracion",
+      "topics": ["refrigerantes", "seguridad", "carga", "clasificación", "mantenimiento", "instalaciones frigoríficas"],
+      "official_page_url": "https://www.boe.es/eli/es/rd/2019/09/27/552/con",
+      "pdf_url": "https://www.boe.es/buscar/pdf/2019/BOE-A-2019-15228-consolidado.pdf",
+      "last_official_update": "2025-11-27",
+      "local_pdf": "recursos/normativa/rsif.pdf",
+      "storage_policy": "public_official_text",
+      "related_tools": ["frigorista", "refrigerant_piping", "retrofit"]
+    },
+    {
+      "id": "rat",
+      "short_title": "RAT",
+      "title": "Reglamento de instalaciones eléctricas de alta tensión e ITC-RAT",
+      "legal_reference": "Real Decreto 337/2014",
+      "authority": "Agencia Estatal Boletín Oficial del Estado",
+      "domain": "electricidad_alta_tension",
+      "topics": ["alta tensión", "centros de transformación", "subestaciones", "protecciones", "puesta a tierra"],
+      "official_page_url": "https://www.boe.es/eli/es/rd/2014/05/09/337/con",
+      "pdf_url": "https://www.boe.es/buscar/pdf/2014/BOE-A-2014-6084-consolidado.pdf",
+      "last_official_update": "2025-10-01",
+      "local_pdf": "recursos/normativa/rat.pdf",
+      "storage_policy": "public_official_text",
+      "related_tools": ["electrical_boards", "electrical_projects"]
+    },
+    {
+      "id": "rlat",
+      "short_title": "RLAT",
+      "title": "Reglamento de líneas eléctricas de alta tensión e ITC-LAT",
+      "legal_reference": "Real Decreto 223/2008",
+      "authority": "Agencia Estatal Boletín Oficial del Estado",
+      "domain": "lineas_alta_tension",
+      "topics": ["líneas alta tensión", "líneas aéreas", "líneas subterráneas", "proyectos", "seguridad"],
+      "official_page_url": "https://www.boe.es/eli/es/rd/2008/02/15/223/con",
+      "pdf_url": "https://www.boe.es/buscar/pdf/2008/BOE-A-2008-5269-consolidado.pdf",
+      "last_official_update": "2025-09-03",
+      "local_pdf": "recursos/normativa/rlat.pdf",
+      "storage_policy": "public_official_text",
+      "related_tools": ["electrical_projects"]
+    },
+    {
+      "id": "cte-db-hs",
+      "short_title": "CTE DB-HS",
+      "title": "Documento Básico HS Salubridad, con comentarios del Ministerio",
+      "legal_reference": "Código Técnico de la Edificación - DB-HS",
+      "authority": "Ministerio de Vivienda y Agenda Urbana",
+      "domain": "fontaneria_saneamiento_ventilacion",
+      "topics": ["suministro de agua", "fontanería", "evacuación de aguas", "saneamiento", "ventilación", "HS 4", "HS 5"],
+      "official_page_url": "https://www.codigotecnico.org/DocumentosCTE/Salubridad.html",
+      "pdf_url": "https://www.codigotecnico.org/pdf/Documentos/HS/DccHS.pdf",
+      "last_official_update": "2025-02-12",
+      "version_note": "Articulado de 14/06/2022 y comentarios ministeriales de 12/02/2025.",
+      "local_pdf": "recursos/normativa/cte-db-hs.pdf",
+      "storage_policy": "public_official_text_with_nonbinding_comments",
+      "related_tools": ["plumbing", "drainage", "ventilation", "condensate_drain"]
+    },
+    {
+      "id": "water-quality",
+      "short_title": "Agua de consumo",
+      "title": "Criterios técnico-sanitarios de la calidad del agua de consumo, su control y suministro",
+      "legal_reference": "Real Decreto 3/2023",
+      "authority": "Agencia Estatal Boletín Oficial del Estado",
+      "domain": "agua_consumo",
+      "topics": ["agua de consumo", "calidad", "instalaciones interiores", "materiales", "control", "fontanería"],
+      "official_page_url": "https://www.boe.es/eli/es/rd/2023/01/10/3/con",
+      "pdf_url": "https://www.boe.es/buscar/pdf/2023/BOE-A-2023-628-consolidado.pdf",
+      "last_official_update": "2023-02-14",
+      "local_pdf": "recursos/normativa/agua-consumo.pdf",
+      "storage_policy": "public_official_text",
+      "related_tools": ["plumbing", "water_quality"]
+    }
+  ],
+  "referenced_not_stored": [
+    {
+      "family": "UNE, UNE-EN e IEC",
+      "reason": "Normas técnicas protegidas. Se registran identificador, edición y aplicabilidad, pero no se publica el texto completo sin licencia."
+    }
+  ]
+}

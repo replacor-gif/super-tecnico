@@ -1,0 +1,48 @@
+{
+  "generated_at_utc": "2026-08-12T16:29:07+00:00",
+  "documents": [
+    {
+      "id": "rebt",
+      "changed": false,
+      "previous_sha256": null,
+      "sha256": "e101577e04e6f17ee249f8839be680cfde326028faa5a71889c83d9663964f96"
+    },
+    {
+      "id": "rite",
+      "changed": false,
+      "previous_sha256": null,
+      "sha256": "ad1680c83bf4c7f5c656af1794c32ad0669ad9f36ac293737ff3f95177ff7b26"
+    },
+    {
+      "id": "rsif",
+      "changed": false,
+      "previous_sha256": null,
+      "sha256": "cefb1d8f04eb21bc0a8aebee3f3421ec7f73bf1d3513d741ab06c5204b24715f"
+    },
+    {
+      "id": "rat",
+      "changed": false,
+      "previous_sha256": null,
+      "sha256": "d62566daa3a9c63db0b8bd86ee2bde821eb2e6046d7d7b99228f933f91aaaec1"
+    },
+    {
+      "id": "rlat",
+      "changed": false,
+      "previous_sha256": null,
+      "sha256": "f198d287a3661eb39810bdb9a3b3db53179dd7ab05f4c4a035de95e65258326e"
+    },
+    {
+      "id": "cte-db-hs",
+      "changed": false,
+      "previous_sha256": null,
+      "sha256": "9552bf50f2d0cc7351dd8308e0e1c224d7ce38a95ed559f8a2863ecdcc172d42"
+    },
+    {
+      "id": "water-quality",
+      "changed": false,
+      "previous_sha256": null,
+      "sha256": "494f1c7035cfea2f9522a2f75064bde5796ee295679f0bb45245a9eb37a5b301"
+    }
+  ],
+  "manual_rule_review_required_when_changed": true
+}
