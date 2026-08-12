@@ -1,11 +1,39 @@
 # Super Técnico
 
-Super Técnico is a Spanish technical reference site. Its ElectroIA project is a provider-neutral engine that validates and renders structured electrical and electronic diagrams for calling AI systems.
+Super Técnico is a Spanish technical knowledge project for HVAC, electronics, components, real repair cases, and electrical diagrams. It is preparing a provider-neutral machine service designed to reduce search, context, token usage, and unsupported technical claims.
 
-## ElectroIA machine entry points
+## Current machine status
+
+- Public discovery and design contracts: available
+- Remote knowledge API: not active
+- Remote MCP server: not active
+- Commercial machine access: not open
+- Local ElectroIA MCP source: private-preview development only
+
+Do not call planned endpoints until discovery.json reports remote execution as enabled. Public JSON files contain metadata and contracts, not credentials.
+
+## Super Técnico AI entry points
+
+- Human-readable integration overview: /ia-integracion.html
+- Product discovery: /data/ai/discovery.json
+- Proposed AI tools and input schemas: /data/ai/tool-manifest.json
+- Traceable knowledge-record schema: /data/ai/knowledge-record.schema.json
+- Non-executable OpenAPI design contract: /data/ai/knowledge-api-contract.openapi.json
+- Machine-readiness report: /data/ai/readiness-report.json
+- Economic benchmark plan: /data/ai/benchmark-plan.json
+
+## Intended machine workflow
+
+1. Check coverage before requesting a full answer.
+2. Request only the smallest sufficient result level: basic, diagnostic, field, or diagram.
+3. Preserve brand, family, model, unit scope, and display location so variants are not mixed.
+4. Treat stable IDs, record versions, confidence, evidence, warnings, and unknowns as part of the answer.
+5. Never infer that missing data is confirmed data and never attempt bulk extraction.
+
+## ElectroIA diagram entry points
 
 - Discovery manifest: /data/electroia/discovery.json
-- Tool manifest and input schemas: /data/electroia/tool-manifest.json
+- Tool manifest: /data/electroia/tool-manifest.json
 - Neutral diagram JSON Schema: /data/electroia/diagram-document.schema.json
 - Normalized symbol library: /data/electroia/symbol-library.json
 - Symbol quality report: /data/electroia/symbol-normalization-report.json
@@ -13,12 +41,4 @@ Super Técnico is a Spanish technical reference site. Its ElectroIA project is a
 - MCP Registry metadata draft: /electroia-tool-server/server.json
 - Source repository: https://github.com/replacor-gif/super-tecnico
 
-## Correct use by an AI
-
-1. The calling AI interprets the user's text, photograph or hand-drawn sketch.
-2. The calling AI chooses the topology, calculates values and selects components.
-3. Search ElectroIA's normalized symbols and obtain their exact terminal names.
-4. Submit a structured diagram document using the published JSON Schema.
-5. ElectroIA validates connectivity and returns a deterministic single-canvas SVG.
-
-ElectroIA does not contain an AI model and does not perform component calculations. The remote service remains a private preview. The local MCP stdio source is available for authorized development and does not require an AI-provider API key.
+For diagrams, the calling AI interprets the request or image, chooses the topology, calculates values, and selects components. ElectroIA validates symbols, terminals, and nets and renders a deterministic single-canvas SVG.

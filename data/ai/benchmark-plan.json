@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "status": "baseline_pending",
+  "purpose": "Demostrar con medidas que Super Técnico resuelve consultas técnicas con menos coste, menos contexto y menor riesgo que una búsqueda documental independiente.",
+  "comparison_modes": [
+    "independent_web_and_document_search",
+    "super_tecnico_machine_tool"
+  ],
+  "test_families": [
+    {
+      "id": "hvac_error",
+      "minimum_cases": 40,
+      "example": "Interpretar un código repetido según marca, familia, unidad y lugar de lectura"
+    },
+    {
+      "id": "guided_diagnostic",
+      "minimum_cases": 30,
+      "example": "Obtener causas, comprobaciones ordenadas, valores y advertencias"
+    },
+    {
+      "id": "component_identification",
+      "minimum_cases": 30,
+      "example": "Identificar una referencia o marcaje sin confundir candidatos históricos"
+    },
+    {
+      "id": "field_case",
+      "minimum_cases": 20,
+      "example": "Localizar una reparación confirmada por referencia de placa y síntoma"
+    },
+    {
+      "id": "diagram",
+      "minimum_cases": 20,
+      "example": "Validar terminales y producir un SVG electrotécnico en un único lienzo"
+    }
+  ],
+  "metrics": [
+    "task_success_rate",
+    "applicable_source_precision",
+    "unsupported_claim_rate",
+    "input_tokens",
+    "output_tokens",
+    "documents_opened",
+    "wall_time_ms",
+    "cost_per_resolved_case",
+    "response_bytes",
+    "cache_hit_rate"
+  ],
+  "initial_gates": {
+    "coverage_preflight_max_output_tokens": 250,
+    "basic_answer_max_output_tokens": 700,
+    "diagnostic_answer_max_output_tokens": 1400,
+    "paid_answer_provenance_percent": 100,
+    "unsupported_claim_rate_max_percent": 1,
+    "target_cost_reduction_percent": 40,
+    "target_time_reduction_percent": 60
+  },
+  "claim_policy": "No se publicará un porcentaje de ahorro hasta completar el conjunto de pruebas con consultas ciegas y registrar tanto aciertos como fallos."
+}

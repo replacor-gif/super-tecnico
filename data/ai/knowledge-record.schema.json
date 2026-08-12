@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://app.replacor.com/super-tecnico/data/ai/knowledge-record.schema.json",
+  "title": "Super Técnico Knowledge Record",
+  "description": "Contrato neutral para entregar conocimiento técnico trazable a una IA sin exponer la base de datos interna.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "record_version",
+    "entity_type",
+    "canonical_label",
+    "status",
+    "evidence",
+    "confidence",
+    "payload",
+    "updated_at"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "record_id": {"type": "string", "pattern": "^st:[a-z0-9_-]+:[a-zA-Z0-9._:-]+$", "maxLength": 180},
+    "record_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$"},
+    "content_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "hvac_error",
+        "hvac_procedure",
+        "technical_parameter",
+        "component",
+        "component_comparison",
+        "field_case",
+        "training_reference",
+        "electroia_symbol",
+        "electroia_diagram"
+      ]
+    },
+    "canonical_label": {"type": "string", "minLength": 1, "maxLength": 240},
+    "status": {"type": "string", "enum": ["active", "historical", "draft", "superseded", "withdrawn"]},
+    "language": {"type": "string", "default": "es"},
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "brand": {"type": ["string", "null"], "maxLength": 100},
+        "family": {"type": ["string", "null"], "maxLength": 160},
+        "model": {"type": ["string", "null"], "maxLength": 160},
+        "unit_scope": {"type": ["string", "null"], "maxLength": 60},
+        "display_location": {"type": ["string", "null"], "maxLength": 120}
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "title", "review_status"],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "OFFICIAL_FABRICANTE",
+              "EXPERIENCIA_CAMPO",
+              "TECNICO_VERIFICADO",
+              "CASO_CONFIRMADO",
+              "INFERENCIA",
+              "PENDIENTE_VALIDACION"
+            ]
+          },
+          "title": {"type": "string", "minLength": 1, "maxLength": 300},
+          "publisher": {"type": ["string", "null"], "maxLength": 160},
+          "url": {"type": ["string", "null"], "format": "uri"},
+          "document_ref": {"type": ["string", "null"], "maxLength": 160},
+          "page_or_section": {"type": ["string", "null"], "maxLength": 160},
+          "review_status": {"type": "string", "enum": ["reviewed", "confirmed", "pending", "rejected"]},
+          "retrieved_at": {"type": ["string", "null"], "format": "date"}
+        }
+      }
+    },
+    "confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["score", "level", "basis"],
+      "properties": {
+        "score": {"type": "number", "minimum": 0, "maximum": 1},
+        "level": {"type": "string", "enum": ["high", "medium", "low", "unknown"]},
+        "basis": {"type": "string", "minLength": 1, "maxLength": 500}
+      }
+    },
+    "payload": {
+      "type": "object",
+      "description": "Proyección mínima necesaria para el objetivo de la herramienta; nunca una copia directa de la fila o documento maestro.",
+      "additionalProperties": true
+    },
+    "warnings": {"type": "array", "maxItems": 12, "items": {"type": "string", "maxLength": 400}},
+    "unknowns": {"type": "array", "maxItems": 12, "items": {"type": "string", "maxLength": 240}},
+    "relations": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "record_id"],
+        "properties": {
+          "kind": {"type": "string", "enum": ["same_code_variant", "supersedes", "related", "uses_component", "renders_with"]},
+          "record_id": {"type": "string", "maxLength": 180}
+        }
+      }
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "machine_use": {"type": "string", "enum": ["contract_required", "permitted", "restricted"]},
+        "redistribution": {"type": "string", "enum": ["forbidden", "attribution_required", "permitted"]}
+      }
+    },
+    "updated_at": {"type": "string", "format": "date-time"}
+  }
+}

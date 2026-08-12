@@ -1,0 +1,397 @@
+{
+  "schema_version": "1.0",
+  "generated_at_utc": "2026-08-12T14:42:32.616791+00:00",
+  "status": "private_preview_foundation",
+  "readiness_score_percent": 50,
+  "score_meaning": "Preparación contractual y de datos; no disponibilidad comercial.",
+  "content_inventory": {
+    "brands": 30,
+    "brands_with_sources": 30,
+    "brands_with_quality_report": 30,
+    "brands_with_specific_provenance_policy": 4,
+    "source_documents": 238,
+    "hvac_errors": 2538,
+    "hvac_topics": 683,
+    "hvac_variants": 1717,
+    "components": 38618,
+    "component_specifications": 8363,
+    "components_reviewed": 8205,
+    "components_historical": 3327,
+    "electroia_symbols": 460,
+    "electroia_symbols_reviewed": 72,
+    "hvac_training_chapters": 167,
+    "electronics_chapters": 678
+  },
+  "checkpoints": [
+    {
+      "id": "public_discovery",
+      "title": "Descubrimiento público para máquinas",
+      "status": "pass",
+      "evidence": "llms.txt y data/ai/discovery.json"
+    },
+    {
+      "id": "stable_contracts",
+      "title": "Contratos estables y versionados",
+      "status": "pass",
+      "evidence": "Manifiesto, JSON Schema y contrato OpenAPI de diseño"
+    },
+    {
+      "id": "focused_tools",
+      "title": "Herramientas centradas en objetivos",
+      "status": "pass",
+      "evidence": "Preflight, resolución, diagnóstico, componentes, casos y diagramas"
+    },
+    {
+      "id": "quality_labels",
+      "title": "Calidad y confianza explícitas",
+      "status": "pass",
+      "evidence": "30/30 marcas con informe y componentes con confidence"
+    },
+    {
+      "id": "source_traceability",
+      "title": "Fuentes aplicables por respuesta",
+      "status": "partial",
+      "evidence": "30/30 marcas con fuentes; 4 políticas históricas específicas"
+    },
+    {
+      "id": "remote_mcp",
+      "title": "Servidor MCP remoto",
+      "status": "planned",
+      "evidence": "ElectroIA dispone de stdio local; el transporte remoto sigue desactivado"
+    },
+    {
+      "id": "machine_auth",
+      "title": "Autenticación de clientes máquina",
+      "status": "planned",
+      "evidence": "Contrato API key/OAuth definido; sin emisión de credenciales"
+    },
+    {
+      "id": "metering",
+      "title": "Medición y facturación por uso",
+      "status": "planned",
+      "evidence": "Niveles de consumo definidos; sin contabilidad activa"
+    },
+    {
+      "id": "economic_benchmark",
+      "title": "Ahorro económico demostrado",
+      "status": "planned",
+      "evidence": "Plan y umbrales definidos; baseline pendiente"
+    },
+    {
+      "id": "anti_extraction",
+      "title": "Protección contra extracción masiva",
+      "status": "partial",
+      "evidence": "Política sin exportación masiva definida; falta aplicación en gateway remoto"
+    }
+  ],
+  "release_blockers": [
+    "Implementar el gateway remoto MCP/HTTPS con autenticación y cuotas.",
+    "Crear proyecciones de respuesta que nunca expongan registros maestros completos.",
+    "Registrar uso, coste, latencia, cache y resultado por herramienta.",
+    "Completar el benchmark ciego antes de publicar promesas de ahorro.",
+    "Definir condiciones comerciales, privacidad, soporte y proceso de alta.",
+    "Validar seguridad y revisión de la plataforma antes de publicar en directorios."
+  ],
+  "brands": [
+    {
+      "slug": "aermec",
+      "data_version": "1.0.0",
+      "errors": 25,
+      "topics": 15,
+      "variants": 30,
+      "source_documents": 4,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "airwell-historica",
+      "data_version": "1.0.0",
+      "errors": 40,
+      "topics": 34,
+      "variants": 91,
+      "source_documents": 7,
+      "quality_report": true,
+      "provenance_policy": true
+    },
+    {
+      "slug": "aux-air",
+      "data_version": "1.0.0",
+      "errors": 98,
+      "topics": 37,
+      "variants": 107,
+      "source_documents": 8,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "carrier",
+      "data_version": "1.0.0",
+      "errors": 59,
+      "topics": 15,
+      "variants": 30,
+      "source_documents": 4,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "chigo",
+      "data_version": "1.0.0",
+      "errors": 37,
+      "topics": 18,
+      "variants": 37,
+      "source_documents": 4,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "ciat",
+      "data_version": "1.0.0",
+      "errors": 51,
+      "topics": 15,
+      "variants": 30,
+      "source_documents": 4,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "daikin",
+      "data_version": "2.0.0",
+      "errors": 66,
+      "topics": 14,
+      "variants": 34,
+      "source_documents": 9,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "fujitsu-general",
+      "data_version": "2.20.0",
+      "errors": 117,
+      "topics": 39,
+      "variants": 71,
+      "source_documents": 22,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "gree",
+      "data_version": "2.0.0",
+      "errors": 179,
+      "topics": 22,
+      "variants": 81,
+      "source_documents": 16,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "haier",
+      "data_version": "1.0.0",
+      "errors": 120,
+      "topics": 24,
+      "variants": 67,
+      "source_documents": 8,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "hisense",
+      "data_version": "1.0.0",
+      "errors": 114,
+      "topics": 37,
+      "variants": 107,
+      "source_documents": 9,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "hitachi",
+      "data_version": "1.0.0",
+      "errors": 61,
+      "topics": 19,
+      "variants": 38,
+      "source_documents": 6,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "hitecsa",
+      "data_version": "1.0.0",
+      "errors": 27,
+      "topics": 15,
+      "variants": 30,
+      "source_documents": 4,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "keyter",
+      "data_version": "1.0.0",
+      "errors": 99,
+      "topics": 15,
+      "variants": 30,
+      "source_documents": 4,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "lennox",
+      "data_version": "1.0.0",
+      "errors": 69,
+      "topics": 15,
+      "variants": 30,
+      "source_documents": 4,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "lg",
+      "data_version": "1.0.0",
+      "errors": 81,
+      "topics": 23,
+      "variants": 64,
+      "source_documents": 7,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "mcquay-historica",
+      "data_version": "1.0.0",
+      "errors": 25,
+      "topics": 15,
+      "variants": 30,
+      "source_documents": 4,
+      "quality_report": true,
+      "provenance_policy": true
+    },
+    {
+      "slug": "midea",
+      "data_version": "1.1.0",
+      "errors": 222,
+      "topics": 24,
+      "variants": 86,
+      "source_documents": 14,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "mitsubishi-electric",
+      "data_version": "1.0.0",
+      "errors": 107,
+      "topics": 22,
+      "variants": 56,
+      "source_documents": 12,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "mitsubishi-heavy-industries",
+      "data_version": "1.0.0",
+      "errors": 110,
+      "topics": 35,
+      "variants": 100,
+      "source_documents": 9,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "panasonic",
+      "data_version": "2.0.0",
+      "errors": 127,
+      "topics": 25,
+      "variants": 108,
+      "source_documents": 21,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "roca-clima",
+      "data_version": "1.0.0",
+      "errors": 79,
+      "topics": 30,
+      "variants": 76,
+      "source_documents": 8,
+      "quality_report": true,
+      "provenance_policy": true
+    },
+    {
+      "slug": "samsung",
+      "data_version": "1.0.0",
+      "errors": 119,
+      "topics": 31,
+      "variants": 72,
+      "source_documents": 13,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "sanyo-historica",
+      "data_version": "1.0.0",
+      "errors": 68,
+      "topics": 20,
+      "variants": 41,
+      "source_documents": 3,
+      "quality_report": true,
+      "provenance_policy": true
+    },
+    {
+      "slug": "sharp",
+      "data_version": "1.0.0",
+      "errors": 83,
+      "topics": 17,
+      "variants": 34,
+      "source_documents": 5,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "systemair",
+      "data_version": "1.0.0",
+      "errors": 43,
+      "topics": 15,
+      "variants": 30,
+      "source_documents": 4,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "tcl",
+      "data_version": "1.0.0",
+      "errors": 105,
+      "topics": 28,
+      "variants": 67,
+      "source_documents": 8,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "toshiba",
+      "data_version": "1.0.0",
+      "errors": 122,
+      "topics": 34,
+      "variants": 80,
+      "source_documents": 9,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "trane",
+      "data_version": "1.0.0",
+      "errors": 25,
+      "topics": 15,
+      "variants": 30,
+      "source_documents": 4,
+      "quality_report": true,
+      "provenance_policy": false
+    },
+    {
+      "slug": "york",
+      "data_version": "1.0.0",
+      "errors": 60,
+      "topics": 15,
+      "variants": 30,
+      "source_documents": 4,
+      "quality_report": true,
+      "provenance_policy": false
+    }
+  ]
+}

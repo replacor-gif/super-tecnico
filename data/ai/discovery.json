@@ -1,0 +1,124 @@
+{
+  "schema_version": "1.0",
+  "service_version": "0.1.0",
+  "id": "super-tecnico-ai-gateway",
+  "name": "Super Técnico para IAs",
+  "title": "Conocimiento técnico verificable y diagramas deterministas para sistemas de IA",
+  "status": "design_ready_private_preview",
+  "provider_neutral": true,
+  "primary_language": "es",
+  "purpose": "Reducir búsquedas, contexto, tokens y errores al resolver consultas de climatización, electrónica de placas, componentes y documentación electrotécnica.",
+  "value_model": {
+    "promise": "Una consulta breve devuelve el dato aplicable, su contexto, nivel de confianza y procedencia sin obligar a la IA a localizar y comparar documentos dispersos.",
+    "economic_goal": "El coste total por caso resuelto debe ser inferior al de buscar, descargar, extraer, contrastar y resumir las fuentes de manera independiente.",
+    "claims_status": "pending_benchmark",
+    "benchmark_plan": "benchmark-plan.json"
+  },
+  "service_families": [
+    {
+      "id": "super-tecnico-knowledge",
+      "title": "Super Técnico Knowledge",
+      "status": "contract_ready_execution_planned",
+      "capabilities": [
+        "coverage_preflight",
+        "hvac_error_resolution",
+        "guided_diagnostics",
+        "component_identification",
+        "component_comparison",
+        "field_case_search",
+        "technical_reference_search"
+      ]
+    },
+    {
+      "id": "electroia-diagram-engine",
+      "title": "ElectroIA Diagram Engine",
+      "status": "private_preview",
+      "capabilities": [
+        "normalized_symbol_search",
+        "diagram_validation",
+        "orthogonal_routing",
+        "single_canvas_svg_rendering"
+      ],
+      "discovery": "../electroia/discovery.json"
+    }
+  ],
+  "access_model": {
+    "humans": {
+      "site_access": "free",
+      "purpose": "Consulta directa por técnicos"
+    },
+    "machines": {
+      "discovery": "public",
+      "coverage_preflight": "planned_free",
+      "answer_access": "planned_authenticated_metered",
+      "authentication": "planned_api_key_or_oauth",
+      "bulk_dataset_export": "not_offered",
+      "current_execution": "disabled"
+    }
+  },
+  "result_levels": [
+    {
+      "id": "coverage",
+      "billing": "free",
+      "purpose": "Confirmar si existe cobertura antes de gastar recursos"
+    },
+    {
+      "id": "basic",
+      "billing": "metered_planned",
+      "purpose": "Respuesta técnica concreta y compacta"
+    },
+    {
+      "id": "diagnostic",
+      "billing": "metered_planned",
+      "purpose": "Causas, comprobaciones, seguridad y fuentes"
+    },
+    {
+      "id": "field",
+      "billing": "metered_planned",
+      "purpose": "Casos reales confirmados y experiencia de taller"
+    },
+    {
+      "id": "diagram",
+      "billing": "metered_planned",
+      "purpose": "Validación y renderizado determinista con ElectroIA"
+    }
+  ],
+  "machine_entry_points": {
+    "llms": "../../llms.txt",
+    "tool_manifest": "tool-manifest.json",
+    "knowledge_record_schema": "knowledge-record.schema.json",
+    "openapi_design_contract": "knowledge-api-contract.openapi.json",
+    "readiness_report": "readiness-report.json",
+    "benchmark_plan": "benchmark-plan.json"
+  },
+  "discovery_channels": {
+    "website": "../../ia-integracion.html",
+    "llms_txt": "../../llms.txt",
+    "mcp_registry": "planned_after_remote_service",
+    "openai_plugin_directory": "planned_after_remote_service_review",
+    "developer_direct_connection": "planned_remote_mcp_url"
+  },
+  "trust": {
+    "stable_ids_required": true,
+    "record_versions_required": true,
+    "provenance_required_for_paid_answers": true,
+    "confidence_required": true,
+    "evidence_kinds": [
+      "OFFICIAL_FABRICANTE",
+      "EXPERIENCIA_CAMPO",
+      "TECNICO_VERIFICADO",
+      "CASO_CONFIRMADO",
+      "INFERENCIA",
+      "PENDIENTE_VALIDACION"
+    ],
+    "unknowns_are_explicit": true
+  },
+  "security": {
+    "credentials_in_public_files": false,
+    "database_direct_access": false,
+    "remote_execution_enabled": false,
+    "rate_limits_required": true,
+    "usage_audit_required": true,
+    "anti_extraction_controls_required": true
+  }
+}

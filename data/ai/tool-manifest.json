@@ -1,0 +1,195 @@
+{
+  "schema_version": "1.0",
+  "name": "super-tecnico-ai-tools",
+  "title": "Super Técnico — herramientas técnicas para IAs",
+  "status": "design_contract",
+  "execution_enabled": false,
+  "provider_neutral": true,
+  "instructions": "Primero usa supertecnico_check_coverage. Solicita después solo el nivel mínimo que resuelva el caso. Conserva marcas, familias, unidades y lugar de lectura; no mezcles variantes. Muestra incertidumbre y procedencia. Usa ElectroIA únicamente cuando ya hayas decidido la topología y los componentes.",
+  "routing_policy": {
+    "preflight_first": true,
+    "smallest_sufficient_result": true,
+    "bulk_export_allowed": false,
+    "unknown_result": "Return a structured not_found or insufficient_context result; never invent a record."
+  },
+  "default_output_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["ok", "status", "request_id", "service_version", "result", "warnings"],
+    "properties": {
+      "ok": {"type": "boolean"},
+      "status": {"type": "string", "enum": ["success", "not_found", "insufficient_context", "rejected", "error"]},
+      "request_id": {"type": "string", "minLength": 8, "maxLength": 64},
+      "service_version": {"type": "string"},
+      "result": {"type": ["object", "array", "null"]},
+      "warnings": {"type": "array", "maxItems": 12, "items": {"type": "string", "maxLength": 400}},
+      "missing_context": {"type": "array", "maxItems": 8, "items": {"type": "string", "maxLength": 160}},
+      "usage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "billing_tier": {"type": "string"},
+          "billable_units": {"type": "integer", "minimum": 0},
+          "cache_status": {"type": "string", "enum": ["hit", "miss", "not_applicable"]}
+        }
+      }
+    }
+  },
+  "tools": [
+    {
+      "name": "supertecnico_get_capabilities",
+      "title": "Consultar capacidades",
+      "description": "Indica cobertura, versiones y límites antes de resolver una consulta.",
+      "state": "planned",
+      "result_level": "coverage",
+      "billing_tier": "free",
+      "target_output_tokens": 250,
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {"type": "object", "additionalProperties": false, "properties": {}}
+    },
+    {
+      "name": "supertecnico_check_coverage",
+      "title": "Comprobar cobertura",
+      "description": "Comprueba gratuitamente si Super Técnico dispone de datos aplicables y qué contexto mínimo falta.",
+      "state": "planned",
+      "result_level": "coverage",
+      "billing_tier": "free",
+      "target_output_tokens": 250,
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["domain", "query"],
+        "properties": {
+          "domain": {"type": "string", "enum": ["hvac", "electronics", "components", "field_cases", "diagrams"]},
+          "query": {"type": "string", "minLength": 2, "maxLength": 300},
+          "brand": {"type": "string", "maxLength": 80},
+          "model_or_family": {"type": "string", "maxLength": 120}
+        }
+      }
+    },
+    {
+      "name": "supertecnico_resolve_hvac_code",
+      "title": "Resolver código HVAC",
+      "description": "Separa significados por marca, familia, unidad y lugar de lectura y devuelve el resultado aplicable con fuentes.",
+      "state": "planned",
+      "result_level": "basic",
+      "billing_tier": "metered_basic",
+      "target_output_tokens": 700,
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["brand", "code"],
+        "properties": {
+          "brand": {"type": "string", "minLength": 2, "maxLength": 80},
+          "code": {"type": "string", "minLength": 1, "maxLength": 24},
+          "model_or_family": {"type": "string", "maxLength": 120},
+          "unit_scope": {"type": "string", "enum": ["indoor", "outdoor", "controller", "board", "system", "unknown"]},
+          "display_location": {"type": "string", "maxLength": 120}
+        }
+      }
+    },
+    {
+      "name": "supertecnico_get_diagnostic",
+      "title": "Obtener diagnóstico guiado",
+      "description": "Devuelve causas, comprobaciones ordenadas, valores disponibles, advertencias y trazabilidad para un caso ya identificado.",
+      "state": "planned",
+      "result_level": "diagnostic",
+      "billing_tier": "metered_diagnostic",
+      "target_output_tokens": 1400,
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["record_id"],
+        "properties": {
+          "record_id": {"type": "string", "minLength": 4, "maxLength": 120},
+          "symptoms": {"type": "array", "maxItems": 8, "items": {"type": "string", "maxLength": 160}},
+          "measurements": {"type": "array", "maxItems": 12, "items": {"type": "string", "maxLength": 160}}
+        }
+      }
+    },
+    {
+      "name": "supertecnico_search_components",
+      "title": "Buscar componentes",
+      "description": "Busca referencias o marcajes y conserva ambigüedades, calidad, confianza y estado de verificación.",
+      "state": "planned",
+      "result_level": "basic",
+      "billing_tier": "metered_basic",
+      "target_output_tokens": 700,
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["query"],
+        "properties": {
+          "query": {"type": "string", "minLength": 1, "maxLength": 120},
+          "package": {"type": "string", "maxLength": 80},
+          "category": {"type": "string", "maxLength": 80},
+          "minimum_confidence": {"type": "number", "minimum": 0, "maximum": 1},
+          "limit": {"type": "integer", "minimum": 1, "maximum": 20, "default": 8}
+        }
+      }
+    },
+    {
+      "name": "supertecnico_compare_components",
+      "title": "Comparar componentes",
+      "description": "Compara dos referencias y destaca diferencias críticas y datos ausentes sin garantizar sustitución directa.",
+      "state": "planned",
+      "result_level": "diagnostic",
+      "billing_tier": "metered_diagnostic",
+      "target_output_tokens": 1200,
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["left_part_number", "right_part_number"],
+        "properties": {
+          "left_part_number": {"type": "string", "minLength": 1, "maxLength": 120},
+          "right_part_number": {"type": "string", "minLength": 1, "maxLength": 120},
+          "application": {"type": "string", "maxLength": 240}
+        }
+      }
+    },
+    {
+      "name": "supertecnico_search_field_cases",
+      "title": "Buscar casos reales",
+      "description": "Busca casos moderados por referencia de placa, equipo y síntoma y distingue soluciones propuestas de reparaciones confirmadas.",
+      "state": "planned",
+      "result_level": "field",
+      "billing_tier": "metered_field",
+      "target_output_tokens": 900,
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["query"],
+        "properties": {
+          "query": {"type": "string", "minLength": 3, "maxLength": 300},
+          "board_reference": {"type": "string", "maxLength": 120},
+          "brand": {"type": "string", "maxLength": 80},
+          "confirmed_only": {"type": "boolean", "default": true},
+          "limit": {"type": "integer", "minimum": 1, "maximum": 10, "default": 5}
+        }
+      }
+    },
+    {
+      "name": "supertecnico_render_diagram",
+      "title": "Generar diagrama electrotécnico",
+      "description": "Delega en ElectroIA la validación y el renderizado SVG de un documento estructurado ya decidido por la IA.",
+      "state": "private_preview_via_electroia",
+      "result_level": "diagram",
+      "billing_tier": "metered_diagram_planned",
+      "target_output_tokens": 500,
+      "delegate": "../electroia/tool-manifest.json#electroia_render_diagram",
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["document"],
+        "properties": {"document": {"$ref": "../electroia/diagram-document.schema.json"}}
+      }
+    }
+  ]
+}

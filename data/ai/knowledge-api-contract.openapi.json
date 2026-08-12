@@ -1,0 +1,191 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Super Técnico AI Gateway",
+    "version": "0.1.0",
+    "description": "Contrato de diseño para la futura API autenticada de conocimiento técnico. No representa todavía un servicio ejecutable."
+  },
+  "x-super-tecnico-status": "design_contract",
+  "x-execution-enabled": false,
+  "x-do-not-call-until-enabled": true,
+  "servers": [
+    {
+      "url": "https://app.replacor.com/super-tecnico/api/v1",
+      "description": "Dirección reservada; no está activa durante la vista previa privada."
+    }
+  ],
+  "security": [{"ApiKeyAuth": []}],
+  "paths": {
+    "/capabilities": {
+      "get": {
+        "operationId": "supertecnico_get_capabilities",
+        "summary": "Consultar capacidades y versiones",
+        "x-billing-tier": "free",
+        "responses": {
+          "200": {
+            "description": "Capacidades disponibles",
+            "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Envelope"}}}
+          }
+        }
+      }
+    },
+    "/coverage": {
+      "post": {
+        "operationId": "supertecnico_check_coverage",
+        "summary": "Comprobar cobertura antes de solicitar una respuesta",
+        "x-billing-tier": "free",
+        "requestBody": {
+          "required": true,
+          "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CoverageRequest"}}}
+        },
+        "responses": {
+          "200": {
+            "description": "Cobertura y contexto mínimo necesario",
+            "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Envelope"}}}
+          }
+        }
+      }
+    },
+    "/hvac/resolve": {
+      "post": {
+        "operationId": "supertecnico_resolve_hvac_code",
+        "summary": "Resolver un código HVAC sin mezclar variantes",
+        "x-billing-tier": "metered_basic",
+        "requestBody": {
+          "required": true,
+          "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HvacCodeRequest"}}}
+        },
+        "responses": {
+          "200": {"description": "Interpretaciones aplicables con trazabilidad", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Envelope"}}}},
+          "409": {"description": "Falta contexto para separar variantes"}
+        }
+      }
+    },
+    "/diagnostics": {
+      "post": {
+        "operationId": "supertecnico_get_diagnostic",
+        "summary": "Obtener un diagnóstico guiado",
+        "x-billing-tier": "metered_diagnostic",
+        "requestBody": {
+          "required": true,
+          "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DiagnosticRequest"}}}
+        },
+        "responses": {
+          "200": {"description": "Diagnóstico trazable", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Envelope"}}}}
+        }
+      }
+    },
+    "/components/search": {
+      "post": {
+        "operationId": "supertecnico_search_components",
+        "summary": "Buscar una referencia o marcaje",
+        "x-billing-tier": "metered_basic",
+        "requestBody": {
+          "required": true,
+          "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ComponentSearchRequest"}}}
+        },
+        "responses": {
+          "200": {"description": "Candidatos con calidad y confianza", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Envelope"}}}}
+        }
+      }
+    },
+    "/field-cases/search": {
+      "post": {
+        "operationId": "supertecnico_search_field_cases",
+        "summary": "Buscar averías reales moderadas",
+        "x-billing-tier": "metered_field",
+        "requestBody": {
+          "required": true,
+          "content": {"application/json": {"schema": {"$ref": "#/components/schemas/FieldCaseRequest"}}}
+        },
+        "responses": {
+          "200": {"description": "Casos y nivel de confirmación", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Envelope"}}}}
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {"type": "apiKey", "in": "header", "name": "X-Super-Tecnico-Key"}
+    },
+    "schemas": {
+      "CoverageRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["domain", "query"],
+        "properties": {
+          "domain": {"type": "string", "enum": ["hvac", "electronics", "components", "field_cases", "diagrams"]},
+          "query": {"type": "string", "minLength": 2, "maxLength": 300},
+          "brand": {"type": "string", "maxLength": 80},
+          "model_or_family": {"type": "string", "maxLength": 120}
+        }
+      },
+      "HvacCodeRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["brand", "code"],
+        "properties": {
+          "brand": {"type": "string", "maxLength": 80},
+          "code": {"type": "string", "maxLength": 24},
+          "model_or_family": {"type": "string", "maxLength": 120},
+          "unit_scope": {"type": "string", "maxLength": 60},
+          "display_location": {"type": "string", "maxLength": 120}
+        }
+      },
+      "DiagnosticRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["record_id"],
+        "properties": {
+          "record_id": {"type": "string", "maxLength": 180},
+          "symptoms": {"type": "array", "maxItems": 8, "items": {"type": "string", "maxLength": 160}},
+          "measurements": {"type": "array", "maxItems": 12, "items": {"type": "string", "maxLength": 160}}
+        }
+      },
+      "ComponentSearchRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["query"],
+        "properties": {
+          "query": {"type": "string", "maxLength": 120},
+          "package": {"type": "string", "maxLength": 80},
+          "minimum_confidence": {"type": "number", "minimum": 0, "maximum": 1},
+          "limit": {"type": "integer", "minimum": 1, "maximum": 20, "default": 8}
+        }
+      },
+      "FieldCaseRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["query"],
+        "properties": {
+          "query": {"type": "string", "maxLength": 300},
+          "board_reference": {"type": "string", "maxLength": 120},
+          "brand": {"type": "string", "maxLength": 80},
+          "confirmed_only": {"type": "boolean", "default": true},
+          "limit": {"type": "integer", "minimum": 1, "maximum": 10, "default": 5}
+        }
+      },
+      "Envelope": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ok", "request_id", "service_version", "result"],
+        "properties": {
+          "ok": {"type": "boolean"},
+          "request_id": {"type": "string"},
+          "service_version": {"type": "string"},
+          "result": {"type": ["object", "array", "null"]},
+          "usage": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "billing_tier": {"type": "string"},
+              "billable_units": {"type": "integer", "minimum": 0},
+              "cache_status": {"type": "string", "enum": ["hit", "miss", "not_applicable"]}
+            }
+          },
+          "warnings": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

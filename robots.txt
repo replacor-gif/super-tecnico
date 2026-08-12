@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://app.replacor.com/super-tecnico/sitemap.xml

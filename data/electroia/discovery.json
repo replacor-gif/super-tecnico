@@ -6,6 +6,7 @@
   "provider_neutral": true,
   "embedded_ai_model": false,
   "purpose": "Validar símbolos, terminales y redes decididos por una IA y generar un SVG determinista sobre una rejilla común.",
+  "parent_discovery": "../ai/discovery.json",
   "responsibility_boundary": {
     "calling_ai": [
       "interpret_user_or_image",

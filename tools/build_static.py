@@ -410,7 +410,10 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "comparador.html",
         "averias.html",
         "feedback.html",
+        "ia-integracion.html",
         "llms.txt",
+        "robots.txt",
+        "sitemap.xml",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/index.html",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/styles.css",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/engine.js",
@@ -453,6 +456,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "assets/electronics.css",
         "assets/electronics.js",
         "assets/i18n.js",
+        "assets/ai-integration.css",
         "assets/page-counter.js",
         "assets/portal.css",
         "assets/smd.css",
@@ -673,6 +677,18 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         output / "data" / "electroia" / "examples" / "distribution-board-single-line.json",
         read_json(source_root / "data" / "electroia" / "examples" / "distribution-board-single-line.json"),
     )
+    for filename in (
+        "discovery.json",
+        "tool-manifest.json",
+        "knowledge-record.schema.json",
+        "knowledge-api-contract.openapi.json",
+        "readiness-report.json",
+        "benchmark-plan.json",
+    ):
+        write_json(
+            output / "data" / "ai" / filename,
+            read_json(source_root / "data" / "ai" / filename),
+        )
     components_details = source_root / "data" / "components" / "details"
     for path in sorted(components_details.glob("*.json")):
         write_json(output / "data" / "components" / "details" / path.name, read_json(path))

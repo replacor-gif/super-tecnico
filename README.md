@@ -15,6 +15,24 @@ Portal técnico estático con herramientas independientes. La publicación es:
 - **Averías reales por placa:** casos aportados por técnicos, buscables por referencia o explorables mediante filtros de marca y equipo; se publican únicamente tras moderación.
 - **Ideas y mejoras:** propuestas públicas, apoyos de la comunidad y aportaciones privadas pendientes de revisión.
 
+## Integración futura con sistemas de IA
+
+`ia-integracion.html` y `data/ai/` forman la capa pública de descubrimiento de **Super Técnico para IAs**. Separan el futuro servicio de conocimiento técnico del motor gráfico ElectroIA y describen herramientas, niveles de respuesta, trazabilidad, seguridad y medición sin activar todavía un servicio remoto.
+
+Estado actual:
+
+- contratos públicos y `llms.txt` disponibles;
+- comprobación de cobertura gratuita diseñada;
+- respuestas autenticadas y por consumo todavía desactivadas;
+- acceso directo a la base y exportación masiva no permitidos;
+- publicación en registros MCP y catálogos de plataformas pendiente del servidor remoto y de su revisión de seguridad.
+
+Para regenerar el inventario de preparación:
+
+```bash
+python tools/audit_ai_readiness.py
+```
+
 El identificador SMD publica 439 candidatos de seis fabricantes, todos con marcaje, encapsulado, patillaje, parámetros eléctricos y una fuente oficial. Cuando un código tiene varios significados, muestra todos los candidatos cerrados y no selecciona ninguno automáticamente.
 
 La base de referencias publica 11.532 componentes y 8.363 parámetros. Separa 8.205 fichas oficiales, revisadas o confirmadas en índices de fabricante de 3.327 candidatos históricos pendientes de contrastar. Para priorizar cobertura, admite dos niveles: ficha desarrollada y ficha índice oficial. La primera contiene parámetros cuando están documentados; la segunda confirma referencia, fabricante, familia, categoría, catálogo y página sin inventar valores que todavía no se hayan extraído. La ampliación masiva inicial incorpora 6.551 referencias de los catálogos oficiales de Nexperia y Texas Instruments, además de IPM, MOSFET, lógica, temporizadores, operacionales, reguladores y drivers ya desarrollados. Ninguna coincidencia se presenta como sustitución automática.
