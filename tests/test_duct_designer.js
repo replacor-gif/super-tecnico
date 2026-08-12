@@ -101,6 +101,9 @@ assert.match(configured.svg, /class="route-edge is-main through-hallway"/);
 assert.match(configured.svg, /data-kind="outlet-drag"/);
 assert.match(configured.svg, /data-kind="branch-drag"/);
 assert.match(configured.svg, /UNIDAD INTERIOR/);
+const selectedOnTouch = D.renderPlanSvg(example, { selectedAdjustment: { kind: 'outlet-drag', roomId: 'bed-1' } });
+assert.match(selectedOnTouch.svg, /plan-outlet is-draggable is-selected/);
+assert.match(selectedOnTouch.svg, /tócala y después toca su nueva posición/);
 
 const movedState = D.normalizeState({
   ...state,

@@ -3088,6 +3088,9 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("ductVelocityMps", script)
         self.assertIn("outletOverrides", script)
         self.assertIn("branchGuides", script)
+        self.assertIn("setPointerCapture", script)
+        self.assertIn("selectedAdjustment", script)
+        self.assertIn("En móvil también puedes tocarlo", script)
         self.assertIn('data-kind="outlet-drag"', script)
         self.assertIn('data-kind="branch-drag"', script)
         self.assertIn("roundUp(Math.max(DESIGN.minimumDuctWidthCm, rawWidthCm), 5)", script)
@@ -3099,6 +3102,8 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("through-hallway", css)
         self.assertIn("room-hatch-bedroom", css)
         self.assertIn("branch-drag", css)
+        self.assertIn(".drag-hit { r: 40px; }", css)
+        self.assertIn("duct-designer.js?v=6", html)
         self.assertIn('href="conductos.html"', portal)
         self.assertNotIn("ductSizing", script)
 

@@ -262,6 +262,11 @@ button { cursor: pointer; }
 .branch-drag { filter: drop-shadow(0 0 7px rgba(255, 228, 56, .72)); }
 .branch-drag > path { fill: #2b2400; stroke: var(--duct-yellow); stroke-width: 3; }
 .branch-drag > circle:not(.drag-hit) { fill: var(--duct-yellow); stroke: #2b2400; stroke-width: 2; }
+.plan-outlet.is-selected rect,
+.branch-drag.is-selected > path { stroke: #fff; stroke-width: 5; filter: url(#planGlow); }
+.plan-outlet.is-selected,
+.branch-drag.is-selected { animation: selected-adjustment 1s ease-in-out infinite alternate; }
+@keyframes selected-adjustment { to { filter: drop-shadow(0 0 13px rgba(255, 255, 255, .95)); } }
 .legend-branch { background: var(--duct-yellow); }
 .legend-live { background: var(--duct-green); }
 .scale-marker line,
@@ -346,6 +351,7 @@ button { cursor: pointer; }
   .finish-drawing span { max-width: 105px; font-size: .62rem; }
   .plan-scroll { min-height: 470px; max-height: 630px; padding: 5px; }
   .plan-stage { min-height: 460px; }
+  .drag-hit { r: 40px; }
   .plan-foot { padding: 8px; }
   .plan-summary { gap: 5px; }
   .plan-summary span { padding: 6px; font-size: .58rem; }
