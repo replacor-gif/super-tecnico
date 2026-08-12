@@ -9,8 +9,8 @@
   <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
   <link rel="stylesheet" href="assets/common.css?v=1">
   <link rel="stylesheet" href="assets/app-theme.css?v=1">
-  <link rel="stylesheet" href="assets/analytics.css?v=1">
-  <script src="assets/analytics.js?v=1" defer></script>
+  <link rel="stylesheet" href="assets/analytics.css?v=2">
+  <script src="assets/analytics.js?v=2" defer></script>
 </head>
 <body class="analytics-body access-checking">
   <section id="analyticsPinGate" class="analytics-gate" hidden aria-labelledby="analyticsPinTitle">
@@ -79,6 +79,16 @@
           <header><div><p class="analytics-kicker">PROCEDENCIA</p><h2>Cómo llegan</h2></div></header>
           <div id="analyticsSources" class="analytics-source-list"></div>
           <p class="analytics-privacy">El panel trabaja con totales agregados. No muestra direcciones IP, identidades ni historiales personales.</p>
+        </article>
+
+        <article class="analytics-card analytics-rating-card">
+          <header><div><p class="analytics-kicker">VALORACIONES</p><h2>Me gusta y no me gusta</h2></div><span id="ratingTotals"></span></header>
+          <div id="analyticsRatings" class="analytics-ratings"></div>
+        </article>
+
+        <article class="analytics-card analytics-comments-card">
+          <header><div><p class="analytics-kicker">QUÉ MEJORARÍAN</p><h2>Comentarios recientes</h2></div></header>
+          <div id="analyticsComments" class="analytics-comments"></div>
         </article>
       </section>
 

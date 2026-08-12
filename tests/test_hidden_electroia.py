@@ -37,6 +37,8 @@ class HiddenElectroIATests(unittest.TestCase):
         app = (ROOT / "assets" / "analytics.js").read_text(encoding="utf-8")
         backend = (ROOT / "api" / "index.php").read_text(encoding="utf-8")
         analytics_backend = (ROOT / "api" / "analytics.php").read_text(encoding="utf-8")
+        ratings_backend = (ROOT / "api" / "ratings.php").read_text(encoding="utf-8")
+        dashboard = (ROOT / "assets" / "analytics.js").read_text(encoding="utf-8")
         self.assertIn("const ANALYTICS_PATH = 'analitica-privada.html'", counter)
         self.assertIn("analytics.textContent = '\\u03b2'", counter)
         self.assertLess(counter.index("tools.append(access, analytics)"), counter.index("footer.append(tools)"))
@@ -46,6 +48,9 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn("analytics-summary", backend)
         self.assertIn("st_require_electroia_access", backend)
         self.assertIn("st_page_daily", analytics_backend)
+        self.assertIn("st_rating_admin_summary", analytics_backend)
+        self.assertIn("st_page_ratings", ratings_backend)
+        self.assertIn("analyticsComments", dashboard)
         for content in (counter, html, app, backend, analytics_backend):
             self.assertNotIn("4097", content)
 

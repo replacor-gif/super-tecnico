@@ -308,6 +308,7 @@ class StaticSiteTests(unittest.TestCase):
             "api/index.php",
             "api/bootstrap.php",
             "api/electroia.php",
+            "api/ratings.php",
             "api/migrate.php",
             "database/schema.sql",
             ".deploy-now/config.yaml",
@@ -338,12 +339,27 @@ class StaticSiteTests(unittest.TestCase):
         script = (self.dist / "assets" / "page-counter.js").read_text(encoding="utf-8")
         community_script = (self.dist / "assets" / "community-api.js").read_text(encoding="utf-8")
         self.assertIn("action', 'page-view'", script)
+        self.assertIn("action', 'page-rating'", script)
         self.assertIn("st-page-counter", script)
+        self.assertIn("st-rating-widget", script)
+        self.assertIn("data-rating-vote=\"like\"", script)
+        self.assertIn("data-rating-vote=\"dislike\"", script)
+        self.assertIn("¿Qué mejorarías?", script)
         self.assertIn("new URL('api/index.php', document.baseURI).href", script)
         self.assertIn("location.pathname.endsWith('/')", script)
         self.assertIn("new URL('api/index.php', document.baseURI).href", community_script)
         self.assertNotIn("home-5020945339.app-ionos.space", script)
         self.assertNotIn("home-5020945339.app-ionos.space", community_script)
+        common = (self.dist / "assets" / "common.css").read_text(encoding="utf-8")
+        self.assertIn(".st-rating-widget", common)
+        self.assertIn(".st-rating-feedback", common)
+
+        backend = (ROOT / "api" / "index.php").read_text(encoding="utf-8")
+        ratings = (ROOT / "api" / "ratings.php").read_text(encoding="utf-8")
+        schema = (ROOT / "database" / "schema.sql").read_text(encoding="utf-8")
+        self.assertIn("$action === 'page-rating'", backend)
+        self.assertIn("st_rating_vote", ratings)
+        self.assertIn("st_page_rating_votes", schema)
 
     def test_industrial_manufacturers_v1_are_complete_searchable_and_public_safe(self):
         expectations = {

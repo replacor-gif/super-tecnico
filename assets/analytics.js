@@ -38,6 +38,10 @@
     return PAGE_LABELS[key] || key.replaceAll('-', ' ').replace(/^./, letter => letter.toUpperCase());
   }
 
+  function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
+  }
+
   function showGate(message = '') {
     document.body.classList.remove('access-checking');
     byId('analyticsApp').hidden = true;
@@ -144,6 +148,21 @@
     byId('analyticsSources').innerHTML = rows.map(([label, value, color]) => `<div class="source-row" style="--row-color:${color}"><i></i><span>${label}</span><strong>${number(value)}</strong></div>`).join('');
   }
 
+  function renderRatings(data) {
+    const ratings = data.ratings || { likes: 0, dislikes: 0, pages: [], feedback: [] };
+    const total = Number(ratings.likes || 0) + Number(ratings.dislikes || 0);
+    const approval = total ? Math.round(Number(ratings.likes || 0) / total * 100) : 0;
+    byId('ratingTotals').textContent = total ? `${number(total)} votos · ${approval}% positivos` : 'Sin votos todavía';
+    byId('analyticsRatings').innerHTML = (ratings.pages || []).length ? ratings.pages.map(page => {
+      const pageTotal = Number(page.likes || 0) + Number(page.dislikes || 0);
+      const positive = pageTotal ? Number(page.likes || 0) / pageTotal * 100 : 0;
+      return `<div class="rating-page-row"><div><strong>${escapeHtml(pageLabel(page.page_key))}</strong><small>${number(pageTotal)} votos</small></div><span class="rating-page-like">👍 ${number(page.likes)}</span><span class="rating-page-dislike">👎 ${number(page.dislikes)}</span><div class="rating-balance"><i style="width:${positive}%"></i></div></div>`;
+    }).join('') : '<p class="chart-empty">Las valoraciones aparecerán aquí cuando llegue el primer voto.</p>';
+    byId('analyticsComments').innerHTML = (ratings.feedback || []).length ? ratings.feedback.map(item =>
+      `<article class="rating-comment"><header><strong>${escapeHtml(pageLabel(item.page_key))}</strong><time>${new Date(item.updated_at.replace(' ', 'T')).toLocaleDateString('es-ES')}</time></header><p>${escapeHtml(item.feedback)}</p></article>`
+    ).join('') : '<p class="chart-empty">Todavía no hay comentarios sobre qué mejorar.</p>';
+  }
+
   async function loadSummary() {
     if (state.loading) return;
     state.loading = true;
@@ -162,6 +181,7 @@
       renderDevices(data);
       renderRanking(data);
       renderSources(data);
+      renderRatings(data);
       byId('analyticsStatus').textContent = data.totals.period_views ? 'Datos actualizados correctamente.' : 'El registro diario comienza con esta versión; los totales históricos se conservan.';
       byId('analyticsUpdated').textContent = `Actualizado ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
       byId('analyticsTrackingNote').textContent = data.tracking_since

@@ -129,3 +129,23 @@ CREATE TABLE IF NOT EXISTS st_page_daily_visitors (
   PRIMARY KEY (page_key, view_date, client_hash),
   KEY idx_daily_visitors_date (view_date)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS st_page_ratings (
+  page_key VARCHAR(64) NOT NULL,
+  likes BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  dislikes BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (page_key)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS st_page_rating_votes (
+  page_key VARCHAR(64) NOT NULL,
+  client_hash CHAR(64) NOT NULL,
+  vote ENUM('like','dislike') NOT NULL,
+  feedback VARCHAR(600) NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (page_key, client_hash),
+  KEY idx_rating_feedback (vote, updated_at),
+  CONSTRAINT fk_rating_page FOREIGN KEY (page_key) REFERENCES st_page_ratings(page_key) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

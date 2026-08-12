@@ -2,6 +2,7 @@
 declare(strict_types=1);
 require __DIR__ . '/bootstrap.php';
 require __DIR__ . '/electroia.php';
+require __DIR__ . '/ratings.php';
 require __DIR__ . '/analytics.php';
 
 $action = preg_replace('/[^a-z0-9-]/', '', strtolower((string) ($_GET['action'] ?? 'health')));
@@ -42,6 +43,20 @@ try {
         if (preg_match('/^[a-z0-9][a-z0-9-]*$/', $page) !== 1) st_json(['ok' => false, 'error' => 'invalid_page'], 422);
         st_rate_limit('view-' . substr(hash('sha256', $page), 0, 16), st_client_hash($body), 120, 3600);
         st_json(['ok' => true, 'page' => $page, 'views' => st_analytics_record($page, $body)]);
+    }
+
+    if ($action === 'page-rating' && $method === 'GET') {
+        $page = (string) ($_GET['page_key'] ?? '');
+        st_json(st_rating_summary($page));
+    }
+
+    if ($action === 'page-rating' && $method === 'POST') {
+        $body = st_body();
+        $page = st_text($body, 'page_key', 1, 64);
+        $vote = st_text($body, 'vote', 4, 7);
+        $feedback = st_text($body, 'feedback', 0, 600, false);
+        st_rate_limit('rating-' . substr(hash('sha256', $page), 0, 16), st_client_hash($body), 20, 86400);
+        st_json(st_rating_vote($page, $vote, $feedback, $body));
     }
 
     if ($action === 'analytics-summary' && $method === 'GET') {
