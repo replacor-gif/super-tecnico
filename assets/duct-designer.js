@@ -5,35 +5,41 @@
 })(typeof window !== 'undefined' ? window : globalThis, function () {
   'use strict';
 
-  const STORAGE_KEY = 'st.ductDesigner.v2';
+  const STORAGE_KEY = 'st.ductDesigner.v3';
+  const LEGACY_STORAGE_KEY = 'st.ductDesigner.v2';
   const CELL_PX = 44;
-  const DEFAULTS = Object.freeze({
-    schemaVersion: 2,
-    projectName: 'Vivienda de prueba',
-    systemMode: 'climate',
-    cellSizeM: .5,
-    gridCols: 24,
-    gridRows: 18,
-    ductHeightCm: 25,
-    grilleHeightCm: 15,
-    machineCapacityFg: 0,
+
+  /* Criterios internos del método práctico. No forman parte de la interfaz. */
+  const DESIGN = Object.freeze({
     loadPerM2: 150,
     airflowPer9000: 1200,
     areaPer9000: 900,
+    ductHeightCm: 25,
+    grilleHeightCm: 15,
     grilleMultiplier: 2,
     minimumDuctWidthCm: 10,
     minimumGrilleWidthCm: 20,
   });
 
+  const DEFAULTS = Object.freeze({
+    schemaVersion: 3,
+    workflowStep: 1,
+    projectName: 'Vivienda',
+    systemMode: 'climate',
+    cellSizeM: .5,
+    gridCols: 24,
+    gridRows: 18,
+  });
+
   const ROOM_TYPES = Object.freeze({
-    bedroom: { label: 'Dormitorio', short: 'DORMITORIO', conditioned: true },
-    living: { label: 'Salón / comedor', short: 'SALÓN', conditioned: true },
-    kitchen: { label: 'Cocina', short: 'COCINA', conditioned: true },
-    office: { label: 'Oficina / despacho', short: 'OFICINA', conditioned: true },
-    bathroom: { label: 'Baño', short: 'BAÑO', conditioned: false },
-    hallway: { label: 'Pasillo / distribuidor', short: 'PASILLO', conditioned: false },
-    utility: { label: 'Lavadero / técnico', short: 'TÉCNICO', conditioned: false },
-    other: { label: 'Otra estancia', short: 'ESTANCIA', conditioned: true },
+    bedroom: { label: 'Dormitorio', short: 'DORMITORIO', grille: false, color: '#00c8ff' },
+    living: { label: 'Salón / comedor', short: 'SALÓN', grille: false, color: '#ffe438' },
+    kitchen: { label: 'Cocina', short: 'COCINA', grille: false, color: '#ff7a00' },
+    office: { label: 'Oficina / despacho', short: 'OFICINA', grille: false, color: '#00ead0' },
+    bathroom: { label: 'Baño', short: 'BAÑO', grille: false, color: '#7f8fa5' },
+    hallway: { label: 'Pasillo / distribuidor', short: 'PASILLO', grille: false, color: '#63758d' },
+    utility: { label: 'Lavadero / zona técnica', short: 'TÉCNICO', grille: false, color: '#ff3fa7' },
+    other: { label: 'Otra estancia', short: 'ESTANCIA', grille: false, color: '#51ff7d' },
   });
 
   function finite(value, fallback = 0) {
@@ -60,172 +66,200 @@
     return `${value.x},${value.y}`;
   }
 
+  function parsePointKey(value) {
+    const [x, y] = String(value).split(',').map(Number);
+    return { x, y };
+  }
+
   function edgeKey(a, b) {
     const one = pointKey(a);
     const two = pointKey(b);
     return one < two ? `${one}|${two}` : `${two}|${one}`;
   }
 
-  function normalizeEdge(edge, cols, rows) {
-    const a = point(edge?.a, cols, rows);
-    const b = point(edge?.b, cols, rows);
-    if (Math.abs(a.x - b.x) + Math.abs(a.y - b.y) !== 1) return null;
-    return pointKey(a) < pointKey(b) ? { a, b } : { a: b, b: a };
-  }
-
-  function routeEdgesFromPoints(startValue, endValue, horizontalFirst = true) {
-    const start = { x: Math.round(finite(startValue?.x)), y: Math.round(finite(startValue?.y)) };
-    const end = { x: Math.round(finite(endValue?.x)), y: Math.round(finite(endValue?.y)) };
-    const edges = [];
-    let cursor = { ...start };
-    const walk = axis => {
-      const target = end[axis];
-      while (cursor[axis] !== target) {
-        const next = { ...cursor, [axis]: cursor[axis] + Math.sign(target - cursor[axis]) };
-        edges.push({ a: { ...cursor }, b: next });
-        cursor = next;
-      }
-    };
-    if (horizontalFirst) { walk('x'); walk('y'); }
-    else { walk('y'); walk('x'); }
-    return edges;
-  }
-
   function normalizeState(input = {}) {
     const gridCols = clamp(Math.round(finite(input.gridCols, DEFAULTS.gridCols)), 8, 60);
     const gridRows = clamp(Math.round(finite(input.gridRows, DEFAULTS.gridRows)), 8, 50);
-    const roomIds = new Set();
+    const ids = new Set();
     const rooms = (Array.isArray(input.rooms) ? input.rooms : []).slice(0, 80).map((room, index) => {
+      const type = ROOM_TYPES[room?.type] ? room.type : 'other';
       const x = clamp(Math.round(finite(room?.x)), 0, gridCols - 1);
       const y = clamp(Math.round(finite(room?.y)), 0, gridRows - 1);
       const w = clamp(Math.round(finite(room?.w, 2)), 1, gridCols - x);
       const h = clamp(Math.round(finite(room?.h, 2)), 1, gridRows - y);
       let id = String(room?.id || `room-${index + 1}`).slice(0, 60);
-      while (roomIds.has(id)) id = `${id}-${index + 1}`;
-      roomIds.add(id);
-      const type = ROOM_TYPES[room?.type] ? room.type : 'other';
+      while (ids.has(id)) id = `${id}-${index + 1}`;
+      ids.add(id);
       return {
         id, type, x, y, w, h,
         name: String(room?.name || ROOM_TYPES[type].label).slice(0, 35),
-        conditioned: room?.conditioned === undefined ? ROOM_TYPES[type].conditioned : Boolean(room.conditioned),
-        ceilingHeightM: clamp(finite(room?.ceilingHeightM, 2.5), 1.8, 8),
-        occupancy: clamp(Math.round(finite(room?.occupancy, 1)), 0, 100),
-        manualAreaM2: Math.max(0, finite(room?.manualAreaM2, 0)),
-        manualLoadFg: Math.max(0, finite(room?.manualLoadFg, 0)),
-        ventilationRole: ['supply', 'extract', 'transfer', 'none'].includes(room?.ventilationRole) ? room.ventilationRole : 'none',
+        conditioned: room?.conditioned === undefined ? ROOM_TYPES[type].grille : Boolean(room.conditioned),
+        ceilingHeightM: 2.5,
+        ventilationRole: room?.ventilationRole || (type === 'bathroom' || type === 'kitchen' ? 'extract' : type === 'hallway' ? 'transfer' : 'none'),
       };
     });
-
-    const edgeMap = new Map();
-    (Array.isArray(input.routeEdges) ? input.routeEdges : []).forEach(raw => {
-      const edge = normalizeEdge(raw, gridCols, gridRows);
-      if (edge) edgeMap.set(edgeKey(edge.a, edge.b), edge);
-    });
-    const outlets = (Array.isArray(input.outlets) ? input.outlets : [])
-      .filter(outlet => outlet && roomIds.has(String(outlet.roomId)))
-      .slice(0, rooms.length)
-      .map((outlet, index) => ({
-        id: String(outlet.id || `outlet-${index + 1}`).slice(0, 60),
-        roomId: String(outlet.roomId),
-        ...point(outlet, gridCols, gridRows),
-      }));
-    const uniqueOutlets = new Map();
-    outlets.forEach(outlet => uniqueOutlets.set(outlet.roomId, outlet));
-
     return {
-      schemaVersion: 2,
+      ...DEFAULTS,
+      workflowStep: clamp(Math.round(finite(input.workflowStep, input.machine ? 3 : 1)), 1, 3),
       projectName: String(input.projectName || DEFAULTS.projectName).slice(0, 70),
-      systemMode: input.systemMode === 'ventilation' ? 'ventilation' : 'climate',
       cellSizeM: [.25, .5, 1].includes(finite(input.cellSizeM)) ? finite(input.cellSizeM) : DEFAULTS.cellSizeM,
-      gridCols, gridRows,
-      ductHeightCm: clamp(finite(input.ductHeightCm, DEFAULTS.ductHeightCm), 10, 80),
-      grilleHeightCm: clamp(finite(input.grilleHeightCm, DEFAULTS.grilleHeightCm), 8, 80),
-      machineCapacityFg: Math.max(0, finite(input.machineCapacityFg, 0)),
-      loadPerM2: clamp(finite(input.loadPerM2, DEFAULTS.loadPerM2), 50, 350),
-      airflowPer9000: clamp(finite(input.airflowPer9000, DEFAULTS.airflowPer9000), 500, 2500),
-      areaPer9000: clamp(finite(input.areaPer9000, DEFAULTS.areaPer9000), 300, 1800),
-      grilleMultiplier: clamp(finite(input.grilleMultiplier, DEFAULTS.grilleMultiplier), 1, 4),
-      minimumDuctWidthCm: clamp(finite(input.minimumDuctWidthCm, DEFAULTS.minimumDuctWidthCm), 5, 40),
-      minimumGrilleWidthCm: clamp(finite(input.minimumGrilleWidthCm, DEFAULTS.minimumGrilleWidthCm), 10, 60),
+      gridCols,
+      gridRows,
       rooms,
       machine: input.machine ? point(input.machine, gridCols, gridRows) : null,
-      routeEdges: [...edgeMap.values()],
-      outlets: [...uniqueOutlets.values()],
     };
   }
 
   function emptyState() {
-    return normalizeState({ ...DEFAULTS, rooms: [], machine: null, routeEdges: [], outlets: [] });
+    return normalizeState({ ...DEFAULTS, rooms: [], machine: null, workflowStep: 1 });
   }
 
   function exampleState() {
-    const paths = [
-      [{ x: 9, y: 9 }, { x: 9, y: 6 }, { x: 6, y: 6 }],
-      [{ x: 9, y: 6 }, { x: 18, y: 6 }],
-      [{ x: 9, y: 9 }, { x: 14, y: 9 }],
-    ];
-    const routeEdges = [];
-    paths.forEach(path => path.slice(1).forEach((end, index) => routeEdges.push(...routeEdgesFromPoints(path[index], end))));
     return normalizeState({
       ...DEFAULTS,
+      workflowStep: 3,
       rooms: [
-        { id: 'bed-1', type: 'bedroom', name: 'Dormitorio principal', x: 1, y: 1, w: 7, h: 6, conditioned: true, ceilingHeightM: 2.5, occupancy: 2 },
-        { id: 'bed-2', type: 'bedroom', name: 'Dormitorio 2', x: 8, y: 1, w: 7, h: 6, conditioned: true, ceilingHeightM: 2.5, occupancy: 1 },
-        { id: 'kitchen', type: 'kitchen', name: 'Cocina', x: 15, y: 1, w: 8, h: 6, conditioned: true, ceilingHeightM: 2.5, occupancy: 2 },
-        { id: 'bath', type: 'bathroom', name: 'Baño', x: 1, y: 7, w: 6, h: 5, conditioned: false, ceilingHeightM: 2.5, occupancy: 1, ventilationRole: 'extract' },
-        { id: 'hall', type: 'hallway', name: 'Pasillo', x: 7, y: 7, w: 4, h: 10, conditioned: false, ceilingHeightM: 2.5, occupancy: 0, ventilationRole: 'transfer' },
-        { id: 'living', type: 'living', name: 'Salón comedor', x: 11, y: 7, w: 12, h: 10, conditioned: true, ceilingHeightM: 2.6, occupancy: 4 },
+        { id: 'bed-1', type: 'bedroom', name: 'Dormitorio 1', x: 1, y: 1, w: 7, h: 6, conditioned: true },
+        { id: 'bed-2', type: 'bedroom', name: 'Dormitorio 2', x: 8, y: 1, w: 7, h: 6, conditioned: true },
+        { id: 'kitchen', type: 'kitchen', name: 'Cocina', x: 15, y: 1, w: 8, h: 6, conditioned: false },
+        { id: 'bath', type: 'bathroom', name: 'Baño', x: 1, y: 7, w: 6, h: 5, conditioned: false },
+        { id: 'hall', type: 'hallway', name: 'Pasillo', x: 7, y: 7, w: 4, h: 10, conditioned: false },
+        { id: 'living', type: 'living', name: 'Salón comedor', x: 11, y: 7, w: 12, h: 10, conditioned: true },
       ],
       machine: { x: 9, y: 9 },
-      routeEdges,
-      outlets: [
-        { id: 'out-bed-1', roomId: 'bed-1', x: 6, y: 6 },
-        { id: 'out-bed-2', roomId: 'bed-2', x: 11, y: 6 },
-        { id: 'out-kitchen', roomId: 'kitchen', x: 18, y: 6 },
-        { id: 'out-living', roomId: 'living', x: 14, y: 9 },
-      ],
     });
   }
 
-  function airflowForLoad(loadFg, state) {
-    return loadFg * state.airflowPer9000 / 9000;
+  function roomOverlap(one, two) {
+    return one.x < two.x + two.w && one.x + one.w > two.x && one.y < two.y + two.h && one.y + one.h > two.y;
   }
 
-  function areaForLoad(loadFg, state) {
-    return loadFg * state.areaPer9000 / 9000;
+  function roomArea(room, state) {
+    return room.w * state.cellSizeM * room.h * state.cellSizeM;
   }
 
-  function sizeDuct(loadFg, input = {}) {
-    const state = normalizeState(input);
-    const requiredAreaCm2 = areaForLoad(loadFg, state);
-    const rawWidthCm = requiredAreaCm2 / state.ductHeightCm;
-    const widthCm = loadFg > 0 ? roundUp(Math.max(state.minimumDuctWidthCm, rawWidthCm), 1) : 0;
-    const actualAreaM2 = widthCm * state.ductHeightCm / 10000;
-    const airflowM3h = airflowForLoad(loadFg, state);
+  function airflowForLoad(loadFg) {
+    return loadFg * DESIGN.airflowPer9000 / 9000;
+  }
+
+  function sizeDuct(loadFg) {
+    const requiredAreaCm2 = loadFg * DESIGN.areaPer9000 / 9000;
+    const rawWidthCm = requiredAreaCm2 / DESIGN.ductHeightCm;
+    const widthCm = loadFg > 0 ? roundUp(Math.max(DESIGN.minimumDuctWidthCm, rawWidthCm), 1) : 0;
+    const actualAreaM2 = widthCm * DESIGN.ductHeightCm / 10000;
+    const airflowM3h = airflowForLoad(loadFg);
     const velocityMps = actualAreaM2 > 0 ? airflowM3h / (actualAreaM2 * 3600) : 0;
-    return { widthCm, heightCm: state.ductHeightCm, requiredAreaCm2, airflowM3h, velocityMps };
+    return { widthCm, heightCm: DESIGN.ductHeightCm, requiredAreaCm2, airflowM3h, velocityMps };
   }
 
   function enrichRoom(room, state) {
-    const geometricAreaM2 = room.w * state.cellSizeM * room.h * state.cellSizeM;
-    const areaM2 = room.manualAreaM2 > 0 ? room.manualAreaM2 : geometricAreaM2;
-    const loadFg = room.conditioned ? (room.manualLoadFg > 0 ? room.manualLoadFg : areaM2 * state.loadPerM2) : 0;
-    const airflowM3h = airflowForLoad(loadFg, state);
-    const branchDuct = sizeDuct(loadFg, state);
-    const grilleAreaCm2 = branchDuct.requiredAreaCm2 * state.grilleMultiplier;
-    const grilleWidthCm = loadFg > 0 ? roundUp(Math.max(state.minimumGrilleWidthCm, grilleAreaCm2 / state.grilleHeightCm), 5) : 0;
+    const areaM2 = roomArea(room, state);
+    const loadFg = room.conditioned ? areaM2 * DESIGN.loadPerM2 : 0;
+    const airflowM3h = airflowForLoad(loadFg);
+    const branchDuct = sizeDuct(loadFg);
+    const grilleAreaCm2 = branchDuct.requiredAreaCm2 * DESIGN.grilleMultiplier;
+    const grilleWidthCm = loadFg > 0 ? roundUp(Math.max(DESIGN.minimumGrilleWidthCm, grilleAreaCm2 / DESIGN.grilleHeightCm), 5) : 0;
     return {
       ...room,
       typeLabel: ROOM_TYPES[room.type].label,
-      geometricAreaM2,
       areaM2,
       volumeM3: areaM2 * room.ceilingHeightM,
       loadFg,
       airflowM3h,
       branchDuct,
-      grille: { widthCm: grilleWidthCm, heightCm: state.grilleHeightCm },
-      source: room.manualLoadFg > 0 ? 'manual-load' : room.manualAreaM2 > 0 ? 'manual-area' : 'plan',
+      grille: { widthCm: grilleWidthCm, heightCm: DESIGN.grilleHeightCm },
     };
+  }
+
+  function boundaryPoints(room) {
+    const points = [];
+    for (let x = room.x; x <= room.x + room.w; x += 1) {
+      points.push({ x, y: room.y }, { x, y: room.y + room.h });
+    }
+    for (let y = room.y + 1; y < room.y + room.h; y += 1) {
+      points.push({ x: room.x, y }, { x: room.x + room.w, y });
+    }
+    return points;
+  }
+
+  function pointInsideRoom(value, room) {
+    return value.x > room.x && value.x < room.x + room.w && value.y > room.y && value.y < room.y + room.h;
+  }
+
+  function routeCost(a, b, rooms, existingEdges) {
+    const key = edgeKey(a, b);
+    if (existingEdges.has(key)) return .18;
+    const midpoint = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+    const crossed = rooms.find(room => pointInsideRoom(midpoint, room));
+    if (!crossed) return 1.8;
+    if (crossed.type === 'hallway') return .42;
+    if (crossed.type === 'utility' || crossed.type === 'bathroom') return .85;
+    return crossed.conditioned ? 12 : 1.2;
+  }
+
+  function findAutomaticPath(state, targetRoom, existingEdges) {
+    const start = state.machine;
+    if (!start) return null;
+    const targets = boundaryPoints(targetRoom);
+    const targetKeys = new Set(targets.map(pointKey));
+    const heuristic = value => targets.reduce((minimum, target) => Math.min(minimum, Math.abs(value.x - target.x) + Math.abs(value.y - target.y)), Infinity);
+    const startKey = pointKey(start);
+    const open = [{ key: startKey, point: start, score: heuristic(start) }];
+    const openKeys = new Set([startKey]);
+    const cost = new Map([[startKey, 0]]);
+    const previous = new Map();
+    while (open.length) {
+      open.sort((one, two) => one.score - two.score);
+      const current = open.shift();
+      openKeys.delete(current.key);
+      if (targetKeys.has(current.key)) {
+        const path = [current.point];
+        let cursor = current.key;
+        while (previous.has(cursor)) {
+          cursor = previous.get(cursor);
+          path.push(parsePointKey(cursor));
+        }
+        return path.reverse();
+      }
+      const neighbours = [
+        { x: current.point.x + 1, y: current.point.y }, { x: current.point.x - 1, y: current.point.y },
+        { x: current.point.x, y: current.point.y + 1 }, { x: current.point.x, y: current.point.y - 1 },
+      ].filter(item => item.x >= 0 && item.y >= 0 && item.x <= state.gridCols && item.y <= state.gridRows);
+      neighbours.forEach(next => {
+        const nextKey = pointKey(next);
+        const nextCost = cost.get(current.key) + routeCost(current.point, next, state.rooms, existingEdges);
+        if (nextCost >= (cost.get(nextKey) ?? Infinity)) return;
+        cost.set(nextKey, nextCost);
+        previous.set(nextKey, current.key);
+        const score = nextCost + heuristic(next);
+        const existing = open.find(item => item.key === nextKey);
+        if (existing) { existing.point = next; existing.score = score; }
+        else if (!openKeys.has(nextKey)) { open.push({ key: nextKey, point: next, score }); openKeys.add(nextKey); }
+      });
+    }
+    return null;
+  }
+
+  function automaticNetwork(input = {}) {
+    const state = normalizeState(input);
+    if (!state.machine) return { routeEdges: [], outlets: [] };
+    const selectedRooms = state.rooms.filter(room => room.conditioned).sort((one, two) => {
+      const distance = room => Math.abs((room.x + room.w / 2) - state.machine.x) + Math.abs((room.y + room.h / 2) - state.machine.y);
+      return distance(two) - distance(one);
+    });
+    const edges = new Map();
+    const outlets = [];
+    selectedRooms.forEach((room, index) => {
+      const path = findAutomaticPath(state, room, edges);
+      if (!path?.length) return;
+      for (let pointIndex = 1; pointIndex < path.length; pointIndex += 1) {
+        const a = path[pointIndex - 1];
+        const b = path[pointIndex];
+        edges.set(edgeKey(a, b), pointKey(a) < pointKey(b) ? { a, b } : { a: b, b: a });
+      }
+      outlets.push({ id: `outlet-${index + 1}-${room.id}`, roomId: room.id, ...path.at(-1) });
+    });
+    return { routeEdges: [...edges.values()], outlets };
   }
 
   function buildGraph(edges) {
@@ -265,10 +299,6 @@
     return null;
   }
 
-  function roomOverlap(one, two) {
-    return one.x < two.x + two.w && one.x + one.w > two.x && one.y < two.y + two.h && one.y + one.h > two.y;
-  }
-
   function connectedComponents(edges) {
     const remaining = new Map(edges.map(edge => [edge.key, edge]));
     const components = [];
@@ -299,12 +329,12 @@
     const state = normalizeState(input);
     const rooms = state.rooms.map(room => enrichRoom(room, state));
     const roomMap = new Map(rooms.map(room => [room.id, room]));
-    const outletMap = new Map(state.outlets.map(outlet => [outlet.roomId, outlet]));
-    const graph = buildGraph(state.routeEdges);
+    const generated = automaticNetwork(state);
+    const outletMap = new Map(generated.outlets.map(outlet => [outlet.roomId, outlet]));
+    const graph = buildGraph(generated.routeEdges);
     const machineKey = state.machine ? pointKey(state.machine) : '';
     const assignments = new Map();
     const roomConnections = new Map();
-
     rooms.filter(room => room.conditioned).forEach(room => {
       const outlet = outletMap.get(room.id);
       const path = state.machine && outlet ? shortestPath(graph, machineKey, pointKey(outlet)) : null;
@@ -318,13 +348,12 @@
       }
     });
 
-    const activeEdges = state.routeEdges.map(edge => {
+    const activeEdges = generated.routeEdges.map(edge => {
       const key = edgeKey(edge.a, edge.b);
       const roomIds = [...(assignments.get(key) || [])].sort();
       const loadFg = roomIds.reduce((sum, id) => sum + (roomMap.get(id)?.loadFg || 0), 0);
-      return { ...edge, key, roomIds, loadFg, ...sizeDuct(loadFg, state) };
+      return { ...edge, key, roomIds, loadFg, ...sizeDuct(loadFg) };
     });
-
     const buckets = new Map();
     activeEdges.filter(edge => edge.loadFg > 0).forEach(edge => {
       const signature = edge.roomIds.join('|');
@@ -336,53 +365,38 @@
       const sample = component[Math.floor(component.length / 2)];
       const roomIds = sample.roomIds;
       const loadFg = roomIds.reduce((sum, id) => sum + (roomMap.get(id)?.loadFg || 0), 0);
-      sections.push({
-        id: '', roomIds, rooms: roomIds.map(id => roomMap.get(id)).filter(Boolean),
-        edges: component, representative: sample,
-        lengthM: component.length * state.cellSizeM,
-        loadFg,
-        ...sizeDuct(loadFg, state),
-      });
+      sections.push({ id: '', roomIds, rooms: roomIds.map(id => roomMap.get(id)).filter(Boolean), edges: component, representative: sample, lengthM: component.length * state.cellSizeM, loadFg, ...sizeDuct(loadFg) });
     }));
-    sections.sort((a, b) => b.loadFg - a.loadFg || b.lengthM - a.lengthM).forEach((section, index) => { section.id = `T${index + 1}`; });
+    sections.sort((one, two) => two.loadFg - one.loadFg || two.lengthM - one.lengthM).forEach((section, index) => { section.id = `T${index + 1}`; });
     const sectionByEdge = new Map();
     sections.forEach(section => section.edges.forEach(edge => sectionByEdge.set(edge.key, section)));
     activeEdges.forEach(edge => { edge.sectionId = sectionByEdge.get(edge.key)?.id || ''; });
 
-    const conditionedRooms = rooms.filter(room => room.conditioned);
-    const connectedRooms = conditionedRooms.filter(room => roomConnections.get(room.id)?.connected);
-    const loadFg = conditionedRooms.reduce((sum, room) => sum + room.loadFg, 0);
-    const connectedLoadFg = connectedRooms.reduce((sum, room) => sum + room.loadFg, 0);
-    const airflowM3h = conditionedRooms.reduce((sum, room) => sum + room.airflowM3h, 0);
+    const selectedRooms = rooms.filter(room => room.conditioned);
+    const connectedRooms = selectedRooms.filter(room => roomConnections.get(room.id)?.connected);
+    const loadFg = selectedRooms.reduce((sum, room) => sum + room.loadFg, 0);
+    const airflowM3h = selectedRooms.reduce((sum, room) => sum + room.airflowM3h, 0);
     const warnings = [];
-    if (!rooms.length) warnings.push({ level: 'info', text: 'Dibuja al menos una estancia para comenzar el proyecto.' });
-    if (rooms.some((room, index) => rooms.slice(index + 1).some(other => roomOverlap(room, other)))) warnings.push({ level: 'danger', text: 'Hay estancias superpuestas. Corrige el plano antes de continuar.' });
-    if (conditionedRooms.length && !state.machine) warnings.push({ level: 'warn', text: 'Falta colocar la unidad interior en el plano.' });
-    if (state.machine && conditionedRooms.length && !state.routeEdges.length) warnings.push({ level: 'warn', text: 'Marca el recorrido de los conductos desde la unidad interior.' });
-    conditionedRooms.forEach(room => {
-      const connection = roomConnections.get(room.id);
-      if (!connection?.outlet) warnings.push({ level: 'warn', text: `${room.name}: falta colocar la rejilla.` });
-      else if (!connection.connected) warnings.push({ level: 'warn', text: `${room.name}: la rejilla no está unida a la máquina por el recorrido dibujado.` });
-      if (room.grille.widthCm > 120) warnings.push({ level: 'warn', text: `${room.name}: conviene repartir el caudal entre dos salidas.` });
-    });
-    if (state.machineCapacityFg > 0 && state.machineCapacityFg < loadFg) warnings.push({ level: 'danger', text: `La máquina indicada queda aproximadamente ${formatNumber(loadFg - state.machineCapacityFg)} frg/h por debajo de la demanda estimada.` });
+    if (!rooms.length) warnings.push({ level: 'info', text: 'Dibuja las estancias para comenzar.' });
+    if (rooms.some((room, index) => rooms.slice(index + 1).some(other => roomOverlap(room, other)))) warnings.push({ level: 'danger', text: 'Hay estancias superpuestas.' });
+    if (rooms.length && !selectedRooms.length) warnings.push({ level: 'warn', text: 'Marca al menos una habitación con rejilla.' });
+    if (selectedRooms.length && !state.machine) warnings.push({ level: 'info', text: 'Toca en el plano la posición de la unidad interior.' });
+    if (state.machine && connectedRooms.length === selectedRooms.length && selectedRooms.length) warnings.push({ level: 'ok', text: 'El recorrido automático conecta todas las rejillas seleccionadas.' });
     sections.forEach(section => {
       if (section.velocityMps > 5.2) warnings.push({ level: 'warn', text: `${section.id}: velocidad elevada (${formatNumber(section.velocityMps, 1)} m/s).` });
-      if (section.velocityMps > 0 && section.velocityMps < 1.6) warnings.push({ level: 'info', text: `${section.id}: velocidad baja (${formatNumber(section.velocityMps, 1)} m/s).` });
     });
-    if (conditionedRooms.length && connectedRooms.length === conditionedRooms.length) warnings.unshift({ level: 'ok', text: 'Todas las estancias climatizadas están conectadas a la red.' });
-
     return {
       state, rooms, roomMap, outletMap, roomConnections, activeEdges, sections,
       totals: {
         rooms: rooms.length,
-        conditionedRooms: conditionedRooms.length,
+        selectedRooms: selectedRooms.length,
         connectedRooms: connectedRooms.length,
         areaM2: rooms.reduce((sum, room) => sum + room.areaM2, 0),
-        conditionedAreaM2: conditionedRooms.reduce((sum, room) => sum + room.areaM2, 0),
-        loadFg, connectedLoadFg, airflowM3h,
+        conditionedAreaM2: selectedRooms.reduce((sum, room) => sum + room.areaM2, 0),
+        loadFg,
+        airflowM3h,
         suggestedCapacityFg: loadFg > 0 ? roundUp(loadFg, 500) : 0,
-        mainDuct: sizeDuct(loadFg, state),
+        mainDuct: sizeDuct(loadFg),
       },
       warnings: uniqueWarnings(warnings),
     };
@@ -403,52 +417,43 @@
 
   function renderPlanSvg(result, options = {}) {
     const { state } = result;
+    const step = options.step || state.workflowStep;
     const width = state.gridCols * CELL_PX;
     const height = state.gridRows * CELL_PX;
-    const selected = options.selected || {};
     const px = value => value * CELL_PX;
-    const parts = [`<svg class="installation-plan" viewBox="0 0 ${width} ${height}" role="img" aria-label="Plano interactivo de ${escapeHtml(state.projectName)}">`,
-      `<defs><pattern id="minorGrid" width="${CELL_PX}" height="${CELL_PX}" patternUnits="userSpaceOnUse"><path d="M ${CELL_PX} 0 L 0 0 0 ${CELL_PX}"/></pattern><filter id="planGlow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><pattern id="notConditioned" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12"/></pattern></defs>`,
+    const parts = [`<svg class="installation-plan" viewBox="0 0 ${width} ${height}" role="img" aria-label="Plano de ${escapeHtml(state.projectName)}">`,
+      `<defs><pattern id="minorGrid" width="${CELL_PX}" height="${CELL_PX}" patternUnits="userSpaceOnUse"><path d="M ${CELL_PX} 0 L 0 0 0 ${CELL_PX}"/></pattern><filter id="planGlow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><pattern id="notSelected" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12"/></pattern></defs>`,
       `<rect class="plan-background" width="${width}" height="${height}"/><rect class="plan-grid" width="${width}" height="${height}"/>`];
 
     result.rooms.forEach(room => {
       const x = px(room.x), y = px(room.y), w = px(room.w), h = px(room.h);
       const centerX = x + w / 2, centerY = y + h / 2;
-      const selectedClass = selected.kind === 'room' && selected.id === room.id ? ' is-selected' : '';
-      const small = w < 190 || h < 130;
-      parts.push(`<g class="plan-room room-type-${room.type}${room.conditioned ? ' is-conditioned' : ' is-unconditioned'}${selectedClass}" data-kind="room" data-id="${escapeHtml(room.id)}" tabindex="0"><rect class="room-fill" x="${x + 2}" y="${y + 2}" width="${Math.max(1, w - 4)}" height="${Math.max(1, h - 4)}" rx="5"/><rect class="room-wall" x="${x + 2}" y="${y + 2}" width="${Math.max(1, w - 4)}" height="${Math.max(1, h - 4)}" rx="5"/>${room.conditioned ? '' : `<rect class="room-hatch" x="${x + 5}" y="${y + 5}" width="${Math.max(1, w - 10)}" height="${Math.max(1, h - 10)}"/>`}<text class="room-type-label" x="${centerX}" y="${centerY - (small ? 10 : 25)}" text-anchor="middle">${escapeHtml(ROOM_TYPES[room.type].short)}</text><text class="room-name-label" x="${centerX}" y="${centerY + (small ? 9 : 2)}" text-anchor="middle">${escapeHtml(room.name)}</text><text class="room-area-label" x="${centerX}" y="${centerY + (small ? 27 : 25)}" text-anchor="middle">${formatNumber(room.areaM2, 1)} m²${room.conditioned ? ` · ${formatNumber(room.loadFg)} frg/h` : ' · NO CLIMATIZADA'}</text>${small ? '' : `<text class="room-dimension-label" x="${centerX}" y="${y + h - 12}" text-anchor="middle">${formatNumber(room.w * state.cellSizeM, 2)} × ${formatNumber(room.h * state.cellSizeM, 2)} m</text>`}</g>`);
+      const small = w < 180 || h < 125;
+      parts.push(`<g class="plan-room room-type-${room.type}${room.conditioned ? ' has-grille' : ' no-grille'}" data-kind="room" data-id="${escapeHtml(room.id)}"><rect class="room-fill" x="${x + 2}" y="${y + 2}" width="${Math.max(1, w - 4)}" height="${Math.max(1, h - 4)}" rx="5"/><rect class="room-wall" x="${x + 2}" y="${y + 2}" width="${Math.max(1, w - 4)}" height="${Math.max(1, h - 4)}" rx="5"/>${step >= 2 && !room.conditioned ? `<rect class="room-hatch" x="${x + 5}" y="${y + 5}" width="${Math.max(1, w - 10)}" height="${Math.max(1, h - 10)}"/>` : ''}<text class="room-type-label" x="${centerX}" y="${centerY - (small ? 10 : 24)}" text-anchor="middle">${escapeHtml(ROOM_TYPES[room.type].short)}</text><text class="room-name-label" x="${centerX}" y="${centerY + (small ? 9 : 1)}" text-anchor="middle">${escapeHtml(room.name)}</text><text class="room-area-label" x="${centerX}" y="${centerY + (small ? 27 : 24)}" text-anchor="middle">${formatNumber(room.areaM2, 1)} m²${step >= 2 ? room.conditioned ? ' · CON REJILLA' : ' · SIN REJILLA' : ''}</text>`);
+      if (step === 1) parts.push(`<g class="room-delete" data-kind="room-delete" data-id="${escapeHtml(room.id)}" transform="translate(${x + w - 20} ${y + 20})"><circle class="room-delete-hit" r="28"/><circle class="room-delete-button" r="13"/><path d="M-4-4l8 8M4-4l-8 8"/></g>`);
+      if (step === 2) parts.push(`<g class="zone-toggle${room.conditioned ? ' is-checked' : ''}" data-kind="zone-toggle" data-id="${escapeHtml(room.id)}" transform="translate(${x + w - 25} ${y + 25})"><rect class="zone-hit" x="-30" y="-30" width="60" height="60" rx="14"/><rect class="zone-box" x="-17" y="-17" width="34" height="34" rx="8"/><path d="M-8 0l6 7L9-8"/><title>${room.conditioned ? 'Quitar rejilla' : 'Poner rejilla'} en ${escapeHtml(room.name)}</title></g>`);
+      parts.push('</g>');
     });
 
-    result.activeEdges.forEach(edge => {
-      const section = result.sections.find(item => item.id === edge.sectionId);
-      const active = edge.loadFg > 0;
-      const widthPx = active ? clamp(7 + edge.widthCm * .28, 9, 24) : 6;
-      const selectedClass = selected.kind === 'section' && selected.id === edge.sectionId ? ' is-selected' : '';
-      parts.push(`<line class="route-edge${active ? ' is-active' : ' is-pending'}${selectedClass}" data-kind="edge" data-edge="${edge.key}" data-section-id="${edge.sectionId}" x1="${px(edge.a.x)}" y1="${px(edge.a.y)}" x2="${px(edge.b.x)}" y2="${px(edge.b.y)}" style="--route-width:${widthPx}px"><title>${section ? `${section.id}: ${section.widthCm} × ${section.heightCm} cm` : 'Recorrido sin carga'}</title></line>`);
-    });
-
-    result.sections.forEach(section => {
-      const edge = section.representative;
-      const x = px((edge.a.x + edge.b.x) / 2);
-      const y = px((edge.a.y + edge.b.y) / 2);
-      parts.push(`<g class="section-label" data-kind="section" data-id="${section.id}"><rect x="${x - 52}" y="${y - 15}" width="104" height="30" rx="8"/><text x="${x}" y="${y + 5}" text-anchor="middle">${section.id} · ${section.widthCm}×${section.heightCm}</text></g>`);
-    });
-
-    result.rooms.forEach(room => {
-      const outlet = result.outletMap.get(room.id);
-      if (!outlet) return;
-      const connected = result.roomConnections.get(room.id)?.connected;
-      const selectedClass = selected.kind === 'outlet' && selected.id === outlet.id ? ' is-selected' : '';
-      parts.push(`<g class="plan-outlet${connected ? ' is-connected' : ' is-disconnected'}${selectedClass}" data-kind="outlet" data-id="${escapeHtml(outlet.id)}" data-room-id="${escapeHtml(room.id)}" tabindex="0" transform="translate(${px(outlet.x)} ${px(outlet.y)})"><rect x="-22" y="-8" width="44" height="16" rx="4"/><path d="M-15-3h30M-15 2h30"/><title>${escapeHtml(room.name)} · rejilla ${room.grille.widthCm} × ${room.grille.heightCm} cm</title></g>`);
-    });
-
-    if (state.machine) {
-      const selectedClass = selected.kind === 'machine' ? ' is-selected' : '';
-      parts.push(`<g class="plan-machine${selectedClass}" data-kind="machine" tabindex="0" transform="translate(${px(state.machine.x)} ${px(state.machine.y)})"><rect x="-35" y="-27" width="70" height="54" rx="12"/><circle cx="0" cy="0" r="15"/><path d="M0-15c9 3 11 8 5 14M15 0c-3 9-8 11-14 5M0 15c-9-3-11-8-5-14M-15 0c3-9 8-11 14-5"/><text x="0" y="-37" text-anchor="middle">UNIDAD INTERIOR</text></g>`);
+    if (step === 3) {
+      result.activeEdges.forEach(edge => {
+        const routeWidth = clamp(7 + edge.widthCm * .28, 9, 24);
+        parts.push(`<line class="route-edge" x1="${px(edge.a.x)}" y1="${px(edge.a.y)}" x2="${px(edge.b.x)}" y2="${px(edge.b.y)}" style="--route-width:${routeWidth}px"><title>${edge.sectionId}: ${edge.widthCm} × ${edge.heightCm} cm</title></line>`);
+      });
+      result.sections.forEach(section => {
+        const edge = section.representative;
+        const x = px((edge.a.x + edge.b.x) / 2), y = px((edge.a.y + edge.b.y) / 2);
+        parts.push(`<g class="section-label"><rect x="${x - 51}" y="${y - 15}" width="102" height="30" rx="8"/><text x="${x}" y="${y + 5}" text-anchor="middle">${section.id} · ${section.widthCm}×${section.heightCm}</text></g>`);
+      });
+      result.rooms.forEach(room => {
+        const outlet = result.outletMap.get(room.id);
+        if (!outlet) return;
+        parts.push(`<g class="plan-outlet" transform="translate(${px(outlet.x)} ${px(outlet.y)})"><rect x="-22" y="-8" width="44" height="16" rx="4"/><path d="M-15-3h30M-15 2h30"/><title>${escapeHtml(room.name)} · rejilla ${room.grille.widthCm} × ${room.grille.heightCm} cm</title></g>`);
+      });
+      if (state.machine) parts.push(`<g class="plan-machine" transform="translate(${px(state.machine.x)} ${px(state.machine.y)})"><rect x="-35" y="-27" width="70" height="54" rx="12"/><circle cx="0" cy="0" r="15"/><path d="M0-15c9 3 11 8 5 14M15 0c-3 9-8 11-14 5M0 15c-9-3-11-8-5-14M-15 0c3-9 8-11 14-5"/><text x="0" y="-37" text-anchor="middle">UNIDAD INTERIOR</text></g>`);
     }
 
-    if (options.roomStart) parts.push(`<g class="drawing-anchor"><circle cx="${px(options.roomStart.x)}" cy="${px(options.roomStart.y)}" r="12"/><text x="${px(options.roomStart.x) + 18}" y="${px(options.roomStart.y) - 16}">Primera esquina</text></g>`);
-    if (options.routeAnchor) parts.push(`<g class="drawing-anchor route-anchor"><circle cx="${px(options.routeAnchor.x)}" cy="${px(options.routeAnchor.y)}" r="12"/><text x="${px(options.routeAnchor.x) + 18}" y="${px(options.routeAnchor.y) - 16}">Continúa el recorrido</text></g>`);
+    if (options.roomStart) parts.push(`<g class="drawing-anchor"><circle cx="${px(options.roomStart.x)}" cy="${px(options.roomStart.y)}" r="12"/><text x="${px(options.roomStart.x) + 18}" y="${px(options.roomStart.y) - 16}">Ahora marca la esquina opuesta</text></g>`);
     parts.push(`<g class="scale-marker" transform="translate(${width - 150} ${height - 25})"><line x1="0" y1="0" x2="${CELL_PX * 2}" y2="0"/><path d="M0-6v12M${CELL_PX * 2}-6v12"/><text x="${CELL_PX}" y="-10" text-anchor="middle">${formatNumber(state.cellSizeM * 2, 2)} m</text></g>`);
     parts.push('</svg>');
     return { svg: parts.join(''), width, height };
@@ -458,126 +463,85 @@
     if (typeof document === 'undefined' || !document.getElementById('planStage')) return;
     const $ = id => document.getElementById(id);
     const elements = {
-      projectName: $('projectName'), cellSize: $('cellSize'), planWidth: $('planWidth'), planHeight: $('planHeight'), machineCapacity: $('machineCapacity'),
-      ductHeight: $('ductHeight'), grilleHeight: $('grilleHeight'), loadPerM2: $('loadPerM2'), airflowPer9000: $('airflowPer9000'), areaPer9000: $('areaPer9000'), grilleMultiplier: $('grilleMultiplier'),
-      saveState: $('saveState'), planProjectName: $('planProjectName'), activeToolLabel: $('activeToolLabel'), planScroll: $('planScroll'), planStage: $('planStage'),
-      drawingMessage: $('drawingMessage'), finishRoute: $('finishRoute'), selectionPanel: $('selectionPanel'), resultStatus: $('resultStatus'), resultSummary: $('resultSummary'), alerts: $('ductAlerts'),
-      roomCount: $('roomCount'), roomList: $('roomOverviewList'), networkResults: $('networkResults'), roomDialog: $('roomDialog'), roomForm: $('roomForm'), roomId: $('roomId'), roomType: $('roomType'), roomName: $('roomName'), roomConditioned: $('roomConditioned'), roomCeiling: $('roomCeiling'), roomOccupancy: $('roomOccupancy'), roomManualArea: $('roomManualArea'), roomManualLoad: $('roomManualLoad'), roomGeometrySummary: $('roomGeometrySummary'),
+      roomType: $('roomType'), cellSize: $('cellSize'), stepOne: $('stepOneControls'), stepTwo: $('stepTwoControls'), stepThree: $('stepThreeControls'),
+      message: $('assistantMessage'), planStatus: $('planStatus'), planScroll: $('planScroll'), planStage: $('planStage'), planSummary: $('planSummary'), continueButton: $('continueButton'),
+      automaticResult: $('automaticResult'), networkStatus: $('networkStatus'), resultSummary: $('resultSummary'), alerts: $('ductAlerts'), networkResults: $('networkResults'), roomResults: $('roomResults'),
+      undo: $('undoProject'), redo: $('redoProject'),
     };
-    const toolLabels = { select: 'Seleccionar', room: 'Dibujar estancia', machine: 'Colocar máquina', duct: 'Trazar conducto', outlet: 'Colocar rejilla', erase: 'Borrar elemento' };
     let state = loadState();
     let result = calculateProject(state);
-    let tool = 'select';
-    let selected = { kind: 'project' };
     let roomStart = null;
-    let routeAnchor = null;
-    let draftRect = null;
     let zoom = 1;
     const history = [];
     const future = [];
 
     function loadState() {
       try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        return saved ? normalizeState(JSON.parse(saved)) : exampleState();
+        const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
+        return saved ? normalizeState(JSON.parse(saved)) : emptyState();
       } catch (_) {
-        return exampleState();
+        return emptyState();
       }
     }
 
-    function saveState() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-        elements.saveState.textContent = 'Guardado';
-        elements.saveState.classList.add('is-saved');
-        setTimeout(() => elements.saveState.classList.remove('is-saved'), 500);
-      } catch (_) {
-        elements.saveState.textContent = 'Sin guardar';
-      }
+    function save() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (_) {}
     }
 
-    function snapshot(value) {
-      return JSON.stringify(value);
-    }
-
-    function commit(next, nextSelection = selected) {
-      history.push(snapshot(state));
-      if (history.length > 60) history.shift();
+    function commit(next) {
+      history.push(JSON.stringify(state));
+      if (history.length > 50) history.shift();
       future.length = 0;
       state = normalizeState(next);
-      selected = nextSelection;
-      render();
-    }
-
-    function replace(next) {
-      state = normalizeState(next);
+      roomStart = null;
       render();
     }
 
     function undo() {
       if (!history.length) return;
-      future.push(snapshot(state));
+      future.push(JSON.stringify(state));
       state = normalizeState(JSON.parse(history.pop()));
-      selected = { kind: 'project' };
-      roomStart = routeAnchor = null;
+      roomStart = null;
       render();
     }
 
     function redo() {
       if (!future.length) return;
-      history.push(snapshot(state));
+      history.push(JSON.stringify(state));
       state = normalizeState(JSON.parse(future.pop()));
-      selected = { kind: 'project' };
+      roomStart = null;
       render();
     }
 
-    function syncProjectInputs() {
-      elements.projectName.value = state.projectName;
-      elements.cellSize.value = String(state.cellSizeM);
-      elements.planWidth.value = formatNumber(state.gridCols * state.cellSizeM, 2).replace(',', '.');
-      elements.planHeight.value = formatNumber(state.gridRows * state.cellSizeM, 2).replace(',', '.');
-      elements.machineCapacity.value = state.machineCapacityFg || '';
-      elements.ductHeight.value = state.ductHeightCm;
-      elements.grilleHeight.value = state.grilleHeightCm;
-      elements.loadPerM2.value = state.loadPerM2;
-      elements.airflowPer9000.value = state.airflowPer9000;
-      elements.areaPer9000.value = state.areaPer9000;
-      elements.grilleMultiplier.value = state.grilleMultiplier;
+    function setStep(step) {
+      if (step === 2 && !state.rooms.length) return;
+      if (step === 3 && !state.rooms.some(room => room.conditioned)) return;
+      commit({ ...state, workflowStep: step, machine: step < 3 ? null : state.machine });
+      if (step === 3 && !state.machine) {
+        elements.planScroll.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
 
-    function updateProjectSettings() {
-      const cellSizeM = finite(elements.cellSize.value, state.cellSizeM);
-      const usedX = Math.max(8, state.machine?.x || 0, ...state.rooms.map(room => room.x + room.w), ...state.outlets.map(item => item.x), ...state.routeEdges.flatMap(edge => [edge.a.x, edge.b.x]));
-      const usedY = Math.max(8, state.machine?.y || 0, ...state.rooms.map(room => room.y + room.h), ...state.outlets.map(item => item.y), ...state.routeEdges.flatMap(edge => [edge.a.y, edge.b.y]));
-      const gridCols = Math.max(usedX, Math.round(clamp(finite(elements.planWidth.value, state.gridCols * cellSizeM), 4, 30) / cellSizeM));
-      const gridRows = Math.max(usedY, Math.round(clamp(finite(elements.planHeight.value, state.gridRows * cellSizeM), 4, 25) / cellSizeM));
-      replace({ ...state, projectName: elements.projectName.value, cellSizeM, gridCols, gridRows, machineCapacityFg: elements.machineCapacity.value, ductHeightCm: elements.ductHeight.value, grilleHeightCm: elements.grilleHeight.value, loadPerM2: elements.loadPerM2.value, airflowPer9000: elements.airflowPer9000.value, areaPer9000: elements.areaPer9000.value, grilleMultiplier: elements.grilleMultiplier.value });
+    function nameForType(type) {
+      const definition = ROOM_TYPES[type];
+      const count = state.rooms.filter(room => room.type === type).length + 1;
+      const repeated = ['bedroom', 'bathroom', 'office', 'other'].includes(type);
+      return repeated ? `${definition.label} ${count}` : count > 1 ? `${definition.label} ${count}` : definition.label;
     }
 
-    function setTool(nextTool) {
-      tool = nextTool;
-      roomStart = null;
-      if (tool !== 'duct') routeAnchor = null;
-      document.querySelectorAll('[data-tool]').forEach(button => button.classList.toggle('is-active', button.dataset.tool === tool));
-      elements.activeToolLabel.textContent = toolLabels[tool];
-      elements.finishRoute.hidden = tool !== 'duct' || !routeAnchor;
-      const messages = {
-        select: 'Toca una estancia, rejilla, máquina o tramo para consultar y editar.',
-        room: 'Toca la primera esquina de la estancia y después la esquina opuesta.',
-        machine: 'Toca el punto del plano donde irá la unidad interior.',
-        duct: 'Empieza en la máquina o en un conducto existente y marca los cambios de dirección.',
-        outlet: 'Toca dentro de una estancia climatizada para colocar su rejilla.',
-        erase: 'Toca el elemento que quieras retirar del plano.',
-      };
-      elements.drawingMessage.querySelector('p').textContent = messages[tool];
-      renderPlan();
+    function pointerPoint(event) {
+      const svg = elements.planStage.querySelector('svg');
+      const svgPoint = svg.createSVGPoint();
+      svgPoint.x = event.clientX;
+      svgPoint.y = event.clientY;
+      const local = svgPoint.matrixTransform(svg.getScreenCTM().inverse());
+      return point({ x: local.x / CELL_PX, y: local.y / CELL_PX }, state.gridCols, state.gridRows);
     }
 
     function renderPlan() {
-      const rendered = renderPlanSvg(result, { selected, roomStart, routeAnchor });
+      const rendered = renderPlanSvg(result, { step: state.workflowStep, roomStart });
       elements.planStage.innerHTML = rendered.svg;
       elements.planStage.dataset.width = rendered.width;
-      elements.planStage.dataset.height = rendered.height;
       applyZoom();
     }
 
@@ -591,346 +555,149 @@
 
     function fitPlan() {
       const width = finite(elements.planStage.dataset.width, 900);
-      const available = Math.max(300, elements.planScroll.clientWidth - 12);
-      zoom = clamp(available / width, .35, 1.35);
+      const minimumZoom = window.innerWidth < 760 ? .55 : .34;
+      zoom = clamp(Math.max(300, elements.planScroll.clientWidth - 12) / width, minimumZoom, 1.35);
       applyZoom();
-      requestAnimationFrame(() => {
-        elements.planScroll.scrollLeft = Math.max(0, (elements.planScroll.scrollWidth - elements.planScroll.clientWidth) / 2);
+      requestAnimationFrame(() => { elements.planScroll.scrollLeft = Math.max(0, (elements.planScroll.scrollWidth - elements.planScroll.clientWidth) / 2); });
+    }
+
+    function renderSteps() {
+      document.querySelectorAll('[data-go-step]').forEach(button => {
+        const step = Number(button.dataset.goStep);
+        button.disabled = step === 2 ? !state.rooms.length : step === 3 ? !state.rooms.some(room => room.conditioned) : false;
+        button.classList.toggle('is-active', step === state.workflowStep);
+        button.classList.toggle('is-complete', step < state.workflowStep || (step === 3 && Boolean(state.machine)));
       });
+      elements.stepOne.hidden = state.workflowStep !== 1;
+      elements.stepTwo.hidden = state.workflowStep !== 2;
+      elements.stepThree.hidden = state.workflowStep !== 3;
+      elements.cellSize.value = String(state.cellSizeM);
     }
 
-    function summaryMetric(label, value, note, tone) {
-      return `<article class="summary-metric metric-${tone}"><span>${label}</span><strong>${value}</strong><small>${note}</small></article>`;
+    function renderMessage() {
+      const marker = elements.message.querySelector('span');
+      const copy = elements.message.querySelector('p');
+      marker.textContent = state.workflowStep;
+      if (state.workflowStep === 1) {
+        copy.innerHTML = roomStart ? '<strong>Primera esquina marcada.</strong> Toca ahora la esquina opuesta.' : '<strong>Elige una estancia y toca dos esquinas.</strong> Se añadirá al plano sin pedir más datos.';
+        elements.planStatus.textContent = roomStart ? 'Cerrando estancia' : 'Preparado para dibujar';
+      } else if (state.workflowStep === 2) {
+        copy.innerHTML = '<strong>Activa o desactiva las casillas del plano.</strong> Solo las habitaciones marcadas recibirán caudal y rejilla.';
+        elements.planStatus.textContent = `${result.totals.selectedRooms} habitaciones con rejilla`;
+      } else if (!state.machine) {
+        copy.innerHTML = '<strong>¿Dónde irá la unidad interior?</strong> Toca su posición y calcularemos automáticamente toda la red.';
+        elements.planStatus.textContent = 'Esperando posición de la máquina';
+      } else {
+        copy.innerHTML = '<strong>Diseño terminado.</strong> Puedes tocar otra posición para comparar un recorrido diferente.';
+        elements.planStatus.textContent = 'Recorrido automático calculado';
+      }
     }
 
-    function renderSummary() {
-      const totals = result.totals;
-      const machine = state.machineCapacityFg || totals.suggestedCapacityFg;
+    function renderFoot() {
+      elements.planSummary.innerHTML = `<span><b>${result.totals.rooms}</b> estancias</span><span><b>${formatNumber(result.totals.areaM2, 1)} m²</b> dibujados</span>${state.workflowStep >= 2 ? `<span><b>${result.totals.selectedRooms}</b> con rejilla</span>` : ''}`;
+      if (state.workflowStep === 1) {
+        elements.continueButton.disabled = !state.rooms.length;
+        elements.continueButton.innerHTML = 'Ya he dibujado el plano <span>→</span>';
+      } else if (state.workflowStep === 2) {
+        elements.continueButton.disabled = !state.rooms.some(room => room.conditioned);
+        elements.continueButton.innerHTML = 'Ya he marcado las rejillas <span>→</span>';
+      } else if (!state.machine) {
+        elements.continueButton.disabled = true;
+        elements.continueButton.innerHTML = 'Toca la posición de la máquina';
+      } else {
+        elements.continueButton.disabled = false;
+        elements.continueButton.innerHTML = 'Ver resultados <span>↓</span>';
+      }
+    }
+
+    function metric(label, value, note, color) {
+      return `<article style="--metric-color:${color}"><span>${label}</span><strong>${value}</strong><small>${note}</small></article>`;
+    }
+
+    function renderResults() {
+      const visible = state.workflowStep === 3 && state.machine && result.totals.selectedRooms > 0;
+      elements.automaticResult.hidden = !visible;
+      if (!visible) return;
+      elements.networkStatus.textContent = result.totals.connectedRooms === result.totals.selectedRooms ? 'RED COMPLETA' : 'REVISAR RECORRIDO';
       elements.resultSummary.innerHTML = [
-        summaryMetric('Superficie climatizada', `${formatNumber(totals.conditionedAreaM2, 1)} m²`, `${totals.conditionedRooms} de ${totals.rooms} estancias`, 'blue'),
-        summaryMetric(state.machineCapacityFg ? 'Máquina indicada' : 'Máquina orientativa', `${formatNumber(machine)} frg/h`, `${formatNumber(totals.loadFg)} frg/h estimadas`, 'orange'),
-        summaryMetric('Caudal total', `${formatNumber(totals.airflowM3h)} m³/h`, `${totals.connectedRooms}/${totals.conditionedRooms} estancias conectadas`, 'green'),
-        summaryMetric('Conducto principal', totals.loadFg ? `${totals.mainDuct.widthCm} × ${totals.mainDuct.heightCm} cm` : '—', totals.loadFg ? `${formatNumber(totals.mainDuct.velocityMps, 1)} m/s` : 'Pendiente del plano', 'pink'),
+        metric('Superficie con rejilla', `${formatNumber(result.totals.conditionedAreaM2, 1)} m²`, `${result.totals.selectedRooms} estancias`, '#00c8ff'),
+        metric('Necesidad estimada', `${formatNumber(result.totals.suggestedCapacityFg)} frg/h`, 'Dato para seleccionar la máquina', '#ff7a00'),
+        metric('Caudal de impulsión', `${formatNumber(result.totals.airflowM3h)} m³/h`, 'Distribuido entre las rejillas', '#51ff7d'),
+        metric('Salida principal', `${result.totals.mainDuct.widthCm} × ${result.totals.mainDuct.heightCm} cm`, `${formatNumber(result.totals.mainDuct.velocityMps, 1)} m/s`, '#ff3fa7'),
       ].join('');
-      const complete = totals.conditionedRooms > 0 && totals.connectedRooms === totals.conditionedRooms && state.machine;
-      elements.resultStatus.textContent = complete ? 'RED CONECTADA' : totals.rooms ? 'EN PROCESO' : 'PLANO VACÍO';
-      elements.resultStatus.className = `result-status${complete ? ' is-ready' : ''}`;
-    }
-
-    function renderAlerts() {
-      elements.alerts.innerHTML = result.warnings.slice(0, 8).map(item => `<p class="duct-alert alert-${item.level}"><span>${item.level === 'ok' ? '✓' : item.level === 'danger' ? '!' : item.level === 'warn' ? '△' : 'i'}</span>${escapeHtml(item.text)}</p>`).join('');
-    }
-
-    function renderRoomList() {
-      elements.roomCount.textContent = result.rooms.length;
-      elements.roomList.innerHTML = result.rooms.length ? result.rooms.map(room => {
-        const connection = result.roomConnections.get(room.id);
-        const stateLabel = !room.conditioned ? 'No climatizada' : connection?.connected ? 'Conectada' : connection?.outlet ? 'Sin unir' : 'Sin rejilla';
-        return `<button class="overview-room${room.conditioned ? '' : ' is-off'}" data-overview-room="${escapeHtml(room.id)}" type="button"><i class="room-dot room-type-${room.type}"></i><span><strong>${escapeHtml(room.name)}</strong><small>${formatNumber(room.areaM2, 1)} m² · ${stateLabel}</small></span><b>${room.conditioned ? `${formatNumber(room.loadFg)} frg/h` : '—'}</b></button>`;
-      }).join('') : '<p class="empty-list">Todavía no has dibujado estancias.</p>';
-    }
-
-    function renderNetworkResults() {
-      if (!result.sections.length) {
-        elements.networkResults.innerHTML = '<div class="network-empty"><strong>La tabla aparecerá al conectar las rejillas</strong><p>Dibuja el recorrido desde la máquina y asegúrate de que pasa por cada rejilla.</p></div>';
-        return;
-      }
-      const sections = result.sections.map(section => `<button class="network-row" type="button" data-network-section="${section.id}"><span class="network-id">${section.id}</span><span class="network-destination"><strong>${section.rooms.map(room => escapeHtml(room.name)).join(' · ')}</strong><small>${formatNumber(section.lengthM, 1)} m dibujados · ${formatNumber(section.airflowM3h)} m³/h</small></span><span class="network-size"><strong>${section.widthCm} × ${section.heightCm} cm</strong><small>${formatNumber(section.velocityMps, 1)} m/s</small></span></button>`).join('');
-      const outlets = result.rooms.filter(room => room.conditioned).map(room => {
-        const connected = result.roomConnections.get(room.id)?.connected;
-        return `<div class="network-row outlet-result${connected ? '' : ' is-pending'}"><span class="network-id">▥</span><span class="network-destination"><strong>${escapeHtml(room.name)}</strong><small>${formatNumber(room.airflowM3h)} m³/h · ramal ${room.branchDuct.widthCm} × ${room.branchDuct.heightCm} cm</small></span><span class="network-size"><strong>${room.grille.widthCm} × ${room.grille.heightCm} cm</strong><small>${connected ? 'Rejilla conectada' : 'Pendiente de conexión'}</small></span></div>`;
-      }).join('');
-      elements.networkResults.innerHTML = `<article><header><strong>Tramos de la red</strong><span>Desde mayor a menor caudal</span></header>${sections}</article><article><header><strong>Salidas por estancia</strong><span>Ramal y rejilla recomendados</span></header>${outlets}</article>`;
-    }
-
-    function renderWorkflow() {
-      const conditioned = result.totals.conditionedRooms;
-      const states = [
-        [$('workflowRooms'), result.totals.rooms > 0],
-        [$('workflowMachine'), Boolean(state.machine)],
-        [$('workflowRoute'), state.routeEdges.length > 0],
-        [$('workflowOutlets'), conditioned > 0 && state.outlets.length >= conditioned],
-        [$('workflowReview'), conditioned > 0 && result.totals.connectedRooms === conditioned],
-      ];
-      let currentFound = false;
-      states.forEach(([element, complete]) => {
-        element.classList.toggle('is-complete', complete);
-        element.classList.remove('is-current');
-        if (!complete && !currentFound) { element.classList.add('is-current'); currentFound = true; }
-      });
-      if (!currentFound) states.at(-1)[0].classList.add('is-current');
-    }
-
-    function renderInspector() {
-      if (selected.kind === 'room') {
-        const room = result.roomMap.get(selected.id);
-        if (!room) { selected = { kind: 'project' }; return renderInspector(); }
-        const connection = result.roomConnections.get(room.id);
-        elements.selectionPanel.innerHTML = `<div class="selection-copy"><p class="duct-eyebrow">ESTANCIA SELECCIONADA</p><h3>${escapeHtml(room.name)}</h3><p>${room.typeLabel} · ${formatNumber(room.w * state.cellSizeM, 2)} × ${formatNumber(room.h * state.cellSizeM, 2)} m · volumen ${formatNumber(room.volumeM3, 1)} m³</p></div><div class="selection-values"><span><b>${formatNumber(room.areaM2, 1)} m²</b> superficie</span><span><b>${room.conditioned ? `${formatNumber(room.loadFg)} frg/h` : 'No'}</b> climatización</span><span><b>${connection?.connected ? 'Conectada' : connection?.outlet ? 'Sin unir' : 'Sin rejilla'}</b> salida</span></div><div class="selection-actions"><button data-selection-action="up" type="button">↑</button><button data-selection-action="left" type="button">←</button><button data-selection-action="right" type="button">→</button><button data-selection-action="down" type="button">↓</button><button data-selection-action="edit" type="button">Editar datos</button><button data-selection-action="delete" class="danger-action" type="button">Eliminar</button></div>`;
-        return;
-      }
-      if (selected.kind === 'section') {
-        const section = result.sections.find(item => item.id === selected.id);
-        if (section) {
-          elements.selectionPanel.innerHTML = `<div class="selection-copy"><p class="duct-eyebrow">TRAMO ${section.id}</p><h3>${section.widthCm} × ${section.heightCm} cm</h3><p>Alimenta ${section.rooms.map(room => escapeHtml(room.name)).join(', ')}.</p></div><div class="selection-values"><span><b>${formatNumber(section.airflowM3h)} m³/h</b> caudal</span><span><b>${formatNumber(section.velocityMps, 1)} m/s</b> velocidad</span><span><b>${formatNumber(section.lengthM, 1)} m</b> longitud dibujada</span></div>`;
-          return;
-        }
-      }
-      if (selected.kind === 'machine') {
-        elements.selectionPanel.innerHTML = `<div class="selection-copy"><p class="duct-eyebrow">UNIDAD INTERIOR</p><h3>${state.machineCapacityFg ? `${formatNumber(state.machineCapacityFg)} frg/h indicadas` : `${formatNumber(result.totals.suggestedCapacityFg)} frg/h orientativas`}</h3><p>Origen de todos los recorridos de impulsión.</p></div><div class="selection-actions"><button data-selection-action="delete-machine" class="danger-action" type="button">Retirar máquina</button></div>`;
-        return;
-      }
-      if (selected.kind === 'outlet') {
-        const outlet = state.outlets.find(item => item.id === selected.id);
-        const room = outlet ? result.roomMap.get(outlet.roomId) : null;
-        if (room) {
-          elements.selectionPanel.innerHTML = `<div class="selection-copy"><p class="duct-eyebrow">REJILLA DE ${escapeHtml(room.name)}</p><h3>${room.grille.widthCm} × ${room.grille.heightCm} cm</h3><p>Ramal ${room.branchDuct.widthCm} × ${room.branchDuct.heightCm} cm · ${formatNumber(room.airflowM3h)} m³/h.</p></div><div class="selection-actions"><button data-selection-action="delete-outlet" class="danger-action" type="button">Retirar rejilla</button></div>`;
-          return;
-        }
-      }
-      elements.selectionPanel.innerHTML = `<div class="selection-copy"><p class="duct-eyebrow">AYUDA DEL PLANO</p><h3>${toolLabels[tool]}</h3><p>${elements.drawingMessage.querySelector('p').textContent}</p></div><div class="selection-values"><span><b>${formatNumber(state.gridCols * state.cellSizeM, 1)} × ${formatNumber(state.gridRows * state.cellSizeM, 1)} m</b> área de trabajo</span><span><b>${formatNumber(state.cellSizeM, 2)} m</b> cada cuadrado</span></div>`;
+      elements.alerts.innerHTML = result.warnings.filter(item => item.level !== 'info').map(item => `<p class="alert-${item.level}"><span>${item.level === 'ok' ? '✓' : '!'}</span>${escapeHtml(item.text)}</p>`).join('');
+      elements.networkResults.innerHTML = result.sections.map(section => `<div class="result-row"><b>${section.id}</b><span><strong>${section.rooms.map(room => escapeHtml(room.name)).join(' · ')}</strong><small>${formatNumber(section.lengthM, 1)} m · ${formatNumber(section.airflowM3h)} m³/h</small></span><em>${section.widthCm} × ${section.heightCm} cm</em></div>`).join('');
+      elements.roomResults.innerHTML = result.rooms.filter(room => room.conditioned).map(room => `<div class="result-row room-result"><b>▥</b><span><strong>${escapeHtml(room.name)}</strong><small>${formatNumber(room.airflowM3h)} m³/h · ramal ${room.branchDuct.widthCm} × ${room.branchDuct.heightCm} cm</small></span><em>${room.grille.widthCm} × ${room.grille.heightCm} cm</em></div>`).join('');
     }
 
     function render() {
       result = calculateProject(state);
-      elements.planProjectName.textContent = state.projectName || 'Proyecto sin nombre';
-      syncProjectInputs();
+      renderSteps();
+      renderMessage();
       renderPlan();
-      renderSummary();
-      renderAlerts();
-      renderRoomList();
-      renderNetworkResults();
-      renderWorkflow();
-      renderInspector();
-      $('undoProject').disabled = !history.length;
-      $('redoProject').disabled = !future.length;
-      elements.finishRoute.hidden = tool !== 'duct' || !routeAnchor;
-      saveState();
+      renderFoot();
+      renderResults();
+      elements.undo.disabled = !history.length;
+      elements.redo.disabled = !future.length;
+      save();
     }
 
-    function pointerPoint(event) {
-      const svg = elements.planStage.querySelector('svg');
-      if (!svg) return { x: 0, y: 0 };
-      const svgPoint = svg.createSVGPoint();
-      svgPoint.x = event.clientX;
-      svgPoint.y = event.clientY;
-      const local = svgPoint.matrixTransform(svg.getScreenCTM().inverse());
-      return point({ x: local.x / CELL_PX, y: local.y / CELL_PX }, state.gridCols, state.gridRows);
-    }
-
-    function roomAt(position) {
-      return result.rooms.slice().reverse().find(room => position.x >= room.x && position.x <= room.x + room.w && position.y >= room.y && position.y <= room.y + room.h);
-    }
-
-    function distanceToEdge(position, edge) {
-      if (edge.a.x === edge.b.x) return Math.abs(position.x - edge.a.x) + (position.y < Math.min(edge.a.y, edge.b.y) ? Math.min(edge.a.y, edge.b.y) - position.y : position.y > Math.max(edge.a.y, edge.b.y) ? position.y - Math.max(edge.a.y, edge.b.y) : 0);
-      return Math.abs(position.y - edge.a.y) + (position.x < Math.min(edge.a.x, edge.b.x) ? Math.min(edge.a.x, edge.b.x) - position.x : position.x > Math.max(edge.a.x, edge.b.x) ? position.x - Math.max(edge.a.x, edge.b.x) : 0);
-    }
-
-    function nearestEdge(position) {
-      return state.routeEdges.map(edge => ({ edge, distance: distanceToEdge(position, edge) })).sort((a, b) => a.distance - b.distance)[0];
-    }
-
-    function openRoomDialog(room = null, rectangle = null) {
-      draftRect = rectangle || (room ? { x: room.x, y: room.y, w: room.w, h: room.h } : null);
-      if (!draftRect) return;
-      $('roomDialogTitle').textContent = room ? 'Editar estancia' : 'Nueva estancia';
-      elements.roomId.value = room?.id || '';
-      elements.roomType.value = room?.type || 'bedroom';
-      elements.roomName.value = room?.name || '';
-      elements.roomConditioned.checked = room?.conditioned ?? true;
-      elements.roomCeiling.value = room?.ceilingHeightM || 2.5;
-      elements.roomOccupancy.value = room?.occupancy ?? 1;
-      elements.roomManualArea.value = room?.manualAreaM2 || '';
-      elements.roomManualLoad.value = room?.manualLoadFg || '';
-      updateRoomGeometry();
-      elements.roomDialog.showModal();
-      setTimeout(() => elements.roomName.focus(), 40);
-    }
-
-    function updateRoomGeometry() {
-      if (!draftRect) return;
-      const widthM = draftRect.w * state.cellSizeM;
-      const heightM = draftRect.h * state.cellSizeM;
-      elements.roomGeometrySummary.innerHTML = `<span>Medida dibujada</span><strong>${formatNumber(widthM, 2)} × ${formatNumber(heightM, 2)} m</strong><b>${formatNumber(widthM * heightM, 1)} m²</b>`;
-    }
-
-    function removeRoom(id) {
-      commit({ ...state, rooms: state.rooms.filter(room => room.id !== id), outlets: state.outlets.filter(outlet => outlet.roomId !== id) }, { kind: 'project' });
-    }
-
-    function moveRoom(id, dx, dy) {
-      const room = state.rooms.find(item => item.id === id);
-      if (!room) return;
-      const moved = { ...room, x: clamp(room.x + dx, 0, state.gridCols - room.w), y: clamp(room.y + dy, 0, state.gridRows - room.h) };
-      if (state.rooms.some(other => other.id !== id && roomOverlap(moved, other))) {
-        elements.drawingMessage.querySelector('p').textContent = 'No se puede mover: esa posición invade otra estancia.';
-        return;
-      }
-      const offsetX = moved.x - room.x, offsetY = moved.y - room.y;
-      commit({ ...state, rooms: state.rooms.map(item => item.id === id ? moved : item), outlets: state.outlets.map(outlet => outlet.roomId === id ? { ...outlet, x: outlet.x + offsetX, y: outlet.y + offsetY } : outlet) }, selected);
-    }
-
-    function handleCanvas(event) {
-      const position = pointerPoint(event);
+    function handlePlanClick(event) {
       const target = event.target.closest('[data-kind]');
-      if (tool === 'select') {
-        if (!target) selected = { kind: 'project' };
-        else if (target.dataset.kind === 'room') selected = { kind: 'room', id: target.dataset.id };
-        else if (target.dataset.kind === 'machine') selected = { kind: 'machine' };
-        else if (target.dataset.kind === 'outlet') selected = { kind: 'outlet', id: target.dataset.id };
-        else if (target.dataset.kind === 'section' || target.dataset.kind === 'edge') selected = { kind: 'section', id: target.dataset.id || target.dataset.sectionId };
-        render();
+      if (state.workflowStep === 1 && target?.dataset.kind === 'room-delete') {
+        commit({ ...state, rooms: state.rooms.filter(room => room.id !== target.dataset.id) });
         return;
       }
-      if (tool === 'room') {
-        if (!roomStart) {
-          roomStart = position;
-          elements.drawingMessage.querySelector('p').textContent = 'Primera esquina marcada. Toca ahora la esquina opuesta.';
+      if (state.workflowStep === 2 && target?.dataset.kind === 'zone-toggle') {
+        commit({ ...state, rooms: state.rooms.map(room => room.id === target.dataset.id ? { ...room, conditioned: !room.conditioned } : room) });
+        return;
+      }
+      const position = pointerPoint(event);
+      if (state.workflowStep === 1) {
+        if (!roomStart) { roomStart = position; render(); return; }
+        const rectangle = { x: Math.min(roomStart.x, position.x), y: Math.min(roomStart.y, position.y), w: Math.abs(position.x - roomStart.x), h: Math.abs(position.y - roomStart.y) };
+        roomStart = null;
+        if (!rectangle.w || !rectangle.h) { render(); return; }
+        if (state.rooms.some(room => roomOverlap(rectangle, room))) {
+          elements.message.querySelector('p').innerHTML = '<strong>Esa zona invade otra estancia.</strong> Elige dos esquinas diferentes.';
           renderPlan();
           return;
         }
-        const rectangle = { x: Math.min(roomStart.x, position.x), y: Math.min(roomStart.y, position.y), w: Math.abs(position.x - roomStart.x), h: Math.abs(position.y - roomStart.y) };
-        roomStart = null;
-        if (!rectangle.w || !rectangle.h) { elements.drawingMessage.querySelector('p').textContent = 'La estancia necesita al menos un cuadrado de ancho y de fondo.'; renderPlan(); return; }
-        if (state.rooms.some(room => roomOverlap(rectangle, room))) { elements.drawingMessage.querySelector('p').textContent = 'Ese espacio se superpone con otra estancia.'; renderPlan(); return; }
-        openRoomDialog(null, rectangle);
-        renderPlan();
+        const type = elements.roomType.value;
+        const id = `room-${Date.now()}-${Math.random().toString(16).slice(2, 6)}`;
+        commit({ ...state, rooms: [...state.rooms, { id, type, name: nameForType(type), ...rectangle, conditioned: ROOM_TYPES[type].grille }] });
         return;
       }
-      if (tool === 'machine') {
-        commit({ ...state, machine: position }, { kind: 'machine' });
-        setTool('duct');
-        routeAnchor = position;
-        elements.finishRoute.hidden = false;
-        elements.drawingMessage.querySelector('p').textContent = 'Máquina colocada. Marca ahora el recorrido del conducto.';
-        renderPlan();
-        return;
-      }
-      if (tool === 'duct') {
-        if (!routeAnchor) { routeAnchor = position; elements.finishRoute.hidden = false; renderPlan(); return; }
-        const additions = routeEdgesFromPoints(routeAnchor, position, true);
-        const edgeMap = new Map(state.routeEdges.map(edge => [edgeKey(edge.a, edge.b), edge]));
-        additions.forEach(edge => edgeMap.set(edgeKey(edge.a, edge.b), edge));
-        routeAnchor = position;
-        commit({ ...state, routeEdges: [...edgeMap.values()] }, selected);
-        elements.finishRoute.hidden = false;
-        return;
-      }
-      if (tool === 'outlet') {
-        const room = roomAt(position);
-        if (!room) { elements.drawingMessage.querySelector('p').textContent = 'La rejilla debe colocarse dentro de una estancia.'; return; }
-        if (!room.conditioned) { elements.drawingMessage.querySelector('p').textContent = `${room.name} está marcada como no climatizada.`; return; }
-        const outlet = { id: state.outlets.find(item => item.roomId === room.id)?.id || `outlet-${Date.now()}`, roomId: room.id, ...position };
-        commit({ ...state, outlets: [...state.outlets.filter(item => item.roomId !== room.id), outlet] }, { kind: 'outlet', id: outlet.id });
-        return;
-      }
-      if (tool === 'erase') {
-        if (target?.dataset.kind === 'room') { removeRoom(target.dataset.id); return; }
-        if (target?.dataset.kind === 'machine') { commit({ ...state, machine: null }, { kind: 'project' }); return; }
-        if (target?.dataset.kind === 'outlet') { commit({ ...state, outlets: state.outlets.filter(item => item.id !== target.dataset.id) }, { kind: 'project' }); return; }
-        const nearest = nearestEdge(position);
-        if (nearest && nearest.distance <= .65) commit({ ...state, routeEdges: state.routeEdges.filter(edge => edgeKey(edge.a, edge.b) !== edgeKey(nearest.edge.a, nearest.edge.b)) }, { kind: 'project' });
+      if (state.workflowStep === 3) {
+        commit({ ...state, machine: position });
+        setTimeout(() => elements.automaticResult.scrollIntoView({ behavior: 'smooth', block: 'start' }), 250);
       }
     }
 
-    document.querySelectorAll('[data-tool]').forEach(button => button.addEventListener('click', () => setTool(button.dataset.tool)));
-    elements.planStage.addEventListener('click', handleCanvas);
-    elements.finishRoute.addEventListener('click', () => { routeAnchor = null; elements.finishRoute.hidden = true; elements.drawingMessage.querySelector('p').textContent = 'Recorrido finalizado. Puedes empezar otra derivación desde cualquier punto existente.'; renderPlan(); });
-    $('undoProject').addEventListener('click', undo);
-    $('redoProject').addEventListener('click', redo);
+    document.querySelectorAll('[data-go-step]').forEach(button => button.addEventListener('click', () => setStep(Number(button.dataset.goStep))));
+    elements.planStage.addEventListener('click', handlePlanClick);
+    elements.continueButton.addEventListener('click', () => {
+      if (state.workflowStep < 3) setStep(state.workflowStep + 1);
+      else if (state.machine) elements.automaticResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    elements.cellSize.addEventListener('change', () => commit({ ...state, cellSizeM: elements.cellSize.value }));
+    elements.undo.addEventListener('click', undo);
+    elements.redo.addEventListener('click', redo);
     $('zoomIn').addEventListener('click', () => { zoom = clamp(zoom + .12, .3, 2); applyZoom(); });
     $('zoomOut').addEventListener('click', () => { zoom = clamp(zoom - .12, .3, 2); applyZoom(); });
     $('zoomFit').addEventListener('click', fitPlan);
-    $('helpToggle').addEventListener('click', () => $('toolHelp').classList.toggle('is-hidden'));
-    [elements.projectName, elements.cellSize, elements.planWidth, elements.planHeight, elements.machineCapacity, elements.ductHeight, elements.grilleHeight, elements.loadPerM2, elements.airflowPer9000, elements.areaPer9000, elements.grilleMultiplier].forEach(input => {
-      input.addEventListener(input === elements.projectName ? 'input' : 'change', updateProjectSettings);
-    });
-
-    elements.roomType.addEventListener('change', () => {
-      const definition = ROOM_TYPES[elements.roomType.value];
-      if (!elements.roomName.value.trim()) elements.roomName.value = definition.label;
-      if (!elements.roomId.value) elements.roomConditioned.checked = definition.conditioned;
-    });
-    $('closeRoomDialog').addEventListener('click', () => elements.roomDialog.close());
-    $('cancelRoom').addEventListener('click', () => elements.roomDialog.close());
-    elements.roomDialog.addEventListener('click', event => { if (event.target === elements.roomDialog) elements.roomDialog.close(); });
-    elements.roomForm.addEventListener('submit', event => {
-      event.preventDefault();
-      if (!draftRect) return;
-      const id = elements.roomId.value || `room-${Date.now()}-${Math.random().toString(16).slice(2, 6)}`;
-      const room = { id, ...draftRect, type: elements.roomType.value, name: elements.roomName.value.trim() || ROOM_TYPES[elements.roomType.value].label, conditioned: elements.roomConditioned.checked, ceilingHeightM: elements.roomCeiling.value, occupancy: elements.roomOccupancy.value, manualAreaM2: elements.roomManualArea.value, manualLoadFg: elements.roomManualLoad.value, ventilationRole: state.rooms.find(item => item.id === id)?.ventilationRole || 'none' };
-      const others = state.rooms.filter(item => item.id !== id);
-      if (others.some(item => roomOverlap(room, item))) { elements.roomGeometrySummary.textContent = 'La estancia se superpone con otra.'; return; }
-      elements.roomDialog.close();
-      commit({ ...state, rooms: [...others, room] }, { kind: 'room', id });
-      draftRect = null;
-      setTool('room');
-    });
-
-    elements.selectionPanel.addEventListener('click', event => {
-      const action = event.target.closest('[data-selection-action]')?.dataset.selectionAction;
-      if (!action) return;
-      if (selected.kind === 'room') {
-        if (action === 'edit') openRoomDialog(state.rooms.find(room => room.id === selected.id));
-        if (action === 'delete') removeRoom(selected.id);
-        if (action === 'up') moveRoom(selected.id, 0, -1);
-        if (action === 'down') moveRoom(selected.id, 0, 1);
-        if (action === 'left') moveRoom(selected.id, -1, 0);
-        if (action === 'right') moveRoom(selected.id, 1, 0);
-      }
-      if (action === 'delete-machine') commit({ ...state, machine: null }, { kind: 'project' });
-      if (action === 'delete-outlet') commit({ ...state, outlets: state.outlets.filter(outlet => outlet.id !== selected.id) }, { kind: 'project' });
-    });
-    elements.roomList.addEventListener('click', event => {
-      const button = event.target.closest('[data-overview-room]');
-      if (!button) return;
-      selected = { kind: 'room', id: button.dataset.overviewRoom };
-      setTool('select');
-      render();
-      elements.selectionPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    });
-    elements.networkResults.addEventListener('click', event => {
-      const button = event.target.closest('[data-network-section]');
-      if (!button) return;
-      selected = { kind: 'section', id: button.dataset.networkSection };
-      setTool('select');
-      render();
-      elements.selectionPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
-
-    $('loadExample').addEventListener('click', () => { if (!confirm('¿Cargar la vivienda de ejemplo y sustituir el proyecto actual?')) return; commit(exampleState(), { kind: 'project' }); setTimeout(fitPlan, 50); });
-    $('clearProject').addEventListener('click', () => { if (!confirm('¿Empezar un plano vacío? El proyecto actual se podrá recuperar con Deshacer.')) return; commit(emptyState(), { kind: 'project' }); setTool('room'); });
+    $('loadExample').addEventListener('click', () => { if (state.rooms.length && !confirm('¿Sustituir el plano actual por el ejemplo?')) return; commit(exampleState()); setTimeout(fitPlan, 40); });
+    $('clearProject').addEventListener('click', () => { if (state.rooms.length && !confirm('¿Empezar un plano nuevo?')) return; commit(emptyState()); });
     $('printProject').addEventListener('click', () => window.print());
-    $('exportProject').addEventListener('click', () => {
-      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `${(state.projectName || 'proyecto-conductos').replace(/[^a-z0-9áéíóúñ_-]+/gi, '-').toLowerCase()}.json`;
-      link.click();
-      setTimeout(() => URL.revokeObjectURL(link.href), 1000);
-    });
-    $('importProject').addEventListener('change', async event => {
-      const file = event.target.files?.[0];
-      if (!file) return;
-      try {
-        const imported = normalizeState(JSON.parse(await file.text()));
-        commit(imported, { kind: 'project' });
-        setTimeout(fitPlan, 50);
-      } catch (_) {
-        alert('El archivo no contiene un proyecto válido.');
-      } finally {
-        event.target.value = '';
-      }
-    });
+    $('moveMachine').addEventListener('click', () => { commit({ ...state, workflowStep: 3, machine: null }); elements.planScroll.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
+    $('editZones').addEventListener('click', () => setStep(2));
     window.addEventListener('resize', () => { if (window.innerWidth < 760) fitPlan(); });
     window.addEventListener('keydown', event => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') { event.preventDefault(); event.shiftKey ? redo() : undo(); }
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'y') { event.preventDefault(); redo(); }
-      if (event.key === 'Escape') { roomStart = routeAnchor = null; renderPlan(); }
+      if (event.key === 'Escape' && roomStart) { roomStart = null; render(); }
     });
 
-    syncProjectInputs();
     render();
     requestAnimationFrame(fitPlan);
   }
@@ -940,5 +707,5 @@
     else initBrowser();
   }
 
-  return { DEFAULTS, ROOM_TYPES, normalizeState, emptyState, exampleState, sizeDuct, calculateProject, renderPlanSvg, routeEdgesFromPoints, roundUp, roomOverlap };
+  return { DESIGN, DEFAULTS, ROOM_TYPES, normalizeState, emptyState, exampleState, sizeDuct, automaticNetwork, calculateProject, renderPlanSvg, roundUp, roomOverlap };
 });
