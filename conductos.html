@@ -4,16 +4,16 @@
   <meta charset="utf-8">
   <meta name="google-adsense-account" content="ca-pub-6950924617837531">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Asistente visual para dibujar una vivienda y obtener automáticamente el recorrido y dimensionado de sus conductos.">
+  <meta name="description" content="Asistente visual para dibujar una vivienda libremente y obtener automáticamente el recorrido y dimensionado de sus conductos.">
   <meta name="theme-color" content="#050a13">
   <title>Diseño intuitivo de conductos | Super Técnico</title>
   <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
   <link rel="stylesheet" href="assets/common.css?v=1">
   <link rel="stylesheet" href="assets/app-theme.css?v=1">
-  <link rel="stylesheet" href="assets/duct-designer.css?v=3">
+  <link rel="stylesheet" href="assets/duct-designer.css?v=4">
   <script src="assets/i18n.js?v=6" defer></script>
   <script src="assets/app-shell.js?v=2" defer></script>
-  <script src="assets/duct-designer.js?v=3" defer></script>
+  <script src="assets/duct-designer.js?v=4" defer></script>
 </head>
 <body>
   <header class="duct-header">
@@ -22,51 +22,32 @@
       <span><strong>Super Técnico</strong><small>Diseño de conductos</small></span>
     </a>
     <div class="duct-header-actions">
-      <span>PRUEBA · VERSIÓN 0.3</span>
+      <span>PRUEBA · VERSIÓN 0.4</span>
       <button id="printProject" type="button">Imprimir / PDF</button>
     </div>
   </header>
 
   <main class="duct-main">
     <section class="duct-intro">
-      <div>
-        <p class="duct-eyebrow">DIBUJA · MARCA · COLOCA LA MÁQUINA</p>
-        <h1>Del plano a los conductos en tres pasos</h1>
-        <p>Sin fórmulas ni recorridos manuales. Tú dibujas la vivienda y decides qué habitaciones llevan rejilla; Super Técnico propone automáticamente toda la instalación.</p>
-      </div>
+      <p class="duct-eyebrow">DIBUJA TODO PRIMERO · DECIDE DESPUÉS</p>
+      <h1>Un solo plano, sin pasos que te corten</h1>
+      <p>Dibuja libremente todas las estancias, marca que has terminado y completa la instalación directamente sobre el plano. El conducto principal buscará los pasillos y desde él saldrán los ramales.</p>
     </section>
 
     <section class="duct-assistant">
-      <nav class="assistant-steps" aria-label="Pasos del diseño">
-        <button type="button" data-go-step="1" class="is-active"><b>1</b><span><strong>Dibuja las estancias</strong><small>Elige el tipo y marca dos esquinas</small></span></button>
-        <button type="button" data-go-step="2" disabled><b>2</b><span><strong>Marca las rejillas</strong><small>Activa las zonas que se climatizan</small></span></button>
-        <button type="button" data-go-step="3" disabled><b>3</b><span><strong>Coloca la máquina</strong><small>El recorrido se genera solo</small></span></button>
-      </nav>
-
       <div class="assistant-toolbar">
-        <div id="stepOneControls" class="step-controls">
-          <label class="room-type-control" for="roomType">
-            <span>Voy a dibujar</span>
-            <select id="roomType">
-              <option value="bedroom">Dormitorio</option>
-              <option value="living">Salón / comedor</option>
-              <option value="kitchen">Cocina</option>
-              <option value="office">Oficina / despacho</option>
-              <option value="bathroom">Baño</option>
-              <option value="hallway">Pasillo / distribuidor</option>
-              <option value="utility">Lavadero / zona técnica</option>
-              <option value="other">Otra estancia</option>
-            </select>
-          </label>
-          <label class="grid-scale-control" for="cellSize"><span>Cada cuadrado</span><select id="cellSize"><option value="0.25">25 cm</option><option value="0.5" selected>50 cm</option><option value="1">1 metro</option></select></label>
+        <div class="phase-copy">
+          <span id="phaseBadge">DIBUJANDO EL PLANO</span>
+          <strong>Todo ocurre aquí, de forma continua</strong>
         </div>
 
-        <div id="stepTwoControls" class="step-controls step-explanation" hidden>
-          <span class="step-icon">▣</span><p><strong>Marca las habitaciones que llevarán rejilla.</strong> Toca la casilla situada dentro de cada estancia.</p>
+        <div id="drawingSettings" class="inline-settings">
+          <label for="cellSize"><span>Cada cuadrado</span><select id="cellSize"><option value="0.25">25 cm</option><option value="0.5" selected>50 cm</option><option value="1">1 metro</option></select></label>
         </div>
 
-        <div id="stepThreeControls" class="step-controls step-explanation" hidden>
-          <span class="step-icon machine-icon">M</span><p><strong>Toca en el plano dónde instalarás la unidad interior.</strong> El recorrido y las medidas aparecerán automáticamente.</p>
+        <div id="technicalSettings" class="inline-settings technical-settings" hidden>
+          <label for="ductHeightCm"><span>Altura conducto</span><span class="number-unit"><input id="ductHeightCm" type="number" min="10" max="80" step="1" value="25"><b>cm</b></span></label>
+          <label for="grilleHeightCm"><span>Altura rejilla</span><span class="number-unit"><input id="grilleHeightCm" type="number" min="8" max="60" step="1" value="15"><b>cm</b></span></label>
         </div>
 
         <div class="quick-actions">
@@ -78,7 +59,13 @@
       </div>
 
       <div id="assistantMessage" class="assistant-message" aria-live="polite">
-        <span>1</span><p><strong>Empieza por una esquina.</strong> Después toca la esquina opuesta para cerrar la estancia.</p>
+        <span>✦</span><p><strong>Toca todas las esquinas de una estancia.</strong> Para cerrarla, vuelve a tocar el primer punto.</p>
+      </div>
+
+      <div id="planControlLegend" class="plan-control-legend" hidden>
+        <span><i class="legend-type">▼</i><b>Qué estancia es</b></span>
+        <span><i class="legend-grille">▤</i><b>Lleva rejilla</b></span>
+        <span><i class="legend-machine">M</i><b>Aquí va la máquina</b></span>
       </div>
 
       <div class="plan-frame">
@@ -86,26 +73,28 @@
           <div><span id="planStatusDot"></span><strong id="planStatus">Preparado para dibujar</strong></div>
           <div class="zoom-actions"><button id="zoomOut" type="button" aria-label="Alejar">−</button><button id="zoomFit" type="button">Ajustar</button><button id="zoomIn" type="button" aria-label="Acercar">＋</button></div>
         </div>
-        <div id="planScroll" class="plan-scroll"><div id="planStage" class="plan-stage" aria-label="Plano interactivo de la vivienda"></div></div>
-        <div class="plan-foot">
-          <div id="planSummary" class="plan-summary"></div>
-          <button id="continueButton" class="continue-button" type="button">Ya he dibujado el plano <span>→</span></button>
+        <div class="plan-canvas-wrap">
+          <label id="finishDrawingLabel" class="finish-drawing" for="drawingComplete">
+            <input id="drawingComplete" type="checkbox" disabled>
+            <i>✓</i><span>He terminado de dibujar</span>
+          </label>
+          <div id="planScroll" class="plan-scroll"><div id="planStage" class="plan-stage" aria-label="Plano interactivo de la vivienda"></div></div>
         </div>
+        <div class="plan-foot"><div id="planSummary" class="plan-summary"></div></div>
       </div>
     </section>
 
     <section id="automaticResult" class="automatic-result" hidden>
       <header>
-        <div><p class="duct-eyebrow">PROPUESTA AUTOMÁTICA</p><h2>Instalación calculada sobre tu plano</h2><p>Los conductos siguen preferentemente pasillos y zonas no climatizadas, compartiendo recorrido antes de dividirse hacia cada rejilla.</p></div>
+        <div><p class="duct-eyebrow">PROPUESTA AUTOMÁTICA</p><h2>Instalación calculada sobre tu plano</h2><p>La red crea un conducto principal, aprovecha prioritariamente los pasillos y deriva ramales hasta las estancias seleccionadas.</p></div>
         <span id="networkStatus" class="network-status">RED COMPLETA</span>
       </header>
       <div id="resultSummary" class="result-summary"></div>
       <div id="ductAlerts" class="duct-alerts"></div>
       <div class="result-columns">
-        <section class="result-card"><header><h3>Tramos del conducto</h3><span>Desde la unidad hacia las rejillas</span></header><div id="networkResults"></div></section>
+        <section class="result-card"><header><h3>Principal y ramales</h3><span>Desde la unidad hacia las rejillas</span></header><div id="networkResults"></div></section>
         <section class="result-card"><header><h3>Resultados por estancia</h3><span>Caudal, ramal y rejilla</span></header><div id="roomResults"></div></section>
       </div>
-      <div class="result-actions"><button id="moveMachine" type="button">Cambiar posición de la máquina</button><button id="editZones" type="button">Cambiar habitaciones con rejilla</button></div>
     </section>
 
     <aside class="professional-note"><strong>Resultado de diseño previo</strong><p>La herramienta aplica internamente un criterio práctico para instalaciones habituales. Antes de ejecutar deben comprobarse presión disponible, pérdidas de carga, aislamiento, acústica, retorno y normativa aplicable.</p></aside>
