@@ -294,6 +294,34 @@ h1 {
   transform: rotate(240deg);
 }
 
+.tool-card-frigorista .tool-icon {
+  display: grid;
+  place-items: center;
+  color: #00ead0;
+  background: rgba(0, 234, 208, .09);
+}
+
+.frigorista-tool-icon svg {
+  width: 64px;
+  height: 64px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 9px rgba(0, 234, 208, .3));
+}
+
+.frigorista-tool-icon circle {
+  fill: #ff7a00;
+  stroke: #ffe438;
+}
+
+.tool-card-frigorista .tool-badge {
+  color: #00ead0;
+  background: rgba(0, 234, 208, .09);
+}
+
 .chip-icon {
   display: grid;
   place-items: center;

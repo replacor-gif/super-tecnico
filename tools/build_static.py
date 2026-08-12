@@ -33,6 +33,52 @@ def read_json(path: Path) -> Any:
         raise BuildError(f"JSON no válido en {path}: {exc}") from exc
 
 
+def validate_frigorista_data(source_root: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, int]]:
+    catalog = read_json(source_root / "data" / "frigorista" / "catalog.json")
+    curves = read_json(source_root / "data" / "frigorista" / "pt-curves.json")
+    if catalog.get("dataset_version") != curves.get("dataset_version"):
+        raise BuildError("Frigorista: el catálogo y las curvas P/T tienen versiones diferentes")
+
+    refrigerants = catalog.get("refrigerants") or []
+    curve_map = curves.get("curves") or {}
+    if not isinstance(refrigerants, list) or not isinstance(curve_map, dict):
+        raise BuildError("Frigorista: catálogo o curvas P/T no válidos")
+    ids = [item.get("id") for item in refrigerants]
+    designations = [item.get("designation") for item in refrigerants]
+    if len(ids) != len(set(ids)) or len(designations) != len(set(designations)):
+        raise BuildError("Frigorista: hay identificadores o designaciones duplicadas")
+
+    available = {
+        item["designation"]
+        for item in refrigerants
+        if item.get("selectable") is True and item.get("pt_available") is True
+    }
+    if available != set(curve_map):
+        raise BuildError("Frigorista: la cobertura del catálogo no coincide con las curvas publicadas")
+    if len(available) < 50:
+        raise BuildError(f"Frigorista: cobertura P/T insuficiente ({len(available)})")
+
+    for designation, curve in curve_map.items():
+        for phase in ("bubble", "dew"):
+            points = curve.get(phase) or []
+            if len(points) < 20 or any(len(point) != 2 or point[0] <= 0 for point in points):
+                raise BuildError(f"Frigorista: curva {phase} inválida para {designation}")
+            pressures = [point[0] for point in points]
+            if pressures != sorted(pressures) or len(pressures) != len(set(pressures)):
+                raise BuildError(f"Frigorista: presiones no crecientes en {designation} ({phase})")
+
+    blocked = sum(
+        item.get("selectable") is False and bool(item.get("excluded_reason"))
+        for item in refrigerants
+    )
+    return catalog, curves, {
+        "catalog": len(refrigerants),
+        "pt_available": len(available),
+        "pt_pending_or_blocked": len(refrigerants) - len(available),
+        "blocked": blocked,
+    }
+
+
 def write_json(path: Path, data: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
@@ -402,6 +448,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
     for required in (
         "index.html",
         "climatizacion.html",
+        "frigorista.html",
         "smd.html",
         "calculadoras.html",
         "conductos.html",
@@ -437,6 +484,9 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "assets/calculations.js",
         "assets/calculators.css",
         "assets/calculators.js",
+        "assets/frigorista.css",
+        "assets/frigorista-engine.js",
+        "assets/frigorista.js",
         "assets/duct-designer.css",
         "assets/duct-designer.js",
         "assets/analytics.css",
@@ -469,6 +519,8 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "assets/super-tecnico-logo.png",
         "assets/libro-electronica-inverter-replacor-portada.png",
         "data/ads-config.json",
+        "data/frigorista/catalog.json",
+        "data/frigorista/pt-curves.json",
         "recursos/libro-electronica-inverter-replacor.pdf",
     ):
         source = source_root / required
@@ -645,6 +697,17 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
     write_json(output / "data" / "smd" / "catalog.json", smd_catalog)
     components_catalog, components_stats = validate_components_catalog(source_root)
     write_json(output / "data" / "components" / "catalog.json", components_catalog)
+    frigorista_catalog, frigorista_curves, frigorista_stats = validate_frigorista_data(source_root)
+    write_json(output / "data" / "frigorista" / "catalog.json", frigorista_catalog)
+    write_json(output / "data" / "frigorista" / "pt-curves.json", frigorista_curves)
+    write_json(
+        output / "data" / "frigorista" / "discovery.json",
+        read_json(source_root / "data" / "frigorista" / "discovery.json"),
+    )
+    write_json(
+        output / "data" / "frigorista" / "tool-manifest.json",
+        read_json(source_root / "data" / "frigorista" / "tool-manifest.json"),
+    )
     write_json(
         output / "data" / "electroia" / "tool-manifest.json",
         read_json(source_root / "data" / "electroia" / "tool-manifest.json"),
@@ -700,6 +763,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "brands": manifest,
         "smd": smd_stats,
         "components": components_stats,
+        "frigorista": frigorista_stats,
         "oem_pcb": oem_stats,
         "symbols": {"symbols": len(symbols), "lessons": len(lessons), "modules": len(modules)},
         "training": training_stats,

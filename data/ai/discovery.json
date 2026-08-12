@@ -40,6 +40,20 @@
         "single_canvas_svg_rendering"
       ],
       "discovery": "../electroia/discovery.json"
+    },
+    {
+      "id": "super-tecnico-frigorista",
+      "title": "Asistente Frigorista",
+      "status": "browser_engine_available_remote_execution_planned",
+      "capabilities": [
+        "refrigerant_search",
+        "pressure_temperature_conversion",
+        "bubble_dew_separation",
+        "superheat_calculation",
+        "subcooling_calculation",
+        "next_measurement_guidance"
+      ],
+      "discovery": "../frigorista/discovery.json"
     }
   ],
   "access_model": {

@@ -1,0 +1,108 @@
+{
+  "schema_version": "1.0.0",
+  "name": "super-tecnico-frigorista-tools",
+  "status": "browser_engine_available_remote_execution_planned",
+  "provider_neutral": true,
+  "instructions": "Use the smallest tool that answers the request. Values described as estimates must never be promoted to measurements. Request one missing high-value measurement at a time and allow an inconclusive result.",
+  "measurement_quality": ["measured", "machine_read", "observed_estimate", "unknown"],
+  "tools": [
+    {
+      "name": "frigorista_get_capabilities",
+      "state": "browser_available_remote_planned",
+      "description": "Returns dataset versions, supported units, refrigerant coverage and explicit exclusions.",
+      "input_schema": {"type": "object", "additionalProperties": false, "properties": {}}
+    },
+    {
+      "name": "frigorista_search_refrigerants",
+      "state": "browser_available_remote_planned",
+      "description": "Searches canonical refrigerant designations and reports whether a validated P/T curve is available.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["query"],
+        "properties": {
+          "query": {"type": "string", "minLength": 1, "maxLength": 80},
+          "pt_available_only": {"type": "boolean", "default": true},
+          "limit": {"type": "integer", "minimum": 1, "maximum": 20, "default": 8}
+        }
+      }
+    },
+    {
+      "name": "frigorista_convert_pt",
+      "state": "browser_available_remote_planned",
+      "description": "Converts a measured pressure to saturation temperature, returning bubble and dew separately when applicable.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["refrigerant", "pressure", "pressure_unit", "pressure_reference"],
+        "properties": {
+          "refrigerant": {"type": "string", "minLength": 2, "maxLength": 40},
+          "pressure": {"type": "number"},
+          "pressure_unit": {"type": "string", "enum": ["bar", "psi", "kpa", "mpa"]},
+          "pressure_reference": {"type": "string", "enum": ["gauge", "absolute"]},
+          "atmospheric_pressure_pa": {"type": "number", "exclusiveMinimum": 0, "default": 101325}
+        }
+      }
+    },
+    {
+      "name": "frigorista_calculate_superheat",
+      "state": "browser_available_remote_planned",
+      "description": "Calculates superheat from dew saturation temperature and measured suction-line temperature.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["dew_temperature_c", "suction_line_temperature_c"],
+        "properties": {
+          "dew_temperature_c": {"type": "number"},
+          "suction_line_temperature_c": {"type": "number"},
+          "measurement_quality": {"type": "string", "enum": ["measured", "machine_read", "observed_estimate", "unknown"], "default": "measured"}
+        }
+      }
+    },
+    {
+      "name": "frigorista_calculate_subcooling",
+      "state": "browser_available_remote_planned",
+      "description": "Calculates subcooling from bubble saturation temperature and measured liquid-line temperature.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["bubble_temperature_c", "liquid_line_temperature_c"],
+        "properties": {
+          "bubble_temperature_c": {"type": "number"},
+          "liquid_line_temperature_c": {"type": "number"},
+          "measurement_quality": {"type": "string", "enum": ["measured", "machine_read", "observed_estimate", "unknown"], "default": "measured"}
+        }
+      }
+    },
+    {
+      "name": "frigorista_get_next_measurement",
+      "state": "browser_available_remote_planned",
+      "description": "Returns one next high-value measurement from the current structured session.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["refrigerant", "measurements"],
+        "properties": {
+          "refrigerant": {"type": "string", "minLength": 2, "maxLength": 40},
+          "goal": {"type": "string", "enum": ["pt_only", "superheat", "subcooling", "basic_system_study", "deep_analysis"], "default": "basic_system_study"},
+          "measurements": {"type": "object"}
+        }
+      }
+    },
+    {
+      "name": "frigorista_analyze_measurements",
+      "state": "planned_after_evidence_rules",
+      "description": "Will return evidence, contradictions, unknowns and the next useful measurement without diagnosing charge from pressure alone.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["refrigerant", "measurements"],
+        "properties": {
+          "refrigerant": {"type": "string", "minLength": 2, "maxLength": 40},
+          "measurements": {"type": "object"},
+          "observations": {"type": "array", "maxItems": 12, "items": {"type": "object"}}
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "service_version": "0.1.0",
+  "id": "super-tecnico-frigorista",
+  "name": "Asistente Frigorista",
+  "status": "browser_engine_available_remote_execution_planned",
+  "provider_neutral": true,
+  "embedded_ai_model": false,
+  "purpose": "Convertir presión y temperatura de saturación de forma determinista y ampliar una sesión con las mediciones que el técnico realmente pueda obtener.",
+  "human_entry_point": "../../frigorista.html",
+  "contracts": {
+    "tool_manifest": "tool-manifest.json",
+    "catalog": "catalog.json",
+    "pt_curves": "pt-curves.json"
+  },
+  "interfaces": {
+    "browser_javascript": {
+      "status": "available",
+      "engine": "../../assets/frigorista-engine.js",
+      "catalog": "catalog.json",
+      "pt_curves": "pt-curves.json"
+    },
+    "remote_api": {
+      "status": "planned",
+      "authentication": "planned_api_key_or_oauth"
+    },
+    "remote_mcp": {
+      "status": "planned",
+      "transport": "streamable-http"
+    }
+  },
+  "principles": [
+    "Start with the smallest useful P/T conversion.",
+    "Ask for one additional measurement only when it unlocks a requested result.",
+    "Accept unknown data without blocking the session.",
+    "Keep measured, machine_read, observed_estimate, and unknown values distinct.",
+    "Use dew for superheat and bubble for subcooling in zeotropic blends.",
+    "Never extrapolate or invent an unsupported property.",
+    "A pressure value alone never confirms refrigerant charge or a fault."
+  ],
+  "dataset": {
+    "version": "2026.08.1",
+    "pt_refrigerants": 56,
+    "thermodynamic_engine": "CoolProp 8.0.0",
+    "internal_pressure": "Pa_absolute",
+    "display_pressure_default": "bar_gauge"
+  },
+  "safety": {
+    "r717_standalone": "excluded",
+    "r744_standalone": "excluded",
+    "safety_classes": "seed_pending_source_review",
+    "diagnostic_rules": "not_active"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-08-12T14:42:32.616791+00:00",
+  "generated_at_utc": "2026-08-12T15:47:18.725585+00:00",
   "status": "private_preview_foundation",
   "readiness_score_percent": 50,
   "score_meaning": "Preparación contractual y de datos; no disponibilidad comercial.",
@@ -20,7 +20,9 @@
     "electroia_symbols": 460,
     "electroia_symbols_reviewed": 72,
     "hvac_training_chapters": 167,
-    "electronics_chapters": 678
+    "electronics_chapters": 678,
+    "frigorista_refrigerants": 71,
+    "frigorista_pt_available": 56
   },
   "checkpoints": [
     {
@@ -39,7 +41,7 @@
       "id": "focused_tools",
       "title": "Herramientas centradas en objetivos",
       "status": "pass",
-      "evidence": "Preflight, resolución, diagnóstico, componentes, casos y diagramas"
+      "evidence": "Preflight, refrigeración P/T progresiva, resolución, diagnóstico, componentes, casos y diagramas"
     },
     {
       "id": "quality_labels",

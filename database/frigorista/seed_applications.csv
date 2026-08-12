@@ -1,0 +1,20 @@
+code,name
+domestic,Refrigeración doméstica
+light_commercial,Comercial ligero
+commercial,Refrigeración comercial
+supermarket,Supermercados/centrales
+transport,Transporte refrigerado
+air_conditioning,Climatización
+heat_pump,Bomba de calor
+chillers,Chillers/enfriadoras
+industrial,Refrigeración industrial
+high_temperature,Alta temperatura/proceso
+medium_temperature,Media temperatura
+low_temperature,Baja temperatura
+ultra_low_temperature,Ultra baja temperatura
+cascade,Sistemas en cascada
+automotive,Automoción
+retrofit,Retrofit/equipos existentes
+blend_component,Componente de mezcla
+organic_rankine,Aplicaciones ORC/especiales
+legacy_blends,Mezclas históricas

@@ -1,0 +1,70 @@
+designation,family,mixture_type,safety_class_seed,catalog_status,application_tags,notes,selectable,verification_status
+R11,CFC,pure,A1,legacy,industrial_chillers,Refrigerante histórico; mantener para identificación de equipos antiguos.,1,seed_needs_final_source_verification
+R12,CFC,pure,A1,legacy,domestic|commercial|transport,Histórico/legado.,1,seed_needs_final_source_verification
+R13,CFC,pure,A1,legacy,ultra_low_temperature,"Histórico, muy baja temperatura.",1,seed_needs_final_source_verification
+R22,HCFC,pure,A1,legacy,air_conditioning|commercial|industrial,Muy extendido en instalaciones antiguas.,1,seed_needs_final_source_verification
+R23,HFC,pure,A1,current_specialty,ultra_low_temperature|cascade,Aplicaciones de muy baja temperatura/cascada.,1,seed_needs_final_source_verification
+R32,HFC,pure,A2L,current,air_conditioning|heat_pump,Climatización y bombas de calor.,1,seed_needs_final_source_verification
+R123,HCFC,pure,B1,legacy,industrial_chillers,Histórico en chillers de baja presión; sujeto a regulación.,1,seed_needs_final_source_verification
+R124,HCFC,pure,A1,legacy,industrial|legacy_blends,Componente y refrigerante histórico.,1,seed_needs_final_source_verification
+R125,HFC,pure,A1,component,blend_component,Principalmente componente de mezclas.,1,seed_needs_final_source_verification
+R134a,HFC,pure,A1,current_legacy_transition,domestic|commercial|transport|chillers|industrial,Muy extendido; sujeto a transición regulatoria según aplicación.,1,seed_needs_final_source_verification
+R143a,HFC,pure,A2,component,blend_component,Principalmente componente de mezclas.,1,seed_needs_final_source_verification
+R152a,HFC,pure,A2,current_specialty,commercial|industrial|blend_component,Inflamable; aplicaciones específicas y componente de mezclas.,1,seed_needs_final_source_verification
+R227ea,HFC,pure,A1,specialty,industrial|blend_component,Aplicaciones especiales y componente de mezclas.,1,seed_needs_final_source_verification
+R236fa,HFC,pure,A1,specialty,industrial|high_temperature,Aplicaciones especiales.,1,seed_needs_final_source_verification
+R245fa,HFC,pure,B1,specialty,industrial|high_temperature|organic_rankine,Aplicaciones especiales/alta temperatura.,1,seed_needs_final_source_verification
+R401A,HCFC/HFC blend,zeotropic,,legacy,commercial,Retrofit histórico de R12.,1,seed_needs_final_source_verification
+R401B,HCFC/HFC blend,zeotropic,,legacy,commercial,Retrofit histórico de R12.,1,seed_needs_final_source_verification
+R402A,HCFC/HFC/HC blend,zeotropic,,legacy,commercial|low_temperature,Retrofit histórico.,1,seed_needs_final_source_verification
+R402B,HCFC/HFC/HC blend,zeotropic,,legacy,commercial|low_temperature,Retrofit histórico.,1,seed_needs_final_source_verification
+R404A,HFC blend,near_azeotropic,A1,current_legacy_transition,commercial|transport|low_temperature,Muy extendido en refrigeración comercial y baja temperatura.,1,seed_needs_final_source_verification
+R407A,HFC blend,zeotropic,A1,current_legacy_transition,commercial|medium_temperature|low_temperature,Mezcla con glide.,1,seed_needs_final_source_verification
+R407C,HFC blend,zeotropic,A1,current_legacy_transition,air_conditioning|heat_pump|chillers,Mezcla con glide.,1,seed_needs_final_source_verification
+R407F,HFC blend,zeotropic,A1,current,commercial|medium_temperature|low_temperature,Alternativa en refrigeración comercial.,1,seed_needs_final_source_verification
+R407H,HFC blend,zeotropic,A1,current,commercial|medium_temperature|low_temperature,Alternativa en refrigeración comercial.,1,seed_needs_final_source_verification
+R408A,HCFC/HFC blend,zeotropic,,legacy,commercial|low_temperature,Retrofit histórico.,1,seed_needs_final_source_verification
+R409A,HCFC blend,zeotropic,,legacy,commercial,Retrofit histórico.,1,seed_needs_final_source_verification
+R410A,HFC blend,near_azeotropic,A1,current_legacy_transition,air_conditioning|heat_pump,Climatización; alta presión relativa.,1,seed_needs_final_source_verification
+R413A,HFC/HC blend,zeotropic,,legacy,commercial|retrofit,Retrofit histórico.,1,seed_needs_final_source_verification
+R417A,HFC/HC blend,zeotropic,,legacy,air_conditioning|retrofit,Retrofit histórico de R22.,1,seed_needs_final_source_verification
+R422A,HFC/HC blend,zeotropic,,legacy,commercial|low_temperature|retrofit,Retrofit.,1,seed_needs_final_source_verification
+R422B,HFC/HC blend,zeotropic,,legacy,air_conditioning|commercial|retrofit,Retrofit.,1,seed_needs_final_source_verification
+R422D,HFC/HC blend,zeotropic,,legacy,air_conditioning|commercial|retrofit,Retrofit.,1,seed_needs_final_source_verification
+R427A,HFC blend,zeotropic,,legacy_transition,air_conditioning|commercial|retrofit,Retrofit de R22.,1,seed_needs_final_source_verification
+R428A,HFC/HC blend,zeotropic,,legacy,commercial|low_temperature,Retrofit histórico.,1,seed_needs_final_source_verification
+R434A,HFC/HC blend,zeotropic,,legacy,commercial|low_temperature,Aplicaciones de refrigeración.,1,seed_needs_final_source_verification
+R437A,HFC/HC blend,zeotropic,,legacy,commercial|retrofit,Retrofit.,1,seed_needs_final_source_verification
+R438A,HFC/HC blend,zeotropic,,legacy_transition,air_conditioning|commercial|retrofit,Retrofit de R22.,1,seed_needs_final_source_verification
+R448A,HFC/HFO blend,zeotropic,A1,current,commercial|supermarket|medium_temperature|low_temperature,Alternativa de menor GWP a R404A/R507A; glide relevante.,1,seed_needs_final_source_verification
+R449A,HFC/HFO blend,zeotropic,A1,current,commercial|supermarket|medium_temperature|low_temperature,Alternativa de menor GWP a R404A/R507A; glide relevante.,1,seed_needs_final_source_verification
+R449B,HFC/HFO blend,zeotropic,,current_specialty,commercial|medium_temperature|low_temperature,Variante de la familia R449.,1,seed_needs_final_source_verification
+R450A,HFC/HFO blend,zeotropic,A1,current,commercial|chillers|medium_temperature,Alternativa a R134a en determinadas aplicaciones.,1,seed_needs_final_source_verification
+R452A,HFC/HFO blend,zeotropic,A1,current,transport|commercial|medium_temperature|low_temperature,Usado en transporte y refrigeración comercial.,1,seed_needs_final_source_verification
+R452B,HFC/HFO blend,zeotropic,A2L,current,air_conditioning|heat_pump,Alternativa A2L en climatización/bomba de calor.,1,seed_needs_final_source_verification
+R454A,HFC/HFO blend,zeotropic,A2L,current,commercial|medium_temperature|low_temperature,Alternativa A2L.,1,seed_needs_final_source_verification
+R454B,HFC/HFO blend,zeotropic,A2L,current,air_conditioning|heat_pump,Alternativa A2L a R410A en ciertas aplicaciones.,1,seed_needs_final_source_verification
+R454C,HFC/HFO blend,zeotropic,A2L,current,commercial|medium_temperature|low_temperature,Alternativa A2L de bajo GWP.,1,seed_needs_final_source_verification
+R455A,HFC/HFO/CO2 blend,zeotropic,A2L,current,commercial|medium_temperature|low_temperature,Contiene una pequeña fracción de R744 como componente de mezcla; NO habilita diagnóstico de sistemas R744/CO2.,1,seed_needs_final_source_verification
+R456A,HFC/HFO blend,zeotropic,,current_specialty,automotive|commercial,Aplicaciones específicas; verificar soporte termodinámico.,1,seed_needs_final_source_verification
+R466A,HFC blend,zeotropic,A1,current_specialty,air_conditioning|heat_pump,Mezcla A1 para aplicaciones específicas; verificar disponibilidad regional.,1,seed_needs_final_source_verification
+R475A,HFC/HFO blend,zeotropic,,current_specialty,commercial|chillers,Mezcla moderna; verificar soporte termodinámico.,1,seed_needs_final_source_verification
+R502,CFC/HCFC blend,azeotropic,A1,legacy,commercial|low_temperature,Histórico en baja temperatura.,1,seed_needs_final_source_verification
+R507A,HFC blend,azeotropic,A1,current_legacy_transition,commercial|low_temperature,Muy extendido junto con R404A.,1,seed_needs_final_source_verification
+R508A,HFC/PFC blend,azeotropic,,specialty,ultra_low_temperature|cascade,Muy baja temperatura.,1,seed_needs_final_source_verification
+R508B,HFC/PFC blend,azeotropic,A1,specialty,ultra_low_temperature|cascade,Muy baja temperatura/cascada.,1,seed_needs_final_source_verification
+R513A,HFC/HFO blend,azeotropic,A1,current,commercial|chillers|medium_temperature,Alternativa de menor GWP a R134a.,1,seed_needs_final_source_verification
+R513B,HFC/HFO blend,azeotropic,,current_specialty,commercial|chillers|medium_temperature,Variante moderna; verificar soporte y clasificación vigente.,1,seed_needs_final_source_verification
+R515A,HFO/HFC blend,azeotropic,,current_specialty,chillers|high_temperature,Aplicaciones específicas.,1,seed_needs_final_source_verification
+R515B,HFO/HFC blend,azeotropic,A1,current,chillers|high_temperature|industrial,Alternativa de muy bajo GWP en chillers/alta temperatura.,1,seed_needs_final_source_verification
+R516A,HFO/HFC blend,azeotropic,,current_specialty,commercial|chillers|medium_temperature,Alternativa a R134a; verificar clasificación vigente.,1,seed_needs_final_source_verification
+R1233zd(E),HCFO,pure,A1,current,chillers|industrial|high_temperature,Baja presión/alta temperatura; aplicaciones industriales y chillers.,1,seed_needs_final_source_verification
+R1234yf,HFO,pure,A2L,current,automotive|commercial,HFO A2L.,1,seed_needs_final_source_verification
+R1234ze(E),HFO,pure,A2L,current,chillers|commercial|industrial|high_temperature,HFO A2L; aplicaciones de media/alta temperatura.,1,seed_needs_final_source_verification
+R1336mzz(Z),HFO,pure,A1,current_specialty,industrial|high_temperature|heat_pump,Aplicaciones de alta temperatura/proceso.,1,seed_needs_final_source_verification
+R290,HC,pure,A3,current,domestic|commercial|heat_pump,Propano. Alta inflamabilidad; carga y seguridad condicionadas por normativa/equipo.,1,seed_needs_final_source_verification
+R600,HC,pure,A3,specialty,industrial|blend_component,n-butano; aplicaciones específicas.,1,seed_needs_final_source_verification
+R600a,HC,pure,A3,current,domestic|light_commercial,Isobutano. Muy habitual en doméstico y comercial ligero.,1,seed_needs_final_source_verification
+R1270,HC,pure,A3,current_specialty,commercial|industrial|low_temperature,Propileno. Aplicaciones comerciales/industriales específicas.,1,seed_needs_final_source_verification
+R170,HC,pure,A3,specialty,ultra_low_temperature|cascade,Etano; muy baja temperatura/cascada.,1,seed_needs_final_source_verification
+R1150,HC,pure,A3,specialty,ultra_low_temperature|cascade,Etileno; muy baja temperatura/cascada.,1,seed_needs_final_source_verification

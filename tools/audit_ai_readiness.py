@@ -67,11 +67,12 @@ def audit(root: Path) -> dict[str, Any]:
     symbol_report = read_json(root / "data" / "electroia" / "symbol-normalization-report.json")
     training = read_json(root / "data" / "training" / "collection.json")
     electronics = read_json(root / "data" / "electronics" / "collection.json")
+    frigorista = read_json(root / "data" / "frigorista" / "catalog.json")
 
     checks = [
         checkpoint("public_discovery", "Descubrimiento público para máquinas", "pass", "llms.txt y data/ai/discovery.json"),
         checkpoint("stable_contracts", "Contratos estables y versionados", "pass", "Manifiesto, JSON Schema y contrato OpenAPI de diseño"),
-        checkpoint("focused_tools", "Herramientas centradas en objetivos", "pass", "Preflight, resolución, diagnóstico, componentes, casos y diagramas"),
+        checkpoint("focused_tools", "Herramientas centradas en objetivos", "pass", "Preflight, refrigeración P/T progresiva, resolución, diagnóstico, componentes, casos y diagramas"),
         checkpoint("quality_labels", "Calidad y confianza explícitas", "pass", f"{brands_with_quality}/{len(brands)} marcas con informe y componentes con confidence"),
         checkpoint("source_traceability", "Fuentes aplicables por respuesta", "partial", f"{brands_with_sources}/{len(brands)} marcas con fuentes; {brands_with_provenance_policy} políticas históricas específicas"),
         checkpoint("remote_mcp", "Servidor MCP remoto", "planned", "ElectroIA dispone de stdio local; el transporte remoto sigue desactivado"),
@@ -106,6 +107,8 @@ def audit(root: Path) -> dict[str, Any]:
             "electroia_symbols_reviewed": int((symbol_report.get("catalog_status_counts") or {}).get("engine_reviewed") or 0),
             "hvac_training_chapters": int((training.get("stats") or {}).get("chapters") or 0),
             "electronics_chapters": int((electronics.get("stats") or {}).get("chapters") or 0),
+            "frigorista_refrigerants": int((frigorista.get("counts") or {}).get("catalog") or 0),
+            "frigorista_pt_available": int((frigorista.get("counts") or {}).get("pt_available") or 0),
         },
         "checkpoints": checks,
         "release_blockers": [

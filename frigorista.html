@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="google-adsense-account" content="ca-pub-6950924617837531">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Convierte presión en temperatura de saturación y amplía la consulta paso a paso hasta estudiar el funcionamiento de una instalación frigorífica.">
+  <meta name="theme-color" content="#06111b">
+  <title>Asistente Frigorista | Super Técnico</title>
+  <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
+  <link rel="stylesheet" href="assets/app-theme.css?v=1">
+  <link rel="stylesheet" href="assets/frigorista.css?v=1">
+  <script src="assets/app-shell.js?v=3" defer></script>
+  <script src="assets/frigorista-engine.js?v=1" defer></script>
+  <script src="assets/frigorista.js?v=1" defer></script>
+</head>
+<body>
+  <header class="fr-header">
+    <a class="fr-brand" href="index.html" aria-label="Volver a Super Técnico">
+      <img src="assets/super-tecnico-logo.png" alt="">
+      <span><strong>Super Técnico</strong><small>Asistente Frigorista</small></span>
+    </a>
+    <a class="fr-back" href="index.html">Herramientas</a>
+  </header>
+
+  <main class="fr-main">
+    <section class="fr-hero">
+      <div class="fr-hero-copy">
+        <p class="fr-eyebrow">FRIGORISTA · CONSULTA Y ANÁLISIS</p>
+        <h1>De una presión a todo lo que necesites comprobar.</h1>
+        <p>Obtén al instante la temperatura de evaporación o condensación. Si quieres continuar, la misma consulta irá creciendo contigo, una medición cada vez.</p>
+        <div class="fr-hero-points" aria-label="Características">
+          <span><b>01</b> P/T inmediata</span>
+          <span><b>02</b> Sin formularios enormes</span>
+          <span><b>03</b> Datos desconocidos se omiten</span>
+        </div>
+      </div>
+      <div class="fr-gauge" aria-hidden="true">
+        <div class="fr-gauge-scale"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="fr-gauge-needle"></div>
+        <div class="fr-gauge-centre"></div>
+        <strong>P/T</strong>
+        <small>LECTURA TÉCNICA</small>
+      </div>
+    </section>
+
+    <section class="fr-workbench" aria-labelledby="quickTitle">
+      <div class="fr-progress" aria-label="Recorrido de la herramienta">
+        <span class="is-active"><b>1</b> Consulta P/T</span>
+        <span><b>2</b> Añadir mediciones</span>
+        <span><b>3</b> Estudiar el sistema</span>
+      </div>
+
+      <div class="fr-panel-head">
+        <div>
+          <p class="fr-eyebrow">EMPIEZA POR LO ESENCIAL</p>
+          <h2 id="quickTitle">¿Qué presión estás midiendo?</h2>
+          <p>Solo necesitamos el refrigerante y la presión. La referencia habitual del manómetro ya viene seleccionada.</p>
+        </div>
+        <span id="catalogStatus" class="fr-data-status">Preparando refrigerantes…</span>
+      </div>
+
+      <form id="ptForm" class="fr-pt-form" novalidate>
+        <fieldset class="fr-segment-field">
+          <legend>Quiero conocer</legend>
+          <div class="fr-segmented">
+            <label><input type="radio" name="side" value="evaporation" checked><span><b>Evaporación</b><small>Presión de baja</small></span></label>
+            <label><input type="radio" name="side" value="condensation"><span><b>Condensación</b><small>Presión de alta</small></span></label>
+          </div>
+        </fieldset>
+
+        <label class="fr-field fr-field-refrigerant" for="refrigerantInput">
+          <span>Refrigerante</span>
+          <input id="refrigerantInput" name="refrigerant" type="search" list="refrigerantList" autocomplete="off" placeholder="Ejemplo: R410A" required>
+          <datalist id="refrigerantList"></datalist>
+        </label>
+
+        <div class="fr-common-gases" aria-label="Refrigerantes frecuentes">
+          <button type="button" data-refrigerant="R32">R32</button>
+          <button type="button" data-refrigerant="R410A">R410A</button>
+          <button type="button" data-refrigerant="R407C">R407C</button>
+          <button type="button" data-refrigerant="R404A">R404A</button>
+          <button type="button" data-refrigerant="R134a">R134a</button>
+          <button type="button" data-refrigerant="R449A">R449A</button>
+          <button type="button" data-refrigerant="R290">R290</button>
+          <button type="button" data-refrigerant="R600a">R600a</button>
+        </div>
+
+        <div class="fr-pressure-row">
+          <label class="fr-field" for="pressureInput">
+            <span>Presión medida</span>
+            <input id="pressureInput" name="pressure" type="text" inputmode="decimal" autocomplete="off" placeholder="0,00" required>
+          </label>
+          <label class="fr-field fr-unit-field" for="pressureUnit">
+            <span>Unidad</span>
+            <select id="pressureUnit" name="unit">
+              <option value="bar">bar</option>
+              <option value="psi">psi</option>
+              <option value="kpa">kPa</option>
+              <option value="mpa">MPa</option>
+            </select>
+          </label>
+        </div>
+
+        <fieldset class="fr-reference">
+          <legend>Tipo de presión</legend>
+          <label><input type="radio" name="reference" value="gauge" checked><span>Manométrica <small>la habitual</small></span></label>
+          <label><input type="radio" name="reference" value="absolute"><span>Absoluta</span></label>
+        </fieldset>
+
+        <details class="fr-advanced">
+          <summary>Ajuste avanzado de presión atmosférica</summary>
+          <label class="fr-field" for="atmosphericInput">
+            <span>Presión atmosférica local</span>
+            <span class="fr-input-suffix"><input id="atmosphericInput" type="text" inputmode="decimal" value="1,01325"><b>bar abs</b></span>
+          </label>
+        </details>
+
+        <p id="formError" class="fr-error" role="alert" hidden></p>
+        <button id="calculateButton" class="fr-primary-button" type="submit">
+          <span>Calcular temperatura</span><b aria-hidden="true">→</b>
+        </button>
+      </form>
+    </section>
+
+    <section id="resultPanel" class="fr-result" aria-live="polite" hidden>
+      <div class="fr-result-head">
+        <div>
+          <p class="fr-eyebrow" id="resultEyebrow">RESULTADO</p>
+          <h2 id="resultTitle">Temperatura de evaporación</h2>
+        </div>
+        <div id="resultBadges" class="fr-result-badges"></div>
+      </div>
+
+      <div id="singleResult" class="fr-temperature-main" hidden>
+        <strong id="singleTemperature">—</strong><span>°C</span>
+        <small>Temperatura de saturación</small>
+      </div>
+
+      <div id="blendResult" class="fr-blend-result" hidden>
+        <article class="fr-temp-card fr-temp-dew">
+          <span>ROCÍO · VAPOR</span>
+          <strong><b id="dewTemperature">—</b> °C</strong>
+          <small>Referencia para recalentamiento</small>
+        </article>
+        <article class="fr-temp-card fr-temp-bubble">
+          <span>BURBUJA · LÍQUIDO</span>
+          <strong><b id="bubbleTemperature">—</b> °C</strong>
+          <small>Referencia para subenfriamiento</small>
+        </article>
+        <article class="fr-glide-card">
+          <span>DESLIZAMIENTO</span><strong><b id="glideValue">—</b> K</strong>
+        </article>
+      </div>
+
+      <p id="resultExplanation" class="fr-result-explanation"></p>
+      <div class="fr-result-actions">
+        <button id="lineTemperatureButton" class="fr-primary-button" type="button">Añadir temperatura del tubo</button>
+        <button id="analyzeButton" class="fr-secondary-button" type="button">Continuar estudiando el sistema</button>
+        <button id="newQueryButton" class="fr-quiet-button" type="button">Nueva consulta</button>
+      </div>
+    </section>
+
+    <section id="measurementPanel" class="fr-measurement-panel" aria-live="polite" hidden>
+      <div class="fr-panel-head">
+        <div><p class="fr-eyebrow">SIGUIENTE DATO</p><h2 id="measurementTitle">Añadir medición</h2><p id="measurementHelp"></p></div>
+        <button id="closeMeasurementButton" class="fr-close-button" type="button" aria-label="Cerrar">×</button>
+      </div>
+      <form id="measurementForm" class="fr-inline-form">
+        <label class="fr-field" for="measurementInput"><span id="measurementLabel">Temperatura</span><span class="fr-input-suffix"><input id="measurementInput" type="text" inputmode="decimal" placeholder="0,0" required><b>°C</b></span></label>
+        <p id="measurementError" class="fr-error" role="alert" hidden></p>
+        <button class="fr-primary-button" type="submit">Guardar y calcular</button>
+      </form>
+    </section>
+
+    <section id="analysisPanel" class="fr-analysis" hidden>
+      <div class="fr-panel-head">
+        <div><p class="fr-eyebrow">ESTUDIO PROGRESIVO</p><h2>Lo que sabemos del sistema</h2><p>La herramienta conserva cada medición. Puedes detenerte en cualquier momento.</p></div>
+        <span class="fr-live-dot">SESIÓN ACTIVA</span>
+      </div>
+      <div id="measurementSummary" class="fr-summary-grid"></div>
+      <div class="fr-next-card">
+        <div><span>MEDICIÓN MÁS ÚTIL AHORA</span><h3 id="nextMeasurementTitle">—</h3><p id="nextMeasurementReason"></p></div>
+        <button id="nextMeasurementButton" class="fr-primary-button" type="button">Añadir esta medición</button>
+      </div>
+      <div id="derivedSummary" class="fr-derived-grid"></div>
+      <p class="fr-analysis-note">Una presión o un valor aislado no confirma por sí solo una avería. El análisis avanzado irá separando datos medidos, observaciones y conclusiones.</p>
+    </section>
+
+    <details class="fr-source-details">
+      <summary>Datos técnicos y alcance de esta versión</summary>
+      <div>
+        <p>Las curvas P/T se han generado con CoolProp 8.0.0 y se utilizan localmente en el navegador. No se extrapolan valores fuera del intervalo disponible.</p>
+        <p>La clase de seguridad mostrada procede del catálogo inicial y sigue sometida a revisión documental. Comprueba siempre el refrigerante, el equipo y el procedimiento de trabajo.</p>
+        <p>Los sistemas independientes R717 y R744 no forman parte de esta primera versión.</p>
+      </div>
+    </details>
+  </main>
+
+  <footer class="st-page-footer">
+    <span>Super Técnico · REPLACOR</span>
+    <nav class="st-legal-links" aria-label="Información legal">
+      <a href="ia-integracion.html">Para IAs y desarrolladores</a>
+      <a href="https://www.replacor.com/aviso-legal/" target="_blank" rel="noopener">Aviso legal</a>
+      <a href="https://www.replacor.com/politica-de-privacidad/" target="_blank" rel="noopener">Política de privacidad</a>
+    </nav>
+  </footer>
+  <script src="assets/page-counter.js?v=2" defer></script>
+</body>
+</html>

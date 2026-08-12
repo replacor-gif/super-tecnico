@@ -42,3 +42,12 @@ Do not call planned endpoints until discovery.json reports remote execution as e
 - Source repository: https://github.com/replacor-gif/super-tecnico
 
 For diagrams, the calling AI interprets the request or image, chooses the topology, calculates values, and selects components. ElectroIA validates symbols, terminals, and nets and renders a deterministic single-canvas SVG.
+
+## Frigorista entry points
+
+- Human tool: /frigorista.html
+- Discovery manifest: /data/frigorista/discovery.json
+- Proposed AI tools and schemas: /data/frigorista/tool-manifest.json
+- Versioned refrigerant catalog: /data/frigorista/catalog.json
+
+The browser engine already performs deterministic P/T, superheat and subcooling calculations. Remote API and MCP execution remain planned; do not call them until discovery reports them as enabled.

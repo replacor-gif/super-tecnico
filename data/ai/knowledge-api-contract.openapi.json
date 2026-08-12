@@ -114,7 +114,7 @@
         "additionalProperties": false,
         "required": ["domain", "query"],
         "properties": {
-          "domain": {"type": "string", "enum": ["hvac", "electronics", "components", "field_cases", "diagrams"]},
+          "domain": {"type": "string", "enum": ["hvac", "refrigeration", "electronics", "components", "field_cases", "diagrams"]},
           "query": {"type": "string", "minLength": 2, "maxLength": 300},
           "brand": {"type": "string", "maxLength": 80},
           "model_or_family": {"type": "string", "maxLength": 120}
