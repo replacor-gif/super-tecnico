@@ -76,7 +76,7 @@
         <div class="st-drawer-foot"><strong>TÉCNICA REAL.</strong><span>DECISIONES RÁPIDAS.</span></div>
       </aside>
       <nav class="st-bottom-nav" aria-label="Navegación rápida">
-        ${tools.filter(tool => ['index.html', 'climatizacion.html', 'conductos.html', 'calculadoras.html'].includes(tool.href)).map(tool => toolLink(tool, 'st-bottom-link')).join('')}
+        ${tools.filter(tool => ['index.html', 'climatizacion.html', 'frigorista.html', 'conductos.html'].includes(tool.href)).map(tool => toolLink(tool, 'st-bottom-link')).join('')}
         <button class="st-bottom-link st-bottom-more" type="button" data-st-open style="--tool-color:#ff3fa7"><span class="st-tool-icon">${icons.menu}</span><span>Más</span></button>
       </nav>`;
     document.body.append(...shell.childNodes);
