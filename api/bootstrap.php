@@ -21,6 +21,15 @@ function st_config(string $key): mixed
 function st_origin_headers(): bool
 {
     $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+    $action = preg_replace('/[^a-z0-9-]/', '', strtolower((string) ($_GET['action'] ?? '')));
+    $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
+    if ($action === 'regulation-search' && in_array($method, ['GET', 'OPTIONS'], true)) {
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Headers: Content-Type, X-ST-Client, X-ST-Client-Type');
+        header('Access-Control-Allow-Methods: GET, OPTIONS');
+        header('Vary: Origin');
+        return true;
+    }
     if ($origin === '') {
         return true;
     }
@@ -30,7 +39,7 @@ function st_origin_headers(): bool
         header('Access-Control-Allow-Origin: ' . $origin);
         header('Access-Control-Allow-Credentials: true');
         header('Vary: Origin');
-        header('Access-Control-Allow-Headers: Content-Type, X-ST-Client, X-CSRF-Token');
+        header('Access-Control-Allow-Headers: Content-Type, X-ST-Client, X-ST-Client-Type, X-CSRF-Token');
         header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
         return true;
     }

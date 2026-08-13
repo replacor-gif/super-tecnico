@@ -10,10 +10,12 @@
   <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
   <link rel="stylesheet" href="assets/common.css?v=1">
   <link rel="stylesheet" href="assets/app-theme.css?v=1">
-  <link rel="stylesheet" href="assets/regulations.css?v=1">
+  <link rel="stylesheet" href="assets/regulations.css?v=2">
+  <link rel="stylesheet" href="assets/regulations-search.css?v=1">
   <style>*{min-width:0}</style>
   <script src="assets/app-shell.js?v=4" defer></script>
-  <script src="assets/regulations.js?v=1" defer></script>
+  <script src="assets/community-api.js?v=2" defer></script>
+  <script src="assets/regulations.js?v=2" defer></script>
 </head>
 <body>
   <header class="rg-header">
@@ -23,19 +25,29 @@
 
   <main class="rg-main">
     <section class="rg-hero">
-      <div><p class="rg-eyebrow">FUENTES OFICIALES · ESPAÑA</p><h1>Encuentra el punto exacto del reglamento.</h1><p>Busca en las copias oficiales guardadas y abre directamente la página que contiene el resultado.</p></div>
+      <div><p class="rg-eyebrow">FUENTES OFICIALES · ESPAÑA</p><h1>Pregunta una vez. Encuentra la norma y la página.</h1><p>Un buscador técnico común para profesionales y sistemas de IA, siempre con el texto localizado y su fuente oficial.</p></div>
       <div class="rg-book" aria-hidden="true"><i></i><i></i><b>§</b></div>
     </section>
 
     <section class="rg-search-panel" aria-labelledby="searchTitle">
-      <div class="rg-panel-head"><div><p class="rg-eyebrow">CONSULTA DOCUMENTAL</p><h2 id="searchTitle">¿Qué necesitas comprobar?</h2><p>Elige un reglamento para una búsqueda más rápida o consulta toda la biblioteca.</p></div><span id="catalogStatus" class="rg-status">Preparando biblioteca…</span></div>
+      <div class="rg-panel-head"><div><p class="rg-eyebrow">CONSULTA DOCUMENTAL GRATUITA</p><h2 id="searchTitle">¿Qué necesitas comprobar?</h2><p>Escribe como lo preguntarías a un compañero. Puedes afinar por área o reglamento.</p></div><span id="catalogStatus" class="rg-status">Preparando biblioteca…</span></div>
       <form id="searchForm" class="rg-search-form">
         <label class="rg-query"><span>Texto, artículo o concepto</span><div><input id="queryInput" type="search" autocomplete="off" placeholder="Ejemplo: caída de tensión, ventilación, tuberías…" required><button type="submit">Buscar <span aria-hidden="true">→</span></button></div></label>
-        <label class="rg-document"><span>Buscar dentro de</span><select id="documentSelect"><option value="all">Todos los reglamentos</option></select></label>
+        <div class="rg-filter-row">
+          <label class="rg-domain"><span>Área técnica</span><select id="domainSelect"><option value="all">Todas las áreas</option></select></label>
+          <label class="rg-document"><span>Reglamento</span><select id="documentSelect"><option value="all">Todos los reglamentos</option></select></label>
+          <label class="rg-exact"><input id="exactPhrase" type="checkbox"><span>Buscar la frase exacta</span></label>
+        </div>
       </form>
       <div id="topicButtons" class="rg-topics" aria-label="Búsquedas frecuentes"></div>
       <p id="searchMessage" class="rg-search-message" role="status"></p>
+      <p class="rg-privacy-note">Durante esta fase gratuita contamos búsquedas, resultados y aperturas para mejorar la cobertura. No guardamos la dirección IP; las consultas se depuran de correos, enlaces y números largos y se eliminan como máximo a los 180 días.</p>
     </section>
+
+    <details class="rg-ai-access">
+      <summary><span>IA / DESARROLLADORES</span> Usar este buscador desde otra herramienta</summary>
+      <div><p>La misma búsqueda está disponible gratis en formato estructurado, con un máximo de 20 páginas por consulta y sin descarga masiva del catálogo.</p><code>GET api/index.php?action=regulation-search&amp;q=caida%20de%20tension&amp;limit=10&amp;client_type=ai</code><a href="data/regulations/tool-manifest.json">Abrir contrato para máquinas</a></div>
+    </details>
 
     <section id="resultsPanel" class="rg-results" aria-labelledby="resultsTitle" hidden>
       <div class="rg-results-head"><div><p class="rg-eyebrow">COINCIDENCIAS</p><h2 id="resultsTitle">Resultados</h2></div><span id="resultCount"></span></div>
@@ -43,7 +55,7 @@
     </section>
 
     <section class="rg-library" aria-labelledby="libraryTitle">
-      <div class="rg-library-head"><div><p class="rg-eyebrow">BIBLIOTECA COMÚN</p><h2 id="libraryTitle">Reglamentos disponibles</h2><p id="librarySummary">Cargando documentos oficiales…</p><p>Las fuentes se comprobarán semanalmente. Si cambia el contenido, las herramientas relacionadas quedarán señaladas para revisión antes de asumir la nueva regla.</p></div></div>
+      <div class="rg-library-head"><div><p class="rg-eyebrow">BIBLIOTECA COMÚN</p><h2 id="libraryTitle">Reglamentos disponibles</h2><p id="librarySummary">Cargando documentos oficiales…</p><p>Las fuentes se comprueban semanalmente. Si cambia el contenido, las herramientas relacionadas quedan señaladas para revisión antes de asumir la nueva regla.</p></div></div>
       <div id="documentGrid" class="rg-document-grid"></div>
       <details class="rg-standards"><summary>Normas UNE e IEC relacionadas</summary><p>Las normas técnicas comerciales se identifican para saber cuál aplica, pero no se copian ni se distribuyen sin licencia. Super Técnico enlazará su referencia y mantendrá separadas las obligaciones legales de las recomendaciones técnicas.</p><div id="referencedStandards"></div></details>
     </section>

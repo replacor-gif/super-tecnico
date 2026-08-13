@@ -2,8 +2,9 @@
   "schema_version": "1.1",
   "name": "super-tecnico-ai-tools",
   "title": "Super Técnico — herramientas técnicas para IAs",
-  "status": "design_contract",
-  "execution_enabled": false,
+  "status": "mixed_public_preview",
+  "execution_enabled": true,
+  "execution_scope": ["supertecnico_search_regulations"],
   "provider_neutral": true,
   "instructions": "Primero usa supertecnico_check_coverage. Solicita después solo el nivel mínimo que resuelva el caso. Conserva marcas, familias, unidades y lugar de lectura; no mezcles variantes. Muestra incertidumbre y procedencia. Usa ElectroIA únicamente cuando ya hayas decidido la topología y los componentes.",
   "routing_policy": {
@@ -13,7 +14,7 @@
     "unknown_result": "Return a structured not_found or insufficient_context result; never invent a record."
   },
   "billing_policy": {
-    "status": "planned_after_benchmark",
+    "status": "free_preview_measurement_before_commercial_release",
     "coverage_preflight": "free",
     "economic_classes": ["micro", "standard", "advanced", "heavy"],
     "classification": {
@@ -312,11 +313,13 @@
       "name": "supertecnico_search_regulations",
       "title": "Buscar normativa oficial",
       "description": "Localiza texto dentro de reglamentos oficiales y devuelve documento, página, huellas de fuente y estado de revisión sin convertir una coincidencia en una conclusión legal automática.",
-      "state": "browser_available_remote_planned",
+      "state": "public_free_preview",
       "result_level": "basic",
-      "billing_tier": "metered_basic_planned",
+      "billing_tier": "free_preview",
       "target_output_tokens": 850,
       "delegate": "../regulations/tool-manifest.json",
+      "http_endpoint": "../../api/index.php?action=regulation-search",
+      "authentication": "not_required_during_free_preview",
       "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
       "input_schema": {
         "type": "object",
@@ -325,9 +328,11 @@
         "properties": {
           "query": {"type": "string", "minLength": 2, "maxLength": 300},
           "document_id": {"type": "string", "maxLength": 64},
+          "domain": {"type": "string", "maxLength": 80},
+          "exact_phrase": {"type": "boolean", "default": false},
           "evidence_level": {"type": "string", "enum": ["document_hit", "reviewed_rule", "deterministic_result"], "default": "document_hit"},
           "jurisdiction": {"type": "string", "enum": ["ES"], "default": "ES"},
-          "limit": {"type": "integer", "minimum": 1, "maximum": 30, "default": 10}
+          "limit": {"type": "integer", "minimum": 1, "maximum": 20, "default": 10}
         }
       }
     },

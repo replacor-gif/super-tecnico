@@ -6,8 +6,14 @@
   const PAGE_LABELS = {
     inicio: 'Inicio', climatizacion: 'Climatización', conductos: 'Diseño de conductos', calculadoras: 'Calculadoras',
     componentes: 'Componentes', comparador: 'Comparador', smd: 'Identificador SMD', averias: 'Averías compartidas',
-    feedback: 'Propuestas', simbolos: 'Simbología', 'electronica-placas': 'Electrónica de placas',
+    feedback: 'Propuestas', simbolos: 'Simbología', 'electronica-placas': 'Electrónica de placas', normativa: 'Normativa técnica',
     'formacion-climatizacion': 'Formación de climatización',
+  };
+  const REGULATION_LABELS = {
+    rebt: 'REBT', rite: 'RITE', rsif: 'RSIF', rat: 'RAT', rlat: 'RLAT', 'cte-db-hs': 'CTE DB-HS', ict: 'ICT',
+    gas: 'Reglamento de gas', 'pressure-equipment': 'Equipos a presión', 'machinery-safety': 'Seguridad de máquinas',
+    'work-equipment': 'Equipos de trabajo', 'cte-db-he': 'CTE DB-HE', 'cte-db-si': 'CTE DB-SI', rsciei: 'RSCIEI',
+    ripci: 'RIPCI', 'f-gas-eu': 'Gases fluorados UE', 'f-gas-es': 'Gases fluorados España', 'water-quality': 'Agua de consumo',
   };
   const state = { days: 30, loading: false };
   const byId = id => document.getElementById(id);
@@ -163,6 +169,23 @@
     ).join('') : '<p class="chart-empty">Todavía no hay comentarios sobre qué mejorar.</p>';
   }
 
+  function renderRegulationSearch(data) {
+    const regulation = data.regulation_search || { totals: {}, popular_queries: [], top_documents: [] };
+    const totals = regulation.totals || {};
+    const searches = Number(totals.searches || 0);
+    const noResults = Number(totals.no_result_searches || 0);
+    const rows = [
+      ['Búsquedas', searches], ['Personas', totals.human_searches], ['IAs', totals.ai_searches],
+      ['Usuarios aproximados', totals.clients], ['Páginas abiertas', totals.result_opens], ['Tiempo medio', `${number(totals.average_latency_ms)} ms`],
+    ];
+    byId('regulationSearchMetrics').innerHTML = rows.map(([label, value]) => `<div class="regulation-search-metric"><span>${label}</span><strong>${typeof value === 'number' ? number(value) : value}</strong></div>`).join('');
+    byId('regulationSearchPeriod').textContent = `${data.days} días · ${searches ? Math.round(noResults / searches * 100) : 0}% sin resultado`;
+    byId('regulationTopDocuments').innerHTML = (regulation.top_documents || []).length ? regulation.top_documents.map(item => `<span class="regulation-doc-pill">${escapeHtml(REGULATION_LABELS[item.document_id] || item.document_id)} <strong>${number(item.appearances)}</strong></span>`).join('') : '<p class="chart-empty">Aún no hay reglamentos destacados.</p>';
+    byId('regulationPopularQueries').innerHTML = (regulation.popular_queries || []).length ? regulation.popular_queries.map(item => `<div class="regulation-query-row"><strong title="${escapeHtml(item.query)}">${escapeHtml(item.query || 'Consulta sin muestra')}</strong><span>${number(item.searches)} búsquedas</span><small>${number(item.no_results)} sin resultado · ${number(item.result_opens)} aperturas</small></div>`).join('') : '<p class="chart-empty">Las consultas más repetidas aparecerán aquí.</p>';
+    byId('regulationQueryTotals').textContent = `${number(searches)} consultas`;
+    byId('regulationPrivacy').textContent = regulation.privacy || '';
+  }
+
   async function loadSummary() {
     if (state.loading) return;
     state.loading = true;
@@ -182,6 +205,7 @@
       renderRanking(data);
       renderSources(data);
       renderRatings(data);
+      renderRegulationSearch(data);
       byId('analyticsStatus').textContent = data.totals.period_views ? 'Datos actualizados correctamente.' : 'El registro diario comienza con esta versión; los totales históricos se conservan.';
       byId('analyticsUpdated').textContent = `Actualizado ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
       byId('analyticsTrackingNote').textContent = data.tracking_since

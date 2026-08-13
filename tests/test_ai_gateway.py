@@ -15,11 +15,12 @@ def load(path: Path):
 
 
 class AIGatewayFoundationTests(unittest.TestCase):
-    def test_public_page_explains_private_preview_without_false_availability(self):
+    def test_public_page_explains_free_regulation_preview_without_false_availability(self):
         html = (ROOT / "ia-integracion.html").read_text(encoding="utf-8")
         home = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn("Vista previa privada", html)
-        self.assertIn("conexión remota todavía desactivada", html)
+        self.assertIn("Buscador de normativa abierto y gratuito", html)
+        self.assertIn("los demás contratos siguen siendo diseño", html)
+        self.assertIn("Normativa · API activa", html)
         self.assertIn("data/ai/discovery.json", html)
         self.assertIn("data/ai/readiness-report.json", html)
         self.assertIn("data/ai/tool-strategy.json", html)
@@ -31,10 +32,11 @@ class AIGatewayFoundationTests(unittest.TestCase):
     def test_discovery_separates_knowledge_and_diagram_services(self):
         discovery = load(ROOT / "data" / "ai" / "discovery.json")
         services = {item["id"]: item for item in discovery["service_families"]}
-        self.assertEqual(discovery["status"], "design_ready_private_preview")
-        self.assertFalse(discovery["security"]["remote_execution_enabled"])
+        self.assertEqual(discovery["status"], "public_free_preview_one_tool")
+        self.assertTrue(discovery["security"]["remote_execution_enabled"])
+        self.assertEqual(discovery["security"]["remote_execution_scope"], ["supertecnico_search_regulations"])
         self.assertEqual(discovery["access_model"]["humans"]["site_access"], "free")
-        self.assertEqual(discovery["access_model"]["machines"]["coverage_preflight"], "planned_free")
+        self.assertEqual(discovery["access_model"]["machines"]["current_execution"], "enabled_for_supertecnico_search_regulations")
         self.assertEqual(discovery["access_model"]["machines"]["bulk_dataset_export"], "not_offered")
         self.assertIn("super-tecnico-knowledge", services)
         self.assertIn("electroia-diagram-engine", services)
@@ -42,7 +44,8 @@ class AIGatewayFoundationTests(unittest.TestCase):
     def test_tool_contract_uses_free_preflight_and_compact_paid_levels(self):
         manifest = load(ROOT / "data" / "ai" / "tool-manifest.json")
         tools = {item["name"]: item for item in manifest["tools"]}
-        self.assertFalse(manifest["execution_enabled"])
+        self.assertTrue(manifest["execution_enabled"])
+        self.assertEqual(manifest["execution_scope"], ["supertecnico_search_regulations"])
         self.assertTrue(manifest["routing_policy"]["preflight_first"])
         self.assertFalse(manifest["routing_policy"]["bulk_export_allowed"])
         self.assertIn("status", manifest["default_output_schema"]["required"])
@@ -52,6 +55,9 @@ class AIGatewayFoundationTests(unittest.TestCase):
         self.assertEqual(tools["supertecnico_check_coverage"]["billing_tier"], "free")
         self.assertLessEqual(tools["supertecnico_check_coverage"]["target_output_tokens"], 250)
         self.assertEqual(tools["supertecnico_get_diagnostic"]["billing_tier"], "metered_diagnostic")
+        self.assertEqual(tools["supertecnico_search_regulations"]["state"], "public_free_preview")
+        self.assertEqual(tools["supertecnico_search_regulations"]["billing_tier"], "free_preview")
+        self.assertEqual(tools["supertecnico_search_regulations"]["input_schema"]["properties"]["limit"]["maximum"], 20)
         self.assertIn("delegate", tools["supertecnico_render_diagram"])
         self.assertIn("supertecnico_get_compact_context", tools)
         self.assertIn("supertecnico_validate_measurements", tools)
@@ -89,6 +95,24 @@ class AIGatewayFoundationTests(unittest.TestCase):
         self.assertIn("st_ai_benchmark_runs", sql)
         self.assertNotIn("4097", sql)
         self.assertNotRegex(sql, r"sk-[A-Za-z0-9_-]{12,}")
+
+    def test_public_regulation_endpoint_is_limited_traceable_and_measured(self):
+        endpoint = (ROOT / "api" / "regulations.php").read_text(encoding="utf-8")
+        router = (ROOT / "api" / "index.php").read_text(encoding="utf-8")
+        schema = (ROOT / "database" / "schema.sql").read_text(encoding="utf-8")
+        contract = load(ROOT / "data" / "regulations" / "tool-manifest.json")
+        self.assertIn("regulation-search", router)
+        self.assertIn("regulation-result-open", router)
+        self.assertIn("source_content_sha256", endpoint)
+        self.assertIn("official_page_url", endpoint)
+        self.assertIn("free_preview", endpoint)
+        self.assertIn("st_regulation_search_events", schema)
+        self.assertIn("query_hash", schema)
+        self.assertNotIn("ip_address", schema)
+        self.assertEqual(contract["status"], "public_free_preview")
+        self.assertEqual(contract["access"]["maximum_results"], 20)
+        self.assertFalse(contract["access"]["bulk_dataset_export"])
+        self.assertEqual(contract["measurement"]["retention_days"], 180)
 
     def test_knowledge_schema_requires_evidence_confidence_and_version(self):
         schema = load(ROOT / "data" / "ai" / "knowledge-record.schema.json")
@@ -141,6 +165,8 @@ class AIGatewayFoundationTests(unittest.TestCase):
                 "data/ai/benchmark-plan.json",
                 "data/ai/tool-strategy.json",
                 "data/ai/storage-policy.json",
+                "data/regulations/tool-manifest.json",
+                "assets/regulations-search.css",
             ):
                 self.assertTrue((output / path).is_file(), path)
             self.assertFalse((output / "docs" / "SUPER_TECNICO_AI_PRODUCT.md").exists())

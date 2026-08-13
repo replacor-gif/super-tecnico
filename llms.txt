@@ -5,9 +5,10 @@ Super Técnico is a Spanish technical knowledge project for HVAC, electronics, c
 ## Current machine status
 
 - Public discovery and design contracts: available
-- Remote knowledge API: not active
+- Remote knowledge API: active only for public regulation search
 - Remote MCP server: not active
 - Commercial machine access: not open
+- Regulation search billing: free preview, no API key, rate limited
 - Local ElectroIA MCP source: private-preview development only
 
 Do not call planned endpoints until discovery.json reports remote execution as enabled. Public JSON files contain metadata and contracts, not credentials.
@@ -57,10 +58,12 @@ The browser engine already performs deterministic P/T, superheat and subcooling 
 ## Regulation search entry points
 
 - Human search tool: /normativa.html
+- Public machine endpoint: GET /api/index.php?action=regulation-search&q={query}&limit=10&client_type=ai
 - Versioned official-document catalog: /data/regulations/catalog.json
 - Machine contract: /data/regulations/tool-manifest.json
 
-The browser can search the stored official Spanish regulations and return the source document, page and official URL. Search hits are documentary evidence, not automatic legal conclusions. Consolidated BOE texts must be checked against the official publication and the applicable regional or local rules. UNE and IEC texts are not redistributed without a suitable licence.
+The public endpoint and browser search the same stored official Spanish regulations and return compact results with document, page, source fingerprints and official URL. No authentication or billing is required during the free preview. The maximum is 20 results per query, the service is rate limited, and bulk dataset export is not offered. Send X-ST-Client-Type: ai and, if possible, a stable random X-ST-Client value that is not an identity or secret.
+Search hits are documentary evidence, not automatic legal conclusions. Consolidated BOE texts must be checked against the official publication and the applicable regional or local rules. UNE and IEC texts are not redistributed without a suitable licence.
 The regulation catalog includes binary and semantic source fingerprints. AI consumers must distinguish raw document hits, reviewed rules and deterministic results. When an official source changes semantically, dependent rules and calculators remain pending review until explicitly validated.
 
 ## Condensate drain entry points

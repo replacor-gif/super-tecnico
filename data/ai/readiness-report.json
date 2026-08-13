@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-08-12T17:43:05.838172+00:00",
-  "status": "private_preview_foundation",
-  "readiness_score_percent": 54,
-  "score_meaning": "Preparación contractual y de datos; no disponibilidad comercial.",
+  "generated_at_utc": "2026-08-13T14:04:50.885033+00:00",
+  "status": "public_free_preview_one_tool",
+  "readiness_score_percent": 63,
+  "score_meaning": "Preparación técnica global; solo la búsqueda de normativa tiene ejecución pública gratuita.",
   "content_inventory": {
     "brands": 30,
     "brands_with_sources": 30,
@@ -61,6 +61,12 @@
       "evidence": "30/30 marcas con fuentes; 4 políticas históricas específicas"
     },
     {
+      "id": "public_regulation_api",
+      "title": "Búsqueda pública de normativa para máquinas",
+      "status": "pass",
+      "evidence": "GET api/index.php?action=regulation-search con fuentes, páginas, límites y métricas"
+    },
+    {
       "id": "remote_mcp",
       "title": "Servidor MCP remoto",
       "status": "planned",
@@ -75,8 +81,8 @@
     {
       "id": "metering",
       "title": "Medición y facturación por uso",
-      "status": "planned",
-      "evidence": "Niveles de consumo definidos; sin contabilidad activa"
+      "status": "partial",
+      "evidence": "La búsqueda gratuita registra demanda, cliente, cobertura, latencia y aperturas; la facturación sigue desactivada"
     },
     {
       "id": "economic_benchmark",
@@ -87,8 +93,8 @@
     {
       "id": "anti_extraction",
       "title": "Protección contra extracción masiva",
-      "status": "partial",
-      "evidence": "Política sin exportación masiva definida; falta aplicación en gateway remoto"
+      "status": "pass",
+      "evidence": "La primera API limita frecuencia y resultados y no ofrece exportación del catálogo"
     },
     {
       "id": "viability_catalog",
@@ -116,13 +122,13 @@
     }
   ],
   "release_blockers": [
-    "Implementar el gateway remoto MCP/HTTPS con autenticación y cuotas.",
+    "Implementar autenticación y cuotas antes de abrir herramientas distintas de la búsqueda gratuita de normativa.",
     "Crear proyecciones de respuesta que nunca expongan registros maestros completos.",
-    "Registrar uso, coste, latencia, cache y resultado por herramienta.",
+    "Medir coste evitado y utilidad real con el uso de la búsqueda pública.",
     "Implementar las proyecciones de contexto compacto sin exponer registros maestros.",
     "Activar validadores solo en dominios con reglas y tolerancias revisadas.",
     "Completar el benchmark ciego antes de publicar promesas de ahorro.",
-    "Definir condiciones comerciales, privacidad, soporte y proceso de alta.",
+    "Revisar la información de privacidad y definir soporte antes de ampliar la prueba pública.",
     "Validar seguridad y revisión de la plataforma antes de publicar en directorios."
   ],
   "brands": [

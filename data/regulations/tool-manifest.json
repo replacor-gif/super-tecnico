@@ -1,24 +1,57 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "2.0.0",
   "id": "super-tecnico-regulation-search",
+  "tool_name": "supertecnico_search_regulations",
   "name": "Buscador de normativa técnica oficial",
-  "status": "browser_search_available_remote_execution_planned",
+  "status": "public_free_preview",
   "entry_point": "../../normativa.html",
+  "http_endpoint": "../../api/index.php?action=regulation-search",
+  "http_method": "GET",
   "catalog": "catalog.json",
   "jurisdiction": "ES",
+  "access": {
+    "authentication": "not_required_during_free_preview",
+    "billing_tier": "free_preview",
+    "billable_units": 0,
+    "rate_limit": "120 requests per client and hour",
+    "maximum_results": 20,
+    "bulk_dataset_export": false,
+    "cors": "public_read_only_get"
+  },
+  "request": {
+    "required_query_parameters": ["q"],
+    "query_parameters": {
+      "q": "Technical question or literal phrase, 2 to 300 characters.",
+      "document_id": "Optional catalog document id.",
+      "domain": "Optional catalog domain.",
+      "exact_phrase": "Optional boolean.",
+      "limit": "Optional integer from 1 to 20; default 10.",
+      "client_type": "Optional human, ai or software classification used only for aggregate metrics."
+    },
+    "recommended_headers": {
+      "X-ST-Client": "Stable random client identifier; never send a user identity or secret.",
+      "X-ST-Client-Type": "ai"
+    },
+    "example": "api/index.php?action=regulation-search&q=caida%20de%20tension&document_id=rebt&limit=10&client_type=ai"
+  },
   "capabilities": [
     "regulation_catalog",
     "accent_insensitive_full_text_search",
+    "document_and_domain_filtering",
+    "exact_and_related_match_modes",
     "page_level_provenance",
     "official_source_link",
-    "stored_official_pdf_link",
+    "stored_official_pdf_locator",
     "change_detection_by_sha256",
     "semantic_change_detection",
     "dependent_tool_impact_map",
     "reviewed_rule_record_contract"
   ],
-  "result_contract": {
-    "required": ["document_id", "document_title", "page", "text", "official_page_url", "source_sha256", "source_content_sha256"],
+  "response": {
+    "top_level_required": ["ok", "status", "request_id", "service_version", "tool_id", "tool_version", "result", "confidence", "source_ids", "warnings", "usage"],
+    "item_required": ["document_id", "document_title", "page", "text", "official_page_url", "source_sha256", "source_content_sha256", "evidence_level"],
+    "statuses": ["success", "not_found"],
+    "match_modes": ["exact", "all_terms", "related", "none"],
     "evidence_levels": {
       "document_hit": "Literal text found in an official source. It is evidence, not an applicability conclusion.",
       "reviewed_rule": "Structured rule linked to an exact source fingerprint and reviewed for the stated scope.",
@@ -26,6 +59,12 @@
     },
     "rule_record_schema": "rule-record.schema.json",
     "notice": "A trustworthy answer must expose its evidence level, source, locator, applicability scope and review status."
+  },
+  "measurement": {
+    "purpose": "Measure real demand, coverage gaps, human versus AI use, latency and result openings before defining any commercial model.",
+    "stored": ["pseudonymous client hash", "sanitized query sample", "query hash", "filters", "result count", "top document", "client type", "latency", "result opening count"],
+    "not_stored": ["raw IP address", "identity", "email address in query", "URL in query", "long number in query"],
+    "retention_days": 180
   },
   "update_workflow": {
     "registry": "sources.json",

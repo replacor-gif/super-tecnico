@@ -189,5 +189,6 @@ function st_analytics_summary(int $days): array
         'daily' => $daily,
         'pages' => $pageRows,
         'ratings' => st_rating_admin_summary(),
+        'regulation_search' => st_regulations_analytics_summary($days),
     ];
 }

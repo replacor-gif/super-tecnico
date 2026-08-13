@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "service_version": "0.2.0",
+  "service_version": "0.3.0",
   "id": "super-tecnico-ai-gateway",
   "name": "Super Técnico para IAs",
   "title": "Conocimiento técnico verificable y diagramas deterministas para sistemas de IA",
-  "status": "design_ready_private_preview",
+  "status": "public_free_preview_one_tool",
   "provider_neutral": true,
   "primary_language": "es",
   "purpose": "Reducir búsquedas, contexto, tokens y errores al resolver consultas de climatización, electrónica de placas, componentes y documentación electrotécnica.",
@@ -69,7 +69,7 @@
     {
       "id": "super-tecnico-regulations",
       "title": "Normativa técnica oficial",
-      "status": "browser_search_available_remote_execution_planned",
+      "status": "public_free_preview",
       "capabilities": [
         "regulation_catalog",
         "full_text_search",
@@ -80,7 +80,8 @@
         "reviewed_rule_contract",
         "affected_tool_alerts"
       ],
-      "discovery": "../regulations/tool-manifest.json"
+      "discovery": "../regulations/tool-manifest.json",
+      "http_endpoint": "../../api/index.php?action=regulation-search"
     },
     {
       "id": "super-tecnico-condensate-drain",
@@ -103,11 +104,12 @@
     },
     "machines": {
       "discovery": "public",
-      "coverage_preflight": "planned_free",
-      "answer_access": "planned_authenticated_metered",
-      "authentication": "planned_api_key_or_oauth",
+      "coverage_preflight": "free_for_active_regulation_search",
+      "answer_access": "public_free_preview_for_regulation_search",
+      "authentication": "not_required_for_free_preview; api_key_or_oauth_planned_for_future_paid_tools",
       "bulk_dataset_export": "not_offered",
-      "current_execution": "disabled"
+      "current_execution": "enabled_for_supertecnico_search_regulations",
+      "public_free_tools": ["supertecnico_search_regulations"]
     }
   },
   "result_levels": [
@@ -145,7 +147,8 @@
     "readiness_report": "readiness-report.json",
     "benchmark_plan": "benchmark-plan.json",
     "tool_strategy": "tool-strategy.json",
-    "storage_policy": "storage-policy.json"
+    "storage_policy": "storage-policy.json",
+    "public_regulation_search": "../../api/index.php?action=regulation-search"
   },
   "discovery_channels": {
     "website": "../../ia-integracion.html",
@@ -172,7 +175,8 @@
   "security": {
     "credentials_in_public_files": false,
     "database_direct_access": false,
-    "remote_execution_enabled": false,
+    "remote_execution_enabled": true,
+    "remote_execution_scope": ["supertecnico_search_regulations"],
     "rate_limits_required": true,
     "usage_audit_required": true,
     "anti_extraction_controls_required": true

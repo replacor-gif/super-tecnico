@@ -149,3 +149,24 @@ CREATE TABLE IF NOT EXISTS st_page_rating_votes (
   KEY idx_rating_feedback (vote, updated_at),
   CONSTRAINT fk_rating_page FOREIGN KEY (page_key) REFERENCES st_page_ratings(page_key) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS st_regulation_search_events (
+  request_id CHAR(32) NOT NULL,
+  client_hash CHAR(64) NOT NULL,
+  client_type ENUM('human','ai','software','unknown') NOT NULL DEFAULT 'unknown',
+  query_hash CHAR(64) NOT NULL,
+  query_sample VARCHAR(180) NULL,
+  document_filter VARCHAR(64) NULL,
+  domain_filter VARCHAR(80) NULL,
+  result_count SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  top_document_id VARCHAR(64) NULL,
+  match_mode ENUM('exact','all_terms','related','none') NOT NULL DEFAULT 'none',
+  latency_ms INT UNSIGNED NOT NULL DEFAULT 0,
+  opened_count SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (request_id),
+  KEY idx_regulation_search_date (created_at),
+  KEY idx_regulation_search_query (query_hash, created_at),
+  KEY idx_regulation_search_client (client_type, created_at),
+  KEY idx_regulation_search_document (top_document_id, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

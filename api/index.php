@@ -3,6 +3,7 @@ declare(strict_types=1);
 require __DIR__ . '/bootstrap.php';
 require __DIR__ . '/electroia.php';
 require __DIR__ . '/ratings.php';
+require __DIR__ . '/regulations.php';
 require __DIR__ . '/analytics.php';
 
 $action = preg_replace('/[^a-z0-9-]/', '', strtolower((string) ($_GET['action'] ?? 'health')));
@@ -34,7 +35,21 @@ try {
 
     if ($action === 'health' && $method === 'GET') {
         st_db()->query('SELECT 1');
-        st_json(['ok' => true, 'service' => 'super-tecnico-api', 'version' => '1.2']);
+        st_json(['ok' => true, 'service' => 'super-tecnico-api', 'version' => ST_REGULATION_SERVICE_VERSION, 'public_tools' => [ST_REGULATION_TOOL_ID]]);
+    }
+
+    if ($action === 'regulation-search' && in_array($method, ['GET', 'POST'], true)) {
+        $input = $method === 'POST' ? st_body() : $_GET;
+        $clientHash = st_client_hash($input);
+        st_rate_limit('regulation-search', $clientHash, 120, 3600);
+        st_json(st_regulations_search($input, $clientHash));
+    }
+
+    if ($action === 'regulation-result-open' && $method === 'POST') {
+        $input = st_body();
+        $clientHash = st_client_hash($input);
+        st_rate_limit('regulation-result-open', $clientHash, 240, 86400);
+        st_json(st_regulations_record_open($input, $clientHash));
     }
 
     if ($action === 'page-view' && $method === 'POST') {

@@ -98,6 +98,19 @@ body.analytics-body { margin: 0; min-height: 100vh; color: var(--an-text); backg
 .analytics-tracking-note { margin: 18px 4px 0; }
 
 .analytics-rating-card { grid-column: 1; }
+.analytics-regulation-card { grid-column: 1; }
+.regulation-search-metrics { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 9px; }
+.regulation-search-metric { padding: 13px; border: 1px solid #1d334d; border-radius: 13px; background: rgba(5,11,20,.5); }
+.regulation-search-metric span { display: block; color: var(--an-muted); font-size: .65rem; font-weight: 800; text-transform: uppercase; }
+.regulation-search-metric strong { display: block; margin-top: 5px; color: var(--an-yellow); font-size: 1.45rem; }
+.regulation-top-documents { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 7px; }
+.regulation-doc-pill { padding: 7px 9px; border: 1px solid #285069; border-radius: 999px; color: #bceeff; background: rgba(0,200,255,.06); font-size: .7rem; }
+.regulation-doc-pill strong { color: var(--an-cyan); }
+.regulation-popular-queries { display: grid; gap: 8px; }
+.regulation-query-row { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 5px 12px; padding: 10px 11px; border: 1px solid #1d3048; border-radius: 12px; background: rgba(5,11,20,.5); }
+.regulation-query-row strong { overflow: hidden; color: #dbe8f8; font-size: .76rem; text-overflow: ellipsis; white-space: nowrap; }
+.regulation-query-row span { color: var(--an-cyan); font-size: .72rem; font-weight: 850; }
+.regulation-query-row small { grid-column: 1/-1; color: var(--an-muted); font-size: .64rem; }
 .analytics-ratings, .analytics-comments { display: grid; gap: 9px; }
 .rating-page-row { display: grid; grid-template-columns: minmax(140px, 1fr) auto auto; align-items: center; gap: 10px; padding: 11px 12px; border: 1px solid #1a2a40; border-radius: 13px; background: rgba(5,11,20,.48); }
 .rating-page-row > div:first-child { display: grid; gap: 2px; }
@@ -119,6 +132,7 @@ body.analytics-body { margin: 0; min-height: 100vh; color: var(--an-text); backg
   .analytics-grid { grid-template-columns: 1fr; }
   .analytics-ranking-card { grid-column: auto; }
   .analytics-rating-card { grid-column: auto; }
+  .analytics-regulation-card { grid-column: auto; }
 }
 
 @media (max-width: 620px) {
@@ -135,4 +149,5 @@ body.analytics-body { margin: 0; min-height: 100vh; color: var(--an-text); backg
   .ranking-row { grid-template-columns: 1fr auto; gap: 9px; }
   .ranking-track { grid-column: 1 / -1; grid-row: 2; }
   .analytics-pin-card { padding: 27px 21px; }
+  .regulation-search-metrics { grid-template-columns: repeat(2,minmax(0,1fr)); }
 }
