@@ -10,10 +10,10 @@
   <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
   <link rel="stylesheet" href="assets/common.css?v=1">
   <link rel="stylesheet" href="assets/app-theme.css?v=1">
-  <link rel="stylesheet" href="assets/frigorista.css?v=1">
+  <link rel="stylesheet" href="assets/frigorista.css?v=2">
   <script src="assets/app-shell.js?v=4" defer></script>
-  <script src="assets/frigorista-engine.js?v=1" defer></script>
-  <script src="assets/frigorista.js?v=1" defer></script>
+  <script src="assets/frigorista-engine.js?v=2" defer></script>
+  <script src="assets/frigorista.js?v=2" defer></script>
 </head>
 <body>
   <header class="fr-header">
@@ -49,7 +49,7 @@
       <div class="fr-progress" aria-label="Recorrido de la herramienta">
         <span class="is-active"><b>1</b> Consulta P/T</span>
         <span><b>2</b> Añadir mediciones</span>
-        <span><b>3</b> Estudiar el sistema</span>
+        <span><b>3</b> Mollier y diagnóstico</span>
       </div>
 
       <div class="fr-panel-head">
@@ -185,13 +185,49 @@
         <button id="nextMeasurementButton" class="fr-primary-button" type="button">Añadir esta medición</button>
       </div>
       <div id="derivedSummary" class="fr-derived-grid"></div>
+      <section id="mollierPanel" class="fr-mollier-panel" aria-labelledby="mollierTitle">
+        <div class="fr-mollier-head">
+          <div>
+            <p class="fr-eyebrow">DIAGRAMA PRESIÓN · ENTALPÍA</p>
+            <h3 id="mollierTitle">Diagnóstico mediante Mollier</h3>
+            <p>Los puntos aparecen únicamente cuando están respaldados por las presiones y temperaturas medidas.</p>
+          </div>
+          <span id="mollierStatus" class="fr-mollier-status">RECOGIENDO DATOS</span>
+        </div>
+        <div id="mollierEmpty" class="fr-mollier-empty">
+          <strong>Completa baja, aspiración, alta y líquido.</strong>
+          <p>Con esos cuatro datos ya podremos dibujar la expansión y el evaporador. La descarga cerrará el ciclo completo.</p>
+        </div>
+        <div id="mollierContent" hidden>
+          <div class="fr-mollier-layout">
+            <div class="fr-chart-shell">
+              <svg id="mollierChart" class="fr-mollier-chart" viewBox="0 0 760 470" role="img" aria-labelledby="mollierChartTitle mollierChartDescription">
+                <title id="mollierChartTitle">Diagrama de Mollier del ciclo medido</title>
+                <desc id="mollierChartDescription">Diagrama presión entalpía con la campana de saturación y los puntos disponibles del ciclo frigorífico.</desc>
+              </svg>
+              <div class="fr-chart-legend" aria-label="Leyenda del diagrama">
+                <span><i class="is-envelope"></i>Saturación</span>
+                <span><i class="is-cycle"></i>Ciclo medido</span>
+                <span><i class="is-derived"></i>Punto calculado</span>
+              </div>
+            </div>
+            <div>
+              <div id="mollierPoints" class="fr-mollier-points"></div>
+              <div id="mollierPerformance" class="fr-mollier-performance"></div>
+            </div>
+          </div>
+          <div id="mollierEvidence" class="fr-mollier-evidence"></div>
+          <p class="fr-mollier-note">Es un balance específico del ciclo en los puntos medidos. Para declarar una avería se contrastará después con el tipo de equipo, las condiciones de trabajo y los objetivos del fabricante.</p>
+        </div>
+      </section>
       <p class="fr-analysis-note">Una presión o un valor aislado no confirma por sí solo una avería. El análisis avanzado irá separando datos medidos, observaciones y conclusiones.</p>
     </section>
 
     <details class="fr-source-details">
       <summary>Datos técnicos y alcance de esta versión</summary>
       <div>
-        <p>Las curvas P/T se han generado con CoolProp 8.0.0 y se utilizan localmente en el navegador. No se extrapolan valores fuera del intervalo disponible.</p>
+        <p>Las curvas P/T y las propiedades del diagrama presión-entalpía se han generado con CoolProp 8.0.0 y se utilizan localmente en el navegador. No se extrapolan valores fuera del intervalo disponible.</p>
+        <p>La entalpía y la entropía son propiedades relativas: la herramienta utiliza sus diferencias dentro del mismo refrigerante y de la misma versión de datos.</p>
         <p>La clase de seguridad mostrada procede del catálogo inicial y sigue sometida a revisión documental. Comprueba siempre el refrigerante, el equipo y el procedimiento de trabajo.</p>
         <p>Los sistemas independientes R717 y R744 no forman parte de esta primera versión.</p>
       </div>

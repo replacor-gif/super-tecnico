@@ -34,11 +34,12 @@ def read_json(path: Path) -> Any:
         raise BuildError(f"JSON no válido en {path}: {exc}") from exc
 
 
-def validate_frigorista_data(source_root: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, int]]:
+def validate_frigorista_data(source_root: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], dict[str, int]]:
     catalog = read_json(source_root / "data" / "frigorista" / "catalog.json")
     curves = read_json(source_root / "data" / "frigorista" / "pt-curves.json")
-    if catalog.get("dataset_version") != curves.get("dataset_version"):
-        raise BuildError("Frigorista: el catálogo y las curvas P/T tienen versiones diferentes")
+    mollier = read_json(source_root / "data" / "frigorista" / "mollier-data.json")
+    if len({catalog.get("dataset_version"), curves.get("dataset_version"), mollier.get("dataset_version")}) != 1:
+        raise BuildError("Frigorista: el catálogo, las curvas P/T y Mollier tienen versiones diferentes")
 
     refrigerants = catalog.get("refrigerants") or []
     curve_map = curves.get("curves") or {}
@@ -58,6 +59,9 @@ def validate_frigorista_data(source_root: Path) -> tuple[dict[str, Any], dict[st
         raise BuildError("Frigorista: la cobertura del catálogo no coincide con las curvas publicadas")
     if len(available) < 50:
         raise BuildError(f"Frigorista: cobertura P/T insuficiente ({len(available)})")
+    mollier_map = mollier.get("refrigerants") or {}
+    if set(mollier_map) != available:
+        raise BuildError("Frigorista: la cobertura Mollier no coincide con las curvas publicadas")
 
     for designation, curve in curve_map.items():
         for phase in ("bubble", "dew"):
@@ -68,15 +72,31 @@ def validate_frigorista_data(source_root: Path) -> tuple[dict[str, Any], dict[st
             if pressures != sorted(pressures) or len(pressures) != len(set(pressures)):
                 raise BuildError(f"Frigorista: presiones no crecientes en {designation} ({phase})")
 
+    for designation, diagram in mollier_map.items():
+        rows = diagram.get("pressure_rows") or []
+        if len(rows) < 12:
+            raise BuildError(f"Frigorista: diagrama Mollier insuficiente para {designation}")
+        pressures = [row.get("p") for row in rows]
+        if any(not isinstance(value, (int, float)) or value <= 0 for value in pressures):
+            raise BuildError(f"Frigorista: presión Mollier inválida para {designation}")
+        if pressures != sorted(pressures) or len(pressures) != len(set(pressures)):
+            raise BuildError(f"Frigorista: presiones Mollier no crecientes en {designation}")
+        for row in rows:
+            if len(row.get("bubble") or []) != 3 or len(row.get("dew") or []) != 3:
+                raise BuildError(f"Frigorista: saturación Mollier incompleta en {designation}")
+            if len(row.get("vapor") or []) < 3 or len(row.get("liquid") or []) < 3:
+                raise BuildError(f"Frigorista: estados Mollier incompletos en {designation}")
+
     blocked = sum(
         item.get("selectable") is False and bool(item.get("excluded_reason"))
         for item in refrigerants
     )
-    return catalog, curves, {
+    return catalog, curves, mollier, {
         "catalog": len(refrigerants),
         "pt_available": len(available),
         "pt_pending_or_blocked": len(refrigerants) - len(available),
         "blocked": blocked,
+        "mollier_available": len(mollier_map),
     }
 
 
@@ -592,6 +612,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "data/ads-config.json",
         "data/frigorista/catalog.json",
         "data/frigorista/pt-curves.json",
+        "data/frigorista/mollier-data.json",
         "recursos/libro-electronica-inverter-replacor.pdf",
     ):
         source = source_root / required
@@ -768,9 +789,10 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
     write_json(output / "data" / "smd" / "catalog.json", smd_catalog)
     components_catalog, components_stats = validate_components_catalog(source_root)
     write_json(output / "data" / "components" / "catalog.json", components_catalog)
-    frigorista_catalog, frigorista_curves, frigorista_stats = validate_frigorista_data(source_root)
+    frigorista_catalog, frigorista_curves, frigorista_mollier, frigorista_stats = validate_frigorista_data(source_root)
     write_json(output / "data" / "frigorista" / "catalog.json", frigorista_catalog)
     write_json(output / "data" / "frigorista" / "pt-curves.json", frigorista_curves)
+    write_json(output / "data" / "frigorista" / "mollier-data.json", frigorista_mollier)
     write_json(
         output / "data" / "frigorista" / "discovery.json",
         read_json(source_root / "data" / "frigorista" / "discovery.json"),

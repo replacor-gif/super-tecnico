@@ -10,7 +10,7 @@ Portal técnico estático con herramientas independientes. La publicación es:
 - **Identificador OEM de placas HVAC:** cuando falta la marca comercial, relaciona el código impreso en la PCB con 21 plataformas posibles y enlaza el error con la base del fabricante electrónico disponible.
 - **Identificador SMD:** búsqueda por marcaje o referencia con filtros opcionales de encapsulado, patillas, fabricante, tipo y designador de placa.
 - **Calculadoras técnicas:** 15 herramientas de electrónica y climatización con unidades, fórmulas, esquemas y advertencias; incluye LED, Zener, 555 y bus DC monofásico/trifásico.
-- **Asistente frigorista:** conversión P/T y estudio progresivo del sistema sin exigir mediciones que el técnico no tenga.
+- **Asistente frigorista:** conversión P/T, estudio progresivo y diagnóstico del ciclo medido mediante diagrama presión-entalpía (Mollier), sin exigir mediciones que el técnico no tenga.
 - **Diseñador de conductos:** plano de estancias, trazado y dimensiones de la red de aire.
 - **Desagües de condensados:** caudal acumulado, pendiente, caída y diámetro interior por tramo para varias unidades.
 - **Normativa técnica:** búsqueda por página dentro de REBT, RITE, RSIF, RAT, RLAT, CTE DB-HS y criterios sanitarios del agua.

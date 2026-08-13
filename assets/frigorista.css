@@ -194,6 +194,57 @@ body { padding-bottom: 28px; }
 .fr-next-card p { margin-bottom: 0; }
 .fr-analysis-note { margin: 20px 0 0 !important; color: #8397aa !important; font-size: .76rem; }
 
+.fr-mollier-panel { margin-top: 24px; padding: clamp(18px, 4vw, 30px); border: 1px solid rgba(0,200,255,.38); border-radius: 20px; background: radial-gradient(circle at 90% 0, rgba(0,200,255,.11), transparent 30%), #08131e; }
+.fr-mollier-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+.fr-mollier-head h3 { margin-bottom: 7px; font-size: clamp(1.35rem, 3vw, 2rem); }
+.fr-mollier-head p:last-child { max-width: 660px; margin-bottom: 0; }
+.fr-mollier-status { flex: 0 0 auto; padding: 7px 10px; border: 1px solid rgba(255,228,56,.35); border-radius: 999px; color: var(--fr-yellow); background: rgba(255,228,56,.07); font-size: .62rem; font-weight: 900; letter-spacing: .08em; }
+.fr-mollier-status.is-complete { border-color: rgba(81,255,125,.38); color: var(--fr-green); background: rgba(81,255,125,.07); }
+.fr-mollier-status.is-review { border-color: rgba(255,122,0,.5); color: #ff9a3d; background: rgba(255,122,0,.08); }
+.fr-mollier-empty { margin-top: 20px; padding: 19px; border: 1px dashed #35506a; border-radius: 15px; background: rgba(0,0,0,.16); }
+.fr-mollier-empty strong { color: #dbe9f5; }
+.fr-mollier-empty p { margin: 5px 0 0; font-size: .8rem; }
+.fr-mollier-layout { margin-top: 22px; display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(250px, .75fr); gap: 16px; }
+.fr-chart-shell { min-width: 0; padding: 12px; border: 1px solid #294158; border-radius: 17px; background: linear-gradient(160deg, #07101a, #0b1925); box-shadow: inset 0 0 35px rgba(0,0,0,.35); }
+.fr-mollier-chart { width: 100%; height: auto; display: block; overflow: visible; }
+.fr-chart-grid { stroke: #20364a; stroke-width: 1; }
+.fr-chart-axis { stroke: #5f7990; stroke-width: 1.2; }
+.fr-chart-tick { fill: #7890a5; font-size: 12px; font-weight: 700; }
+.fr-chart-label { fill: #a9bdcf; font-size: 13px; font-weight: 850; letter-spacing: .04em; }
+.fr-chart-envelope { fill: rgba(0,200,255,.055); stroke: var(--fr-blue); stroke-width: 2.2; }
+.fr-chart-dew { fill: none; stroke: var(--fr-cyan); stroke-width: 2.2; }
+.fr-chart-segment { fill: none; stroke: var(--fr-yellow); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.fr-chart-point circle { stroke: #06111b; stroke-width: 4; }
+.fr-chart-point.is-derived circle { fill: var(--fr-pink); }
+.fr-chart-point.is-measured circle { fill: var(--fr-yellow); }
+.fr-chart-point text { fill: #071019; font-size: 13px; font-weight: 950; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+.fr-chart-legend { padding: 7px 7px 2px; display: flex; flex-wrap: wrap; gap: 12px; color: #8499ac; font-size: .68rem; font-weight: 760; }
+.fr-chart-legend span { display: flex; align-items: center; gap: 6px; }
+.fr-chart-legend i { width: 18px; height: 3px; display: inline-block; border-radius: 3px; background: var(--fr-cyan); }
+.fr-chart-legend .is-cycle { background: var(--fr-yellow); }
+.fr-chart-legend .is-derived { width: 9px; height: 9px; border-radius: 50%; background: var(--fr-pink); }
+.fr-mollier-points { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.fr-mollier-point { min-height: 96px; padding: 13px; border: 1px solid #2d465d; border-radius: 13px; background: #091621; }
+.fr-mollier-point span { color: var(--fr-yellow); font-size: .64rem; font-weight: 950; letter-spacing: .08em; }
+.fr-mollier-point strong { margin-top: 5px; display: block; color: #f2f9ff; font-size: .86rem; }
+.fr-mollier-point small { margin-top: 4px; display: block; color: #7f95a8; font-size: .66rem; }
+.fr-mollier-point.is-missing { border-style: dashed; opacity: .72; }
+.fr-mollier-point.is-missing span, .fr-mollier-point.is-missing strong { color: #71869a; }
+.fr-mollier-performance { margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.fr-performance-card { min-height: 84px; padding: 13px; border: 1px solid rgba(0,240,208,.25); border-radius: 13px; background: rgba(0,240,208,.04); }
+.fr-performance-card span { display: block; color: #7f96a9; font-size: .61rem; font-weight: 900; letter-spacing: .07em; text-transform: uppercase; }
+.fr-performance-card strong { margin-top: 5px; display: block; color: var(--fr-cyan); font-size: 1.2rem; }
+.fr-performance-card small { color: #70889d; font-size: .62rem; }
+.fr-mollier-evidence { margin-top: 14px; display: grid; gap: 8px; }
+.fr-evidence-item { padding: 12px 14px; display: grid; grid-template-columns: auto 1fr; gap: 10px; border: 1px solid #2b4358; border-radius: 12px; background: #09141f; }
+.fr-evidence-item i { width: 10px; height: 10px; margin-top: 5px; border-radius: 50%; background: var(--fr-blue); box-shadow: 0 0 10px rgba(0,200,255,.35); }
+.fr-evidence-item.is-ok i { background: var(--fr-green); box-shadow: 0 0 10px rgba(81,255,125,.35); }
+.fr-evidence-item.is-warning { border-color: rgba(255,122,0,.34); }
+.fr-evidence-item.is-warning i { background: var(--fr-orange); box-shadow: 0 0 10px rgba(255,122,0,.35); }
+.fr-evidence-item strong { display: block; color: #dce9f4; font-size: .78rem; }
+.fr-evidence-item p { margin: 2px 0 0; color: #8196a9; font-size: .72rem; }
+.fr-mollier-note { margin: 14px 0 0 !important; padding-top: 13px; border-top: 1px solid #233a4e; color: #758da1 !important; font-size: .7rem; }
+
 .fr-source-details { overflow: hidden; }
 .fr-source-details summary { padding: 18px 22px; color: #9db0c2; cursor: pointer; font-size: .78rem; font-weight: 820; }
 .fr-source-details > div { padding: 0 22px 18px; }
@@ -228,6 +279,9 @@ body { padding-bottom: 28px; }
   .fr-derived-grid { grid-template-columns: 1fr; }
   .fr-next-card { align-items: stretch; flex-direction: column; }
   .fr-next-card button { width: 100%; }
+  .fr-mollier-head { display: grid; }
+  .fr-mollier-status { width: fit-content; }
+  .fr-mollier-layout { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 390px) {
@@ -236,4 +290,5 @@ body { padding-bottom: 28px; }
   .fr-blend-result { grid-template-columns: 1fr; }
   .fr-glide-card { grid-column: auto; }
   .fr-summary-grid { grid-template-columns: 1fr; }
+  .fr-mollier-points, .fr-mollier-performance { grid-template-columns: 1fr; }
 }

@@ -5,6 +5,7 @@
   const state = {
     catalog: null,
     curves: null,
+    mollier: null,
     currentSide: 'evaporation',
     currentResult: null,
     measurements: {},
@@ -154,6 +155,12 @@
         reference,
         atmosphericPressurePa: atmospherePa,
       });
+      const previousDesignation = state.measurements.low_pressure?.result.designation
+        || state.measurements.high_pressure?.result.designation;
+      if (previousDesignation && previousDesignation !== result.designation) {
+        state.measurements = {};
+        state.derived = {};
+      }
       const key = side === 'evaporation' ? 'low_pressure' : 'high_pressure';
       state.currentSide = side;
       state.currentResult = result;
@@ -184,6 +191,11 @@
         title: 'Temperatura de la línea de líquido',
         label: 'Temperatura medida en la línea de líquido',
         help: 'Mide sobre el tubo de líquido, en un punto representativo y con buen contacto térmico.',
+      },
+      discharge_line_temperature: {
+        title: 'Temperatura del tubo de descarga',
+        label: 'Temperatura medida a la salida del compresor',
+        help: 'Mide sobre el tubo de descarga, cerca del compresor y con buen contacto térmico. Este dato cierra el ciclo Mollier.',
       },
       return_air_temperature: {
         title: 'Temperatura del aire de retorno',
@@ -260,12 +272,124 @@
     return `<article class="fr-summary-item ${present ? 'is-present' : 'is-missing'}"><span>${label}</span><strong>${value}</strong>${detail ? `<small>${detail}</small>` : ''}</article>`;
   }
 
+  function chartPath(points, x, y) {
+    return points.map((point, index) => `${index ? 'L' : 'M'} ${x(point.x).toFixed(1)} ${y(point.y).toFixed(1)}`).join(' ');
+  }
+
+  function renderMollierChart(model, cycle) {
+    const width = 760;
+    const height = 470;
+    const margin = {left: 76, right: 26, top: 24, bottom: 58};
+    const plotWidth = width - margin.left - margin.right;
+    const plotHeight = height - margin.top - margin.bottom;
+    const x = normalized => margin.left + normalized * plotWidth;
+    const y = normalized => margin.top + (1 - normalized) * plotHeight;
+    const xTicks = [];
+    const yTicks = [];
+    for (let index = 0; index <= 4; index += 1) {
+      const fraction = index / 4;
+      const enthalpy = model.domain.enthalpy_kj_kg[0]
+        + fraction * (model.domain.enthalpy_kj_kg[1] - model.domain.enthalpy_kj_kg[0]);
+      const minimumLogP = Math.log10(model.domain.pressure_pa_abs[0]);
+      const pressure = 10 ** (minimumLogP + fraction * (Math.log10(model.domain.pressure_pa_abs[1]) - minimumLogP));
+      xTicks.push({fraction, label: format(enthalpy, 0)});
+      yTicks.push({fraction, label: format(pressure / 100000, pressure / 100000 < 10 ? 1 : 0)});
+    }
+    const envelope = [...model.bubble, ...[...model.dew].reverse()];
+    const segments = model.segments.map(segment => {
+      const from = model.points[segment.from];
+      const to = model.points[segment.to];
+      return `<line class="fr-chart-segment" x1="${x(from.x).toFixed(1)}" y1="${y(from.y).toFixed(1)}" x2="${x(to.x).toFixed(1)}" y2="${y(to.y).toFixed(1)}"/>`;
+    }).join('');
+    const pointOrder = ['suction', 'discharge', 'liquid', 'expansion'];
+    const points = pointOrder.filter(key => model.points[key]).map(key => {
+      const point = model.points[key];
+      const qualityClass = point.quality === 'derived' ? 'is-derived' : 'is-measured';
+      return `<g class="fr-chart-point ${qualityClass}" transform="translate(${x(point.x).toFixed(1)} ${y(point.y).toFixed(1)})"><title>Punto ${point.number}: ${point.label}, ${format(point.enthalpy_kj_kg, 1)} kJ/kg</title><circle r="15"></circle><text y="1">${point.number}</text></g>`;
+    }).join('');
+    const gridX = xTicks.map(tick => `<line class="fr-chart-grid" x1="${x(tick.fraction)}" y1="${margin.top}" x2="${x(tick.fraction)}" y2="${height - margin.bottom}"/><text class="fr-chart-tick" x="${x(tick.fraction)}" y="${height - margin.bottom + 22}" text-anchor="middle">${tick.label}</text>`).join('');
+    const gridY = yTicks.map(tick => `<line class="fr-chart-grid" x1="${margin.left}" y1="${y(tick.fraction)}" x2="${width - margin.right}" y2="${y(tick.fraction)}"/><text class="fr-chart-tick" x="${margin.left - 12}" y="${y(tick.fraction) + 4}" text-anchor="end">${tick.label}</text>`).join('');
+
+    elements.mollierChart.innerHTML = `
+      <title id="mollierChartTitle">Diagrama de Mollier de ${cycle.designation}</title>
+      <desc id="mollierChartDescription">Diagrama presión entalpía con ${Object.keys(model.points).length} puntos disponibles del ciclo frigorífico.</desc>
+      ${gridX}${gridY}
+      <line class="fr-chart-axis" x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}"/>
+      <line class="fr-chart-axis" x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}"/>
+      <path class="fr-chart-envelope" d="${chartPath(envelope, x, y)} Z"/>
+      <path class="fr-chart-dew" d="${chartPath(model.dew, x, y)}"/>
+      ${segments}${points}
+      <text class="fr-chart-label" x="${margin.left + plotWidth / 2}" y="${height - 10}" text-anchor="middle">ENTALPÍA · kJ/kg</text>
+      <text class="fr-chart-label" transform="translate(18 ${margin.top + plotHeight / 2}) rotate(-90)" text-anchor="middle">PRESIÓN ABSOLUTA · bar</text>`;
+  }
+
+  function mollierPointCard(key, label, cycle) {
+    const point = cycle.points[key];
+    if (!point) return `<article class="fr-mollier-point is-missing"><span>PUNTO —</span><strong>${label}</strong><small>Pendiente de medición</small></article>`;
+    const temperature = Number.isFinite(point.temperature_c) ? `${format(point.temperature_c, 1)} °C · ` : '';
+    return `<article class="fr-mollier-point"><span>PUNTO ${point.number}${point.quality === 'derived' ? ' · CALCULADO' : ' · MEDIDO'}</span><strong>${point.label}</strong><small>${temperature}${format(point.enthalpy_kj_kg, 1)} kJ/kg</small></article>`;
+  }
+
+  function performanceCard(label, value, unit, detail) {
+    const displayed = Number.isFinite(value) ? `${format(value, unit === 'COP' ? 2 : 1)}${unit === 'COP' ? '' : ` ${unit}`}` : 'Pendiente';
+    return `<article class="fr-performance-card"><span>${label}</span><strong>${displayed}</strong><small>${detail}</small></article>`;
+  }
+
+  function renderMollier() {
+    if (!state.mollier) {
+      elements.mollierStatus.textContent = 'DATOS NO DISPONIBLES';
+      elements.mollierStatus.className = 'fr-mollier-status is-review';
+      elements.mollierEmpty.querySelector('strong').textContent = 'El diagrama no está disponible en esta carga.';
+      return;
+    }
+    const designation = state.measurements.low_pressure?.result.designation
+      || state.measurements.high_pressure?.result.designation
+      || elements.refrigerantInput.value;
+    if (!designation) return;
+    const cycle = engine.analyzeMollierCycle({
+      mollier: state.mollier,
+      designation,
+      measurements: state.measurements,
+    });
+    const model = engine.createMollierPlotModel(state.mollier, cycle);
+    if (!model) {
+      elements.mollierContent.hidden = true;
+      elements.mollierEmpty.hidden = false;
+      elements.mollierStatus.textContent = cycle.status === 'review' ? 'REVISAR DATOS' : 'RECOGIENDO DATOS';
+      elements.mollierStatus.className = `fr-mollier-status${cycle.status === 'review' ? ' is-review' : ''}`;
+      return;
+    }
+
+    elements.mollierEmpty.hidden = true;
+    elements.mollierContent.hidden = false;
+    elements.mollierStatus.textContent = cycle.status === 'complete'
+      ? 'CICLO COMPLETO'
+      : cycle.status === 'review' ? 'REVISAR DATOS' : 'DIAGRAMA PARCIAL';
+    elements.mollierStatus.className = `fr-mollier-status${cycle.status === 'complete' ? ' is-complete' : cycle.status === 'review' ? ' is-review' : ''}`;
+    renderMollierChart(model, cycle);
+    elements.mollierPoints.innerHTML = [
+      mollierPointCard('suction', 'Aspiración del compresor', cycle),
+      mollierPointCard('discharge', 'Descarga del compresor', cycle),
+      mollierPointCard('liquid', 'Salida de líquido', cycle),
+      mollierPointCard('expansion', 'Salida de expansión', cycle),
+    ].join('');
+    const performance = cycle.performance;
+    elements.mollierPerformance.innerHTML = [
+      performanceCard('Efecto frigorífico', performance.evaporator_effect_kj_kg, 'kJ/kg', 'ganancia específica en evaporador'),
+      performanceCard('Trabajo del compresor', performance.compressor_work_kj_kg, 'kJ/kg', 'a partir de descarga medida'),
+      performanceCard('Calor rechazado', performance.condenser_heat_kj_kg, 'kJ/kg', 'diferencia en condensador'),
+      performanceCard('COP del ciclo', performance.cop_cycle, 'COP', 'indicador del ciclo medido'),
+    ].join('');
+    elements.mollierEvidence.innerHTML = cycle.evidence.map(item => `<article class="fr-evidence-item is-${item.level}"><i></i><div><strong>${item.title}</strong><p>${item.detail}</p></div></article>`).join('');
+  }
+
   function renderAnalysis() {
     if (!state.catalog) return;
     const low = state.measurements.low_pressure;
     const high = state.measurements.high_pressure;
     const suction = state.measurements.suction_line_temperature;
     const liquid = state.measurements.liquid_line_temperature;
+    const discharge = state.measurements.discharge_line_temperature;
     const returnAir = state.measurements.return_air_temperature;
     const supplyAir = state.measurements.supply_air_temperature;
 
@@ -274,6 +398,7 @@
       summaryItem('Tubo de aspiración', suction ? `${format(suction.value, 1)} °C` : 'Pendiente', '', Boolean(suction)),
       summaryItem('Alta', pressureLabel(high), saturationLabel(high, 'condensation'), Boolean(high)),
       summaryItem('Línea de líquido', liquid ? `${format(liquid.value, 1)} °C` : 'Pendiente', '', Boolean(liquid)),
+      summaryItem('Tubo de descarga', discharge ? `${format(discharge.value, 1)} °C` : 'Opcional', 'Cierra el ciclo Mollier', Boolean(discharge)),
       summaryItem('Aire de retorno', returnAir ? `${format(returnAir.value, 1)} °C` : 'Opcional', '', Boolean(returnAir)),
       summaryItem('Aire de impulsión', supplyAir ? `${format(supplyAir.value, 1)} °C` : 'Opcional', '', Boolean(supplyAir)),
     ].join('');
@@ -297,6 +422,7 @@
     elements.derivedSummary.innerHTML = derived.length
       ? derived.join('')
       : '<article class="fr-derived-item"><span>Resultados adicionales</span><strong>—</strong><small>Aparecerán al añadir las mediciones necesarias.</small></article>';
+    renderMollier();
   }
 
   function askNextMeasurement() {
@@ -375,6 +501,14 @@
       nextMeasurementReason: byId('nextMeasurementReason'),
       nextMeasurementButton: byId('nextMeasurementButton'),
       derivedSummary: byId('derivedSummary'),
+      mollierPanel: byId('mollierPanel'),
+      mollierStatus: byId('mollierStatus'),
+      mollierEmpty: byId('mollierEmpty'),
+      mollierContent: byId('mollierContent'),
+      mollierChart: byId('mollierChart'),
+      mollierPoints: byId('mollierPoints'),
+      mollierPerformance: byId('mollierPerformance'),
+      mollierEvidence: byId('mollierEvidence'),
     });
 
     elements.ptForm.addEventListener('submit', runConversion);
@@ -392,14 +526,18 @@
     });
 
     try {
-      const [catalogResponse, curvesResponse] = await Promise.all([
+      const [catalogResponse, curvesResponse, mollierResponse] = await Promise.all([
         fetch('data/frigorista/catalog.json'),
         fetch('data/frigorista/pt-curves.json'),
+        fetch('data/frigorista/mollier-data.json'),
       ]);
-      if (!catalogResponse.ok || !curvesResponse.ok) throw new Error('No se han podido cargar los datos P/T.');
-      [state.catalog, state.curves] = await Promise.all([catalogResponse.json(), curvesResponse.json()]);
-      if (state.catalog.dataset_version !== state.curves.dataset_version) {
-        throw new Error('Las versiones del catálogo y de las curvas no coinciden.');
+      if (!catalogResponse.ok || !curvesResponse.ok || !mollierResponse.ok) throw new Error('No se han podido cargar los datos termodinámicos.');
+      [state.catalog, state.curves, state.mollier] = await Promise.all([
+        catalogResponse.json(), curvesResponse.json(), mollierResponse.json(),
+      ]);
+      if (state.catalog.dataset_version !== state.curves.dataset_version
+        || state.catalog.dataset_version !== state.mollier.dataset_version) {
+        throw new Error('Las versiones de los datos termodinámicos no coinciden.');
       }
       renderCatalog();
     } catch (error) {

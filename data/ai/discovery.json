@@ -62,7 +62,9 @@
         "bubble_dew_separation",
         "superheat_calculation",
         "subcooling_calculation",
-        "next_measurement_guidance"
+        "next_measurement_guidance",
+        "mollier_pressure_enthalpy_cycle",
+        "specific_cycle_performance"
       ],
       "discovery": "../frigorista/discovery.json"
     },

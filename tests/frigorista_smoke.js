@@ -39,6 +39,15 @@ const {chromium} = require('playwright');
   await page.locator('#measurementInput').fill('36');
   await page.locator('#measurementForm').evaluate(form => form.requestSubmit());
   assert.match(await page.locator('#derivedSummary').innerText(), /Subenfriamiento/i);
+  assert.equal(await page.locator('#nextMeasurementButton').getAttribute('data-measurement'), 'discharge_line_temperature');
+  await page.locator('#nextMeasurementButton').click();
+  await page.locator('#measurementInput').fill('82');
+  await page.locator('#measurementForm').evaluate(form => form.requestSubmit());
+  await page.locator('#mollierContent:visible').waitFor();
+  assert.match(await page.locator('#mollierStatus').innerText(), /CICLO COMPLETO/i);
+  assert.equal(await page.locator('#mollierChart .fr-chart-point').count(), 4);
+  assert.match(await page.locator('#mollierPerformance').innerText(), /COP DEL CICLO/i);
+  await page.screenshot({path: 'test-artifacts/frigorista-mollier-mobile.png', fullPage: true});
 
   await page.locator('#newQueryButton').click();
   await page.locator('[data-refrigerant="R32"]').click();

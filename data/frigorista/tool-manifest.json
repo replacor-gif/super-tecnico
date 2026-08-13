@@ -90,6 +90,37 @@
       }
     },
     {
+      "name": "frigorista_get_mollier_state",
+      "state": "browser_available_remote_planned",
+      "description": "Returns enthalpy and entropy for a measured pressure-temperature point explicitly located in superheated vapour or subcooled liquid.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["refrigerant", "pressure_pa_abs", "temperature_c", "region"],
+        "properties": {
+          "refrigerant": {"type": "string", "minLength": 2, "maxLength": 40},
+          "pressure_pa_abs": {"type": "number", "exclusiveMinimum": 0},
+          "temperature_c": {"type": "number"},
+          "region": {"type": "string", "enum": ["vapor", "liquid"]},
+          "measurement_quality": {"type": "string", "enum": ["measured", "machine_read", "observed_estimate", "unknown"], "default": "measured"}
+        }
+      }
+    },
+    {
+      "name": "frigorista_analyze_mollier_cycle",
+      "state": "browser_available_remote_planned",
+      "description": "Builds a pressure-enthalpy cycle from measured points and returns specific refrigeration effect, compressor work, rejected heat, cycle COP, missing measurements and contradictions.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["refrigerant", "measurements"],
+        "properties": {
+          "refrigerant": {"type": "string", "minLength": 2, "maxLength": 40},
+          "measurements": {"type": "object"}
+        }
+      }
+    },
+    {
       "name": "frigorista_analyze_measurements",
       "state": "planned_after_evidence_rules",
       "description": "Will return evidence, contradictions, unknowns and the next useful measurement without diagnosing charge from pressure alone.",

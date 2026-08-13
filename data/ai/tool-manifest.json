@@ -182,6 +182,27 @@
       }
     },
     {
+      "name": "supertecnico_analyze_mollier_cycle",
+      "title": "Analizar ciclo frigorífico mediante Mollier",
+      "description": "Representa los puntos medidos en presión-entalpía y devuelve efecto frigorífico, trabajo específico, calor rechazado, COP del ciclo, contradicciones y datos pendientes.",
+      "state": "refrigeration_browser_available_remote_planned",
+      "result_level": "diagnostic",
+      "billing_tier": "metered_diagnostic_planned",
+      "economic_class": "advanced",
+      "target_output_tokens": 800,
+      "delegate": "../frigorista/tool-manifest.json#frigorista_analyze_mollier_cycle",
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["refrigerant", "measurements"],
+        "properties": {
+          "refrigerant": {"type": "string", "minLength": 2, "maxLength": 40},
+          "measurements": {"type": "object"}
+        }
+      }
+    },
+    {
       "name": "supertecnico_validate_answer",
       "title": "Validar una respuesta técnica",
       "description": "Descompone una respuesta en afirmaciones y marca las respaldadas, contradictorias, no verificables o fuera del alcance de las fuentes aportadas.",

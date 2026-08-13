@@ -1,5 +1,6 @@
 dist/
 node_modules/
+.codex-deps/
 __pycache__/
 *.py[cod]
 *.db
