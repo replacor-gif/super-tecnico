@@ -37,6 +37,11 @@
   "capabilities": [
     "regulation_catalog",
     "accent_insensitive_full_text_search",
+    "natural_language_stop_word_filtering",
+    "technical_synonym_expansion",
+    "proximity_and_coverage_ranking",
+    "specific_scope_detection_and_ranking",
+    "contextual_query_refinement",
     "document_and_domain_filtering",
     "exact_and_related_match_modes",
     "page_level_provenance",
@@ -49,7 +54,7 @@
   ],
   "response": {
     "top_level_required": ["ok", "status", "request_id", "service_version", "tool_id", "tool_version", "result", "confidence", "source_ids", "warnings", "usage"],
-    "item_required": ["document_id", "document_title", "page", "text", "official_page_url", "source_sha256", "source_content_sha256", "evidence_level"],
+    "item_required": ["document_id", "document_title", "page", "text", "locator", "term_coverage", "official_page_url", "source_sha256", "source_content_sha256", "evidence_level"],
     "statuses": ["success", "not_found"],
     "match_modes": ["exact", "all_terms", "related", "none"],
     "evidence_levels": {

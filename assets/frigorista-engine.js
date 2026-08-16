@@ -376,7 +376,7 @@
     }
 
     errors.forEach(error => evidence.push({level: 'warning', title: 'Dato a revisar', detail: error.message}));
-    return {
+    const cycle = {
       schema_version: '1.0.0',
       designation: normalizeDesignation(designation),
       status: errors.length ? 'review' : (performance.cop_cycle ? 'complete' : (points.suction && points.liquid ? 'partial' : 'collecting')),
@@ -390,6 +390,133 @@
         'Las entalpías son relativas y se usan como diferencias dentro del mismo refrigerante y versión de datos.',
         'El resultado describe el ciclo en los puntos medidos; no sustituye los objetivos del fabricante ni confirma por sí solo una avería.',
       ],
+    };
+    cycle.diagnosis = interpretMollierCycle({cycle, measurements});
+    return cycle;
+  }
+
+  function interpretMollierCycle({cycle, measurements = {}}) {
+    const valueOf = code => {
+      const value = measurements?.[code]?.value;
+      return Number.isFinite(Number(value)) ? Number(value) : null;
+    };
+    const low = measurements.low_pressure?.result;
+    const high = measurements.high_pressure?.result;
+    const suctionTemperature = valueOf('suction_line_temperature');
+    const liquidTemperature = valueOf('liquid_line_temperature');
+    const dischargeTemperature = valueOf('discharge_line_temperature');
+    const returnTemperature = valueOf('return_air_temperature');
+    const supplyTemperature = valueOf('supply_air_temperature');
+    const superheat = low && suctionTemperature !== null
+      ? round(suctionTemperature - Number(low.dew_temperature_c), 1)
+      : null;
+    const subcooling = high && liquidTemperature !== null
+      ? round(Number(high.bubble_temperature_c) - liquidTemperature, 1)
+      : null;
+    const airDelta = returnTemperature !== null && supplyTemperature !== null
+      ? round(returnTemperature - supplyTemperature, 1)
+      : null;
+    const observations = [];
+    const hypotheses = [];
+
+    function observation(code, level, title, detail, value = null, unit = '') {
+      observations.push({code, level, title, detail, value, unit});
+    }
+
+    function hypothesis(code, level, title, reason, checks) {
+      hypotheses.push({code, level, title, reason, checks});
+    }
+
+    if (superheat !== null) {
+      if (superheat < 1) observation('superheat', 'danger', 'Recalentamiento casi nulo', 'Existe riesgo de que llegue refrigerante sin evaporar completamente a la aspiración. Confirma la medida antes de mantener el equipo en estas condiciones.', superheat, 'K');
+      else if (superheat < 3) observation('superheat', 'warning', 'Recalentamiento bajo', 'La aspiración está muy próxima a la saturación. Puede ser normal en algún control específico, pero requiere comprobar el objetivo del fabricante.', superheat, 'K');
+      else if (superheat <= 12) observation('superheat', 'ok', 'Recalentamiento en zona orientativa', 'No destaca por sí solo. La referencia definitiva es el objetivo del fabricante para esta carga y condiciones.', superheat, 'K');
+      else if (superheat <= 20) observation('superheat', 'warning', 'Recalentamiento elevado', 'El evaporador parece recibir poco refrigerante o trabajar con poca alimentación efectiva.', superheat, 'K');
+      else observation('superheat', 'danger', 'Recalentamiento muy elevado', 'La aspiración está muy alejada de la saturación. Revisa alimentación de refrigerante y calentamiento de la línea.', superheat, 'K');
+    }
+
+    if (subcooling !== null) {
+      if (subcooling < 1) observation('subcooling', 'warning', 'Subenfriamiento casi nulo', 'La línea de líquido dispone de muy poco margen frente a la formación de gas antes de la expansión.', subcooling, 'K');
+      else if (subcooling < 4) observation('subcooling', 'info', 'Subenfriamiento bajo', 'Conviene contrastarlo con el objetivo del fabricante y comprobar que no haya pérdidas de carga o calentamiento de la línea.', subcooling, 'K');
+      else if (subcooling <= 12) observation('subcooling', 'ok', 'Subenfriamiento en zona orientativa', 'No destaca por sí solo. Debe compararse con el valor previsto para el equipo y sus condiciones actuales.', subcooling, 'K');
+      else if (subcooling <= 20) observation('subcooling', 'warning', 'Subenfriamiento elevado', 'Hay una acumulación de líquido o rechazo de calor que merece comprobación.', subcooling, 'K');
+      else observation('subcooling', 'danger', 'Subenfriamiento muy elevado', 'El valor es anormalmente alto para una lectura orientativa. Confirma sensores, presiones y estado del circuito de líquido.', subcooling, 'K');
+    }
+
+    if (dischargeTemperature !== null) {
+      if (dischargeTemperature >= 120) observation('discharge_temperature', 'danger', 'Descarga excesivamente caliente', 'Evita prolongar el funcionamiento hasta confirmar la causa y los límites del compresor.', dischargeTemperature, '°C');
+      else if (dischargeTemperature >= 105) observation('discharge_temperature', 'warning', 'Descarga muy caliente', 'Comprueba recalentamiento, condensación, ventilación y límites del fabricante.', dischargeTemperature, '°C');
+      else observation('discharge_temperature', 'info', 'Temperatura de descarga registrada', 'Se utiliza para cerrar el balance del ciclo; su límite admisible depende del compresor y del refrigerante.', dischargeTemperature, '°C');
+    }
+
+    if (airDelta !== null) {
+      if (airDelta < 5) observation('air_delta', 'warning', 'Salto térmico de aire reducido', 'Puede indicar poco intercambio, carga elevada o una medición tomada antes de estabilizarse.', airDelta, 'K');
+      else if (airDelta > 16) observation('air_delta', 'warning', 'Salto térmico de aire elevado', 'Puede estar relacionado con caudal de aire insuficiente. Revisa filtros, batería y ventilación.', airDelta, 'K');
+      else observation('air_delta', 'ok', 'Salto térmico de aire coherente', 'No presenta una desviación orientativa evidente, aunque depende de humedad, caudal y carga.', airDelta, 'K');
+    }
+
+    if (superheat !== null && subcooling !== null) {
+      if (superheat >= 12 && subcooling < 4) {
+        hypothesis('possible_underfeed', 'warning', 'Patrón compatible con alimentación insuficiente', 'Coinciden recalentamiento elevado y poco subenfriamiento. Es compatible con carga baja, falta de líquido o alimentación insuficiente del evaporador, pero no identifica por sí solo la causa.', [
+          'Confirmar ambas temperaturas con las sondas bien sujetas y el equipo estabilizado.',
+          'Comprobar fugas y contrastar la carga mediante el procedimiento del fabricante.',
+          'Revisar si llega líquido estable al dispositivo de expansión.',
+        ]);
+      } else if (superheat >= 12 && subcooling > 12) {
+        hypothesis('possible_liquid_restriction', 'warning', 'Patrón compatible con restricción en la línea de líquido', 'El recalentamiento y el subenfriamiento son elevados al mismo tiempo. Puede existir una restricción o una alimentación deficiente en la expansión.', [
+          'Medir la diferencia de temperatura antes y después del filtro deshidratador.',
+          'Revisar estrangulamientos, solenoides y distribución del evaporador.',
+          'Contrastar la alimentación de la expansión sin depender de conocer su apertura interna.',
+        ]);
+      } else if (superheat < 3 && subcooling > 12) {
+        hypothesis('possible_overfeed', 'warning', 'Patrón compatible con exceso de alimentación o acumulación de líquido', 'Coinciden poco recalentamiento y subenfriamiento elevado. Requiere descartar retorno de líquido y revisar la regulación y la carga.', [
+          'Comprobar escarcha o retorno de líquido en aspiración.',
+          'Verificar caudal de aire y limpieza del evaporador.',
+          'Comparar carga y objetivos con la documentación del equipo.',
+        ]);
+      } else if (superheat < 3) {
+        hypothesis('possible_liquid_return', 'danger', 'Prioridad: descartar retorno de líquido', 'El recalentamiento es bajo y la aspiración está demasiado cerca de saturación para ignorarlo.', [
+          'Repetir la temperatura sobre tubo limpio, aislando bien la sonda.',
+          'Comprobar caudal de aire, evaporador y estabilidad del control.',
+          'No declarar avería hasta contrastar el objetivo de recalentamiento del fabricante.',
+        ]);
+      }
+    }
+
+    if (dischargeTemperature !== null && dischargeTemperature >= 105 && superheat !== null && superheat >= 12) {
+      hypothesis('compressor_thermal_stress', dischargeTemperature >= 120 ? 'danger' : 'warning', 'Posible esfuerzo térmico del compresor', 'La descarga caliente coincide con recalentamiento elevado. Conviene reducir el tiempo de funcionamiento mientras se confirma la alimentación y el rechazo de calor.', [
+        'Contrastar la temperatura máxima admisible del compresor.',
+        'Revisar condensador, ventilación y relación de compresión.',
+      ]);
+    }
+
+    const cop = Number(cycle?.performance?.cop_cycle);
+    if (Number.isFinite(cop) && cop < 1.5) {
+      hypothesis('low_cycle_efficiency', 'warning', 'Rendimiento específico reducido', `El COP estimado del ciclo es ${round(cop, 2)}. Sin las condiciones nominales no puede calificarse el equipo, pero merece comparación con datos del fabricante.`, [
+        'Confirmar presiones y las tres temperaturas de tubo.',
+        'Anotar temperatura exterior, retorno e impulsión para contextualizar el ciclo.',
+      ]);
+    }
+
+    const nextCheck = hypotheses[0]?.checks?.[0]
+      || (returnTemperature === null ? 'Añadir la temperatura del aire de retorno para contextualizar la carga.'
+        : supplyTemperature === null ? 'Añadir la temperatura del aire de impulsión para comprobar el intercambio.'
+          : 'Comparar los valores con los objetivos del fabricante para estas condiciones de trabajo.');
+    const completedCore = superheat !== null && subcooling !== null;
+    return {
+      schema_version: '1.0.0',
+      status: cycle?.errors?.length ? 'review' : (hypotheses.length ? 'attention' : (completedCore ? 'no_dominant_pattern' : 'collecting')),
+      confidence: cycle?.status === 'complete' && completedCore ? 'orientative_pattern' : 'preliminary',
+      headline: cycle?.errors?.length
+        ? 'Primero hay que revisar los datos introducidos.'
+        : hypotheses.length ? hypotheses[0].title
+          : completedCore ? 'No aparece un patrón dominante con las medidas disponibles.'
+            : 'Faltan medidas para interpretar el comportamiento del ciclo.',
+      observations,
+      hypotheses,
+      next_check: nextCheck,
+      values: {superheat_k: superheat, subcooling_k: subcooling, air_delta_k: airDelta},
+      limitation: 'Las zonas son orientativas y no sustituyen los objetivos del fabricante, el tipo de expansión ni las condiciones de carga.',
     };
   }
 
@@ -475,6 +602,7 @@
     calculateSubcooling,
     lookupMollierState,
     analyzeMollierCycle,
+    interpretMollierCycle,
     createMollierPlotModel,
     nextUsefulMeasurement,
   });

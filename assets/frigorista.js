@@ -29,6 +29,12 @@
     }).format(value);
   }
 
+  function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, character => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[character]));
+  }
+
   function setError(element, message = '') {
     element.textContent = message;
     element.hidden = !message;
@@ -335,6 +341,31 @@
     return `<article class="fr-performance-card"><span>${label}</span><strong>${displayed}</strong><small>${detail}</small></article>`;
   }
 
+  function renderCycleDiagnosis(diagnosis) {
+    if (!diagnosis) {
+      elements.mollierDiagnosis.innerHTML = '';
+      return;
+    }
+    const observations = (diagnosis.observations || []).map(item => {
+      const measured = Number.isFinite(item.value) ? `<b>${format(item.value, 1)} ${escapeHtml(item.unit)}</b>` : '';
+      return `<article class="fr-diagnostic-observation is-${escapeHtml(item.level)}"><span>${escapeHtml(item.title)}</span>${measured}<small>${escapeHtml(item.detail)}</small></article>`;
+    }).join('');
+    const hypotheses = (diagnosis.hypotheses || []).map((item, index) => `
+      <article class="fr-diagnostic-hypothesis is-${escapeHtml(item.level)}">
+        <div><span>${index === 0 ? 'PRIMERA HIPÓTESIS A COMPROBAR' : 'OTRA POSIBILIDAD'}</span><h5>${escapeHtml(item.title)}</h5><p>${escapeHtml(item.reason)}</p></div>
+        <details><summary>Comprobaciones recomendadas</summary><ol>${(item.checks || []).map(check => `<li>${escapeHtml(check)}</li>`).join('')}</ol></details>
+      </article>`).join('');
+    const patternClass = diagnosis.status === 'attention' ? ' is-attention' : diagnosis.status === 'review' ? ' is-review' : '';
+    elements.mollierDiagnosis.innerHTML = `
+      <section class="fr-diagnostic-summary${patternClass}" aria-labelledby="cycleDiagnosisTitle">
+        <div class="fr-diagnostic-head"><div><span>LECTURA TÉCNICA ORIENTATIVA</span><h4 id="cycleDiagnosisTitle">${escapeHtml(diagnosis.headline)}</h4></div><b>${diagnosis.confidence === 'orientative_pattern' ? 'CICLO COMPLETO' : 'LECTURA PRELIMINAR'}</b></div>
+        ${observations ? `<div class="fr-diagnostic-observations">${observations}</div>` : ''}
+        ${hypotheses || '<p class="fr-no-pattern">Las medidas no forman ahora mismo una combinación que señale una causa concreta. Esto no confirma que el equipo esté correcto: hay que compararlo con sus objetivos y condiciones reales.</p>'}
+        <div class="fr-next-check"><span>SIGUIENTE COMPROBACIÓN MÁS ÚTIL</span><strong>${escapeHtml(diagnosis.next_check)}</strong></div>
+        <p class="fr-diagnostic-limit">${escapeHtml(diagnosis.limitation)}</p>
+      </section>`;
+  }
+
   function renderMollier() {
     if (!state.mollier) {
       elements.mollierStatus.textContent = 'DATOS NO DISPONIBLES';
@@ -380,6 +411,7 @@
       performanceCard('Calor rechazado', performance.condenser_heat_kj_kg, 'kJ/kg', 'diferencia en condensador'),
       performanceCard('COP del ciclo', performance.cop_cycle, 'COP', 'indicador del ciclo medido'),
     ].join('');
+    renderCycleDiagnosis(cycle.diagnosis);
     elements.mollierEvidence.innerHTML = cycle.evidence.map(item => `<article class="fr-evidence-item is-${item.level}"><i></i><div><strong>${item.title}</strong><p>${item.detail}</p></div></article>`).join('');
   }
 
@@ -508,6 +540,7 @@
       mollierChart: byId('mollierChart'),
       mollierPoints: byId('mollierPoints'),
       mollierPerformance: byId('mollierPerformance'),
+      mollierDiagnosis: byId('mollierDiagnosis'),
       mollierEvidence: byId('mollierEvidence'),
     });
 

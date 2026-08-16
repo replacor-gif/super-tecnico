@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 const ST_REGULATION_TOOL_ID = 'supertecnico_search_regulations';
-const ST_REGULATION_TOOL_VERSION = '1.0.0';
-const ST_REGULATION_SERVICE_VERSION = '0.3.0';
+const ST_REGULATION_TOOL_VERSION = '1.1.0';
+const ST_REGULATION_SERVICE_VERSION = '0.4.0';
 
 function st_regulations_ensure_schema(): void
 {
@@ -83,6 +83,22 @@ function st_regulation_catalog(): array
 function st_regulation_token_variants(string $token): array
 {
     $variants = [$token];
+    $aliases = [
+        'cable' => ['conductor', 'conductores'], 'cables' => ['conductor', 'conductores'],
+        'conductor' => ['cable', 'cables'], 'conductores' => ['cable', 'cables'],
+        'voltaje' => ['tension'], 'tension' => ['voltaje'],
+        'diferencial' => ['interruptor diferencial', 'proteccion diferencial'],
+        'magnetotermico' => ['interruptor automatico', 'pequeno interruptor automatico', 'pia'],
+        'tierra' => ['puesta a tierra'], 'aterramiento' => ['puesta a tierra'],
+        'desague' => ['evacuacion de aguas', 'saneamiento'], 'desagues' => ['evacuacion de aguas', 'saneamiento'],
+        'acondicionado' => ['climatizacion'], 'climatizacion' => ['aire acondicionado'],
+        'extractor' => ['extraccion', 'ventilacion'], 'extraccion' => ['extractor', 'ventilacion'],
+        'refrigerante' => ['gas fluorado'], 'refrigerantes' => ['gases fluorados'],
+        'frigorias' => ['potencia frigorifica', 'carga termica'],
+        'seccion' => ['dimensionado'], 'dimensionado' => ['seccion'],
+        'caudal' => ['flujo'], 'flujo' => ['caudal'],
+    ];
+    foreach ($aliases[$token] ?? [] as $alias) $variants[] = $alias;
     $length = strlen($token);
     if ($length > 5 && str_ends_with($token, 'es')) $variants[] = substr($token, 0, -2);
     if ($length > 4 && str_ends_with($token, 's')) $variants[] = substr($token, 0, -1);
@@ -91,21 +107,91 @@ function st_regulation_token_variants(string $token): array
 
 function st_regulation_terms(string $normalized): array
 {
-    $stop = ['a','al','ante','bajo','con','contra','de','del','desde','durante','e','el','en','entre','hacia','hasta','la','las','lo','los','o','para','por','que','segun','sin','sobre','tras','un','una','unos','unas','y'];
+    $stop = ['a','al','ante','bajo','con','contra','de','del','desde','durante','e','el','en','entre','hacia','hasta','la','las','lo','los','o','para','por','que','segun','sin','sobre','tras','un','una','unos','unas','y',
+        'como','cual','cuales','cuando','cuanto','cuantos','donde','quien','quienes','debe','deben','deberia','deberian','puedo','puede','pueden','necesito','necesita','necesitan','tener','tiene','tienen','hay','saber','dime','indica','indicar','exige','exigido','norma','normativa','reglamento','tecnico','tecnica'];
     $raw = array_values(array_unique(array_filter(explode(' ', $normalized), static fn(string $token): bool => strlen($token) >= 2)));
     $useful = array_values(array_filter($raw, static fn(string $token): bool => !in_array($token, $stop, true)));
     return $useful ?: $raw;
 }
 
+function st_regulation_match_details(string $haystack, array $terms): array
+{
+    $positions = [];
+    foreach ($terms as $term) {
+        $position = st_regulation_term_position($haystack, $term);
+        if ($position !== false) $positions[$term] = $position;
+    }
+    $matched = count($positions);
+    $span = $matched > 1 ? max($positions) - min($positions) : PHP_INT_MAX;
+    return [
+        'matched' => $matched,
+        'positions' => $positions,
+        'first_position' => $matched ? min($positions) : PHP_INT_MAX,
+        'span' => $span,
+        'coverage' => count($terms) ? $matched / count($terms) : 0,
+    ];
+}
+
+function st_regulation_locator(string $text): string
+{
+    if (preg_match('/\b((?:ITC|IF)[-\s]?[A-Z]{0,5}[-\s]?\d{1,3}(?:\.\d+)?)\s+[A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ\s]{4,}/u', $text, $heading) === 1) {
+        return trim(preg_replace('/\s+/u', ' ', $heading[1]) ?? $heading[1]);
+    }
+    $patterns = [
+        '/\bArt[ií]culo\s+\d+(?:\.\d+)?(?:\s*[a-z])?/iu',
+        '/\b(?:Apartado|Secci[oó]n|Tabla)\s+[A-Z]{0,3}\s*\d+(?:\.\d+)*/iu',
+    ];
+    foreach ($patterns as $pattern) {
+        if (preg_match($pattern, $text, $match) === 1) return trim(preg_replace('/\s+/u', ' ', $match[0]) ?? $match[0]);
+    }
+    return '';
+}
+
+function st_regulation_specific_scope(string $haystack, string $query): array
+{
+    $scopes = [
+        'mueble' => 'muebles eléctricos',
+        'vehiculo electrico' => 'recarga de vehículo eléctrico',
+        'alumbrado exterior' => 'alumbrado exterior',
+        'piscina' => 'piscinas y fuentes',
+        'caravana' => 'caravanas',
+        'sauna' => 'saunas',
+        'quirofano' => 'quirófanos',
+        'instalacion provisional' => 'instalaciones provisionales',
+        'feria' => 'ferias y stands',
+        'puerto' => 'puertos y marinas',
+        'tierra' => 'puesta a tierra',
+        'proyecto' => 'documentación y proyecto',
+        'unidad tematica' => 'programa formativo',
+    ];
+    foreach ($scopes as $needle => $label) {
+        if (strpos($haystack, $needle) !== false && strpos($query, $needle) === false) {
+            return ['penalty' => 65, 'hint' => $label];
+        }
+    }
+    return ['penalty' => 0, 'hint' => ''];
+}
+
+function st_regulation_refinement(string $query): ?array
+{
+    if (strpos($query, 'seccion') !== false && (strpos($query, 'cable') !== false || strpos($query, 'conductor') !== false)) {
+        return [
+            'message' => 'La sección depende del circuito y del uso. Añade el destino para acotar la prescripción aplicable.',
+            'suggested_terms' => ['alumbrado', 'tomas de corriente', 'derivación individual', 'tierra', 'recarga de vehículo'],
+        ];
+    }
+    if (strpos($query, 'ventilacion') !== false && strpos($query, 'local') === false && strpos($query, 'vivienda') === false) {
+        return ['message' => 'La ventilación cambia según el uso del recinto. Añade el tipo de edificio o local.', 'suggested_terms' => ['vivienda', 'garaje', 'local comercial', 'sala de máquinas']];
+    }
+    return null;
+}
+
 function st_regulation_term_position(string $haystack, string $term): int|false
 {
     foreach (st_regulation_token_variants($term) as $variant) {
-        if (strlen($variant) === 2) {
-            $matched = preg_match('/(?:^| )' . preg_quote($variant, '/') . '(?: |$)/', $haystack, $capture, PREG_OFFSET_CAPTURE);
-            $position = $matched === 1 ? (int) $capture[0][1] : false;
-        } else {
-            $position = strpos($haystack, $variant);
-        }
+        $suffix = strlen($variant) === 2 || str_ends_with($variant, 's') ? '' : '(?:es|s)?';
+        $matched = preg_match('/(?:^| )' . preg_quote($variant, '/') . $suffix . '(?: |$)/', $haystack, $capture, PREG_OFFSET_CAPTURE);
+        $position = $matched === 1 ? (int) $capture[0][1] : false;
         if ($position !== false) return $position;
     }
     return false;
@@ -161,28 +247,26 @@ function st_regulations_search(array $input, string $clientHash, bool $recordUsa
         ]));
         foreach ($index['records'] ?? [] as $record) {
             $haystack = (string) ($record['search'] ?? st_regulation_normalize((string) ($record['text'] ?? '')));
-            $matched = 0;
-            $firstPosition = PHP_INT_MAX;
-            foreach ($terms as $term) {
-                $position = st_regulation_term_position($haystack, $term);
-                if ($position !== false) {
-                    $matched++;
-                    $firstPosition = min($firstPosition, $position);
-                }
-            }
+            $details = st_regulation_match_details($haystack, $terms);
+            $matched = $details['matched'];
             $phraseFound = $normalized !== '' && strpos($haystack, $normalized) !== false;
             if ($exactPhrase && !$phraseFound) continue;
             if (!$exactPhrase && $matched !== count($terms)) continue;
-            $score = ($phraseFound ? 160 : 0) + ($matched * 24) + ($firstPosition < 180 ? 8 : 0);
-            if (strpos($haystack, $normalized) !== false) $score += 35;
+            $score = ($phraseFound ? 220 : 0) + ($matched * 28) + ($details['first_position'] < 180 ? 10 : 0);
+            if ($details['span'] <= 350) $score += 28;
+            elseif ($details['span'] <= 900) $score += 12;
             foreach ($terms as $term) if (st_regulation_term_position($metadata, $term) !== false) $score += 3;
-            $candidates[] = ['score' => $score, 'matched' => $matched, 'document' => $document, 'record' => $record];
+            if (strpos($haystack, 'indice') !== false) $score -= ((int) ($record['page'] ?? 0) <= 6 ? 90 : 35);
+            $scope = st_regulation_specific_scope($haystack, $normalized);
+            $score -= $scope['penalty'];
+            $candidates[] = ['score' => $score, 'matched' => $matched, 'coverage' => $details['coverage'], 'scope_hint' => $scope['hint'], 'document' => $document, 'record' => $record];
         }
     }
 
     $matchMode = $exactPhrase ? 'exact' : 'all_terms';
     if (!$candidates && !$exactPhrase && count($terms) >= 3) {
         $matchMode = 'related';
+        $minimumRelatedTerms = max(2, (int) ceil(count($terms) * 0.55));
         foreach ($documents as $document) {
             $indexRelative = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, (string) ($document['index_url'] ?? ''));
             $indexPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . $indexRelative;
@@ -190,10 +274,17 @@ function st_regulations_search(array $input, string $clientHash, bool $recordUsa
             $metadata = st_regulation_normalize(implode(' ', [$document['short_title'] ?? '', $document['title'] ?? '', $document['legal_reference'] ?? '', $document['domain'] ?? '', implode(' ', $document['topics'] ?? [])]));
             foreach ($index['records'] ?? [] as $record) {
                 $haystack = (string) ($record['search'] ?? st_regulation_normalize((string) ($record['text'] ?? '')));
-                $matched = 0;
-                foreach ($terms as $term) if (st_regulation_term_position($haystack, $term) !== false) $matched++;
-                if ($matched < max(2, count($terms) - 1)) continue;
-                $candidates[] = ['score' => ($matched * 20), 'matched' => $matched, 'document' => $document, 'record' => $record];
+                $details = st_regulation_match_details($haystack, $terms);
+                $matched = $details['matched'];
+                if ($matched < $minimumRelatedTerms) continue;
+                $score = ($matched * 24) + ($details['coverage'] * 70) + ($details['first_position'] < 180 ? 8 : 0);
+                if ($details['span'] <= 350) $score += 22;
+                elseif ($details['span'] <= 900) $score += 9;
+                foreach ($terms as $term) if (st_regulation_term_position($metadata, $term) !== false) $score += 3;
+                if (strpos($haystack, 'indice') !== false) $score -= ((int) ($record['page'] ?? 0) <= 6 ? 90 : 35);
+                $scope = st_regulation_specific_scope($haystack, $normalized);
+                $score -= $scope['penalty'];
+                $candidates[] = ['score' => $score, 'matched' => $matched, 'coverage' => $details['coverage'], 'scope_hint' => $scope['hint'], 'document' => $document, 'record' => $record];
             }
         }
     }
@@ -221,13 +312,17 @@ function st_regulations_search(array $input, string $clientHash, bool $recordUsa
             'domain' => (string) $document['domain'],
             'page' => $page,
             'text' => st_regulation_snippet((string) ($record['text'] ?? ''), $terms),
+            'locator' => st_regulation_locator((string) ($record['text'] ?? '')),
+            'scope_hint' => (string) ($candidate['scope_hint'] ?? ''),
+            'matched_terms' => (int) ($candidate['matched'] ?? 0),
+            'term_coverage' => round((float) ($candidate['coverage'] ?? 0), 3),
             'local_pdf_path' => (string) $document['local_pdf'],
             'local_pdf_fragment' => '#page=' . $page,
             'official_page_url' => (string) $document['official_page_url'],
             'source_sha256' => (string) $document['sha256'],
             'source_content_sha256' => (string) $document['content_sha256'],
             'evidence_level' => 'document_hit',
-            'relevance_score' => min(1, round(((int) $candidate['score']) / 240, 3)),
+            'relevance_score' => min(1, max(0, round(((int) $candidate['score']) / 320, 3))),
         ];
     }
     if (!$items) $matchMode = 'none';
@@ -256,6 +351,7 @@ function st_regulations_search(array $input, string $clientHash, bool $recordUsa
                 'documents' => array_map(static fn(string $id, int $count): array => ['id' => $id, 'count' => $count], array_keys($facets['documents']), array_values($facets['documents'])),
                 'domains' => array_map(static fn(string $id, int $count): array => ['id' => $id, 'count' => $count], array_keys($facets['domains']), array_values($facets['domains'])),
             ],
+            'refinement' => st_regulation_refinement($normalized),
             'catalog' => ['jurisdiction' => (string) ($catalog['jurisdiction'] ?? 'ES'), 'verified_at' => $catalog['verified_at'] ?? null, 'document_count' => count($catalog['documents'] ?? [])],
         ],
         'confidence' => $matchMode === 'exact' ? 0.98 : ($matchMode === 'all_terms' ? 0.9 : ($matchMode === 'related' ? 0.6 : 0)),

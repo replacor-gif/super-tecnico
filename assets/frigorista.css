@@ -236,6 +236,37 @@ body { padding-bottom: 28px; }
 .fr-performance-card strong { margin-top: 5px; display: block; color: var(--fr-cyan); font-size: 1.2rem; }
 .fr-performance-card small { color: #70889d; font-size: .62rem; }
 .fr-mollier-evidence { margin-top: 14px; display: grid; gap: 8px; }
+.fr-cycle-diagnosis { margin-top: 18px; }
+.fr-diagnostic-summary { padding: 18px; border: 1px solid rgba(0,200,255,.3); border-radius: 16px; background: linear-gradient(145deg, rgba(0,200,255,.08), rgba(5,14,23,.94) 45%); }
+.fr-diagnostic-summary.is-attention { border-color: rgba(255,122,0,.42); background: linear-gradient(145deg, rgba(255,122,0,.08), rgba(5,14,23,.94) 45%); }
+.fr-diagnostic-summary.is-review { border-color: rgba(255,75,75,.45); }
+.fr-diagnostic-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+.fr-diagnostic-head span, .fr-next-check span { color: var(--fr-cyan); font-size: .62rem; font-weight: 950; letter-spacing: .09em; }
+.fr-diagnostic-head h4 { margin: 5px 0 0; color: #f4f9fd; font-size: clamp(1rem, 2.4vw, 1.35rem); }
+.fr-diagnostic-head>b { flex: 0 0 auto; padding: 6px 8px; border: 1px solid rgba(0,200,255,.35); border-radius: 8px; color: var(--fr-cyan); font-size: .58rem; letter-spacing: .06em; }
+.fr-diagnostic-observations { margin-top: 14px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.fr-diagnostic-observation { min-height: 110px; padding: 12px; display: flex; flex-direction: column; border: 1px solid #2b4358; border-radius: 12px; background: rgba(3,11,18,.72); }
+.fr-diagnostic-observation>span { color: #bdd0df; font-size: .68rem; font-weight: 850; }
+.fr-diagnostic-observation>b { margin-top: 5px; color: var(--fr-cyan); font-size: 1.05rem; }
+.fr-diagnostic-observation>small { margin-top: 6px; color: #7f95a8; font-size: .66rem; line-height: 1.45; }
+.fr-diagnostic-observation.is-warning, .fr-diagnostic-observation.is-danger { border-color: rgba(255,122,0,.42); }
+.fr-diagnostic-observation.is-warning>b, .fr-diagnostic-observation.is-danger>b { color: #ffad5f; }
+.fr-diagnostic-observation.is-danger { background: rgba(105,25,7,.12); }
+.fr-diagnostic-observation.is-ok { border-color: rgba(81,255,125,.25); }
+.fr-diagnostic-observation.is-ok>b { color: var(--fr-green); }
+.fr-diagnostic-hypothesis { margin-top: 10px; padding: 15px; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(230px, .8fr); gap: 14px; border: 1px solid rgba(255,122,0,.35); border-radius: 13px; background: rgba(255,122,0,.045); }
+.fr-diagnostic-hypothesis.is-danger { border-color: rgba(255,75,75,.48); background: rgba(255,75,75,.05); }
+.fr-diagnostic-hypothesis span { color: #ffad5f; font-size: .58rem; font-weight: 950; letter-spacing: .08em; }
+.fr-diagnostic-hypothesis h5 { margin: 5px 0 4px; color: #f5f8fb; font-size: .94rem; }
+.fr-diagnostic-hypothesis p { margin: 0; color: #91a6b7; font-size: .72rem; line-height: 1.5; }
+.fr-diagnostic-hypothesis details { align-self: start; padding: 10px 12px; border: 1px solid #365064; border-radius: 10px; background: #07131d; }
+.fr-diagnostic-hypothesis summary { color: #d9e7f1; font-size: .7rem; font-weight: 850; cursor: pointer; }
+.fr-diagnostic-hypothesis ol { margin: 9px 0 0; padding-left: 18px; color: #8da3b5; font-size: .68rem; line-height: 1.5; }
+.fr-no-pattern { margin: 14px 0 0 !important; padding: 13px; border: 1px solid rgba(81,255,125,.24); border-radius: 11px; background: rgba(81,255,125,.04); color: #a9bdcb !important; font-size: .74rem; }
+.fr-next-check { margin-top: 12px; padding: 12px 14px; display: grid; gap: 4px; border-left: 3px solid var(--fr-yellow); background: rgba(255,228,56,.045); }
+.fr-next-check span { color: var(--fr-yellow); }
+.fr-next-check strong { color: #e9f0f5; font-size: .78rem; }
+.fr-diagnostic-limit { margin: 12px 0 0 !important; color: #6f8799 !important; font-size: .64rem; line-height: 1.45; }
 .fr-evidence-item { padding: 12px 14px; display: grid; grid-template-columns: auto 1fr; gap: 10px; border: 1px solid #2b4358; border-radius: 12px; background: #09141f; }
 .fr-evidence-item i { width: 10px; height: 10px; margin-top: 5px; border-radius: 50%; background: var(--fr-blue); box-shadow: 0 0 10px rgba(0,200,255,.35); }
 .fr-evidence-item.is-ok i { background: var(--fr-green); box-shadow: 0 0 10px rgba(81,255,125,.35); }
@@ -282,6 +313,8 @@ body { padding-bottom: 28px; }
   .fr-mollier-head { display: grid; }
   .fr-mollier-status { width: fit-content; }
   .fr-mollier-layout { grid-template-columns: 1fr; }
+  .fr-diagnostic-observations { grid-template-columns: 1fr 1fr; }
+  .fr-diagnostic-hypothesis { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 390px) {
@@ -291,4 +324,6 @@ body { padding-bottom: 28px; }
   .fr-glide-card { grid-column: auto; }
   .fr-summary-grid { grid-template-columns: 1fr; }
   .fr-mollier-points, .fr-mollier-performance { grid-template-columns: 1fr; }
+  .fr-diagnostic-head { display: grid; }
+  .fr-diagnostic-observations { grid-template-columns: 1fr; }
 }

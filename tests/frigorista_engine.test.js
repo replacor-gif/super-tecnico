@@ -97,6 +97,50 @@ assert.ok(completeCycle.performance.compressor_work_kj_kg > 0);
 assert.ok(completeCycle.performance.condenser_heat_kj_kg > 0);
 assert.ok(completeCycle.performance.cop_cycle > 0);
 assert.equal(Object.keys(engine.createMollierPlotModel(mollier, completeCycle).points).length, 4);
+assert.ok(completeCycle.diagnosis);
+assert.ok(Array.isArray(completeCycle.diagnosis.observations));
+assert.ok(completeCycle.diagnosis.next_check);
+
+const underfeedDiagnosis = engine.interpretMollierCycle({
+  cycle: {status: 'complete', errors: [], performance: {cop_cycle: 2.4}},
+  measurements: {
+    low_pressure: {result: {dew_temperature_c: 0}},
+    suction_line_temperature: {value: 18},
+    high_pressure: {result: {bubble_temperature_c: 40}},
+    liquid_line_temperature: {value: 38},
+    discharge_line_temperature: {value: 92},
+  },
+});
+assert.equal(underfeedDiagnosis.values.superheat_k, 18);
+assert.equal(underfeedDiagnosis.values.subcooling_k, 2);
+assert.equal(underfeedDiagnosis.hypotheses[0].code, 'possible_underfeed');
+assert.match(underfeedDiagnosis.next_check, /Confirmar ambas temperaturas/i);
+
+const liquidReturnDiagnosis = engine.interpretMollierCycle({
+  cycle: {status: 'complete', errors: [], performance: {cop_cycle: 3.1}},
+  measurements: {
+    low_pressure: {result: {dew_temperature_c: 8}},
+    suction_line_temperature: {value: 9},
+    high_pressure: {result: {bubble_temperature_c: 45}},
+    liquid_line_temperature: {value: 37},
+    discharge_line_temperature: {value: 80},
+  },
+});
+assert.equal(liquidReturnDiagnosis.hypotheses[0].code, 'possible_liquid_return');
+assert.equal(liquidReturnDiagnosis.hypotheses[0].level, 'danger');
+
+const thermalStressDiagnosis = engine.interpretMollierCycle({
+  cycle: {status: 'complete', errors: [], performance: {cop_cycle: 2.2}},
+  measurements: {
+    low_pressure: {result: {dew_temperature_c: 0}},
+    suction_line_temperature: {value: 15},
+    high_pressure: {result: {bubble_temperature_c: 44}},
+    liquid_line_temperature: {value: 36},
+    discharge_line_temperature: {value: 122},
+  },
+});
+assert.ok(thermalStressDiagnosis.hypotheses.some(item => item.code === 'compressor_thermal_stress'));
+assert.ok(thermalStressDiagnosis.observations.some(item => item.code === 'discharge_temperature' && item.level === 'danger'));
 
 assert.throws(
   () => engine.lookupMollierState({
