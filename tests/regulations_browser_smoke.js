@@ -21,6 +21,7 @@ const {chromium} = require('playwright');
   assert.match(await page.locator('.rg-result-card').first().innerText(), /PÁGINA 169/i);
 
   await page.locator('[data-refine="alumbrado"]').click();
+  await page.locator('.rg-refinement.is-required').waitFor({state: 'detached'});
   await page.locator('.rg-result-card').first().filter({hasText: 'PÁGINA 169'}).waitFor();
   const firstResult = await page.locator('.rg-result-card').first().innerText();
   assert.match(firstResult, /ITC-BT-25/i);
