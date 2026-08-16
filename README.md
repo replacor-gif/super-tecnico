@@ -13,7 +13,7 @@ Portal técnico estático con herramientas independientes. La publicación es:
 - **Asistente frigorista:** conversión P/T, estudio progresivo y diagnóstico del ciclo medido mediante diagrama presión-entalpía (Mollier), sin exigir mediciones que el técnico no tenga.
 - **Diseñador de conductos:** plano de estancias, trazado y dimensiones de la red de aire.
 - **Desagües de condensados:** caudal acumulado, pendiente, caída y diámetro interior por tramo para varias unidades.
-- **Normativa técnica:** búsqueda por página dentro de REBT, RITE, RSIF, RAT, RLAT, CTE DB-HS y criterios sanitarios del agua.
+- **Normativa técnica:** búsqueda natural dentro de 18 reglamentos oficiales, con jerarquía de ITC, artículo, apartado y tabla cuando puede extraerse de forma fiable; pide contexto cuando la consulta no tiene una única respuesta aplicable.
 - **Referencias de componentes:** consulta por referencia, marcado, fabricante, categoría, encapsulado y parámetros eléctricos.
 - **Comparador documental:** contraste lado a lado de referencias reales y búsqueda conservadora de candidatos MOSFET, IGBT y diodos rápidos revisados.
 - **Averías reales por placa:** casos aportados por técnicos, buscables por referencia o explorables mediante filtros de marca y equipo; se publican únicamente tras moderación.
@@ -49,11 +49,15 @@ python tools/update_regulations.py
 
 Puede limitarse a una fuente con `--document rebt` o reconstruir los índices desde las copias guardadas con `--no-download`. Si cambia una huella, `data/regulations/update-report.json` obliga a revisar manualmente las reglas de cálculo que dependan de ese documento. Los textos UNE, UNE-EN e IEC no se almacenan ni distribuyen sin licencia.
 
+Los índices de búsqueda separan texto normativo, tablas, encabezados e índices documentales. Conservan la ruta del resultado y penalizan los índices para que una referencia del sumario no se confunda con el contenido aplicable.
+
 El identificador SMD publica 439 candidatos de seis fabricantes, todos con marcaje, encapsulado, patillaje, parámetros eléctricos y una fuente oficial. Cuando un código tiene varios significados, muestra todos los candidatos cerrados y no selecciona ninguno automáticamente.
 
 La base de referencias publica 11.532 componentes y 8.363 parámetros. Separa 8.205 fichas oficiales, revisadas o confirmadas en índices de fabricante de 3.327 candidatos históricos pendientes de contrastar. Para priorizar cobertura, admite dos niveles: ficha desarrollada y ficha índice oficial. La primera contiene parámetros cuando están documentados; la segunda confirma referencia, fabricante, familia, categoría, catálogo y página sin inventar valores que todavía no se hayan extraído. La ampliación masiva inicial incorpora 6.551 referencias de los catálogos oficiales de Nexperia y Texas Instruments, además de IPM, MOSFET, lógica, temporizadores, operacionales, reguladores y drivers ya desarrollados. Ninguna coincidencia se presenta como sustitución automática.
 
 ## Versión beta e idiomas
+
+El alcance, las puertas de salida y el trabajo pendiente de la primera versión se mantienen en `docs/V1-COMPETENCE-AUDIT.md`, separado del informe de preparación comercial para IAs.
 
 Super Técnico se publica expresamente como una **beta en construcción**. Todas las pantallas incluyen:
 

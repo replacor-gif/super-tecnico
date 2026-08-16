@@ -1,5 +1,5 @@
 {
-  "schema_version": "2.0.0",
+  "schema_version": "2.1.0",
   "id": "super-tecnico-regulation-search",
   "tool_name": "supertecnico_search_regulations",
   "name": "Buscador de normativa técnica oficial",
@@ -42,6 +42,10 @@
     "proximity_and_coverage_ranking",
     "specific_scope_detection_and_ranking",
     "contextual_query_refinement",
+    "required_context_detection",
+    "structured_regulation_hierarchy",
+    "article_section_and_table_locators",
+    "index_and_front_matter_suppression",
     "document_and_domain_filtering",
     "exact_and_related_match_modes",
     "page_level_provenance",
@@ -54,8 +58,9 @@
   ],
   "response": {
     "top_level_required": ["ok", "status", "request_id", "service_version", "tool_id", "tool_version", "result", "confidence", "source_ids", "warnings", "usage"],
-    "item_required": ["document_id", "document_title", "page", "text", "locator", "term_coverage", "official_page_url", "source_sha256", "source_content_sha256", "evidence_level"],
+    "item_required": ["document_id", "document_title", "page", "text", "locator", "breadcrumb", "record_type", "term_coverage", "official_page_url", "source_sha256", "source_content_sha256", "evidence_level"],
     "statuses": ["success", "not_found"],
+    "answer_statuses": ["evidence_found", "needs_context", "not_found"],
     "match_modes": ["exact", "all_terms", "related", "none"],
     "evidence_levels": {
       "document_hit": "Literal text found in an official source. It is evidence, not an applicability conclusion.",

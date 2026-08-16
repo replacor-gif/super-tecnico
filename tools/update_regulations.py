@@ -110,28 +110,261 @@ def page_chunks(text: str, target: int = 950, maximum: int = 1500) -> list[str]:
     return chunks
 
 
+REGULATION_FOOTER = re.compile(
+    r"^(?:BOLET[IÍ]N OFICIAL DEL ESTADO|LEGISLACI[OÓ]N CONSOLIDADA|P[aá]gina\s+\d+)$",
+    re.IGNORECASE,
+)
+INSTRUCTION_HEADING = re.compile(
+    r"^(?P<id>(?:ITC(?:-[A-Z]{2,6})?|IF|IT|DB[-\s]?(?:HS|HE|SI|SUA|HR))[-\s]?\d{1,3}(?:\.\d+)*)\s*[.:-]?\s*(?P<title>.*)$",
+    re.IGNORECASE,
+)
+ARTICLE_HEADING = re.compile(
+    r"^(?P<label>Art[ií]culo\s+(?:[uú]nico|\d+(?:\s*[a-z])?(?:\.\d+)*))(?:[.:-]\s*(?P<title>.*))?$",
+    re.IGNORECASE,
+)
+NAMED_HEADING = re.compile(
+    r"^(?P<label>(?:CAP[IÍ]TULO|T[IÍ]TULO|SECCI[OÓ]N|APARTADO|ANEJO|ANEXO|AP[EÉ]NDICE)\s+[A-Z0-9IVXLC.-]+)(?:[.:-]\s*(?P<title>.*))?$",
+    re.IGNORECASE,
+)
+TABLE_HEADING = re.compile(
+    r"^(?P<label>Tabla\s+[A-Z0-9.-]+)(?:[.:-]\s*(?P<title>.*))?$",
+    re.IGNORECASE,
+)
+NUMBERED_HEADING = re.compile(
+    r"^(?P<id>\d+(?:\.\d+){0,5})\.?\s+(?P<title>.{2,180})$"
+)
+
+
+def index_lines(text: str) -> list[str]:
+    """Keep source order while removing repeated BOE page furniture."""
+    lines: list[str] = []
+    for raw_line in text.splitlines():
+        line = re.sub(r"\s+", " ", raw_line).strip()
+        line = re.sub(r"BOLET[IÍ]N OFICIAL DEL ESTADO\s*$", "", line, flags=re.IGNORECASE).strip()
+        line = re.sub(r"LEGISLACI[OÓ]N CONSOLIDADA\s+P[aá]gina\s+\d+\s*$", "", line, flags=re.IGNORECASE).strip()
+        if not line or REGULATION_FOOTER.match(line):
+            continue
+        lines.append(line)
+    return lines
+
+
+def heading_record(line: str) -> dict | None:
+    """Recognise conservative headings shared by BOE regulations and CTE documents."""
+    if len(line) > 220:
+        return None
+    match = INSTRUCTION_HEADING.match(line)
+    if match:
+        identifier = re.sub(r"\s+", "-", match.group("id").upper()).replace("--", "-")
+        return {"kind": "instruction", "id": identifier, "title": (match.group("title") or "").strip(), "label": line}
+    match = ARTICLE_HEADING.match(line)
+    if match:
+        return {"kind": "article", "id": match.group("label"), "title": (match.group("title") or "").strip(), "label": line}
+    match = NAMED_HEADING.match(line)
+    if match:
+        return {"kind": "named_section", "id": match.group("label"), "title": (match.group("title") or "").strip(), "label": line}
+    match = TABLE_HEADING.match(line)
+    if match:
+        return {"kind": "table", "id": match.group("label"), "title": (match.group("title") or "").strip(), "label": line}
+    match = NUMBERED_HEADING.match(line)
+    if match:
+        title = match.group("title").strip()
+        if len(title.split()) <= 24:
+            return {"kind": "section", "id": match.group("id"), "title": title, "label": line}
+    return None
+
+
+def heading_key(heading: dict) -> str:
+    return normalize_search(f"{heading.get('id', '')} {heading.get('title', '')}")
+
+
+def looks_like_toc_page(lines: list[str]) -> bool:
+    headings = [heading_record(line) for line in lines]
+    headings = [heading for heading in headings if heading]
+    instruction_count = sum(1 for heading in headings if heading["kind"] == "instruction")
+    dotted_entries = sum(1 for line in lines if re.search(r"\.{4,}\s*\d+\s*$", line))
+    return instruction_count >= 3 or dotted_entries >= 3
+
+
+def looks_uppercase_title(value: str) -> bool:
+    letters = [character for character in value if character.isalpha()]
+    return len(letters) >= 6 and sum(1 for character in letters if character.isupper()) / len(letters) >= 0.72
+
+
+def confirmed_instruction_heading(lines: list[str], position: int, heading: dict) -> bool:
+    title = re.sub(r"[.·\s]+\d*\s*$", "", heading.get("title", "")).strip(" .:-")
+    if title and looks_uppercase_title(title):
+        return True
+    following = " ".join(lines[position + 1:position + 3])
+    return looks_uppercase_title(following)
+
+
+def enrich_instruction_heading(lines: list[str], position: int, heading: dict) -> dict:
+    if heading.get("title"):
+        return heading
+    title_lines: list[str] = []
+    for candidate in lines[position + 1:position + 3]:
+        if heading_record(candidate) or not looks_uppercase_title(candidate):
+            break
+        title_lines.append(candidate.strip(" ."))
+    if title_lines:
+        heading = {**heading, "title": " ".join(title_lines)}
+        heading["label"] = f"{heading['id']} {heading['title']}"
+    return heading
+
+
+def context_breadcrumb(context: dict, local_headings: list[dict]) -> str:
+    parts: list[str] = []
+    instruction = context.get("instruction")
+    if instruction:
+        parts.append(instruction["id"])
+    persistent = [heading for heading in local_headings if heading["kind"] in {"article", "named_section", "section"}]
+    heading = persistent[-1] if persistent else context.get("section") or context.get("article")
+    if heading:
+        label = " ".join(part for part in [heading.get("id", ""), heading.get("title", "")] if part).strip()
+        if label and normalize_search(label) not in {normalize_search(part) for part in parts}:
+            parts.append(label)
+    table = next((heading for heading in reversed(local_headings) if heading["kind"] == "table"), None)
+    if table:
+        label = " ".join(part for part in [table.get("id", ""), table.get("title", "")] if part).strip()
+        if label:
+            parts.append(label)
+    return " › ".join(parts)
+
+
+def structured_page_records(document_id: str, page_number: int, text: str, context: dict, target: int = 1150, maximum: int = 1750) -> list[dict]:
+    """Split a page near headings and inherit its regulation hierarchy across pages."""
+    lines = index_lines(text)
+    if looks_like_toc_page(lines):
+        page_text = " ".join(lines).strip()
+        page_headings = [heading for line in lines if (heading := heading_record(line))]
+        records = []
+        for chunk_number, piece in enumerate(page_chunks(page_text, target=target, maximum=maximum), start=1):
+            records.append({
+                "id": f"{document_id}-p{page_number:04d}-{chunk_number:02d}",
+                "document_id": document_id,
+                "page": page_number,
+                "text": piece,
+                "search": normalize_search(piece),
+                "search_context": normalize_search(" ".join(heading["label"] for heading in page_headings)),
+                "record_type": "index",
+                "breadcrumb": "",
+                "instruction_id": "",
+                "section_id": "",
+                "locators": list(dict.fromkeys(heading["label"] for heading in page_headings if heading["kind"] != "instruction")),
+            })
+        return records
+    records: list[dict] = []
+    segment_lines: list[str] = []
+    segment_headings: list[dict] = []
+    segment_is_index = bool(context.get("in_index"))
+
+    def flush() -> None:
+        nonlocal segment_lines, segment_headings, segment_is_index
+        content = " ".join(segment_lines).strip()
+        if not content:
+            segment_lines = []
+            segment_headings = []
+            return
+        pieces = page_chunks(content, target=target, maximum=maximum)
+        breadcrumb = "" if segment_is_index else context_breadcrumb(context, segment_headings)
+        locators = list(dict.fromkeys(heading["label"] for heading in segment_headings if heading["kind"] != "instruction"))
+        kinds = {heading["kind"] for heading in segment_headings}
+        if segment_is_index:
+            record_type = "index"
+        elif "table" in kinds:
+            record_type = "table"
+        elif len(content) < 220 and kinds:
+            record_type = "heading"
+        else:
+            record_type = "body"
+        for piece in pieces:
+            records.append({
+                "document_id": document_id,
+                "page": page_number,
+                "text": piece,
+                "search": normalize_search(piece),
+                "search_context": normalize_search(" ".join([breadcrumb, (context.get("instruction") or {}).get("title", ""), *(heading["label"] for heading in segment_headings)])),
+                "record_type": record_type,
+                "breadcrumb": breadcrumb,
+                "instruction_id": (context.get("instruction") or {}).get("id", ""),
+                "section_id": (context.get("section") or context.get("article") or {}).get("id", ""),
+                "locators": locators,
+            })
+        segment_lines = []
+        segment_headings = []
+
+    for line_position, line in enumerate(lines):
+        heading = heading_record(line)
+        if heading and heading["kind"] == "instruction" and not confirmed_instruction_heading(lines, line_position, heading):
+            heading = None
+        elif heading and heading["kind"] == "instruction":
+            heading = enrich_instruction_heading(lines, line_position, heading)
+        previous_index_state = bool(context.get("in_index"))
+        if heading and heading["kind"] == "instruction":
+            if segment_lines:
+                flush()
+            context["instruction"] = heading
+            context["article"] = None
+            context["section"] = None
+            context["in_index"] = False
+            context["index_headings"] = set()
+        elif heading and heading["kind"] == "section" and heading["id"] == "0" and normalize_search(heading["title"]) == "indice":
+            if segment_lines:
+                flush()
+            context["in_index"] = True
+            context["index_headings"] = set()
+        elif heading and context.get("in_index"):
+            key = heading_key(heading)
+            seen = context.setdefault("index_headings", set())
+            if key and key in seen and heading["kind"] != "table":
+                if segment_lines:
+                    flush()
+                context["in_index"] = False
+            elif key:
+                seen.add(key)
+
+        if bool(context.get("in_index")) != previous_index_state and segment_lines:
+            flush()
+
+        if heading and segment_lines and (len(" ".join(segment_lines)) >= 450 or any(item["kind"] == "table" for item in segment_headings)):
+            flush()
+
+        if not segment_lines:
+            segment_is_index = bool(context.get("in_index"))
+        segment_lines.append(line)
+        if heading:
+            segment_headings.append(heading)
+            if not context.get("in_index"):
+                if heading["kind"] == "article":
+                    context["article"] = heading
+                    context["section"] = None
+                elif heading["kind"] in {"named_section", "section"}:
+                    context["section"] = heading
+        if len(" ".join(segment_lines)) >= target:
+            flush()
+
+    flush()
+    for chunk_number, record in enumerate(records, start=1):
+        record["id"] = f"{document_id}-p{page_number:04d}-{chunk_number:02d}"
+    return records
+
+
 def build_document_index(document: dict, pdf_path: Path) -> tuple[dict, dict]:
     reader = PdfReader(str(pdf_path), strict=False)
     records: list[dict] = []
     semantic_pages: list[str] = []
     pages_with_text = 0
+    structure_context: dict = {"instruction": None, "article": None, "section": None, "in_index": False, "index_headings": set()}
     for page_number, page in enumerate(reader.pages, start=1):
         text = clean_page_text(page.extract_text() or "")
         semantic_pages.append(normalize_search(text))
         if text:
             pages_with_text += 1
-        for chunk_number, chunk in enumerate(page_chunks(text), start=1):
-            records.append({
-                "id": f"{document['id']}-p{page_number:04d}-{chunk_number:02d}",
-                "document_id": document["id"],
-                "page": page_number,
-                "text": chunk,
-                "search": normalize_search(chunk),
-            })
+        records.extend(structured_page_records(document["id"], page_number, text, structure_context))
     digest = sha256(pdf_path)
     content_digest = text_sha256(semantic_pages)
     index_payload = {
-        "schema_version": "1.1.0",
+        "schema_version": "1.2.0",
         "document_id": document["id"],
         "source_sha256": digest,
         "source_content_sha256": content_digest,
@@ -146,6 +379,8 @@ def build_document_index(document: dict, pdf_path: Path) -> tuple[dict, dict]:
         "page_count": len(reader.pages),
         "pages_with_searchable_text": pages_with_text,
         "search_records": len(records),
+        "structured_search_records": sum(1 for record in records if record.get("breadcrumb")),
+        "record_types": {record_type: sum(1 for record in records if record.get("record_type") == record_type) for record_type in ("body", "table", "heading", "index")},
         "index_url": f"data/regulations/index/{document['id']}.json",
     }
     return metadata, index_payload
@@ -171,6 +406,26 @@ def main() -> int:
     for document in source_payload["documents"]:
         pdf_path = ROOT / document["local_pdf"]
         should_process = not selected or document["id"] in selected
+        old_document = previous.get(document["id"], {})
+        existing_index = INDEX_DIR / f"{document['id']}.json"
+        if selected and not should_process and old_document and existing_index.is_file():
+            catalog_documents.append(old_document)
+            changes.append({
+                "id": document["id"],
+                "short_title": document["short_title"],
+                "official_page_url": document["official_page_url"],
+                "new_document": False,
+                "changed": False,
+                "source_file_changed": False,
+                "content_changed": False,
+                "review_required": False,
+                "previous_sha256": old_document.get("sha256"),
+                "sha256": old_document.get("sha256"),
+                "previous_content_sha256": old_document.get("content_sha256"),
+                "content_sha256": old_document.get("content_sha256"),
+                "affected_tools": document.get("related_tools", []),
+            })
+            continue
         if should_process and not args.no_download:
             print(f"Descargando {document['short_title']}...", flush=True)
             download_pdf(document["pdf_url"], pdf_path)
@@ -180,7 +435,6 @@ def main() -> int:
         metadata, index_payload = build_document_index(document, pdf_path)
         if should_process or not (INDEX_DIR / f"{document['id']}.json").exists():
             write_json(INDEX_DIR / f"{document['id']}.json", index_payload)
-        old_document = previous.get(document["id"], {})
         old_hash = old_document.get("sha256")
         old_content_hash = old_document.get("content_sha256")
         source_file_changed = bool(old_hash and old_hash != metadata["sha256"])
@@ -204,7 +458,7 @@ def main() -> int:
 
     generated_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
     catalog = {
-        "schema_version": "1.1.0",
+        "schema_version": "1.2.0",
         "generated_at_utc": generated_at,
         "jurisdiction": source_payload["jurisdiction"],
         "verified_at": source_payload["verified_at"],

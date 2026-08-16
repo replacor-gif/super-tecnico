@@ -51,8 +51,8 @@ if (st_regulation_term_position('todo conductor debe poder seccionarse', 'seccio
     fwrite(STDERR, "Word-boundary search confused seccion with seccionarse.\n");
     exit(1);
 }
-if ((int) ($naturalItems[0]['page'] ?? 0) !== 128 || ($naturalItems[0]['scope_hint'] ?? '') !== '') {
-    fwrite(STDERR, 'Natural-language ranking did not prioritize the general conductor rule. First page: ' . (string) ($naturalItems[0]['page'] ?? '?') . '; scope: ' . (string) ($naturalItems[0]['scope_hint'] ?? '') . "\n");
+if ((int) ($naturalItems[0]['page'] ?? 0) !== 169 || ($naturalItems[0]['record_type'] ?? '') !== 'table' || ($naturalItems[0]['scope_hint'] ?? '') !== '') {
+    fwrite(STDERR, 'Natural-language ranking did not prioritize the residential circuit table. First page: ' . (string) ($naturalItems[0]['page'] ?? '?') . '; type: ' . (string) ($naturalItems[0]['record_type'] ?? '?') . '; scope: ' . (string) ($naturalItems[0]['scope_hint'] ?? '') . "\n");
     exit(1);
 }
 if (empty($naturalQuestion['result']['refinement']['suggested_terms'] ?? [])) {

@@ -3,14 +3,17 @@
   const catalogUrl = 'data/regulations/catalog.json';
   const indexCache = new Map();
   const state = { catalog: null, requestId: '', serverSearch: false };
-  const searchStopWords = new Set(['a','al','ante','bajo','con','contra','de','del','desde','durante','e','el','en','entre','hacia','hasta','la','las','lo','los','o','para','por','que','segun','sin','sobre','tras','un','una','unos','unas','y','como','cual','cuales','cuando','cuanto','cuantos','donde','quien','quienes','debe','deben','deberia','deberian','puedo','puede','pueden','necesito','necesita','necesitan','tener','tiene','tienen','hay','saber','dime','indica','indicar','exige','exigido','norma','normativa','reglamento','tecnico','tecnica']);
+  const searchStopWords = new Set(['a','al','ante','bajo','con','contra','de','del','desde','durante','e','el','en','entre','hacia','hasta','la','las','lo','los','o','para','por','que','segun','sin','sobre','tras','un','una','unos','unas','y','como','cual','cuales','cuando','cuanto','cuantos','donde','quien','quienes','debe','deben','deberia','deberian','puedo','puede','pueden','quiero','queria','necesito','necesita','necesitan','tener','tiene','tienen','hay','saber','dime','indica','indicar','exige','exigido','norma','normativa','reglamento','tecnico','tecnica']);
   const termAliases = {
     cable: ['conductor','conductores'], cables: ['conductor','conductores'], conductor: ['cable','cables'], conductores: ['cable','cables'],
-    voltaje: ['tension'], tension: ['voltaje'], diferencial: ['interruptor diferencial','proteccion diferencial'],
+    voltaje: ['tension'], tension: ['voltaje'], alumbrado: ['iluminacion'], iluminacion: ['alumbrado'], diferencial: ['interruptor diferencial','proteccion diferencial'],
     magnetotermico: ['interruptor automatico','pequeno interruptor automatico','pia'], tierra: ['puesta a tierra'], aterramiento: ['puesta a tierra'],
     desague: ['evacuacion de aguas','saneamiento'], desagues: ['evacuacion de aguas','saneamiento'], acondicionado: ['climatizacion'], climatizacion: ['aire acondicionado'],
     extractor: ['extraccion','ventilacion'], extraccion: ['extractor','ventilacion'], refrigerante: ['gas fluorado'], refrigerantes: ['gases fluorados'],
     frigorias: ['potencia frigorifica','carga termica'], seccion: ['dimensionado'], dimensionado: ['seccion'], caudal: ['flujo'], flujo: ['caudal'],
+    tuveria: ['tuberia'], tuverias: ['tuberia','tuberias'], tuberia: ['tuberias','canalizacion'], tuberias: ['tuberia','canalizacion'],
+    enchufe: ['toma de corriente'], enchufes: ['tomas de corriente'], 'placa solar': ['instalacion fotovoltaica'], 'placas solares': ['instalacion fotovoltaica'],
+    solar: ['fotovoltaica','generador fotovoltaico'], fotovoltaica: ['generador fotovoltaico','solar'], automatico: ['interruptor automatico'],
   };
 
   const el = id => document.getElementById(id);
@@ -63,6 +66,38 @@
     return '';
   }
 
+  function recordHaystack(record) {
+    return [record.search || normalize(record.text), record.search_context || ''].filter(Boolean).join(' ');
+  }
+
+  function recordPenalty(record) {
+    if (record.record_type === 'index') return 170;
+    if (record.record_type === 'heading') return 35;
+    return 0;
+  }
+
+  function recordBoost(record, query) {
+    if (record.record_type !== 'table') return 0;
+    if (query.includes('tabla')) return 100;
+    return ['seccion','diametro','caudal','potencia','intensidad','distancia','altura','limite'].some(term => query.includes(term)) ? 45 : 0;
+  }
+
+  function recordLocator(record, tokens) {
+    const instruction = String(record.instruction_id || '').trim();
+    let best = null;
+    let bestScore = -1;
+    const locators = record.locators?.length ? record.locators : (record.headings || []).filter(heading => heading && heading.kind !== 'instruction').map(heading => heading.label);
+    locators.forEach(label => {
+      if (!label) return;
+      const details = matchDetails(normalize(label), tokens);
+      const depth = String(label).split('.').length - 1;
+      const score = (details.matched * 100) + depth;
+      if (score > bestScore) { bestScore = score; best = label; }
+    });
+    if (best && bestScore >= 100) return [instruction, best].filter(Boolean).join(' › ');
+    return record.breadcrumb || instruction || regulationLocator(record.text);
+  }
+
   function specificScope(haystack, query) {
     const scopes = {
       mueble: 'muebles eléctricos', 'vehiculo electrico': 'recarga de vehículo eléctrico', 'alumbrado exterior': 'alumbrado exterior',
@@ -77,10 +112,15 @@
 
   function queryRefinement(query) {
     if (query.includes('seccion') && (query.includes('cable') || query.includes('conductor'))) {
-      return {message: 'La sección depende del circuito y del uso. Añade el destino para acotar la prescripción aplicable.', suggested_terms: ['alumbrado','tomas de corriente','derivación individual','tierra','recarga de vehículo']};
+      const specific = ['alumbrado','iluminacion','toma','enchufe','derivacion individual','tierra','vehiculo','cocina','horno','lavadora','termo','calefaccion','aire acondicionado'];
+      if (!specific.some(term => query.includes(term))) return {message: 'La sección depende del circuito y del uso. Añade el destino para acotar la prescripción aplicable.', suggested_terms: ['alumbrado','tomas de corriente','derivación individual','tierra','recarga de vehículo'], required: true};
     }
     if (query.includes('ventilacion') && !query.includes('local') && !query.includes('vivienda')) {
-      return {message: 'La ventilación cambia según el uso del recinto. Añade el tipo de edificio o local.', suggested_terms: ['vivienda','garaje','local comercial','sala de máquinas']};
+      return {message: 'La ventilación cambia según el uso del recinto. Añade el tipo de edificio o local.', suggested_terms: ['vivienda','garaje','local comercial','sala de máquinas'], required: true};
+    }
+    if (query.includes('diametro') && (query.includes('tuberia') || query.includes('tuveria'))) {
+      const services = ['agua','desague','saneamiento','gas','refrigerante','calefaccion','climatizacion'];
+      if (!services.some(service => query.includes(service))) return {message: 'El diámetro depende del servicio de la tubería. Indica qué transporta o a qué instalación pertenece.', suggested_terms: ['agua de consumo','saneamiento','gas','refrigerante','calefacción'], required: true};
     }
     return null;
   }
@@ -159,6 +199,12 @@
     return 'RESULTADO RELACIONADO';
   }
 
+  function recordTypeLabel(value) {
+    if (value === 'table') return 'TABLA';
+    if (value === 'heading') return 'ENCABEZADO';
+    return 'TEXTO NORMATIVO';
+  }
+
   function renderResults(payload, query) {
     const result = payload.result || { items: [], returned: 0, candidate_pages: 0, match_mode: 'none' };
     const items = result.items || [];
@@ -173,13 +219,13 @@
       });
       return;
     }
-    const refinement = result.refinement ? `<aside class="rg-refinement"><b>Para afinar la respuesta</b><p>${escapeHtml(result.refinement.message)}</p><div>${(result.refinement.suggested_terms || []).map(term => `<button type="button" data-refine="${escapeHtml(term)}">+ ${escapeHtml(term)}</button>`).join('')}</div></aside>` : '';
+    const refinement = result.refinement ? `<aside class="rg-refinement${result.refinement.required ? ' is-required' : ''}"><b>${result.refinement.required ? 'Falta un dato para concretar' : 'Para afinar la respuesta'}</b><p>${escapeHtml(result.refinement.message)}</p><div>${(result.refinement.suggested_terms || []).map(term => `<button type="button" data-refine="${escapeHtml(term)}">+ ${escapeHtml(term)}</button>`).join('')}</div></aside>` : '';
     el('resultList').innerHTML = refinement + items.map((item, index) => `
       <article class="rg-result-card${index === 0 ? ' is-best' : ''}">
         <div class="rg-result-rank"><span>${index === 0 ? 'PRIMERA COINCIDENCIA' : relevanceLabel(item, result.match_mode)}</span><div>${item.scope_hint ? `<em>Ámbito: ${escapeHtml(item.scope_hint)}</em>` : ''}${item.locator ? `<b>${escapeHtml(item.locator)}</b>` : ''}</div></div>
         <div class="rg-result-meta"><b>${escapeHtml(item.short_title)} · ${escapeHtml(item.legal_reference)}</b><span>PÁGINA ${item.page}</span></div>
         <p>${highlighted(item.text, query)}</p>
-        <div class="rg-evidence-row"><span>EVIDENCIA DOCUMENTAL</span><small>${escapeHtml(item.authority)} · ${escapeHtml(domainLabel(item.domain))} · ${relevanceLabel(item, result.match_mode).toLocaleLowerCase('es')}</small></div>
+        <div class="rg-evidence-row"><span>${recordTypeLabel(item.record_type)}</span><small>${escapeHtml(item.authority)} · ${escapeHtml(domainLabel(item.domain))} · ${relevanceLabel(item, result.match_mode).toLocaleLowerCase('es')}</small></div>
         <div class="rg-result-actions"><a data-result-open href="${escapeHtml(item.local_pdf_path)}${escapeHtml(item.local_pdf_fragment || `#page=${item.page}`)}" target="_blank" rel="noopener">Abrir esta página en el PDF</a><a href="${escapeHtml(item.official_page_url)}" target="_blank" rel="noopener">Comprobar fuente oficial</a></div>
       </article>`).join('');
     el('resultList').querySelectorAll('[data-refine]').forEach(button => button.addEventListener('click', () => {
@@ -197,16 +243,19 @@
   }
 
   function localScore(record, phrase, tokens, exactPhrase, related = false) {
-    const haystack = record.search || normalize(record.text);
+    const haystack = recordHaystack(record);
     const phraseFound = haystack.includes(phrase);
-    if (exactPhrase) return phraseFound ? {rank: 320, matched: tokens.length, coverage: 1} : null;
+    if (exactPhrase) return phraseFound ? {rank: 320 + recordBoost(record, phrase) - recordPenalty(record), matched: tokens.length, coverage: 1} : null;
     const details = matchDetails(haystack, tokens);
     const minimum = related ? Math.max(2, Math.ceil(tokens.length * .55)) : tokens.length;
     if (details.matched < minimum) return null;
     let rank = (phraseFound ? 220 : 0) + (details.matched * 28) + (details.first < 180 ? 10 : 0);
     if (details.span <= 350) rank += 28;
     else if (details.span <= 900) rank += 12;
-    if (haystack.includes('indice')) rank -= Number(record.page) <= 6 ? 90 : 35;
+    tokens.forEach(token => { if (record.search_context && termPosition(record.search_context, token) >= 0) rank += 12; });
+    rank += recordBoost(record, phrase);
+    rank -= recordPenalty(record);
+    if (!record.record_type && haystack.includes('indice')) rank -= Number(record.page) <= 6 ? 90 : 35;
     const scope = specificScope(haystack, phrase);
     rank -= scope.penalty;
     return {rank, matched: details.matched, coverage: details.coverage, scopeHint: scope.hint};
@@ -244,13 +293,15 @@
       items.push({
         document_id: item.document.id, document_title: item.document.title, short_title: item.document.short_title,
         legal_reference: item.document.legal_reference, authority: item.document.authority, domain: item.document.domain,
-        page: item.record.page, text: item.record.text, locator: regulationLocator(item.record.text), scope_hint: item.scopeHint || '',
+        page: item.record.page, text: item.record.text, locator: recordLocator(item.record, tokens), breadcrumb: item.record.breadcrumb || '',
+        instruction_id: item.record.instruction_id || '', section_id: item.record.section_id || '', record_type: item.record.record_type || 'body', scope_hint: item.scopeHint || '',
         matched_terms: item.matched, term_coverage: item.coverage, relevance_score: Math.max(0, Math.min(1, item.rank / 320)), local_pdf_path: item.document.local_pdf,
         local_pdf_fragment: `#page=${item.record.page}`, official_page_url: item.document.official_page_url,
         source_sha256: item.document.sha256, source_content_sha256: item.document.content_sha256, evidence_level: 'document_hit',
       });
     });
-    return { ok: true, status: items.length ? 'success' : 'not_found', result: { items, returned: items.length, candidate_pages: seen.size, match_mode: items.length ? matchMode : 'none', refinement: queryRefinement(phrase) }, warnings: [] };
+    const refinement = queryRefinement(phrase);
+    return { ok: true, status: items.length ? 'success' : 'not_found', result: { items, returned: items.length, candidate_pages: seen.size, match_mode: items.length ? matchMode : 'none', answer_status: items.length ? (refinement?.required ? 'needs_context' : 'evidence_found') : 'not_found', refinement }, warnings: [] };
   }
 
   async function search(event) {
@@ -279,7 +330,9 @@
       renderResults(payload, query);
       if (payload.request_id) {
         const time = payload.usage?.latency_ms ? ` en ${payload.usage.latency_ms} ms` : '';
-        el('searchMessage').textContent = payload.result.match_mode === 'related' ? `No aparecieron todas las palabras juntas; mostramos páginas relacionadas${time}.` : `Búsqueda completada con fuentes y páginas verificables${time}.`;
+        el('searchMessage').textContent = payload.result.answer_status === 'needs_context'
+          ? `He localizado fuentes relacionadas, pero falta el dato indicado para concretar la respuesta${time}.`
+          : (payload.result.match_mode === 'related' ? `No aparecieron todas las palabras juntas; mostramos páginas relacionadas${time}.` : `Búsqueda completada con fuentes y páginas verificables${time}.`);
       }
       const url = new URL(location.href);
       url.searchParams.set('q', query); url.searchParams.set('doc', documentId); url.searchParams.set('domain', domain);

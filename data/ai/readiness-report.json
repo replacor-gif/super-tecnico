@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-08-13T14:04:50.885033+00:00",
+  "generated_at_utc": "2026-08-16T20:12:47.827859+00:00",
   "status": "public_free_preview_one_tool",
   "readiness_score_percent": 63,
   "score_meaning": "Preparación técnica global; solo la búsqueda de normativa tiene ejecución pública gratuita.",
@@ -25,7 +25,7 @@
     "frigorista_pt_available": 56,
     "regulation_documents": 18,
     "regulation_pages": 2050,
-    "regulation_search_records": 5470,
+    "regulation_search_records": 8147,
     "strategy_tools_evaluated": 16,
     "strategy_phase_one_tools": 5
   },

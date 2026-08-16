@@ -75,6 +75,9 @@
       "capabilities": [
         "regulation_catalog",
         "full_text_search",
+        "structured_regulation_hierarchy",
+        "article_section_and_table_locators",
+        "required_context_detection",
         "page_level_provenance",
         "official_source_links",
         "source_change_detection",

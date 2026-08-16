@@ -4,6 +4,7 @@ const { chromium } = require('playwright');
 const assert = require('node:assert/strict');
 
 (async () => {
+  const base = process.env.ST_TEST_URL || 'http://127.0.0.1:8765/electronica-placas.html';
   const browser = await chromium.launch({headless:true, executablePath:'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', args:['--disable-gpu','--no-first-run']});
   const page = await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});
   await page.route('**/api/index.php?action=page-view', route => route.fulfill({
@@ -11,12 +12,17 @@ const assert = require('node:assert/strict');
     contentType: 'application/json',
     body: JSON.stringify({ok:true, views:123}),
   }));
+  await page.route('**/api/index.php?action=page-rating*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ok:true, likes:12, dislikes:1, user_vote:null}),
+  }));
   page.setDefaultTimeout(5000);
   page.setDefaultNavigationTimeout(10000);
   const errors = [];
-  page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
+  page.on('console', message => { if (message.type() === 'error') errors.push(`${message.text()} · ${message.location().url || 'sin URL'}`); });
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto('http://127.0.0.1:8765/electronica-placas.html', {waitUntil:'networkidle'});
+  await page.goto(base, {waitUntil:'networkidle'});
   console.log('loaded');
 
   assert.equal(await page.locator('#elModuleCount').textContent(), '23');
@@ -59,4 +65,4 @@ const assert = require('node:assert/strict');
   assert.deepEqual(errors, []);
   await browser.close();
   console.log('electronics smoke test: OK');
-})().catch(error => { console.error(error); process.exitCode = 1; });
+})().catch(error => { console.error(error); process.exit(1); });

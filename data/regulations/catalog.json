@@ -1,6 +1,6 @@
 {
-  "schema_version": "1.1.0",
-  "generated_at_utc": "2026-08-12T17:22:12+00:00",
+  "schema_version": "1.2.0",
+  "generated_at_utc": "2026-08-16T20:12:31+00:00",
   "jurisdiction": "ES",
   "verified_at": "2026-08-12",
   "notice": "Los textos consolidados del BOE son informativos. Para efectos jurídicos debe comprobarse la publicación oficial y la normativa autonómica o local aplicable.",
@@ -35,7 +35,14 @@
       "bytes": 8837567,
       "page_count": 288,
       "pages_with_searchable_text": 288,
-      "search_records": 707,
+      "search_records": 1157,
+      "structured_search_records": 1061,
+      "record_types": {
+        "body": 884,
+        "table": 75,
+        "heading": 108,
+        "index": 90
+      },
       "index_url": "data/regulations/index/rebt.json"
     },
     {
@@ -70,7 +77,14 @@
       "bytes": 1055510,
       "page_count": 97,
       "pages_with_searchable_text": 97,
-      "search_records": 275,
+      "search_records": 404,
+      "structured_search_records": 319,
+      "record_types": {
+        "body": 296,
+        "table": 17,
+        "heading": 11,
+        "index": 80
+      },
       "index_url": "data/regulations/index/rite.json"
     },
     {
@@ -103,7 +117,14 @@
       "bytes": 5699078,
       "page_count": 203,
       "pages_with_searchable_text": 203,
-      "search_records": 501,
+      "search_records": 788,
+      "structured_search_records": 773,
+      "record_types": {
+        "body": 728,
+        "table": 13,
+        "heading": 40,
+        "index": 7
+      },
       "index_url": "data/regulations/index/rsif.json"
     },
     {
@@ -134,7 +155,14 @@
       "bytes": 1456822,
       "page_count": 126,
       "pages_with_searchable_text": 126,
-      "search_records": 339,
+      "search_records": 548,
+      "structured_search_records": 538,
+      "record_types": {
+        "body": 505,
+        "table": 11,
+        "heading": 25,
+        "index": 7
+      },
       "index_url": "data/regulations/index/rat.json"
     },
     {
@@ -164,7 +192,14 @@
       "bytes": 1573561,
       "page_count": 156,
       "pages_with_searchable_text": 156,
-      "search_records": 407,
+      "search_records": 664,
+      "structured_search_records": 644,
+      "record_types": {
+        "body": 551,
+        "table": 56,
+        "heading": 38,
+        "index": 19
+      },
       "index_url": "data/regulations/index/rlat.json"
     },
     {
@@ -200,7 +235,14 @@
       "bytes": 4713973,
       "page_count": 194,
       "pages_with_searchable_text": 194,
-      "search_records": 505,
+      "search_records": 716,
+      "structured_search_records": 712,
+      "record_types": {
+        "body": 640,
+        "table": 62,
+        "heading": 14,
+        "index": 0
+      },
       "index_url": "data/regulations/index/cte-db-hs.json"
     },
     {
@@ -234,7 +276,14 @@
       "bytes": 5067905,
       "page_count": 120,
       "pages_with_searchable_text": 120,
-      "search_records": 289,
+      "search_records": 374,
+      "structured_search_records": 369,
+      "record_types": {
+        "body": 360,
+        "table": 0,
+        "heading": 10,
+        "index": 4
+      },
       "index_url": "data/regulations/index/ict.json"
     },
     {
@@ -269,7 +318,14 @@
       "bytes": 1172437,
       "page_count": 96,
       "pages_with_searchable_text": 96,
-      "search_records": 255,
+      "search_records": 369,
+      "structured_search_records": 352,
+      "record_types": {
+        "body": 345,
+        "table": 0,
+        "heading": 14,
+        "index": 10
+      },
       "index_url": "data/regulations/index/gas.json"
     },
     {
@@ -304,7 +360,14 @@
       "bytes": 2293424,
       "page_count": 129,
       "pages_with_searchable_text": 129,
-      "search_records": 340,
+      "search_records": 545,
+      "structured_search_records": 527,
+      "record_types": {
+        "body": 500,
+        "table": 7,
+        "heading": 22,
+        "index": 16
+      },
       "index_url": "data/regulations/index/pressure-equipment.json"
     },
     {
@@ -340,7 +403,14 @@
       "bytes": 490711,
       "page_count": 69,
       "pages_with_searchable_text": 69,
-      "search_records": 204,
+      "search_records": 314,
+      "structured_search_records": 293,
+      "record_types": {
+        "body": 302,
+        "table": 0,
+        "heading": 7,
+        "index": 5
+      },
       "index_url": "data/regulations/index/machinery-safety.json"
     },
     {
@@ -374,7 +444,14 @@
       "bytes": 211879,
       "page_count": 17,
       "pages_with_searchable_text": 17,
-      "search_records": 49,
+      "search_records": 81,
+      "structured_search_records": 79,
+      "record_types": {
+        "body": 77,
+        "table": 0,
+        "heading": 2,
+        "index": 2
+      },
       "index_url": "data/regulations/index/work-equipment.json"
     },
     {
@@ -412,7 +489,14 @@
       "bytes": 587859,
       "page_count": 60,
       "pages_with_searchable_text": 60,
-      "search_records": 187,
+      "search_records": 225,
+      "structured_search_records": 215,
+      "record_types": {
+        "body": 185,
+        "table": 26,
+        "heading": 5,
+        "index": 9
+      },
       "index_url": "data/regulations/index/cte-db-he.json"
     },
     {
@@ -448,7 +532,14 @@
       "bytes": 2159826,
       "page_count": 125,
       "pages_with_searchable_text": 125,
-      "search_records": 379,
+      "search_records": 436,
+      "structured_search_records": 435,
+      "record_types": {
+        "body": 388,
+        "table": 40,
+        "heading": 8,
+        "index": 0
+      },
       "index_url": "data/regulations/index/cte-db-si.json"
     },
     {
@@ -483,7 +574,14 @@
       "bytes": 1765558,
       "page_count": 108,
       "pages_with_searchable_text": 108,
-      "search_records": 315,
+      "search_records": 448,
+      "structured_search_records": 438,
+      "record_types": {
+        "body": 399,
+        "table": 27,
+        "heading": 15,
+        "index": 7
+      },
       "index_url": "data/regulations/index/rsciei.json"
     },
     {
@@ -518,7 +616,14 @@
       "bytes": 404783,
       "page_count": 45,
       "pages_with_searchable_text": 45,
-      "search_records": 141,
+      "search_records": 206,
+      "structured_search_records": 194,
+      "record_types": {
+        "body": 194,
+        "table": 3,
+        "heading": 3,
+        "index": 6
+      },
       "index_url": "data/regulations/index/ripci.json"
     },
     {
@@ -555,7 +660,14 @@
       "bytes": 893428,
       "page_count": 70,
       "pages_with_searchable_text": 70,
-      "search_records": 171,
+      "search_records": 264,
+      "structured_search_records": 263,
+      "record_types": {
+        "body": 260,
+        "table": 0,
+        "heading": 4,
+        "index": 0
+      },
       "index_url": "data/regulations/index/f-gas-eu.json"
     },
     {
@@ -589,7 +701,14 @@
       "bytes": 1059661,
       "page_count": 55,
       "pages_with_searchable_text": 55,
-      "search_records": 140,
+      "search_records": 178,
+      "structured_search_records": 172,
+      "record_types": {
+        "body": 170,
+        "table": 0,
+        "heading": 3,
+        "index": 5
+      },
       "index_url": "data/regulations/index/f-gas-es.json"
     },
     {
@@ -621,7 +740,14 @@
       "bytes": 875320,
       "page_count": 92,
       "pages_with_searchable_text": 92,
-      "search_records": 266,
+      "search_records": 430,
+      "structured_search_records": 419,
+      "record_types": {
+        "body": 383,
+        "table": 24,
+        "heading": 13,
+        "index": 10
+      },
       "index_url": "data/regulations/index/water-quality.json"
     }
   ],
