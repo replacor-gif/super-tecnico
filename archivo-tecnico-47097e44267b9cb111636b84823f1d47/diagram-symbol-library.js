@@ -4032,11 +4032,28 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0107": {
     "id": "SYM-0107",
-    "catalog_id": "SYM-0107",
     "name": "Interruptor SPST cerrado",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "switch_nc",
     "designator": "S",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 7,
+    "height": 3,
+    "ports": {
+      "1": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 3,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "catalog_id": "SYM-0107",
     "category": "Relés, interruptores y actuadores",
     "subcategory": "Contactos y actuadores",
     "aliases": "interruptor simple NC",
@@ -4045,35 +4062,40 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La posición dibujada suele ser el estado de reposo, sin energía ni accionamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "switch_spst_nc",
+    "source_asset": "assets/symbols/SYM-0107_interruptor-spst-cerrado.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0108": {
+    "id": "SYM-0108",
+    "name": "Conmutador SPDT",
+    "kind": "switch_spdt",
+    "designator": "S",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
+    "width": 8,
+    "height": 6,
     "ports": {
-      "1": {
-        "x": -3,
+      "COM": {
+        "x": -4,
         "y": 0,
         "side": "west",
         "electrical_type": "passive"
       },
-      "2": {
-        "x": 3,
-        "y": 0,
+      "NC": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NO": {
+        "x": 4,
+        "y": 2,
         "side": "east",
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0107_interruptor-spst-cerrado.svg"
-  },
-  "SYM-0108": {
-    "id": "SYM-0108",
     "catalog_id": "SYM-0108",
-    "name": "Conmutador SPDT",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "S",
     "category": "Relés, interruptores y actuadores",
     "subcategory": "Contactos y actuadores",
     "aliases": "conmutador inversor",
@@ -4082,35 +4104,58 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La posición dibujada suele ser el estado de reposo, sin energía ni accionamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "switch_spdt",
+    "source_asset": "assets/symbols/SYM-0108_conmutador-spdt.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0109": {
+    "id": "SYM-0109",
+    "name": "Conmutador DPDT",
+    "kind": "switch_dpdt",
+    "designator": "S",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
+    "width": 10,
+    "height": 10,
     "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
+      "COM1": {
+        "x": -5,
+        "y": -2,
         "side": "west",
         "electrical_type": "passive"
       },
-      "2": {
-        "x": 3,
-        "y": 0,
+      "NC1": {
+        "x": 5,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NO1": {
+        "x": 5,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "COM2": {
+        "x": -5,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "NC2": {
+        "x": 5,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NO2": {
+        "x": 5,
+        "y": 3,
         "side": "east",
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0108_conmutador-spdt.svg"
-  },
-  "SYM-0109": {
-    "id": "SYM-0109",
     "catalog_id": "SYM-0109",
-    "name": "Conmutador DPDT",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "S",
     "category": "Relés, interruptores y actuadores",
     "subcategory": "Contactos y actuadores",
     "aliases": "doble inversor",
@@ -4119,27 +4164,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La posición dibujada suele ser el estado de reposo, sin energía ni accionamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "switch_dpdt",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0109_conmutador-dpdt.svg"
+    "source_asset": "assets/symbols/SYM-0109_conmutador-dpdt.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0110": {
     "id": "SYM-0110",
@@ -4251,11 +4278,28 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0113": {
     "id": "SYM-0113",
-    "catalog_id": "SYM-0113",
     "name": "Interruptor de flotador",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "float_switch",
     "designator": "S",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "catalog_id": "SYM-0113",
     "category": "Relés, interruptores y actuadores",
     "subcategory": "Contactos y actuadores",
     "aliases": "float, nivel",
@@ -4264,35 +4308,34 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La posición dibujada suele ser el estado de reposo, sin energía ni accionamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "float_switch",
+    "source_asset": "assets/symbols/SYM-0113_interruptor-de-flotador.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0114": {
+    "id": "SYM-0114",
+    "name": "Presostato",
+    "kind": "pressure_switch",
+    "designator": "PS",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
+    "width": 8,
+    "height": 6,
     "ports": {
       "1": {
-        "x": -3,
+        "x": -4,
         "y": 0,
         "side": "west",
         "electrical_type": "passive"
       },
       "2": {
-        "x": 3,
+        "x": 4,
         "y": 0,
         "side": "east",
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0113_interruptor-de-flotador.svg"
-  },
-  "SYM-0114": {
-    "id": "SYM-0114",
     "catalog_id": "SYM-0114",
-    "name": "Presostato",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "PS",
     "category": "Relés, interruptores y actuadores",
     "subcategory": "Contactos y actuadores",
     "aliases": "pressure switch",
@@ -4301,35 +4344,34 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La posición dibujada suele ser el estado de reposo, sin energía ni accionamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pressure_switch",
+    "source_asset": "assets/symbols/SYM-0114_presostato.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0115": {
+    "id": "SYM-0115",
+    "name": "Termostato",
+    "kind": "thermostat_switch",
+    "designator": "TS",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
+    "width": 8,
+    "height": 6,
     "ports": {
       "1": {
-        "x": -3,
+        "x": -4,
         "y": 0,
         "side": "west",
         "electrical_type": "passive"
       },
       "2": {
-        "x": 3,
+        "x": 4,
         "y": 0,
         "side": "east",
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0114_presostato.svg"
-  },
-  "SYM-0115": {
-    "id": "SYM-0115",
     "catalog_id": "SYM-0115",
-    "name": "Termostato",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "TS",
     "category": "Relés, interruptores y actuadores",
     "subcategory": "Contactos y actuadores",
     "aliases": "thermal switch",
@@ -4338,35 +4380,34 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La posición dibujada suele ser el estado de reposo, sin energía ni accionamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "thermostat_switch",
+    "source_asset": "assets/symbols/SYM-0115_termostato.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0116": {
+    "id": "SYM-0116",
+    "name": "Interruptor magnético Reed",
+    "kind": "reed_switch",
+    "designator": "S",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
-    "width": 6,
+    "width": 8,
     "height": 4,
     "ports": {
       "1": {
-        "x": -3,
+        "x": -4,
         "y": 0,
         "side": "west",
         "electrical_type": "passive"
       },
       "2": {
-        "x": 3,
+        "x": 4,
         "y": 0,
         "side": "east",
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0115_termostato.svg"
-  },
-  "SYM-0116": {
-    "id": "SYM-0116",
     "catalog_id": "SYM-0116",
-    "name": "Interruptor magnético Reed",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "S",
     "category": "Relés, interruptores y actuadores",
     "subcategory": "Contactos y actuadores",
     "aliases": "reed",
@@ -4375,27 +4416,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La posición dibujada suele ser el estado de reposo, sin energía ni accionamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "reed_switch",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0116_interruptor-magnetico-reed.svg"
+    "source_asset": "assets/symbols/SYM-0116_interruptor-magnetico-reed.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0117": {
     "id": "SYM-0117",
@@ -4435,11 +4458,28 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0118": {
     "id": "SYM-0118",
-    "catalog_id": "SYM-0118",
     "name": "DIP switch",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "dip_switch",
     "designator": "SW",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 5,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "catalog_id": "SYM-0118",
     "category": "Relés, interruptores y actuadores",
     "subcategory": "Contactos y actuadores",
     "aliases": "microinterruptores",
@@ -4448,27 +4488,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La posición dibujada suele ser el estado de reposo, sin energía ni accionamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dip_switch",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0118_dip-switch.svg"
+    "source_asset": "assets/symbols/SYM-0118_dip-switch.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0119": {
     "id": "SYM-0119",
@@ -4580,11 +4602,46 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0122": {
     "id": "SYM-0122",
-    "catalog_id": "SYM-0122",
     "name": "Relé conmutado",
-    "kind": "generic_3p",
-    "geometry_template": "generic_3p",
+    "kind": "relay_spdt",
     "designator": "K",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 12,
+    "height": 8,
+    "ports": {
+      "A1": {
+        "x": -6,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "A2": {
+        "x": -6,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "COM": {
+        "x": 6,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NC": {
+        "x": 6,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NO": {
+        "x": 6,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "catalog_id": "SYM-0122",
     "category": "Relés, interruptores y actuadores",
     "subcategory": "Contactos y actuadores",
     "aliases": "relay changeover",
@@ -4593,33 +4650,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La posición dibujada suele ser el estado de reposo, sin energía ni accionamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "relay_spdt",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "COM": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "NO": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "NC": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0122_rele-conmutado.svg"
+    "source_asset": "assets/symbols/SYM-0122_rele-conmutado.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0123": {
     "id": "SYM-0123",
@@ -4683,11 +4716,28 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0124": {
     "id": "SYM-0124",
-    "catalog_id": "SYM-0124",
     "name": "Solenoide",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "solenoid",
     "designator": "YV",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 5,
+    "ports": {
+      "A1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "A2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "catalog_id": "SYM-0124",
     "category": "Relés, interruptores y actuadores",
     "subcategory": "Contactos y actuadores",
     "aliases": "electroimán",
@@ -4696,35 +4746,34 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La posición dibujada suele ser el estado de reposo, sin energía ni accionamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "solenoid",
+    "source_asset": "assets/symbols/SYM-0124_solenoide.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0125": {
+    "id": "SYM-0125",
+    "name": "Válvula solenoide",
+    "kind": "solenoid_valve",
+    "designator": "YV",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
+    "width": 10,
+    "height": 7,
     "ports": {
       "A1": {
-        "x": -3,
+        "x": -5,
         "y": 0,
         "side": "west",
         "electrical_type": "passive"
       },
       "A2": {
-        "x": 3,
+        "x": 5,
         "y": 0,
         "side": "east",
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0124_solenoide.svg"
-  },
-  "SYM-0125": {
-    "id": "SYM-0125",
     "catalog_id": "SYM-0125",
-    "name": "Válvula solenoide",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "YV",
     "category": "Relés, interruptores y actuadores",
     "subcategory": "Contactos y actuadores",
     "aliases": "electroválvula",
@@ -4733,27 +4782,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La posición dibujada suele ser el estado de reposo, sin energía ni accionamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "solenoid_valve",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "A1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "A2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0125_valvula-solenoide.svg"
+    "source_asset": "assets/symbols/SYM-0125_valvula-solenoide.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0126": {
     "id": "SYM-0126",
@@ -16802,11 +16833,64 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0425": {
     "id": "SYM-0425",
-    "catalog_id": "SYM-0425",
     "name": "Relé de 2 polos",
-    "kind": "generic_3p",
-    "geometry_template": "generic_3p",
+    "kind": "relay_2pole",
     "designator": "K",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 14,
+    "height": 12,
+    "ports": {
+      "COM1": {
+        "x": -7,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "NC1": {
+        "x": 7,
+        "y": -4,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NO1": {
+        "x": 7,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "COM2": {
+        "x": -7,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "NC2": {
+        "x": 7,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NO2": {
+        "x": 7,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "A1": {
+        "x": -7,
+        "y": 4,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "A2": {
+        "x": 7,
+        "y": 4,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "catalog_id": "SYM-0425",
     "category": "Relés, interruptores y actuadores",
     "subcategory": "Relés multipolares",
     "aliases": "relay 2 polos",
@@ -16815,41 +16899,88 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Todos los contactos cambian simultáneamente cuando se energiza la bobina.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "relay_multi",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "COM": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "NO": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "NC": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0425_rele-de-2-polos.svg"
+    "source_asset": "assets/symbols/SYM-0425_rele-de-2-polos.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0426": {
     "id": "SYM-0426",
-    "catalog_id": "SYM-0426",
     "name": "Relé de 3 polos",
-    "kind": "generic_3p",
-    "geometry_template": "generic_3p",
+    "kind": "relay_3pole",
     "designator": "K",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 14,
+    "height": 16,
+    "ports": {
+      "COM1": {
+        "x": -7,
+        "y": -4,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "NC1": {
+        "x": 7,
+        "y": -5,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NO1": {
+        "x": 7,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "COM2": {
+        "x": -7,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "NC2": {
+        "x": 7,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NO2": {
+        "x": 7,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "COM3": {
+        "x": -7,
+        "y": 4,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "NC3": {
+        "x": 7,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NO3": {
+        "x": 7,
+        "y": 5,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "A1": {
+        "x": -7,
+        "y": 6,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "A2": {
+        "x": 7,
+        "y": 6,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "catalog_id": "SYM-0426",
     "category": "Relés, interruptores y actuadores",
     "subcategory": "Relés multipolares",
     "aliases": "relay 3 polos",
@@ -16858,41 +16989,106 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Todos los contactos cambian simultáneamente cuando se energiza la bobina.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "relay_multi",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "COM": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "NO": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "NC": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0426_rele-de-3-polos.svg"
+    "source_asset": "assets/symbols/SYM-0426_rele-de-3-polos.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0427": {
     "id": "SYM-0427",
-    "catalog_id": "SYM-0427",
     "name": "Relé de 4 polos",
-    "kind": "generic_3p",
-    "geometry_template": "generic_3p",
+    "kind": "relay_4pole",
     "designator": "K",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 14,
+    "height": 20,
+    "ports": {
+      "COM1": {
+        "x": -7,
+        "y": -6,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "NC1": {
+        "x": 7,
+        "y": -7,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NO1": {
+        "x": 7,
+        "y": -5,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "COM2": {
+        "x": -7,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "NC2": {
+        "x": 7,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NO2": {
+        "x": 7,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "COM3": {
+        "x": -7,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "NC3": {
+        "x": 7,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NO3": {
+        "x": 7,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "COM4": {
+        "x": -7,
+        "y": 6,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "NC4": {
+        "x": 7,
+        "y": 5,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NO4": {
+        "x": 7,
+        "y": 7,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "A1": {
+        "x": -7,
+        "y": 8,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "A2": {
+        "x": 7,
+        "y": 8,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "catalog_id": "SYM-0427",
     "category": "Relés, interruptores y actuadores",
     "subcategory": "Relés multipolares",
     "aliases": "relay 4 polos",
@@ -16901,33 +17097,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Todos los contactos cambian simultáneamente cuando se energiza la bobina.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "relay_multi",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "COM": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "NO": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "NC": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0427_rele-de-4-polos.svg"
+    "source_asset": "assets/symbols/SYM-0427_rele-de-4-polos.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0428": {
     "id": "SYM-0428",

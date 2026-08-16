@@ -49,9 +49,9 @@
   },
   "quality": {
     "catalog_symbols": 460,
-    "reviewed_catalog_symbols": 72,
-    "auto_draft_catalog_symbols": 388,
-    "reviewed_families": ["connections_and_references", "electrical_protections"],
+    "reviewed_catalog_symbols": 86,
+    "auto_draft_catalog_symbols": 374,
+    "reviewed_families": ["connections_and_references", "electrical_protections", "relays_switches_and_actuators"],
     "draft_policy": "An auto_draft symbol is usable only as provisional structure and always produces a warning."
   },
   "recommended_ai_workflow": [

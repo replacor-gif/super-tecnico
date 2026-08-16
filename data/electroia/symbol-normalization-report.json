@@ -5,13 +5,13 @@
   "engine_symbols": 463,
   "symbols_with_ports": 463,
   "status_counts": {
-    "auto_draft": 388,
+    "auto_draft": 374,
     "engine_internal": 3,
-    "engine_reviewed": 72
+    "engine_reviewed": 86
   },
   "catalog_status_counts": {
-    "auto_draft": 388,
-    "engine_reviewed": 72
+    "auto_draft": 374,
+    "engine_reviewed": 86
   },
   "family_counts": {
     "aux_contact_no": 1,
@@ -28,18 +28,20 @@
     "crowbar_scr": 1,
     "digital_block": 73,
     "diode": 1,
+    "dip_switch": 1,
     "distribution_board": 1,
     "efuse": 1,
     "emergency_stop_nc": 1,
     "energy_meter": 1,
     "esd_protector": 1,
     "fan": 1,
+    "float_switch": 1,
     "functional_block": 49,
     "functional_earth": 1,
     "fuse": 1,
     "gas_discharge_tube": 1,
-    "generic_2p": 46,
-    "generic_3p": 6,
+    "generic_2p": 36,
+    "generic_3p": 2,
     "ground": 1,
     "inrush_limiter_ntc": 1,
     "installation_block": 8,
@@ -70,11 +72,17 @@
     "potentiometer": 1,
     "power_block": 66,
     "power_port": 1,
+    "pressure_switch": 1,
     "protective_earth": 1,
     "pump": 1,
     "pushbutton_nc": 1,
     "pushbutton_no": 1,
+    "reed_switch": 1,
+    "relay_2pole": 1,
+    "relay_3pole": 1,
+    "relay_4pole": 1,
     "relay_coil": 1,
+    "relay_spdt": 1,
     "resettable_fuse_ptc": 1,
     "residual_current_device": 1,
     "resistor_iec": 1,
@@ -85,17 +93,23 @@
     "shield": 1,
     "signal_bus": 1,
     "socket_outlet": 1,
+    "solenoid": 1,
+    "solenoid_valve": 1,
     "source_ac": 1,
     "source_block": 4,
     "source_dc": 1,
     "spark_gap": 1,
     "surge_protection_device": 1,
+    "switch_dpdt": 1,
+    "switch_nc": 1,
     "switch_no": 1,
+    "switch_spdt": 1,
     "terminal_block": 1,
     "test_point": 1,
     "thermal_fuse": 1,
     "thermal_protector_klixon": 1,
     "thermistor_ntc": 1,
+    "thermostat_switch": 1,
     "transformer": 1,
     "voltage_relay": 1,
     "wire": 1
@@ -168,8 +182,8 @@
     },
     "Relés, interruptores y actuadores": {
       "total": 23,
-      "engine_reviewed": 9,
-      "auto_draft": 14
+      "engine_reviewed": 23,
+      "auto_draft": 0
     },
     "Semiconductores discretos": {
       "total": 43,
@@ -184,7 +198,8 @@
   },
   "fully_reviewed_categories": [
     "Conexiones y referencias",
-    "Protecciones eléctricas"
+    "Protecciones eléctricas",
+    "Relés, interruptores y actuadores"
   ],
   "coverage_percent": 100,
   "quality_policy": {

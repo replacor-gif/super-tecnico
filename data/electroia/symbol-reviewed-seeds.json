@@ -1701,6 +1701,237 @@
       }
     },
     {
+      "id": "SYM-0107",
+      "name": "Interruptor SPST cerrado",
+      "kind": "switch_nc",
+      "designator": "S",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 7,
+      "height": 3,
+      "ports": {
+        "1": { "x": -3, "y": 0, "side": "west", "electrical_type": "passive" },
+        "2": { "x": 3, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0108",
+      "name": "Conmutador SPDT",
+      "kind": "switch_spdt",
+      "designator": "S",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "COM": { "x": -4, "y": 0, "side": "west", "electrical_type": "passive" },
+        "NC": { "x": 4, "y": -2, "side": "east", "electrical_type": "passive" },
+        "NO": { "x": 4, "y": 2, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0109",
+      "name": "Conmutador DPDT",
+      "kind": "switch_dpdt",
+      "designator": "S",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 10,
+      "ports": {
+        "COM1": { "x": -5, "y": -2, "side": "west", "electrical_type": "passive" },
+        "NC1": { "x": 5, "y": -3, "side": "east", "electrical_type": "passive" },
+        "NO1": { "x": 5, "y": -1, "side": "east", "electrical_type": "passive" },
+        "COM2": { "x": -5, "y": 2, "side": "west", "electrical_type": "passive" },
+        "NC2": { "x": 5, "y": 1, "side": "east", "electrical_type": "passive" },
+        "NO2": { "x": 5, "y": 3, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0113",
+      "name": "Interruptor de flotador",
+      "kind": "float_switch",
+      "designator": "S",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "1": { "x": -4, "y": 0, "side": "west", "electrical_type": "passive" },
+        "2": { "x": 4, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0114",
+      "name": "Presostato",
+      "kind": "pressure_switch",
+      "designator": "PS",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "1": { "x": -4, "y": 0, "side": "west", "electrical_type": "passive" },
+        "2": { "x": 4, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0115",
+      "name": "Termostato",
+      "kind": "thermostat_switch",
+      "designator": "TS",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "1": { "x": -4, "y": 0, "side": "west", "electrical_type": "passive" },
+        "2": { "x": 4, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0116",
+      "name": "Interruptor magnético Reed",
+      "kind": "reed_switch",
+      "designator": "S",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 4,
+      "ports": {
+        "1": { "x": -4, "y": 0, "side": "west", "electrical_type": "passive" },
+        "2": { "x": 4, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0118",
+      "name": "DIP switch",
+      "kind": "dip_switch",
+      "designator": "SW",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 5,
+      "ports": {
+        "1": { "x": -4, "y": 0, "side": "west", "electrical_type": "passive" },
+        "2": { "x": 4, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0122",
+      "name": "Relé conmutado",
+      "kind": "relay_spdt",
+      "designator": "K",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 12,
+      "height": 8,
+      "ports": {
+        "A1": { "x": -6, "y": -3, "side": "west", "electrical_type": "passive" },
+        "A2": { "x": -6, "y": 3, "side": "west", "electrical_type": "passive" },
+        "COM": { "x": 6, "y": 0, "side": "east", "electrical_type": "passive" },
+        "NC": { "x": 6, "y": -2, "side": "east", "electrical_type": "passive" },
+        "NO": { "x": 6, "y": 2, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0124",
+      "name": "Solenoide",
+      "kind": "solenoid",
+      "designator": "YV",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 5,
+      "ports": {
+        "A1": { "x": -4, "y": 0, "side": "west", "electrical_type": "passive" },
+        "A2": { "x": 4, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0125",
+      "name": "Válvula solenoide",
+      "kind": "solenoid_valve",
+      "designator": "YV",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 7,
+      "ports": {
+        "A1": { "x": -5, "y": 0, "side": "west", "electrical_type": "passive" },
+        "A2": { "x": 5, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0425",
+      "name": "Relé de 2 polos",
+      "kind": "relay_2pole",
+      "designator": "K",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 14,
+      "height": 12,
+      "ports": {
+        "COM1": { "x": -7, "y": -3, "side": "west", "electrical_type": "passive" },
+        "NC1": { "x": 7, "y": -4, "side": "east", "electrical_type": "passive" },
+        "NO1": { "x": 7, "y": -2, "side": "east", "electrical_type": "passive" },
+        "COM2": { "x": -7, "y": 1, "side": "west", "electrical_type": "passive" },
+        "NC2": { "x": 7, "y": 0, "side": "east", "electrical_type": "passive" },
+        "NO2": { "x": 7, "y": 2, "side": "east", "electrical_type": "passive" },
+        "A1": { "x": -7, "y": 4, "side": "west", "electrical_type": "passive" },
+        "A2": { "x": 7, "y": 4, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0426",
+      "name": "Relé de 3 polos",
+      "kind": "relay_3pole",
+      "designator": "K",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 14,
+      "height": 16,
+      "ports": {
+        "COM1": { "x": -7, "y": -4, "side": "west", "electrical_type": "passive" },
+        "NC1": { "x": 7, "y": -5, "side": "east", "electrical_type": "passive" },
+        "NO1": { "x": 7, "y": -3, "side": "east", "electrical_type": "passive" },
+        "COM2": { "x": -7, "y": 0, "side": "west", "electrical_type": "passive" },
+        "NC2": { "x": 7, "y": -1, "side": "east", "electrical_type": "passive" },
+        "NO2": { "x": 7, "y": 1, "side": "east", "electrical_type": "passive" },
+        "COM3": { "x": -7, "y": 4, "side": "west", "electrical_type": "passive" },
+        "NC3": { "x": 7, "y": 3, "side": "east", "electrical_type": "passive" },
+        "NO3": { "x": 7, "y": 5, "side": "east", "electrical_type": "passive" },
+        "A1": { "x": -7, "y": 6, "side": "west", "electrical_type": "passive" },
+        "A2": { "x": 7, "y": 6, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0427",
+      "name": "Relé de 4 polos",
+      "kind": "relay_4pole",
+      "designator": "K",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 14,
+      "height": 20,
+      "ports": {
+        "COM1": { "x": -7, "y": -6, "side": "west", "electrical_type": "passive" },
+        "NC1": { "x": 7, "y": -7, "side": "east", "electrical_type": "passive" },
+        "NO1": { "x": 7, "y": -5, "side": "east", "electrical_type": "passive" },
+        "COM2": { "x": -7, "y": -2, "side": "west", "electrical_type": "passive" },
+        "NC2": { "x": 7, "y": -3, "side": "east", "electrical_type": "passive" },
+        "NO2": { "x": 7, "y": -1, "side": "east", "electrical_type": "passive" },
+        "COM3": { "x": -7, "y": 2, "side": "west", "electrical_type": "passive" },
+        "NC3": { "x": 7, "y": 1, "side": "east", "electrical_type": "passive" },
+        "NO3": { "x": 7, "y": 3, "side": "east", "electrical_type": "passive" },
+        "COM4": { "x": -7, "y": 6, "side": "west", "electrical_type": "passive" },
+        "NC4": { "x": 7, "y": 5, "side": "east", "electrical_type": "passive" },
+        "NO4": { "x": 7, "y": 7, "side": "east", "electrical_type": "passive" },
+        "A1": { "x": -7, "y": 8, "side": "west", "electrical_type": "passive" },
+        "A2": { "x": 7, "y": 8, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
       "id": "ST-GENERIC-2P",
       "catalog_id": null,
       "name": "Carga genérica",

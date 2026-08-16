@@ -139,7 +139,7 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn('"electroia_search_symbols"', manifest)
         self.assertIn('"electroia_get_symbol"', manifest)
         self.assertIn('"electroia_render_diagram"', manifest)
-        self.assertIn('"diagram_engine_version": "1.5.0-alpha.1"', manifest)
+        self.assertIn('"diagram_engine_version": "1.6.0-alpha.1"', manifest)
         self.assertIn('"normalized_symbol_count": 460', manifest)
         self.assertIn('"calculates_values"', manifest)
         self.assertIn('server.registerTool(', server)
@@ -179,9 +179,10 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertEqual(len(catalog_symbols), 460)
         self.assertEqual(library["engine_symbol_count"], 463)
         self.assertTrue(all(item["ports"] for item in library["symbols"]))
-        self.assertEqual(report["catalog_status_counts"], {"auto_draft": 388, "engine_reviewed": 72})
+        self.assertEqual(report["catalog_status_counts"], {"auto_draft": 374, "engine_reviewed": 86})
         self.assertIn("Conexiones y referencias", report["fully_reviewed_categories"])
         self.assertIn("Protecciones eléctricas", report["fully_reviewed_categories"])
+        self.assertIn("Relés, interruptores y actuadores", report["fully_reviewed_categories"])
         self.assertEqual(
             report["category_quality"]["Conexiones y referencias"],
             {"total": 17, "engine_reviewed": 17, "auto_draft": 0},
@@ -189,6 +190,10 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertEqual(
             report["category_quality"]["Protecciones eléctricas"],
             {"total": 16, "engine_reviewed": 16, "auto_draft": 0},
+        )
+        self.assertEqual(
+            report["category_quality"]["Relés, interruptores y actuadores"],
+            {"total": 23, "engine_reviewed": 23, "auto_draft": 0},
         )
         self.assertEqual(report["coverage_percent"], 100)
 
@@ -198,7 +203,7 @@ class HiddenElectroIATests(unittest.TestCase):
         server = json.loads((ROOT / "electroia-tool-server" / "server.json").read_text(encoding="utf-8"))
         llms = (ROOT / "llms.txt").read_text(encoding="utf-8")
         self.assertEqual(discovery["status"], "private_preview")
-        self.assertEqual(discovery["quality"]["reviewed_catalog_symbols"], 72)
+        self.assertEqual(discovery["quality"]["reviewed_catalog_symbols"], 86)
         self.assertEqual(discovery["interfaces"]["remote_mcp"]["status"], "planned")
         self.assertFalse(discovery["security"]["remote_public_execution"])
         self.assertEqual(openapi["openapi"], "3.1.0")

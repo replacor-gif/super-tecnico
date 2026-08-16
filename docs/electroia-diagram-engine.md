@@ -97,7 +97,7 @@ El motor aporta:
 
 La base educativa de Super Técnico conserva 460 fichas y sus SVG de consulta. No todos esos SVG son todavía símbolos CAD: muchos carecen de terminales tipados y puntos de conexión normalizados.
 
-La versión 1.2 dispone de 50 símbolos operativos. Al primer lote de maniobra se suman conectores de continuidad, tierra funcional, transformadores, final de carrera, selector, disyuntor, diferencial, motor monofásico, bomba, toma, caja de derivación, cuadro, magnetotérmicos de uno, dos y cuatro polos y contador de energía.
+La versión 1.6 dispone de 86 símbolos revisados individualmente. Además de conexiones, referencias y protecciones, queda completa la familia de relés, interruptores y actuadores: conmutadores SPST, SPDT y DPDT, flotador, presostato, termostato, reed, DIP, solenoides y relés de hasta cuatro polos. Los 374 símbolos restantes conservan terminales y estructura provisional, pero el motor los marca como borradores hasta su revisión gráfica.
 
 El primer patrón unifilar representa una alimentación monofásica, contador, protección general, diferencial y tres circuitos derivados. Cada red declara explícitamente cuántos conductores resume la línea.
 

@@ -1,7 +1,7 @@
 "use strict";
 
 const ElectroDiagramCore = (() => {
-  const ENGINE_VERSION = "1.5.0-alpha.1";
+  const ENGINE_VERSION = "1.6.0-alpha.1";
   const CONTRACT_VERSION = "1.0";
   const GRID_PITCH_MIL = 50;
   const UNIT = 24;
@@ -944,6 +944,44 @@ const ElectroDiagramCore = (() => {
     if (kind === "switch_no" || kind === "isolator") {
       const grip = kind === "isolator" ? `${line(-0.15, -1.15, 0.45, -1.8, "symbol-accent")}` : "";
       return `${line(-3, 0, -1.15, 0)}${line(1.15, 0, 3, 0)}<circle cx="${-1.15 * u}" cy="0" r="4" fill="#202824"/><circle cx="${1.15 * u}" cy="0" r="4" fill="#202824"/>${line(-1.05, -0.08, 0.85, -1.25)}${grip}`;
+    }
+    if (kind === "switch_nc") {
+      return `${line(-3, 0, -1.15, 0)}${line(1.15, 0, 3, 0)}<circle cx="${-1.15 * u}" cy="0" r="4" fill="#202824"/><circle cx="${1.15 * u}" cy="0" r="4" fill="#202824"/>${line(-1.05, -0.08, 1.05, -0.08)}`;
+    }
+    if (kind === "switch_spdt") {
+      return `${line(-4, 0, -1.35, 0)}${line(1.35, -2, 4, -2)}${line(1.35, 2, 4, 2)}<circle cx="${-1.35 * u}" cy="0" r="4" fill="#202824"/><circle cx="${1.35 * u}" cy="${-2 * u}" r="4" fill="#202824"/><circle cx="${1.35 * u}" cy="${2 * u}" r="4" fill="#202824"/>${line(-1.2, -0.08, 1.18, -1.9)}`;
+    }
+    if (kind === "switch_dpdt") {
+      const contacts = [-2, 2].map((center) => `${line(-5, center, -1.35, center)}${line(1.35, center - 1, 5, center - 1)}${line(1.35, center + 1, 5, center + 1)}<circle cx="${-1.35 * u}" cy="${center * u}" r="4" fill="#202824"/><circle cx="${1.35 * u}" cy="${(center - 1) * u}" r="4" fill="#202824"/><circle cx="${1.35 * u}" cy="${(center + 1) * u}" r="4" fill="#202824"/>${line(-1.2, center - 0.08, 1.18, center - 0.9)}`).join("");
+      return `${contacts}${line(0, -3.25, 0, 3.25, "symbol-linkage")}`;
+    }
+    if (["float_switch", "pressure_switch", "thermostat_switch", "reed_switch", "dip_switch"].includes(kind)) {
+      const contact = `${line(-4, 0, -1.15, 0)}${line(1.15, 0, 4, 0)}<circle cx="${-1.15 * u}" cy="0" r="4" fill="#202824"/><circle cx="${1.15 * u}" cy="0" r="4" fill="#202824"/>${line(-1.05, -0.08, 0.85, -1.25)}`;
+      if (kind === "float_switch") return `${contact}${line(0, -1.4, 0, -2.25, "symbol-accent")}<circle class="symbol-fill" cx="0" cy="${-2.65 * u}" r="${0.4 * u}"/><path class="symbol-accent" d="M${-1.4 * u} ${2.05 * u}q${0.35 * u} ${-0.35 * u} ${0.7 * u} 0t${0.7 * u} 0t${0.7 * u} 0t${0.7 * u} 0"/>`;
+      if (kind === "pressure_switch") return `${contact}${line(0, -1.4, 0, -2.15, "symbol-accent")}<path class="symbol-accent" d="M${-1.15 * u} ${-2.15 * u}h${2.3 * u}m${-1.8 * u} ${-0.45 * u}h${1.3 * u}m${-0.8 * u} ${-0.45 * u}h${0.3 * u}"/>`;
+      if (kind === "thermostat_switch") return `${contact}${line(0, -1.4, 0, -2.1, "symbol-accent")}<path class="symbol-accent" d="M${-1.15 * u} ${-2.65 * u}h${0.45 * u}v${1.1 * u}h${1.4 * u}v${-1.1 * u}h${0.45 * u}"/>`;
+      if (kind === "reed_switch") return `<rect class="symbol-accent" x="${-2.05 * u}" y="${-1.25 * u}" width="${4.1 * u}" height="${2.5 * u}" rx="${1.1 * u}"/>${contact}`;
+      return `<rect class="symbol-fill" x="${-2.15 * u}" y="${-2 * u}" width="${4.3 * u}" height="${4 * u}" rx="5"/>${contact}<text class="component-value" x="0" y="${1.45 * u}">1</text>`;
+    }
+    if (kind === "relay_spdt") {
+      const coil = `${line(-6, -3, -4.25, -3)}${line(-6, 3, -4.25, 3)}<rect class="symbol-fill" x="${-4.25 * u}" y="${-3.35 * u}" width="${1.75 * u}" height="${6.7 * u}" rx="5"/><path class="symbol-accent" d="M${-3.82 * u} ${-2.55 * u}q${0.9 * u} ${0.65 * u} 0 ${1.3 * u}t0 ${1.3 * u}t0 ${1.3 * u}t0 ${1.3 * u}"/>`;
+      const contact = `${line(2.1, 0, 6, 0)}${line(4.15, -2, 6, -2)}${line(4.15, 2, 6, 2)}<circle cx="${2.1 * u}" cy="0" r="4" fill="#202824"/><circle cx="${4.15 * u}" cy="${-2 * u}" r="4" fill="#202824"/><circle cx="${4.15 * u}" cy="${2 * u}" r="4" fill="#202824"/>${line(2.22, -0.08, 4, -1.9)}`;
+      return `${coil}${contact}${line(-1.45, -2.7, -1.45, 2.7, "symbol-linkage")}`;
+    }
+    if (kind === "solenoid") {
+      return `${line(-4, 0, -1.8, 0)}<rect class="symbol-fill" x="${-1.8 * u}" y="${-1.35 * u}" width="${3.6 * u}" height="${2.7 * u}" rx="4"/>${line(1.8, 0, 4, 0)}<path class="symbol-accent" d="M${-1.25 * u} ${0.85 * u}L${-0.45 * u} ${-0.85 * u}L${0.35 * u} ${0.85 * u}L${1.15 * u} ${-0.85 * u}"/>${line(0, -1.35, 0, -2.15, "symbol-linkage")}`;
+    }
+    if (kind === "solenoid_valve") {
+      return `${line(-5, 0, -3.1, 0)}<rect class="symbol-fill" x="${-3.1 * u}" y="${-1.45 * u}" width="${2.25 * u}" height="${2.9 * u}" rx="4"/><path class="symbol-accent" d="M${-2.65 * u} ${0.9 * u}L${-1.95 * u} ${-0.9 * u}L${-1.25 * u} ${0.9 * u}"/>${line(-0.85, 0, 0, 0, "symbol-linkage")}<path class="symbol-fill" d="M0 ${-1.65 * u}L${1.45 * u} 0L0 ${1.65 * u}ZM${2.9 * u} ${-1.65 * u}L${1.45 * u} 0L${2.9 * u} ${1.65 * u}Z"/>${line(2.9, 0, 5, 0)}`;
+    }
+    if (["relay_2pole", "relay_3pole", "relay_4pole"].includes(kind)) {
+      const poleCount = Number(kind.match(/\d/)[0]);
+      const centers = poleCount === 2 ? [-3, 1] : poleCount === 3 ? [-4, 0, 4] : [-6, -2, 2, 6];
+      const coilY = poleCount === 2 ? 4 : poleCount === 3 ? 6 : 8;
+      const contacts = centers.map((center) => `${line(-7, center, -1.35, center)}${line(1.35, center - 1, 7, center - 1)}${line(1.35, center + 1, 7, center + 1)}<circle cx="${-1.35 * u}" cy="${center * u}" r="4" fill="#202824"/><circle cx="${1.35 * u}" cy="${(center - 1) * u}" r="4" fill="#202824"/><circle cx="${1.35 * u}" cy="${(center + 1) * u}" r="4" fill="#202824"/>${line(-1.2, center - 0.08, 1.18, center - 0.9)}`).join("");
+      const linkage = line(0, centers[0] - 1.55, 0, centers[centers.length - 1] + 1.55, "symbol-linkage");
+      const coil = `${line(-7, coilY, -1.55, coilY)}<rect class="symbol-fill" x="${-1.55 * u}" y="${(coilY - 0.72) * u}" width="${3.1 * u}" height="${1.44 * u}" rx="4"/>${line(1.55, coilY, 7, coilY)}<path class="symbol-accent" d="M${-1.05 * u} ${coilY * u}q${0.35 * u} ${-0.48 * u} ${0.7 * u} 0t${0.7 * u} 0t${0.7 * u} 0"/>`;
+      return `${contacts}${linkage}${coil}`;
     }
     if (kind === "pushbutton_no" || kind === "pushbutton_nc") {
       const contact = kind === "pushbutton_nc"
