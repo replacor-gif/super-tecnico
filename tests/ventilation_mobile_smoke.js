@@ -41,6 +41,7 @@ const { chromium } = require('playwright');
   const box = await svg.boundingBox();
   assert.ok(box);
   await svg.click({ position: { x: box.width * .17, y: box.height * .22 }, force: true });
+  assert.match(page.url(), /ventilacion\.html/, 'A plan tap was intercepted by app navigation.');
   assert.equal(await page.locator('[data-kind="vent-terminal"]').count(), 5);
   assert.match(await page.locator('#ventNetworkStatus').innerText(), /RED CALCULADA/i);
 

@@ -3151,7 +3151,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("branch-drag", css)
         self.assertIn("wall-snap-target", css)
         self.assertIn(".drag-hit { r: 40px; }", css)
-        self.assertIn("duct-designer.js?v=7", html)
+        self.assertIn("duct-designer.js?v=9", html)
         self.assertIn('href="conductos.html"', portal)
         self.assertNotIn("ductSizing", script)
 
