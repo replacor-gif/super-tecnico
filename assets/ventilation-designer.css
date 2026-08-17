@@ -1,0 +1,175 @@
+:root {
+  --vent-supply: #51ff7d;
+  --vent-extract: #ff3fa7;
+  --vent-cyan: #00c8ff;
+  --vent-yellow: #ffe438;
+}
+
+.vent-header { border-bottom-color: rgba(0, 200, 255, .32); }
+.vent-intro { background: radial-gradient(circle at 84% 14%, rgba(0, 200, 255, .16), transparent 34%), radial-gradient(circle at 16% 100%, rgba(255, 63, 167, .12), transparent 37%), #07101c; }
+.vent-intro h1 { max-width: 960px; }
+
+.vent-project-setup {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.7fr) minmax(220px, 1.2fr) minmax(150px, .65fr) minmax(160px, .65fr);
+  gap: 10px;
+  margin: 0 0 12px;
+  padding: 12px;
+  border: 1px solid #203955;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #091523, #050c16);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .22);
+}
+.vent-project-setup label,
+.vent-room-editor label { display: grid; gap: 6px; min-width: 0; }
+.vent-project-setup label > span:first-child,
+.vent-room-editor label > span:first-child { color: #9fb3c8; font-size: .66rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+.vent-project-setup select,
+.vent-project-setup input,
+.vent-room-editor select,
+.vent-room-editor input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid #2c4969;
+  border-radius: 11px;
+  outline: 0;
+  color: #f5f9ff;
+  background: #08121e;
+  font: inherit;
+  font-weight: 750;
+}
+.vent-project-setup select:focus,
+.vent-project-setup input:focus,
+.vent-room-editor select:focus,
+.vent-room-editor input:focus { border-color: var(--vent-cyan); box-shadow: 0 0 0 3px rgba(0, 200, 255, .12); }
+.vent-project-setup .number-unit,
+.vent-room-editor .number-unit { display: grid; grid-template-columns: 1fr auto; align-items: center; overflow: hidden; border: 1px solid #2c4969; border-radius: 11px; background: #08121e; }
+.vent-project-setup .number-unit input,
+.vent-room-editor .number-unit input { min-width: 0; border: 0; border-radius: 0; }
+.vent-project-setup .number-unit b,
+.vent-room-editor .number-unit b { padding: 0 11px; color: var(--vent-yellow); font-size: .72rem; white-space: nowrap; }
+
+.vent-room-editor {
+  position: sticky;
+  z-index: 8;
+  bottom: 76px;
+  margin: 10px;
+  padding: 11px;
+  border: 1px solid rgba(0, 200, 255, .48);
+  border-radius: 15px;
+  background: rgba(5, 13, 23, .96);
+  box-shadow: 0 -14px 36px rgba(0, 0, 0, .36), 0 0 22px rgba(0, 200, 255, .08);
+  backdrop-filter: blur(16px);
+}
+.vent-room-editor > header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 9px; }
+.vent-room-editor > header span { color: var(--vent-cyan); font-size: .62rem; font-weight: 950; letter-spacing: .12em; }
+.vent-room-editor > header strong { color: #fff; font-size: .9rem; }
+.vent-room-editor > div { display: grid; grid-template-columns: 1.2fr 1.2fr .7fr .8fr .8fr; gap: 8px; }
+
+.vent-placement-toolbar {
+  position: sticky;
+  z-index: 9;
+  bottom: 72px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(110px, 1fr));
+  gap: 7px;
+  margin: 10px;
+  padding: 9px;
+  border: 1px solid #294867;
+  border-radius: 16px;
+  background: rgba(4, 11, 20, .96);
+  box-shadow: 0 -14px 36px rgba(0, 0, 0, .38);
+  backdrop-filter: blur(16px);
+}
+.vent-placement-toolbar button { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 6px 8px; border: 1px solid #263e58; border-radius: 11px; color: #c9d6e4; background: #091522; font-size: .7rem; font-weight: 850; cursor: pointer; }
+.vent-placement-toolbar button:hover,
+.vent-placement-toolbar button.is-active { border-color: var(--vent-cyan); color: #fff; background: #102237; box-shadow: 0 0 18px rgba(0, 200, 255, .14); }
+.vent-placement-toolbar i { display: grid; place-items: center; width: 31px; height: 31px; flex: 0 0 auto; border: 2px solid currentColor; color: inherit; font-style: normal; font-weight: 950; }
+.vent-placement-toolbar .placement-grille { border-radius: 5px; }
+.vent-placement-toolbar .placement-fan { border-radius: 50%; }
+.vent-placement-toolbar .supply-mark { color: var(--vent-supply); }
+.vent-placement-toolbar .extract-mark { color: var(--vent-extract); }
+.vent-placement-toolbar .placement-delete i { color: #ff5e66; border-color: #ff5e66; border-radius: 50%; font-size: 1.2rem; }
+.vent-placement-toolbar button[hidden] { display: none; }
+
+.ventilation-plan .plan-room { cursor: pointer; }
+.ventilation-plan .plan-room.is-selected .room-wall { stroke: #fff !important; stroke-width: 5; filter: drop-shadow(0 0 7px var(--vent-cyan)); }
+.ventilation-plan .room-type-bedroom_main .room-wall,
+.ventilation-plan .room-type-bedroom .room-wall { stroke: #00c8ff; }
+.ventilation-plan .room-type-living .room-wall { stroke: #a66bff; }
+.ventilation-plan .room-type-office .room-wall { stroke: #00e6c7; }
+.ventilation-plan .room-type-classroom .room-wall { stroke: #39d98a; }
+.ventilation-plan .room-type-retail .room-wall { stroke: #ffe438; }
+.ventilation-plan .room-type-kitchen .room-wall { stroke: #ff7a00; }
+.ventilation-plan .room-type-bathroom .room-wall { stroke: #ff3fa7; }
+.ventilation-plan .room-type-toilet .room-wall { stroke: #ff5e66; }
+.ventilation-plan .room-type-utility .room-wall { stroke: #ef8bff; }
+.ventilation-plan .room-type-hallway .room-wall { stroke: #51ff7d; }
+.ventilation-plan .room-type-storage .room-wall { stroke: #d6a96b; }
+.ventilation-plan .room-type-garage .room-wall { stroke: #8c9aaf; }
+
+.vent-route { pointer-events: none; stroke-width: var(--route-width); stroke-linecap: square; opacity: .9; }
+.vent-route.route-supply { stroke: var(--vent-supply); filter: drop-shadow(0 0 6px rgba(81, 255, 125, .42)); }
+.vent-route.route-extract { stroke: var(--vent-extract); filter: drop-shadow(0 0 6px rgba(255, 63, 167, .42)); }
+.vent-route.through-hallway { stroke-dasharray: none; opacity: 1; }
+.vent-terminal,
+.vent-fan { cursor: pointer; }
+.vent-terminal .placement-hit,
+.vent-fan .placement-hit { fill: transparent; stroke: none; }
+.vent-terminal rect { fill: #07121e; stroke-width: 3; }
+.vent-terminal path { fill: none; stroke-width: 2; }
+.vent-terminal text,
+.vent-fan text { font-size: 10px; font-weight: 950; letter-spacing: .08em; }
+.vent-terminal.terminal-supply rect,
+.vent-terminal.terminal-supply path { stroke: var(--vent-supply); }
+.vent-terminal.terminal-supply text { fill: var(--vent-supply); }
+.vent-terminal.terminal-extract rect,
+.vent-terminal.terminal-extract path { stroke: var(--vent-extract); }
+.vent-terminal.terminal-extract text { fill: var(--vent-extract); }
+.vent-fan .fan-body { fill: #07121e; stroke-width: 3; }
+.vent-fan path { fill: none; stroke-width: 2.8; stroke-linecap: round; }
+.vent-fan.fan-supply .fan-body,
+.vent-fan.fan-supply path { stroke: var(--vent-supply); }
+.vent-fan.fan-supply text { fill: var(--vent-supply); }
+.vent-fan.fan-extract .fan-body,
+.vent-fan.fan-extract path { stroke: var(--vent-extract); }
+.vent-fan.fan-extract text { fill: var(--vent-extract); }
+.vent-terminal.is-selected,
+.vent-fan.is-selected { filter: drop-shadow(0 0 10px #fff); }
+.vent-terminal.is-selected rect,
+.vent-fan.is-selected .fan-body { stroke: #fff; stroke-width: 5; }
+
+.vent-result-columns { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.empty-result { margin: 0; padding: 16px; color: #8fa1b4; font-size: .8rem; text-align: center; }
+.vent-professional-note { display: grid; gap: 6px; }
+.vent-professional-note a { width: max-content; color: var(--vent-cyan); font-size: .78rem; font-weight: 850; text-decoration: none; }
+.vent-professional-note a:hover { text-decoration: underline; }
+
+@media (max-width: 1050px) {
+  .vent-project-setup { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .vent-room-editor > div { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .vent-result-columns { grid-template-columns: 1fr; }
+  .vent-placement-toolbar { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .vent-project-setup { grid-template-columns: 1fr; padding: 9px; }
+  .vent-project-setup select,
+  .vent-project-setup input { min-height: 43px; }
+  .vent-room-editor { bottom: 68px; margin: 7px; padding: 9px; }
+  .vent-room-editor > header { align-items: flex-start; flex-direction: column; gap: 2px; }
+  .vent-room-editor > div { grid-template-columns: 1fr 1fr; }
+  .vent-room-editor label:first-child,
+  .vent-room-editor label:nth-child(2) { grid-column: 1 / -1; }
+  .vent-placement-toolbar { bottom: 68px; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 7px; padding: 7px; }
+  .vent-placement-toolbar button { min-height: 48px; font-size: .64rem; }
+  .vent-placement-toolbar .placement-delete { grid-column: 1 / -1; }
+  .vent-placement-toolbar i { width: 28px; height: 28px; }
+}
+
+@media print {
+  .vent-project-setup,
+  .vent-room-editor,
+  .vent-placement-toolbar { display: none !important; }
+}

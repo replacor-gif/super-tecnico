@@ -73,3 +73,13 @@ The regulation catalog includes binary and semantic source fingerprints. AI cons
 - Machine contract: /data/condensate/tool-manifest.json
 
 The browser engine accumulates condensate flow from the furthest unit to the outlet and sizes each gravity segment using explicit assumptions. Prefer measured or manufacturer flow. Manufacturer connection size remains a minimum. Remote execution is planned and is not currently enabled.
+
+## Ventilation and extraction entry points
+
+- Human design tool: /ventilacion.html
+- Deterministic browser engine: /assets/ventilation-designer.js
+- Versioned rule profiles: /assets/ventilation-rules.js
+- Discovery manifest: /data/ventilation/discovery.json
+- Machine contract: /data/ventilation/tool-manifest.json
+
+The browser engine accepts a polygonal floor plan, room heights, occupancy or parking data where required, and manually positioned grilles and fans. It applies a declared CTE DB HS 3, RITE, or technician-supplied air-change profile, then returns room airflow, fan airflow, routed networks, and 5 cm stepped rectangular duct sizes. It does not yet calculate a final fan pressure duty point or replace project-specific fire, acoustic, discharge, filtration, regional, local, or licensed-standard checks. Remote execution is not enabled.

@@ -4,7 +4,7 @@
   const API_URL = new URL('api/index.php', document.baseURI);
   const CLIENT_KEY = 'st.community.client.v1';
   const PAGE_LABELS = {
-    inicio: 'Inicio', climatizacion: 'Climatización', conductos: 'Diseño de conductos', calculadoras: 'Calculadoras',
+    inicio: 'Inicio', climatizacion: 'Climatización', conductos: 'Diseño de conductos', ventilacion: 'Ventilación y extracción', calculadoras: 'Calculadoras',
     componentes: 'Componentes', comparador: 'Comparador', smd: 'Identificador SMD', averias: 'Averías compartidas',
     feedback: 'Propuestas', simbolos: 'Simbología', 'electronica-placas': 'Electrónica de placas', normativa: 'Normativa técnica',
     'formacion-climatizacion': 'Formación de climatización',

@@ -1247,5 +1247,22 @@
     calculateProject,
     renderPlanSvg,
     roundUp,
+    geometry: Object.freeze({
+      point,
+      routePoint,
+      pointKey,
+      parsePointKey,
+      edgeKey,
+      polygonBounds,
+      polygonCentroid,
+      nearestInteriorPoint,
+      roomAtMidpoint,
+      findPath,
+      addPathToNetwork,
+      buildGraph,
+      shortestPath,
+      connectedComponents,
+      edgeLengthGrid,
+    }),
   };
 });

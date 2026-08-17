@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="google-adsense-account" content="ca-pub-6950924617837531">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Diseñador visual de ventilación y extracción con recintos, altura, rejillas, turbinas, caudales y recorridos de conductos.">
+  <meta name="theme-color" content="#050a13">
+  <title>Ventilación y extracción | Super Técnico</title>
+  <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
+  <link rel="stylesheet" href="assets/app-theme.css?v=1">
+  <link rel="stylesheet" href="assets/duct-designer.css?v=7">
+  <link rel="stylesheet" href="assets/ventilation-designer.css?v=1">
+  <script src="assets/i18n.js?v=6" defer></script>
+  <script src="assets/app-shell.js?v=5" defer></script>
+  <script src="assets/duct-designer.js?v=8" defer></script>
+  <script src="assets/ventilation-rules.js?v=1" defer></script>
+  <script src="assets/ventilation-designer.js?v=1" defer></script>
+</head>
+<body class="ventilation-page">
+  <header class="duct-header vent-header">
+    <a class="duct-brand" href="index.html" aria-label="Volver a Super Técnico">
+      <img src="assets/super-tecnico-logo.png" alt="">
+      <span><strong>Super Técnico</strong><small>Ventilación y extracción</small></span>
+    </a>
+    <div class="duct-header-actions">
+      <span>PRUEBA · VERSIÓN 0.1</span>
+      <button id="ventPrintProject" type="button">Imprimir / PDF</button>
+    </div>
+  </header>
+
+  <main class="duct-main">
+    <section class="duct-intro vent-intro">
+      <p class="duct-eyebrow">PLANO REAL · CAUDAL REGLAMENTARIO · RED AUTOMÁTICA</p>
+      <h1>Ventilación y extracción sobre el recinto real</h1>
+      <p>Dibuja los espacios, indica su altura y coloca personalmente rejillas y turbinas. Super Técnico calcula el volumen, aplica el criterio correspondiente al uso elegido y genera los recorridos y dimensiones de cada tramo.</p>
+    </section>
+
+    <section class="vent-project-setup" aria-label="Datos generales del proyecto">
+      <label for="ventProfile"><span>Tipo de lugar</span><select id="ventProfile">
+        <option value="cte_dwelling">Vivienda · ventilación general</option>
+        <option value="rite_ida2_people">Oficina, aula, museo o sala de lectura</option>
+        <option value="rite_ida3_people">Comercio, cine, teatro u hotel</option>
+        <option value="rite_service_extract">Local de servicio o aseos</option>
+        <option value="cte_storage">Trasteros y zonas comunes</option>
+        <option value="cte_waste">Almacén de residuos</option>
+        <option value="cte_garage">Aparcamiento o garaje</option>
+        <option value="cte_kitchen_hood">Extracción independiente de cocina</option>
+        <option value="technical_ach">Otro recinto · renovaciones por hora</option>
+      </select></label>
+      <label for="ventSystemMode"><span>Tipo de instalación</span><select id="ventSystemMode">
+        <option value="extract">Solo extracción</option>
+        <option value="supply">Solo impulsión</option>
+        <option value="balanced">Impulsión + extracción</option>
+      </select></label>
+      <label for="ventDefaultHeight"><span>Altura habitual</span><span class="number-unit"><input id="ventDefaultHeight" type="number" min="1.8" max="15" step="0.1" value="2.5"><b>m</b></span></label>
+      <label id="ventAchField" for="ventCustomAch" hidden><span>Renovaciones</span><span class="number-unit"><input id="ventCustomAch" type="number" min="0.1" max="60" step="0.5" value="6"><b>ren/h</b></span></label>
+    </section>
+
+    <section class="duct-assistant vent-assistant">
+      <div class="assistant-toolbar">
+        <div class="phase-copy">
+          <span id="ventPhaseBadge">DIBUJANDO RECINTOS</span>
+          <strong>Un único plano para toda la instalación</strong>
+        </div>
+        <div class="inline-settings">
+          <label for="ventCellSize"><span>Cada cuadrado</span><select id="ventCellSize"><option value="0.25">25 cm</option><option value="0.5" selected>50 cm</option><option value="1">1 metro</option></select></label>
+        </div>
+        <div class="quick-actions">
+          <button id="ventUndo" type="button" disabled aria-label="Deshacer">↶</button>
+          <button id="ventRedo" type="button" disabled aria-label="Rehacer">↷</button>
+          <button id="ventLoadExample" type="button">Ver ejemplo</button>
+          <button id="ventClearProject" class="clear-action" type="button">Plano nuevo</button>
+        </div>
+      </div>
+
+      <div id="ventAssistantMessage" class="assistant-message" aria-live="polite">
+        <span>1</span><p><strong>Toca todas las esquinas de cada recinto.</strong> Cierra volviendo al primer punto.</p>
+      </div>
+
+      <div class="plan-frame vent-plan-frame">
+        <div class="plan-topline">
+          <div><span id="planStatusDot"></span><strong id="ventPlanStatus">Preparado para dibujar</strong></div>
+          <div class="zoom-actions"><button id="ventZoomOut" type="button" aria-label="Alejar">−</button><button id="ventZoomFit" type="button">Ajustar</button><button id="ventZoomIn" type="button" aria-label="Acercar">＋</button></div>
+        </div>
+        <div class="plan-canvas-wrap">
+          <button id="ventPhaseAction" class="finish-drawing" type="button" disabled><i>✓</i><span>He terminado el plano</span></button>
+          <div id="ventPlanScroll" class="plan-scroll"><div id="ventPlanStage" class="plan-stage" aria-label="Plano interactivo de ventilación y extracción"></div></div>
+        </div>
+        <div class="plan-foot"><div id="ventPlanSummary" class="plan-summary"></div></div>
+      </div>
+
+      <section id="ventRoomEditor" class="vent-room-editor" hidden>
+        <header><span>RECINTO SELECCIONADO</span><strong data-room-editor-title>Estancia</strong></header>
+        <div>
+          <label for="ventRoomName"><span>Nombre</span><input id="ventRoomName" type="text" maxlength="80" placeholder="Nombre opcional"></label>
+          <label for="ventRoomType"><span>Qué es</span><select id="ventRoomType">
+            <option value="unassigned">Sin identificar</option>
+            <option value="bedroom_main">Dormitorio principal</option>
+            <option value="bedroom">Dormitorio</option>
+            <option value="living">Salón / comedor</option>
+            <option value="office">Oficina / despacho</option>
+            <option value="classroom">Aula / sala</option>
+            <option value="retail">Comercio / público</option>
+            <option value="kitchen">Cocina</option>
+            <option value="bathroom">Baño</option>
+            <option value="toilet">Aseo</option>
+            <option value="utility">Lavadero / servicio</option>
+            <option value="hallway">Pasillo / distribuidor</option>
+            <option value="storage">Trastero / almacén</option>
+            <option value="garage">Garaje / aparcamiento</option>
+            <option value="other">Otro recinto</option>
+          </select></label>
+          <label for="ventRoomHeight"><span>Altura real</span><span class="number-unit"><input id="ventRoomHeight" type="number" min="1.8" max="15" step="0.1"><b>m</b></span></label>
+          <label id="ventOccupantsField" for="ventRoomOccupants" hidden><span>Ocupación prevista</span><span class="number-unit"><input id="ventRoomOccupants" type="number" min="0" max="5000" step="1"><b>personas</b></span></label>
+          <label id="ventParkingField" for="ventRoomParking" hidden><span>Plazas</span><span class="number-unit"><input id="ventRoomParking" type="number" min="0" max="5000" step="1"><b>vehículos</b></span></label>
+        </div>
+      </section>
+
+      <div id="ventPlacementToolbar" class="vent-placement-toolbar" hidden aria-label="Elementos que se pueden colocar">
+        <button type="button" data-place-tool="terminal-supply"><i class="placement-grille supply-mark">I</i><span>Rejilla impulsión</span></button>
+        <button type="button" data-place-tool="terminal-extract"><i class="placement-grille extract-mark">E</i><span>Rejilla extracción</span></button>
+        <button type="button" data-place-tool="fan-supply"><i class="placement-fan supply-mark">I</i><span>Turbina impulsión</span></button>
+        <button type="button" data-place-tool="fan-extract"><i class="placement-fan extract-mark">E</i><span>Turbina extracción</span></button>
+        <button type="button" data-place-tool="delete" class="placement-delete"><i>×</i><span>Borrar elemento</span></button>
+      </div>
+    </section>
+
+    <section id="ventAutomaticResult" class="automatic-result" hidden>
+      <header>
+        <div><p class="duct-eyebrow">CÁLCULO VIVO SOBRE EL PLANO</p><h2>Red de ventilación y extracción</h2><p>Cada cambio de posición vuelve a repartir caudales, rehace los recorridos y dimensiona los tramos en medidas escalonadas de 5 cm.</p></div>
+        <span id="ventNetworkStatus" class="network-status">FALTA COMPLETAR</span>
+      </header>
+      <div id="ventResultSummary" class="result-summary"></div>
+      <div id="ventAlerts" class="duct-alerts"></div>
+      <div class="result-columns vent-result-columns">
+        <section class="result-card"><header><h3>Principal y ramales</h3><span>Caudal y dimensión por tramo</span></header><div id="ventNetworkResults"></div></section>
+        <section class="result-card"><header><h3>Resultados por recinto</h3><span>Volumen, criterio y rejilla</span></header><div id="ventRoomResults"></div></section>
+        <section class="result-card"><header><h3>Turbinas</h3><span>Punto de caudal de cada red</span></header><div id="ventFanResults"></div></section>
+      </div>
+    </section>
+
+    <aside class="professional-note vent-professional-note">
+      <strong>Criterio y trazabilidad</strong>
+      <p id="ventSourceReference">La herramienta mostrará aquí el apartado utilizado.</p>
+      <a id="ventSourceLink" href="#" target="_blank" rel="noopener" hidden>Consultar fuente oficial</a>
+      <p>El caudal y la sección son un dimensionado inicial. La elección final de la turbina requiere comprobar pérdidas de presión, accesorios, filtros, acústica, protección contra incendios, descargas al exterior y cualquier exigencia específica del proyecto.</p>
+    </aside>
+  </main>
+
+  <footer class="st-page-footer"><strong>SUPER TÉCNICO</strong><p>Diseño de instalaciones para el técnico.</p></footer>
+  <script src="assets/page-counter.js?v=3" defer></script>
+</body>
+</html>

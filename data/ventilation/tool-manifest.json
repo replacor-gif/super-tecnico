@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "tool_id": "super_tecnico.ventilation_design",
+  "version": "0.1.0",
+  "provider_neutral": true,
+  "embedded_ai_model": false,
+  "execution": {
+    "browser": true,
+    "remote_api": false,
+    "mcp": false
+  },
+  "input_contract": {
+    "required": ["profile_id", "system_mode", "cell_size_m", "rooms", "terminals", "fans"],
+    "profile_id": {
+      "enum": [
+        "cte_dwelling",
+        "rite_ida2_people",
+        "rite_ida3_people",
+        "rite_service_extract",
+        "cte_storage",
+        "cte_waste",
+        "cte_garage",
+        "cte_kitchen_hood",
+        "technical_ach"
+      ]
+    },
+    "system_mode": {"enum": ["extract", "supply", "balanced"]},
+    "rooms": "Polygon, type, height_m, occupants and parking_spaces where applicable.",
+    "terminals": "Manually positioned supply or extract grilles inside rooms.",
+    "fans": "Manually positioned supply or extract fan units."
+  },
+  "output_contract": {
+    "rooms": "Area, volume, airflow direction, airflow and calculation basis.",
+    "terminals": "Assigned airflow and grille dimensions.",
+    "fans": "Design airflow, connected terminals and longest routed run.",
+    "sections": "Network kind, airflow, length, velocity and rectangular dimensions in 5 cm steps.",
+    "warnings": "Missing data, scope conditions and project checks still required.",
+    "source": "Official source identifier, reference and verification date."
+  },
+  "official_sources": [
+    {
+      "id": "CTE_DB_HS3",
+      "url": "https://www.codigotecnico.org/pdf/Documentos/HS/DBHS.pdf",
+      "verified": "2026-08-17"
+    },
+    {
+      "id": "RITE_IT_1_1_4_2",
+      "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2007-15820",
+      "verified": "2026-08-17"
+    }
+  ],
+  "safety": {
+    "result_level": "preliminary_design",
+    "requires_professional_verification": true,
+    "not_a_substitute_for": [
+      "fan_curve_selection at required pressure",
+      "complete pressure-loss calculation",
+      "fire and smoke-control design",
+      "acoustic verification",
+      "discharge and intake separation verification",
+      "regional or local requirements"
+    ]
+  }
+}

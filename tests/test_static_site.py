@@ -326,6 +326,7 @@ class StaticSiteTests(unittest.TestCase):
             "smd.html",
             "calculadoras.html",
             "conductos.html",
+            "ventilacion.html",
             "desagues-condensados.html",
             "normativa.html",
             "componentes.html",
@@ -3039,6 +3040,7 @@ class StaticSiteTests(unittest.TestCase):
             "climatizacion.html",
             "calculadoras.html",
             "conductos.html",
+            "ventilacion.html",
             "componentes.html",
             "smd.html",
             "comparador.html",
@@ -3053,7 +3055,7 @@ class StaticSiteTests(unittest.TestCase):
         for filename in public_pages:
             html = (self.dist / filename).read_text(encoding="utf-8")
             self.assertIn('assets/app-theme.css?v=1', html, filename)
-            self.assertIn('assets/app-shell.js?v=4', html, filename)
+            self.assertIn('assets/app-shell.js?v=5', html, filename)
 
         shell = (self.dist / "assets" / "app-shell.js").read_text(encoding="utf-8")
         for marker in ("st-app-drawer", "st-bottom-nav", "st-drawer-search", "Calculadoras", "Componentes"):
@@ -3152,6 +3154,34 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("duct-designer.js?v=7", html)
         self.assertIn('href="conductos.html"', portal)
         self.assertNotIn("ductSizing", script)
+
+    def test_ventilation_designer_uses_manual_terminals_and_traceable_rules(self):
+        html = (self.dist / "ventilacion.html").read_text(encoding="utf-8")
+        script = (self.dist / "assets" / "ventilation-designer.js").read_text(encoding="utf-8")
+        rules = (self.dist / "assets" / "ventilation-rules.js").read_text(encoding="utf-8")
+        css = (self.dist / "assets" / "ventilation-designer.css").read_text(encoding="utf-8")
+        portal = (self.dist / "index.html").read_text(encoding="utf-8")
+        for marker in (
+            'id="ventProfile"', 'id="ventSystemMode"', 'id="ventDefaultHeight"',
+            'id="ventRoomEditor"', 'data-place-tool="terminal-supply"',
+            'data-place-tool="terminal-extract"', 'data-place-tool="fan-supply"',
+            'data-place-tool="fan-extract"', 'id="ventAutomaticResult"',
+        ):
+            self.assertIn(marker, html)
+        for marker in (
+            "calculateRoomDemands", "assignTerminalsToFans", "buildFanNetwork",
+            "chooseRectangularSize", "chooseGrilleSize", "renderPlanSvg",
+            "st.ventilationDesigner.v1", "customAch", "parkingSpaces",
+        ):
+            self.assertIn(marker, script)
+        for marker in (
+            "CTE_DB_HS3", "RITE_IT_1_1_4_2", "cte_dwelling", "cte_garage",
+            "rite_ida2_people", "120", "12.5", "checked: '2026-08-17'",
+        ):
+            self.assertIn(marker, rules)
+        self.assertIn("vent-placement-toolbar", css)
+        self.assertIn("vent-route", css)
+        self.assertIn('href="ventilacion.html"', portal)
 
 
 if __name__ == "__main__":

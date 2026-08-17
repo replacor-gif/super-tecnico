@@ -537,6 +537,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "smd.html",
         "calculadoras.html",
         "conductos.html",
+        "ventilacion.html",
         "analitica-privada.html",
         "componentes.html",
         "comparador.html",
@@ -580,6 +581,9 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "assets/regulations.js",
         "assets/duct-designer.css",
         "assets/duct-designer.js",
+        "assets/ventilation-designer.css",
+        "assets/ventilation-designer.js",
+        "assets/ventilation-rules.js",
         "assets/analytics.css",
         "assets/analytics.js",
         "assets/common.css",
@@ -613,6 +617,8 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "data/frigorista/catalog.json",
         "data/frigorista/pt-curves.json",
         "data/frigorista/mollier-data.json",
+        "data/ventilation/discovery.json",
+        "data/ventilation/tool-manifest.json",
         "recursos/libro-electronica-inverter-replacor.pdf",
     ):
         source = source_root / required

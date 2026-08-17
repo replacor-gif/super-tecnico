@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "tool_id": "super_tecnico.ventilation_design",
+  "title": "Super Técnico · Ventilación y extracción",
+  "language": "es-ES",
+  "status": "browser_preview",
+  "remote_execution": false,
+  "billing_required": false,
+  "human_url": "/ventilacion.html",
+  "browser_engine": "/assets/ventilation-designer.js",
+  "rule_profiles": "/assets/ventilation-rules.js",
+  "capabilities": [
+    "polygonal_floor_plan",
+    "room_height_and_volume",
+    "manual_grille_placement",
+    "manual_fan_placement",
+    "automatic_network_routing",
+    "airflow_distribution",
+    "rectangular_duct_sizing_5_cm_steps",
+    "grille_sizing",
+    "cte_hs3_profiles",
+    "rite_profiles",
+    "technician_defined_air_changes"
+  ],
+  "limitations": [
+    "No remote API or MCP execution is enabled.",
+    "Final fan pressure, full pressure losses, fittings, filters, acoustics, fire safety and discharge conditions require project-specific verification.",
+    "Technician-defined air changes are not a normative justification by themselves.",
+    "Official, regional and local requirements must be checked for the actual project."
+  ],
+  "verified": "2026-08-17"
+}
