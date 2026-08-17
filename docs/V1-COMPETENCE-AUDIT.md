@@ -33,7 +33,7 @@ Se considera competente cuando:
 
 - Una coincidencia normativa es evidencia documental, no una conclusión automática sobre aplicabilidad.
 - Todavía no hay una biblioteca suficiente de reglas normativas revisadas para contestar directamente todos los dimensionados.
-- ElectroIA conserva 460 símbolos normalizados, pero solo 100 tienen revisión gráfica completa; no debe prometer diagramas perfectos para cualquier instalación.
+- ElectroIA conserva 460 símbolos normalizados, pero solo 117 tienen revisión gráfica completa; no debe prometer diagramas perfectos para cualquier instalación.
 - La entrada por foto o boceto está prevista en el contrato, pero no es una función terminada.
 - El diseñador de conductos ofrece un diseño previo práctico y editable; todavía no calcula toda la pérdida de carga, los accesorios, el ruido ni la presión disponible necesarios para considerarlo un plano de ejecución definitivo.
 - Solo el buscador normativo está abierto como herramienta remota para IAs. Frigorista, desagües, componentes y diagramas siguen siendo motores de navegador o vista previa privada.

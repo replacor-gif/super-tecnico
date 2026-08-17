@@ -2086,6 +2086,274 @@
       }
     },
     {
+      "id": "SYM-0163",
+      "name": "Sensor de temperatura resistivo",
+      "kind": "sensor_rtd",
+      "designator": "RTD",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 8,
+      "ports": {
+        "1": { "x": -5, "y": -2, "side": "west", "electrical_type": "passive" },
+        "2": { "x": -5, "y": 2, "side": "west", "electrical_type": "passive" },
+        "3": { "x": 5, "y": -2, "side": "east", "electrical_type": "passive" },
+        "4": { "x": 5, "y": 2, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0164",
+      "name": "Termopar",
+      "kind": "thermocouple",
+      "designator": "TC",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "+": { "x": -4, "y": 0, "side": "west", "electrical_type": "passive" },
+        "-": { "x": 4, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0165",
+      "name": "Sensor de temperatura integrado",
+      "kind": "sensor_temperature_ic",
+      "designator": "U",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 8,
+      "ports": {
+        "VCC": { "x": -5, "y": -2, "side": "west", "electrical_type": "power_in" },
+        "GND": { "x": -5, "y": 2, "side": "west", "electrical_type": "power_in" },
+        "OUT": { "x": 5, "y": 0, "side": "east", "electrical_type": "output" }
+      }
+    },
+    {
+      "id": "SYM-0166",
+      "name": "Sensor de presiÃ³n analÃ³gico",
+      "kind": "sensor_pressure_analog",
+      "designator": "BP",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 8,
+      "ports": {
+        "V+": { "x": -5, "y": -2, "side": "west", "electrical_type": "power_in" },
+        "GND": { "x": -5, "y": 2, "side": "west", "electrical_type": "power_in" },
+        "OUT": { "x": 5, "y": 0, "side": "east", "electrical_type": "output" }
+      }
+    },
+    {
+      "id": "SYM-0167",
+      "name": "Sensor de presiÃ³n digital",
+      "kind": "sensor_pressure_digital",
+      "designator": "BP",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 12,
+      "height": 10,
+      "ports": {
+        "VCC": { "x": -6, "y": -3, "side": "west", "electrical_type": "power_in" },
+        "GND": { "x": -6, "y": 3, "side": "west", "electrical_type": "power_in" },
+        "SDA": { "x": 6, "y": -2, "side": "east", "electrical_type": "passive" },
+        "SCL": { "x": 6, "y": 2, "side": "east", "electrical_type": "input" }
+      }
+    },
+    {
+      "id": "SYM-0170",
+      "name": "Sensor de corriente Hall",
+      "kind": "sensor_current_hall",
+      "designator": "CS",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 12,
+      "height": 10,
+      "ports": {
+        "IP+": { "x": -6, "y": 0, "side": "west", "electrical_type": "power_in" },
+        "IP-": { "x": 6, "y": 0, "side": "east", "electrical_type": "power_out" },
+        "VCC": { "x": -6, "y": -3, "side": "west", "electrical_type": "power_in" },
+        "GND": { "x": -6, "y": 3, "side": "west", "electrical_type": "power_in" },
+        "OUT": { "x": 6, "y": -3, "side": "east", "electrical_type": "output" }
+      }
+    },
+    {
+      "id": "SYM-0171",
+      "name": "Transformador de corriente sensor",
+      "kind": "sensor_current_transformer",
+      "designator": "CT",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 8,
+      "ports": {
+        "P1": { "x": -5, "y": -2, "side": "west", "electrical_type": "power_in" },
+        "P2": { "x": 5, "y": -2, "side": "east", "electrical_type": "power_out" },
+        "S1": { "x": -5, "y": 2, "side": "west", "electrical_type": "output" },
+        "S2": { "x": 5, "y": 2, "side": "east", "electrical_type": "output" }
+      }
+    },
+    {
+      "id": "SYM-0172",
+      "name": "Sensor de humedad",
+      "kind": "sensor_humidity",
+      "designator": "RH",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 8,
+      "ports": {
+        "VCC": { "x": -5, "y": -2, "side": "west", "electrical_type": "power_in" },
+        "GND": { "x": -5, "y": 2, "side": "west", "electrical_type": "power_in" },
+        "OUT": { "x": 5, "y": 0, "side": "east", "electrical_type": "output" }
+      }
+    },
+    {
+      "id": "SYM-0173",
+      "name": "Sensor de flujo",
+      "kind": "sensor_flow",
+      "designator": "FS",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 8,
+      "ports": {
+        "V+": { "x": -5, "y": -2, "side": "west", "electrical_type": "power_in" },
+        "0V": { "x": -5, "y": 2, "side": "west", "electrical_type": "power_in" },
+        "OUT": { "x": 5, "y": 0, "side": "east", "electrical_type": "output" }
+      }
+    },
+    {
+      "id": "SYM-0174",
+      "name": "Sensor de nivel",
+      "kind": "sensor_level",
+      "designator": "LS",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 8,
+      "ports": {
+        "V+": { "x": -5, "y": -2, "side": "west", "electrical_type": "power_in" },
+        "0V": { "x": -5, "y": 2, "side": "west", "electrical_type": "power_in" },
+        "OUT": { "x": 5, "y": 0, "side": "east", "electrical_type": "output" }
+      }
+    },
+    {
+      "id": "SYM-0353",
+      "name": "Sensor de CO2",
+      "kind": "sensor_co2",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 12,
+      "height": 10,
+      "ports": {
+        "VCC": { "x": -6, "y": -3, "side": "west", "electrical_type": "power_in" },
+        "GND": { "x": -6, "y": 3, "side": "west", "electrical_type": "power_in" },
+        "OUT": { "x": 6, "y": -2, "side": "east", "electrical_type": "output" },
+        "BUS": { "x": 6, "y": 2, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0354",
+      "name": "Sensor de calidad de aire",
+      "kind": "sensor_air_quality",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 12,
+      "height": 10,
+      "ports": {
+        "VCC": { "x": -6, "y": -3, "side": "west", "electrical_type": "power_in" },
+        "GND": { "x": -6, "y": 3, "side": "west", "electrical_type": "power_in" },
+        "OUT": { "x": 6, "y": -2, "side": "east", "electrical_type": "output" },
+        "BUS": { "x": 6, "y": 2, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0355",
+      "name": "Detector de llama",
+      "kind": "sensor_flame",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 8,
+      "ports": {
+        "VCC": { "x": -5, "y": -2, "side": "west", "electrical_type": "power_in" },
+        "GND": { "x": -5, "y": 2, "side": "west", "electrical_type": "power_in" },
+        "OUT": { "x": 5, "y": 0, "side": "east", "electrical_type": "output" }
+      }
+    },
+    {
+      "id": "SYM-0356",
+      "name": "Detector de fugas de agua",
+      "kind": "sensor_water_leak",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 12,
+      "height": 10,
+      "ports": {
+        "E1": { "x": -6, "y": -2, "side": "west", "electrical_type": "passive" },
+        "E2": { "x": -6, "y": 2, "side": "west", "electrical_type": "passive" },
+        "VCC": { "x": 6, "y": -3, "side": "east", "electrical_type": "power_in" },
+        "GND": { "x": 6, "y": 3, "side": "east", "electrical_type": "power_in" },
+        "OUT": { "x": 6, "y": 0, "side": "east", "electrical_type": "output" }
+      }
+    },
+    {
+      "id": "SYM-0357",
+      "name": "Sensor de escarcha",
+      "kind": "sensor_frost",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 8,
+      "ports": {
+        "VCC": { "x": -5, "y": -2, "side": "west", "electrical_type": "power_in" },
+        "GND": { "x": -5, "y": 2, "side": "west", "electrical_type": "power_in" },
+        "OUT": { "x": 5, "y": 0, "side": "east", "electrical_type": "output" }
+      }
+    },
+    {
+      "id": "SYM-0438",
+      "name": "Bobina Rogowski",
+      "kind": "sensor_rogowski",
+      "designator": "CT",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 12,
+      "height": 8,
+      "ports": {
+        "COIL+": { "x": -6, "y": -2, "side": "west", "electrical_type": "passive" },
+        "COIL-": { "x": -6, "y": 2, "side": "west", "electrical_type": "passive" },
+        "OUT+": { "x": 6, "y": -2, "side": "east", "electrical_type": "output" },
+        "OUT-": { "x": 6, "y": 2, "side": "east", "electrical_type": "output" }
+      }
+    },
+    {
+      "id": "SYM-0439",
+      "name": "Sensor de corriente aislado por shunt",
+      "kind": "sensor_isolated_shunt",
+      "designator": "U",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 14,
+      "height": 12,
+      "ports": {
+        "IN+": { "x": -7, "y": -3, "side": "west", "electrical_type": "power_in" },
+        "IN-": { "x": -7, "y": 3, "side": "west", "electrical_type": "power_in" },
+        "VDD1": { "x": -3, "y": -6, "side": "north", "electrical_type": "power_in" },
+        "GND1": { "x": -3, "y": 6, "side": "south", "electrical_type": "power_in" },
+        "VDD2": { "x": 3, "y": -6, "side": "north", "electrical_type": "power_in" },
+        "GND2": { "x": 3, "y": 6, "side": "south", "electrical_type": "power_in" },
+        "OUT": { "x": 7, "y": 0, "side": "east", "electrical_type": "output" }
+      }
+    },
+    {
       "id": "SYM-0442",
       "name": "Motor PSC con condensador permanente",
       "kind": "motor_psc",

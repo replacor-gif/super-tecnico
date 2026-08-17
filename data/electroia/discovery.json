@@ -49,9 +49,10 @@
   },
   "quality": {
     "catalog_symbols": 460,
-    "reviewed_catalog_symbols": 100,
-    "auto_draft_catalog_symbols": 360,
+    "reviewed_catalog_symbols": 117,
+    "auto_draft_catalog_symbols": 343,
     "reviewed_families": ["connections_and_references", "electrical_protections", "relays_switches_and_actuators", "machines_and_actuators"],
+    "reviewed_batches": ["hvac_sensors_temperature_pressure_airflow_level_air_quality_leak_frost_current"],
     "draft_policy": "An auto_draft symbol is usable only as provisional structure and always produces a warning."
   },
   "recommended_ai_workflow": [

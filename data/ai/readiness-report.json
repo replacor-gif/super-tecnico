@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-08-17T03:52:36.277907+00:00",
+  "generated_at_utc": "2026-08-17T08:47:48.176143+00:00",
   "status": "public_free_preview_one_tool",
   "readiness_score_percent": 63,
   "score_meaning": "Preparación técnica global; solo la búsqueda de normativa tiene ejecución pública gratuita.",
@@ -18,7 +18,7 @@
     "components_reviewed": 8205,
     "components_historical": 3327,
     "electroia_symbols": 460,
-    "electroia_symbols_reviewed": 100,
+    "electroia_symbols_reviewed": 117,
     "hvac_training_chapters": 167,
     "electronics_chapters": 678,
     "frigorista_refrigerants": 71,

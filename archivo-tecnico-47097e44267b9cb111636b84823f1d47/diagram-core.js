@@ -1,7 +1,7 @@
 "use strict";
 
 const ElectroDiagramCore = (() => {
-  const ENGINE_VERSION = "1.7.0-alpha.1";
+  const ENGINE_VERSION = "1.8.0-alpha.1";
   const CONTRACT_VERSION = "1.0";
   const GRID_PITCH_MIL = 50;
   const UNIT = 24;
@@ -280,7 +280,7 @@ const ElectroDiagramCore = (() => {
 
   function getRegistry() {
     return {
-      version: "0.8",
+      version: "0.9",
       engine_version: ENGINE_VERSION,
       standard_profile: "IEC_EXPERIMENTAL",
       grid_pitch_mil: GRID_PITCH_MIL,
@@ -789,6 +789,20 @@ const ElectroDiagramCore = (() => {
   function drawSymbolBody(kind, definition) {
     const u = UNIT;
     const line = (x1, y1, x2, y2, className = "symbol-line") => `<path class="${className}" d="M${x1 * u} ${y1 * u}L${x2 * u} ${y2 * u}"/>`;
+    const sensorBody = (code, motif = "", shape = "rect", labelX = 0, labelY = 5) => {
+      const halfWidth = Math.max(1.8, definition.width / 2 - 1.25);
+      const halfHeight = Math.max(1.55, definition.height / 2 - 1.05);
+      const leads = Object.values(definition.ports || {}).map((terminal) => {
+        if (terminal.side === "west") return line(terminal.x, terminal.y, -halfWidth, terminal.y);
+        if (terminal.side === "east") return line(halfWidth, terminal.y, terminal.x, terminal.y);
+        if (terminal.side === "north") return line(terminal.x, terminal.y, terminal.x, -halfHeight);
+        return line(terminal.x, halfHeight, terminal.x, terminal.y);
+      }).join("");
+      const outline = shape === "round"
+        ? `<ellipse class="symbol-fill" cx="0" cy="0" rx="${halfWidth * u}" ry="${halfHeight * u}"/>`
+        : `<rect class="symbol-fill" x="${-halfWidth * u}" y="${-halfHeight * u}" width="${halfWidth * 2 * u}" height="${halfHeight * 2 * u}" rx="7"/>`;
+      return `${leads}${outline}${motif}<text class="component-value" x="${labelX}" y="${labelY}">${escapeXml(code)}</text>`;
+    };
     const familyKinds = new Set([
       "generic_1p", "generic_2p", "generic_3p", "generic_4p", "connector_block",
       "digital_block", "functional_block", "sensor_block", "semiconductor_block",
@@ -1061,6 +1075,57 @@ const ElectroDiagramCore = (() => {
     }
     if (kind === "compressor_crs") {
       return `${line(-5, 0, -2.95, 0)}${line(2.6, -1.45, 5, -2)}${line(2.6, 1.45, 5, 2)}<circle class="symbol-fill" cx="0" cy="0" r="${3 * u}"/><circle cx="0" cy="0" r="4" fill="#202824"/>${line(0, 0, -2.7, 0, "symbol-accent")}${line(0, 0, 2.55, -1.4, "symbol-accent")}${line(0, 0, 2.55, 1.4, "symbol-accent")}<text class="component-value" x="${-2.25 * u}" y="${-0.35 * u}">C</text><text class="component-value" x="${2.25 * u}" y="${-1.75 * u}">R</text><text class="component-value" x="${2.25 * u}" y="${2.15 * u}">S</text><text class="component-ref" x="0" y="${-2 * u}">COMP</text>`;
+    }
+    if (kind === "sensor_rtd") {
+      return sensorBody("RTD", `<path class="symbol-accent" d="M${-2.55 * u} ${-1.25 * u}l${0.65 * u} ${-0.55 * u}l${0.65 * u} ${1.1 * u}l${0.65 * u} ${-1.1 * u}l${0.65 * u} ${1.1 * u}l${0.65 * u} ${-1.1 * u}l${0.65 * u} ${0.55 * u}"/>${line(-2.55, -2, -2.55, 2, "symbol-linkage")}`);
+    }
+    if (kind === "thermocouple") {
+      return sensorBody("TC", `${line(-2.55, -1.35, -0.15, -0.15, "symbol-accent")}${line(2.55, -1.35, 0.15, -0.15, "symbol-accent")}<circle cx="0" cy="${-0.15 * u}" r="5" fill="#202824"/><text class="polarity" x="${-1.75 * u}" y="${1.45 * u}">+</text><text class="polarity" x="${1.75 * u}" y="${1.45 * u}">−</text>`, "round", 0, 1.65 * u);
+    }
+    if (kind === "sensor_temperature_ic") {
+      return sensorBody("TEMP", `<circle class="symbol-accent" cx="${-1.65 * u}" cy="${0.5 * u}" r="${0.42 * u}"/>${line(-1.65, -1.65, -1.65, 0.1, "symbol-accent")}<path class="symbol-accent" d="M${-2.05 * u} ${-1.65 * u}h${0.8 * u}"/>`);
+    }
+    if (kind === "sensor_pressure_analog") {
+      return sensorBody("P", `<path class="symbol-accent" d="M${-2.25 * u} ${-1.25 * u}Q${-1.45 * u} ${-2.05 * u} ${-0.65 * u} ${-1.25 * u}T${0.95 * u} ${-1.25 * u}T${2.25 * u} ${-1.25 * u}"/><text class="component-value" x="0" y="${1.65 * u}">0–10 V</text>`, "round");
+    }
+    if (kind === "sensor_pressure_digital") {
+      return sensorBody("P · I²C", `<path class="symbol-accent" d="M${-2.3 * u} ${-1.4 * u}Q${-1.45 * u} ${-2.2 * u} ${-0.6 * u} ${-1.4 * u}T${1.1 * u} ${-1.4 * u}"/>`, "rect", 0, 1.55 * u);
+    }
+    if (kind === "sensor_current_hall") {
+      return sensorBody("HALL I", `${line(-3.75, -0.7, 3.75, -0.7, "symbol-accent")}<path class="symbol-accent" d="M${-0.55 * u} ${-2.1 * u}v${0.95 * u}h${1.1 * u}v${-0.95 * u}M0 ${-1.15 * u}v${0.45 * u}"/><path class="symbol-accent" d="M${1.55 * u} ${1.55 * u}l${0.75 * u} ${-0.45 * u}l${-0.75 * u} ${-0.45 * u}"/>`, "rect", -0.9 * u, 1.7 * u);
+    }
+    if (kind === "sensor_current_transformer") {
+      return sensorBody("CT", `${line(-3.75, -2, 3.75, -2, "symbol-accent")}<circle class="symbol-accent" cx="0" cy="${-2 * u}" r="${1.05 * u}"/><path class="symbol-accent" d="M${-1.8 * u} ${1.65 * u}q${0.45 * u} ${-0.6 * u} ${0.9 * u} 0t${0.9 * u} 0t${0.9 * u} 0t${0.9 * u} 0"/>`);
+    }
+    if (kind === "sensor_humidity") {
+      return sensorBody("%RH", `<path class="symbol-accent" d="M${-1.6 * u} ${-1.55 * u}C${-2.55 * u} ${-0.15 * u},${-2.4 * u} ${0.75 * u},${-1.6 * u} ${0.75 * u}S${-0.65 * u} ${-0.15 * u},${-1.6 * u} ${-1.55 * u}Z"/>`);
+    }
+    if (kind === "sensor_flow") {
+      return sensorBody("FLOW", `<path class="symbol-accent" d="M${-2.55 * u} ${-1.35 * u}H${1.75 * u}M${0.75 * u} ${-2.1 * u}l${1 * u} ${0.75 * u}l${-1 * u} ${0.75 * u}"/>`, "round");
+    }
+    if (kind === "sensor_level") {
+      return sensorBody("LEVEL", `<path class="symbol-accent" d="M${-2.5 * u} ${-1.25 * u}q${0.55 * u} ${-0.55 * u} ${1.1 * u} 0t${1.1 * u} 0t${1.1 * u} 0t${1.1 * u} 0M${-2.5 * u} ${-2.05 * u}V${0.1 * u}"/>`);
+    }
+    if (kind === "sensor_co2") {
+      return sensorBody("CO₂", `<path class="symbol-accent" d="M${-2.75 * u} ${-1.5 * u}q${0.55 * u} ${-0.5 * u} ${1.1 * u} 0t${1.1 * u} 0M${0.35 * u} ${-1.5 * u}q${0.55 * u} ${-0.5 * u} ${1.1 * u} 0t${1.1 * u} 0"/>`, "round");
+    }
+    if (kind === "sensor_air_quality") {
+      return sensorBody("IAQ", `<path class="symbol-accent" d="M${-2.65 * u} ${-1.75 * u}C${-1.8 * u} ${-2.45 * u},${-0.95 * u} ${-1.05 * u},${-0.1 * u} ${-1.75 * u}S${1.6 * u} ${-1.05 * u},${2.45 * u} ${-1.75 * u}M${-2.2 * u} ${1.4 * u}H${2.2 * u}"/>`);
+    }
+    if (kind === "sensor_flame") {
+      return sensorBody("FLAME", `<path class="symbol-accent" d="M${-1.1 * u} ${-2.25 * u}C${0.35 * u} ${-1.05 * u},${0.75 * u} ${0.05 * u},${-0.3 * u} ${0.85 * u}C${-0.65 * u} ${0.1 * u},${-1.45 * u} ${-0.05 * u},${-1.5 * u} ${-1.05 * u}C${-2.85 * u} ${0.05 * u},${-2.45 * u} ${1.2 * u},${-1.1 * u} ${1.2 * u}"/>`, "round", 1.45 * u, 5);
+    }
+    if (kind === "sensor_water_leak") {
+      return sensorBody("H₂O", `${line(-2.5, -1.25, -0.5, -1.25, "symbol-accent")}${line(-2.5, 1.25, -0.5, 1.25, "symbol-accent")}<path class="symbol-accent" d="M${1.15 * u} ${-2 * u}C${0.05 * u} ${-0.55 * u},${0.15 * u} ${0.55 * u},${1.15 * u} ${0.55 * u}S${2.25 * u} ${-0.55 * u},${1.15 * u} ${-2 * u}Z"/>`, "rect", -1.45 * u, 5);
+    }
+    if (kind === "sensor_frost") {
+      return sensorBody("FROST", `${line(0, -2.35, 0, -0.75, "symbol-accent")}${line(-1.4, -1.55, 1.4, 0.05, "symbol-accent")}${line(1.4, -1.55, -1.4, 0.05, "symbol-accent")}<circle cx="0" cy="${-0.75 * u}" r="4" fill="#202824"/>`, "round", 0, 1.45 * u);
+    }
+    if (kind === "sensor_rogowski") {
+      return sensorBody("ROGO", `<path class="symbol-accent" d="M${-2.6 * u} ${-0.5 * u}A${1.75 * u} ${1.75 * u} 0 1 1 ${-0.65 * u} ${-2.15 * u}M${-2.6 * u} ${-0.5 * u}l${1.15 * u} ${0.25 * u}"/><rect class="symbol-accent" x="${1.3 * u}" y="${-2.1 * u}" width="${1.65 * u}" height="${1.5 * u}" rx="4"/>`);
+    }
+    if (kind === "sensor_isolated_shunt") {
+      return sensorBody("SHUNT", `${line(-3.75, -3, -1.4, -3, "symbol-accent")}<rect class="symbol-accent" x="${-1.4 * u}" y="${-3.45 * u}" width="${2.8 * u}" height="${0.9 * u}"/>${line(1.4, -3, 3.75, -3, "symbol-accent")}${line(-0.25, -4.5, -0.25, 4.5, "symbol-linkage")}${line(0.25, -4.5, 0.25, 4.5, "symbol-linkage")}<path class="symbol-accent" d="M${1.25 * u} ${1.75 * u}H${2.75 * u}M${2.05 * u} ${1.1 * u}l${0.7 * u} ${0.65 * u}l${-0.7 * u} ${0.65 * u}"/>`);
     }
     if (kind === "pump") {
       return `${line(-4, 0, -2.2, 0)}<circle class="symbol-fill" cx="0" cy="0" r="${2.2 * u}"/>${line(2.2, 0, 4, 0)}<path class="symbol-accent" d="M${-0.9 * u} ${-1.15 * u}L${1.25 * u} 0L${-0.9 * u} ${1.15 * u}Z"/>`;

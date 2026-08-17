@@ -3,7 +3,7 @@
   "name": "io.github.replacor-gif/electroia-diagrams",
   "title": "ElectroIA Diagram Engine",
   "description": "Validates and renders structured electrical diagrams as deterministic SVG.",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "websiteUrl": "https://github.com/replacor-gif/super-tecnico/tree/agent/intuitive-navigation/electroia-tool-server",
   "repository": {
     "url": "https://github.com/replacor-gif/super-tecnico",

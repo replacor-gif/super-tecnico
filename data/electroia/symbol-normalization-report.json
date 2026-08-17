@@ -5,13 +5,13 @@
   "engine_symbols": 463,
   "symbols_with_ports": 463,
   "status_counts": {
-    "auto_draft": 360,
+    "auto_draft": 343,
     "engine_internal": 3,
-    "engine_reviewed": 100
+    "engine_reviewed": 117
   },
   "catalog_status_counts": {
-    "auto_draft": 360,
-    "engine_reviewed": 100
+    "auto_draft": 343,
+    "engine_reviewed": 117
   },
   "family_counts": {
     "aux_contact_no": 1,
@@ -99,7 +99,23 @@
     "reverse_polarity_protection": 1,
     "selector_switch": 1,
     "semiconductor_block": 41,
-    "sensor_block": 42,
+    "sensor_air_quality": 1,
+    "sensor_block": 25,
+    "sensor_co2": 1,
+    "sensor_current_hall": 1,
+    "sensor_current_transformer": 1,
+    "sensor_flame": 1,
+    "sensor_flow": 1,
+    "sensor_frost": 1,
+    "sensor_humidity": 1,
+    "sensor_isolated_shunt": 1,
+    "sensor_level": 1,
+    "sensor_pressure_analog": 1,
+    "sensor_pressure_digital": 1,
+    "sensor_rogowski": 1,
+    "sensor_rtd": 1,
+    "sensor_temperature_ic": 1,
+    "sensor_water_leak": 1,
     "servo_motor": 1,
     "shield": 1,
     "signal_bus": 1,
@@ -122,6 +138,7 @@
     "thermal_fuse": 1,
     "thermal_protector_klixon": 1,
     "thermistor_ntc": 1,
+    "thermocouple": 1,
     "thermostat_switch": 1,
     "transformer": 1,
     "voltage_relay": 1,
@@ -205,8 +222,8 @@
     },
     "Sensores y transductores": {
       "total": 42,
-      "engine_reviewed": 0,
-      "auto_draft": 42
+      "engine_reviewed": 17,
+      "auto_draft": 25
     }
   },
   "fully_reviewed_categories": [
