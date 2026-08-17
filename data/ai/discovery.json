@@ -69,6 +69,20 @@
       "discovery": "../frigorista/discovery.json"
     },
     {
+      "id": "super-tecnico-refrigerant-piping",
+      "title": "Diseñador de tuberías frigoríficas",
+      "status": "browser_engine_available_remote_execution_planned",
+      "capabilities": [
+        "refrigerant_mass_flow_estimation",
+        "suction_liquid_and_discharge_line_sizing",
+        "minimum_load_oil_return_check",
+        "oil_trap_and_double_riser_proposal",
+        "insulation_and_condensation_control",
+        "unpriced_bill_of_quantities"
+      ],
+      "discovery": "../refrigerant-piping/discovery.json"
+    },
+    {
       "id": "super-tecnico-regulations",
       "title": "Normativa técnica oficial",
       "status": "public_free_preview",

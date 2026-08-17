@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="google-adsense-account" content="ca-pub-6950924617837531">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Diseña tuberías frigoríficas, retorno de aceite, sifones, dobles montantes y aislamiento con comprobación normativa y termodinámica.">
+  <meta name="theme-color" content="#071118">
+  <title>Tuberías frigoríficas | Super Técnico</title>
+  <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
+  <link rel="stylesheet" href="assets/app-theme.css?v=1">
+  <link rel="stylesheet" href="assets/refrigerant-piping.css?v=1">
+  <script src="assets/app-shell.js?v=7" defer></script>
+  <script src="assets/refrigerant-piping-engine.js?v=1" defer></script>
+  <script src="assets/refrigerant-piping.js?v=1" defer></script>
+</head>
+<body>
+  <header class="rp-header">
+    <a class="rp-brand" href="index.html"><img src="assets/super-tecnico-logo.png" alt=""><span><strong>Super Técnico</strong><small>Diseño de instalaciones frigoríficas</small></span></a>
+    <a class="rp-back" href="index.html">Herramientas</a>
+  </header>
+
+  <main class="rp-main">
+    <section class="rp-hero">
+      <div>
+        <p class="rp-eyebrow">FRÍO · TUBERÍAS · ACEITE · AISLAMIENTO</p>
+        <h1>Diseña la línea completa, no solamente el diámetro.</h1>
+        <p>Super Técnico estudia el refrigerante, la carga mínima y máxima, el recorrido, el desnivel y el ambiente para proponer tuberías, sifones, doble montante y aislamiento.</p>
+        <div class="rp-hero-tags"><span>24 refrigerantes</span><span>RSIF + RITE</span><span>Mediciones preparadas</span></div>
+      </div>
+      <div class="rp-hero-graphic" aria-hidden="true"><span class="rp-coil"></span><i></i><b>R</b><em></em></div>
+    </section>
+
+    <section class="rp-workbench" aria-labelledby="projectTitle">
+      <div class="rp-panel-head">
+        <div><p class="rp-eyebrow">PROYECTO RÁPIDO</p><h2 id="projectTitle">Describe la instalación en una sola pantalla</h2><p>Los valores habituales se completan automáticamente y puedes corregirlos.</p></div>
+        <button id="rpExample" class="rp-quiet" type="button">Cargar ejemplo</button>
+      </div>
+
+      <form id="rpForm" novalidate>
+        <div class="rp-form-section">
+          <div class="rp-section-title"><span>1</span><div><strong>Equipo y servicio</strong><small>Qué instalación vas a dimensionar</small></div></div>
+          <div class="rp-fields rp-fields-four">
+            <label><span>Tipo de instalación</span><select id="rpSystem" required></select></label>
+            <label><span>Refrigerante</span><select id="rpRefrigerant" required><option value="">Cargando…</option></select></label>
+            <label><span>Potencia frigorífica</span><div class="rp-unit-input"><input id="rpCapacity" type="number" min="0.5" max="1000" step="0.1" value="7" inputmode="decimal" required><b>kW</b></div></label>
+            <label><span>Carga mínima prevista</span><div class="rp-unit-input"><input id="rpMinimumLoad" type="number" min="5" max="100" step="1" value="35" inputmode="numeric" required><b>%</b></div></label>
+          </div>
+          <div class="rp-fields rp-fields-two rp-optional-row">
+            <label><span>Marca <small>(opcional)</small></span><input id="rpManufacturer" type="text" maxlength="60" placeholder="Ej.: Daikin, Copeland…"></label>
+            <label><span>Modelo <small>(muy recomendable)</small></span><input id="rpModel" type="text" maxlength="80" placeholder="Permite contrastar límites del fabricante"></label>
+          </div>
+        </div>
+
+        <div class="rp-form-section">
+          <div class="rp-section-title"><span>2</span><div><strong>Régimen y recorrido</strong><small>Temperaturas, distancia y desnivel reales</small></div></div>
+          <div class="rp-fields rp-fields-four">
+            <label><span>Evaporación</span><div class="rp-unit-input"><input id="rpEvaporating" type="number" min="-40" max="15" step="1" value="5" inputmode="decimal" required><b>°C</b></div></label>
+            <label><span>Condensación</span><div class="rp-unit-input"><input id="rpCondensing" type="number" min="25" max="60" step="1" value="45" inputmode="decimal" required><b>°C</b></div></label>
+            <label><span>Longitud real de línea</span><div class="rp-unit-input"><input id="rpLength" type="number" min="1" max="300" step="0.5" value="20" inputmode="decimal" required><b>m</b></div></label>
+            <label><span>Desnivel del compresor</span><div class="rp-unit-input"><input id="rpRise" type="number" min="-80" max="80" step="0.5" value="6" inputmode="decimal" required><b>m</b></div><small class="rp-field-help">Positivo si el compresor está más alto.</small></label>
+          </div>
+          <div class="rp-fields rp-fields-two">
+            <label><span>Complejidad del recorrido</span><select id="rpComplexity"><option value="simple">Directo, pocos codos</option><option value="normal" selected>Normal</option><option value="complex">Muchos accesorios</option></select></label>
+            <label><span>Ubicación principal</span><select id="rpLocation"><option value="inside">Interior del edificio</option><option value="outside">Exterior / intemperie</option></select></label>
+          </div>
+        </div>
+
+        <div class="rp-form-section rp-environment">
+          <div class="rp-section-title"><span>3</span><div><strong>Ambiente del aislamiento</strong><small>Para evitar condensación y seleccionar el espesor</small></div></div>
+          <div class="rp-fields rp-fields-three">
+            <label><span>Temperatura ambiente</span><div class="rp-unit-input"><input id="rpAmbient" type="number" min="-10" max="50" step="1" value="30" inputmode="decimal"><b>°C</b></div></label>
+            <label><span>Humedad relativa</span><div class="rp-unit-input"><input id="rpHumidity" type="number" min="10" max="100" step="1" value="65" inputmode="numeric"><b>%</b></div></label>
+            <label><span>Aislamiento elastomérico</span><select id="rpConductivity"><option value="0.036">λ 0,036 W/m·K</option><option value="0.033">λ 0,033 W/m·K</option><option value="0.040">λ 0,040 W/m·K</option></select></label>
+          </div>
+        </div>
+
+        <div class="rp-form-actions">
+          <p><b>Prioridad técnica:</b> si existe tabla del fabricante, sus límites prevalecen sobre el predimensionado.</p>
+          <button class="rp-primary" type="submit">Diseñar la instalación <span aria-hidden="true">→</span></button>
+        </div>
+        <p id="rpError" class="rp-error" role="alert" hidden></p>
+      </form>
+    </section>
+
+    <section id="rpResults" class="rp-results" aria-live="polite" hidden>
+      <div class="rp-result-head"><div><p class="rp-eyebrow">RESULTADO PROFESIONAL</p><h2 id="rpResultTitle">Instalación frigorífica</h2><p id="rpResultSubtitle"></p></div><div class="rp-result-actions"><span id="rpStatus" class="rp-status"></span><button id="rpPrint" class="rp-quiet" type="button">Imprimir</button></div></div>
+
+      <div class="rp-summary-grid">
+        <article class="rp-summary-gas"><span>Línea de gas / aspiración</span><strong id="rpGasSize">—</strong><small id="rpGasDetail">—</small></article>
+        <article class="rp-summary-liquid"><span>Línea de líquido</span><strong id="rpLiquidSize">—</strong><small id="rpLiquidDetail">—</small></article>
+        <article id="rpDischargeSummary" class="rp-summary-discharge" hidden><span>Línea de descarga</span><strong id="rpDischargeSize">—</strong><small id="rpDischargeDetail">—</small></article>
+        <article class="rp-summary-oil"><span>Retorno de aceite</span><strong id="rpOilStatus">—</strong><small id="rpOilDetail">—</small></article>
+        <article class="rp-summary-insulation"><span>Aislamiento aspiración</span><strong id="rpInsulation">—</strong><small id="rpInsulationDetail">—</small></article>
+      </div>
+
+      <div class="rp-diagram-card">
+        <div class="rp-card-head"><div><h3>Cómo debe quedar la línea</h3><p id="rpDiagramCaption"></p></div><span>ESQUEMA FUNCIONAL</span></div>
+        <div id="rpDiagram" class="rp-diagram"></div>
+      </div>
+
+      <div class="rp-result-grid">
+        <article class="rp-oil-card"><div class="rp-card-head"><div><h3>Sifones y retorno de aceite</h3><p>Decisiones visibles para ejecutar el montante.</p></div><span>ACEITE</span></div><div id="rpOilPlan" class="rp-decision-list"></div></article>
+        <article class="rp-insulation-card"><div class="rp-card-head"><div><h3>Aislamiento y condensación</h3><p>Espesor comercial y protección necesaria.</p></div><span>RITE · RSIF</span></div><div id="rpInsulationPlan" class="rp-decision-list"></div></article>
+      </div>
+
+      <article class="rp-warning-card"><div class="rp-card-head"><div><h3>Comprobaciones antes de ejecutar</h3><p>Lo que todavía debe confirmarse en obra o con el fabricante.</p></div><span>IMPORTANTE</span></div><div id="rpWarnings" class="rp-warning-list"></div></article>
+
+      <article class="rp-measurements-card">
+        <div class="rp-card-head"><div><h3>Mediciones del proyecto</h3><p>Preparadas para la futura estimación económica, todavía sin precios públicos.</p></div><span>FUTURO PRESUPUESTO</span></div>
+        <div class="rp-table-wrap"><table><thead><tr><th>Partida</th><th>Unidad</th><th>Cantidad</th></tr></thead><tbody id="rpMeasurements"></tbody></table></div>
+      </article>
+
+      <details class="rp-technical-details"><summary>Ver comprobaciones técnicas del resultado</summary><div class="rp-table-wrap"><table><thead><tr><th>Línea</th><th>Diámetro</th><th>Velocidad máxima</th><th>Velocidad mínima</th><th>Pérdida equivalente</th></tr></thead><tbody id="rpTechnicalRows"></tbody></table></div></details>
+
+      <div class="rp-sources"><p><b>Fuentes principales:</b> RSIF, RITE IT 1.2.4.2.1, propiedades CoolProp 8.0 y criterios de diseño de tuberías de Copeland.</p><a href="normativa.html?q=tuberías%20frigoríficas">Consultar normativa relacionada →</a></div>
+    </section>
+  </main>
+
+  <footer class="st-page-footer"><span>Super Técnico · REPLACOR</span><nav class="st-legal-links"><a href="normativa.html">Normativa técnica</a><a href="ia-integracion.html">Para IAs</a><a href="https://www.replacor.com/aviso-legal/" target="_blank" rel="noopener">Aviso legal</a></nav></footer>
+  <script src="assets/page-counter.js?v=2" defer></script>
+</body>
+</html>

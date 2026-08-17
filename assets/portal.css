@@ -307,6 +307,17 @@ h1 {
   box-shadow: 0 0 26px rgba(0, 234, 255, .28);
 }
 
+.tool-card-piping .tool-icon {
+  color: #00eaff;
+  background: linear-gradient(145deg, #092a35, #10202a);
+  box-shadow: 0 0 28px rgba(0, 234, 255, .22);
+}
+
+.tool-card-piping .tool-badge { color: #00798a; }
+.tool-card-piping .tool-button { background: linear-gradient(110deg, #007d91, #096b77); }
+.piping-tool-icon svg { width: 66px; height: 66px; fill: none; stroke: currentColor; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.piping-tool-icon .piping-detail { stroke: #ffe438; stroke-width: 3; }
+
 .tool-card-condensate .tool-badge {
   color: #00798a;
 }

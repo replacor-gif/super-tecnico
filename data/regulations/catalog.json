@@ -70,7 +70,8 @@
         "air_pro",
         "ducts",
         "ventilation",
-        "condensate_drain"
+        "condensate_drain",
+        "refrigerant_piping"
       ],
       "sha256": "ad1680c83bf4c7f5c656af1794c32ad0669ad9f36ac293737ff3f95177ff7b26",
       "content_sha256": "087c21f5a2920e4a4981216b31c98bc4a639f436d7b4995f7dab2578662f950e",

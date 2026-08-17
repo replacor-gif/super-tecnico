@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "DEMO-RP-001",
+  "discipline": "refrigeration",
+  "jurisdiction": "ES",
+  "region": null,
+  "base_date": "2026-08-17",
+  "currency": "EUR",
+  "tax_included": false,
+  "pricing_status": "private_rates_required",
+  "measurements": [
+    {"measurement_code": "RP-CU-00952", "description": "Tubo frigorífico 3/8 pulgada", "unit": "m", "quantity": 21, "technical_origin": "super_tecnico.refrigerant_piping_design", "technical_specification": {"outside_diameter_mm": 9.52}, "waste_factor_percent": 5, "pricing_status": "unpriced", "unit_rate_id": null, "confidence": "high"},
+    {"measurement_code": "RP-INS-19", "description": "Aislamiento elastomérico de 19 mm", "unit": "m", "quantity": 21, "technical_origin": "super_tecnico.refrigerant_piping_design", "technical_specification": {"thickness_mm": 19}, "waste_factor_percent": 5, "pricing_status": "unpriced", "unit_rate_id": null, "confidence": "high"}
+  ],
+  "estimate_summary": null
+}

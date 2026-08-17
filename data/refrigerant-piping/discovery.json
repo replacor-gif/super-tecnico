@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0.0",
+  "name": "super-tecnico-refrigerant-piping",
+  "status": "browser_engine_available_remote_execution_planned",
+  "human_entry_point": "../../tuberias-frigorificas.html",
+  "tool_manifest": "tool-manifest.json",
+  "property_grid": "property-grid.json",
+  "design_rules": "design-rules.json",
+  "provider_neutral": true,
+  "pricing": {"public_prices": false, "private_cost_engine_contract_prepared": true}
+}

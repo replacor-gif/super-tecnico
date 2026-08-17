@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "tool_id": "super_tecnico.refrigerant_piping_design",
+  "title": "Diseñador de tuberías frigoríficas",
+  "version": "0.1.0",
+  "provider_neutral": true,
+  "embedded_ai_model": false,
+  "execution": {"browser": true, "remote_api": false, "mcp": false},
+  "capabilities": [
+    "refrigerant_mass_flow_estimation",
+    "suction_liquid_and_discharge_line_sizing",
+    "minimum_and_maximum_load_velocity_check",
+    "pressure_drop_and_static_head_check",
+    "oil_trap_and_double_riser_proposal",
+    "rite_and_condensation_insulation_sizing",
+    "bill_of_quantities_without_prices"
+  ],
+  "input_contract": {
+    "required": ["system_type", "refrigerant", "capacity_kw", "evaporating_c", "condensing_c", "minimum_load_percent", "route"],
+    "route": ["length_m", "vertical_rise_m", "complexity", "location", "ambient_temperature_c", "relative_humidity_percent"],
+    "optional": ["manufacturer", "model", "manufacturer_line_sizes", "insulation_conductivity_w_mk"]
+  },
+  "output_contract": {
+    "lines": "Commercial OD, calculated ID, velocity at minimum and maximum capacity, friction and static pressure drop and equivalent saturation loss.",
+    "oil_management": "Required lower traps, intermediate traps, double riser proposal and manufacturer checks.",
+    "insulation": "Regulatory floor, condensation-control thickness, commercial thickness and weather/vapour-barrier warnings.",
+    "bill_of_quantities": "Neutral quantities prepared for the future private cost engine; no public unit prices."
+  },
+  "result_levels": ["manufacturer_required", "preliminary_engineering", "reviewed_preliminary"],
+  "priority_rule": "A documented manufacturer limit or line-size table overrides the generic engineering proposal.",
+  "excluded_scope": ["R717", "R744", "pumped_liquid_recirculation", "secondary_refrigerant_networks"],
+  "official_sources": [
+    {"id": "RSIF", "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2019-15228", "verified": "2026-08-17"},
+    {"id": "RITE", "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2007-15820", "verified": "2026-08-17"}
+  ],
+  "safety": {"requires_professional_verification": true, "requires_manufacturer_confirmation_when_available": true, "not_a_certificate": true}
+}

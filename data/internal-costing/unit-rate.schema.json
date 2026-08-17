@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://supertecnico.replacor.es/schemas/unit-rate.schema.json",
+  "title": "Super Técnico - Precio unitario privado",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["rate_id", "concept_code", "unit", "currency", "base_date", "geography", "components", "source", "publication_policy"],
+  "properties": {
+    "rate_id": {"type": "string", "pattern": "^[A-Z0-9._-]{4,100}$"},
+    "concept_code": {"type": "string", "minLength": 3, "maxLength": 100},
+    "description": {"type": "string", "minLength": 3, "maxLength": 400},
+    "unit": {"enum": ["m", "m2", "m3", "kg", "l", "h", "ud", "lot"]},
+    "currency": {"const": "EUR"},
+    "base_date": {"type": "string", "format": "date"},
+    "geography": {"type": "object", "required": ["country"], "properties": {"country": {"const": "ES"}, "region": {"type": ["string", "null"]}, "province": {"type": ["string", "null"]}}},
+    "components": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["material", "labour", "machinery", "auxiliary"],
+      "properties": {
+        "material": {"type": "number", "minimum": 0},
+        "labour": {"type": "number", "minimum": 0},
+        "machinery": {"type": "number", "minimum": 0},
+        "auxiliary": {"type": "number", "minimum": 0}
+      }
+    },
+    "source": {"type": "object", "required": ["source_id", "title", "license_status", "retrieved_at"], "properties": {"source_id": {"type": "string"}, "title": {"type": "string"}, "edition": {"type": ["string", "null"]}, "license_status": {"enum": ["owned", "licensed", "open_data", "user_supplied", "not_publishable"]}, "retrieved_at": {"type": "string", "format": "date"}}},
+    "publication_policy": {"enum": ["private_only", "aggregate_only", "public_allowed"]},
+    "confidence": {"enum": ["low", "medium", "high", "verified"]}
+  }
+}

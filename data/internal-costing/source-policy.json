@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "status": "private_foundation_no_prices",
+  "purpose": "Convertir mediciones técnicas de cualquier herramienta de Super Técnico en una horquilla económica orientativa trazable.",
+  "public_price_data": false,
+  "accepted_source_kinds": [
+    "licensed_project_price_database",
+    "open_public_administration_price_database",
+    "technician_owned_price_database",
+    "verified_supplier_quote",
+    "verified_labour_rate"
+  ],
+  "forbidden_practices": [
+    "republish licensed prices without permission",
+    "mix supply-only retail prices with installed project unit rates",
+    "use an undated rate",
+    "hide geography or price edition",
+    "present an estimate as a binding quotation"
+  ],
+  "required_dimensions": ["discipline", "concept_code", "unit", "base_date", "geography", "material", "labour", "machinery", "auxiliary", "source", "confidence"],
+  "estimate_output": {
+    "amounts": ["direct_cost", "indirect_cost", "reference_total", "lower_range", "upper_range"],
+    "mandatory_labels": ["orientative", "excluding_tax", "base_date", "geography", "source_edition", "unpriced_items"]
+  },
+  "integration_contract": {
+    "input": "Neutral bill_of_quantities emitted by each technical engine",
+    "matching": "Stable measurement_code plus technical specification",
+    "output": "Private priced project; public tools continue to expose quantities without unit rates"
+  }
+}

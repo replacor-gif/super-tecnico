@@ -3060,6 +3060,7 @@ class StaticSiteTests(unittest.TestCase):
             "calculadoras.html",
             "conductos.html",
             "ventilacion.html",
+            "tuberias-frigorificas.html",
             "componentes.html",
             "smd.html",
             "comparador.html",
@@ -3074,11 +3075,60 @@ class StaticSiteTests(unittest.TestCase):
         for filename in public_pages:
             html = (self.dist / filename).read_text(encoding="utf-8")
             self.assertIn('assets/app-theme.css?v=1', html, filename)
-            self.assertIn('assets/app-shell.js?v=6', html, filename)
+            self.assertIn('assets/app-shell.js?v=7', html, filename)
 
         shell = (self.dist / "assets" / "app-shell.js").read_text(encoding="utf-8")
         for marker in ("st-app-drawer", "st-bottom-nav", "st-drawer-search", "Calculadoras", "Componentes"):
             self.assertIn(marker, shell)
+
+    def test_refrigerant_piping_designer_is_public_traceable_and_unpriced(self):
+        expected = (
+            "tuberias-frigorificas.html",
+            "assets/refrigerant-piping.css",
+            "assets/refrigerant-piping-engine.js",
+            "assets/refrigerant-piping.js",
+            "data/refrigerant-piping/property-grid.json",
+            "data/refrigerant-piping/design-rules.json",
+            "data/refrigerant-piping/tool-manifest.json",
+            "data/refrigerant-piping/discovery.json",
+        )
+        for relative in expected:
+            self.assertTrue((self.dist / relative).is_file(), relative)
+
+        properties = load(self.dist / "data" / "refrigerant-piping" / "property-grid.json")
+        manifest = load(self.dist / "data" / "refrigerant-piping" / "tool-manifest.json")
+        state_count = sum(
+            len(fluid["evaporating_states"]) + len(fluid["condensing_states"])
+            for fluid in properties["fluids"]
+        )
+        self.assertEqual(len(properties["fluids"]), 24)
+        self.assertGreaterEqual(state_count, 350)
+        self.assertEqual(properties["engine"], {
+            "name": "CoolProp",
+            "version": "8.0.0",
+            "purpose": "Build-time thermophysical properties; no runtime dependency",
+        })
+        self.assertIn("bill_of_quantities_without_prices", manifest["capabilities"])
+        self.assertTrue(manifest["safety"]["requires_professional_verification"])
+        self.assertIn("R744", manifest["excluded_scope"])
+
+        page = (self.dist / "tuberias-frigorificas.html").read_text(encoding="utf-8")
+        portal = (self.dist / "index.html").read_text(encoding="utf-8")
+        engine = (self.dist / "assets" / "refrigerant-piping-engine.js").read_text(encoding="utf-8")
+        self.assertIn('href="tuberias-frigorificas.html"', portal)
+        for marker in ('id="rpForm"', 'id="rpDiagram"', 'id="rpMeasurements"'):
+            self.assertIn(marker, page)
+        for marker in ("findDoubleRiser", "sizeInsulation", "billOfQuantities", "flashMarginK"):
+            self.assertIn(marker, engine)
+
+        public_payload = "\n".join(
+            (self.dist / relative).read_text(encoding="utf-8")
+            for relative in expected if relative.endswith((".json", ".js", ".html"))
+        ).lower()
+        for forbidden in ('"unit_rate"', '"unit_price"', '"material_price"', '"labour_price"'):
+            self.assertNotIn(forbidden, public_payload)
+        self.assertTrue((ROOT / "data" / "internal-costing" / "unit-rate.schema.json").is_file())
+        self.assertFalse((self.dist / "data" / "internal-costing").exists())
 
     def test_regulation_library_is_traceable_searchable_and_public(self):
         catalog = load(self.dist / "data" / "regulations" / "catalog.json")

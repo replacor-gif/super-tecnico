@@ -29,7 +29,7 @@ const browser = await chromium.launch({ headless: true, executablePath: "C:\\Pro
 try {
   const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
   await desktop.goto(`${base}/actualizaciones.html`, { waitUntil: "networkidle" });
-  assert.equal(await desktop.locator(".update-entry").count(), 8);
+  assert.equal(await desktop.locator(".update-entry").count(), 9);
   assert.equal((await desktop.locator(".update-entry").first().textContent()).includes("Administrador"), true);
   await desktop.screenshot({ path: "test-artifacts/updates-desktop.png", fullPage: true });
 

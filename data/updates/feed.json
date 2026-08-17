@@ -10,6 +10,15 @@
   },
   "entries": [
     {
+      "id": "UPD-20260817-REFRIGERANT-PIPING",
+      "date": "2026-08-17",
+      "title": "Nuevo diseñador de tuberías frigoríficas",
+      "summary": "Dimensiona líneas de aspiración, líquido y descarga con propiedades reales del refrigerante, comprueba retorno de aceite, propone sifones y dobles montantes y calcula el aislamiento frente a condensación y RITE.",
+      "areas": ["Refrigeración", "Diseño de instalaciones", "Normativa"],
+      "kind": "new_tool",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
       "id": "UPD-20260817-AUTOMATION-SIGNALS",
       "date": "2026-08-17",
       "title": "Diez señales y comunicaciones industriales normalizadas",

@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "version": "2026.08.1",
+  "status": "reviewed_preliminary_design",
+  "pipe_material": {
+    "id": "acr_copper_typical",
+    "title": "Tubo de cobre frigorífico deshidratado",
+    "roughness_m": 0.0000015,
+    "warning": "El espesor real, la presión admisible y la compatibilidad deben comprobarse en el tubo seleccionado y con el refrigerante.",
+    "sizes": [
+      {"od_mm": 6.35, "wall_mm": 0.8, "label": "1/4\""},
+      {"od_mm": 9.52, "wall_mm": 0.8, "label": "3/8\""},
+      {"od_mm": 12.7, "wall_mm": 0.8, "label": "1/2\""},
+      {"od_mm": 15.88, "wall_mm": 1.0, "label": "5/8\""},
+      {"od_mm": 19.05, "wall_mm": 1.0, "label": "3/4\""},
+      {"od_mm": 22.22, "wall_mm": 1.0, "label": "7/8\""},
+      {"od_mm": 28.58, "wall_mm": 1.0, "label": "1 1/8\""},
+      {"od_mm": 34.93, "wall_mm": 1.2, "label": "1 3/8\""},
+      {"od_mm": 41.28, "wall_mm": 1.2, "label": "1 5/8\""},
+      {"od_mm": 53.98, "wall_mm": 1.5, "label": "2 1/8\""}
+    ]
+  },
+  "system_profiles": {
+    "split": {"title": "Split o bomba de calor", "default_min_load_percent": 35, "default_te_c": 5, "default_tc_c": 45, "manufacturer_priority": true, "generic_oil_design": false, "allow_double_riser": false, "show_discharge": false},
+    "vrf": {"title": "VRF / VRV", "default_min_load_percent": 20, "default_te_c": 5, "default_tc_c": 45, "manufacturer_priority": true, "generic_oil_design": false, "allow_double_riser": false, "show_discharge": false},
+    "condensing_unit": {"title": "Unidad condensadora", "default_min_load_percent": 50, "default_te_c": -10, "default_tc_c": 40, "manufacturer_priority": true, "generic_oil_design": true, "allow_double_riser": true, "show_discharge": false},
+    "commercial": {"title": "Refrigeración comercial", "default_min_load_percent": 35, "default_te_c": -10, "default_tc_c": 40, "manufacturer_priority": false, "generic_oil_design": true, "allow_double_riser": true, "show_discharge": false},
+    "central": {"title": "Central o varios compresores", "default_min_load_percent": 15, "default_te_c": -10, "default_tc_c": 40, "manufacturer_priority": false, "generic_oil_design": true, "allow_double_riser": true, "show_discharge": true}
+  },
+  "velocity_profiles_m_s": {
+    "suction": {"horizontal_min": 3.5, "riser_min": 7.5, "maximum": 20, "max_saturation_drop_k": 1.0},
+    "discharge": {"horizontal_min": 3.5, "riser_min": 5, "maximum": 20, "max_saturation_drop_k": 1.0},
+    "liquid": {"minimum": 0.25, "maximum": 1.5, "max_saturation_drop_k": 0.5}
+  },
+  "route_factors": {
+    "simple": {"title": "Recorrido directo", "equivalent_length_factor": 1.12},
+    "normal": {"title": "Recorrido normal", "equivalent_length_factor": 1.28},
+    "complex": {"title": "Muchos codos y accesorios", "equivalent_length_factor": 1.5}
+  },
+  "oil_management": {
+    "riser_trap_threshold_m": 1.5,
+    "intermediate_trap_spacing_m": 6,
+    "double_riser_min_height_m": 3,
+    "status": "engineering_rule_requiring_manufacturer_confirmation",
+    "note": "Los sifones, contrasifones y dobles montantes dependen del compresor, aceite, regulación de capacidad y fabricante. El motor los propone y nunca los declara universales."
+  },
+  "insulation": {
+    "conductivity_reference_w_mk": 0.04,
+    "default_elastomeric_conductivity_w_mk": 0.036,
+    "surface_margin_above_dew_point_k": 1.5,
+    "outside_heat_transfer_w_m2k": 8,
+    "commercial_thickness_mm": [6, 9, 10, 13, 15, 19, 20, 25, 30, 32, 40, 50, 60, 70],
+    "rite_climatization_minimum_mm": [
+      {"max_od_mm": 13, "inside_mm": 10, "outside_mm": 15},
+      {"max_od_mm": 26, "inside_mm": 15, "outside_mm": 20},
+      {"max_od_mm": 35, "inside_mm": 20, "outside_mm": 25},
+      {"max_od_mm": 90, "inside_mm": 30, "outside_mm": 40},
+      {"max_od_mm": 100000, "inside_mm": 40, "outside_mm": 50}
+    ]
+  },
+  "sources": [
+    {"id": "RSIF_RD_552_2019", "title": "RSIF e instrucciones IF", "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2019-15228", "applies_to": ["materials", "components", "insulation", "safety", "documentation"]},
+    {"id": "RITE_RD_1027_2007", "title": "RITE IT 1.2.4.2.1", "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2007-15820", "applies_to": ["climatization_circuit_insulation", "condensation", "weather_protection"]},
+    {"id": "COPELAND_SYSTEM_DESIGN", "title": "Copeland Refrigeration Manual - System Design", "url": "https://www.copeland.com/documents/system-design-en-us-5400002.pdf", "applies_to": ["line_sizing", "oil_return", "double_risers"]},
+    {"id": "ARMACELL_APPLICATION_MANUAL", "title": "ArmaFlex Application Manual", "url": "https://www.armacell.com/en-GB/document/armaflex-application-manual", "applies_to": ["elastomeric_insulation", "vapour_barrier", "condensation_control"]}
+  ]
+}

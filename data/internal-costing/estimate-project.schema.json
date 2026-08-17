@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://supertecnico.replacor.es/schemas/estimate-project.schema.json",
+  "title": "Super Técnico - Proyecto de estimación económica",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "discipline", "jurisdiction", "base_date", "measurements", "pricing_status"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"type": "string", "pattern": "^[A-Z0-9][A-Z0-9._-]{2,80}$"},
+    "discipline": {"enum": ["water", "sanitation", "electricity", "hvac", "refrigeration", "ventilation", "fire_protection", "telecommunications", "multidiscipline"]},
+    "jurisdiction": {"type": "string", "default": "ES"},
+    "region": {"type": ["string", "null"], "maxLength": 100},
+    "base_date": {"type": "string", "format": "date"},
+    "currency": {"const": "EUR"},
+    "tax_included": {"const": false},
+    "measurements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["measurement_code", "description", "unit", "quantity", "technical_origin", "pricing_status"],
+        "properties": {
+          "measurement_code": {"type": "string", "pattern": "^[A-Z0-9._-]{3,80}$"},
+          "description": {"type": "string", "minLength": 3, "maxLength": 300},
+          "unit": {"enum": ["m", "m2", "m3", "kg", "l", "h", "ud", "lot"]},
+          "quantity": {"type": "number", "exclusiveMinimum": 0},
+          "technical_origin": {"type": "string", "minLength": 3, "maxLength": 120},
+          "technical_specification": {"type": "object"},
+          "waste_factor_percent": {"type": "number", "minimum": 0, "maximum": 50, "default": 0},
+          "pricing_status": {"enum": ["unpriced", "matched", "manual_review", "excluded"]},
+          "unit_rate_id": {"type": ["string", "null"]},
+          "confidence": {"enum": ["unknown", "low", "medium", "high", "verified"]}
+        }
+      }
+    },
+    "pricing_status": {"enum": ["measurement_only", "private_rates_required", "priced_private", "review_required"]},
+    "estimate_summary": {
+      "type": ["object", "null"],
+      "properties": {
+        "direct_cost": {"type": "number", "minimum": 0},
+        "indirect_cost": {"type": "number", "minimum": 0},
+        "reference_total": {"type": "number", "minimum": 0},
+        "lower_range": {"type": "number", "minimum": 0},
+        "upper_range": {"type": "number", "minimum": 0}
+      }
+    }
+  }
+}
