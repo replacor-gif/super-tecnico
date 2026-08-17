@@ -849,8 +849,8 @@
       "designator": "FAN",
       "standard_profile": "IEC_EXPERIMENTAL",
       "grid_pitch_mil": 50,
-      "width": 7,
-      "height": 7,
+      "width": 6,
+      "height": 6,
       "ports": {
         "+": {
           "x": 0,
@@ -1929,6 +1929,220 @@
         "NO4": { "x": 7, "y": 7, "side": "east", "electrical_type": "passive" },
         "A1": { "x": -7, "y": 8, "side": "west", "electrical_type": "passive" },
         "A2": { "x": 7, "y": 8, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0149",
+      "name": "Motor DC",
+      "kind": "motor_dc",
+      "designator": "M",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "+": { "x": -4, "y": 0, "side": "west", "electrical_type": "power_in" },
+        "-": { "x": 4, "y": 0, "side": "east", "electrical_type": "power_in" }
+      }
+    },
+    {
+      "id": "SYM-0152",
+      "name": "Motor BLDC",
+      "kind": "motor_bldc",
+      "designator": "M",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 10,
+      "ports": {
+        "U": { "x": -2, "y": -5, "side": "north", "electrical_type": "power_in" },
+        "V": { "x": 0, "y": -5, "side": "north", "electrical_type": "power_in" },
+        "W": { "x": 2, "y": -5, "side": "north", "electrical_type": "power_in" },
+        "PE": { "x": 5, "y": 2, "side": "east", "electrical_type": "protective_earth" }
+      }
+    },
+    {
+      "id": "SYM-0153",
+      "name": "Motor paso a paso bipolar",
+      "kind": "stepper_bipolar",
+      "designator": "M",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 8,
+      "ports": {
+        "A+": { "x": -5, "y": -2, "side": "west", "electrical_type": "power_in" },
+        "A-": { "x": -5, "y": 2, "side": "west", "electrical_type": "power_in" },
+        "B+": { "x": 5, "y": -2, "side": "east", "electrical_type": "power_in" },
+        "B-": { "x": 5, "y": 2, "side": "east", "electrical_type": "power_in" }
+      }
+    },
+    {
+      "id": "SYM-0154",
+      "name": "Motor paso a paso unipolar",
+      "kind": "stepper_unipolar",
+      "designator": "M",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 12,
+      "height": 10,
+      "ports": {
+        "A1": { "x": -6, "y": -2, "side": "west", "electrical_type": "power_in" },
+        "AC": { "x": -6, "y": 0, "side": "west", "electrical_type": "power_in" },
+        "A2": { "x": -6, "y": 2, "side": "west", "electrical_type": "power_in" },
+        "B1": { "x": 6, "y": -2, "side": "east", "electrical_type": "power_in" },
+        "BC": { "x": 6, "y": 0, "side": "east", "electrical_type": "power_in" },
+        "B2": { "x": 6, "y": 2, "side": "east", "electrical_type": "power_in" }
+      }
+    },
+    {
+      "id": "SYM-0155",
+      "name": "Servomotor",
+      "kind": "servo_motor",
+      "designator": "M",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 12,
+      "height": 10,
+      "ports": {
+        "PWR": { "x": -6, "y": -2, "side": "west", "electrical_type": "power_in" },
+        "0V": { "x": -6, "y": 2, "side": "west", "electrical_type": "power_in" },
+        "CTRL": { "x": 6, "y": -2, "side": "east", "electrical_type": "input" },
+        "FB": { "x": 6, "y": 2, "side": "east", "electrical_type": "output" }
+      }
+    },
+    {
+      "id": "SYM-0158",
+      "name": "Compresor hermético",
+      "kind": "compressor_hermetic",
+      "designator": "CM",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 10,
+      "ports": {
+        "T1": { "x": -2, "y": -5, "side": "north", "electrical_type": "power_in" },
+        "T2": { "x": 0, "y": -5, "side": "north", "electrical_type": "power_in" },
+        "T3": { "x": 2, "y": -5, "side": "north", "electrical_type": "power_in" },
+        "PE": { "x": 5, "y": 2, "side": "east", "electrical_type": "protective_earth" }
+      }
+    },
+    {
+      "id": "SYM-0159",
+      "name": "Calentador / resistencia calefactora",
+      "kind": "heater",
+      "designator": "EH",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 5,
+      "ports": {
+        "1": { "x": -4, "y": 0, "side": "west", "electrical_type": "power_in" },
+        "2": { "x": 4, "y": 0, "side": "east", "electrical_type": "power_in" }
+      }
+    },
+    {
+      "id": "SYM-0160",
+      "name": "Válvula de expansión electrónica",
+      "kind": "eev_stepper",
+      "designator": "EEV",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 12,
+      "height": 10,
+      "ports": {
+        "A+": { "x": -6, "y": -3, "side": "west", "electrical_type": "power_in" },
+        "A-": { "x": -6, "y": -1, "side": "west", "electrical_type": "power_in" },
+        "B+": { "x": -6, "y": 1, "side": "west", "electrical_type": "power_in" },
+        "B-": { "x": -6, "y": 3, "side": "west", "electrical_type": "power_in" }
+      }
+    },
+    {
+      "id": "SYM-0161",
+      "name": "Válvula de cuatro vías",
+      "kind": "four_way_valve",
+      "designator": "4WV",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 12,
+      "height": 8,
+      "ports": {
+        "A1": { "x": -6, "y": 0, "side": "west", "electrical_type": "power_in" },
+        "A2": { "x": 6, "y": 0, "side": "east", "electrical_type": "power_in" }
+      }
+    },
+    {
+      "id": "SYM-0162",
+      "name": "Bomba de drenaje",
+      "kind": "drain_pump",
+      "designator": "DP",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 8,
+      "ports": {
+        "L": { "x": -5, "y": 0, "side": "west", "electrical_type": "power_in" },
+        "N": { "x": 5, "y": 0, "side": "east", "electrical_type": "power_in" }
+      }
+    },
+    {
+      "id": "SYM-0442",
+      "name": "Motor PSC con condensador permanente",
+      "kind": "motor_psc",
+      "designator": "M",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 12,
+      "height": 10,
+      "ports": {
+        "COM": { "x": -6, "y": 0, "side": "west", "electrical_type": "power_in" },
+        "RUN": { "x": -2, "y": -5, "side": "north", "electrical_type": "power_in" },
+        "AUX": { "x": 2, "y": -5, "side": "north", "electrical_type": "power_in" },
+        "CAP": { "x": 6, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0443",
+      "name": "Motor de polo sombreado",
+      "kind": "motor_shaded_pole",
+      "designator": "M",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "L": { "x": -4, "y": 0, "side": "west", "electrical_type": "power_in" },
+        "N": { "x": 4, "y": 0, "side": "east", "electrical_type": "power_in" }
+      }
+    },
+    {
+      "id": "SYM-0444",
+      "name": "Motor EC",
+      "kind": "motor_ec",
+      "designator": "M",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 12,
+      "height": 10,
+      "ports": {
+        "PWR": { "x": -6, "y": -2, "side": "west", "electrical_type": "power_in" },
+        "0V": { "x": -6, "y": 2, "side": "west", "electrical_type": "power_in" },
+        "CTRL": { "x": 6, "y": 0, "side": "east", "electrical_type": "input" }
+      }
+    },
+    {
+      "id": "SYM-0445",
+      "name": "Compresor monofásico C-R-S",
+      "kind": "compressor_crs",
+      "designator": "COMP",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 10,
+      "ports": {
+        "C": { "x": -5, "y": 0, "side": "west", "electrical_type": "power_in" },
+        "R": { "x": 5, "y": -2, "side": "east", "electrical_type": "power_in" },
+        "S": { "x": 5, "y": 2, "side": "east", "electrical_type": "power_in" }
       }
     },
     {

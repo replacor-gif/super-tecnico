@@ -20,10 +20,10 @@ La IA llamante decide la topología, los valores y los componentes. La herramien
 su conectividad y devuelve un SVG sobre una rejilla común.
 
 La biblioteca externa contiene las 460 fichas del catálogo y 3 elementos auxiliares
-del motor. Cada definición indica su calidad: 86 símbolos del catálogo tienen geometría
-revisada individualmente y 374 son borradores normalizados por familias. Las familias
-de conexiones y referencias, protecciones eléctricas y relés, interruptores y actuadores
-ya están revisadas por completo. El motor
+del motor. Cada definición indica su calidad: 100 símbolos del catálogo tienen geometría
+revisada individualmente y 360 son borradores normalizados por familias. Las familias
+de conexiones y referencias, protecciones eléctricas, relés, interruptores y actuadores,
+y máquinas y actuadores ya están revisadas por completo. El motor
 los distingue gráficamente y avisa cuando se utiliza uno pendiente de revisión.
 
 Los generadores de relé y ventilador se conservan como adaptadores de demostración.

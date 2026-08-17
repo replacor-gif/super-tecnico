@@ -5662,11 +5662,28 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0149": {
     "id": "SYM-0149",
-    "catalog_id": "SYM-0149",
     "name": "Motor DC",
-    "kind": "machine_block",
-    "geometry_template": "machine_block",
+    "kind": "motor_dc",
     "designator": "M",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "+": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "-": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_in"
+      }
+    },
+    "catalog_id": "SYM-0149",
     "category": "Máquinas y actuadores",
     "subcategory": "Motores y climatización",
     "aliases": "motor corriente continua",
@@ -5675,27 +5692,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica alimentación, fases, bobinados, realimentaciones y protecciones asociadas.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "motor_dc",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0149_motor-dc.svg"
+    "source_asset": "assets/symbols/SYM-0149_motor-dc.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0150": {
     "id": "SYM-0150",
@@ -5789,11 +5788,40 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0152": {
     "id": "SYM-0152",
-    "catalog_id": "SYM-0152",
     "name": "Motor BLDC",
-    "kind": "machine_block",
-    "geometry_template": "machine_block",
+    "kind": "motor_bldc",
     "designator": "M",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 10,
+    "height": 10,
+    "ports": {
+      "U": {
+        "x": -2,
+        "y": -5,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "V": {
+        "x": 0,
+        "y": -5,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "W": {
+        "x": 2,
+        "y": -5,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "PE": {
+        "x": 5,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "catalog_id": "SYM-0152",
     "category": "Máquinas y actuadores",
     "subcategory": "Motores y climatización",
     "aliases": "brushless, ventilador BLDC",
@@ -5802,35 +5830,46 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica alimentación, fases, bobinados, realimentaciones y protecciones asociadas.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "motor_bldc",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0152_motor-bldc.svg"
+    "source_asset": "assets/symbols/SYM-0152_motor-bldc.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0153": {
     "id": "SYM-0153",
-    "catalog_id": "SYM-0153",
     "name": "Motor paso a paso bipolar",
-    "kind": "machine_block",
-    "geometry_template": "machine_block",
+    "kind": "stepper_bipolar",
     "designator": "M",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 10,
+    "height": 8,
+    "ports": {
+      "A+": {
+        "x": -5,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "A-": {
+        "x": -5,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "B+": {
+        "x": 5,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_in"
+      },
+      "B-": {
+        "x": 5,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "power_in"
+      }
+    },
+    "catalog_id": "SYM-0153",
     "category": "Máquinas y actuadores",
     "subcategory": "Motores y climatización",
     "aliases": "stepper bipolar",
@@ -5839,35 +5878,58 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica alimentación, fases, bobinados, realimentaciones y protecciones asociadas.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "stepper_bipolar",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0153_motor-paso-a-paso-bipolar.svg"
+    "source_asset": "assets/symbols/SYM-0153_motor-paso-a-paso-bipolar.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0154": {
     "id": "SYM-0154",
-    "catalog_id": "SYM-0154",
     "name": "Motor paso a paso unipolar",
-    "kind": "machine_block",
-    "geometry_template": "machine_block",
+    "kind": "stepper_unipolar",
     "designator": "M",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 12,
+    "height": 10,
+    "ports": {
+      "A1": {
+        "x": -6,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "AC": {
+        "x": -6,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "A2": {
+        "x": -6,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "B1": {
+        "x": 6,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_in"
+      },
+      "BC": {
+        "x": 6,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_in"
+      },
+      "B2": {
+        "x": 6,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "power_in"
+      }
+    },
+    "catalog_id": "SYM-0154",
     "category": "Máquinas y actuadores",
     "subcategory": "Motores y climatización",
     "aliases": "stepper unipolar",
@@ -5876,35 +5938,46 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica alimentación, fases, bobinados, realimentaciones y protecciones asociadas.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "stepper_unipolar",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0154_motor-paso-a-paso-unipolar.svg"
+    "source_asset": "assets/symbols/SYM-0154_motor-paso-a-paso-unipolar.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0155": {
     "id": "SYM-0155",
-    "catalog_id": "SYM-0155",
     "name": "Servomotor",
-    "kind": "machine_block",
-    "geometry_template": "machine_block",
+    "kind": "servo_motor",
     "designator": "M",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 12,
+    "height": 10,
+    "ports": {
+      "PWR": {
+        "x": -6,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "0V": {
+        "x": -6,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CTRL": {
+        "x": 6,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "input"
+      },
+      "FB": {
+        "x": 6,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "catalog_id": "SYM-0155",
     "category": "Máquinas y actuadores",
     "subcategory": "Motores y climatización",
     "aliases": "servo motor",
@@ -5913,27 +5986,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica alimentación, fases, bobinados, realimentaciones y protecciones asociadas.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "servo",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0155_servomotor.svg"
+    "source_asset": "assets/symbols/SYM-0155_servomotor.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0156": {
     "id": "SYM-0156",
@@ -5943,8 +5998,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "designator": "FM",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
-    "width": 7,
-    "height": 7,
+    "width": 6,
+    "height": 6,
     "ports": {
       "+": {
         "x": 0,
@@ -6009,11 +6064,40 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0158": {
     "id": "SYM-0158",
-    "catalog_id": "SYM-0158",
     "name": "Compresor hermético",
-    "kind": "machine_block",
-    "geometry_template": "machine_block",
+    "kind": "compressor_hermetic",
     "designator": "CM",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 10,
+    "height": 10,
+    "ports": {
+      "T1": {
+        "x": -2,
+        "y": -5,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "T2": {
+        "x": 0,
+        "y": -5,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "T3": {
+        "x": 2,
+        "y": -5,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "PE": {
+        "x": 5,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "catalog_id": "SYM-0158",
     "category": "Máquinas y actuadores",
     "subcategory": "Motores y climatización",
     "aliases": "compressor",
@@ -6022,35 +6106,34 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica alimentación, fases, bobinados, realimentaciones y protecciones asociadas.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "compressor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0158_compresor-hermetico.svg"
+    "source_asset": "assets/symbols/SYM-0158_compresor-hermetico.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0159": {
     "id": "SYM-0159",
-    "catalog_id": "SYM-0159",
     "name": "Calentador / resistencia calefactora",
-    "kind": "machine_block",
-    "geometry_template": "machine_block",
+    "kind": "heater",
     "designator": "EH",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 5,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_in"
+      }
+    },
+    "catalog_id": "SYM-0159",
     "category": "Máquinas y actuadores",
     "subcategory": "Motores y climatización",
     "aliases": "heater",
@@ -6059,35 +6142,46 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica alimentación, fases, bobinados, realimentaciones y protecciones asociadas.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "heater",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0159_calentador-resistencia-calefactora.svg"
+    "source_asset": "assets/symbols/SYM-0159_calentador-resistencia-calefactora.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0160": {
     "id": "SYM-0160",
-    "catalog_id": "SYM-0160",
     "name": "Válvula de expansión electrónica",
-    "kind": "machine_block",
-    "geometry_template": "machine_block",
+    "kind": "eev_stepper",
     "designator": "EEV",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 12,
+    "height": 10,
+    "ports": {
+      "A+": {
+        "x": -6,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "A-": {
+        "x": -6,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "B+": {
+        "x": -6,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "B-": {
+        "x": -6,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "power_in"
+      }
+    },
+    "catalog_id": "SYM-0160",
     "category": "Máquinas y actuadores",
     "subcategory": "Motores y climatización",
     "aliases": "electronic expansion valve",
@@ -6096,35 +6190,34 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica alimentación, fases, bobinados, realimentaciones y protecciones asociadas.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "eev",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0160_valvula-de-expansion-electronica.svg"
+    "source_asset": "assets/symbols/SYM-0160_valvula-de-expansion-electronica.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0161": {
     "id": "SYM-0161",
-    "catalog_id": "SYM-0161",
     "name": "Válvula de cuatro vías",
-    "kind": "machine_block",
-    "geometry_template": "machine_block",
+    "kind": "four_way_valve",
     "designator": "4WV",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 12,
+    "height": 8,
+    "ports": {
+      "A1": {
+        "x": -6,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "A2": {
+        "x": 6,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_in"
+      }
+    },
+    "catalog_id": "SYM-0161",
     "category": "Máquinas y actuadores",
     "subcategory": "Motores y climatización",
     "aliases": "reversing valve",
@@ -6133,35 +6226,34 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica alimentación, fases, bobinados, realimentaciones y protecciones asociadas.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "four_way_valve",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0161_valvula-de-cuatro-vias.svg"
+    "source_asset": "assets/symbols/SYM-0161_valvula-de-cuatro-vias.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0162": {
     "id": "SYM-0162",
-    "catalog_id": "SYM-0162",
     "name": "Bomba de drenaje",
-    "kind": "machine_block",
-    "geometry_template": "machine_block",
+    "kind": "drain_pump",
     "designator": "DP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 10,
+    "height": 8,
+    "ports": {
+      "L": {
+        "x": -5,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "N": {
+        "x": 5,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_in"
+      }
+    },
+    "catalog_id": "SYM-0162",
     "category": "Máquinas y actuadores",
     "subcategory": "Motores y climatización",
     "aliases": "drain pump",
@@ -6170,27 +6262,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica alimentación, fases, bobinados, realimentaciones y protecciones asociadas.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "drain_pump",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0162_bomba-de-drenaje.svg"
+    "source_asset": "assets/symbols/SYM-0162_bomba-de-drenaje.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0163": {
     "id": "SYM-0163",
@@ -17639,11 +17713,40 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0442": {
     "id": "SYM-0442",
-    "catalog_id": "SYM-0442",
     "name": "Motor PSC con condensador permanente",
-    "kind": "machine_block",
-    "geometry_template": "machine_block",
+    "kind": "motor_psc",
     "designator": "M",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 12,
+    "height": 10,
+    "ports": {
+      "COM": {
+        "x": -6,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "RUN": {
+        "x": -2,
+        "y": -5,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "AUX": {
+        "x": 2,
+        "y": -5,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "CAP": {
+        "x": 6,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "catalog_id": "SYM-0442",
     "category": "Máquinas y actuadores",
     "subcategory": "Motores AC",
     "aliases": "permanent split capacitor, motor condensador",
@@ -17652,35 +17755,34 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El esquema muestra bobinado principal, auxiliar y condensador de marcha.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "motor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0442_motor-psc-con-condensador-permanente.svg"
+    "source_asset": "assets/symbols/SYM-0442_motor-psc-con-condensador-permanente.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0443": {
     "id": "SYM-0443",
-    "catalog_id": "SYM-0443",
     "name": "Motor de polo sombreado",
-    "kind": "machine_block",
-    "geometry_template": "machine_block",
+    "kind": "motor_shaded_pole",
     "designator": "M",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "L": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "N": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_in"
+      }
+    },
+    "catalog_id": "SYM-0443",
     "category": "Máquinas y actuadores",
     "subcategory": "Motores AC",
     "aliases": "shaded pole motor",
@@ -17689,35 +17791,40 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Normalmente no utiliza condensador ni bobinado auxiliar accesible.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "motor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0443_motor-de-polo-sombreado.svg"
+    "source_asset": "assets/symbols/SYM-0443_motor-de-polo-sombreado.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0444": {
     "id": "SYM-0444",
-    "catalog_id": "SYM-0444",
     "name": "Motor EC",
-    "kind": "machine_block",
-    "geometry_template": "machine_block",
+    "kind": "motor_ec",
     "designator": "M",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 12,
+    "height": 10,
+    "ports": {
+      "PWR": {
+        "x": -6,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "0V": {
+        "x": -6,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CTRL": {
+        "x": 6,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "input"
+      }
+    },
+    "catalog_id": "SYM-0444",
     "category": "Máquinas y actuadores",
     "subcategory": "Motores electrónicos",
     "aliases": "electronically commutated motor, ECM",
@@ -17726,35 +17833,40 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Además de potencia puede recibir una orden 0-10 V, PWM o bus.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "motor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0444_motor-ec.svg"
+    "source_asset": "assets/symbols/SYM-0444_motor-ec.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0445": {
     "id": "SYM-0445",
-    "catalog_id": "SYM-0445",
     "name": "Compresor monofásico C-R-S",
-    "kind": "machine_block",
-    "geometry_template": "machine_block",
+    "kind": "compressor_crs",
     "designator": "COMP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 10,
+    "height": 10,
+    "ports": {
+      "C": {
+        "x": -5,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "R": {
+        "x": 5,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_in"
+      },
+      "S": {
+        "x": 5,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "power_in"
+      }
+    },
+    "catalog_id": "SYM-0445",
     "category": "Máquinas y actuadores",
     "subcategory": "Compresores",
     "aliases": "common run start, compresor hermético monofásico",
@@ -17763,27 +17875,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La mayor resistencia suele medirse entre R y S; C-R y C-S corresponden a cada bobinado.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "compressor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0445_compresor-monofasico-c-r-s.svg"
+    "source_asset": "assets/symbols/SYM-0445_compresor-monofasico-c-r-s.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0446": {
     "id": "SYM-0446",

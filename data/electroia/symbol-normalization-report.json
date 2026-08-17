@@ -5,13 +5,13 @@
   "engine_symbols": 463,
   "symbols_with_ports": 463,
   "status_counts": {
-    "auto_draft": 374,
+    "auto_draft": 360,
     "engine_internal": 3,
-    "engine_reviewed": 86
+    "engine_reviewed": 100
   },
   "catalog_status_counts": {
-    "auto_draft": 374,
-    "engine_reviewed": 86
+    "auto_draft": 360,
+    "engine_reviewed": 100
   },
   "family_counts": {
     "aux_contact_no": 1,
@@ -20,6 +20,8 @@
     "circuit_breaker": 1,
     "circuit_breaker_3p": 1,
     "comparator": 1,
+    "compressor_crs": 1,
+    "compressor_hermetic": 1,
     "connector_block": 18,
     "contact_nc": 1,
     "contact_no": 1,
@@ -30,12 +32,15 @@
     "diode": 1,
     "dip_switch": 1,
     "distribution_board": 1,
+    "drain_pump": 1,
+    "eev_stepper": 1,
     "efuse": 1,
     "emergency_stop_nc": 1,
     "energy_meter": 1,
     "esd_protector": 1,
     "fan": 1,
     "float_switch": 1,
+    "four_way_valve": 1,
     "functional_block": 49,
     "functional_earth": 1,
     "fuse": 1,
@@ -43,6 +48,7 @@
     "generic_2p": 36,
     "generic_3p": 2,
     "ground": 1,
+    "heater": 1,
     "inrush_limiter_ntc": 1,
     "installation_block": 8,
     "isolation_barrier": 1,
@@ -55,7 +61,6 @@
     "kelvin_4wire": 1,
     "lamp": 1,
     "limit_switch": 1,
-    "machine_block": 14,
     "mcb_1p": 1,
     "mcb_2p": 1,
     "mcb_4p": 1,
@@ -63,6 +68,11 @@
     "mosfet_n": 1,
     "motor_1phase": 1,
     "motor_3phase": 1,
+    "motor_bldc": 1,
+    "motor_dc": 1,
+    "motor_ec": 1,
+    "motor_psc": 1,
+    "motor_shaded_pole": 1,
     "net_label": 1,
     "net_tie": 1,
     "no_connect": 1,
@@ -90,6 +100,7 @@
     "selector_switch": 1,
     "semiconductor_block": 41,
     "sensor_block": 42,
+    "servo_motor": 1,
     "shield": 1,
     "signal_bus": 1,
     "socket_outlet": 1,
@@ -99,6 +110,8 @@
     "source_block": 4,
     "source_dc": 1,
     "spark_gap": 1,
+    "stepper_bipolar": 1,
+    "stepper_unipolar": 1,
     "surge_protection_device": 1,
     "switch_dpdt": 1,
     "switch_nc": 1,
@@ -162,8 +175,8 @@
     },
     "Máquinas y actuadores": {
       "total": 18,
-      "engine_reviewed": 4,
-      "auto_draft": 14
+      "engine_reviewed": 18,
+      "auto_draft": 0
     },
     "Optoelectrónica y aislamiento": {
       "total": 10,
@@ -198,6 +211,7 @@
   },
   "fully_reviewed_categories": [
     "Conexiones y referencias",
+    "Máquinas y actuadores",
     "Protecciones eléctricas",
     "Relés, interruptores y actuadores"
   ],

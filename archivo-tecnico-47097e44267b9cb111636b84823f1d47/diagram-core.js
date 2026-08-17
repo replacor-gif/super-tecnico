@@ -1,7 +1,7 @@
 "use strict";
 
 const ElectroDiagramCore = (() => {
-  const ENGINE_VERSION = "1.6.0-alpha.1";
+  const ENGINE_VERSION = "1.7.0-alpha.1";
   const CONTRACT_VERSION = "1.0";
   const GRID_PITCH_MIL = 50;
   const UNIT = 24;
@@ -137,7 +137,7 @@ const ElectroDiagramCore = (() => {
       W: port(2, -4, "north", "power_in"),
       PE: port(4, 2, "east", "protective_earth"),
     }),
-    "SYM-0156": symbol("SYM-0156", "Ventilador", "fan", "FAN", 7, 7, {
+    "SYM-0156": symbol("SYM-0156", "Ventilador", "fan", "FAN", 6, 6, {
       "+": port(0, -3, "north", "power_in"),
       "-": port(0, 3, "south", "power_in"),
     }),
@@ -280,7 +280,7 @@ const ElectroDiagramCore = (() => {
 
   function getRegistry() {
     return {
-      version: "0.6",
+      version: "0.8",
       engine_version: ENGINE_VERSION,
       standard_profile: "IEC_EXPERIMENTAL",
       grid_pitch_mil: GRID_PITCH_MIL,
@@ -1015,6 +1015,52 @@ const ElectroDiagramCore = (() => {
     }
     if (kind === "motor_1phase") {
       return `${line(-4, 0, -2.45, 0)}<circle class="symbol-fill" cx="0" cy="0" r="${2.45 * u}"/>${line(2.45, 0, 4, 0)}${line(0, 2.45, 0, 4)}<text class="polarity" x="0" y="${-0.15 * u}">M</text><text class="component-value" x="0" y="${0.85 * u}">1~</text>`;
+    }
+    if (kind === "motor_dc") {
+      return `${line(-4, 0, -2.45, 0)}<circle class="symbol-fill" cx="0" cy="0" r="${2.45 * u}"/>${line(2.45, 0, 4, 0)}<text class="polarity" x="0" y="${-0.15 * u}">M</text><text class="component-value" x="0" y="${0.85 * u}">DC</text><text class="polarity" x="${-3.25 * u}" y="${-0.35 * u}">+</text><text class="polarity" x="${3.25 * u}" y="${-0.35 * u}">−</text>`;
+    }
+    if (kind === "motor_bldc") {
+      return `${line(-2, -5, -2, -2.65)}${line(0, -5, 0, -2.8)}${line(2, -5, 2, -2.65)}<circle class="symbol-fill" cx="0" cy="0" r="${2.8 * u}"/>${line(2.4, 1.45, 5, 2)}<text class="polarity" x="0" y="${-0.2 * u}">M</text><text class="component-value" x="0" y="${0.9 * u}">BLDC</text><text class="component-value" x="${-2 * u}" y="${-3.05 * u}">U</text><text class="component-value" x="0" y="${-3.05 * u}">V</text><text class="component-value" x="${2 * u}" y="${-3.05 * u}">W</text>`;
+    }
+    if (kind === "stepper_bipolar") {
+      const windingA = `<path class="symbol-accent" d="M${-2.4 * u} ${-2 * u}q${0.6 * u} ${-0.8 * u} ${1.2 * u} 0t${1.2 * u} 0t${1.2 * u} 0t${1.2 * u} 0"/>`;
+      const windingB = `<path class="symbol-accent" d="M${-2.4 * u} ${2 * u}q${0.6 * u} ${0.8 * u} ${1.2 * u} 0t${1.2 * u} 0t${1.2 * u} 0t${1.2 * u} 0"/>`;
+      return `${line(-5, -2, -2.4, -2)}${line(-5, 2, -2.4, 2)}${line(2.4, -2, 5, -2)}${line(2.4, 2, 5, 2)}<circle class="symbol-fill" cx="0" cy="0" r="${3 * u}"/>${windingA}${windingB}<text class="component-value" x="0" y="4">2Φ BIP</text>`;
+    }
+    if (kind === "stepper_unipolar") {
+      const leads = [-2, 0, 2].map((offset) => `${line(-6, offset, -3.05, offset)}${line(3.05, offset, 6, offset)}`).join("");
+      return `${leads}<circle class="symbol-fill" cx="0" cy="0" r="${3.05 * u}"/><path class="symbol-accent" d="M${-2.55 * u} ${-2 * u}q${0.42 * u} ${-0.62 * u} ${0.84 * u} 0t${0.84 * u} 0t${0.84 * u} 0M${-2.55 * u} ${2 * u}q${0.42 * u} ${0.62 * u} ${0.84 * u} 0t${0.84 * u} 0t${0.84 * u} 0M${0.05 * u} ${-2 * u}q${0.42 * u} ${-0.62 * u} ${0.84 * u} 0t${0.84 * u} 0t${0.84 * u} 0M${0.05 * u} ${2 * u}q${0.42 * u} ${0.62 * u} ${0.84 * u} 0t${0.84 * u} 0t${0.84 * u} 0"/><text class="component-value" x="0" y="4">2Φ UNI</text>`;
+    }
+    if (kind === "servo_motor") {
+      return `${line(-6, -2, -3.8, -2)}${line(-6, 2, -3.8, 2)}${line(3.8, -2, 6, -2)}${line(3.8, 2, 6, 2)}<rect class="symbol-fill" x="${-3.8 * u}" y="${-3.1 * u}" width="${7.6 * u}" height="${6.2 * u}" rx="8"/><circle class="symbol-accent" cx="${-1.25 * u}" cy="0" r="${1.45 * u}"/><path class="symbol-accent" d="M${0.65 * u} ${1.35 * u}L${1.75 * u} ${0.15 * u}L${2.85 * u} ${1.35 * u}M${1.75 * u} ${0.15 * u}V${-1.6 * u}"/><text class="component-value" x="${-1.25 * u}" y="5">M</text><text class="component-value" x="${1.75 * u}" y="${2.25 * u}">SERVO</text>`;
+    }
+    if (kind === "compressor_hermetic") {
+      return `${line(-2, -5, -2, -3.15)}${line(0, -5, 0, -3.25)}${line(2, -5, 2, -3.15)}<circle class="symbol-fill" cx="0" cy="0" r="${3.25 * u}"/>${line(2.85, 1.55, 5, 2)}<path class="symbol-accent" d="M${-1.8 * u} ${1.3 * u}Q0 ${-1.8 * u} ${1.8 * u} ${1.3 * u}"/><text class="component-ref" x="0" y="${-0.25 * u}">COMP</text><text class="component-value" x="0" y="${0.75 * u}">HERM</text>`;
+    }
+    if (kind === "heater") {
+      return `${line(-4, 0, -2.25, 0)}<rect class="symbol-fill" x="${-2.25 * u}" y="${-0.85 * u}" width="${4.5 * u}" height="${1.7 * u}" rx="4"/>${line(2.25, 0, 4, 0)}<path class="symbol-accent" d="M${-1.75 * u} 0l${0.55 * u} ${-0.55 * u}l${0.55 * u} ${1.1 * u}l${0.55 * u} ${-1.1 * u}l${0.55 * u} ${1.1 * u}l${0.55 * u} ${-1.1 * u}l${0.55 * u} ${0.55 * u}M${-1.25 * u} ${-1.45 * u}q${0.35 * u} ${-0.45 * u} ${0.7 * u} 0t${0.7 * u} 0M${0.15 * u} ${-1.45 * u}q${0.35 * u} ${-0.45 * u} ${0.7 * u} 0"/>`;
+    }
+    if (kind === "eev_stepper") {
+      const leads = [-3, -1, 1, 3].map((offset) => line(-6, offset, -3.7, offset)).join("");
+      return `${leads}<rect class="symbol-fill" x="${-3.7 * u}" y="${-4 * u}" width="${7.7 * u}" height="${8 * u}" rx="7"/><path class="symbol-accent" d="M${-3.15 * u} ${-3 * u}q${0.45 * u} ${-0.65 * u} ${0.9 * u} 0t${0.9 * u} 0M${-3.15 * u} ${-1 * u}q${0.45 * u} ${-0.65 * u} ${0.9 * u} 0t${0.9 * u} 0M${-3.15 * u} ${1 * u}q${0.45 * u} ${0.65 * u} ${0.9 * u} 0t${0.9 * u} 0M${-3.15 * u} ${3 * u}q${0.45 * u} ${0.65 * u} ${0.9 * u} 0t${0.9 * u} 0M${-1.2 * u} 0H${0.25 * u}"/><path class="symbol-line" d="M${0.25 * u} ${-1.8 * u}L${1.85 * u} 0L${0.25 * u} ${1.8 * u}ZM${3.45 * u} ${-1.8 * u}L${1.85 * u} 0L${3.45 * u} ${1.8 * u}Z"/><text class="component-value" x="${1.85 * u}" y="${3 * u}">EEV</text>`;
+    }
+    if (kind === "four_way_valve") {
+      return `${line(-6, 0, -1.65, 0)}<rect class="symbol-fill" x="${-1.65 * u}" y="${-0.8 * u}" width="${3.3 * u}" height="${1.6 * u}" rx="4"/>${line(1.65, 0, 6, 0)}<path class="symbol-accent" d="M${-1.2 * u} ${0.5 * u}L${-0.4 * u} ${-0.5 * u}L${0.4 * u} ${0.5 * u}L${1.2 * u} ${-0.5 * u}M0 ${-0.8 * u}V${-1.45 * u}"/><rect class="symbol-fill" x="${-2.8 * u}" y="${-3.2 * u}" width="${5.6 * u}" height="${1.75 * u}" rx="5"/><path class="symbol-accent" d="M${-2.2 * u} ${-2.75 * u}C${-1.15 * u} ${-1.65 * u},${1.15 * u} ${-1.65 * u},${2.2 * u} ${-2.75 * u}M${-2.2 * u} ${-1.9 * u}C${-1.15 * u} ${-3 * u},${1.15 * u} ${-3 * u},${2.2 * u} ${-1.9 * u}"/><text class="component-value" x="0" y="${-3.55 * u}">4WV</text>`;
+    }
+    if (kind === "drain_pump") {
+      return `${line(-5, 0, -2.5, 0)}<circle class="symbol-fill" cx="0" cy="0" r="${2.5 * u}"/>${line(2.5, 0, 5, 0)}<path class="symbol-accent" d="M${-1.2 * u} ${-1.15 * u}L${1.25 * u} 0L${-1.2 * u} ${1.15 * u}ZM${-1.7 * u} ${1.75 * u}q${0.42 * u} ${-0.38 * u} ${0.84 * u} 0t${0.84 * u} 0t${0.84 * u} 0t${0.84 * u} 0"/><text class="component-value" x="0" y="${-1.65 * u}">DP</text>`;
+    }
+    if (kind === "motor_psc") {
+      return `${line(-6, 0, -3.25, 0)}${line(-2, -5, -2, -3.05)}${line(2, -5, 2, -3.05)}${line(3.25, 0, 6, 0)}<circle class="symbol-fill" cx="0" cy="0" r="${3.25 * u}"/><path class="symbol-accent" d="M${-2.55 * u} 0q${0.52 * u} ${-0.72 * u} ${1.04 * u} 0t${1.04 * u} 0t${1.04 * u} 0M${0.25 * u} ${-2.1 * u}q${0.52 * u} ${-0.72 * u} ${1.04 * u} 0t${1.04 * u} 0M${1.45 * u} ${-0.9 * u}V${0.9 * u}M${2 * u} ${-0.9 * u}V${0.9 * u}"/><text class="component-value" x="0" y="${1.95 * u}">PSC</text>`;
+    }
+    if (kind === "motor_shaded_pole") {
+      return `${line(-4, 0, -2.45, 0)}<circle class="symbol-fill" cx="0" cy="0" r="${2.45 * u}"/>${line(2.45, 0, 4, 0)}<text class="polarity" x="${-0.35 * u}" y="4">M</text><text class="component-value" x="0" y="${1.05 * u}">1~</text><path class="symbol-accent" d="M${0.95 * u} ${-1.55 * u}q${0.8 * u} ${0.55 * u} 0 ${1.1 * u}M${1.35 * u} ${-1.75 * u}q${0.8 * u} ${0.55 * u} 0 ${1.1 * u}"/>`;
+    }
+    if (kind === "motor_ec") {
+      return `${line(-6, -2, -4.1, -2)}${line(-6, 2, -4.1, 2)}${line(4.1, 0, 6, 0)}<rect class="symbol-fill" x="${-4.1 * u}" y="${-3.35 * u}" width="${8.2 * u}" height="${6.7 * u}" rx="8"/><rect class="symbol-accent" x="${-3.45 * u}" y="${-2.35 * u}" width="${2.1 * u}" height="${4.7 * u}" rx="4"/><circle class="symbol-accent" cx="${1.25 * u}" cy="0" r="${1.85 * u}"/><path class="symbol-accent" d="M${-0.95 * u} 0H${-0.6 * u}M${-2.95 * u} ${-1.2 * u}h${1.1 * u}M${-2.95 * u} 0h${1.1 * u}M${-2.95 * u} ${1.2 * u}h${1.1 * u}"/><text class="component-value" x="${1.25 * u}" y="5">EC</text>`;
+    }
+    if (kind === "compressor_crs") {
+      return `${line(-5, 0, -2.95, 0)}${line(2.6, -1.45, 5, -2)}${line(2.6, 1.45, 5, 2)}<circle class="symbol-fill" cx="0" cy="0" r="${3 * u}"/><circle cx="0" cy="0" r="4" fill="#202824"/>${line(0, 0, -2.7, 0, "symbol-accent")}${line(0, 0, 2.55, -1.4, "symbol-accent")}${line(0, 0, 2.55, 1.4, "symbol-accent")}<text class="component-value" x="${-2.25 * u}" y="${-0.35 * u}">C</text><text class="component-value" x="${2.25 * u}" y="${-1.75 * u}">R</text><text class="component-value" x="${2.25 * u}" y="${2.15 * u}">S</text><text class="component-ref" x="0" y="${-2 * u}">COMP</text>`;
     }
     if (kind === "pump") {
       return `${line(-4, 0, -2.2, 0)}<circle class="symbol-fill" cx="0" cy="0" r="${2.2 * u}"/>${line(2.2, 0, 4, 0)}<path class="symbol-accent" d="M${-0.9 * u} ${-1.15 * u}L${1.25 * u} 0L${-0.9 * u} ${1.15 * u}Z"/>`;
