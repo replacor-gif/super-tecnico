@@ -1,0 +1,111 @@
+{
+  "schema_version": "0.1.0",
+  "tool_id": "super_tecnico.electrical_panel_designer",
+  "name": "Diseñador integral de cuadros eléctricos",
+  "status": "design_foundation_private",
+  "provider_neutral": true,
+  "embedded_ai_model": false,
+  "jurisdiction_profiles": ["ES_DBO", "ES_PSC", "ES_MACHINE", "ES_HVAC_AUTOMATION", "ES_EMBEDDED_IOT"],
+  "project_schema": "panel-project.schema.json",
+  "standards_registry": "standards-registry.json",
+  "controller_registry": "../electroia/controller-ecosystems.json",
+  "semantic_validator": "../../tools/validate_panel_project.py",
+  "core_principle": "One technical project graph produces calculations, diagrams, physical layout, automation artifacts, manufacturing documents and evidence.",
+  "project_kinds": [
+    "distribution_board_dbo",
+    "power_control_assembly_psc",
+    "machine_electrical_equipment",
+    "building_hvac_automation",
+    "embedded_iot_control"
+  ],
+  "human_modes": ["guided_technician", "professional", "review_only"],
+  "machine_clients": ["external_ai", "engineering_software", "configuration_service"],
+  "design_layers": [
+    "requirements",
+    "applicability",
+    "loads_and_supply",
+    "power_and_protection",
+    "control_and_io",
+    "functional_safety",
+    "network_and_cybersecurity",
+    "enclosure_and_thermal",
+    "placement_and_routing",
+    "documentation",
+    "manufacturing",
+    "commissioning_and_as_built"
+  ],
+  "planned_engines": [
+    {"id": "requirements_normalizer", "execution": "ai_or_guided", "result": "structured_requirements"},
+    {"id": "applicability_resolver", "execution": "deterministic_reviewed_rules", "result": "standards_profile"},
+    {"id": "load_and_supply", "execution": "deterministic", "result": "design_currents_and_power_balance"},
+    {"id": "conductor_and_voltage_drop", "execution": "deterministic", "result": "candidate_conductors"},
+    {"id": "short_circuit_and_breaking_capacity", "execution": "deterministic", "result": "fault_levels_and_verification"},
+    {"id": "protection_coordination", "execution": "deterministic_plus_manufacturer_data", "result": "selectivity_and_backup_status"},
+    {"id": "automation_io", "execution": "deterministic", "result": "io_map_addresses_terminals_and_power"},
+    {"id": "functional_safety", "execution": "reviewed_method_with_professional_approval", "result": "safety_functions_and_validation_plan"},
+    {"id": "thermal_enclosure", "execution": "deterministic", "result": "losses_temperature_and_cooling"},
+    {"id": "panel_placement", "execution": "constraint_solver", "result": "rails_ducts_components_and_reserve"},
+    {"id": "wire_routing", "execution": "constraint_solver", "result": "routes_lengths_fill_and_segregation"},
+    {"id": "electroia_documents", "execution": "deterministic", "result": "linked_electrotechnical_documents"}
+  ],
+  "minimum_outputs": [
+    "project_summary",
+    "load_list",
+    "single_line_diagram",
+    "power_and_control_schematics",
+    "io_and_network_diagram",
+    "terminal_plan",
+    "panel_layout_2d",
+    "bill_of_materials",
+    "wire_cable_ferrule_and_label_lists",
+    "calculation_and_verification_report",
+    "applicable_requirements_and_open_checks",
+    "commissioning_test_plan",
+    "automation_source_and_backup_manifest"
+  ],
+  "automation_targets": [
+    "industrial_plc",
+    "safety_plc",
+    "codesys_target",
+    "arduino_development_board",
+    "arduino_industrial_controller",
+    "raspberry_pi_edge_controller",
+    "custom_embedded_controller"
+  ],
+  "interchange_targets": [
+    "electroia_json",
+    "PLCopen_XML_IEC_61131_10",
+    "AutomationML_IEC_62714",
+    "structured_text",
+    "ladder_or_fbd_when_supported",
+    "CSV_XLSX_io_and_terminals",
+    "SVG_PDF",
+    "DXF_STEP_future",
+    "manufacturing_machine_formats_future"
+  ],
+  "evidence_policy": {
+    "levels": ["official_source_hit", "reviewed_rule", "deterministic_result", "professional_verification_pending"],
+    "compliance_claim_requires_professional_approval": true,
+    "protected_standard_text_is_not_published_without_license": true,
+    "source_change_invalidates_dependent_reviewed_rules": true
+  },
+  "safety_boundaries": {
+    "generic_arduino_or_raspberry_pi_as_safety_controller": false,
+    "remote_upload_without_explicit_authorization": false,
+    "automatic_compliance_declaration": false,
+    "manufacturer_tables_required_for_selectivity_or_backup_when_applicable": true,
+    "routine_verification_and_commissioning_required": true
+  },
+  "first_reference_case": {
+    "id": "panel_motor_pump_dol_auto_manual",
+    "description": "Three-phase motor or pump panel with protection, contactor, overload, start-stop, auto-manual, emergency stop, signalling, terminal blocks and optional controller.",
+    "acceptance": [
+      "single_source_project_graph",
+      "linked_power_control_io_terminal_and_layout_views",
+      "deterministic_calculations_with_evidence",
+      "complete_bom_and_wire_list",
+      "mobile_and_desktop_review",
+      "no_unresolved_critical_error_hidden"
+    ]
+  }
+}

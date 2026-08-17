@@ -1,0 +1,208 @@
+{
+  "schema_version": "0.1.0",
+  "project_id": "REF-PUMP-DOL-001",
+  "title": "Cuadro de bomba trifásica con manual y automático",
+  "revision": "A",
+  "jurisdiction_profile": "ES_MACHINE",
+  "project_kind": "machine_electrical_equipment",
+  "requirements": {
+    "functional_description": "Alimentar y controlar una bomba trifásica mediante arranque directo, con selección manual o automática, parada local, protección de motor y parada de emergencia.",
+    "operating_modes": ["stopped", "manual", "automatic"],
+    "required_outputs": ["single_line_diagram", "power_schematic", "control_schematic", "terminal_plan", "panel_layout_2d", "bill_of_materials", "wire_list", "verification_report"],
+    "future_reserve_percent": 20,
+    "notes": ["Caso de referencia para probar el grafo técnico completo; no es un diseño aprobado para fabricar."]
+  },
+  "environment": {
+    "installation": "indoor",
+    "ambient_temperature": {"value": 35, "unit": "degC"},
+    "maximum_altitude": {"value": 1000, "unit": "m"},
+    "ingress_protection_target": "IP54",
+    "pollution_degree": 3,
+    "corrosion_or_chemical_risk": "low",
+    "emc_environment": "industrial",
+    "hazardous_area": false,
+    "notes": []
+  },
+  "supply": {
+    "current_type": "AC",
+    "phases": 3,
+    "nominal_voltage": {"value": 400, "unit": "V"},
+    "frequency": {"value": 50, "unit": "Hz"},
+    "earthing_system": "TN_S",
+    "neutral_available": true,
+    "source_evidence_ids": ["EV-SUPPLY-001"]
+  },
+  "loads": [
+    {
+      "id": "LOAD-PUMP-1",
+      "tag": "M1",
+      "description": "Motor de bomba",
+      "load_type": "motor",
+      "rated_power": {"value": 4, "unit": "kW"},
+      "current_type": "AC",
+      "phases": 3,
+      "nominal_voltage": {"value": 400, "unit": "V"},
+      "power_factor": 0.82,
+      "efficiency": 0.86,
+      "starting_method": "direct_on_line",
+      "operating_mode": "intermittent",
+      "simultaneity_factor": 1,
+      "required_protection_functions": ["short_circuit", "overload", "phase_loss"],
+      "source_evidence_ids": ["EV-MOTOR-001"]
+    }
+  ],
+  "field_devices": [
+    {
+      "id": "FD-START",
+      "tag": "S1",
+      "description": "Pulsador de marcha manual",
+      "device_type": "pushbutton",
+      "connections": [
+        {"id": "S1-13", "designation": "13", "signal_type": "RELAY_DRY_CONTACT"},
+        {"id": "S1-14", "designation": "14", "signal_type": "RELAY_DRY_CONTACT"}
+      ],
+      "location": "door"
+    },
+    {
+      "id": "FD-STOP",
+      "tag": "S0",
+      "description": "Pulsador de parada",
+      "device_type": "pushbutton",
+      "connections": [
+        {"id": "S0-11", "designation": "11", "signal_type": "RELAY_DRY_CONTACT"},
+        {"id": "S0-12", "designation": "12", "signal_type": "RELAY_DRY_CONTACT"}
+      ],
+      "location": "door",
+      "fail_state": "open"
+    },
+    {
+      "id": "FD-AUTO-DEMAND",
+      "tag": "B1",
+      "description": "Contacto de demanda automática",
+      "device_type": "switch",
+      "connections": [
+        {"id": "B1-13", "designation": "13", "signal_type": "RELAY_DRY_CONTACT"},
+        {"id": "B1-14", "designation": "14", "signal_type": "RELAY_DRY_CONTACT"}
+      ],
+      "location": "field",
+      "fail_state": "open"
+    },
+    {
+      "id": "FD-CONTACTOR",
+      "tag": "KM1",
+      "description": "Contactor de potencia de la bomba",
+      "device_type": "contactor",
+      "connections": [
+        {"id": "KM1-A1", "designation": "A1", "signal_type": "24VDC_PNP"},
+        {"id": "KM1-A2", "designation": "A2", "signal_type": "24VDC_PNP"}
+      ],
+      "location": "panel",
+      "fail_state": "de_energized"
+    },
+    {
+      "id": "FD-SAFETY-RELAY",
+      "tag": "KSR1",
+      "description": "Relé de seguridad para la parada de emergencia",
+      "device_type": "relay",
+      "connections": [
+        {"id": "KSR1-S11", "designation": "S11", "signal_type": "24VDC_PNP"},
+        {"id": "KSR1-S12", "designation": "S12", "signal_type": "24VDC_PNP"},
+        {"id": "KSR1-13", "designation": "13", "signal_type": "RELAY_DRY_CONTACT"},
+        {"id": "KSR1-14", "designation": "14", "signal_type": "RELAY_DRY_CONTACT"}
+      ],
+      "location": "panel",
+      "fail_state": "outputs_open"
+    }
+  ],
+  "control_system": {
+    "architecture": "hybrid",
+    "controllers": [
+      {
+        "id": "CTRL-PLC-1",
+        "tag": "A1",
+        "ecosystem_id": "generic_iec_industrial_plc",
+        "safety_role": "non_safety_control",
+        "power_supply": {"value": 24, "unit": "VDC"},
+        "interfaces": ["24VDC_PNP"],
+        "io_modules": [
+          {"id": "A1-DI", "slot": 0, "module_type": "DI", "channel_count": 8, "electrical_standard": "24VDC_PNP"},
+          {"id": "A1-DO", "slot": 1, "module_type": "DO", "channel_count": 8, "electrical_standard": "24VDC_PNP"}
+        ],
+        "source_evidence_ids": []
+      }
+    ],
+    "io_points": [
+      {"id": "IO-START", "tag": "I_START", "description": "Orden de marcha manual", "direction": "DI", "electrical_standard": "24VDC_PNP", "controller_id": "CTRL-PLC-1", "module_id": "A1-DI", "channel": 0, "address": "%IX0.0", "variable": "xStart", "field_device_id": "FD-START", "field_connection_id": "S1-14", "normal_state": "false", "fail_state": "false", "safety_related": false},
+      {"id": "IO-STOP", "tag": "I_STOP_OK", "description": "Cadena de parada disponible", "direction": "DI", "electrical_standard": "24VDC_PNP", "controller_id": "CTRL-PLC-1", "module_id": "A1-DI", "channel": 1, "address": "%IX0.1", "variable": "xStopOk", "field_device_id": "FD-STOP", "field_connection_id": "S0-12", "normal_state": "true", "fail_state": "false", "safety_related": false},
+      {"id": "IO-AUTO", "tag": "I_AUTO_DEMAND", "description": "Demanda del proceso", "direction": "DI", "electrical_standard": "24VDC_PNP", "controller_id": "CTRL-PLC-1", "module_id": "A1-DI", "channel": 2, "address": "%IX0.2", "variable": "xAutoDemand", "field_device_id": "FD-AUTO-DEMAND", "field_connection_id": "B1-14", "normal_state": "false", "fail_state": "false", "safety_related": false},
+      {"id": "IO-CONTACTOR", "tag": "Q_PUMP", "description": "Orden al contactor de bomba", "direction": "DO", "electrical_standard": "24VDC_PNP", "controller_id": "CTRL-PLC-1", "module_id": "A1-DO", "channel": 0, "address": "%QX0.0", "variable": "xPumpCommand", "field_device_id": "FD-CONTACTOR", "field_connection_id": "KM1-A1", "normal_state": "false", "fail_state": "false", "safety_related": false}
+    ],
+    "networks": [],
+    "sequences": [
+      {
+        "id": "SEQ-PUMP",
+        "name": "Mando de bomba",
+        "trigger": "Marcha manual o demanda automática con permisos activos",
+        "steps": ["comprobar cadena de parada", "comprobar protección de motor", "activar KM1", "confirmar marcha"],
+        "interlocks": ["no arrancar con parada activa", "no arrancar con sobrecarga disparada"],
+        "fault_response": "Desactivar KM1, conservar diagnóstico y exigir rearme cuando corresponda."
+      }
+    ],
+    "cause_and_effect": [
+      {"cause": "Parada de emergencia accionada", "effect": "El relé de seguridad abre el circuito de mando de KM1 independientemente del PLC", "reset": "Rearme manual después de eliminar la causa"}
+    ]
+  },
+  "safety": {
+    "risk_assessment_status": "not_started",
+    "safety_functions": [
+      {
+        "id": "SF-E-STOP-1",
+        "description": "Parada de emergencia de la bomba",
+        "standard": "pending_selection",
+        "required_level": "pending_risk_assessment",
+        "status": "calculation_pending",
+        "safe_state": "KM1 de-energized and motor supply interrupted",
+        "input_device_ids": [],
+        "logic_controller_ids": ["FD-SAFETY-RELAY"],
+        "output_device_ids": ["FD-CONTACTOR"]
+      }
+    ],
+    "professional_approval": {"role": "responsible_designer", "status": "pending", "scope": "risk assessment, safety function and complete design"}
+  },
+  "design_preferences": {
+    "preferred_manufacturers": [],
+    "excluded_manufacturers": [],
+    "wire_colour_system": "pending_project_standard",
+    "component_tagging_system": "IEC_81346_project_rules",
+    "spare_io_percent": 20,
+    "spare_terminal_percent": 20
+  },
+  "evidence": [
+    {
+      "id": "EV-SUPPLY-001",
+      "kind": "site_measurement",
+      "title": "Características declaradas de la alimentación",
+      "status": "professional_verification_pending",
+      "applies_to": ["supply"]
+    },
+    {
+      "id": "EV-MOTOR-001",
+      "kind": "manufacturer_data",
+      "title": "Placa y ficha del motor pendientes de adjuntar",
+      "status": "professional_verification_pending",
+      "applies_to": ["LOAD-PUMP-1"]
+    }
+  ],
+  "lifecycle": {
+    "state": "draft",
+    "created_at": "2026-08-17T12:00:00+02:00",
+    "updated_at": "2026-08-17T12:00:00+02:00",
+    "open_checks": [
+      {"id": "CHK-SC-001", "severity": "critical", "message": "Falta la corriente de cortocircuito prevista en el origen del cuadro.", "blocks_manufacture": true, "required_evidence": "Medición, cálculo o dato oficial de la alimentación."},
+      {"id": "CHK-MOTOR-001", "severity": "critical", "message": "Falta la intensidad de placa y el régimen real del motor.", "blocks_manufacture": true, "required_evidence": "Fotografía de placa o ficha del fabricante."},
+      {"id": "CHK-SAFETY-001", "severity": "critical", "message": "La función de parada de emergencia necesita evaluación de riesgos, nivel requerido, selección de componentes y validación.", "blocks_manufacture": true, "required_evidence": "Expediente de seguridad validado."},
+      {"id": "CHK-PLC-001", "severity": "warning", "message": "Falta seleccionar el modelo exacto de PLC y comprobar sus canales y terminales.", "blocks_manufacture": true, "required_evidence": "Ficha oficial y configuración de hardware."}
+    ],
+    "approvals": []
+  }
+}

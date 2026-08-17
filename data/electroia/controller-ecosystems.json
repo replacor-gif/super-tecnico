@@ -1,0 +1,230 @@
+{
+  "schema_version": "0.1.0",
+  "updated_at": "2026-08-17",
+  "registry_id": "electroia.controller_ecosystems",
+  "status": "design_foundation_private",
+  "purpose": "Describe controller capabilities and electrical interface rules without coupling ElectroIA to one manufacturer.",
+  "core_safety_policy": {
+    "default_classification": "non_safety_control",
+    "generic_arduino_or_raspberry_pi_may_execute_safety_functions": false,
+    "safety_control_requires": [
+      "explicit_safety_rated_controller_model",
+      "verified_input_and_output_subsystem",
+      "documented_safety_function",
+      "risk_assessment",
+      "calculation_and_validation_under_applicable_functional_safety_standard",
+      "professional_approval"
+    ],
+    "fail_safe_state_required_for_every_critical_output": true
+  },
+  "signal_types": [
+    {
+      "id": "24VDC_PNP",
+      "domain": "digital",
+      "nominal_level": "24 V DC",
+      "interface_rules": ["verify_source_or_sink topology", "verify common reference", "verify input thresholds and current"]
+    },
+    {
+      "id": "24VDC_NPN",
+      "domain": "digital",
+      "nominal_level": "24 V DC",
+      "interface_rules": ["verify source_or_sink topology", "verify common reference", "verify input thresholds and current"]
+    },
+    {
+      "id": "RELAY_DRY_CONTACT",
+      "domain": "digital",
+      "nominal_level": "potential-free contact",
+      "interface_rules": ["verify contact utilization category", "verify voltage and current", "protect inductive loads"]
+    },
+    {
+      "id": "0_10V",
+      "domain": "analog",
+      "nominal_level": "0 to 10 V",
+      "interface_rules": ["verify common reference", "use screened cable when required", "define behaviour for open circuit"]
+    },
+    {
+      "id": "4_20mA",
+      "domain": "analog",
+      "nominal_level": "4 to 20 mA",
+      "interface_rules": ["verify active or passive loop", "calculate loop voltage budget", "define under-range and over-range diagnostics"]
+    },
+    {
+      "id": "RTD",
+      "domain": "temperature",
+      "nominal_level": "resistive sensor",
+      "interface_rules": ["record sensor curve", "record 2 3 or 4 wire connection", "apply lead compensation where supported"]
+    },
+    {
+      "id": "THERMOCOUPLE",
+      "domain": "temperature",
+      "nominal_level": "thermoelectric sensor",
+      "interface_rules": ["record thermocouple type", "respect polarity", "provide cold junction compensation"]
+    },
+    {
+      "id": "PULSE_ENCODER",
+      "domain": "motion",
+      "nominal_level": "pulse or quadrature",
+      "interface_rules": ["verify electrical driver type", "verify maximum frequency", "verify screening and termination"]
+    },
+    {
+      "id": "3V3_GPIO",
+      "domain": "embedded_digital",
+      "nominal_level": "3.3 V logic",
+      "interface_rules": ["never connect directly to 24 V field wiring", "check absolute maximum ratings", "add isolation or industrial interface"]
+    },
+    {
+      "id": "5V_GPIO",
+      "domain": "embedded_digital",
+      "nominal_level": "5 V logic",
+      "interface_rules": ["never connect directly to 24 V field wiring", "check output current", "add isolation or industrial interface"]
+    },
+    {
+      "id": "RS485",
+      "domain": "communications",
+      "nominal_level": "differential serial bus",
+      "interface_rules": ["define protocol", "define topology", "terminate both ends", "define biasing and reference", "use galvanic isolation when required"]
+    },
+    {
+      "id": "CAN",
+      "domain": "communications",
+      "nominal_level": "differential fieldbus",
+      "interface_rules": ["define application protocol", "terminate both ends", "verify bitrate and cable length", "define reference and isolation"]
+    },
+    {
+      "id": "ETHERNET",
+      "domain": "communications",
+      "nominal_level": "IEEE 802.3 family",
+      "interface_rules": ["define physical medium and connector", "define industrial protocol", "define addressing", "define cybersecurity zone and access policy"]
+    }
+  ],
+  "ecosystems": [
+    {
+      "id": "generic_iec_industrial_plc",
+      "name": "PLC industrial IEC 61131-3",
+      "role": "machine_or_process_controller",
+      "safety_class": "non_safety_by_default",
+      "allowed_safety_roles": ["none", "monitoring", "non_safety_control"],
+      "typical_signals": ["24VDC_PNP", "24VDC_NPN", "RELAY_DRY_CONTACT", "0_10V", "4_20mA", "RTD", "THERMOCOUPLE", "PULSE_ENCODER", "RS485", "CAN", "ETHERNET"],
+      "required_model_data": ["manufacturer", "family", "exact_model", "firmware", "power_supply", "io_modules", "channel_electrical_types", "terminal_assignment", "communications"],
+      "generated_artifacts": ["io_map", "address_map", "terminal_plan", "variable_list", "program_structure", "backup_manifest"],
+      "preferred_exchange": ["PLCopen_XML_IEC_61131_10", "AutomationML_IEC_62714", "structured_text", "CSV_io"]
+    },
+    {
+      "id": "safety_plc",
+      "name": "PLC de seguridad certificado",
+      "role": "safety_related_control",
+      "safety_class": "model_specific_verification_required",
+      "allowed_safety_roles": ["none", "monitoring", "non_safety_control", "safety_control"],
+      "typical_signals": ["24VDC_PNP", "RELAY_DRY_CONTACT", "ETHERNET"],
+      "required_model_data": ["manufacturer", "exact_model", "firmware", "certificate", "safety_manual", "safe_io_modules", "proof_test_or_diagnostic_requirements"],
+      "generated_artifacts": ["safety_io_map", "safety_function_matrix", "cause_and_effect", "validation_plan", "software_backup_manifest"],
+      "preferred_exchange": ["vendor_project", "PLCopen_XML_when_supported", "PDF_validation_record"],
+      "prohibitions": ["do_not_infer_safety_integrity_from_brand_or_product_family"]
+    },
+    {
+      "id": "codesys_target",
+      "name": "Controlador compatible con CODESYS",
+      "role": "vendor_neutral_iec_controller",
+      "safety_class": "target_specific_non_safety_by_default",
+      "allowed_safety_roles": ["none", "monitoring", "non_safety_control"],
+      "typical_signals": ["24VDC_PNP", "24VDC_NPN", "RELAY_DRY_CONTACT", "0_10V", "4_20mA", "RS485", "CAN", "ETHERNET"],
+      "required_model_data": ["runtime_target", "runtime_version", "device_description", "io_configuration", "libraries", "fieldbuses"],
+      "generated_artifacts": ["iec_program_structure", "io_map", "variable_list", "library_manifest", "target_manifest"],
+      "preferred_exchange": ["PLCopen_XML_IEC_61131_10", "structured_text", "AutomationML_IEC_62714"]
+    },
+    {
+      "id": "arduino_generic_5v",
+      "name": "Arduino genérico de lógica de 5 V",
+      "role": "prototype_or_non_safety_embedded_controller",
+      "safety_class": "non_safety",
+      "allowed_safety_roles": ["none", "monitoring", "non_safety_control"],
+      "typical_signals": ["5V_GPIO", "RS485", "CAN", "ETHERNET"],
+      "required_model_data": ["board_fqbn", "board_revision", "logic_voltage", "pin_map", "power_budget", "interface_modules", "libraries"],
+      "generated_artifacts": ["pin_map", "wiring_interface_diagram", "source_project", "compile_manifest", "library_lock", "upload_instructions"],
+      "preferred_exchange": ["arduino_cli_project", "JSON_pin_map"],
+      "mandatory_interface_rules": ["no_direct_24V_field_connection", "protect_and_condition_every_field_io", "document_common_ground_or_isolation"]
+    },
+    {
+      "id": "arduino_generic_3v3",
+      "name": "Arduino genérico de lógica de 3,3 V",
+      "role": "prototype_or_non_safety_embedded_controller",
+      "safety_class": "non_safety",
+      "allowed_safety_roles": ["none", "monitoring", "non_safety_control"],
+      "typical_signals": ["3V3_GPIO", "RS485", "CAN", "ETHERNET"],
+      "required_model_data": ["board_fqbn", "board_revision", "logic_voltage", "pin_map", "power_budget", "interface_modules", "libraries"],
+      "generated_artifacts": ["pin_map", "wiring_interface_diagram", "source_project", "compile_manifest", "library_lock", "upload_instructions"],
+      "preferred_exchange": ["arduino_cli_project", "JSON_pin_map"],
+      "mandatory_interface_rules": ["no_direct_5V_or_24V_connection_without_compatibility_check", "protect_and_condition_every_field_io", "document_common_ground_or_isolation"]
+    },
+    {
+      "id": "arduino_opta",
+      "name": "Arduino Opta",
+      "role": "industrial_micro_plc",
+      "safety_class": "non_safety",
+      "allowed_safety_roles": ["none", "monitoring", "non_safety_control"],
+      "typical_signals": ["24VDC_PNP", "RELAY_DRY_CONTACT", "0_10V", "RS485", "ETHERNET"],
+      "required_model_data": ["exact_model", "hardware_revision", "firmware", "expansion_modules", "channel_configuration", "communications"],
+      "generated_artifacts": ["io_map", "terminal_plan", "iec_or_arduino_program", "compile_manifest", "backup_manifest"],
+      "preferred_exchange": ["IEC_61131_3_project", "arduino_cli_project", "CSV_io"],
+      "official_sources": ["https://docs.arduino.cc/resources/datasheets/AFX00001-AFX00002-AFX00003-datasheet.pdf", "https://www.arduino.cc/pro/software-plc-ide/"]
+    },
+    {
+      "id": "arduino_portenta_machine_control",
+      "name": "Arduino Portenta Machine Control",
+      "role": "industrial_machine_controller",
+      "safety_class": "non_safety",
+      "allowed_safety_roles": ["none", "monitoring", "non_safety_control"],
+      "typical_signals": ["24VDC_PNP", "RELAY_DRY_CONTACT", "0_10V", "4_20mA", "RTD", "THERMOCOUPLE", "PULSE_ENCODER", "RS485", "CAN", "ETHERNET"],
+      "required_model_data": ["hardware_revision", "firmware", "channel_configuration", "power_budget", "communications", "libraries"],
+      "generated_artifacts": ["io_map", "terminal_plan", "iec_or_arduino_program", "compile_manifest", "backup_manifest"],
+      "preferred_exchange": ["IEC_61131_3_project", "arduino_cli_project", "CSV_io"],
+      "official_sources": ["https://docs.arduino.cc/hardware/portenta-machine-control/", "https://www.arduino.cc/pro/software-plc-ide/"]
+    },
+    {
+      "id": "raspberry_pi_compute_or_sbc",
+      "name": "Raspberry Pi Compute Module o SBC",
+      "role": "edge_controller_gateway_hmi_or_supervision",
+      "safety_class": "non_safety",
+      "allowed_safety_roles": ["none", "monitoring", "non_safety_control"],
+      "typical_signals": ["3V3_GPIO", "RS485", "CAN", "ETHERNET"],
+      "required_model_data": ["board_or_compute_module", "carrier_board", "os_image", "kernel", "runtime", "interface_modules", "power_and_shutdown_strategy", "storage_strategy", "network_policy"],
+      "generated_artifacts": ["interface_wiring_diagram", "io_or_tag_map", "software_manifest", "image_or_container_manifest", "backup_and_restore_plan", "cybersecurity_checklist"],
+      "preferred_exchange": ["OPC_UA_information_model", "MQTT_topic_map", "JSON_tag_map", "container_manifest"],
+      "mandatory_interface_rules": ["no_direct_24V_field_connection", "industrial_power_and_emc_interface_required", "defined_safe_output_state_on_boot_crash_and_shutdown", "watchdog_required_for_control_role"],
+      "official_sources": ["https://www.raspberrypi.com/documentation/computers/compute-module.html"]
+    },
+    {
+      "id": "custom_embedded_controller",
+      "name": "Controlador electrónico personalizado",
+      "role": "embedded_control",
+      "safety_class": "non_safety_unless_separately_certified",
+      "allowed_safety_roles": ["none", "monitoring", "non_safety_control"],
+      "typical_signals": ["3V3_GPIO", "5V_GPIO", "RS485", "CAN", "ETHERNET"],
+      "required_model_data": ["schematic_revision", "pcb_revision", "bom_revision", "firmware_revision", "io_electrical_characteristics", "emc_and_environmental_evidence"],
+      "generated_artifacts": ["hardware_interface_contract", "pin_map", "firmware_manifest", "programming_and_test_plan"],
+      "preferred_exchange": ["electroia_json", "CSV_io", "source_archive_manifest"]
+    }
+  ],
+  "interchange_sources": [
+    {
+      "id": "PLCOPEN_XML",
+      "official_url": "https://www.plcopen.org/standards/logic/iec-61131-10/"
+    },
+    {
+      "id": "AUTOMATIONML",
+      "official_url": "https://www.automationml.org/about-automationml/specifications/"
+    },
+    {
+      "id": "ARDUINO_CLI",
+      "official_url": "https://docs.arduino.cc/arduino-cli/"
+    },
+    {
+      "id": "CODESYS",
+      "official_url": "https://www.codesys.com/products/engineering/development-system/"
+    },
+    {
+      "id": "OPC_UA",
+      "official_url": "https://reference.opcfoundation.org/specs/OPC-10000-1/4.1/"
+    }
+  ]
+}

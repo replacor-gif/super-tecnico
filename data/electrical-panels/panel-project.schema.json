@@ -1,0 +1,390 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://replacor.es/schemas/electrical-panels/panel-project.schema.json",
+  "title": "Super Técnico electrical panel project",
+  "description": "Manufacturer-neutral source of truth for calculations, diagrams, panel layout, automation and evidence.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "project_id",
+    "title",
+    "revision",
+    "jurisdiction_profile",
+    "project_kind",
+    "requirements",
+    "environment",
+    "supply",
+    "loads",
+    "control_system",
+    "safety",
+    "evidence",
+    "lifecycle"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "project_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,79}$"},
+    "title": {"type": "string", "minLength": 3, "maxLength": 160},
+    "revision": {"type": "string", "minLength": 1, "maxLength": 24},
+    "jurisdiction_profile": {"enum": ["ES_DBO", "ES_PSC", "ES_MACHINE", "ES_HVAC_AUTOMATION", "ES_EMBEDDED_IOT"]},
+    "project_kind": {"enum": ["distribution_board_dbo", "power_control_assembly_psc", "machine_electrical_equipment", "building_hvac_automation", "embedded_iot_control"]},
+    "requirements": {
+      "type": "object",
+      "required": ["functional_description", "operating_modes", "required_outputs"],
+      "properties": {
+        "functional_description": {"type": "string", "minLength": 10},
+        "operating_modes": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+        "required_outputs": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+        "future_reserve_percent": {"type": "number", "minimum": 0, "maximum": 100},
+        "notes": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "environment": {
+      "type": "object",
+      "required": ["installation", "ambient_temperature", "ingress_protection_target"],
+      "properties": {
+        "installation": {"enum": ["indoor", "outdoor", "sheltered_outdoor", "mobile", "unknown"]},
+        "ambient_temperature": {"$ref": "#/$defs/quantity"},
+        "maximum_altitude": {"$ref": "#/$defs/quantity"},
+        "ingress_protection_target": {"type": "string", "pattern": "^IP[0-6X][0-9X][A-Z]?$"},
+        "pollution_degree": {"enum": [1, 2, 3, 4, "unknown"]},
+        "corrosion_or_chemical_risk": {"enum": ["none", "low", "medium", "high", "unknown"]},
+        "emc_environment": {"enum": ["residential_commercial", "industrial", "mixed", "unknown"]},
+        "hazardous_area": {"type": "boolean"},
+        "notes": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "supply": {
+      "type": "object",
+      "required": ["current_type", "phases", "nominal_voltage", "earthing_system"],
+      "properties": {
+        "current_type": {"enum": ["AC", "DC"]},
+        "phases": {"enum": [1, 2, 3]},
+        "nominal_voltage": {"$ref": "#/$defs/quantity"},
+        "frequency": {"$ref": "#/$defs/quantity"},
+        "earthing_system": {"enum": ["TT", "TN_C", "TN_S", "TN_C_S", "IT", "SELV", "PELV", "unknown"]},
+        "neutral_available": {"type": "boolean"},
+        "prospective_short_circuit_current": {"$ref": "#/$defs/quantity"},
+        "upstream_protection": {"$ref": "#/$defs/device_reference"},
+        "source_evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      },
+      "additionalProperties": false
+    },
+    "loads": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/load"},
+      "minItems": 1
+    },
+    "field_devices": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/field_device"},
+      "default": []
+    },
+    "control_system": {
+      "type": "object",
+      "required": ["architecture", "controllers", "io_points", "networks"],
+      "properties": {
+        "architecture": {"enum": ["hardwired", "programmable", "hybrid", "none"]},
+        "controllers": {"type": "array", "items": {"$ref": "#/$defs/controller"}},
+        "io_points": {"type": "array", "items": {"$ref": "#/$defs/io_point"}},
+        "networks": {"type": "array", "items": {"$ref": "#/$defs/network"}},
+        "sequences": {"type": "array", "items": {"$ref": "#/$defs/sequence"}},
+        "cause_and_effect": {"type": "array", "items": {"$ref": "#/$defs/cause_effect"}}
+      },
+      "additionalProperties": false
+    },
+    "safety": {
+      "type": "object",
+      "required": ["risk_assessment_status", "safety_functions"],
+      "properties": {
+        "risk_assessment_status": {"enum": ["not_applicable", "not_started", "in_progress", "approved"]},
+        "safety_functions": {"type": "array", "items": {"$ref": "#/$defs/safety_function"}},
+        "professional_approval": {"$ref": "#/$defs/approval"}
+      },
+      "additionalProperties": false
+    },
+    "enclosure": {
+      "type": "object",
+      "properties": {
+        "manufacturer": {"type": "string"},
+        "family": {"type": "string"},
+        "model": {"type": "string"},
+        "dimensions": {"$ref": "#/$defs/dimensions"},
+        "material": {"type": "string"},
+        "mounting": {"enum": ["wall", "floor", "flush", "machine", "rack", "unknown"]},
+        "target_ip": {"type": "string"},
+        "internal_temperature_limit": {"$ref": "#/$defs/quantity"},
+        "reserve_percent": {"type": "number", "minimum": 0, "maximum": 100}
+      },
+      "additionalProperties": false
+    },
+    "design_preferences": {
+      "type": "object",
+      "properties": {
+        "preferred_manufacturers": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "excluded_manufacturers": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "wire_colour_system": {"type": "string"},
+        "component_tagging_system": {"type": "string"},
+        "spare_io_percent": {"type": "number", "minimum": 0, "maximum": 100},
+        "spare_terminal_percent": {"type": "number", "minimum": 0, "maximum": 100}
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/evidence_reference"}
+    },
+    "lifecycle": {
+      "type": "object",
+      "required": ["state", "created_at", "updated_at", "open_checks"],
+      "properties": {
+        "state": {"enum": ["draft", "calculated", "review_pending", "approved_for_manufacture", "as_built", "retired"]},
+        "created_at": {"type": "string", "format": "date-time"},
+        "updated_at": {"type": "string", "format": "date-time"},
+        "open_checks": {"type": "array", "items": {"$ref": "#/$defs/open_check"}},
+        "approvals": {"type": "array", "items": {"$ref": "#/$defs/approval"}}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "quantity": {
+      "type": "object",
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {"type": "number"},
+        "unit": {"type": "string", "minLength": 1, "maxLength": 24}
+      },
+      "additionalProperties": false
+    },
+    "dimensions": {
+      "type": "object",
+      "required": ["width_mm", "height_mm", "depth_mm"],
+      "properties": {
+        "width_mm": {"type": "number", "exclusiveMinimum": 0},
+        "height_mm": {"type": "number", "exclusiveMinimum": 0},
+        "depth_mm": {"type": "number", "exclusiveMinimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "device_reference": {
+      "type": "object",
+      "properties": {
+        "manufacturer": {"type": "string"},
+        "family": {"type": "string"},
+        "model": {"type": "string"},
+        "catalogue_revision": {"type": "string"},
+        "datasheet_url": {"type": "string", "format": "uri"}
+      },
+      "additionalProperties": false
+    },
+    "connection_point": {
+      "type": "object",
+      "required": ["id", "designation", "signal_type"],
+      "properties": {
+        "id": {"type": "string"},
+        "designation": {"type": "string"},
+        "signal_type": {"type": "string"},
+        "potential": {"type": "string"},
+        "terminal_id": {"type": "string"},
+        "cable_id": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "load": {
+      "type": "object",
+      "required": ["id", "tag", "load_type", "rated_power", "current_type", "phases", "nominal_voltage", "operating_mode"],
+      "properties": {
+        "id": {"type": "string"},
+        "tag": {"type": "string"},
+        "description": {"type": "string"},
+        "load_type": {"enum": ["motor", "heater", "lighting", "socket", "transformer", "power_supply", "drive", "electronic", "other"]},
+        "rated_power": {"$ref": "#/$defs/quantity"},
+        "rated_current": {"$ref": "#/$defs/quantity"},
+        "current_type": {"enum": ["AC", "DC"]},
+        "phases": {"enum": [1, 2, 3]},
+        "nominal_voltage": {"$ref": "#/$defs/quantity"},
+        "power_factor": {"type": "number", "minimum": 0, "maximum": 1},
+        "efficiency": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "starting_method": {"enum": ["direct_on_line", "star_delta", "soft_starter", "variable_speed_drive", "electronic", "not_applicable", "unknown"]},
+        "operating_mode": {"enum": ["continuous", "intermittent", "standby", "emergency", "unknown"]},
+        "simultaneity_factor": {"type": "number", "minimum": 0, "maximum": 1},
+        "required_protection_functions": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "device": {"$ref": "#/$defs/device_reference"},
+        "source_evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      },
+      "additionalProperties": false
+    },
+    "field_device": {
+      "type": "object",
+      "required": ["id", "tag", "device_type", "connections"],
+      "properties": {
+        "id": {"type": "string"},
+        "tag": {"type": "string"},
+        "description": {"type": "string"},
+        "device_type": {"enum": ["sensor", "switch", "pushbutton", "actuator", "valve", "damper", "contactor", "relay", "drive", "hmi", "gateway", "other"]},
+        "device": {"$ref": "#/$defs/device_reference"},
+        "connections": {"type": "array", "items": {"$ref": "#/$defs/connection_point"}, "minItems": 1},
+        "location": {"type": "string"},
+        "fail_state": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "controller": {
+      "type": "object",
+      "required": ["id", "tag", "ecosystem_id", "safety_role", "power_supply", "interfaces", "io_modules"],
+      "properties": {
+        "id": {"type": "string"},
+        "tag": {"type": "string"},
+        "ecosystem_id": {"type": "string"},
+        "manufacturer": {"type": "string"},
+        "family": {"type": "string"},
+        "model": {"type": "string"},
+        "hardware_revision": {"type": "string"},
+        "firmware": {"type": "string"},
+        "runtime": {"type": "string"},
+        "safety_role": {"enum": ["none", "monitoring", "non_safety_control", "safety_control"]},
+        "power_supply": {"$ref": "#/$defs/quantity"},
+        "interfaces": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "io_modules": {"type": "array", "items": {"$ref": "#/$defs/io_module"}},
+        "source_evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      },
+      "additionalProperties": false
+    },
+    "io_module": {
+      "type": "object",
+      "required": ["id", "module_type", "channel_count"],
+      "properties": {
+        "id": {"type": "string"},
+        "slot": {"type": ["string", "integer"]},
+        "module_type": {"enum": ["DI", "DO", "AI", "AO", "mixed", "communications", "safety_DI", "safety_DO", "safety_mixed"]},
+        "channel_count": {"type": "integer", "minimum": 1},
+        "electrical_standard": {"type": "string"},
+        "device": {"$ref": "#/$defs/device_reference"}
+      },
+      "additionalProperties": false
+    },
+    "io_point": {
+      "type": "object",
+      "required": ["id", "tag", "direction", "electrical_standard", "safety_related"],
+      "properties": {
+        "id": {"type": "string"},
+        "tag": {"type": "string"},
+        "description": {"type": "string"},
+        "direction": {"enum": ["DI", "DO", "AI", "AO", "COMM", "SAFETY_DI", "SAFETY_DO"]},
+        "electrical_standard": {"type": "string"},
+        "controller_id": {"type": "string"},
+        "module_id": {"type": "string"},
+        "channel": {"type": ["string", "integer"]},
+        "address": {"type": "string"},
+        "variable": {"type": "string"},
+        "field_device_id": {"type": "string"},
+        "field_connection_id": {"type": "string"},
+        "terminal_id": {"type": "string"},
+        "normal_state": {"type": "string"},
+        "fail_state": {"type": "string"},
+        "safety_related": {"type": "boolean"},
+        "diagnostics": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "network": {
+      "type": "object",
+      "required": ["id", "protocol", "nodes"],
+      "properties": {
+        "id": {"type": "string"},
+        "protocol": {"type": "string"},
+        "physical_layer": {"type": "string"},
+        "topology": {"enum": ["line", "star", "ring", "tree", "bus", "point_to_point", "wireless", "mixed"]},
+        "nodes": {"type": "array", "items": {"type": "string"}, "minItems": 2, "uniqueItems": true},
+        "addressing": {"type": "object", "additionalProperties": {"type": "string"}},
+        "cybersecurity_zone": {"type": "string"},
+        "remote_access": {"enum": ["disabled", "local_only", "vpn_or_managed_gateway", "other_approved"]}
+      },
+      "additionalProperties": false
+    },
+    "sequence": {
+      "type": "object",
+      "required": ["id", "trigger", "steps"],
+      "properties": {
+        "id": {"type": "string"},
+        "name": {"type": "string"},
+        "trigger": {"type": "string"},
+        "steps": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "interlocks": {"type": "array", "items": {"type": "string"}},
+        "fault_response": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "cause_effect": {
+      "type": "object",
+      "required": ["cause", "effect"],
+      "properties": {
+        "cause": {"type": "string"},
+        "effect": {"type": "string"},
+        "delay": {"$ref": "#/$defs/quantity"},
+        "reset": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "safety_function": {
+      "type": "object",
+      "required": ["id", "description", "required_level", "status", "safe_state", "input_device_ids", "logic_controller_ids", "output_device_ids"],
+      "properties": {
+        "id": {"type": "string"},
+        "description": {"type": "string"},
+        "standard": {"enum": ["ISO_13849_1", "IEC_62061", "other", "pending_selection"]},
+        "required_level": {"type": "string"},
+        "achieved_level": {"type": "string"},
+        "status": {"enum": ["defined", "calculation_pending", "validation_pending", "validated"]},
+        "safe_state": {"type": "string"},
+        "input_device_ids": {"type": "array", "items": {"type": "string"}},
+        "logic_controller_ids": {"type": "array", "items": {"type": "string"}},
+        "output_device_ids": {"type": "array", "items": {"type": "string"}},
+        "validation_record_id": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "evidence_reference": {
+      "type": "object",
+      "required": ["id", "kind", "title", "status"],
+      "properties": {
+        "id": {"type": "string"},
+        "kind": {"enum": ["legal_source", "standard_reference", "manufacturer_data", "site_measurement", "user_requirement", "calculation_result", "professional_decision"]},
+        "title": {"type": "string"},
+        "source_url": {"type": "string", "format": "uri"},
+        "source_revision": {"type": "string"},
+        "retrieved_at": {"type": "string", "format": "date-time"},
+        "status": {"enum": ["official_source_hit", "reviewed_rule", "verified_input", "deterministic_result", "professional_verification_pending", "superseded"]},
+        "applies_to": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "open_check": {
+      "type": "object",
+      "required": ["id", "severity", "message", "blocks_manufacture"],
+      "properties": {
+        "id": {"type": "string"},
+        "severity": {"enum": ["info", "warning", "critical"]},
+        "message": {"type": "string"},
+        "blocks_manufacture": {"type": "boolean"},
+        "required_evidence": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "approval": {
+      "type": "object",
+      "required": ["role", "status"],
+      "properties": {
+        "role": {"type": "string"},
+        "person_or_organization": {"type": "string"},
+        "status": {"enum": ["pending", "approved", "rejected"]},
+        "approved_at": {"type": "string", "format": "date-time"},
+        "scope": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

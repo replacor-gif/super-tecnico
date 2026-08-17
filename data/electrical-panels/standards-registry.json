@@ -1,0 +1,286 @@
+{
+  "schema_version": "0.1.0",
+  "jurisdiction": "ES",
+  "verified_at": "2026-08-17",
+  "status": "reference_metadata_foundation",
+  "notice": "This registry selects candidate legal and technical references. Applicability, Spanish adoption, harmonised status, regional rules and the edition accepted by the competent authority must be verified for each real project.",
+  "licensing": {
+    "official_public_law": "May be indexed according to its official reuse conditions.",
+    "une_en_iec_iso": "Reference, edition, scope and applicability metadata only unless licensed distribution rights exist.",
+    "automatic_compliance_claim": false
+  },
+  "profiles": [
+    {
+      "id": "ES_DBO",
+      "project_kind": "distribution_board_dbo",
+      "primary_references": ["ES_REBT", "IEC_61439_1", "IEC_61439_3"],
+      "conditional_references": ["EU_LVD", "EU_EMC", "IEC_60529", "IEC_61643_11", "IEC_61082_1", "IEC_81346_1", "IEC_60617_DB"]
+    },
+    {
+      "id": "ES_PSC",
+      "project_kind": "power_control_assembly_psc",
+      "primary_references": ["ES_REBT", "IEC_61439_1", "IEC_61439_2"],
+      "conditional_references": ["EU_LVD", "EU_EMC", "IEC_TR_60890", "IEC_60947_2", "IEC_60947_4_1", "IEC_60529", "IEC_61643_11", "IEC_61082_1", "IEC_81346_1", "IEC_60617_DB"]
+    },
+    {
+      "id": "ES_MACHINE",
+      "project_kind": "machine_electrical_equipment",
+      "primary_references": ["ES_REBT", "ES_MACHINERY_RD_1644_2008", "EU_MACHINERY_2023_1230", "IEC_60204_1"],
+      "conditional_references": ["IEC_61439_1", "IEC_61439_2", "ISO_13849_1", "IEC_62061", "IEC_62443_4_2", "IEC_60947_2", "IEC_60947_4_1", "IEC_60529", "IEC_61082_1", "IEC_81346_1", "IEC_60617_DB"]
+    },
+    {
+      "id": "ES_HVAC_AUTOMATION",
+      "project_kind": "building_hvac_automation",
+      "primary_references": ["ES_REBT", "ES_RITE"],
+      "conditional_references": ["IEC_61439_1", "IEC_61439_2", "IEC_60204_1", "IEC_61131_3", "IEC_62443_4_2", "IEC_61082_1", "IEC_81346_1", "IEC_60617_DB"]
+    },
+    {
+      "id": "ES_EMBEDDED_IOT",
+      "project_kind": "embedded_iot_control",
+      "primary_references": ["EU_LVD", "EU_EMC"],
+      "conditional_references": ["ES_REBT", "EU_MACHINERY_2023_1230", "IEC_60204_1", "IEC_61131_3", "IEC_61131_10", "IEC_62443_4_2", "IEC_60529", "IEC_61082_1", "IEC_81346_1", "IEC_60617_DB"]
+    }
+  ],
+  "references": [
+    {
+      "id": "ES_REBT",
+      "kind": "binding_regulation",
+      "designation": "Real Decreto 842/2002",
+      "title": "Reglamento electrotécnico para baja tensión e ITC",
+      "edition_or_status": "Consolidated text, last published update 2025-09-03",
+      "official_url": "https://www.boe.es/eli/es/rd/2002/08/02/842/con",
+      "scope_summary": "Spanish low-voltage installations and their safety, operation and documentation requirements.",
+      "national_adoption_check_required": false
+    },
+    {
+      "id": "ES_RITE",
+      "kind": "binding_regulation",
+      "designation": "Real Decreto 1027/2007",
+      "title": "Reglamento de Instalaciones Térmicas en los Edificios",
+      "edition_or_status": "Consolidated text",
+      "official_url": "https://www.boe.es/eli/es/rd/2007/07/20/1027/con",
+      "scope_summary": "Thermal installations in buildings, including control, machinery rooms and related electrical requirements.",
+      "national_adoption_check_required": false
+    },
+    {
+      "id": "ES_MACHINERY_RD_1644_2008",
+      "kind": "binding_regulation_transition",
+      "designation": "Real Decreto 1644/2008",
+      "title": "Normas para la comercialización y puesta en servicio de las máquinas",
+      "edition_or_status": "Current Spanish machinery framework during transition",
+      "official_url": "https://www.boe.es/eli/es/rd/2008/10/10/1644/con",
+      "scope_summary": "Spanish requirements for machinery before general application of Regulation EU 2023/1230.",
+      "national_adoption_check_required": false
+    },
+    {
+      "id": "EU_MACHINERY_2023_1230",
+      "kind": "binding_eu_regulation",
+      "designation": "Regulation (EU) 2023/1230",
+      "title": "Machinery Regulation",
+      "edition_or_status": "General application from 2027-01-20; transitional provisions apply earlier",
+      "official_url": "https://eur-lex.europa.eu/eli/reg/2023/1230/oj",
+      "scope_summary": "Machinery, related products and partly completed machinery placed on the EU market or put into service.",
+      "national_adoption_check_required": false
+    },
+    {
+      "id": "EU_LVD",
+      "kind": "binding_eu_directive",
+      "designation": "Directive 2014/35/EU",
+      "title": "Low Voltage Directive",
+      "edition_or_status": "In force",
+      "official_url": "https://eur-lex.europa.eu/eli/dir/2014/35/oj",
+      "scope_summary": "Electrical equipment made available on the EU market within the directive voltage limits.",
+      "national_adoption_check_required": false
+    },
+    {
+      "id": "EU_EMC",
+      "kind": "binding_eu_directive",
+      "designation": "Directive 2014/30/EU",
+      "title": "Electromagnetic Compatibility Directive",
+      "edition_or_status": "In force",
+      "official_url": "https://eur-lex.europa.eu/eli/dir/2014/30/oj",
+      "scope_summary": "Electromagnetic compatibility of equipment and fixed installations placed on the EU market.",
+      "national_adoption_check_required": false
+    },
+    {
+      "id": "IEC_61439_1",
+      "kind": "technical_standard_reference",
+      "designation": "IEC 61439-1:2020",
+      "title": "Low-voltage switchgear and controlgear assemblies - General rules",
+      "edition_or_status": "Edition 3.0 with corrigenda 2021 and 2023 included by IEC",
+      "official_url": "https://webstore.iec.ch/en/publication/32338",
+      "scope_summary": "Definitions, service conditions, construction, characteristics and verification requirements for LV assemblies.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "IEC_61439_2",
+      "kind": "technical_standard_reference",
+      "designation": "IEC 61439-2:2020",
+      "title": "Power switchgear and controlgear assemblies",
+      "edition_or_status": "Edition 3.0",
+      "official_url": "https://webstore.iec.ch/en/publication/30043",
+      "scope_summary": "Specific requirements for power switchgear and controlgear assemblies up to 1000 V AC or 1500 V DC.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "IEC_61439_3",
+      "kind": "technical_standard_reference",
+      "designation": "IEC 61439-3:2024",
+      "title": "Distribution boards intended to be operated by ordinary persons",
+      "edition_or_status": "Edition 2.0",
+      "official_url": "https://webstore.iec.ch/en/publication/68496",
+      "scope_summary": "Specific requirements for enclosed stationary DBO assemblies within the stated current and voltage limits.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "IEC_60204_1",
+      "kind": "technical_standard_reference",
+      "designation": "IEC 60204-1:2016+A1:2021",
+      "title": "Safety of machinery - Electrical equipment of machines - General requirements",
+      "edition_or_status": "Consolidated edition 6.1 valid; edition 7 under development",
+      "official_url": "https://webstore.iec.ch/en/publication/26037",
+      "scope_summary": "Electrical, electronic and programmable electronic equipment and systems of machines from the supply connection point.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "IEC_TR_60890",
+      "kind": "technical_report_reference",
+      "designation": "IEC TR 60890:2022",
+      "title": "Temperature-rise verification of LV assemblies by calculation",
+      "edition_or_status": "Edition 3.0",
+      "official_url": "https://webstore.iec.ch/en/publication/66007",
+      "scope_summary": "Calculation method for air temperature rise inside enclosures within its defined validity conditions.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "IEC_60947_2",
+      "kind": "technical_standard_reference",
+      "designation": "IEC 60947-2:2024",
+      "title": "Low-voltage switchgear and controlgear - Circuit-breakers",
+      "edition_or_status": "Edition 6.0",
+      "official_url": "https://webstore.iec.ch/en/publication/66277",
+      "scope_summary": "Circuit-breakers for instructed or skilled persons within stated AC and DC voltage limits.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "IEC_60947_4_1",
+      "kind": "technical_standard_reference",
+      "designation": "IEC 60947-4-1:2023+COR1:2026",
+      "title": "Contactors and motor-starters",
+      "edition_or_status": "Edition 5.0 corrected 2026-03",
+      "official_url": "https://webstore.iec.ch/en/publication/74487",
+      "scope_summary": "Electromechanical contactors, starters, motor protective switching devices and dedicated accessories.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "IEC_61643_11",
+      "kind": "technical_standard_reference",
+      "designation": "IEC 61643-11:2025",
+      "title": "Surge protective devices connected to AC low-voltage power systems",
+      "edition_or_status": "Edition 2.0",
+      "official_url": "https://webstore.iec.ch/en/publication/65314",
+      "scope_summary": "Requirements and test methods for AC low-voltage surge protective devices.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "IEC_60529",
+      "kind": "technical_standard_reference",
+      "designation": "IEC 60529:1989+A1:1999+A2:2013",
+      "title": "Degrees of protection provided by enclosures - IP Code",
+      "edition_or_status": "Consolidated edition 2.2",
+      "official_url": "https://webstore.iec.ch/en/publication/2452",
+      "scope_summary": "Classification of enclosure protection against access, solid objects and water.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "IEC_61082_1",
+      "kind": "technical_standard_reference",
+      "designation": "IEC 61082-1:2014",
+      "title": "Preparation of documents used in electrotechnology - Rules",
+      "edition_or_status": "Edition 3.0",
+      "official_url": "https://webstore.iec.ch/en/publication/4469",
+      "scope_summary": "General and specific presentation rules for electrotechnical diagrams, drawings and tables.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "IEC_81346_1",
+      "kind": "technical_standard_reference",
+      "designation": "IEC 81346-1:2022",
+      "title": "Structuring principles and reference designations - Basic rules",
+      "edition_or_status": "Edition 2.0",
+      "official_url": "https://webstore.iec.ch/en/publication/64021",
+      "scope_summary": "System structuring and unambiguous reference designation principles across technical disciplines.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "IEC_60617_DB",
+      "kind": "licensed_database_reference",
+      "designation": "IEC 60617:2026 DB",
+      "title": "Graphical symbols for diagrams",
+      "edition_or_status": "Subscription database, 2026 publication state",
+      "official_url": "https://webstore.iec.ch/en/publication/2723",
+      "scope_summary": "Official IEC database of graphical symbols for electrotechnical diagrams.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "IEC_61131_3",
+      "kind": "technical_standard_reference",
+      "designation": "IEC 61131-3:2025",
+      "title": "Programmable controllers - Programming languages",
+      "edition_or_status": "Edition 4.0",
+      "official_url": "https://webstore.iec.ch/en/publication/68533",
+      "scope_summary": "Syntax and semantics of Structured Text, Ladder Diagram, Function Block Diagram and SFC elements for programmable controllers.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "IEC_61131_10",
+      "kind": "technical_standard_reference",
+      "designation": "IEC 61131-10:2019",
+      "title": "PLCopen XML exchange format",
+      "edition_or_status": "Edition 1.0",
+      "official_url": "https://www.plcopen.org/standards/logic/iec-61131-10/",
+      "scope_summary": "XML-based import and export of IEC 61131-3 projects and program organization units.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "IEC_62714",
+      "kind": "technical_standard_family_reference",
+      "designation": "IEC 62714 series",
+      "title": "AutomationML engineering data exchange",
+      "edition_or_status": "Series reference; applicable parts must be selected",
+      "official_url": "https://www.automationml.org/about-automationml/specifications/",
+      "scope_summary": "Exchange of plant automation engineering data including semantics, geometry, logic and communication models.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "ISO_13849_1",
+      "kind": "technical_standard_reference",
+      "designation": "ISO 13849-1:2023",
+      "title": "Safety-related parts of control systems - General principles for design",
+      "edition_or_status": "Edition 4",
+      "official_url": "https://www.iso.org/standard/73481.html",
+      "scope_summary": "Methodology for design and integration of safety-related control system parts including software.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "IEC_62061",
+      "kind": "technical_standard_reference",
+      "designation": "IEC 62061:2021+A1:2024+A2:2026",
+      "title": "Functional safety of safety-related control systems",
+      "edition_or_status": "Edition 2 with amendments through 2026",
+      "official_url": "https://webstore.iec.ch/en/publication/92835",
+      "scope_summary": "Design, integration and validation of safety-related control systems for machinery.",
+      "national_adoption_check_required": true
+    },
+    {
+      "id": "IEC_62443_4_2",
+      "kind": "technical_standard_reference",
+      "designation": "IEC 62443-4-2:2019",
+      "title": "Technical security requirements for IACS components",
+      "edition_or_status": "Edition 1.0 with corrigendum 2022",
+      "official_url": "https://webstore.iec.ch/en/publication/34421",
+      "scope_summary": "Security capability requirements for industrial automation and control system components.",
+      "national_adoption_check_required": true
+    }
+  ]
+}
