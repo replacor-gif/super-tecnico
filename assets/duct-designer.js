@@ -8,6 +8,7 @@
   const STORAGE_KEY = 'st.ductDesigner.v5';
   const LEGACY_KEYS = ['st.ductDesigner.v4', 'st.ductDesigner.v3', 'st.ductDesigner.v2'];
   const CELL_PX = 44;
+  const ROUTE_STEP = .5;
 
   /* Criterios internos del método práctico. No se muestran ni se modifican. */
   const DESIGN = Object.freeze({
@@ -75,8 +76,16 @@
     };
   }
 
+  function routePoint(value, cols = DEFAULTS.gridCols, rows = DEFAULTS.gridRows) {
+    return {
+      x: clamp(Math.round(finite(value?.x) / ROUTE_STEP) * ROUTE_STEP, 0, cols),
+      y: clamp(Math.round(finite(value?.y) / ROUTE_STEP) * ROUTE_STEP, 0, rows),
+    };
+  }
+
   function pointKey(value) {
-    return `${value.x},${value.y}`;
+    const clean = coordinate => Object.is(coordinate, -0) ? 0 : Number(finite(coordinate).toFixed(3));
+    return `${clean(value.x)},${clean(value.y)}`;
   }
 
   function parsePointKey(value) {
@@ -255,7 +264,13 @@
     const outletOverrides = {};
     Object.entries(input.outletOverrides || {}).forEach(([roomId, value]) => {
       const room = roomById.get(roomId);
-      if (room) outletOverrides[roomId] = point(nearestInteriorPoint(room, point(value, gridCols, gridRows)), gridCols, gridRows);
+      if (!room) return;
+      const target = {
+        x: clamp(finite(value?.x), 0, gridCols),
+        y: clamp(finite(value?.y), 0, gridRows),
+      };
+      const snapped = snapOutletToWall(room, target);
+      if (snapped) outletOverrides[roomId] = { x: snapped.x, y: snapped.y };
     });
     const branchGuides = {};
     Object.entries(input.branchGuides || {}).forEach(([roomId, value]) => {
@@ -357,23 +372,82 @@
     return [...found.values()];
   }
 
+  function closestPointOnSegment(value, a, b) {
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const lengthSquared = dx * dx + dy * dy;
+    if (!lengthSquared) return { x: a.x, y: a.y };
+    const ratio = clamp(((value.x - a.x) * dx + (value.y - a.y) * dy) / lengthSquared, 0, 1);
+    return { x: a.x + dx * ratio, y: a.y + dy * ratio };
+  }
+
+  function distanceToSegment(value, a, b) {
+    const closest = closestPointOnSegment(value, a, b);
+    return Math.hypot(value.x - closest.x, value.y - closest.y);
+  }
+
+  function normalizeWallAngle(value) {
+    let angle = value;
+    while (angle > 90) angle -= 180;
+    while (angle <= -90) angle += 180;
+    return Number(angle.toFixed(2));
+  }
+
+  function wallSegments(room) {
+    const points = pointsForRoom(room);
+    return points.map((a, index) => {
+      const b = points[(index + 1) % points.length];
+      const dx = b.x - a.x, dy = b.y - a.y;
+      return {
+        index,
+        a: { x: a.x, y: a.y },
+        b: { x: b.x, y: b.y },
+        x: (a.x + b.x) / 2,
+        y: (a.y + b.y) / 2,
+        length: Math.hypot(dx, dy),
+        angleDeg: normalizeWallAngle(Math.atan2(dy, dx) * 180 / Math.PI),
+      };
+    }).filter(segment => segment.length >= ROUTE_STEP);
+  }
+
+  function outletPlacement(segment) {
+    return {
+      x: segment.x,
+      y: segment.y,
+      wallIndex: segment.index,
+      wallAngleDeg: segment.angleDeg,
+      wallA: segment.a,
+      wallB: segment.b,
+      centered: true,
+    };
+  }
+
+  function snapOutletToWall(room, targetValue) {
+    const target = targetValue || polygonCentroid(pointsForRoom(room));
+    const segment = wallSegments(room).sort((one, two) => {
+      const distanceDifference = distanceToSegment(target, one.a, one.b) - distanceToSegment(target, two.a, two.b);
+      if (Math.abs(distanceDifference) > 1e-8) return distanceDifference;
+      return Math.hypot(target.x - one.x, target.y - one.y) - Math.hypot(target.x - two.x, target.y - two.y);
+    })[0];
+    return segment ? outletPlacement(segment) : null;
+  }
+
   function roomAtMidpoint(a, b, rooms) {
     const midpoint = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
     return rooms.find(room => pointInPolygon(midpoint, room.points, false));
   }
 
-  function chooseOutletPoint(room, state, occupied) {
-    const center = polygonCentroid(room.points);
-    const hallwayPoints = state.rooms.filter(item => item.type === 'hallway').flatMap(boundaryPoints);
-    const candidates = boundaryPoints(room).map(candidate => {
-      const hallwayDistance = hallwayPoints.length
-        ? hallwayPoints.reduce((minimum, hallPoint) => Math.min(minimum, Math.abs(candidate.x - hallPoint.x) + Math.abs(candidate.y - hallPoint.y)), Infinity)
+  function chooseOutletPlacement(room, state, occupied) {
+    const hallwayWalls = state.rooms.filter(item => item.type === 'hallway').flatMap(wallSegments);
+    const candidates = wallSegments(room).map(segment => {
+      const hallwayDistance = hallwayWalls.length
+        ? hallwayWalls.reduce((minimum, hallWall) => Math.min(minimum, distanceToSegment(segment, hallWall.a, hallWall.b)), Infinity)
         : 0;
-      const centerDistance = Math.abs(candidate.x - center.x) + Math.abs(candidate.y - center.y);
-      const machineDistance = state.machine ? Math.abs(candidate.x - state.machine.x) + Math.abs(candidate.y - state.machine.y) : 0;
-      return { candidate, score: hallwayDistance * 10 + centerDistance + machineDistance * .03 };
-    }).sort((one, two) => one.score - two.score);
-    return (candidates.find(item => !occupied.has(pointKey(item.candidate))) || candidates[0])?.candidate || room.points[0];
+      const machineDistance = state.machine ? Math.hypot(segment.x - state.machine.x, segment.y - state.machine.y) : 0;
+      const occupiedPenalty = occupied.has(pointKey(segment)) ? 1000 : 0;
+      const lengthPreference = Math.min(segment.length, 10) * .15;
+      return { segment, score: occupiedPenalty + hallwayDistance * 12 + machineDistance * .04 - lengthPreference };
+    }).sort((one, two) => one.score - two.score || one.segment.index - two.segment.index);
+    return candidates[0] ? outletPlacement(candidates[0].segment) : snapOutletToWall(room, room.points[0]);
   }
 
   function routeCost(a, b, rooms) {
@@ -386,13 +460,15 @@
   }
 
   function findPath(state, starts, targets) {
-    const targetKeys = new Set(targets.map(pointKey));
-    const heuristic = value => targets.reduce((minimum, target) => Math.min(minimum, Math.abs(value.x - target.x) + Math.abs(value.y - target.y)), Infinity);
+    const routeStarts = starts.map(value => routePoint(value, state.gridCols, state.gridRows));
+    const routeTargets = targets.map(value => routePoint(value, state.gridCols, state.gridRows));
+    const targetKeys = new Set(routeTargets.map(pointKey));
+    const heuristic = value => routeTargets.reduce((minimum, target) => Math.min(minimum, Math.abs(value.x - target.x) + Math.abs(value.y - target.y)), Infinity);
     const open = [];
     const openKeys = new Set();
     const cost = new Map();
     const previous = new Map();
-    starts.forEach(start => {
+    routeStarts.forEach(start => {
       const key = pointKey(start);
       if (cost.has(key)) return;
       cost.set(key, 0);
@@ -414,12 +490,13 @@
         return path.reverse();
       }
       const neighbours = [
-        { x: current.point.x + 1, y: current.point.y }, { x: current.point.x - 1, y: current.point.y },
-        { x: current.point.x, y: current.point.y + 1 }, { x: current.point.x, y: current.point.y - 1 },
+        { x: current.point.x + ROUTE_STEP, y: current.point.y }, { x: current.point.x - ROUTE_STEP, y: current.point.y },
+        { x: current.point.x, y: current.point.y + ROUTE_STEP }, { x: current.point.x, y: current.point.y - ROUTE_STEP },
       ].filter(item => item.x >= 0 && item.y >= 0 && item.x <= state.gridCols && item.y <= state.gridRows);
       neighbours.forEach(next => {
         const nextKey = pointKey(next);
-        const nextCost = cost.get(current.key) + routeCost(current.point, next, state.rooms);
+        const stepLength = Math.abs(next.x - current.point.x) + Math.abs(next.y - current.point.y);
+        const nextCost = cost.get(current.key) + routeCost(current.point, next, state.rooms) * stepLength;
         if (nextCost >= (cost.get(nextKey) ?? Infinity)) return;
         cost.set(nextKey, nextCost);
         previous.set(nextKey, current.key);
@@ -459,8 +536,9 @@
     ordered.forEach((room, index) => {
       const starts = index === 0 ? [{ x: state.machine.x, y: state.machine.y }] : [...nodes.values()];
       const outlet = state.outletOverrides[room.id]
-        ? nearestInteriorPoint(room, state.outletOverrides[room.id])
-        : chooseOutletPoint(room, state, occupiedOutlets);
+        ? snapOutletToWall(room, state.outletOverrides[room.id])
+        : chooseOutletPlacement(room, state, occupiedOutlets);
+      if (!outlet) return;
       const guide = state.branchGuides[room.id];
       let path;
       if (guide) {
@@ -543,6 +621,10 @@
     return components;
   }
 
+  function edgeLengthGrid(edge) {
+    return Math.hypot(edge.b.x - edge.a.x, edge.b.y - edge.a.y);
+  }
+
   function calculateProject(input = {}) {
     const state = normalizeState(input);
     const rooms = state.rooms.map(room => enrichRoom(room, state));
@@ -614,7 +696,7 @@
         rooms: roomIds.map(id => roomMap.get(id)).filter(Boolean),
         edges: component,
         representative: sample,
-        lengthM: component.length * state.cellSizeM,
+        lengthM: component.reduce((sum, edge) => sum + edgeLengthGrid(edge), 0) * state.cellSizeM,
         loadFg,
         isMain: component.some(edge => edge.isMain),
         ...sizeDuct(loadFg, state),
@@ -637,7 +719,7 @@
     if (rooms.some(room => room.type === 'unassigned')) warnings.push({ level: 'warn', text: 'Falta identificar alguna estancia.' });
     if (identified.length && !selectedRooms.length) warnings.push({ level: 'warn', text: 'Marca al menos una estancia con rejilla.' });
     if (selectedRooms.length && !state.machine) warnings.push({ level: 'info', text: 'Marca la estancia de la unidad interior.' });
-    if (state.machine && connectedRooms.length === selectedRooms.length && selectedRooms.length) warnings.push({ level: 'ok', text: 'La red forma un conducto principal y deriva ramales hacia todas las rejillas.' });
+    if (state.machine && connectedRooms.length === selectedRooms.length && selectedRooms.length) warnings.push({ level: 'ok', text: 'La red forma un conducto principal y deriva ramales hasta rejillas centradas y alineadas con sus paredes.' });
     sections.forEach(section => {
       if (section.velocityMps > 5.2) warnings.push({ level: 'warn', text: `${section.id}: velocidad elevada (${formatNumber(section.velocityMps, 1)} m/s).` });
     });
@@ -660,7 +742,7 @@
         airflowM3h,
         suggestedCapacityFg: loadFg > 0 ? roundUp(loadFg, 500) : 0,
         mainDuct: sizeDuct(loadFg, state),
-        hallwayLengthM: activeEdges.filter(edge => edge.environment === 'hallway').length * state.cellSizeM,
+        hallwayLengthM: activeEdges.filter(edge => edge.environment === 'hallway').reduce((sum, edge) => sum + edgeLengthGrid(edge), 0) * state.cellSizeM,
       },
       warnings: uniqueWarnings(warnings),
     };
@@ -741,11 +823,19 @@
         const x = px((edge.a.x + edge.b.x) / 2), y = px((edge.a.y + edge.b.y) / 2);
         parts.push(`<g class="section-label ${section.isMain ? 'main-label' : ''}"><rect x="${x - 51}" y="${y - 15}" width="102" height="30" rx="8"/><text x="${x}" y="${y + 5}" text-anchor="middle">${section.id} · ${section.widthCm}×${section.heightCm}</text></g>`);
       });
+      if (selectedAdjustment?.kind === 'outlet-drag') {
+        const selectedRoom = result.roomMap.get(selectedAdjustment.roomId);
+        const selectedOutlet = result.outletMap.get(selectedAdjustment.roomId);
+        if (selectedRoom) wallSegments(selectedRoom).forEach(wall => {
+          const current = selectedOutlet?.wallIndex === wall.index;
+          parts.push(`<g class="wall-snap-target${current ? ' is-current' : ''}" data-kind="outlet-wall-target" data-id="${escapeHtml(selectedRoom.id)}" data-wall-index="${wall.index}"><line class="wall-snap-hit" x1="${px(wall.a.x)}" y1="${px(wall.a.y)}" x2="${px(wall.b.x)}" y2="${px(wall.b.y)}"/><line class="wall-snap-line" x1="${px(wall.a.x)}" y1="${px(wall.a.y)}" x2="${px(wall.b.x)}" y2="${px(wall.b.y)}"/><circle cx="${px(wall.x)}" cy="${px(wall.y)}" r="${current ? 9 : 7}"/><title>${current ? 'Pared actual' : 'Colocar la rejilla centrada en esta pared'}</title></g>`);
+        });
+      }
       result.rooms.forEach(room => {
         const outlet = result.outletMap.get(room.id);
         if (!outlet) return;
         const selected = selectedAdjustment?.kind === 'outlet-drag' && selectedAdjustment.roomId === room.id;
-        parts.push(`<g class="plan-outlet is-draggable${selected ? ' is-selected' : ''}" data-kind="outlet-drag" data-id="${escapeHtml(room.id)}" transform="translate(${px(outlet.x)} ${px(outlet.y)})"><circle class="drag-hit" r="25"/><rect x="-22" y="-8" width="44" height="16" rx="4"/><path d="M-15-3h30M-15 2h30"/><title>Arrastra la rejilla o tócala y después toca su nueva posición · ${escapeHtml(room.name)} · ${room.grille.widthCm} × ${room.grille.heightCm} cm</title></g>`);
+        parts.push(`<g class="plan-outlet is-draggable${selected ? ' is-selected' : ''}" data-kind="outlet-drag" data-id="${escapeHtml(room.id)}" data-wall-index="${outlet.wallIndex}" data-wall-angle="${outlet.wallAngleDeg}" data-centered="${outlet.centered ? 'true' : 'false'}" transform="translate(${px(outlet.x)} ${px(outlet.y)}) rotate(${outlet.wallAngleDeg})"><circle class="drag-hit" r="25"/><rect x="-22" y="-8" width="44" height="16" rx="4"/><path d="M-15-3h30M-15 2h30"/><title>Rejilla centrada y alineada con la pared · Tócala y elige otra pared para recolocarla · ${escapeHtml(room.name)} · ${room.grille.widthCm} × ${room.grille.heightCm} cm</title></g>`);
       });
       result.roomConnections.forEach((connection, roomId) => {
         if (!connection.branchHandle) return;
@@ -856,7 +946,8 @@
       if (drag.kind === 'outlet-drag') {
         const room = state.rooms.find(item => item.id === drag.roomId);
         if (!room) return;
-        position = point(nearestInteriorPoint(room, position), state.gridCols, state.gridRows);
+        position = snapOutletToWall(room, position);
+        if (!position) return;
       }
       const positionKey = pointKey(position);
       if (positionKey === drag.lastPoint) return;
@@ -870,7 +961,7 @@
       }
       if (drag.kind === 'outlet-drag') {
         state = normalizeState({ ...state, outletOverrides: { ...state.outletOverrides, [drag.roomId]: position } });
-        transientMessage = '<strong>Moviendo rejilla.</strong> El recorrido, las longitudes y los tramos se están recalculando.';
+        transientMessage = '<strong>Rejilla ajustada a la pared.</strong> Se centra, se alinea con ella y toda la red se recalcula.';
       } else {
         state = normalizeState({ ...state, branchGuides: { ...state.branchGuides, [drag.roomId]: position } });
         transientMessage = '<strong>Ajustando ramal.</strong> Suelta el rombo cuando el conducto pase por el lugar real.';
@@ -934,7 +1025,7 @@
       elements.phaseAction.classList.toggle('is-layout', state.phase === 'layout');
       elements.phaseAction.querySelector('span').textContent = drawing ? 'He terminado de dibujar' : state.phase === 'configure' ? 'Calcular y ajustar' : 'Editar estancias';
       elements.legend.innerHTML = state.phase === 'layout'
-        ? '<span><i class="legend-grille">▤</i><b>Toca o arrastra rejilla</b></span><span><i class="legend-branch">◆</i><b>Toca o mueve ramal</b></span><span><i class="legend-live">↻</i><b>Recálculo inmediato</b></span>'
+        ? '<span><i class="legend-grille">▤</i><b>Rejilla centrada en pared</b></span><span><i class="legend-branch">◆</i><b>Toca o mueve ramal</b></span><span><i class="legend-live">↻</i><b>Recálculo inmediato</b></span>'
         : '<span><i class="legend-type">▼</i><b>Qué estancia es</b></span><span><i class="legend-grille">▤</i><b>Lleva rejilla</b></span><span><i class="legend-machine">M</i><b>Aquí va la máquina</b></span>';
     }
 
@@ -963,8 +1054,8 @@
         icon.textContent = '↔';
         if (selectedAdjustment) {
           const item = selectedAdjustment.kind === 'outlet-drag' ? 'rejilla' : 'ramal';
-          copy.innerHTML = `<strong>${item === 'rejilla' ? 'Rejilla seleccionada' : 'Ramal seleccionado'}.</strong> Ahora toca en el plano el lugar donde quieres colocarlo.`;
-        } else copy.innerHTML = '<strong>Ajusta la instalación a la obra real.</strong> Arrastra una rejilla o un rombo. En móvil también puedes tocarlo y después tocar su nueva posición.';
+          copy.innerHTML = `<strong>${item === 'rejilla' ? 'Rejilla seleccionada' : 'Ramal seleccionado'}.</strong> ${item === 'rejilla' ? 'Toca la pared deseada: quedará centrada y alineada automáticamente.' : 'Ahora toca en el plano el lugar por el que debe pasar.'}`;
+        } else copy.innerHTML = '<strong>Ajusta la instalación a la obra real.</strong> Las rejillas se fijan centradas y alineadas a una pared; los rombos modifican el recorrido. En móvil, toca el elemento y después su nueva zona.';
         elements.planStatus.textContent = drag ? 'Recalculando mientras mueves' : selectedAdjustment ? 'Toca la nueva posición' : 'Plano calculado y ajustable';
       }
     }
@@ -1059,7 +1150,8 @@
         if (selectedAdjustment.kind === 'outlet-drag') {
           const room = state.rooms.find(item => item.id === selectedAdjustment.roomId);
           if (!room) return;
-          position = point(nearestInteriorPoint(room, position), state.gridCols, state.gridRows);
+          position = snapOutletToWall(room, position);
+          if (!position) return;
           const roomId = selectedAdjustment.roomId;
           selectedAdjustment = null;
           commit({ ...state, outletOverrides: { ...state.outletOverrides, [roomId]: position } });
@@ -1147,6 +1239,8 @@
     polygonSelfIntersects,
     pointInPolygon,
     roomOverlap,
+    wallSegments,
+    snapOutletToWall,
     sizeDuct,
     loadForRoom,
     automaticNetwork,

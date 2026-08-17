@@ -266,6 +266,12 @@ button { cursor: pointer; }
 .branch-drag.is-selected > path { stroke: #fff; stroke-width: 5; filter: url(#planGlow); }
 .plan-outlet.is-selected,
 .branch-drag.is-selected { animation: selected-adjustment 1s ease-in-out infinite alternate; }
+.wall-snap-target { cursor: pointer; pointer-events: all; touch-action: manipulation; }
+.wall-snap-hit { stroke: transparent; stroke-width: 34; }
+.wall-snap-line { stroke: var(--duct-pink); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 12 8; opacity: .82; filter: url(#planGlow); pointer-events: none; }
+.wall-snap-target circle { fill: #210818; stroke: #fff; stroke-width: 3; filter: drop-shadow(0 0 8px rgba(255, 63, 167, .9)); pointer-events: none; }
+.wall-snap-target.is-current .wall-snap-line { stroke: #fff; stroke-width: 7; }
+.wall-snap-target.is-current circle { fill: var(--duct-pink); }
 @keyframes selected-adjustment { to { filter: drop-shadow(0 0 13px rgba(255, 255, 255, .95)); } }
 .legend-branch { background: var(--duct-yellow); }
 .legend-live { background: var(--duct-green); }

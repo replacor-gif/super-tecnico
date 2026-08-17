@@ -27,17 +27,16 @@ const {chromium} = require('playwright');
   const before = await outlet.getAttribute('transform');
   await outlet.click();
   assert.equal(await page.locator('[data-kind="outlet-drag"][data-id="bed-1"].is-selected').count(), 1);
+  assert.equal(await page.locator('[data-kind="outlet-wall-target"][data-id="bed-1"]').count(), 4);
   assert.match(await page.locator('#assistantMessage').innerText(), /Rejilla seleccionada/i);
-  await page.evaluate(() => {
-    const svg = document.querySelector('#planStage svg');
-    const point = svg.createSVGPoint();
-    point.x = 3 * 44;
-    point.y = 3 * 44;
-    const screen = point.matrixTransform(svg.getScreenCTM());
-    svg.dispatchEvent(new MouseEvent('click', {bubbles: true, clientX: screen.x, clientY: screen.y}));
-  });
+  await page.locator('[data-kind="outlet-wall-target"][data-id="bed-1"][data-wall-index="0"]').click({force: true});
   const after = await page.locator('[data-kind="outlet-drag"][data-id="bed-1"]').getAttribute('transform');
   assert.notEqual(after, before, 'Touch select-and-place did not move the grille.');
+  const movedOutlet = page.locator('[data-kind="outlet-drag"][data-id="bed-1"]');
+  assert.equal(await movedOutlet.getAttribute('data-centered'), 'true');
+  assert.equal(await movedOutlet.getAttribute('data-wall-index'), '0');
+  assert.equal(await movedOutlet.getAttribute('data-wall-angle'), '0');
+  assert.match(after, /translate\(198 44\) rotate\(0\)/, 'The grille did not snap to the centre and direction of the selected wall.');
   assert.equal(await page.locator('[data-kind="outlet-drag"].is-selected').count(), 0);
   assert.match(await page.locator('#networkStatus').innerText(), /RED COMPLETA/i);
 

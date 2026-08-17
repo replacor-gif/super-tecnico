@@ -27,6 +27,16 @@ const network = D.automaticNetwork(state);
 assert.equal(network.outlets.length, 3);
 assert.equal(new Set(network.outlets.map(outlet => `${outlet.x},${outlet.y}`)).size, 3);
 assert.ok(network.routeEdges.length > 0);
+network.outlets.forEach(outlet => {
+  const room = state.rooms.find(item => item.id === outlet.roomId);
+  const wall = D.wallSegments(room).find(item => item.index === outlet.wallIndex);
+  assert.ok(wall, `Missing wall for ${outlet.roomId}`);
+  assert.equal(outlet.x, wall.x, `${outlet.roomId} grille is not horizontally centred`);
+  assert.equal(outlet.y, wall.y, `${outlet.roomId} grille is not vertically centred`);
+  assert.equal(outlet.wallAngleDeg, wall.angleDeg, `${outlet.roomId} grille is not aligned with its wall`);
+  assert.equal(outlet.centered, true);
+  assert.ok(network.routeEdges.some(edge => `${edge.a.x},${edge.a.y}` === `${outlet.x},${outlet.y}` || `${edge.b.x},${edge.b.y}` === `${outlet.x},${outlet.y}`), `Branch does not end at ${outlet.roomId} grille`);
+});
 
 const internalCriteria = D.calculateProject({
   ...D.emptyState(),
@@ -76,6 +86,13 @@ assert.equal(D.pointInPolygon({ x: 2, y: 2 }, irregular), true);
 assert.equal(D.roomOverlap({ points: irregular }, { points: [{ x: 4, y: 1 }, { x: 7, y: 1 }, { x: 7, y: 3 }, { x: 4, y: 3 }] }), true);
 assert.equal(D.roomOverlap({ points: irregular }, { points: [{ x: 5, y: 0 }, { x: 8, y: 0 }, { x: 8, y: 2 }, { x: 5, y: 2 }] }), false);
 
+const diagonalRoom = { points: [{ x: 0, y: 0 }, { x: 5, y: 3 }, { x: 5, y: 7 }, { x: 0, y: 7 }] };
+const diagonalPlacement = D.snapOutletToWall(diagonalRoom, { x: 3, y: 2 });
+assert.deepEqual({ x: diagonalPlacement.x, y: diagonalPlacement.y }, { x: 2.5, y: 1.5 });
+assert.equal(diagonalPlacement.wallIndex, 0);
+assert.equal(diagonalPlacement.centered, true);
+assert.ok(Math.abs(diagonalPlacement.wallAngleDeg - 30.96) < .01);
+
 const legacy = D.normalizeState({
   workflowStep: 3,
   rooms: [{ id: 'legacy', type: 'bedroom', x: 1, y: 2, w: 4, h: 3, conditioned: true }],
@@ -103,16 +120,23 @@ assert.match(configured.svg, /data-kind="branch-drag"/);
 assert.match(configured.svg, /UNIDAD INTERIOR/);
 const selectedOnTouch = D.renderPlanSvg(example, { selectedAdjustment: { kind: 'outlet-drag', roomId: 'bed-1' } });
 assert.match(selectedOnTouch.svg, /plan-outlet is-draggable is-selected/);
-assert.match(selectedOnTouch.svg, /tócala y después toca su nueva posición/);
+assert.match(selectedOnTouch.svg, /data-centered="true"/);
+assert.match(selectedOnTouch.svg, /centrada y alineada con la pared/);
+assert.match(selectedOnTouch.svg, /rotate\((?:0|90|30\.96)\)/);
+assert.equal((selectedOnTouch.svg.match(/data-kind="outlet-wall-target"/g) || []).length, 4);
+assert.match(selectedOnTouch.svg, /wall-snap-target is-current/);
 
 const movedState = D.normalizeState({
   ...state,
   phase: 'layout',
-  outletOverrides: { 'bed-1': { x: 4, y: 4 } },
+  outletOverrides: { 'bed-1': { x: 7.8, y: 4 } },
   branchGuides: { 'bed-1': { x: 9, y: 5 } },
 });
 const moved = D.calculateProject(movedState);
-assert.deepEqual(moved.outletMap.get('bed-1'), { id: 'outlet-bed-1', roomId: 'bed-1', x: 4, y: 4 });
+assert.deepEqual(moved.outletMap.get('bed-1'), {
+  id: 'outlet-bed-1', roomId: 'bed-1', x: 8, y: 4, wallIndex: 1, wallAngleDeg: 90,
+  wallA: { x: 8, y: 1 }, wallB: { x: 8, y: 7 }, centered: true,
+});
 assert.deepEqual(moved.roomConnections.get('bed-1').branchHandle, { x: 9, y: 5 });
 
 console.log('Plano poligonal y red principal de conductos: pruebas superadas.');
