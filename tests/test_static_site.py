@@ -303,6 +303,25 @@ class StaticSiteTests(unittest.TestCase):
         self.assertFalse((self.dist / "moderacion.html").exists())
         self.assertFalse((self.dist / "api").exists())
 
+    def test_updates_and_electrical_panel_foundation_are_public(self):
+        for relative in (
+            "actualizaciones.html",
+            "assets/updates.css",
+            "assets/updates.js",
+            "data/updates/feed.json",
+            "data/electroia/controller-ecosystems.json",
+            "data/electrical-panels/examples/motor-pump-dol-auto-manual.json",
+            "data/electrical-panels/panel-project.schema.json",
+            "data/electrical-panels/standards-registry.json",
+            "data/electrical-panels/tool-manifest.json",
+        ):
+            self.assertTrue((self.dist / relative).is_file(), relative)
+
+        portal = (self.dist / "index.html").read_text(encoding="utf-8")
+        updates = load(self.dist / "data" / "updates" / "feed.json")
+        self.assertIn("Últimas mejoras", portal)
+        self.assertGreaterEqual(len(updates["entries"]), 1)
+
     def test_private_backend_is_present_only_in_source(self):
         for relative in (
             "api/index.php",
@@ -3055,7 +3074,7 @@ class StaticSiteTests(unittest.TestCase):
         for filename in public_pages:
             html = (self.dist / filename).read_text(encoding="utf-8")
             self.assertIn('assets/app-theme.css?v=1', html, filename)
-            self.assertIn('assets/app-shell.js?v=5', html, filename)
+            self.assertIn('assets/app-shell.js?v=6', html, filename)
 
         shell = (self.dist / "assets" / "app-shell.js").read_text(encoding="utf-8")
         for marker in ("st-app-drawer", "st-bottom-nav", "st-drawer-search", "Calculadoras", "Componentes"):

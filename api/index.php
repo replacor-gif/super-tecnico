@@ -299,6 +299,7 @@ try {
         $types = ['idea', 'change', 'bug', 'technical'];
         $type = (string) ($body['type'] ?? '');
         if (!in_array($type, $types, true)) st_json(['ok' => false, 'error' => 'invalid_type'], 422);
+        if (trim((string) ($body['nickname'] ?? '')) === '') $body['nickname'] = 'Usuario anónimo';
         $nickname = st_text($body, 'nickname', 2, 40);
         $area = st_text($body, 'area', 2, 100);
         $context = st_text($body, 'context', 0, 160, false);

@@ -6,10 +6,11 @@ Fecha de revisión: 2026-08-17
 
 - Catálogo público: 460 símbolos.
 - Símbolos con estructura y terminales: 460.
-- Símbolos revisados individualmente: 117.
-- Borradores por familia pendientes de revisión gráfica: 343.
+- Símbolos revisados individualmente: 127.
+- Borradores por familia pendientes de revisión gráfica: 333.
 - Familias completas: conexiones y referencias; protecciones eléctricas; relés, interruptores y actuadores; máquinas y actuadores.
 - Lote de sensores HVAC revisado: 17 símbolos de temperatura, presión, humedad, flujo, nivel, calidad de aire, seguridad y medida de corriente.
+- Lote de señales y comunicaciones revisado: 10 símbolos de RS-485, CAN, Ethernet, 4-20 mA, 0-10 V, UART, JTAG/SWD, Modbus RTU, BACnet MS/TP y DALI.
 
 Un símbolo solo cambia a `engine_reviewed` cuando dispone de geometría propia, terminales identificados, anclajes sobre la rejilla común y una prueba de representación. Estar presente en el catálogo o compartir una plantilla provisional no equivale a estar revisado.
 

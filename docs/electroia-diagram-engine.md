@@ -97,7 +97,7 @@ El motor aporta:
 
 La base educativa de Super Técnico conserva 460 fichas y sus SVG de consulta. No todos esos SVG son todavía símbolos CAD: muchos carecen de terminales tipados y puntos de conexión normalizados.
 
-La versión 1.8 dispone de 117 símbolos revisados individualmente. Además de las cuatro familias completas, incorpora un lote HVAC de 17 sensores: RTD, termopar, temperatura integrada, presión analógica y digital, humedad, flujo, nivel, CO2, calidad de aire, llama, fugas de agua, escarcha, Hall de corriente, transformador de corriente, Rogowski y shunt aislado. Los 343 símbolos restantes conservan terminales y estructura provisional, pero el motor los marca como borradores hasta su revisión gráfica.
+La versión 1.8 dispone de 127 símbolos revisados individualmente. Además de las cuatro familias completas, incorpora un lote HVAC de 17 sensores y otro de 10 señales y comunicaciones industriales: RS-485, CAN, Ethernet, 4-20 mA, 0-10 V, UART, JTAG/SWD, Modbus RTU, BACnet MS/TP y DALI. Los 333 símbolos restantes conservan terminales y estructura provisional, pero el motor los marca como borradores hasta su revisión gráfica.
 
 El primer patrón unifilar representa una alimentación monofásica, contador, protección general, diferencial y tres circuitos derivados. Cada red declara explícitamente cuántos conductores resume la línea.
 

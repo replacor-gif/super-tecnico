@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-08-17",
+  "title": "Últimas mejoras de Super Técnico",
+  "author_policy": {
+    "maintainer": "Administrador",
+    "missing_contributor_name": "Usuario anónimo",
+    "named_contributor": "Use the public nickname supplied with the contribution",
+    "personal_data": "Do not publish private identifiers unless the contributor explicitly chose that text as a public nickname."
+  },
+  "entries": [
+    {
+      "id": "UPD-20260817-AUTOMATION-SIGNALS",
+      "date": "2026-08-17",
+      "title": "Diez señales y comunicaciones industriales normalizadas",
+      "summary": "ElectroIA ya dispone de geometrías y terminales revisados para RS-485, CAN, Ethernet, 4-20 mA, 0-10 V, UART, JTAG/SWD, Modbus RTU, BACnet MS/TP y DALI.",
+      "areas": ["ElectroIA", "Automatización", "Simbología"],
+      "kind": "catalog_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
+      "id": "UPD-20260817-PANEL-DESIGNER",
+      "date": "2026-08-17",
+      "title": "Base del diseñador integral de cuadros eléctricos",
+      "summary": "Preparada la arquitectura que unirá cálculos, esquemas, borneros, automatización, armario, materiales, normativa y fabricación en un único proyecto.",
+      "areas": ["ElectroIA", "Cuadros eléctricos", "Normativa"],
+      "kind": "new_foundation",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
+      "id": "UPD-20260817-HVAC-SENSORS",
+      "date": "2026-08-17",
+      "title": "Nueva familia de sensores normalizada en ElectroIA",
+      "summary": "Revisados individualmente 17 símbolos de temperatura, presión, humedad, caudal, nivel, calidad de aire, seguridad y medida de corriente.",
+      "areas": ["ElectroIA", "Simbología"],
+      "kind": "catalog_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
+      "id": "UPD-20260817-VENTILATION",
+      "date": "2026-08-17",
+      "title": "Nuevo diseñador de ventilación y extracción",
+      "summary": "Añadido el primer flujo para dibujar recintos, colocar rejillas y turbinas y obtener caudales, recorridos y dimensiones según el uso del local.",
+      "areas": ["Ventilación", "Diseño de instalaciones"],
+      "kind": "new_tool",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
+      "id": "UPD-20260817-DUCTS-MOBILE",
+      "date": "2026-08-17",
+      "title": "Movimiento de rejillas y conductos más cómodo en móvil",
+      "summary": "Mejorado el manejo táctil y la alineación de las rejillas con las paredes para acercar el plano a la instalación real.",
+      "areas": ["Conductos", "Móvil"],
+      "kind": "usability",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
+      "id": "UPD-20260816-REGULATIONS",
+      "date": "2026-08-16",
+      "title": "Buscador de reglamentos preparado para una primera versión competente",
+      "summary": "Mejoradas las búsquedas, referencias a documentos oficiales, páginas exactas y control de actualización de las fuentes.",
+      "areas": ["Normativa", "Buscador"],
+      "kind": "reliability",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
+      "id": "UPD-20260813-MOLLIER",
+      "date": "2026-08-13",
+      "title": "Diagnóstico frigorista mediante diagrama de Mollier",
+      "summary": "El asistente puede continuar desde una consulta de presión y temperatura hasta un análisis progresivo del comportamiento del circuito frigorífico.",
+      "areas": ["Frigorista", "Diagnóstico"],
+      "kind": "tool_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
+      "id": "UPD-20260812-AI-TOOLS",
+      "date": "2026-08-12",
+      "title": "Super Técnico preparado para herramientas de IA",
+      "summary": "Creada una base neutral para que distintas IAs puedan consultar capacidades técnicas, normativa, componentes y motores especializados.",
+      "areas": ["IA", "Integración"],
+      "kind": "new_foundation",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    }
+  ]
+}

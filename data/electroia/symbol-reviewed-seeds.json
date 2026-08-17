@@ -2414,6 +2414,174 @@
       }
     },
     {
+      "id": "SYM-0251",
+      "name": "Transceptor RS-485",
+      "kind": "transceiver_rs485",
+      "designator": "U",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 12,
+      "height": 12,
+      "ports": {
+        "DI": { "x": -6, "y": -3, "side": "west", "electrical_type": "input" },
+        "DE": { "x": -6, "y": -1, "side": "west", "electrical_type": "input" },
+        "nRE": { "x": -6, "y": 1, "side": "west", "electrical_type": "input" },
+        "RO": { "x": -6, "y": 3, "side": "west", "electrical_type": "output" },
+        "A": { "x": 6, "y": -2, "side": "east", "electrical_type": "bidirectional" },
+        "B": { "x": 6, "y": 2, "side": "east", "electrical_type": "bidirectional" },
+        "VCC": { "x": 0, "y": -6, "side": "north", "electrical_type": "power_in" },
+        "GND": { "x": 0, "y": 6, "side": "south", "electrical_type": "power_in" }
+      }
+    },
+    {
+      "id": "SYM-0252",
+      "name": "Transceptor CAN",
+      "kind": "transceiver_can",
+      "designator": "U",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 12,
+      "height": 10,
+      "ports": {
+        "TXD": { "x": -6, "y": -2, "side": "west", "electrical_type": "input" },
+        "RXD": { "x": -6, "y": 2, "side": "west", "electrical_type": "output" },
+        "CANH": { "x": 6, "y": -2, "side": "east", "electrical_type": "bidirectional" },
+        "CANL": { "x": 6, "y": 2, "side": "east", "electrical_type": "bidirectional" },
+        "VCC": { "x": 0, "y": -5, "side": "north", "electrical_type": "power_in" },
+        "GND": { "x": 0, "y": 5, "side": "south", "electrical_type": "power_in" }
+      }
+    },
+    {
+      "id": "SYM-0265",
+      "name": "Puerto Ethernet",
+      "kind": "ethernet_port",
+      "designator": "J",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 16,
+      "height": 14,
+      "ports": {
+        "MDI1+": { "x": -8, "y": -7, "side": "west", "electrical_type": "bidirectional" },
+        "MDI1-": { "x": -8, "y": -5, "side": "west", "electrical_type": "bidirectional" },
+        "MDI2+": { "x": -8, "y": -3, "side": "west", "electrical_type": "bidirectional" },
+        "MDI2-": { "x": -8, "y": -1, "side": "west", "electrical_type": "bidirectional" },
+        "MDI3+": { "x": -8, "y": 1, "side": "west", "electrical_type": "bidirectional" },
+        "MDI3-": { "x": -8, "y": 3, "side": "west", "electrical_type": "bidirectional" },
+        "MDI4+": { "x": -8, "y": 5, "side": "west", "electrical_type": "bidirectional" },
+        "MDI4-": { "x": -8, "y": 7, "side": "west", "electrical_type": "bidirectional" },
+        "SHIELD": { "x": 0, "y": 7, "side": "south", "electrical_type": "shield" }
+      }
+    },
+    {
+      "id": "SYM-0454",
+      "name": "Lazo de corriente 4-20 mA",
+      "kind": "signal_4_20ma",
+      "designator": "AI/AO",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 6,
+      "ports": {
+        "LOOP+": { "x": -5, "y": 0, "side": "west", "electrical_type": "passive" },
+        "LOOP-": { "x": 5, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0455",
+      "name": "Señal analógica 0-10 V",
+      "kind": "signal_0_10v",
+      "designator": "AI/AO",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 6,
+      "ports": {
+        "SIG": { "x": -5, "y": 0, "side": "west", "electrical_type": "passive" },
+        "COM": { "x": 5, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
+      "id": "SYM-0456",
+      "name": "Puerto UART",
+      "kind": "uart_port",
+      "designator": "UART",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 12,
+      "height": 8,
+      "ports": {
+        "RX": { "x": -6, "y": -2, "side": "west", "electrical_type": "input" },
+        "TX": { "x": 6, "y": -2, "side": "east", "electrical_type": "output" },
+        "VCC": { "x": 0, "y": -4, "side": "north", "electrical_type": "power_in" },
+        "GND": { "x": 0, "y": 4, "side": "south", "electrical_type": "power_in" }
+      }
+    },
+    {
+      "id": "SYM-0457",
+      "name": "Interfaz JTAG / SWD",
+      "kind": "debug_jtag_swd",
+      "designator": "JTAG/SWD",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 14,
+      "height": 14,
+      "ports": {
+        "TCK_SWCLK": { "x": -7, "y": -4, "side": "west", "electrical_type": "input" },
+        "TMS_SWDIO": { "x": -7, "y": -2, "side": "west", "electrical_type": "bidirectional" },
+        "TDI": { "x": -7, "y": 0, "side": "west", "electrical_type": "input" },
+        "NRST": { "x": -7, "y": 2, "side": "west", "electrical_type": "input" },
+        "TDO_SWO": { "x": 7, "y": -2, "side": "east", "electrical_type": "output" },
+        "VTREF": { "x": 0, "y": -7, "side": "north", "electrical_type": "power_in" },
+        "GND": { "x": 0, "y": 7, "side": "south", "electrical_type": "power_in" }
+      }
+    },
+    {
+      "id": "SYM-0458",
+      "name": "Bus Modbus RTU sobre RS-485",
+      "kind": "bus_modbus_rtu",
+      "designator": "BUS",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 10,
+      "ports": {
+        "A": { "x": -5, "y": -2, "side": "west", "electrical_type": "bidirectional" },
+        "B": { "x": -5, "y": 2, "side": "west", "electrical_type": "bidirectional" },
+        "COM": { "x": 5, "y": -2, "side": "east", "electrical_type": "passive" },
+        "SHIELD": { "x": 5, "y": 2, "side": "east", "electrical_type": "shield" }
+      }
+    },
+    {
+      "id": "SYM-0459",
+      "name": "Bus BACnet MS/TP",
+      "kind": "bus_bacnet_mstp",
+      "designator": "BUS",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 10,
+      "ports": {
+        "A+": { "x": -5, "y": -2, "side": "west", "electrical_type": "bidirectional" },
+        "B-": { "x": -5, "y": 2, "side": "west", "electrical_type": "bidirectional" },
+        "COM": { "x": 5, "y": -2, "side": "east", "electrical_type": "passive" },
+        "SHIELD": { "x": 5, "y": 2, "side": "east", "electrical_type": "shield" }
+      }
+    },
+    {
+      "id": "SYM-0460",
+      "name": "Bus DALI",
+      "kind": "bus_dali",
+      "designator": "DA",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 10,
+      "height": 6,
+      "ports": {
+        "DA1": { "x": -5, "y": 0, "side": "west", "electrical_type": "passive" },
+        "DA2": { "x": 5, "y": 0, "side": "east", "electrical_type": "passive" }
+      }
+    },
+    {
       "id": "ST-GENERIC-2P",
       "catalog_id": null,
       "name": "Carga genérica",

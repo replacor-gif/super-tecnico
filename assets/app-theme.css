@@ -398,6 +398,14 @@ summary { color: var(--st-text) !important; }
 
 footer, .st-page-footer { color: #78879b !important; }
 .st-page-counter { border-color: #29364a !important; color: #738197 !important; background: rgba(8,13,20,.76) !important; }
+
+.st-drawer-updates { margin:12px 18px 4px; padding:13px 14px; display:grid; grid-template-columns:42px 1fr auto; align-items:center; gap:11px; border:1px solid color-mix(in srgb,var(--tool-color) 42%,#263548); border-radius:14px; color:#f4f7fa; background:color-mix(in srgb,var(--tool-color) 8%,#0b121a); text-decoration:none; }
+.st-drawer-updates .st-tool-icon { color:var(--tool-color); }
+.st-drawer-updates > span:nth-child(2) { display:grid; gap:3px; }
+.st-drawer-updates strong { font-size:.85rem; }
+.st-drawer-updates small { color:#8797a7; font-size:.68rem; }
+.st-drawer-updates > b { color:var(--tool-color); font-size:.72rem; }
+.st-drawer-updates.is-active { box-shadow:0 0 0 2px color-mix(in srgb,var(--tool-color) 30%,transparent); }
 .st-electro-access { color: #65748a !important; }
 .st-electro-access:hover, .st-electro-access:focus-visible { color: var(--st-yellow) !important; background: rgba(255,228,56,.09) !important; }
 .st-analytics-access { color: #60758f !important; }

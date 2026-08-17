@@ -809,6 +809,36 @@ const ElectroDiagramCore = (() => {
       "machine_block", "protection_block", "power_block", "isolation_block",
       "installation_block", "meter_block", "source_block",
     ]);
+    if (kind === "transceiver_rs485") {
+      return sensorBody("RS-485", `<path class="symbol-accent" d="M${-2.7 * u} ${-1.8 * u}H${1.8 * u}m0 0l${-0.7 * u} ${-0.55 * u}m${0.7 * u} ${0.55 * u}l${-0.7 * u} ${0.55 * u}M${2.7 * u} ${0.25 * u}H${-1.8 * u}m0 0l${0.7 * u} ${-0.55 * u}m${-0.7 * u} ${0.55 * u}l${0.7 * u} ${0.55 * u}"/><text class="component-value" x="0" y="${2.35 * u}">A / B</text>`, "rect", 0, 1.25 * u);
+    }
+    if (kind === "transceiver_can") {
+      return sensorBody("CAN", `<path class="symbol-accent" d="M${-2.8 * u} ${-1.55 * u}H${2.8 * u}M${-2.8 * u} ${0.15 * u}H${2.8 * u}M${-2.25 * u} ${-2.05 * u}v${1 * u}M${2.25 * u} ${-2.05 * u}v${1 * u}"/><text class="component-value" x="0" y="${2 * u}">H / L</text>`, "rect", 0, 1.25 * u);
+    }
+    if (kind === "ethernet_port") {
+      return sensorBody("ETH", `<path class="symbol-accent" d="M${-3.3 * u} ${-2.75 * u}H${3.3 * u}V${1.2 * u}L${2.2 * u} ${2.55 * u}H${-2.2 * u}L${-3.3 * u} ${1.2 * u}ZM${-2.3 * u} ${-2.75 * u}v${1.25 * u}m${1.15 * u} ${-1.25 * u}v${1.25 * u}M0 ${-2.75 * u}v${1.25 * u}m${1.15 * u} ${-1.25 * u}v${1.25 * u}m${1.15 * u} ${-1.25 * u}v${1.25 * u}"/>`, "rect", 0, 0.65 * u);
+    }
+    if (kind === "signal_4_20ma") {
+      return sensorBody("4–20 mA", `<path class="symbol-accent" d="M${-2.65 * u} ${0.65 * u}C${-1.75 * u} ${-1.75 * u},${1.45 * u} ${-1.75 * u},${2.35 * u} ${0.2 * u}m0 0l${-0.1 * u} ${-0.85 * u}m${0.1 * u} ${0.85 * u}l${-0.85 * u} ${-0.15 * u}"/>`, "round", 0, 1.45 * u);
+    }
+    if (kind === "signal_0_10v") {
+      return sensorBody("0–10 V", `<path class="symbol-accent" d="M${-2.65 * u} ${1 * u}H${2.55 * u}M${-2.35 * u} ${0.75 * u}L${1.85 * u} ${-1.8 * u}m0 0h${-0.85 * u}m${0.85 * u} 0v${0.85 * u}"/>`, "rect", 0, 1.65 * u);
+    }
+    if (kind === "uart_port") {
+      return sensorBody("UART", `<path class="symbol-accent" d="M${-2.65 * u} ${-1.4 * u}H${1.95 * u}m0 0l${-0.7 * u} ${-0.55 * u}m${0.7 * u} ${0.55 * u}l${-0.7 * u} ${0.55 * u}M${2.65 * u} ${0.55 * u}H${-1.95 * u}m0 0l${0.7 * u} ${-0.55 * u}m${-0.7 * u} ${0.55 * u}l${0.7 * u} ${0.55 * u}"/>`, "rect", 0, 2.1 * u);
+    }
+    if (kind === "debug_jtag_swd") {
+      return sensorBody("JTAG / SWD", `<path class="symbol-accent" d="M${-2.8 * u} ${-1.75 * u}H${2.8 * u}"/><circle class="symbol-accent" cx="${-2.4 * u}" cy="${-1.75 * u}" r="7"/><circle class="symbol-accent" cx="${-0.8 * u}" cy="${-1.75 * u}" r="7"/><circle class="symbol-accent" cx="${0.8 * u}" cy="${-1.75 * u}" r="7"/><circle class="symbol-accent" cx="${2.4 * u}" cy="${-1.75 * u}" r="7"/><path class="symbol-accent" d="M${-2.3 * u} ${0.25 * u}h${4.6 * u}v${1.25 * u}h${-4.6 * u}Z"/>`, "rect", 0, 2.4 * u);
+    }
+    if (kind === "bus_modbus_rtu") {
+      return sensorBody("MODBUS", `<path class="symbol-accent" d="M${-2.9 * u} ${-1.65 * u}C${-1.8 * u} ${-2.2 * u},${-0.75 * u} ${-1.1 * u},${0.35 * u} ${-1.65 * u}S${2.05 * u} ${-1.1 * u},${2.9 * u} ${-1.65 * u}M${-2.9 * u} ${0.05 * u}C${-1.8 * u} ${-0.5 * u},${-0.75 * u} ${0.6 * u},${0.35 * u} ${0.05 * u}S${2.05 * u} ${0.6 * u},${2.9 * u} ${0.05 * u}"/><text class="component-value" x="0" y="${2.15 * u}">RTU · RS-485</text>`, "rect", 0, 1.25 * u);
+    }
+    if (kind === "bus_bacnet_mstp") {
+      return sensorBody("BACnet", `<path class="symbol-accent" d="M${-2.5 * u} ${-1.2 * u}H${2.5 * u}"/><circle class="symbol-fill" cx="${-2.5 * u}" cy="${-1.2 * u}" r="7"/><circle class="symbol-fill" cx="0" cy="${-1.2 * u}" r="7"/><circle class="symbol-fill" cx="${2.5 * u}" cy="${-1.2 * u}" r="7"/><path class="symbol-accent" d="M${2.5 * u} ${-0.9 * u}q${0.45 * u} ${0.65 * u} 0 ${1.3 * u}"/><text class="component-value" x="0" y="${2.05 * u}">MS/TP</text>`, "rect", 0, 1.2 * u);
+    }
+    if (kind === "bus_dali") {
+      return sensorBody("DALI", `<circle class="symbol-accent" cx="0" cy="${-0.75 * u}" r="${1.05 * u}"/><path class="symbol-accent" d="M${-0.72 * u} ${-1.47 * u}L${0.72 * u} ${-0.03 * u}M${-0.72 * u} ${-0.03 * u}L${0.72 * u} ${-1.47 * u}"/>`, "round", 0, 1.65 * u);
+    }
     if (familyKinds.has(kind)) return drawFamilyBlock(definition, line);
     if (kind === "wire") {
       return line(-3, 0, 3, 0);

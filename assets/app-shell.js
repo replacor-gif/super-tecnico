@@ -40,6 +40,7 @@
     diagram: '<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="9" cy="12" r="4"/><circle cx="39" cy="12" r="4"/><circle cx="9" cy="36" r="4"/><circle cx="39" cy="36" r="4"/><path d="M13 12h10v24H13M27 12h8M23 24h16v8"/><path class="detail" d="M29 9v6M33 9v6"/></svg>',
     learn: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="m5 17 19-9 19 9-19 9zM12 21v12c7 7 17 7 24 0V21M43 17v15"/><circle cx="43" cy="35" r="2"/></svg>',
     idea: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M34 30c4-3 7-8 7-14C41 7 33 1 24 1S7 7 7 16c0 6 3 11 7 14 3 2 4 5 4 8h12c0-3 1-6 4-8zM18 43h12M19 38h10"/><path class="detail" d="M24 8v5M12 16h5M31 16h5"/></svg>',
+    updates: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5v8M24 35v8M5 24h8M35 24h8M10.6 10.6l5.7 5.7M31.7 31.7l5.7 5.7M37.4 10.6l-5.7 5.7M16.3 31.7l-5.7 5.7"/><circle cx="24" cy="24" r="7"/><path class="detail" d="M24 2v3M24 43v3"/></svg>',
   };
 
   function currentFile() {
@@ -79,6 +80,7 @@
         <label class="st-drawer-search"><span>${icons.search}</span><input type="search" autocomplete="off" placeholder="Buscar una herramienta…" aria-label="Buscar una herramienta"></label>
         <div class="st-drawer-status"><span>ACCESO RÁPIDO</span><b>${tools.length - 1} HERRAMIENTAS</b></div>
         <nav class="st-drawer-grid" aria-label="Todas las herramientas">${tools.map(tool => toolLink(tool)).join('')}</nav>
+        <a class="st-drawer-updates${currentFile() === 'actualizaciones.html' ? ' is-active' : ''}" href="actualizaciones.html" style="--tool-color:#ffe438"><span class="st-tool-icon">${icons.updates}</span><span><strong>Últimas mejoras</strong><small>Consulta cómo sigue creciendo la aplicación</small></span><b>VER →</b></a>
         <div class="st-drawer-foot"><strong>TÉCNICA REAL.</strong><span>DECISIONES RÁPIDAS.</span></div>
       </aside>
       <nav class="st-bottom-nav" aria-label="Navegación rápida">

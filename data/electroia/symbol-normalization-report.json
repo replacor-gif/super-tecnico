@@ -5,16 +5,19 @@
   "engine_symbols": 463,
   "symbols_with_ports": 463,
   "status_counts": {
-    "auto_draft": 343,
+    "auto_draft": 333,
     "engine_internal": 3,
-    "engine_reviewed": 117
+    "engine_reviewed": 127
   },
   "catalog_status_counts": {
-    "auto_draft": 343,
-    "engine_reviewed": 117
+    "auto_draft": 333,
+    "engine_reviewed": 127
   },
   "family_counts": {
     "aux_contact_no": 1,
+    "bus_bacnet_mstp": 1,
+    "bus_dali": 1,
+    "bus_modbus_rtu": 1,
     "capacitor": 1,
     "chassis_ground": 1,
     "circuit_breaker": 1,
@@ -22,13 +25,14 @@
     "comparator": 1,
     "compressor_crs": 1,
     "compressor_hermetic": 1,
-    "connector_block": 18,
+    "connector_block": 10,
     "contact_nc": 1,
     "contact_no": 1,
     "contactor_3p": 1,
     "cross_no_connection": 1,
     "crowbar_scr": 1,
-    "digital_block": 73,
+    "debug_jtag_swd": 1,
+    "digital_block": 71,
     "diode": 1,
     "dip_switch": 1,
     "distribution_board": 1,
@@ -38,6 +42,7 @@
     "emergency_stop_nc": 1,
     "energy_meter": 1,
     "esd_protector": 1,
+    "ethernet_port": 1,
     "fan": 1,
     "float_switch": 1,
     "four_way_valve": 1,
@@ -118,6 +123,8 @@
     "sensor_water_leak": 1,
     "servo_motor": 1,
     "shield": 1,
+    "signal_0_10v": 1,
+    "signal_4_20ma": 1,
     "signal_bus": 1,
     "socket_outlet": 1,
     "solenoid": 1,
@@ -140,7 +147,10 @@
     "thermistor_ntc": 1,
     "thermocouple": 1,
     "thermostat_switch": 1,
+    "transceiver_can": 1,
+    "transceiver_rs485": 1,
     "transformer": 1,
+    "uart_port": 1,
     "voltage_relay": 1,
     "wire": 1
   },
@@ -157,8 +167,8 @@
     },
     "Conectores y comunicaciones": {
       "total": 19,
-      "engine_reviewed": 1,
-      "auto_draft": 18
+      "engine_reviewed": 9,
+      "auto_draft": 10
     },
     "Conexiones y referencias": {
       "total": 17,
@@ -172,8 +182,8 @@
     },
     "Electrónica digital": {
       "total": 73,
-      "engine_reviewed": 0,
-      "auto_draft": 73
+      "engine_reviewed": 2,
+      "auto_draft": 71
     },
     "Fuentes y alimentación": {
       "total": 11,

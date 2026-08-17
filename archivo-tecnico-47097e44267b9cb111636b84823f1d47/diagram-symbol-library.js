@@ -10053,11 +10053,64 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0251": {
     "id": "SYM-0251",
-    "catalog_id": "SYM-0251",
     "name": "Transceptor RS-485",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
+    "kind": "transceiver_rs485",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 12,
+    "height": 12,
+    "ports": {
+      "DI": {
+        "x": -6,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DE": {
+        "x": -6,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "nRE": {
+        "x": -6,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "RO": {
+        "x": -6,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "output"
+      },
+      "A": {
+        "x": 6,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "B": {
+        "x": 6,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -6,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 6,
+        "side": "south",
+        "electrical_type": "power_in"
+      }
+    },
+    "catalog_id": "SYM-0251",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "RS485 transceiver",
@@ -10066,35 +10119,58 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "rs485",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0251_transceptor-rs-485.svg"
+    "source_asset": "assets/symbols/SYM-0251_transceptor-rs-485.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0252": {
     "id": "SYM-0252",
-    "catalog_id": "SYM-0252",
     "name": "Transceptor CAN",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
+    "kind": "transceiver_can",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 12,
+    "height": 10,
+    "ports": {
+      "TXD": {
+        "x": -6,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "RXD": {
+        "x": -6,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "output"
+      },
+      "CANH": {
+        "x": 6,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "CANL": {
+        "x": 6,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -5,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 5,
+        "side": "south",
+        "electrical_type": "power_in"
+      }
+    },
+    "catalog_id": "SYM-0252",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "CAN transceiver",
@@ -10103,27 +10179,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "can",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0252_transceptor-can.svg"
+    "source_asset": "assets/symbols/SYM-0252_transceptor-can.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0253": {
     "id": "SYM-0253",
@@ -10594,11 +10652,70 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0265": {
     "id": "SYM-0265",
-    "catalog_id": "SYM-0265",
     "name": "Puerto Ethernet",
-    "kind": "connector_block",
-    "geometry_template": "connector_block",
+    "kind": "ethernet_port",
     "designator": "J",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 16,
+    "height": 14,
+    "ports": {
+      "MDI1+": {
+        "x": -8,
+        "y": -7,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "MDI1-": {
+        "x": -8,
+        "y": -5,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "MDI2+": {
+        "x": -8,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "MDI2-": {
+        "x": -8,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "MDI3+": {
+        "x": -8,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "MDI3-": {
+        "x": -8,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "MDI4+": {
+        "x": -8,
+        "y": 5,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "MDI4-": {
+        "x": -8,
+        "y": 7,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "SHIELD": {
+        "x": 0,
+        "y": 7,
+        "side": "south",
+        "electrical_type": "shield"
+      }
+    },
+    "catalog_id": "SYM-0265",
     "category": "Conectores y comunicaciones",
     "subcategory": "Conexión física",
     "aliases": "RJ45 Ethernet",
@@ -10607,27 +10724,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue numeración de pines, blindaje, pares diferenciales y dirección de señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ethernet",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0265_puerto-ethernet.svg"
+    "source_asset": "assets/symbols/SYM-0265_puerto-ethernet.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0266": {
     "id": "SYM-0266",
@@ -18303,11 +18402,28 @@ const ElectroDiagramSymbols = Object.freeze({
   },
   "SYM-0454": {
     "id": "SYM-0454",
-    "catalog_id": "SYM-0454",
     "name": "Lazo de corriente 4-20 mA",
-    "kind": "connector_block",
-    "geometry_template": "connector_block",
+    "kind": "signal_4_20ma",
     "designator": "AI/AO",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 10,
+    "height": 6,
+    "ports": {
+      "LOOP+": {
+        "x": -5,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "LOOP-": {
+        "x": 5,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "catalog_id": "SYM-0454",
     "category": "Conectores y comunicaciones",
     "subcategory": "Señales industriales",
     "aliases": "current loop, 4-20mA",
@@ -18316,35 +18432,34 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Distingue transmisor de dos, tres o cuatro hilos y quién alimenta el lazo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "signal",
+    "source_asset": "assets/symbols/SYM-0454_lazo-de-corriente-4-20-ma.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0455": {
+    "id": "SYM-0455",
+    "name": "Señal analógica 0-10 V",
+    "kind": "signal_0_10v",
+    "designator": "AI/AO",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
+    "width": 10,
+    "height": 6,
     "ports": {
-      "1": {
-        "x": -3,
+      "SIG": {
+        "x": -5,
         "y": 0,
         "side": "west",
         "electrical_type": "passive"
       },
-      "2": {
-        "x": 3,
+      "COM": {
+        "x": 5,
         "y": 0,
         "side": "east",
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0454_lazo-de-corriente-4-20-ma.svg"
-  },
-  "SYM-0455": {
-    "id": "SYM-0455",
     "catalog_id": "SYM-0455",
-    "name": "Señal analógica 0-10 V",
-    "kind": "connector_block",
-    "geometry_template": "connector_block",
-    "designator": "AI/AO",
     "category": "Conectores y comunicaciones",
     "subcategory": "Señales industriales",
     "aliases": "0-10V, 2-10V control",
@@ -18353,35 +18468,46 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Comprueba si la entrada es 0-10 V o 2-10 V y si el común está aislado.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "signal",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0455_senal-analogica-0-10-v.svg"
+    "source_asset": "assets/symbols/SYM-0455_senal-analogica-0-10-v.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0456": {
     "id": "SYM-0456",
-    "catalog_id": "SYM-0456",
     "name": "Puerto UART",
-    "kind": "connector_block",
-    "geometry_template": "connector_block",
+    "kind": "uart_port",
     "designator": "UART",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 12,
+    "height": 8,
+    "ports": {
+      "RX": {
+        "x": -6,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "TX": {
+        "x": 6,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "power_in"
+      }
+    },
+    "catalog_id": "SYM-0456",
     "category": "Conectores y comunicaciones",
     "subcategory": "Servicio digital",
     "aliases": "serial TTL, TX RX",
@@ -18390,41 +18516,64 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "TX de un equipo suele conectarse a RX del otro y ambos comparten referencia si no hay aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bus",
+    "source_asset": "assets/symbols/SYM-0456_puerto-uart.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0457": {
+    "id": "SYM-0457",
+    "name": "Interfaz JTAG / SWD",
+    "kind": "debug_jtag_swd",
+    "designator": "JTAG/SWD",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
+    "width": 14,
+    "height": 14,
     "ports": {
-      "VCC": {
-        "x": -4,
+      "TCK_SWCLK": {
+        "x": -7,
+        "y": -4,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "TMS_SWDIO": {
+        "x": -7,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "TDI": {
+        "x": -7,
         "y": 0,
         "side": "west",
         "electrical_type": "input"
       },
-      "GND": {
-        "x": 4,
-        "y": -1,
+      "NRST": {
+        "x": -7,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "TDO_SWO": {
+        "x": 7,
+        "y": -2,
         "side": "east",
         "electrical_type": "output"
       },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
+      "VTREF": {
+        "x": 0,
+        "y": -7,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 7,
+        "side": "south",
+        "electrical_type": "power_in"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0456_puerto-uart.svg"
-  },
-  "SYM-0457": {
-    "id": "SYM-0457",
     "catalog_id": "SYM-0457",
-    "name": "Interfaz JTAG / SWD",
-    "kind": "connector_block",
-    "geometry_template": "connector_block",
-    "designator": "JTAG/SWD",
     "category": "Conectores y comunicaciones",
     "subcategory": "Programación y depuración",
     "aliases": "debug port, programming header",
@@ -18433,41 +18582,46 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica reloj, datos, reset, referencia de tensión y masa antes de conectar la herramienta.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bus",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0457_interfaz-jtag-swd.svg"
+    "source_asset": "assets/symbols/SYM-0457_interfaz-jtag-swd.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0458": {
     "id": "SYM-0458",
-    "catalog_id": "SYM-0458",
     "name": "Bus Modbus RTU sobre RS-485",
-    "kind": "connector_block",
-    "geometry_template": "connector_block",
+    "kind": "bus_modbus_rtu",
     "designator": "BUS",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 10,
+    "height": 10,
+    "ports": {
+      "A": {
+        "x": -5,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "B": {
+        "x": -5,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "COM": {
+        "x": 5,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "SHIELD": {
+        "x": 5,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "shield"
+      }
+    },
+    "catalog_id": "SYM-0458",
     "category": "Conectores y comunicaciones",
     "subcategory": "Buses industriales",
     "aliases": "Modbus RTU, RS485",
@@ -18476,47 +18630,46 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Además de A/B deben revisarse dirección, velocidad, paridad, polarización y terminación.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bus",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "IN1": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "IN2": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "OUT1": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT2": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0458_bus-modbus-rtu-sobre-rs-485.svg"
+    "source_asset": "assets/symbols/SYM-0458_bus-modbus-rtu-sobre-rs-485.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0459": {
     "id": "SYM-0459",
-    "catalog_id": "SYM-0459",
     "name": "Bus BACnet MS/TP",
-    "kind": "connector_block",
-    "geometry_template": "connector_block",
+    "kind": "bus_bacnet_mstp",
     "designator": "BUS",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 10,
+    "height": 10,
+    "ports": {
+      "A+": {
+        "x": -5,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "B-": {
+        "x": -5,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "COM": {
+        "x": 5,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "SHIELD": {
+        "x": 5,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "shield"
+      }
+    },
+    "catalog_id": "SYM-0459",
     "category": "Conectores y comunicaciones",
     "subcategory": "Buses de edificios",
     "aliases": "BACnet MSTP, RS485 building automation",
@@ -18525,47 +18678,34 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa MAC, velocidad, polaridad, terminadores y número máximo de maestros configurado.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bus",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "IN1": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "IN2": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "OUT1": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT2": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0459_bus-bacnet-ms-tp.svg"
+    "source_asset": "assets/symbols/SYM-0459_bus-bacnet-ms-tp.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0460": {
     "id": "SYM-0460",
-    "catalog_id": "SYM-0460",
     "name": "Bus DALI",
-    "kind": "connector_block",
-    "geometry_template": "connector_block",
+    "kind": "bus_dali",
     "designator": "DA",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 10,
+    "height": 6,
+    "ports": {
+      "DA1": {
+        "x": -5,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "DA2": {
+        "x": 5,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "catalog_id": "SYM-0460",
     "category": "Conectores y comunicaciones",
     "subcategory": "Control de iluminación",
     "aliases": "Digital Addressable Lighting Interface",
@@ -18574,39 +18714,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Los dos conductores del bus suelen ser no polarizados, pero no deben confundirse con alimentación de red.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bus",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "IN1": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "IN2": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "OUT1": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT2": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0460_bus-dali.svg"
+    "source_asset": "assets/symbols/SYM-0460_bus-dali.svg",
+    "review_status": "engine_reviewed",
+    "geometry_source": "reviewed_seed"
   },
   "ST-CONTROL-PORT": {
     "id": "ST-CONTROL-PORT",
