@@ -6,6 +6,7 @@ require __DIR__ . '/ratings.php';
 require __DIR__ . '/regulations.php';
 require __DIR__ . '/analytics.php';
 require __DIR__ . '/connectors.php';
+require __DIR__ . '/embedded-platforms.php';
 
 $action = preg_replace('/[^a-z0-9-]/', '', strtolower((string) ($_GET['action'] ?? 'health')));
 $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
@@ -36,7 +37,7 @@ try {
 
     if ($action === 'health' && $method === 'GET') {
         st_db()->query('SELECT 1');
-        st_json(['ok' => true, 'service' => 'super-tecnico-api', 'version' => ST_REGULATION_SERVICE_VERSION, 'public_tools' => [ST_REGULATION_TOOL_ID, 'supertecnico_search_connectors', 'supertecnico_get_connector', 'supertecnico_resolve_connector_contact']]);
+        st_json(['ok' => true, 'service' => 'super-tecnico-api', 'version' => ST_REGULATION_SERVICE_VERSION, 'public_tools' => [ST_REGULATION_TOOL_ID, 'supertecnico_search_connectors', 'supertecnico_get_connector', 'supertecnico_resolve_connector_contact', 'supertecnico_search_embedded_platforms', 'supertecnico_get_embedded_platform', 'supertecnico_recommend_embedded_platforms']]);
     }
 
     if ($action === 'regulation-search' && in_array($method, ['GET', 'POST'], true)) {
@@ -69,6 +70,24 @@ try {
         $clientHash = st_client_hash($_GET);
         st_rate_limit('connector-resolve', $clientHash, 240, 3600);
         st_json(st_connectors_resolve($_GET, $clientHash));
+    }
+
+    if ($action === 'embedded-search' && $method === 'GET') {
+        $clientHash = st_client_hash($_GET);
+        st_rate_limit('embedded-search', $clientHash, 240, 3600);
+        st_json(st_embedded_search($_GET, $clientHash));
+    }
+
+    if ($action === 'embedded-get' && $method === 'GET') {
+        $clientHash = st_client_hash($_GET);
+        st_rate_limit('embedded-get', $clientHash, 240, 3600);
+        st_json(st_embedded_get($_GET, $clientHash));
+    }
+
+    if ($action === 'embedded-recommend' && $method === 'GET') {
+        $clientHash = st_client_hash($_GET);
+        st_rate_limit('embedded-recommend', $clientHash, 120, 3600);
+        st_json(st_embedded_recommend($_GET, $clientHash));
     }
 
     if ($action === 'page-view' && $method === 'POST') {

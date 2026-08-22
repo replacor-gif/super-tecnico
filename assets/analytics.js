@@ -7,7 +7,7 @@
     inicio: 'Inicio', climatizacion: 'Climatización', conductos: 'Diseño de conductos', ventilacion: 'Ventilación y extracción', calculadoras: 'Calculadoras',
     componentes: 'Componentes', comparador: 'Comparador', smd: 'Identificador SMD', averias: 'Averías compartidas',
     feedback: 'Propuestas', simbolos: 'Simbología', 'electronica-placas': 'Electrónica de placas', normativa: 'Normativa técnica',
-    'formacion-climatizacion': 'Formación de climatización',
+    'formacion-climatizacion': 'Formación de climatización', 'plataformas-embebidas': 'Plataformas embebidas',
   };
   const REGULATION_LABELS = {
     rebt: 'REBT', rite: 'RITE', rsif: 'RSIF', rat: 'RAT', rlat: 'RLAT', 'cte-db-hs': 'CTE DB-HS', ict: 'ICT',

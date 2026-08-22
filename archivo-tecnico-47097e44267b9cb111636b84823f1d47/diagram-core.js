@@ -1,7 +1,7 @@
 "use strict";
 
 const ElectroDiagramCore = (() => {
-  const ENGINE_VERSION = "1.10.0-alpha.1";
+  const ENGINE_VERSION = "1.11.0-alpha.1";
   const CONTRACT_VERSION = "1.0";
   const GRID_PITCH_MIL = 50;
   const UNIT = 24;
@@ -1231,6 +1231,7 @@ const ElectroDiagramCore = (() => {
 
   function drawFamilyBlock(definition, line) {
     const u = UNIT;
+    const familyKind = definition.geometry_template || definition.kind;
     const halfWidth = Math.max(1.4, definition.width / 2 - 1.2);
     const halfHeight = Math.max(1.2, definition.height / 2 - 0.8);
     const leads = Object.values(definition.ports || {}).map((terminal) => {
@@ -1246,12 +1247,12 @@ const ElectroDiagramCore = (() => {
       installation_block: "I", meter_block: "M", source_block: "±",
       generic_1p: "·", generic_2p: "X", generic_3p: "X", generic_4p: "X",
     };
-    const round = ["sensor_block", "machine_block", "meter_block", "source_block"].includes(definition.kind);
+    const round = ["sensor_block", "machine_block", "meter_block", "source_block"].includes(familyKind);
     const body = round
       ? `<ellipse class="symbol-fill" cx="0" cy="0" rx="${halfWidth * u}" ry="${halfHeight * u}"/>`
       : `<rect class="symbol-fill" x="${-halfWidth * u}" y="${-halfHeight * u}" width="${halfWidth * 2 * u}" height="${halfHeight * 2 * u}" rx="5"/>`;
     const badge = definition.review_status === "auto_draft" ? `<text class="draft-badge" x="${(halfWidth - 0.25) * u}" y="${(-halfHeight + 0.55) * u}">D</text>` : "";
-    return `${leads}${body}<text class="family-code" x="0" y="5">${escapeXml(codes[definition.kind] || "X")}</text>${badge}`;
+    return `${leads}${body}<text class="family-code" x="0" y="5">${escapeXml(codes[familyKind] || "X")}</text>${badge}`;
   }
 
   function getContract() {

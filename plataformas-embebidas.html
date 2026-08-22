@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="google-adsense-account" content="ca-pub-6950924617837531">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Buscador y preselector técnico de Arduino, ESP, Raspberry Pi, STM32, FPGA y otras plataformas embebidas con riesgos y procedencia.">
+  <meta name="theme-color" content="#080d13">
+  <title>Plataformas embebidas | Super Técnico · REPLACOR</title>
+  <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
+  <link rel="stylesheet" href="assets/embedded-platforms.css?v=1">
+  <link rel="stylesheet" href="assets/app-theme.css?v=1">
+  <script src="assets/i18n.js?v=6" defer></script>
+  <script src="assets/app-shell.js?v=10" defer></script>
+  <script src="assets/embedded-platforms.js?v=1" defer></script>
+</head>
+<body>
+  <header class="ep-header">
+    <a class="ep-brand" href="index.html" aria-label="Volver al menú de Super Técnico">
+      <img src="assets/super-tecnico-logo.png" alt="">
+      <span><strong>Super Técnico</strong><small>REPLACOR Core · Plataformas embebidas</small><span class="beta-badge">BETA · Base trazable</span></span>
+    </a>
+    <nav aria-label="Navegación secundaria"><a href="componentes.html">Componentes</a><a href="conectores.html">Conectores</a><a href="simbolos.html">ElectroIA</a></nav>
+  </header>
+
+  <main>
+    <section class="ep-hero">
+      <div>
+        <p class="ep-kicker">41 fichas normalizadas · Personas + IAs</p>
+        <h1>Elige la familia por el proyecto, no por la moda</h1>
+        <p>Compara arquitecturas, niveles eléctricos, interfaces, uso recomendado y riesgos. La herramienta ayuda a reducir candidatos; la revisión exacta de placa y la documentación oficial siguen siendo obligatorias.</p>
+      </div>
+      <div class="ep-status" id="epStatus"><span aria-hidden="true"></span><strong>Cargando catálogo…</strong><small>Procedencia por ficha</small></div>
+    </section>
+
+    <section class="ep-search" aria-labelledby="epSearchTitle">
+      <div class="ep-search-heading"><div><p class="ep-kicker">Consulta rápida</p><h2 id="epSearchTitle">¿Qué necesitas construir?</h2></div><button id="epModeButton" type="button" aria-pressed="false">Preselección guiada</button></div>
+      <div class="ep-query-row">
+        <label for="epQuery"><span>Placa, interfaz, arquitectura o uso</span><div><input id="epQuery" type="search" enterkeyhint="search" autocomplete="off" spellcheck="false" placeholder="Ej.: Matter, control de motor, Linux, TinyML, CAN…"><button id="epSearchButton" type="button">Buscar</button></div></label>
+      </div>
+      <div class="ep-recommend" id="epRecommend" hidden>
+        <label for="epUseCase"><span>Describe el objetivo</span><textarea id="epUseCase" rows="3" placeholder="Ej.: gateway Linux compacto con cámara, Wi-Fi y bajo consumo"></textarea></label>
+        <label for="epInterfaces"><span>Interfaces obligatorias</span><input id="epInterfaces" type="text" placeholder="Ej.: Ethernet, CAN, cámara"></label>
+        <label class="ep-check"><input id="epLinux" type="checkbox"><span>Necesito Linux</span></label>
+        <button id="epRecommendButton" type="button">Ordenar candidatos</button>
+      </div>
+      <div class="ep-examples" aria-label="Ejemplos"><span>Prueba:</span><button type="button" data-ep-query="Matter">Matter</button><button type="button" data-ep-query="control de motor">Control de motor</button><button type="button" data-ep-query="TinyML">TinyML</button><button type="button" data-ep-query="Linux industrial">Linux industrial</button><button type="button" data-ep-query="FPGA">FPGA</button></div>
+      <details class="ep-filters"><summary>Acotar por fabricante o tipo</summary><div><label><span>Fabricante/ecosistema</span><select id="epManufacturer"><option value="">Todos</option></select></label><label><span>Tipo de plataforma</span><select id="epClass"><option value="">Todos</option></select></label></div></details>
+    </section>
+
+    <section class="ep-workspace">
+      <aside class="ep-results" aria-labelledby="epResultsTitle">
+        <div class="ep-results-heading"><div><p class="ep-kicker">Coincidencias</p><h2 id="epResultsTitle">Catálogo completo</h2></div><strong id="epResultCount">—</strong></div>
+        <div id="epResultList" class="ep-result-list" aria-live="polite"></div>
+      </aside>
+      <section id="epDetail" class="ep-detail" aria-live="polite">
+        <div class="ep-empty"><span aria-hidden="true">µ</span><h2>Selecciona una plataforma</h2><p>La ficha básica aparece primero. Las pruebas, integración y procedencia se despliegan solo cuando las necesitas.</p></div>
+      </section>
+    </section>
+
+    <section class="ep-ai">
+      <div><p class="ep-kicker">Base reutilizable</p><h2>Lista para una persona, ElectroIA u otra IA</h2><p>El navegador y la API consultan el mismo catálogo versionado. Las respuestas incluyen ID estable, riesgo principal, estado de revisión y página de procedencia.</p></div>
+      <div><a class="primary" href="data/embedded-platforms/tool-manifest.json">Contrato para IAs</a><a href="data/embedded-platforms/discovery.json">Discovery</a><a href="data/embedded-platforms/guides.json">Reglas de selección</a></div>
+    </section>
+
+    <aside class="ep-notice"><strong>Estado documental honesto</strong><p>Las 41 fichas tienen la fuente identificada, pero aún no están contrastadas una por una con la documentación oficial de cada revisión. La herramienta nunca las presenta como una validación final.</p></aside>
+  </main>
+
+  <footer class="st-page-footer"><span>Super Técnico · REPLACOR Core</span><nav class="st-legal-links"><a href="actualizaciones.html">Últimas mejoras</a><a href="feedback.html?type=idea">Aportar una mejora</a><a href="https://www.replacor.com/aviso-legal/" target="_blank" rel="noopener">Aviso legal</a><a href="https://www.replacor.com/politica-de-privacidad/" target="_blank" rel="noopener">Privacidad</a></nav></footer>
+  <script src="assets/ads.js?v=1" defer></script>
+  <script src="assets/page-counter.js?v=2" defer></script>
+</body>
+</html>

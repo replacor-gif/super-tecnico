@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.replacor-gif/electroia-diagrams",
   "title": "ElectroIA Diagram Engine",
-  "description": "Validates and renders structured electrical diagrams and resolves connector contacts from deterministic, versioned data.",
-  "version": "0.10.0",
+  "description": "Validates and renders structured electrical diagrams and resolves connectors and embedded platforms from deterministic, versioned data.",
+  "version": "0.11.0",
   "websiteUrl": "https://github.com/replacor-gif/super-tecnico/tree/agent/intuitive-navigation/electroia-tool-server",
   "repository": {
     "url": "https://github.com/replacor-gif/super-tecnico",

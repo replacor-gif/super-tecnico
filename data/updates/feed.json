@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-22",
+  "updated_at": "2026-08-23",
   "title": "Últimas mejoras de Super Técnico",
   "author_policy": {
     "maintainer": "Administrador",
@@ -9,6 +9,15 @@
     "personal_data": "Do not publish private identifiers unless the contributor explicitly chose that text as a public nickname."
   },
   "entries": [
+    {
+      "id": "UPD-20260823-EMBEDDED-ELECTROIA-ROUND2",
+      "date": "2026-08-23",
+      "title": "Plataformas embebidas y tres grandes familias ElectroIA",
+      "summary": "Incorporadas 41 fichas trazables de Arduino, ESP, Raspberry Pi, STM32, FPGA y otros ecosistemas con buscador, preselección y API para IAs. ElectroIA normaliza otros 186 símbolos y alcanza 392 fichas revisadas en el motor.",
+      "areas": ["REPLACOR Core", "Plataformas embebidas", "ElectroIA", "IA", "Simbología"],
+      "kind": "platform_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
     {
       "id": "UPD-20260822-KNOWLEDGE-DESK-ELECTROIA-3F",
       "date": "2026-08-22",

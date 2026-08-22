@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-22",
+  "updated_at": "2026-08-23",
   "brand_direction": "REPLACOR",
   "environment": "Super Técnico",
   "orchestrator_name": "SINAPSYS",
@@ -8,7 +8,8 @@
   "principle": "Un entorno técnico vivo: las bases se almacenan una vez y los motores las consultan mediante contratos neutrales.",
   "motors": [
     {"id": "connector-core", "title": "Conectores y pinouts", "status": "browser_and_http_beta", "manifest": "../connectors/tool-manifest.json", "consumers": ["ElectroIA", "cuadros eléctricos", "automatización", "diagnóstico"], "governance": "human_review_console_and_private_import_queue"},
-    {"id": "electroia", "title": "Motor gráfico electrotécnico", "status": "private_preview", "manifest": "../electroia/tool-manifest.json", "dependencies": ["connector-core", "symbol-library"], "reviewed_symbol_families": 7},
+    {"id": "embedded-platform-core", "title": "Plataformas embebidas", "status": "browser_and_http_beta", "manifest": "../embedded-platforms/tool-manifest.json", "consumers": ["ElectroIA", "automatización", "IoT", "cuadros eléctricos", "diagnóstico"], "records": 41, "governance": "source_identified_then_exact_revision_review"},
+    {"id": "electroia", "title": "Motor gráfico electrotécnico", "status": "private_preview", "manifest": "../electroia/tool-manifest.json", "dependencies": ["connector-core", "embedded-platform-core", "symbol-library"], "reviewed_symbol_families": 10},
     {"id": "regulations", "title": "Motor de normativa", "status": "public_free_preview", "manifest": "../regulations/tool-manifest.json"},
     {"id": "projects", "title": "Núcleo de proyectos técnicos", "status": "browser_local_first", "manifest": "../projects/tool-manifest.json"}
   ]

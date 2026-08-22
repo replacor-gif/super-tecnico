@@ -7612,21 +7612,13 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0183",
     "catalog_id": "SYM-0183",
     "name": "Amplificador operacional",
-    "kind": "functional_block",
+    "kind": "opamp",
     "geometry_template": "functional_block",
     "designator": "U",
-    "category": "Circuitos integrados funcionales",
-    "subcategory": "Analógica y potencia",
-    "aliases": "op amp",
-    "keywords": "integrado analógico bloque funcional",
-    "description": "Amplifica la diferencia entre entradas + y −.",
-    "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
-    "catalog_standard": "Común / educativa",
-    "catalog_drawing_type": "opamp",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
-    "height": 8,
+    "height": 6,
     "ports": {
       "IN+": {
         "x": -4,
@@ -7642,26 +7634,36 @@ const ElectroDiagramSymbols = Object.freeze({
       },
       "OUT": {
         "x": 4,
-        "y": -2,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "VCC": {
-        "x": 4,
         "y": 0,
         "side": "east",
         "electrical_type": "output"
       },
-      "GND": {
-        "x": 4,
-        "y": 2,
-        "side": "east",
-        "electrical_type": "output"
+      "VCC+": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "VCC-": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "power_in"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0183_amplificador-operacional.svg"
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
+    "category": "Circuitos integrados funcionales",
+    "subcategory": "Analógica y potencia",
+    "aliases": "op amp",
+    "keywords": "integrado analógico bloque funcional",
+    "description": "Amplifica la diferencia entre entradas + y −.",
+    "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
+    "catalog_standard": "Común / educativa",
+    "catalog_drawing_type": "opamp",
+    "source_asset": "assets/symbols/SYM-0183_amplificador-operacional.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0184": {
     "id": "SYM-0184",
@@ -7721,9 +7723,54 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0185",
     "catalog_id": "SYM-0185",
     "name": "Amplificador de instrumentación",
-    "kind": "functional_block",
+    "kind": "instrumentation_amp",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "IN+": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "IN-": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "REF": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC+": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "VCC-": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "power_in"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "INA",
@@ -7732,10 +7779,20 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "instrumentation_amp",
+    "source_asset": "assets/symbols/SYM-0185_amplificador-de-instrumentacion.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0186": {
+    "id": "SYM-0186",
+    "catalog_id": "SYM-0186",
+    "name": "Amplificador diferencial",
+    "kind": "difference_amp",
+    "geometry_template": "functional_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
-    "height": 8,
+    "height": 6,
     "ports": {
       "IN+": {
         "x": -4,
@@ -7751,34 +7808,26 @@ const ElectroDiagramSymbols = Object.freeze({
       },
       "OUT": {
         "x": 4,
-        "y": -2,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "VCC": {
-        "x": 4,
         "y": 0,
         "side": "east",
         "electrical_type": "output"
       },
-      "GND": {
-        "x": 4,
-        "y": 2,
-        "side": "east",
-        "electrical_type": "output"
+      "VCC+": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "VCC-": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "power_in"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0185_amplificador-de-instrumentacion.svg"
-  },
-  "SYM-0186": {
-    "id": "SYM-0186",
-    "catalog_id": "SYM-0186",
-    "name": "Amplificador diferencial",
-    "kind": "functional_block",
-    "geometry_template": "functional_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "diff amp",
@@ -7787,10 +7836,20 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "difference_amp",
+    "source_asset": "assets/symbols/SYM-0186_amplificador-diferencial.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0187": {
+    "id": "SYM-0187",
+    "catalog_id": "SYM-0187",
+    "name": "Amplificador de corriente",
+    "kind": "current_amp",
+    "geometry_template": "functional_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
-    "height": 8,
+    "height": 6,
     "ports": {
       "IN+": {
         "x": -4,
@@ -7806,34 +7865,26 @@ const ElectroDiagramSymbols = Object.freeze({
       },
       "OUT": {
         "x": 4,
-        "y": -2,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "VCC": {
-        "x": 4,
         "y": 0,
         "side": "east",
         "electrical_type": "output"
       },
-      "GND": {
-        "x": 4,
-        "y": 2,
-        "side": "east",
-        "electrical_type": "output"
+      "VCC+": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "VCC-": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "power_in"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0186_amplificador-diferencial.svg"
-  },
-  "SYM-0187": {
-    "id": "SYM-0187",
-    "catalog_id": "SYM-0187",
-    "name": "Amplificador de corriente",
-    "kind": "functional_block",
-    "geometry_template": "functional_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "current sense amplifier",
@@ -7842,41 +7893,67 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "current_amp",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0187_amplificador-de-corriente.svg"
+    "source_asset": "assets/symbols/SYM-0187_amplificador-de-corriente.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0188": {
     "id": "SYM-0188",
     "catalog_id": "SYM-0188",
     "name": "Amplificador de aislamiento",
-    "kind": "functional_block",
+    "kind": "isolation_amp",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "IN+": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "IN-": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "GND1": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "OUT": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "GND2": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "ground"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "isolated amplifier",
@@ -7885,41 +7962,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "isolation_amp",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0188_amplificador-de-aislamiento.svg"
+    "source_asset": "assets/symbols/SYM-0188_amplificador-de-aislamiento.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0189": {
     "id": "SYM-0189",
     "catalog_id": "SYM-0189",
     "name": "Buffer analógico",
-    "kind": "functional_block",
+    "kind": "buffer_analog",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "voltage follower",
@@ -7928,41 +8013,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "buffer_analog",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0189_buffer-analogico.svg"
+    "source_asset": "assets/symbols/SYM-0189_buffer-analogico.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0190": {
     "id": "SYM-0190",
     "catalog_id": "SYM-0190",
     "name": "Interruptor analógico",
-    "kind": "functional_block",
+    "kind": "analog_switch",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN_OUT_A": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "CTRL": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "IN_OUT_B": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "bilateral switch",
@@ -7971,35 +8070,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "analog_switch",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0190_interruptor-analogico.svg"
+    "source_asset": "assets/symbols/SYM-0190_interruptor-analogico.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0191": {
     "id": "SYM-0191",
     "catalog_id": "SYM-0191",
     "name": "Multiplexor analógico",
-    "kind": "functional_block",
+    "kind": "analog_mux",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN[]": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SEL[]": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "COMMON": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "analog MUX",
@@ -8008,35 +8127,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "analog_mux",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0191_multiplexor-analogico.svg"
+    "source_asset": "assets/symbols/SYM-0191_multiplexor-analogico.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0192": {
     "id": "SYM-0192",
     "catalog_id": "SYM-0192",
     "name": "Demultiplexor analógico",
-    "kind": "functional_block",
+    "kind": "analog_demux",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "COMMON": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "SEL[]": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT[]": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "analog DEMUX",
@@ -8045,41 +8184,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "analog_demux",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0192_demultiplexor-analogico.svg"
+    "source_asset": "assets/symbols/SYM-0192_demultiplexor-analogico.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0193": {
     "id": "SYM-0193",
     "catalog_id": "SYM-0193",
     "name": "Convertidor ADC",
-    "kind": "functional_block",
+    "kind": "adc",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "AIN[]": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "REF": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DIGITAL_BUS": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "A/D",
@@ -8088,35 +8241,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "adc",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0193_convertidor-adc.svg"
+    "source_asset": "assets/symbols/SYM-0193_convertidor-adc.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0194": {
     "id": "SYM-0194",
     "catalog_id": "SYM-0194",
     "name": "Convertidor DAC",
-    "kind": "functional_block",
+    "kind": "dac",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "DIGITAL_BUS": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "REF": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "AOUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "D/A",
@@ -8125,35 +8298,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dac",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0194_convertidor-dac.svg"
+    "source_asset": "assets/symbols/SYM-0194_convertidor-dac.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0195": {
     "id": "SYM-0195",
     "catalog_id": "SYM-0195",
     "name": "Referencia de tensión",
-    "kind": "functional_block",
+    "kind": "voltage_ref",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "VREF": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "VREF",
@@ -8162,41 +8349,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "voltage_ref",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0195_referencia-de-tension.svg"
+    "source_asset": "assets/symbols/SYM-0195_referencia-de-tension.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0196": {
     "id": "SYM-0196",
     "catalog_id": "SYM-0196",
     "name": "Regulador lineal",
-    "kind": "functional_block",
+    "kind": "linear_reg",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "VIN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "ADJ": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "VOUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "linear regulator",
@@ -8205,41 +8406,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "linear_reg",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0196_regulador-lineal.svg"
+    "source_asset": "assets/symbols/SYM-0196_regulador-lineal.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0197": {
     "id": "SYM-0197",
     "catalog_id": "SYM-0197",
     "name": "LDO",
-    "kind": "functional_block",
+    "kind": "ldo",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "VIN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "EN": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "VOUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "low dropout",
@@ -8248,41 +8463,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ldo",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0197_ldo.svg"
+    "source_asset": "assets/symbols/SYM-0197_ldo.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0198": {
     "id": "SYM-0198",
     "catalog_id": "SYM-0198",
     "name": "Convertidor buck",
-    "kind": "functional_block",
+    "kind": "buck",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "VIN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "FB": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SW": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "step-down",
@@ -8291,41 +8520,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "buck",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0198_convertidor-buck.svg"
+    "source_asset": "assets/symbols/SYM-0198_convertidor-buck.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0199": {
     "id": "SYM-0199",
     "catalog_id": "SYM-0199",
     "name": "Convertidor boost",
-    "kind": "functional_block",
+    "kind": "boost",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "VIN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "FB": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SW": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "step-up",
@@ -8334,41 +8577,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "boost",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0199_convertidor-boost.svg"
+    "source_asset": "assets/symbols/SYM-0199_convertidor-boost.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0200": {
     "id": "SYM-0200",
     "catalog_id": "SYM-0200",
     "name": "Convertidor buck-boost",
-    "kind": "functional_block",
+    "kind": "buckboost",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "VIN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "FB": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SW1": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "SW2": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "step up/down",
@@ -8377,41 +8640,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "buckboost",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0200_convertidor-buck-boost.svg"
+    "source_asset": "assets/symbols/SYM-0200_convertidor-buck-boost.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0201": {
     "id": "SYM-0201",
     "catalog_id": "SYM-0201",
     "name": "Controlador flyback",
-    "kind": "functional_block",
+    "kind": "flyback_ctrl",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "FB": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CS": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "GATE": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "PWM flyback",
@@ -8420,41 +8697,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "flyback_ctrl",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0201_controlador-flyback.svg"
+    "source_asset": "assets/symbols/SYM-0201_controlador-flyback.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0202": {
     "id": "SYM-0202",
     "catalog_id": "SYM-0202",
     "name": "Controlador LLC",
-    "kind": "functional_block",
+    "kind": "llc_ctrl",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "FB": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "PROTECT": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "HO": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "LO": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "resonant controller",
@@ -8463,35 +8760,67 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "llc_ctrl",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0202_controlador-llc.svg"
+    "source_asset": "assets/symbols/SYM-0202_controlador-llc.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0203": {
     "id": "SYM-0203",
     "catalog_id": "SYM-0203",
     "name": "Controlador PFC",
-    "kind": "functional_block",
+    "kind": "pfc_ctrl",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "VRECT": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CS": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "ZCD": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "FB": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "GATE": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -5,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 5,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "power factor correction",
@@ -8500,35 +8829,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pfc_ctrl",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0203_controlador-pfc.svg"
+    "source_asset": "assets/symbols/SYM-0203_controlador-pfc.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0204": {
     "id": "SYM-0204",
     "catalog_id": "SYM-0204",
     "name": "Controlador PWM",
-    "kind": "functional_block",
+    "kind": "pwm_ctrl",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "FB": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CS": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "RT_CT": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "PWM oscillator",
@@ -8537,41 +8892,67 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pwm_ctrl",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0204_controlador-pwm.svg"
+    "source_asset": "assets/symbols/SYM-0204_controlador-pwm.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0205": {
     "id": "SYM-0205",
     "catalog_id": "SYM-0205",
     "name": "Temporizador 555",
-    "kind": "functional_block",
+    "kind": "timer555",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "TRIG": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "THRESH": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "RESET": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "DISCH": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "open_collector"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "555 timer",
@@ -8580,41 +8961,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "timer555",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0205_temporizador-555.svg"
+    "source_asset": "assets/symbols/SYM-0205_temporizador-555.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0206": {
     "id": "SYM-0206",
     "catalog_id": "SYM-0206",
     "name": "Oscilador",
-    "kind": "functional_block",
+    "kind": "oscillator_block",
     "geometry_template": "functional_block",
     "designator": "Y/U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "clock oscillator",
@@ -8623,41 +9006,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "oscillator_block",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0206_oscilador.svg"
+    "source_asset": "assets/symbols/SYM-0206_oscilador.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0207": {
     "id": "SYM-0207",
     "catalog_id": "SYM-0207",
     "name": "PLL",
-    "kind": "functional_block",
+    "kind": "pll",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "REF": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "VCO_IN": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "CONTROL": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "phase locked loop",
@@ -8666,41 +9069,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pll",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0207_pll.svg"
+    "source_asset": "assets/symbols/SYM-0207_pll.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0208": {
     "id": "SYM-0208",
     "catalog_id": "SYM-0208",
     "name": "Detector de cruce por cero",
-    "kind": "functional_block",
+    "kind": "zero_cross",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "AC_IN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "zero crossing detector",
@@ -8709,41 +9120,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "zero_cross",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0208_detector-de-cruce-por-cero.svg"
+    "source_asset": "assets/symbols/SYM-0208_detector-de-cruce-por-cero.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0209": {
     "id": "SYM-0209",
     "catalog_id": "SYM-0209",
     "name": "Detector RMS",
-    "kind": "functional_block",
+    "kind": "rms_detector",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "true RMS",
@@ -8752,41 +9171,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "rms_detector",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0209_detector-rms.svg"
+    "source_asset": "assets/symbols/SYM-0209_detector-rms.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0210": {
     "id": "SYM-0210",
     "catalog_id": "SYM-0210",
     "name": "Supervisor de tensión",
-    "kind": "functional_block",
+    "kind": "supervisor",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "SENSE": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "RESET": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "reset IC, brownout",
@@ -8795,41 +9222,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "supervisor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0210_supervisor-de-tension.svg"
+    "source_asset": "assets/symbols/SYM-0210_supervisor-de-tension.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0211": {
     "id": "SYM-0211",
     "catalog_id": "SYM-0211",
     "name": "Watchdog",
-    "kind": "functional_block",
+    "kind": "watchdog",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "WDI": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "RESET": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica y potencia",
     "aliases": "WDT",
@@ -8838,35 +9273,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El bloque funcional resume el comportamiento; las etiquetas de pin son esenciales para seguir la señal.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "watchdog",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0211_watchdog.svg"
+    "source_asset": "assets/symbols/SYM-0211_watchdog.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0212": {
     "id": "SYM-0212",
     "catalog_id": "SYM-0212",
     "name": "Puerta AND",
-    "kind": "digital_block",
+    "kind": "gate_and",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "A": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "B": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "Q": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas",
     "aliases": "AND",
@@ -8875,6 +9318,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Las burbujas indican inversión o activo bajo; el símbolo IEC puede representarse como rectángulo con función interna.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_and",
+    "source_asset": "assets/symbols/SYM-0212_puerta-and.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0213": {
+    "id": "SYM-0213",
+    "catalog_id": "SYM-0213",
+    "name": "Puerta NAND",
+    "kind": "gate_nand",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -8882,34 +9335,26 @@ const ElectroDiagramSymbols = Object.freeze({
     "ports": {
       "A": {
         "x": -4,
-        "y": 0,
+        "y": -1,
         "side": "west",
         "electrical_type": "input"
       },
       "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
       },
       "Q": {
         "x": 4,
-        "y": 1,
+        "y": 0,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0212_puerta-and.svg"
-  },
-  "SYM-0213": {
-    "id": "SYM-0213",
-    "catalog_id": "SYM-0213",
-    "name": "Puerta NAND",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas",
     "aliases": "NAND",
@@ -8918,6 +9363,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Las burbujas indican inversión o activo bajo; el símbolo IEC puede representarse como rectángulo con función interna.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_nand",
+    "source_asset": "assets/symbols/SYM-0213_puerta-nand.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0214": {
+    "id": "SYM-0214",
+    "catalog_id": "SYM-0214",
+    "name": "Puerta OR",
+    "kind": "gate_or",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -8925,34 +9380,26 @@ const ElectroDiagramSymbols = Object.freeze({
     "ports": {
       "A": {
         "x": -4,
-        "y": 0,
+        "y": -1,
         "side": "west",
         "electrical_type": "input"
       },
       "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
       },
       "Q": {
         "x": 4,
-        "y": 1,
+        "y": 0,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0213_puerta-nand.svg"
-  },
-  "SYM-0214": {
-    "id": "SYM-0214",
-    "catalog_id": "SYM-0214",
-    "name": "Puerta OR",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas",
     "aliases": "OR",
@@ -8961,6 +9408,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Las burbujas indican inversión o activo bajo; el símbolo IEC puede representarse como rectángulo con función interna.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_or",
+    "source_asset": "assets/symbols/SYM-0214_puerta-or.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0215": {
+    "id": "SYM-0215",
+    "catalog_id": "SYM-0215",
+    "name": "Puerta NOR",
+    "kind": "gate_nor",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -8968,34 +9425,26 @@ const ElectroDiagramSymbols = Object.freeze({
     "ports": {
       "A": {
         "x": -4,
-        "y": 0,
+        "y": -1,
         "side": "west",
         "electrical_type": "input"
       },
       "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
       },
       "Q": {
         "x": 4,
-        "y": 1,
+        "y": 0,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0214_puerta-or.svg"
-  },
-  "SYM-0215": {
-    "id": "SYM-0215",
-    "catalog_id": "SYM-0215",
-    "name": "Puerta NOR",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas",
     "aliases": "NOR",
@@ -9004,6 +9453,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Las burbujas indican inversión o activo bajo; el símbolo IEC puede representarse como rectángulo con función interna.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_nor",
+    "source_asset": "assets/symbols/SYM-0215_puerta-nor.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0216": {
+    "id": "SYM-0216",
+    "catalog_id": "SYM-0216",
+    "name": "Puerta XOR",
+    "kind": "gate_xor",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -9011,34 +9470,26 @@ const ElectroDiagramSymbols = Object.freeze({
     "ports": {
       "A": {
         "x": -4,
-        "y": 0,
+        "y": -1,
         "side": "west",
         "electrical_type": "input"
       },
       "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
       },
       "Q": {
         "x": 4,
-        "y": 1,
+        "y": 0,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0215_puerta-nor.svg"
-  },
-  "SYM-0216": {
-    "id": "SYM-0216",
-    "catalog_id": "SYM-0216",
-    "name": "Puerta XOR",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas",
     "aliases": "XOR",
@@ -9047,6 +9498,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Las burbujas indican inversión o activo bajo; el símbolo IEC puede representarse como rectángulo con función interna.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_xor",
+    "source_asset": "assets/symbols/SYM-0216_puerta-xor.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0217": {
+    "id": "SYM-0217",
+    "catalog_id": "SYM-0217",
+    "name": "Puerta XNOR",
+    "kind": "gate_xnor",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -9054,34 +9515,26 @@ const ElectroDiagramSymbols = Object.freeze({
     "ports": {
       "A": {
         "x": -4,
-        "y": 0,
+        "y": -1,
         "side": "west",
         "electrical_type": "input"
       },
       "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
       },
       "Q": {
         "x": 4,
-        "y": 1,
+        "y": 0,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0216_puerta-xor.svg"
-  },
-  "SYM-0217": {
-    "id": "SYM-0217",
-    "catalog_id": "SYM-0217",
-    "name": "Puerta XNOR",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas",
     "aliases": "XNOR",
@@ -9090,6 +9543,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Las burbujas indican inversión o activo bajo; el símbolo IEC puede representarse como rectángulo con función interna.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_xnor",
+    "source_asset": "assets/symbols/SYM-0217_puerta-xnor.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0218": {
+    "id": "SYM-0218",
+    "catalog_id": "SYM-0218",
+    "name": "Inversor NOT",
+    "kind": "gate_not",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -9101,30 +9564,16 @@ const ElectroDiagramSymbols = Object.freeze({
         "side": "west",
         "electrical_type": "input"
       },
-      "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
       "Q": {
         "x": 4,
-        "y": 1,
+        "y": 0,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0217_puerta-xnor.svg"
-  },
-  "SYM-0218": {
-    "id": "SYM-0218",
-    "catalog_id": "SYM-0218",
-    "name": "Inversor NOT",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas",
     "aliases": "NOT inverter",
@@ -9133,6 +9582,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Las burbujas indican inversión o activo bajo; el símbolo IEC puede representarse como rectángulo con función interna.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_not",
+    "source_asset": "assets/symbols/SYM-0218_inversor-not.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0219": {
+    "id": "SYM-0219",
+    "catalog_id": "SYM-0219",
+    "name": "Buffer digital",
+    "kind": "gate_buffer",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -9144,30 +9603,16 @@ const ElectroDiagramSymbols = Object.freeze({
         "side": "west",
         "electrical_type": "input"
       },
-      "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
       "Q": {
         "x": 4,
-        "y": 1,
+        "y": 0,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0218_inversor-not.svg"
-  },
-  "SYM-0219": {
-    "id": "SYM-0219",
-    "catalog_id": "SYM-0219",
-    "name": "Buffer digital",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas",
     "aliases": "buffer",
@@ -9176,6 +9621,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Las burbujas indican inversión o activo bajo; el símbolo IEC puede representarse como rectángulo con función interna.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_buffer",
+    "source_asset": "assets/symbols/SYM-0219_buffer-digital.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0220": {
+    "id": "SYM-0220",
+    "catalog_id": "SYM-0220",
+    "name": "Buffer triestado",
+    "kind": "gate_tristate",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -9183,34 +9638,26 @@ const ElectroDiagramSymbols = Object.freeze({
     "ports": {
       "A": {
         "x": -4,
-        "y": 0,
+        "y": -1,
         "side": "west",
         "electrical_type": "input"
       },
-      "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
+      "OE": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
       },
       "Q": {
         "x": 4,
-        "y": 1,
+        "y": 0,
         "side": "east",
-        "electrical_type": "output"
+        "electrical_type": "tri_state"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0219_buffer-digital.svg"
-  },
-  "SYM-0220": {
-    "id": "SYM-0220",
-    "catalog_id": "SYM-0220",
-    "name": "Buffer triestado",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas",
     "aliases": "three-state",
@@ -9219,6 +9666,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Las burbujas indican inversión o activo bajo; el símbolo IEC puede representarse como rectángulo con función interna.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_tristate",
+    "source_asset": "assets/symbols/SYM-0220_buffer-triestado.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0221": {
+    "id": "SYM-0221",
+    "catalog_id": "SYM-0221",
+    "name": "Entrada Schmitt",
+    "kind": "gate_schmitt",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -9230,30 +9687,16 @@ const ElectroDiagramSymbols = Object.freeze({
         "side": "west",
         "electrical_type": "input"
       },
-      "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
       "Q": {
         "x": 4,
-        "y": 1,
+        "y": 0,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0220_buffer-triestado.svg"
-  },
-  "SYM-0221": {
-    "id": "SYM-0221",
-    "catalog_id": "SYM-0221",
-    "name": "Entrada Schmitt",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas",
     "aliases": "Schmitt trigger",
@@ -9262,6 +9705,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Las burbujas indican inversión o activo bajo; el símbolo IEC puede representarse como rectángulo con función interna.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_schmitt",
+    "source_asset": "assets/symbols/SYM-0221_entrada-schmitt.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0222": {
+    "id": "SYM-0222",
+    "catalog_id": "SYM-0222",
+    "name": "Salida colector abierto",
+    "kind": "open_collector",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -9273,30 +9726,16 @@ const ElectroDiagramSymbols = Object.freeze({
         "side": "west",
         "electrical_type": "input"
       },
-      "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
       "Q": {
         "x": 4,
-        "y": 1,
+        "y": 0,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0221_entrada-schmitt.svg"
-  },
-  "SYM-0222": {
-    "id": "SYM-0222",
-    "catalog_id": "SYM-0222",
-    "name": "Salida colector abierto",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas",
     "aliases": "open collector",
@@ -9305,41 +9744,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Las burbujas indican inversión o activo bajo; el símbolo IEC puede representarse como rectángulo con función interna.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "open_collector",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0222_salida-colector-abierto.svg"
+    "source_asset": "assets/symbols/SYM-0222_salida-colector-abierto.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0223": {
     "id": "SYM-0223",
     "catalog_id": "SYM-0223",
     "name": "Salida drenador abierto",
-    "kind": "digital_block",
+    "kind": "open_drain",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "A": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "Q": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas",
     "aliases": "open drain",
@@ -9348,41 +9783,73 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Las burbujas indican inversión o activo bajo; el símbolo IEC puede representarse como rectángulo con función interna.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "open_drain",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0223_salida-drenador-abierto.svg"
+    "source_asset": "assets/symbols/SYM-0223_salida-drenador-abierto.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0224": {
     "id": "SYM-0224",
     "catalog_id": "SYM-0224",
     "name": "Biestable D",
-    "kind": "digital_block",
+    "kind": "flipflop_d",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "D": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CLK": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SET": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "RESET": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "Q": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "nQ": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -5,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 5,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "D flip-flop",
@@ -9391,20 +9858,36 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "flipflop_d",
+    "source_asset": "assets/symbols/SYM-0224_biestable-d.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0225": {
+    "id": "SYM-0225",
+    "catalog_id": "SYM-0225",
+    "name": "Biestable JK",
+    "kind": "flipflop_jk",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
-    "height": 6,
+    "height": 8,
     "ports": {
-      "D": {
+      "J": {
         "x": -4,
-        "y": -1,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "K": {
+        "x": -4,
+        "y": 0,
         "side": "west",
         "electrical_type": "input"
       },
       "CLK": {
         "x": -4,
-        "y": 1,
+        "y": 2,
         "side": "west",
         "electrical_type": "input"
       },
@@ -9419,19 +9902,23 @@ const ElectroDiagramSymbols = Object.freeze({
         "y": 1,
         "side": "east",
         "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "ground"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0224_biestable-d.svg"
-  },
-  "SYM-0225": {
-    "id": "SYM-0225",
-    "catalog_id": "SYM-0225",
-    "name": "Biestable JK",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "JK flip-flop",
@@ -9440,12 +9927,22 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "flipflop_jk",
+    "source_asset": "assets/symbols/SYM-0225_biestable-jk.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0226": {
+    "id": "SYM-0226",
+    "catalog_id": "SYM-0226",
+    "name": "Biestable T",
+    "kind": "flipflop_t",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
     "height": 6,
     "ports": {
-      "D": {
+      "T": {
         "x": -4,
         "y": -1,
         "side": "west",
@@ -9459,28 +9956,26 @@ const ElectroDiagramSymbols = Object.freeze({
       },
       "Q": {
         "x": 4,
-        "y": -1,
+        "y": 0,
         "side": "east",
         "electrical_type": "output"
       },
-      "nQ": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0225_biestable-jk.svg"
-  },
-  "SYM-0226": {
-    "id": "SYM-0226",
-    "catalog_id": "SYM-0226",
-    "name": "Biestable T",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "T flip-flop",
@@ -9489,18 +9984,28 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "flipflop_t",
+    "source_asset": "assets/symbols/SYM-0226_biestable-t.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0227": {
+    "id": "SYM-0227",
+    "catalog_id": "SYM-0227",
+    "name": "Latch SR",
+    "kind": "latch_sr",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
     "height": 6,
     "ports": {
-      "D": {
+      "S": {
         "x": -4,
         "y": -1,
         "side": "west",
         "electrical_type": "input"
       },
-      "CLK": {
+      "R": {
         "x": -4,
         "y": 1,
         "side": "west",
@@ -9517,19 +10022,23 @@ const ElectroDiagramSymbols = Object.freeze({
         "y": 1,
         "side": "east",
         "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0226_biestable-t.svg"
-  },
-  "SYM-0227": {
-    "id": "SYM-0227",
-    "catalog_id": "SYM-0227",
-    "name": "Latch SR",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "SR latch",
@@ -9538,35 +10047,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "latch_sr",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0227_latch-sr.svg"
+    "source_asset": "assets/symbols/SYM-0227_latch-sr.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0228": {
     "id": "SYM-0228",
     "catalog_id": "SYM-0228",
     "name": "Latch D",
-    "kind": "digital_block",
+    "kind": "latch_d",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "D": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "EN": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "Q": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "D latch",
@@ -9575,35 +10104,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "latch_d",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0228_latch-d.svg"
+    "source_asset": "assets/symbols/SYM-0228_latch-d.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0229": {
     "id": "SYM-0229",
     "catalog_id": "SYM-0229",
     "name": "Contador binario",
-    "kind": "digital_block",
+    "kind": "counter",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "CLK": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "RESET": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "Q[]": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "counter",
@@ -9612,41 +10161,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "counter",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0229_contador-binario.svg"
+    "source_asset": "assets/symbols/SYM-0229_contador-binario.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0230": {
     "id": "SYM-0230",
     "catalog_id": "SYM-0230",
     "name": "Registro",
-    "kind": "digital_block",
+    "kind": "register",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "D[]": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CLK": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "Q[]": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "register",
@@ -9655,35 +10218,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "register",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0230_registro.svg"
+    "source_asset": "assets/symbols/SYM-0230_registro.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0231": {
     "id": "SYM-0231",
     "catalog_id": "SYM-0231",
     "name": "Registro de desplazamiento",
-    "kind": "digital_block",
+    "kind": "shift_register",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "SER": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CLK": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "LOAD": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "Q[]": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "shift register",
@@ -9692,35 +10281,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "shift_register",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0231_registro-de-desplazamiento.svg"
+    "source_asset": "assets/symbols/SYM-0231_registro-de-desplazamiento.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0232": {
     "id": "SYM-0232",
     "catalog_id": "SYM-0232",
     "name": "Multiplexor digital",
-    "kind": "digital_block",
+    "kind": "digital_mux",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "D[]": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SEL[]": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "Q": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "MUX",
@@ -9729,41 +10338,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "digital_mux",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0232_multiplexor-digital.svg"
+    "source_asset": "assets/symbols/SYM-0232_multiplexor-digital.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0233": {
     "id": "SYM-0233",
     "catalog_id": "SYM-0233",
     "name": "Demultiplexor digital",
-    "kind": "digital_block",
+    "kind": "digital_demux",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "D": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SEL[]": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "Q[]": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "DEMUX",
@@ -9772,41 +10395,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "digital_demux",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0233_demultiplexor-digital.svg"
+    "source_asset": "assets/symbols/SYM-0233_demultiplexor-digital.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0234": {
     "id": "SYM-0234",
     "catalog_id": "SYM-0234",
     "name": "Codificador",
-    "kind": "digital_block",
+    "kind": "encoder_block",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN[]": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CODE[]": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "encoder",
@@ -9815,41 +10446,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "encoder_block",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0234_codificador.svg"
+    "source_asset": "assets/symbols/SYM-0234_codificador.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0235": {
     "id": "SYM-0235",
     "catalog_id": "SYM-0235",
     "name": "Decodificador",
-    "kind": "digital_block",
+    "kind": "decoder_block",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "CODE[]": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT[]": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "decoder",
@@ -9858,41 +10497,67 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "decoder_block",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0235_decodificador.svg"
+    "source_asset": "assets/symbols/SYM-0235_decodificador.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0236": {
     "id": "SYM-0236",
     "catalog_id": "SYM-0236",
     "name": "Comparador de magnitud",
-    "kind": "digital_block",
+    "kind": "digital_comparator",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "A[]": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "B[]": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "A_GT_B": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "A_EQ_B": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "A_LT_B": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "magnitude comparator",
@@ -9901,53 +10566,67 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "digital_comparator",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 8,
-    "ports": {
-      "IN+": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "IN-": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "OUT": {
-        "x": 4,
-        "y": -2,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "VCC": {
-        "x": 4,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "GND": {
-        "x": 4,
-        "y": 2,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0236_comparador-de-magnitud.svg"
+    "source_asset": "assets/symbols/SYM-0236_comparador-de-magnitud.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0237": {
     "id": "SYM-0237",
     "catalog_id": "SYM-0237",
     "name": "Sumador",
-    "kind": "digital_block",
+    "kind": "adder",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "A[]": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "B[]": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CIN": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SUM[]": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "COUT": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "binary adder",
@@ -9956,35 +10635,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "adder",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0237_sumador.svg"
+    "source_asset": "assets/symbols/SYM-0237_sumador.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0238": {
     "id": "SYM-0238",
     "catalog_id": "SYM-0238",
     "name": "Memoria ROM",
-    "kind": "digital_block",
+    "kind": "rom",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "ADDR[]": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CE": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DATA[]": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "ROM",
@@ -9993,35 +10692,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "rom",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0238_memoria-rom.svg"
+    "source_asset": "assets/symbols/SYM-0238_memoria-rom.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0239": {
     "id": "SYM-0239",
     "catalog_id": "SYM-0239",
     "name": "Memoria RAM",
-    "kind": "digital_block",
+    "kind": "ram",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "ADDR[]": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DATA_IN[]": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "WE": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DATA_OUT[]": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "tri_state"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "RAM",
@@ -10030,35 +10755,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ram",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0239_memoria-ram.svg"
+    "source_asset": "assets/symbols/SYM-0239_memoria-ram.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0240": {
     "id": "SYM-0240",
     "catalog_id": "SYM-0240",
     "name": "EEPROM",
-    "kind": "digital_block",
+    "kind": "eeprom",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "BUS": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "WP": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "READY": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "EEPROM I2C SPI",
@@ -10067,35 +10812,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "eeprom",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0240_eeprom.svg"
+    "source_asset": "assets/symbols/SYM-0240_eeprom.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0241": {
     "id": "SYM-0241",
     "catalog_id": "SYM-0241",
     "name": "Memoria Flash",
-    "kind": "digital_block",
+    "kind": "flash",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "SPI_QSPI": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "CS": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "READY": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "SPI flash NOR NAND",
@@ -10104,35 +10869,73 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "flash",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0241_memoria-flash.svg"
+    "source_asset": "assets/symbols/SYM-0241_memoria-flash.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0242": {
     "id": "SYM-0242",
     "catalog_id": "SYM-0242",
     "name": "Microcontrolador",
-    "kind": "digital_block",
+    "kind": "mcu",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "GPIO_A": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "BUS_A": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "RESET": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "GPIO_B": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "BUS_B": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "DEBUG": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "MCU",
@@ -10141,47 +10944,67 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "mcu",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "IN1": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "IN2": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "OUT1": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT2": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0242_microcontrolador.svg"
+    "source_asset": "assets/symbols/SYM-0242_microcontrolador.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0243": {
     "id": "SYM-0243",
     "catalog_id": "SYM-0243",
     "name": "Microprocesador",
-    "kind": "digital_block",
+    "kind": "cpu",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "ADDR[]": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "output"
+      },
+      "DATA[]": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "RESET": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CONTROL[]": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "IRQ": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "input"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "CPU MPU",
@@ -10190,47 +11013,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "cpu",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "IN1": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "IN2": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "OUT1": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT2": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0243_microprocesador.svg"
+    "source_asset": "assets/symbols/SYM-0243_microprocesador.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0244": {
     "id": "SYM-0244",
     "catalog_id": "SYM-0244",
     "name": "DSP",
-    "kind": "digital_block",
+    "kind": "dsp",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "DATA_IN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "BUS": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "DATA_OUT": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "PERIPH": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "digital signal processor",
@@ -10239,47 +11076,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dsp",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "IN1": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "IN2": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "OUT1": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT2": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0244_dsp.svg"
+    "source_asset": "assets/symbols/SYM-0244_dsp.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0245": {
     "id": "SYM-0245",
     "catalog_id": "SYM-0245",
     "name": "FPGA",
-    "kind": "digital_block",
+    "kind": "fpga",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IO_BANK_A": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "CONFIG": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "IO_BANK_B": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "DEBUG": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "programmable logic",
@@ -10288,47 +11139,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fpga",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "IN1": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "IN2": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "OUT1": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT2": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0245_fpga.svg"
+    "source_asset": "assets/symbols/SYM-0245_fpga.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0246": {
     "id": "SYM-0246",
     "catalog_id": "SYM-0246",
     "name": "CPLD / GAL",
-    "kind": "digital_block",
+    "kind": "cpld",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IO_A": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "CLK": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "IO_B": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "programmable logic",
@@ -10337,47 +11196,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "cpld",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "IN1": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "IN2": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "OUT1": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT2": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0246_cpld-gal.svg"
+    "source_asset": "assets/symbols/SYM-0246_cpld-gal.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0247": {
     "id": "SYM-0247",
     "catalog_id": "SYM-0247",
     "name": "Reloj en tiempo real",
-    "kind": "digital_block",
+    "kind": "rtc",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "BUS": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "XTAL": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "IRQ": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "RTC",
@@ -10386,35 +11253,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "rtc",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0247_reloj-en-tiempo-real.svg"
+    "source_asset": "assets/symbols/SYM-0247_reloj-en-tiempo-real.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0248": {
     "id": "SYM-0248",
     "catalog_id": "SYM-0248",
     "name": "Controlador de display",
-    "kind": "digital_block",
+    "kind": "display_driver",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "BUS": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SEGMENTS": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "COMMONS": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "LCD LED driver",
@@ -10423,35 +11316,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "display_driver",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0248_controlador-de-display.svg"
+    "source_asset": "assets/symbols/SYM-0248_controlador-de-display.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0249": {
     "id": "SYM-0249",
     "catalog_id": "SYM-0249",
     "name": "Expansor de E/S",
-    "kind": "digital_block",
+    "kind": "io_expander",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "I2C_SPI": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "IRQ": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "output"
+      },
+      "GPIO[]": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "GPIO expander",
@@ -10460,35 +11373,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "io_expander",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0249_expansor-de-e-s.svg"
+    "source_asset": "assets/symbols/SYM-0249_expansor-de-e-s.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0250": {
     "id": "SYM-0250",
     "catalog_id": "SYM-0250",
     "name": "Transceptor RS-232",
-    "kind": "digital_block",
+    "kind": "rs232",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "TX_LOGIC": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "RX_LOGIC": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "output"
+      },
+      "TX_LINE": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "RX_LINE": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "input"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "RS232 transceiver",
@@ -10497,27 +11436,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "rs232",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0250_transceptor-rs-232.svg"
+    "source_asset": "assets/symbols/SYM-0250_transceptor-rs-232.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0251": {
     "id": "SYM-0251",
@@ -10655,9 +11575,48 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0253",
     "catalog_id": "SYM-0253",
     "name": "Transceptor LIN",
-    "kind": "digital_block",
+    "kind": "lin",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "TXD": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "RXD": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "output"
+      },
+      "LIN": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "LIN transceiver",
@@ -10666,35 +11625,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "lin",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0253_transceptor-lin.svg"
+    "source_asset": "assets/symbols/SYM-0253_transceptor-lin.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0254": {
     "id": "SYM-0254",
     "catalog_id": "SYM-0254",
     "name": "Traductor de nivel",
-    "kind": "digital_block",
+    "kind": "level_shifter",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "A[]": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "OE": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "B[]": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "level translator",
@@ -10703,35 +11682,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "level_shifter",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0254_traductor-de-nivel.svg"
+    "source_asset": "assets/symbols/SYM-0254_traductor-de-nivel.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0255": {
     "id": "SYM-0255",
     "catalog_id": "SYM-0255",
     "name": "Aislador de bus",
-    "kind": "digital_block",
+    "kind": "bus_isolator",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "BUS_1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "BUS_2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales",
     "aliases": "isolated bus",
@@ -10740,39 +11733,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee nombres de pines, reloj, reset, enable y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bus_isolator",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "IN1": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "IN2": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "OUT1": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT2": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0255_aislador-de-bus.svg"
+    "source_asset": "assets/symbols/SYM-0255_aislador-de-bus.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0256": {
     "id": "SYM-0256",
@@ -11274,9 +12236,48 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0268",
     "catalog_id": "SYM-0268",
     "name": "Puente H",
-    "kind": "power_block",
+    "kind": "hbridge",
     "geometry_template": "power_block",
     "designator": "U/Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "VIN": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CTRL_A": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CTRL_B": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT1": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "OUT2": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "H-bridge",
@@ -11285,41 +12286,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "hbridge",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0268_puente-h.svg"
+    "source_asset": "assets/symbols/SYM-0268_puente-h.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0269": {
     "id": "SYM-0269",
     "catalog_id": "SYM-0269",
     "name": "Medio puente",
-    "kind": "power_block",
+    "kind": "halfbridge",
     "geometry_template": "power_block",
     "designator": "U/Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "DC+": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "DC-": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "HIN": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "LIN": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SW": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "half bridge",
@@ -11328,35 +12343,73 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "halfbridge",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0269_medio-puente.svg"
+    "source_asset": "assets/symbols/SYM-0269_medio-puente.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0270": {
     "id": "SYM-0270",
     "catalog_id": "SYM-0270",
     "name": "Puente inversor trifásico",
-    "kind": "power_block",
+    "kind": "inverter3",
     "geometry_template": "power_block",
     "designator": "U/Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "DC+": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "DC-": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "U_R": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "V_S": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "W_T": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "FAULT": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "PE": {
+        "x": 0,
+        "y": 5,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "3-phase inverter",
@@ -11365,47 +12418,73 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "inverter3",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "U": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "V": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "W": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "PE": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0270_puente-inversor-trifasico.svg"
+    "source_asset": "assets/symbols/SYM-0270_puente-inversor-trifasico.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0271": {
     "id": "SYM-0271",
     "catalog_id": "SYM-0271",
     "name": "Módulo IPM",
-    "kind": "power_block",
+    "kind": "ipm",
     "geometry_template": "power_block",
     "designator": "PM/U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "DC+": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "DC-": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "U_R": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "V_S": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "W_T": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "FAULT": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "PE": {
+        "x": 0,
+        "y": 5,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "intelligent power module",
@@ -11414,35 +12493,73 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ipm",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0271_modulo-ipm.svg"
+    "source_asset": "assets/symbols/SYM-0271_modulo-ipm.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0272": {
     "id": "SYM-0272",
     "catalog_id": "SYM-0272",
     "name": "Módulo IGBT",
-    "kind": "power_block",
+    "kind": "igbt_module",
     "geometry_template": "power_block",
     "designator": "PM",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "DC+": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "DC-": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "U_R": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "V_S": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "W_T": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "FAULT": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "PE": {
+        "x": 0,
+        "y": 5,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "IGBT module",
@@ -11451,41 +12568,73 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "igbt_module",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "G": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "C": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "E": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0272_modulo-igbt.svg"
+    "source_asset": "assets/symbols/SYM-0272_modulo-igbt.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0273": {
     "id": "SYM-0273",
     "catalog_id": "SYM-0273",
     "name": "Módulo PIM",
-    "kind": "power_block",
+    "kind": "pim",
     "geometry_template": "power_block",
     "designator": "PM",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "DC+": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "DC-": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "U_R": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "V_S": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "W_T": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "FAULT": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "PE": {
+        "x": 0,
+        "y": 5,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "power integrated module",
@@ -11494,41 +12643,73 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pim",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0273_modulo-pim.svg"
+    "source_asset": "assets/symbols/SYM-0273_modulo-pim.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0274": {
     "id": "SYM-0274",
     "catalog_id": "SYM-0274",
     "name": "Rectificador trifásico",
-    "kind": "power_block",
+    "kind": "rectifier3",
     "geometry_template": "power_block",
     "designator": "BR",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "DC+": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "DC-": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "U_R": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "V_S": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "W_T": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "FAULT": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "PE": {
+        "x": 0,
+        "y": 5,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "3-phase bridge",
@@ -11537,35 +12718,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "rectifier3",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "A": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "K": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0274_rectificador-trifasico.svg"
+    "source_asset": "assets/symbols/SYM-0274_rectificador-trifasico.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0275": {
     "id": "SYM-0275",
     "catalog_id": "SYM-0275",
     "name": "Etapa PFC boost",
-    "kind": "power_block",
+    "kind": "pfc_stage",
     "geometry_template": "power_block",
     "designator": "BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "RECTIFIED": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "GATE": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SENSE": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "output"
+      },
+      "DC_BUS": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "PFC boost",
@@ -11574,35 +12769,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pfc_stage",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0275_etapa-pfc-boost.svg"
+    "source_asset": "assets/symbols/SYM-0275_etapa-pfc-boost.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0276": {
     "id": "SYM-0276",
     "catalog_id": "SYM-0276",
     "name": "Fuente flyback aislada",
-    "kind": "power_block",
+    "kind": "flyback_stage",
     "geometry_template": "power_block",
     "designator": "BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "PRIMARY": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SECONDARY": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "FEEDBACK": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "flyback SMPS",
@@ -11611,35 +12820,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "flyback_stage",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0276_fuente-flyback-aislada.svg"
+    "source_asset": "assets/symbols/SYM-0276_fuente-flyback-aislada.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0277": {
     "id": "SYM-0277",
     "catalog_id": "SYM-0277",
     "name": "Fuente auxiliar no aislada",
-    "kind": "power_block",
+    "kind": "noniso_supply",
     "geometry_template": "power_block",
     "designator": "BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "MAINS_BUS": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUTPUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "buck offline",
@@ -11648,41 +12865,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "noniso_supply",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0277_fuente-auxiliar-no-aislada.svg"
+    "source_asset": "assets/symbols/SYM-0277_fuente-auxiliar-no-aislada.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0278": {
     "id": "SYM-0278",
     "catalog_id": "SYM-0278",
     "name": "Driver de puerta high/low side",
-    "kind": "power_block",
+    "kind": "gate_driver",
     "geometry_template": "power_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "HIN": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "LIN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "BOOT": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "HO": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "LO": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "COM": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "gate driver",
@@ -11691,41 +12928,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_driver",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "A": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "Q": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0278_driver-de-puerta-high-low-side.svg"
+    "source_asset": "assets/symbols/SYM-0278_driver-de-puerta-high-low-side.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0279": {
     "id": "SYM-0279",
     "catalog_id": "SYM-0279",
     "name": "Driver BLDC trifásico",
-    "kind": "power_block",
+    "kind": "bldc_driver",
     "geometry_template": "power_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "PWM": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "HALL_BEMF": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "U": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "V": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "W": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "motor driver",
@@ -11734,35 +12985,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bldc_driver",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0279_driver-bldc-trifasico.svg"
+    "source_asset": "assets/symbols/SYM-0279_driver-bldc-trifasico.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0280": {
     "id": "SYM-0280",
     "catalog_id": "SYM-0280",
     "name": "Driver paso a paso",
-    "kind": "power_block",
+    "kind": "stepper_driver",
     "geometry_template": "power_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "STEP": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DIR": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "A+": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "A-": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "B+": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "B-": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "stepper driver",
@@ -11771,41 +13048,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "stepper_driver",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0280_driver-paso-a-paso.svg"
+    "source_asset": "assets/symbols/SYM-0280_driver-paso-a-paso.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0281": {
     "id": "SYM-0281",
     "catalog_id": "SYM-0281",
     "name": "Driver de válvula EEV",
-    "kind": "power_block",
+    "kind": "eev_driver",
     "geometry_template": "power_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "CONTROL": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "A+": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "A-": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "B+": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "B-": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "electronic expansion valve driver",
@@ -11814,35 +13105,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "eev_driver",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0281_driver-de-valvula-eev.svg"
+    "source_asset": "assets/symbols/SYM-0281_driver-de-valvula-eev.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0282": {
     "id": "SYM-0282",
     "catalog_id": "SYM-0282",
     "name": "Controlador de compresor inverter",
-    "kind": "power_block",
+    "kind": "compressor_ctrl",
     "geometry_template": "power_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "SENSORS": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CURRENT": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "COMM": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "PWM_GATE": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "FAULT": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "compressor inverter control",
@@ -11851,35 +13162,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "compressor_ctrl",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0282_controlador-de-compresor-inverter.svg"
+    "source_asset": "assets/symbols/SYM-0282_controlador-de-compresor-inverter.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0283": {
     "id": "SYM-0283",
     "catalog_id": "SYM-0283",
     "name": "Controlador de ventilador BLDC",
-    "kind": "power_block",
+    "kind": "fan_ctrl",
     "geometry_template": "power_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "PWM": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "HALL": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "PHASES": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "FG": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "fan motor controller",
@@ -11888,35 +13213,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fan_ctrl",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0283_controlador-de-ventilador-bldc.svg"
+    "source_asset": "assets/symbols/SYM-0283_controlador-de-ventilador-bldc.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0284": {
     "id": "SYM-0284",
     "catalog_id": "SYM-0284",
     "name": "Comunicación interior-exterior",
-    "kind": "power_block",
+    "kind": "hvac_comm",
     "geometry_template": "power_block",
     "designator": "BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "INDOOR_BUS": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "OUTDOOR_BUS": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "S communication line",
@@ -11925,35 +13252,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "hvac_comm",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0284_comunicacion-interior-exterior.svg"
+    "source_asset": "assets/symbols/SYM-0284_comunicacion-interior-exterior.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0285": {
     "id": "SYM-0285",
     "catalog_id": "SYM-0285",
     "name": "Filtro de entrada de red",
-    "kind": "power_block",
+    "kind": "mains_filter",
     "geometry_template": "power_block",
     "designator": "BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "L_IN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "N_IN": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "L_OUT": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "N_OUT": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "EMI mains filter",
@@ -11962,41 +13303,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "mains_filter",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0285_filtro-de-entrada-de-red.svg"
+    "source_asset": "assets/symbols/SYM-0285_filtro-de-entrada-de-red.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0286": {
     "id": "SYM-0286",
     "catalog_id": "SYM-0286",
     "name": "Bus DC inverter",
-    "kind": "power_block",
+    "kind": "dc_bus",
     "geometry_template": "power_block",
     "designator": "BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "RECTIFIER+": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "RECTIFIER-": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "P": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "N": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "MID": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "DC link",
@@ -12005,47 +13360,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dc_bus",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "IN1": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "IN2": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "OUT1": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT2": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0286_bus-dc-inverter.svg"
+    "source_asset": "assets/symbols/SYM-0286_bus-dc-inverter.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0287": {
     "id": "SYM-0287",
     "catalog_id": "SYM-0287",
     "name": "Freno dinámico",
-    "kind": "power_block",
+    "kind": "brake_chopper",
     "geometry_template": "power_block",
     "designator": "BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "P": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "N": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "GATE": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "BRAKE_R": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "braking chopper",
@@ -12054,35 +13411,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "brake_chopper",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0287_freno-dinamico.svg"
+    "source_asset": "assets/symbols/SYM-0287_freno-dinamico.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0288": {
     "id": "SYM-0288",
     "catalog_id": "SYM-0288",
     "name": "Detección de corriente de fase",
-    "kind": "power_block",
+    "kind": "phase_current",
     "geometry_template": "power_block",
     "designator": "BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "PHASES": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "SENSE[]": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "phase current sensing",
@@ -12091,41 +13450,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "phase_current",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0288_deteccion-de-corriente-de-fase.svg"
+    "source_asset": "assets/symbols/SYM-0288_deteccion-de-corriente-de-fase.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0289": {
     "id": "SYM-0289",
     "catalog_id": "SYM-0289",
     "name": "Detección de cruce por cero de red",
-    "kind": "power_block",
+    "kind": "mains_zero",
     "geometry_template": "power_block",
     "designator": "BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "L": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "N": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "LOGIC_OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "mains zero crossing",
@@ -12134,41 +13495,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "mains_zero",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0289_deteccion-de-cruce-por-cero-de-red.svg"
+    "source_asset": "assets/symbols/SYM-0289_deteccion-de-cruce-por-cero-de-red.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0290": {
     "id": "SYM-0290",
     "catalog_id": "SYM-0290",
     "name": "Cadena de NTC de climatización",
-    "kind": "power_block",
+    "kind": "ntc_chain",
     "geometry_template": "power_block",
     "designator": "BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "NTC[]": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "ADC[]": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "REF_GND": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "NTC room coil discharge",
@@ -12177,35 +13540,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ntc_chain",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0290_cadena-de-ntc-de-climatizacion.svg"
+    "source_asset": "assets/symbols/SYM-0290_cadena-de-ntc-de-climatizacion.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0291": {
     "id": "SYM-0291",
     "catalog_id": "SYM-0291",
     "name": "Presostato alta/baja",
-    "kind": "power_block",
+    "kind": "pressure_switch_pair",
     "geometry_template": "power_block",
     "designator": "PS",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "HP_COM": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "LP_COM": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "HP_OUT": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "LP_OUT": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "HP LP switch",
@@ -12214,35 +13591,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pressure_switch_pair",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0291_presostato-alta-baja.svg"
+    "source_asset": "assets/symbols/SYM-0291_presostato-alta-baja.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0292": {
     "id": "SYM-0292",
     "catalog_id": "SYM-0292",
     "name": "Transductor de presión frigorífica",
-    "kind": "power_block",
+    "kind": "refrig_pressure",
     "geometry_template": "power_block",
     "designator": "BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "PRESSURE": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "VCC": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "SIGNAL": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "GND": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "refrigerant pressure sensor",
@@ -12251,41 +13642,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "refrig_pressure",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0292_transductor-de-presion-frigorifica.svg"
+    "source_asset": "assets/symbols/SYM-0292_transductor-de-presion-frigorifica.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0293": {
     "id": "SYM-0293",
     "catalog_id": "SYM-0293",
     "name": "Calentador de cárter",
-    "kind": "power_block",
+    "kind": "crankcase_heater",
     "geometry_template": "power_block",
     "designator": "EH",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "crankcase heater",
@@ -12294,35 +13681,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "crankcase_heater",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0293_calentador-de-carter.svg"
+    "source_asset": "assets/symbols/SYM-0293_calentador-de-carter.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0294": {
     "id": "SYM-0294",
     "catalog_id": "SYM-0294",
     "name": "Resistencia de bandeja",
-    "kind": "power_block",
+    "kind": "tray_heater",
     "geometry_template": "power_block",
     "designator": "EH",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "base pan heater",
@@ -12331,35 +13720,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "tray_heater",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0294_resistencia-de-bandeja.svg"
+    "source_asset": "assets/symbols/SYM-0294_resistencia-de-bandeja.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0295": {
     "id": "SYM-0295",
     "catalog_id": "SYM-0295",
     "name": "Circuito de desescarche",
-    "kind": "power_block",
+    "kind": "defrost_block",
     "geometry_template": "power_block",
     "designator": "BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "SENSORS": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "HEATER": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "FAN": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Bloques funcionales",
     "aliases": "defrost control",
@@ -12368,33 +13765,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee el flujo de energía de izquierda a derecha y separa potencia, control, sensado y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "defrost_block",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0295_circuito-de-desescarche.svg"
+    "source_asset": "assets/symbols/SYM-0295_circuito-de-desescarche.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0296": {
     "id": "SYM-0296",
@@ -12747,9 +14119,48 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0305",
     "catalog_id": "SYM-0305",
     "name": "Amplificador transimpedancia",
-    "kind": "functional_block",
+    "kind": "transimpedance",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN+": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "IN-": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC+": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "VCC-": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "power_in"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "TIA",
@@ -12758,41 +14169,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "transimpedance",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0305_amplificador-transimpedancia.svg"
+    "source_asset": "assets/symbols/SYM-0305_amplificador-transimpedancia.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0306": {
     "id": "SYM-0306",
     "catalog_id": "SYM-0306",
     "name": "Amplificador logarítmico",
-    "kind": "functional_block",
+    "kind": "log_amp",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN+": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "IN-": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC+": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "VCC-": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "power_in"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "log amplifier",
@@ -12801,41 +14226,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "log_amp",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0306_amplificador-logaritmico.svg"
+    "source_asset": "assets/symbols/SYM-0306_amplificador-logaritmico.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0307": {
     "id": "SYM-0307",
     "catalog_id": "SYM-0307",
     "name": "Amplificador de ganancia programable",
-    "kind": "functional_block",
+    "kind": "pga",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "GAIN": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "PGA",
@@ -12844,41 +14283,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pga",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0307_amplificador-de-ganancia-programable.svg"
+    "source_asset": "assets/symbols/SYM-0307_amplificador-de-ganancia-programable.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0308": {
     "id": "SYM-0308",
     "catalog_id": "SYM-0308",
     "name": "Amplificador de audio",
-    "kind": "functional_block",
+    "kind": "audio_amp",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "audio power amplifier",
@@ -12887,41 +14334,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "audio_amp",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0308_amplificador-de-audio.svg"
+    "source_asset": "assets/symbols/SYM-0308_amplificador-de-audio.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0309": {
     "id": "SYM-0309",
     "catalog_id": "SYM-0309",
     "name": "Amplificador de RF",
-    "kind": "functional_block",
+    "kind": "rf_amp",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "RF_IN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "BIAS": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "RF_OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "RF amplifier",
@@ -12930,41 +14391,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "rf_amp",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0309_amplificador-de-rf.svg"
+    "source_asset": "assets/symbols/SYM-0309_amplificador-de-rf.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0310": {
     "id": "SYM-0310",
     "catalog_id": "SYM-0310",
     "name": "Mezclador de RF",
-    "kind": "functional_block",
+    "kind": "mixer",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "RF": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "LO": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "IF": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "mixer frequency converter",
@@ -12973,35 +14448,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "mixer",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0310_mezclador-de-rf.svg"
+    "source_asset": "assets/symbols/SYM-0310_mezclador-de-rf.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0311": {
     "id": "SYM-0311",
     "catalog_id": "SYM-0311",
     "name": "Modulador",
-    "kind": "functional_block",
+    "kind": "modulator",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "SIGNAL": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CARRIER": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "AM FM PWM modulator",
@@ -13010,41 +14505,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "modulator",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0311_modulador.svg"
+    "source_asset": "assets/symbols/SYM-0311_modulador.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0312": {
     "id": "SYM-0312",
     "catalog_id": "SYM-0312",
     "name": "Demodulador",
-    "kind": "functional_block",
+    "kind": "demodulator",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "MODULATED_IN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "detector",
@@ -13053,41 +14556,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "demodulator",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0312_demodulador.svg"
+    "source_asset": "assets/symbols/SYM-0312_demodulador.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0313": {
     "id": "SYM-0313",
     "catalog_id": "SYM-0313",
     "name": "Detector de envolvente",
-    "kind": "functional_block",
+    "kind": "envelope_detector",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "envelope detector",
@@ -13096,41 +14607,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "envelope_detector",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0313_detector-de-envolvente.svg"
+    "source_asset": "assets/symbols/SYM-0313_detector-de-envolvente.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0314": {
     "id": "SYM-0314",
     "catalog_id": "SYM-0314",
     "name": "Muestreador y retenedor",
-    "kind": "functional_block",
+    "kind": "sample_hold",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SAMPLE": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "sample and hold",
@@ -13139,41 +14664,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "sample_hold",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0314_muestreador-y-retenedor.svg"
+    "source_asset": "assets/symbols/SYM-0314_muestreador-y-retenedor.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0315": {
     "id": "SYM-0315",
     "catalog_id": "SYM-0315",
     "name": "Oscilador controlado por tensión",
-    "kind": "functional_block",
+    "kind": "vco",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "VCTRL": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "VCO",
@@ -13182,41 +14715,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "vco",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0315_oscilador-controlado-por-tension.svg"
+    "source_asset": "assets/symbols/SYM-0315_oscilador-controlado-por-tension.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0316": {
     "id": "SYM-0316",
     "catalog_id": "SYM-0316",
     "name": "Fuente de corriente constante",
-    "kind": "functional_block",
+    "kind": "constant_current",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "SENSE": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "IOUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "current source IC",
@@ -13225,41 +14772,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "constant_current",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0316_fuente-de-corriente-constante.svg"
+    "source_asset": "assets/symbols/SYM-0316_fuente-de-corriente-constante.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0317": {
     "id": "SYM-0317",
     "catalog_id": "SYM-0317",
     "name": "Espejo de corriente",
-    "kind": "functional_block",
+    "kind": "current_mirror",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IREF": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "IOUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "current mirror",
@@ -13268,35 +14823,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "current_mirror",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0317_espejo-de-corriente.svg"
+    "source_asset": "assets/symbols/SYM-0317_espejo-de-corriente.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0318": {
     "id": "SYM-0318",
     "catalog_id": "SYM-0318",
     "name": "Regulador shunt",
-    "kind": "functional_block",
+    "kind": "shunt_reg",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "REF": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "A": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "K": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "TL431 shunt regulator",
@@ -13305,35 +14880,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "shunt_reg",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0318_regulador-shunt.svg"
+    "source_asset": "assets/symbols/SYM-0318_regulador-shunt.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0319": {
     "id": "SYM-0319",
     "catalog_id": "SYM-0319",
     "name": "Comparador de ventana",
-    "kind": "functional_block",
+    "kind": "window_comp",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "LOW": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "HIGH": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC+": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "VCC-": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "power_in"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "window comparator",
@@ -13342,41 +14943,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "window_comp",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0319_comparador-de-ventana.svg"
+    "source_asset": "assets/symbols/SYM-0319_comparador-de-ventana.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0320": {
     "id": "SYM-0320",
     "catalog_id": "SYM-0320",
     "name": "Rectificador de precisión",
-    "kind": "functional_block",
+    "kind": "precision_rect",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "precision rectifier",
@@ -13385,41 +14994,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "precision_rect",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0320_rectificador-de-precision.svg"
+    "source_asset": "assets/symbols/SYM-0320_rectificador-de-precision.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0321": {
     "id": "SYM-0321",
     "catalog_id": "SYM-0321",
     "name": "Bomba de carga",
-    "kind": "functional_block",
+    "kind": "charge_pump",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "VIN": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CAP+": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "CAP-": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "VOUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "charge pump",
@@ -13428,35 +15057,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "charge_pump",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0321_bomba-de-carga.svg"
+    "source_asset": "assets/symbols/SYM-0321_bomba-de-carga.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0322": {
     "id": "SYM-0322",
     "catalog_id": "SYM-0322",
     "name": "Control automático de ganancia",
-    "kind": "functional_block",
+    "kind": "agc",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "automatic gain control",
@@ -13465,41 +15114,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "agc",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0322_control-automatico-de-ganancia.svg"
+    "source_asset": "assets/symbols/SYM-0322_control-automatico-de-ganancia.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0323": {
     "id": "SYM-0323",
     "catalog_id": "SYM-0323",
     "name": "Filtro activo paso bajo",
-    "kind": "functional_block",
+    "kind": "active_lpf",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "active low pass",
@@ -13508,41 +15165,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "active_lpf",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0323_filtro-activo-paso-bajo.svg"
+    "source_asset": "assets/symbols/SYM-0323_filtro-activo-paso-bajo.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0324": {
     "id": "SYM-0324",
     "catalog_id": "SYM-0324",
     "name": "Filtro activo paso alto",
-    "kind": "functional_block",
+    "kind": "active_hpf",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "active high pass",
@@ -13551,41 +15216,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "active_hpf",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0324_filtro-activo-paso-alto.svg"
+    "source_asset": "assets/symbols/SYM-0324_filtro-activo-paso-alto.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0325": {
     "id": "SYM-0325",
     "catalog_id": "SYM-0325",
     "name": "Filtro activo pasabanda",
-    "kind": "functional_block",
+    "kind": "active_bpf",
     "geometry_template": "functional_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "functional_ics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Circuitos integrados funcionales",
     "subcategory": "Analógica avanzada",
     "aliases": "active band pass",
@@ -13594,41 +15267,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue entradas, salidas, referencias, control de ganancia y alimentación del bloque.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "active_bpf",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0325_filtro-activo-pasabanda.svg"
+    "source_asset": "assets/symbols/SYM-0325_filtro-activo-pasabanda.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0326": {
     "id": "SYM-0326",
     "catalog_id": "SYM-0326",
     "name": "Monoestable",
-    "kind": "digital_block",
+    "kind": "monostable",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "TRIG": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "RC": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "Q": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "one shot",
@@ -13637,35 +15324,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "monostable",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0326_monoestable.svg"
+    "source_asset": "assets/symbols/SYM-0326_monoestable.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0327": {
     "id": "SYM-0327",
     "catalog_id": "SYM-0327",
     "name": "Divisor de frecuencia",
-    "kind": "digital_block",
+    "kind": "freq_divider",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "CLK": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "RESET": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "frequency divider",
@@ -13674,41 +15381,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "freq_divider",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0327_divisor-de-frecuencia.svg"
+    "source_asset": "assets/symbols/SYM-0327_divisor-de-frecuencia.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0328": {
     "id": "SYM-0328",
     "catalog_id": "SYM-0328",
     "name": "Detector de flanco",
-    "kind": "digital_block",
+    "kind": "edge_detector",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "edge detector",
@@ -13717,41 +15432,67 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "edge_detector",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0328_detector-de-flanco.svg"
+    "source_asset": "assets/symbols/SYM-0328_detector-de-flanco.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0329": {
     "id": "SYM-0329",
     "catalog_id": "SYM-0329",
     "name": "ALU",
-    "kind": "digital_block",
+    "kind": "alu",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "A[]": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "B[]": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OP[]": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "RESULT[]": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "FLAGS": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "arithmetic logic unit",
@@ -13760,35 +15501,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "alu",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0329_alu.svg"
+    "source_asset": "assets/symbols/SYM-0329_alu.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0330": {
     "id": "SYM-0330",
     "catalog_id": "SYM-0330",
     "name": "Transceptor de bus",
-    "kind": "digital_block",
+    "kind": "bus_transceiver",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "BUS_A": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "DIR": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OE": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "BUS_B": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "bus buffer",
@@ -13797,47 +15564,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bus_transceiver",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "IN1": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "IN2": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "OUT1": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT2": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0330_transceptor-de-bus.svg"
+    "source_asset": "assets/symbols/SYM-0330_transceptor-de-bus.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0331": {
     "id": "SYM-0331",
     "catalog_id": "SYM-0331",
     "name": "Driver de línea",
-    "kind": "digital_block",
+    "kind": "line_driver",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "line driver",
@@ -13846,41 +15615,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "line_driver",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0331_driver-de-linea.svg"
+    "source_asset": "assets/symbols/SYM-0331_driver-de-linea.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0332": {
     "id": "SYM-0332",
     "catalog_id": "SYM-0332",
     "name": "Receptor de línea",
-    "kind": "digital_block",
+    "kind": "line_receiver",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN+": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "IN-": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "line receiver",
@@ -13889,41 +15672,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "line_receiver",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0332_receptor-de-linea.svg"
+    "source_asset": "assets/symbols/SYM-0332_receptor-de-linea.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0333": {
     "id": "SYM-0333",
     "catalog_id": "SYM-0333",
     "name": "Acondicionador antirrebote",
-    "kind": "digital_block",
+    "kind": "debounce",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "SW_IN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "debouncer",
@@ -13932,41 +15723,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "debounce",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0333_acondicionador-antirrebote.svg"
+    "source_asset": "assets/symbols/SYM-0333_acondicionador-antirrebote.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0334": {
     "id": "SYM-0334",
     "catalog_id": "SYM-0334",
     "name": "Generador de reloj",
-    "kind": "digital_block",
+    "kind": "clock_gen",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "REF": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CLK[]": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "clock generator",
@@ -13975,41 +15774,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "clock_gen",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0334_generador-de-reloj.svg"
+    "source_asset": "assets/symbols/SYM-0334_generador-de-reloj.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0335": {
     "id": "SYM-0335",
     "catalog_id": "SYM-0335",
     "name": "Distribuidor de reloj",
-    "kind": "digital_block",
+    "kind": "clock_buffer",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "CLK_IN": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CLK_OUT[]": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "clock fanout",
@@ -14018,41 +15825,73 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "clock_buffer",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0335_distribuidor-de-reloj.svg"
+    "source_asset": "assets/symbols/SYM-0335_distribuidor-de-reloj.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0336": {
     "id": "SYM-0336",
     "catalog_id": "SYM-0336",
     "name": "Memoria SRAM",
-    "kind": "digital_block",
+    "kind": "sram",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 12,
+    "ports": {
+      "ADDR[]": {
+        "x": -4,
+        "y": -4,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DATA[]": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "CE": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OE": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "WE": {
+        "x": -4,
+        "y": 4,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "READY": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -6,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 6,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "static RAM",
@@ -14061,35 +15900,67 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "sram",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0336_memoria-sram.svg"
+    "source_asset": "assets/symbols/SYM-0336_memoria-sram.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0337": {
     "id": "SYM-0337",
     "catalog_id": "SYM-0337",
     "name": "Memoria DRAM",
-    "kind": "digital_block",
+    "kind": "dram",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "ADDR[]": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DATA[]": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "RAS": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CAS": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "READY": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -5,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 5,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "dynamic RAM",
@@ -14098,35 +15969,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dram",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0337_memoria-dram.svg"
+    "source_asset": "assets/symbols/SYM-0337_memoria-dram.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0338": {
     "id": "SYM-0338",
     "catalog_id": "SYM-0338",
     "name": "Memoria FRAM",
-    "kind": "digital_block",
+    "kind": "fram",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "BUS": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "CS": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "READY": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "ferroelectric RAM",
@@ -14135,35 +16026,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fram",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0338_memoria-fram.svg"
+    "source_asset": "assets/symbols/SYM-0338_memoria-fram.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0339": {
     "id": "SYM-0339",
     "catalog_id": "SYM-0339",
     "name": "Memoria NVRAM",
-    "kind": "digital_block",
+    "kind": "nvram",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "ADDR[]": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DATA[]": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "READY": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "nonvolatile RAM",
@@ -14172,35 +16089,67 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "nvram",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0339_memoria-nvram.svg"
+    "source_asset": "assets/symbols/SYM-0339_memoria-nvram.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0340": {
     "id": "SYM-0340",
     "catalog_id": "SYM-0340",
     "name": "FIFO",
-    "kind": "digital_block",
+    "kind": "fifo",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "DATA_IN[]": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "WR_CLK": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DATA_OUT[]": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "RD_CLK": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "input"
+      },
+      "FLAGS": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -4,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "first in first out",
@@ -14209,35 +16158,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fifo",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0340_fifo.svg"
+    "source_asset": "assets/symbols/SYM-0340_fifo.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0341": {
     "id": "SYM-0341",
     "catalog_id": "SYM-0341",
     "name": "Controlador de teclado",
-    "kind": "digital_block",
+    "kind": "keyboard_ctrl",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "ROWS[]": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "COLS[]": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "BUS": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "keyboard scanner",
@@ -14246,35 +16215,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "keyboard_ctrl",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0341_controlador-de-teclado.svg"
+    "source_asset": "assets/symbols/SYM-0341_controlador-de-teclado.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0342": {
     "id": "SYM-0342",
     "catalog_id": "SYM-0342",
     "name": "Controlador táctil capacitivo",
-    "kind": "digital_block",
+    "kind": "touch_ctrl",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "ELECTRODES[]": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "BUS": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "IRQ": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "capacitive touch",
@@ -14283,35 +16272,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "touch_ctrl",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0342_controlador-tactil-capacitivo.svg"
+    "source_asset": "assets/symbols/SYM-0342_controlador-tactil-capacitivo.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0343": {
     "id": "SYM-0343",
     "catalog_id": "SYM-0343",
     "name": "Generador CRC",
-    "kind": "digital_block",
+    "kind": "crc",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "DATA[]": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CLK": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CRC[]": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "CRC checker",
@@ -14320,35 +16329,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "crc",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0343_generador-crc.svg"
+    "source_asset": "assets/symbols/SYM-0343_generador-crc.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0344": {
     "id": "SYM-0344",
     "catalog_id": "SYM-0344",
     "name": "Controlador DMA",
-    "kind": "digital_block",
+    "kind": "dma",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "BUS_IN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "REQUEST": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "BUS_OUT": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "ACK": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "direct memory access",
@@ -14357,35 +16392,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dma",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0344_controlador-dma.svg"
+    "source_asset": "assets/symbols/SYM-0344_controlador-dma.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0345": {
     "id": "SYM-0345",
     "catalog_id": "SYM-0345",
     "name": "Puente de buses",
-    "kind": "digital_block",
+    "kind": "bus_bridge",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "BUS_A": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "BUS_B": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "protocol bridge",
@@ -14394,47 +16443,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bus_bridge",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "IN1": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "IN2": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "OUT1": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT2": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0345_puente-de-buses.svg"
+    "source_asset": "assets/symbols/SYM-0345_puente-de-buses.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0346": {
     "id": "SYM-0346",
     "catalog_id": "SYM-0346",
     "name": "Controlador USB",
-    "kind": "digital_block",
+    "kind": "usb_ctrl",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "INTERNAL_BUS": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "VBUS": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "D+": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "D-": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "USB controller",
@@ -14443,35 +16506,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "usb_ctrl",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0346_controlador-usb.svg"
+    "source_asset": "assets/symbols/SYM-0346_controlador-usb.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0347": {
     "id": "SYM-0347",
     "catalog_id": "SYM-0347",
     "name": "Controlador Ethernet",
-    "kind": "digital_block",
+    "kind": "ethernet_ctrl",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "MII_RMII": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "TX_PAIR": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "RX_PAIR": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "input"
+      },
+      "VCC": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Bloques digitales ampliados",
     "aliases": "Ethernet MAC PHY",
@@ -14480,27 +16563,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Revisa reloj, reset, habilitación, dirección de datos y señales activas a nivel bajo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ethernet_ctrl",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0347_controlador-ethernet.svg"
+    "source_asset": "assets/symbols/SYM-0347_controlador-ethernet.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0348": {
     "id": "SYM-0348",
@@ -15245,9 +17309,36 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0366",
     "catalog_id": "SYM-0366",
     "name": "Arranque suave",
-    "kind": "power_block",
+    "kind": "soft_start",
     "geometry_template": "power_block",
     "designator": "U/BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "POWER_IN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "POWER_OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Conversión y control de potencia",
     "aliases": "soft starter",
@@ -15256,41 +17347,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Separa entrada, almacenamiento, interruptores, magnéticos, salida y lazos de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "soft_start",
+    "source_asset": "assets/symbols/SYM-0366_arranque-suave.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0367": {
+    "id": "SYM-0367",
+    "catalog_id": "SYM-0367",
+    "name": "Controlador hot-swap",
+    "kind": "hot_swap",
+    "geometry_template": "power_block",
+    "designator": "U/BLOCK",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
     "height": 6,
     "ports": {
-      "VCC": {
+      "IN": {
         "x": -4,
-        "y": 0,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "SENSE": {
+        "x": -4,
+        "y": 1,
         "side": "west",
         "electrical_type": "input"
       },
-      "GND": {
+      "OUT": {
         "x": 4,
         "y": -1,
         "side": "east",
-        "electrical_type": "output"
+        "electrical_type": "power_out"
       },
-      "OUT": {
+      "GATE": {
         "x": 4,
         "y": 1,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0366_arranque-suave.svg"
-  },
-  "SYM-0367": {
-    "id": "SYM-0367",
-    "catalog_id": "SYM-0367",
-    "name": "Controlador hot-swap",
-    "kind": "power_block",
-    "geometry_template": "power_block",
-    "designator": "U/BLOCK",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Conversión y control de potencia",
     "aliases": "hot swap controller",
@@ -15299,41 +17398,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Separa entrada, almacenamiento, interruptores, magnéticos, salida y lazos de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "hot_swap",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0367_controlador-hot-swap.svg"
+    "source_asset": "assets/symbols/SYM-0367_controlador-hot-swap.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0368": {
     "id": "SYM-0368",
     "catalog_id": "SYM-0368",
     "name": "Rectificador síncrono",
-    "kind": "power_block",
+    "kind": "sync_rect",
     "geometry_template": "power_block",
     "designator": "U/BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "AC_PULSE": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "GATE": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DC_OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Conversión y control de potencia",
     "aliases": "synchronous rectifier",
@@ -15342,41 +17443,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Separa entrada, almacenamiento, interruptores, magnéticos, salida y lazos de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "sync_rect",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0368_rectificador-sincrono.svg"
+    "source_asset": "assets/symbols/SYM-0368_rectificador-sincrono.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0369": {
     "id": "SYM-0369",
     "catalog_id": "SYM-0369",
     "name": "Driver de puerta aislado",
-    "kind": "power_block",
+    "kind": "isolated_gate_driver",
     "geometry_template": "power_block",
     "designator": "U/BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "LOGIC_IN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "VCC1": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "GATE": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "EMITTER": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VCC2": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "power_in"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Conversión y control de potencia",
     "aliases": "isolated IGBT MOSFET driver",
@@ -15385,41 +17500,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Separa entrada, almacenamiento, interruptores, magnéticos, salida y lazos de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "isolated_gate_driver",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "A": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "Q": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0369_driver-de-puerta-aislado.svg"
+    "source_asset": "assets/symbols/SYM-0369_driver-de-puerta-aislado.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0370": {
     "id": "SYM-0370",
     "catalog_id": "SYM-0370",
     "name": "Convertidor forward",
-    "kind": "power_block",
+    "kind": "forward_stage",
     "geometry_template": "power_block",
     "designator": "U/BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "PRIMARY": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "RESET": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SECONDARY": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Conversión y control de potencia",
     "aliases": "forward converter",
@@ -15428,35 +17545,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Separa entrada, almacenamiento, interruptores, magnéticos, salida y lazos de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "forward_stage",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0370_convertidor-forward.svg"
+    "source_asset": "assets/symbols/SYM-0370_convertidor-forward.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0371": {
     "id": "SYM-0371",
     "catalog_id": "SYM-0371",
     "name": "Convertidor push-pull",
-    "kind": "power_block",
+    "kind": "push_pull",
     "geometry_template": "power_block",
     "designator": "U/BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "GATE_A": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "GATE_B": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "PRIMARY_CT": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "SECONDARY": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Conversión y control de potencia",
     "aliases": "push pull converter",
@@ -15465,35 +17596,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Separa entrada, almacenamiento, interruptores, magnéticos, salida y lazos de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "push_pull",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0371_convertidor-push-pull.svg"
+    "source_asset": "assets/symbols/SYM-0371_convertidor-push-pull.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0372": {
     "id": "SYM-0372",
     "catalog_id": "SYM-0372",
     "name": "Convertidor half-bridge",
-    "kind": "power_block",
+    "kind": "halfbridge_supply",
     "geometry_template": "power_block",
     "designator": "U/BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "BUS": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "TRANSFORMER": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Conversión y control de potencia",
     "aliases": "half bridge converter",
@@ -15502,35 +17641,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Separa entrada, almacenamiento, interruptores, magnéticos, salida y lazos de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "halfbridge_supply",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0372_convertidor-half-bridge.svg"
+    "source_asset": "assets/symbols/SYM-0372_convertidor-half-bridge.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0373": {
     "id": "SYM-0373",
     "catalog_id": "SYM-0373",
     "name": "Convertidor full-bridge",
-    "kind": "power_block",
+    "kind": "fullbridge_supply",
     "geometry_template": "power_block",
     "designator": "U/BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "BUS": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "TRANSFORMER": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Conversión y control de potencia",
     "aliases": "full bridge converter",
@@ -15539,35 +17686,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Separa entrada, almacenamiento, interruptores, magnéticos, salida y lazos de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fullbridge_supply",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0373_convertidor-full-bridge.svg"
+    "source_asset": "assets/symbols/SYM-0373_convertidor-full-bridge.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0374": {
     "id": "SYM-0374",
     "catalog_id": "SYM-0374",
     "name": "Flyback active clamp",
-    "kind": "power_block",
+    "kind": "active_clamp",
     "geometry_template": "power_block",
     "designator": "U/BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "MAIN_GATE": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CLAMP_GATE": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "PRIMARY": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "SECONDARY": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Conversión y control de potencia",
     "aliases": "active clamp flyback",
@@ -15576,35 +17737,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Separa entrada, almacenamiento, interruptores, magnéticos, salida y lazos de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "active_clamp",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0374_flyback-active-clamp.svg"
+    "source_asset": "assets/symbols/SYM-0374_flyback-active-clamp.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0375": {
     "id": "SYM-0375",
     "catalog_id": "SYM-0375",
     "name": "Inversor solar",
-    "kind": "power_block",
+    "kind": "solar_inverter",
     "geometry_template": "power_block",
     "designator": "U/BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "PV+": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "PV-": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "AC_L": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "AC_N": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Conversión y control de potencia",
     "aliases": "PV inverter",
@@ -15613,41 +17788,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Separa entrada, almacenamiento, interruptores, magnéticos, salida y lazos de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "solar_inverter",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0375_inversor-solar.svg"
+    "source_asset": "assets/symbols/SYM-0375_inversor-solar.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0376": {
     "id": "SYM-0376",
     "catalog_id": "SYM-0376",
     "name": "Cargador de batería",
-    "kind": "power_block",
+    "kind": "battery_charger",
     "geometry_template": "power_block",
     "designator": "U/BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "INPUT": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "SENSE": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "BAT+": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "BAT-": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Conversión y control de potencia",
     "aliases": "charger",
@@ -15656,35 +17839,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Separa entrada, almacenamiento, interruptores, magnéticos, salida y lazos de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "battery_charger",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0376_cargador-de-bateria.svg"
+    "source_asset": "assets/symbols/SYM-0376_cargador-de-bateria.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0377": {
     "id": "SYM-0377",
     "catalog_id": "SYM-0377",
     "name": "BMS / gestor de batería",
-    "kind": "power_block",
+    "kind": "bms",
     "geometry_template": "power_block",
     "designator": "U/BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "CELLS[]": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SHUNT": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "PACK+": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "PACK-": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "FET_DRIVE": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Conversión y control de potencia",
     "aliases": "battery management",
@@ -15693,35 +17896,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Separa entrada, almacenamiento, interruptores, magnéticos, salida y lazos de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bms",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0377_bms-gestor-de-bateria.svg"
+    "source_asset": "assets/symbols/SYM-0377_bms-gestor-de-bateria.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0378": {
     "id": "SYM-0378",
     "catalog_id": "SYM-0378",
     "name": "Balanceador de celdas",
-    "kind": "power_block",
+    "kind": "cell_balancer",
     "geometry_template": "power_block",
     "designator": "U/BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "CELL_TAPS[]": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "BALANCE[]": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Conversión y control de potencia",
     "aliases": "battery balancer",
@@ -15730,35 +17935,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Separa entrada, almacenamiento, interruptores, magnéticos, salida y lazos de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "cell_balancer",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0378_balanceador-de-celdas.svg"
+    "source_asset": "assets/symbols/SYM-0378_balanceador-de-celdas.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0379": {
     "id": "SYM-0379",
     "catalog_id": "SYM-0379",
     "name": "Controlador de freno regenerativo",
-    "kind": "power_block",
+    "kind": "regen_brake",
     "geometry_template": "power_block",
     "designator": "U/BLOCK",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "MOTOR": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DC_BUS": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "BRAKE": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Conversión y control de potencia",
     "aliases": "regenerative brake",
@@ -15767,27 +17986,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Separa entrada, almacenamiento, interruptores, magnéticos, salida y lazos de control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "regen_brake",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0379_controlador-de-freno-regenerativo.svg"
+    "source_asset": "assets/symbols/SYM-0379_controlador-de-freno-regenerativo.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0380": {
     "id": "SYM-0380",
@@ -16252,9 +18452,30 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0392",
     "catalog_id": "SYM-0392",
     "name": "Sensor NTC de aire interior",
-    "kind": "power_block",
+    "kind": "ntc_room",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "room air thermistor",
@@ -16263,35 +18484,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ntc_room",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0392_sensor-ntc-de-aire-interior.svg"
+    "source_asset": "assets/symbols/SYM-0392_sensor-ntc-de-aire-interior.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0393": {
     "id": "SYM-0393",
     "catalog_id": "SYM-0393",
     "name": "Sensor NTC de batería interior",
-    "kind": "power_block",
+    "kind": "ntc_indoor_coil",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "indoor coil thermistor",
@@ -16300,35 +18523,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ntc_indoor_coil",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "A1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "A2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0393_sensor-ntc-de-bateria-interior.svg"
+    "source_asset": "assets/symbols/SYM-0393_sensor-ntc-de-bateria-interior.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0394": {
     "id": "SYM-0394",
     "catalog_id": "SYM-0394",
     "name": "Sensor NTC de batería exterior",
-    "kind": "power_block",
+    "kind": "ntc_outdoor_coil",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "outdoor coil thermistor",
@@ -16337,35 +18562,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ntc_outdoor_coil",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "A1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "A2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0394_sensor-ntc-de-bateria-exterior.svg"
+    "source_asset": "assets/symbols/SYM-0394_sensor-ntc-de-bateria-exterior.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0395": {
     "id": "SYM-0395",
     "catalog_id": "SYM-0395",
     "name": "Sensor NTC de descarga",
-    "kind": "power_block",
+    "kind": "ntc_discharge",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "discharge pipe thermistor",
@@ -16374,35 +18601,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ntc_discharge",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0395_sensor-ntc-de-descarga.svg"
+    "source_asset": "assets/symbols/SYM-0395_sensor-ntc-de-descarga.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0396": {
     "id": "SYM-0396",
     "catalog_id": "SYM-0396",
     "name": "Sensor NTC de aspiración",
-    "kind": "power_block",
+    "kind": "ntc_suction",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "suction thermistor",
@@ -16411,35 +18640,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ntc_suction",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0396_sensor-ntc-de-aspiracion.svg"
+    "source_asset": "assets/symbols/SYM-0396_sensor-ntc-de-aspiracion.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0397": {
     "id": "SYM-0397",
     "catalog_id": "SYM-0397",
     "name": "Sensor NTC ambiente exterior",
-    "kind": "power_block",
+    "kind": "ntc_ambient",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "outdoor ambient thermistor",
@@ -16448,35 +18679,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ntc_ambient",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0397_sensor-ntc-ambiente-exterior.svg"
+    "source_asset": "assets/symbols/SYM-0397_sensor-ntc-ambiente-exterior.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0398": {
     "id": "SYM-0398",
     "catalog_id": "SYM-0398",
     "name": "Condensador de ventilador",
-    "kind": "power_block",
+    "kind": "fan_capacitor",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "motor run capacitor",
@@ -16485,35 +18718,73 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fan_capacitor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0398_condensador-de-ventilador.svg"
+    "source_asset": "assets/symbols/SYM-0398_condensador-de-ventilador.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0399": {
     "id": "SYM-0399",
     "catalog_id": "SYM-0399",
     "name": "Contactor de compresor",
-    "kind": "power_block",
+    "kind": "compressor_contactor",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 12,
+    "ports": {
+      "A1": {
+        "x": -4,
+        "y": -4,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "A2": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "L1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "L2": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "L3": {
+        "x": -4,
+        "y": 4,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "T1": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "T2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "T3": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "compressor relay contactor",
@@ -16522,35 +18793,55 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "compressor_contactor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0399_contactor-de-compresor.svg"
+    "source_asset": "assets/symbols/SYM-0399_contactor-de-compresor.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0400": {
     "id": "SYM-0400",
     "catalog_id": "SYM-0400",
     "name": "Relé de ventilador",
-    "kind": "power_block",
+    "kind": "fan_relay",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "A1": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "A2": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "COM": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "NO": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NC": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "fan relay",
@@ -16559,41 +18850,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fan_relay",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "COM": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "NO": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "NC": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0400_rele-de-ventilador.svg"
+    "source_asset": "assets/symbols/SYM-0400_rele-de-ventilador.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0401": {
     "id": "SYM-0401",
     "catalog_id": "SYM-0401",
     "name": "Flotador de condensados",
-    "kind": "power_block",
+    "kind": "drain_float",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "drain float switch",
@@ -16602,35 +18889,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "drain_float",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0401_flotador-de-condensados.svg"
+    "source_asset": "assets/symbols/SYM-0401_flotador-de-condensados.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0402": {
     "id": "SYM-0402",
     "catalog_id": "SYM-0402",
     "name": "Termostato de desescarche",
-    "kind": "power_block",
+    "kind": "defrost_thermostat",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "defrost thermostat",
@@ -16639,35 +18928,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "defrost_thermostat",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0402_termostato-de-desescarche.svg"
+    "source_asset": "assets/symbols/SYM-0402_termostato-de-desescarche.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0403": {
     "id": "SYM-0403",
     "catalog_id": "SYM-0403",
     "name": "Sonda de presión alta",
-    "kind": "power_block",
+    "kind": "high_pressure_sensor",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "PRESSURE": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "VCC": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "SIGNAL": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "GND": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "high pressure transducer",
@@ -16676,35 +18979,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "high_pressure_sensor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0403_sonda-de-presion-alta.svg"
+    "source_asset": "assets/symbols/SYM-0403_sonda-de-presion-alta.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0404": {
     "id": "SYM-0404",
     "catalog_id": "SYM-0404",
     "name": "Sonda de presión baja",
-    "kind": "power_block",
+    "kind": "low_pressure_sensor",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "PRESSURE": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "VCC": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "SIGNAL": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "GND": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "low pressure transducer",
@@ -16713,35 +19030,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "low_pressure_sensor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0404_sonda-de-presion-baja.svg"
+    "source_asset": "assets/symbols/SYM-0404_sonda-de-presion-baja.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0405": {
     "id": "SYM-0405",
     "catalog_id": "SYM-0405",
     "name": "Bobina de válvula de cuatro vías",
-    "kind": "power_block",
+    "kind": "four_way_coil",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "reversing valve coil",
@@ -16750,35 +19069,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "four_way_coil",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "A1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "A2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0405_bobina-de-valvula-de-cuatro-vias.svg"
+    "source_asset": "assets/symbols/SYM-0405_bobina-de-valvula-de-cuatro-vias.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0406": {
     "id": "SYM-0406",
     "catalog_id": "SYM-0406",
     "name": "Calentador de compresor",
-    "kind": "power_block",
+    "kind": "compressor_heater",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "compressor heater",
@@ -16787,35 +19108,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "compressor_heater",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0406_calentador-de-compresor.svg"
+    "source_asset": "assets/symbols/SYM-0406_calentador-de-compresor.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0407": {
     "id": "SYM-0407",
     "catalog_id": "SYM-0407",
     "name": "Protector térmico de compresor",
-    "kind": "power_block",
+    "kind": "compressor_thermal",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "compressor overload",
@@ -16824,35 +19147,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "compressor_thermal",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0407_protector-termico-de-compresor.svg"
+    "source_asset": "assets/symbols/SYM-0407_protector-termico-de-compresor.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0408": {
     "id": "SYM-0408",
     "catalog_id": "SYM-0408",
     "name": "Comunicación por modulación sobre red",
-    "kind": "power_block",
+    "kind": "powerline_hvac",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "MAINS_IN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "TX": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "MAINS_OUT": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "RX": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "HVAC power line communication",
@@ -16861,35 +19198,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "powerline_hvac",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0408_comunicacion-por-modulacion-sobre-red.svg"
+    "source_asset": "assets/symbols/SYM-0408_comunicacion-por-modulacion-sobre-red.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0409": {
     "id": "SYM-0409",
     "catalog_id": "SYM-0409",
     "name": "Reactor de entrada inverter",
-    "kind": "power_block",
+    "kind": "input_reactor",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "line reactor",
@@ -16898,41 +19237,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "input_reactor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0409_reactor-de-entrada-inverter.svg"
+    "source_asset": "assets/symbols/SYM-0409_reactor-de-entrada-inverter.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0410": {
     "id": "SYM-0410",
     "catalog_id": "SYM-0410",
     "name": "Reactor de bus DC",
-    "kind": "power_block",
+    "kind": "dc_reactor",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "DC link choke",
@@ -16941,35 +19276,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dc_reactor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0410_reactor-de-bus-dc.svg"
+    "source_asset": "assets/symbols/SYM-0410_reactor-de-bus-dc.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0411": {
     "id": "SYM-0411",
     "catalog_id": "SYM-0411",
     "name": "Resistencia de precarga",
-    "kind": "power_block",
+    "kind": "precharge_resistor",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "precharge",
@@ -16978,35 +19315,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "precharge_resistor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0411_resistencia-de-precarga.svg"
+    "source_asset": "assets/symbols/SYM-0411_resistencia-de-precarga.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0412": {
     "id": "SYM-0412",
     "catalog_id": "SYM-0412",
     "name": "Relé de precarga",
-    "kind": "power_block",
+    "kind": "precharge_relay",
     "geometry_template": "power_block",
     "designator": "TH/K/EH/L/BP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "A1": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "A2": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "COM": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "NO": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Componentes específicos de climatización",
     "aliases": "precharge bypass relay",
@@ -17015,33 +19366,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Relaciona el elemento con su posición física, entrada de placa y función de protección o control.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "precharge_relay",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "COM": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "NO": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "NC": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0412_rele-de-precarga.svg"
+    "source_asset": "assets/symbols/SYM-0412_rele-de-precarga.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0413": {
     "id": "SYM-0413",
@@ -17232,9 +19558,36 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0418",
     "catalog_id": "SYM-0418",
     "name": "Puerta AND estilo IEC",
-    "kind": "digital_block",
+    "kind": "gate_iec",
     "geometry_template": "digital_block",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "A": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "B": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "Q": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas IEC",
     "aliases": "AND rectangular IEC",
@@ -17243,6 +19596,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La función se indica mediante texto o símbolo dentro del rectángulo; las burbujas indican inversión.",
     "catalog_standard": "IEC",
     "catalog_drawing_type": "gate_iec",
+    "source_asset": "assets/symbols/SYM-0418_puerta-and-estilo-iec.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0419": {
+    "id": "SYM-0419",
+    "catalog_id": "SYM-0419",
+    "name": "Puerta OR estilo IEC",
+    "kind": "gate_iec",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -17250,34 +19613,26 @@ const ElectroDiagramSymbols = Object.freeze({
     "ports": {
       "A": {
         "x": -4,
-        "y": 0,
+        "y": -1,
         "side": "west",
         "electrical_type": "input"
       },
       "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
       },
       "Q": {
         "x": 4,
-        "y": 1,
+        "y": 0,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0418_puerta-and-estilo-iec.svg"
-  },
-  "SYM-0419": {
-    "id": "SYM-0419",
-    "catalog_id": "SYM-0419",
-    "name": "Puerta OR estilo IEC",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas IEC",
     "aliases": "OR rectangular IEC",
@@ -17286,6 +19641,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La función se indica mediante texto o símbolo dentro del rectángulo; las burbujas indican inversión.",
     "catalog_standard": "IEC",
     "catalog_drawing_type": "gate_iec",
+    "source_asset": "assets/symbols/SYM-0419_puerta-or-estilo-iec.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0420": {
+    "id": "SYM-0420",
+    "catalog_id": "SYM-0420",
+    "name": "Puerta XOR estilo IEC",
+    "kind": "gate_iec",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -17293,34 +19658,26 @@ const ElectroDiagramSymbols = Object.freeze({
     "ports": {
       "A": {
         "x": -4,
-        "y": 0,
+        "y": -1,
         "side": "west",
         "electrical_type": "input"
       },
       "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
       },
       "Q": {
         "x": 4,
-        "y": 1,
+        "y": 0,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0419_puerta-or-estilo-iec.svg"
-  },
-  "SYM-0420": {
-    "id": "SYM-0420",
-    "catalog_id": "SYM-0420",
-    "name": "Puerta XOR estilo IEC",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas IEC",
     "aliases": "XOR rectangular IEC",
@@ -17329,6 +19686,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La función se indica mediante texto o símbolo dentro del rectángulo; las burbujas indican inversión.",
     "catalog_standard": "IEC",
     "catalog_drawing_type": "gate_iec",
+    "source_asset": "assets/symbols/SYM-0420_puerta-xor-estilo-iec.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0421": {
+    "id": "SYM-0421",
+    "catalog_id": "SYM-0421",
+    "name": "Puerta NOT estilo IEC",
+    "kind": "gate_iec",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -17336,34 +19703,26 @@ const ElectroDiagramSymbols = Object.freeze({
     "ports": {
       "A": {
         "x": -4,
-        "y": 0,
+        "y": -1,
         "side": "west",
         "electrical_type": "input"
       },
       "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
       },
       "Q": {
         "x": 4,
-        "y": 1,
+        "y": 0,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0420_puerta-xor-estilo-iec.svg"
-  },
-  "SYM-0421": {
-    "id": "SYM-0421",
-    "catalog_id": "SYM-0421",
-    "name": "Puerta NOT estilo IEC",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas IEC",
     "aliases": "NOT rectangular IEC",
@@ -17372,6 +19731,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La función se indica mediante texto o símbolo dentro del rectángulo; las burbujas indican inversión.",
     "catalog_standard": "IEC",
     "catalog_drawing_type": "gate_iec",
+    "source_asset": "assets/symbols/SYM-0421_puerta-not-estilo-iec.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0422": {
+    "id": "SYM-0422",
+    "catalog_id": "SYM-0422",
+    "name": "Puerta NAND estilo IEC",
+    "kind": "gate_iec",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -17379,34 +19748,26 @@ const ElectroDiagramSymbols = Object.freeze({
     "ports": {
       "A": {
         "x": -4,
-        "y": 0,
+        "y": -1,
         "side": "west",
         "electrical_type": "input"
       },
       "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
       },
       "Q": {
         "x": 4,
-        "y": 1,
+        "y": 0,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0421_puerta-not-estilo-iec.svg"
-  },
-  "SYM-0422": {
-    "id": "SYM-0422",
-    "catalog_id": "SYM-0422",
-    "name": "Puerta NAND estilo IEC",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas IEC",
     "aliases": "NAND rectangular IEC",
@@ -17415,6 +19776,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La función se indica mediante texto o símbolo dentro del rectángulo; las burbujas indican inversión.",
     "catalog_standard": "IEC",
     "catalog_drawing_type": "gate_iec",
+    "source_asset": "assets/symbols/SYM-0422_puerta-nand-estilo-iec.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0423": {
+    "id": "SYM-0423",
+    "catalog_id": "SYM-0423",
+    "name": "Puerta NOR estilo IEC",
+    "kind": "gate_iec",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -17422,34 +19793,26 @@ const ElectroDiagramSymbols = Object.freeze({
     "ports": {
       "A": {
         "x": -4,
-        "y": 0,
+        "y": -1,
         "side": "west",
         "electrical_type": "input"
       },
       "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
       },
       "Q": {
         "x": 4,
-        "y": 1,
+        "y": 0,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0422_puerta-nand-estilo-iec.svg"
-  },
-  "SYM-0423": {
-    "id": "SYM-0423",
-    "catalog_id": "SYM-0423",
-    "name": "Puerta NOR estilo IEC",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas IEC",
     "aliases": "NOR rectangular IEC",
@@ -17458,6 +19821,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La función se indica mediante texto o símbolo dentro del rectángulo; las burbujas indican inversión.",
     "catalog_standard": "IEC",
     "catalog_drawing_type": "gate_iec",
+    "source_asset": "assets/symbols/SYM-0423_puerta-nor-estilo-iec.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0424": {
+    "id": "SYM-0424",
+    "catalog_id": "SYM-0424",
+    "name": "Puerta XNOR estilo IEC",
+    "kind": "gate_iec",
+    "geometry_template": "digital_block",
+    "designator": "U",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -17465,34 +19838,26 @@ const ElectroDiagramSymbols = Object.freeze({
     "ports": {
       "A": {
         "x": -4,
-        "y": 0,
+        "y": -1,
         "side": "west",
         "electrical_type": "input"
       },
       "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
       },
       "Q": {
         "x": 4,
-        "y": 1,
+        "y": 0,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0423_puerta-nor-estilo-iec.svg"
-  },
-  "SYM-0424": {
-    "id": "SYM-0424",
-    "catalog_id": "SYM-0424",
-    "name": "Puerta XNOR estilo IEC",
-    "kind": "digital_block",
-    "geometry_template": "digital_block",
-    "designator": "U",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "digital_electronics_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Electrónica digital",
     "subcategory": "Puertas lógicas IEC",
     "aliases": "XNOR rectangular IEC",
@@ -17501,33 +19866,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La función se indica mediante texto o símbolo dentro del rectángulo; las burbujas indican inversión.",
     "catalog_standard": "IEC",
     "catalog_drawing_type": "gate_iec",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "A": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "Q": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0424_puerta-xnor-estilo-iec.svg"
+    "source_asset": "assets/symbols/SYM-0424_puerta-xnor-estilo-iec.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0425": {
     "id": "SYM-0425",
@@ -18541,9 +20881,30 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0446",
     "catalog_id": "SYM-0446",
     "name": "PTC de arranque de compresor",
-    "kind": "power_block",
+    "kind": "ptc_fuse",
     "geometry_template": "power_block",
     "designator": "PTC",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Arranque de compresor",
     "aliases": "relé PTC de arranque, posistor",
@@ -18552,27 +20913,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "En frío conduce; tras el arranque reduce la corriente del bobinado auxiliar.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ptc_fuse",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0446_ptc-de-arranque-de-compresor.svg"
+    "source_asset": "assets/symbols/SYM-0446_ptc-de-arranque-de-compresor.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0447": {
     "id": "SYM-0447",
@@ -18800,9 +21142,36 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0452",
     "catalog_id": "SYM-0452",
     "name": "Módulo de tiristores SCR",
-    "kind": "power_block",
+    "kind": "module",
     "geometry_template": "power_block",
     "designator": "TM",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "ANODE_IN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "GATE": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CATHODE_OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Módulos de potencia",
     "aliases": "thyristor module, módulo SCR",
@@ -18811,47 +21180,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Comprueba el esquema interno: ánodo común, cátodo común o serie.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "module",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "IN1": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "IN2": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "OUT1": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT2": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0452_modulo-de-tiristores-scr.svg"
+    "source_asset": "assets/symbols/SYM-0452_modulo-de-tiristores-scr.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0453": {
     "id": "SYM-0453",
     "catalog_id": "SYM-0453",
     "name": "Módulo de diodos de potencia",
-    "kind": "power_block",
+    "kind": "module",
     "geometry_template": "power_block",
     "designator": "DM",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "ANODE_IN": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "GATE": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CATHODE_OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "power_hvac_2026_08",
+    "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa.",
     "category": "Potencia y climatización",
     "subcategory": "Módulos de potencia",
     "aliases": "power diode module, dual diode",
@@ -18860,39 +21225,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El dibujo interno determina polaridad y terminal común.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "module",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "IN1": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "IN2": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "OUT1": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT2": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0453_modulo-de-diodos-de-potencia.svg"
+    "source_asset": "assets/symbols/SYM-0453_modulo-de-diodos-de-potencia.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0454": {
     "id": "SYM-0454",

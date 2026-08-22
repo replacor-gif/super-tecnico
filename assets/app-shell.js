@@ -14,6 +14,7 @@
     { href: 'calculadoras.html', label: 'Calculadoras', short: 'Cálculos', color: '#ff8a00', icon: 'calculator', terms: 'cálculo electricidad taller ley ohm electrónica' },
     { href: 'componentes.html', label: 'Componentes', short: 'Componentes', color: '#54ff82', icon: 'chip', terms: 'referencias electrónica encapsulado datasheet ficha rápida' },
     { href: 'conectores.html', label: 'Conectores y pinouts', short: 'Conectores', color: '#00eaff', icon: 'connector', terms: 'conectores cables pinout contactos usb hdmi ethernet can obd m12 sata audio' },
+    { href: 'plataformas-embebidas.html', label: 'Plataformas embebidas', short: 'Embebidas', color: '#ffe438', icon: 'chip', terms: 'arduino esp raspberry stm32 microcontrolador linux fpga tinyml matter placa desarrollo' },
     { href: 'smd.html', label: 'Identificador SMD', short: 'SMD', color: '#ff3fa7', icon: 'smd', terms: 'marcado código componente placa' },
     { href: 'averias.html', label: 'Averías reales', short: 'Averías', color: '#ffea36', icon: 'warning', terms: 'avería reparación placa síntoma solución' },
     { href: 'comparador.html', label: 'Comparador', short: 'Comparar', color: '#a66bff', icon: 'compare', terms: 'comparar referencias sustitución equivalencia' },

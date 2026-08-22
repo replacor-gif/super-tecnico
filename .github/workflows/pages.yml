@@ -40,6 +40,12 @@ jobs:
       - name: Verificar panel privado de visitas
         run: node --check assets/analytics.js
 
+      - name: Verificar catálogo de plataformas embebidas
+        run: |
+          node --check assets/embedded-platforms.js
+          php -l api/embedded-platforms.php
+          php -l api/index.php
+
       - name: Verificar buscador universal de datasheets
         run: node tests/test_datasheet_finder.js
 

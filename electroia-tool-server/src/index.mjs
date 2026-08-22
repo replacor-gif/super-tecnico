@@ -18,7 +18,7 @@ function toolError(error) {
 }
 
 function createServer() {
-  const server = new McpServer({ name: "electroia-tools", version: "0.10.0" });
+  const server = new McpServer({ name: "electroia-tools", version: "0.11.0" });
 
   server.registerTool(
     "electroia_get_capabilities",
@@ -122,6 +122,52 @@ function createServer() {
     },
     async (args) => {
       try { return toolResult(await callElectroIATool("supertecnico_resolve_connector_contact", args)); }
+      catch (error) { return toolError(error); }
+    }
+  );
+
+  server.registerTool(
+    "supertecnico_search_embedded_platforms",
+    {
+      description: "Busca placas y plataformas embebidas por objetivo, arquitectura, fabricante o interfaz conservando riesgos, revisión y procedencia.",
+      inputSchema: z.object({
+        query: z.string().min(1).max(160),
+        manufacturer: z.string().max(80).optional(),
+        platform_class: z.string().max(60).optional(),
+        limit: z.number().int().min(1).max(20).optional(),
+      }),
+    },
+    async (args) => {
+      try { return toolResult(await callElectroIATool("supertecnico_search_embedded_platforms", args)); }
+      catch (error) { return toolError(error); }
+    }
+  );
+
+  server.registerTool(
+    "supertecnico_get_embedded_platform",
+    {
+      description: "Devuelve la ficha completa de una plataforma, sus riesgos, pruebas mínimas, requisitos de integración y procedencia.",
+      inputSchema: z.object({platform_id: z.string().min(3).max(100)}),
+    },
+    async (args) => {
+      try { return toolResult(await callElectroIATool("supertecnico_get_embedded_platform", args)); }
+      catch (error) { return toolError(error); }
+    }
+  );
+
+  server.registerTool(
+    "supertecnico_recommend_embedded_platforms",
+    {
+      description: "Preselecciona plataformas por caso de uso e interfaces; nunca declara una selección definitiva.",
+      inputSchema: z.object({
+        use_case: z.string().min(3).max(300),
+        required_interfaces: z.array(z.string().min(1).max(40)).max(15).optional(),
+        needs_linux: z.boolean().optional(),
+        limit: z.number().int().min(1).max(10).optional(),
+      }),
+    },
+    async (args) => {
+      try { return toolResult(await callElectroIATool("supertecnico_recommend_embedded_platforms", args)); }
       catch (error) { return toolError(error); }
     }
   );

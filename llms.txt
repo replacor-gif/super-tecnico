@@ -10,6 +10,7 @@ Super Técnico is a Spanish technical knowledge project for HVAC, electronics, c
 - Commercial machine access: not open
 - Regulation search billing: free preview, no API key, rate limited
 - Local ElectroIA MCP source: private-preview development only
+- Embedded-platform search and documentary preselection: public free preview, rate limited
 
 Do not call planned endpoints until discovery.json reports remote execution as enabled. Public JSON files contain metadata and contracts, not credentials.
 
@@ -62,6 +63,20 @@ For diagrams, the calling AI interprets the request or image, chooses the topolo
 - Preserved contributed source: /recursos/enciclopedia-conectores-pinouts-edicion-8-origen.pdf
 
 Always preserve connector_id, variant, gender, view.perspective, view.orientation_note, review.status, source_ids and warnings. `source_identified` is not equivalent to `reviewed`; `pending_review` must never be completed by inference. Browser search and rate-limited HTTP lookup are public. Local MCP lookup is also available through ElectroIA's provider-neutral tool server.
+
+## Embedded platform entry points
+
+- Human quick search: /plataformas-embebidas.html
+- Normalized 41-record catalog: /data/embedded-platforms/catalog.json
+- Provider-neutral tool contract: /data/embedded-platforms/tool-manifest.json
+- Discovery manifest: /data/embedded-platforms/discovery.json
+- Selection and safety guide: /data/embedded-platforms/guides.json
+- Source registry: /data/embedded-platforms/sources.json
+- HTTP search: /api/index.php?action=embedded-search&q=Matter
+- HTTP record: /api/index.php?action=embedded-get&platform_id=emb-esp32-c6-devkitc-1
+- HTTP preselection: /api/index.php?action=embedded-recommend&use_case=gateway%20Linux&needs_linux=true
+
+The catalog preserves architecture, logic/power, interfaces, recommended use, primary risk, review status and a source-page locator. All imported records currently have `source_identified` status; this is not an official verification of the exact board revision. Recommendation results are documentary preselection only and must not be presented as a final hardware decision.
 
 ## Frigorista entry points
 

@@ -1,0 +1,127 @@
+{
+  "schema_version": "1.0",
+  "name": "super-tecnico-embedded-platforms",
+  "title": "REPLACOR Core · Plataformas embebidas",
+  "version": "0.1.0",
+  "provider_neutral": true,
+  "embedded_ai_model": false,
+  "remote_execution": true,
+  "browser_available": true,
+  "purpose": "Búsqueda, consulta y preselección trazable de placas y plataformas embebidas.",
+  "instructions": "Buscar primero; usar recommend solo como preselección. Conservar review.status, source_locator y primary_risk. No convertir source_identified en reviewed ni asumir compatibilidad por coincidencia de interfaz.",
+  "public_data": [
+    "catalog.json",
+    "sources.json",
+    "guides.json"
+  ],
+  "tools": [
+    {
+      "name": "supertecnico_search_embedded_platforms",
+      "description": "Busca por nombre, fabricante, arquitectura, interfaz o uso.",
+      "state": "public_http_beta",
+      "http_endpoint": "../../api/index.php?action=embedded-search",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": false
+      },
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "query"
+        ],
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "manufacturer": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "platform_class": {
+            "type": "string",
+            "maxLength": 60
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20,
+            "default": 8
+          }
+        }
+      }
+    },
+    {
+      "name": "supertecnico_get_embedded_platform",
+      "description": "Devuelve una ficha completa con riesgos, recepción, integración y procedencia.",
+      "state": "public_http_beta",
+      "http_endpoint": "../../api/index.php?action=embedded-get",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": false
+      },
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "platform_id"
+        ],
+        "properties": {
+          "platform_id": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 100
+          }
+        }
+      }
+    },
+    {
+      "name": "supertecnico_recommend_embedded_platforms",
+      "description": "Ordena candidatos por caso de uso e interfaces sin declarar una selección definitiva.",
+      "state": "public_http_beta",
+      "http_endpoint": "../../api/index.php?action=embedded-recommend",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": false
+      },
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "use_case"
+        ],
+        "properties": {
+          "use_case": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 300
+          },
+          "required_interfaces": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "needs_linux": {
+            "type": "boolean",
+            "default": false
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "default": 5
+          }
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "No selecciona una placa final sin requisitos suficientes.",
+    "No garantiza compatibilidad eléctrica, mecánica, normativa ni de software.",
+    "Las fichas importadas requieren contraste oficial por revisión exacta antes de diseñar hardware."
+  ]
+}

@@ -1,0 +1,1501 @@
+{
+  "schema_version": "1.0",
+  "catalog_version": "2026.08.1",
+  "generated_at": "2026-08-23",
+  "count": 41,
+  "review_policy": {
+    "source_identified": "Dato trazado hasta una fuente entregada, todavía no contrastado ficha a ficha con la documentación oficial de la revisión exacta.",
+    "reviewed": "Dato contrastado con documentación oficial del fabricante para el modelo y revisión indicados.",
+    "selection_rule": "Una coincidencia orienta la preselección; nunca sustituye la verificación de pinout, alimentación, revisión, memoria, radio, carrier y condiciones ambientales."
+  },
+  "shared_reception_checks": [
+    "Identificar revisión, módulo y memoria montada.",
+    "Medir rails y consumo durante reset y arranque.",
+    "Cargar firmware mínimo y registrar el log de arranque.",
+    "Verificar GPIO, UART, I2C/SPI y la conectividad declarada.",
+    "Guardar versiones de bootloader, core o SDK y toolchain."
+  ],
+  "shared_integration_requirements": [
+    "Diseñar protección, puntos de prueba y conector de programación o depuración antes de cerrar PCB o carcasa.",
+    "Definir desde el inicio una estrategia de actualización y recuperación.",
+    "Validar RF, térmica, EMC y fabricación antes de sustituir un kit por módulo o diseño propio.",
+    "No conectar señales industriales, red o 24 V a GPIO sin una interfaz adaptada, protegida y documentada."
+  ],
+  "records": [
+    {
+      "id": "emb-arduino-nano-33-ble-sense-rev2",
+      "name": "Arduino Nano 33 BLE Sense Rev2",
+      "manufacturer": "Arduino",
+      "platform_class": "microcontroller_board",
+      "architecture": "nRF52840 Cortex-M4F; placa de sensores",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "BLE",
+        "USB",
+        "I2C",
+        "SPI",
+        "PDM"
+      ],
+      "recommended_use": "TinyML, movimiento, audio y sensórica compacta",
+      "primary_risk": "No tolera 5 V; sensores y pines compartidos; confirmar revisión de librerías.",
+      "tags": [
+        "tinyml",
+        "sensors",
+        "ble",
+        "audio",
+        "motion"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 69,
+        "document_page": 62,
+        "section": "22.1"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-arduino-nano-rp2040-connect",
+      "name": "Arduino Nano RP2040 Connect",
+      "manufacturer": "Arduino",
+      "platform_class": "microcontroller_board",
+      "architecture": "RP2040 + módulo inalámbrico NINA",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "Wi-Fi/BLE",
+        "USB",
+        "PIO",
+        "UART/I2C/SPI"
+      ],
+      "recommended_use": "PIO con conectividad en formato Nano",
+      "primary_risk": "La numeración Arduino y GPIO RP2040 puede confundir; radio y MCU son dominios distintos.",
+      "tags": [
+        "pio",
+        "wifi",
+        "ble",
+        "compact"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 70,
+        "document_page": 63,
+        "section": "22.2"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-arduino-nano-matter",
+      "name": "Arduino Nano Matter",
+      "manufacturer": "Arduino",
+      "platform_class": "microcontroller_board",
+      "architecture": "Módulo multiprotocolo Cortex-M33",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "Thread",
+        "BLE",
+        "Matter"
+      ],
+      "recommended_use": "Domótica interoperable y nodos Matter",
+      "primary_risk": "Matter exige credenciales, commissioning y versiones de stack; verificar SKU y región.",
+      "tags": [
+        "matter",
+        "thread",
+        "ble",
+        "smart-home"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 71,
+        "document_page": 64,
+        "section": "22.3"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-arduino-nano-r4",
+      "name": "Arduino Nano R4",
+      "manufacturer": "Arduino",
+      "platform_class": "microcontroller_board",
+      "architecture": "Renesas RA4M1 Cortex-M4",
+      "logic_and_power": "5 V/según placa",
+      "interfaces": [
+        "USB",
+        "UART",
+        "I2C",
+        "SPI",
+        "ADC/DAC según revisión"
+      ],
+      "recommended_use": "Migración compacta a arquitectura RA",
+      "primary_risk": "Producto reciente: confirmar pinout y límites eléctricos de la revisión exacta.",
+      "tags": [
+        "renesas",
+        "compact",
+        "migration"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 72,
+        "document_page": 65,
+        "section": "22.4"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-arduino-mkr-wan-1310",
+      "name": "Arduino MKR WAN 1310",
+      "manufacturer": "Arduino",
+      "platform_class": "microcontroller_board",
+      "architecture": "SAMD21 + módulo LoRa",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "LoRa/LoRaWAN",
+        "USB",
+        "UART/I2C/SPI"
+      ],
+      "recommended_use": "Telemetría de largo alcance y batería",
+      "primary_risk": "La antena correcta es obligatoria; no transmitir sin antena; respetar plan regional.",
+      "tags": [
+        "lora",
+        "lorawan",
+        "battery",
+        "telemetry"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 73,
+        "document_page": 66,
+        "section": "22.5"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-arduino-mkr-nb-1500",
+      "name": "Arduino MKR NB 1500",
+      "manufacturer": "Arduino",
+      "platform_class": "microcontroller_board",
+      "architecture": "SAMD21 + módem NB-IoT/LTE-M",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "Celular",
+        "USB",
+        "UART/I2C/SPI"
+      ],
+      "recommended_use": "Telemetría celular de bajo consumo",
+      "primary_risk": "Picos de corriente del módem y cobertura/operador condicionan la fiabilidad.",
+      "tags": [
+        "lte-m",
+        "nb-iot",
+        "cellular",
+        "telemetry"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 74,
+        "document_page": 67,
+        "section": "22.6"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-arduino-portenta-c33",
+      "name": "Arduino Portenta C33",
+      "manufacturer": "Arduino",
+      "platform_class": "microcontroller_board",
+      "architecture": "Renesas RA6M5 Cortex-M33",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "Wi-Fi/BLE",
+        "USB",
+        "Ethernet mediante carrier"
+      ],
+      "recommended_use": "IoT profesional, seguridad y carriers Portenta",
+      "primary_risk": "Conectores de alta densidad; validar carrier y firmware del módulo de radio.",
+      "tags": [
+        "iot",
+        "security",
+        "wifi",
+        "professional"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 75,
+        "document_page": 68,
+        "section": "22.7"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-portenta-machine-control",
+      "name": "Portenta Machine Control",
+      "manufacturer": "Arduino",
+      "platform_class": "industrial_controller",
+      "architecture": "STM32H7 + front-end industrial",
+      "logic_and_power": "24 V industrial",
+      "interfaces": [
+        "E/S analógica/digital",
+        "encoder",
+        "CAN/RS-485/Ethernet según versión"
+      ],
+      "recommended_use": "Control de máquina y prototipos industriales",
+      "primary_risk": "No confundir con PLC de seguridad; validar aislamiento, corriente y normativa.",
+      "tags": [
+        "24v",
+        "machine-control",
+        "can",
+        "rs485",
+        "ethernet"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 76,
+        "document_page": 69,
+        "section": "22.8"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-arduino-nicla-vision",
+      "name": "Arduino Nicla Vision",
+      "manufacturer": "Arduino",
+      "platform_class": "microcontroller_board",
+      "architecture": "STM32H7 + cámara/sensores",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "Cámara",
+        "BLE/Wi-Fi según placa",
+        "USB"
+      ],
+      "recommended_use": "Visión y TinyML ultracompacto",
+      "primary_risk": "Calor, RAM de framebuffer y óptica limitan; verificar orientación de cámara.",
+      "tags": [
+        "vision",
+        "tinyml",
+        "camera",
+        "compact"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 77,
+        "document_page": 70,
+        "section": "22.9"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-arduino-nicla-voice",
+      "name": "Arduino Nicla Voice",
+      "manufacturer": "Arduino",
+      "platform_class": "microcontroller_board",
+      "architecture": "MCU de bajo consumo + audio AI",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "PDM/audio",
+        "BLE"
+      ],
+      "recommended_use": "Wake word y detección acústica",
+      "primary_risk": "La acústica de la caja y el ruido real importan más que la demo de laboratorio.",
+      "tags": [
+        "audio",
+        "wake-word",
+        "ble",
+        "low-power"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 78,
+        "document_page": 71,
+        "section": "22.10"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-esp32-s3-devkitc-1",
+      "name": "ESP32-S3-DevKitC-1",
+      "manufacturer": "Espressif",
+      "platform_class": "microcontroller_board",
+      "architecture": "2× Xtensa LX7 hasta 240 MHz",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "Wi-Fi",
+        "BLE",
+        "USB nativo",
+        "JTAG"
+      ],
+      "recommended_use": "HMI, voz, USB, TinyML y prototipos S3",
+      "primary_risk": "Flash/PSRAM cambian por módulo; pines de memoria no siempre están disponibles.",
+      "tags": [
+        "wifi",
+        "ble",
+        "usb",
+        "tinyml",
+        "hmi"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 79,
+        "document_page": 72,
+        "section": "22.11"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-esp32-c3-devkitm-1",
+      "name": "ESP32-C3-DevKitM-1",
+      "manufacturer": "Espressif",
+      "platform_class": "microcontroller_board",
+      "architecture": "RISC-V hasta 160 MHz",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "Wi-Fi",
+        "BLE",
+        "USB/JTAG según placa"
+      ],
+      "recommended_use": "IoT económico y seguro",
+      "primary_risk": "GPIO2/8/9 son de strapping; LED RGB y boot comparten recursos.",
+      "tags": [
+        "wifi",
+        "ble",
+        "risc-v",
+        "low-cost"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 80,
+        "document_page": 73,
+        "section": "22.12"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-esp32-c6-devkitc-1",
+      "name": "ESP32-C6-DevKitC-1",
+      "manufacturer": "Espressif",
+      "platform_class": "microcontroller_board",
+      "architecture": "RISC-V hasta 160 MHz",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "Wi-Fi 6",
+        "BLE",
+        "IEEE 802.15.4",
+        "USB/JTAG"
+      ],
+      "recommended_use": "Matter, Thread, Zigbee y Wi-Fi",
+      "primary_risk": "Diferenciar USB nativo de USB-UART; revisar strapping y antena.",
+      "tags": [
+        "wifi6",
+        "ble",
+        "matter",
+        "thread",
+        "zigbee"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 81,
+        "document_page": 74,
+        "section": "22.13"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-esp32-h2-devkitm",
+      "name": "ESP32-H2-DevKitM",
+      "manufacturer": "Espressif",
+      "platform_class": "microcontroller_board",
+      "architecture": "RISC-V de bajo consumo",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "BLE + IEEE 802.15.4",
+        "sin Wi-Fi"
+      ],
+      "recommended_use": "End devices Thread/Zigbee/Matter",
+      "primary_risk": "No dispone de Wi-Fi; el border router debe estar en otro equipo.",
+      "tags": [
+        "ble",
+        "thread",
+        "zigbee",
+        "matter",
+        "no-wifi"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 82,
+        "document_page": 75,
+        "section": "22.14"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-esp32-p4-function-ev-board",
+      "name": "ESP32-P4 Function EV Board",
+      "manufacturer": "Espressif",
+      "platform_class": "evaluation_board",
+      "architecture": "2× RISC-V de alto rendimiento",
+      "logic_and_power": "3,3 V/5 V en placa",
+      "interfaces": [
+        "MIPI/display/cámara",
+        "USB",
+        "Ethernet según kit",
+        "sin radio integrada"
+      ],
+      "recommended_use": "HMI, visión y multimedia",
+      "primary_risk": "Necesita coprocesador externo para Wi-Fi/BLE; plataforma compleja y de rápida evolución.",
+      "tags": [
+        "hmi",
+        "vision",
+        "display",
+        "camera",
+        "no-radio"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 83,
+        "document_page": 76,
+        "section": "22.15"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-nodemcu-esp8266",
+      "name": "NodeMCU ESP8266",
+      "manufacturer": "Espressif/community",
+      "platform_class": "microcontroller_board",
+      "architecture": "ESP8266 Xtensa L106",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "Wi-Fi",
+        "UART",
+        "SPI",
+        "I2C por software/hardware según core"
+      ],
+      "recommended_use": "Legado IoT económico",
+      "primary_risk": "GPIO de boot, ADC limitado y reguladores de clones varían; no tolera 5 V.",
+      "tags": [
+        "wifi",
+        "legacy",
+        "low-cost"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 84,
+        "document_page": 77,
+        "section": "22.16"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-raspberry-pi-5",
+      "name": "Raspberry Pi 5",
+      "manufacturer": "Raspberry Pi",
+      "platform_class": "single_board_computer",
+      "architecture": "BCM2712 4× Cortex-A76",
+      "logic_and_power": "5 V USB-C",
+      "interfaces": [
+        "GPIO 40-pin",
+        "PCIe FFC",
+        "MIPI",
+        "GbE",
+        "Wi-Fi/BLE",
+        "USB"
+      ],
+      "recommended_use": "Desktop, gateway, visión y edge computing",
+      "primary_risk": "Fuente/refrigeración críticas; GPIO 3,3 V; Linux no es tiempo real duro.",
+      "tags": [
+        "linux",
+        "gateway",
+        "vision",
+        "edge-computing"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 85,
+        "document_page": 78,
+        "section": "22.17"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-raspberry-pi-zero-2-w",
+      "name": "Raspberry Pi Zero 2 W",
+      "manufacturer": "Raspberry Pi",
+      "platform_class": "single_board_computer",
+      "architecture": "4× Cortex-A53",
+      "logic_and_power": "5 V",
+      "interfaces": [
+        "Wi-Fi/BLE",
+        "mini-HDMI",
+        "USB OTG",
+        "40-pin sin header según SKU"
+      ],
+      "recommended_use": "Gateway compacto y cámara ligera",
+      "primary_risk": "RAM y USB limitados; alimentación por micro-USB y rendimiento térmico.",
+      "tags": [
+        "linux",
+        "wifi",
+        "compact",
+        "camera"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 86,
+        "document_page": 79,
+        "section": "22.18"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-raspberry-pi-compute-module-5",
+      "name": "Raspberry Pi Compute Module 5",
+      "manufacturer": "Raspberry Pi",
+      "platform_class": "system_on_module",
+      "architecture": "BCM2712 en SoM",
+      "logic_and_power": "según carrier",
+      "interfaces": [
+        "PCIe",
+        "MIPI",
+        "USB",
+        "GbE",
+        "GPIO por 2×100 pines"
+      ],
+      "recommended_use": "Producto embebido de alto rendimiento",
+      "primary_risk": "El carrier es parte del diseño eléctrico; revisar secuencias, FFC y eMMC.",
+      "tags": [
+        "linux",
+        "product",
+        "pcie",
+        "mipi"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 87,
+        "document_page": 80,
+        "section": "22.19"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-raspberry-pi-pico-2-w",
+      "name": "Raspberry Pi Pico 2 W",
+      "manufacturer": "Raspberry Pi",
+      "platform_class": "microcontroller_board",
+      "architecture": "RP2350 + radio",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "Wi-Fi/BLE",
+        "PIO",
+        "USB",
+        "UART/I2C/SPI"
+      ],
+      "recommended_use": "MCU conectado con PIO y seguridad moderna",
+      "primary_risk": "Radio y ADC comparten un entorno ruidoso; no tolera 5 V.",
+      "tags": [
+        "wifi",
+        "ble",
+        "pio",
+        "security"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 88,
+        "document_page": 81,
+        "section": "22.20"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-stm32-nucleo-f446re",
+      "name": "STM32 Nucleo-F446RE",
+      "manufacturer": "STMicroelectronics",
+      "platform_class": "microcontroller_board",
+      "architecture": "Cortex-M4F hasta 180 MHz",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "ST-LINK",
+        "Arduino/Morpho",
+        "USB",
+        "CAN",
+        "timers"
+      ],
+      "recommended_use": "Control, DSP y aprendizaje STM32",
+      "primary_risk": "Algunos pines están conectados a ST-LINK o headers; revisar sold bridges.",
+      "tags": [
+        "control",
+        "dsp",
+        "can",
+        "stm32"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 89,
+        "document_page": 82,
+        "section": "22.21"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-stm32-nucleo-h743zi2",
+      "name": "STM32 Nucleo-H743ZI2",
+      "manufacturer": "STMicroelectronics",
+      "platform_class": "microcontroller_board",
+      "architecture": "Cortex-M7 hasta 480 MHz",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "ST-LINK",
+        "Ethernet",
+        "USB",
+        "CAN-FD",
+        "múltiples buses"
+      ],
+      "recommended_use": "Control de alto rendimiento y comunicaciones",
+      "primary_risk": "Caches/DMA requieren coherencia; consumo y layout externo importan.",
+      "tags": [
+        "high-performance",
+        "ethernet",
+        "can-fd",
+        "stm32"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 90,
+        "document_page": 83,
+        "section": "22.22"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-stm32-nucleo-n657x0-q",
+      "name": "STM32 Nucleo-N657X0-Q",
+      "manufacturer": "STMicroelectronics",
+      "platform_class": "microcontroller_board",
+      "architecture": "Cortex-M55 + aceleración neural",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "cámara/display/USB/Ethernet según kit"
+      ],
+      "recommended_use": "Visión y edge AI en MCU",
+      "primary_risk": "Familia reciente: fijar versión de toolchain, firmware y documentación.",
+      "tags": [
+        "edge-ai",
+        "vision",
+        "camera",
+        "stm32"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 91,
+        "document_page": 84,
+        "section": "22.23"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-teensy-4-1",
+      "name": "Teensy 4.1",
+      "manufacturer": "PJRC",
+      "platform_class": "microcontroller_board",
+      "architecture": "NXP i.MX RT1062 Cortex-M7 a 600 MHz",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "USB host/device",
+        "CAN",
+        "audio",
+        "Ethernet",
+        "microSD"
+      ],
+      "recommended_use": "Audio, control y tiempo real muy rápido",
+      "primary_risk": "GPIO no tolerantes a 5 V; integridad de señal y alimentación son críticas.",
+      "tags": [
+        "real-time",
+        "audio",
+        "can",
+        "ethernet",
+        "fast"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 92,
+        "document_page": 85,
+        "section": "22.24"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-bbc-micro-bit-v2",
+      "name": "BBC micro:bit v2",
+      "manufacturer": "Micro:bit Educational Foundation",
+      "platform_class": "microcontroller_board",
+      "architecture": "nRF52833 Cortex-M4",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "BLE",
+        "radio",
+        "USB",
+        "matriz LED",
+        "micrófono"
+      ],
+      "recommended_use": "Educación, sensores y prototipos sencillos",
+      "primary_risk": "El edge connector comparte funciones; evitar sobrecargar pines y fuente.",
+      "tags": [
+        "education",
+        "ble",
+        "sensors",
+        "simple"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 93,
+        "document_page": 86,
+        "section": "22.25"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-nordic-nrf52840-dk",
+      "name": "Nordic nRF52840 DK",
+      "manufacturer": "Nordic Semiconductor",
+      "platform_class": "development_kit",
+      "architecture": "Cortex-M4F",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "BLE",
+        "Thread",
+        "Zigbee",
+        "USB",
+        "NFC"
+      ],
+      "recommended_use": "Bajo consumo y radio multiprotocolo",
+      "primary_risk": "El debugger puede alterar consumo; aislar dominios para medir microamperios.",
+      "tags": [
+        "ble",
+        "thread",
+        "zigbee",
+        "nfc",
+        "low-power"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 94,
+        "document_page": 87,
+        "section": "22.26"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-nordic-nrf5340-dk",
+      "name": "Nordic nRF5340 DK",
+      "manufacturer": "Nordic Semiconductor",
+      "platform_class": "development_kit",
+      "architecture": "2× Cortex-M33 (application/network)",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "BLE",
+        "Thread",
+        "Zigbee",
+        "USB"
+      ],
+      "recommended_use": "Audio LE, multiprotocolo y seguridad",
+      "primary_risk": "Arquitectura multicore: firmware de red y aplicación deben ser compatibles.",
+      "tags": [
+        "ble",
+        "thread",
+        "zigbee",
+        "le-audio",
+        "security"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 95,
+        "document_page": 88,
+        "section": "22.27"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-ti-c2000-launchpad",
+      "name": "TI C2000 LaunchPad",
+      "manufacturer": "Texas Instruments",
+      "platform_class": "development_kit",
+      "architecture": "DSP/MCU C2000 para control",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "PWM de alta resolución",
+        "ADC sincronizado",
+        "CAN/SPI/UART"
+      ],
+      "recommended_use": "FOC, inversores, PFC y control digital de potencia",
+      "primary_risk": "Requiere comprensión de potencia y aislamiento; no conectar etapas de red directamente.",
+      "tags": [
+        "motor-control",
+        "pfc",
+        "inverter",
+        "power-control"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 96,
+        "document_page": 89,
+        "section": "22.28"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-nxp-frdm-mcxn947",
+      "name": "NXP FRDM-MCXN947",
+      "manufacturer": "NXP",
+      "platform_class": "development_kit",
+      "architecture": "MCX N, dual Cortex-M33 + aceleradores",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "USB",
+        "Ethernet/CAN según placa",
+        "EdgeLock"
+      ],
+      "recommended_use": "Control, seguridad y edge AI",
+      "primary_risk": "Plataforma reciente; revisar mapping de headers y versión de MCUXpresso.",
+      "tags": [
+        "control",
+        "security",
+        "edge-ai",
+        "ethernet",
+        "can"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 97,
+        "document_page": 90,
+        "section": "22.29"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-microchip-curiosity-nano-avr128da48",
+      "name": "Microchip Curiosity Nano AVR128DA48",
+      "manufacturer": "Microchip",
+      "platform_class": "development_kit",
+      "architecture": "AVR DA 8 bits",
+      "logic_and_power": "5 V/3,3 V configurable según kit",
+      "interfaces": [
+        "UPDI/debugger",
+        "UART/I2C/SPI",
+        "ADC/DAC según MCU"
+      ],
+      "recommended_use": "AVR moderno y analógica mejorada",
+      "primary_risk": "La tensión de target puede configurarse; verificar antes de conectar periféricos.",
+      "tags": [
+        "avr",
+        "8-bit",
+        "analog",
+        "education"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 98,
+        "document_page": 91,
+        "section": "22.30"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-infineon-psoc-6-pioneer-kit",
+      "name": "Infineon PSoC 6 Pioneer Kit",
+      "manufacturer": "Infineon",
+      "platform_class": "development_kit",
+      "architecture": "Cortex-M4 + Cortex-M0+",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "BLE según kit",
+        "CapSense",
+        "USB",
+        "analógica configurable"
+      ],
+      "recommended_use": "Mixed-signal, touch y conectividad",
+      "primary_risk": "La matriz de rutas internas es potente pero puede ocultar conflictos.",
+      "tags": [
+        "mixed-signal",
+        "touch",
+        "ble",
+        "configurable"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 99,
+        "document_page": 92,
+        "section": "22.31"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-beaglebone-black",
+      "name": "BeagleBone Black",
+      "manufacturer": "BeagleBoard.org",
+      "platform_class": "single_board_computer",
+      "architecture": "TI AM335x Cortex-A8 + PRU",
+      "logic_and_power": "5 V",
+      "interfaces": [
+        "Ethernet",
+        "USB",
+        "microSD/eMMC",
+        "headers P8/P9"
+      ],
+      "recommended_use": "Linux industrial e I/O determinista mediante PRU",
+      "primary_risk": "Muchos pines tienen mux complejo; niveles 3,3 V y secuencia de alimentación crítica.",
+      "tags": [
+        "linux",
+        "industrial",
+        "pru",
+        "deterministic-io"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 100,
+        "document_page": 93,
+        "section": "22.32"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-nvidia-jetson-orin-nano",
+      "name": "NVIDIA Jetson Orin Nano",
+      "manufacturer": "NVIDIA",
+      "platform_class": "edge_ai_computer",
+      "architecture": "CPU Arm + GPU Ampere",
+      "logic_and_power": "módulo/carrier",
+      "interfaces": [
+        "CSI",
+        "PCIe",
+        "USB",
+        "GbE",
+        "GPIO según carrier"
+      ],
+      "recommended_use": "Visión, IA y robótica",
+      "primary_risk": "Calcule memoria, potencia, refrigeración y compatibilidad JetPack antes de comprar.",
+      "tags": [
+        "vision",
+        "ai",
+        "robotics",
+        "gpu"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 101,
+        "document_page": 94,
+        "section": "22.33"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-google-coral-dev-board-usb-accelerator",
+      "name": "Google Coral Dev Board / USB Accelerator",
+      "manufacturer": "Google Coral",
+      "platform_class": "edge_ai_accelerator",
+      "architecture": "SoM/Edge TPU",
+      "logic_and_power": "5 V/según producto",
+      "interfaces": [
+        "USB/M.2/PCIe según variante"
+      ],
+      "recommended_use": "Inferencia TensorFlow Lite eficiente",
+      "primary_risk": "Solo acelera operaciones compatibles; revisar compilador Edge TPU y memoria.",
+      "tags": [
+        "tensorflow-lite",
+        "edge-ai",
+        "usb",
+        "pcie"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 102,
+        "document_page": 95,
+        "section": "22.34"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-adafruit-feather-rp2040",
+      "name": "Adafruit Feather RP2040",
+      "manufacturer": "Adafruit",
+      "platform_class": "microcontroller_board",
+      "architecture": "RP2040",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "USB",
+        "Li-Po",
+        "UART/I2C/SPI",
+        "FeatherWing"
+      ],
+      "recommended_use": "Prototipo compacto con batería",
+      "primary_risk": "El cargador y pin BAT requieren atención; lógica 3,3 V.",
+      "tags": [
+        "rp2040",
+        "battery",
+        "compact",
+        "featherwing"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 103,
+        "document_page": 96,
+        "section": "22.35"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-seeed-xiao-esp32c6",
+      "name": "Seeed XIAO ESP32C6",
+      "manufacturer": "Seeed Studio",
+      "platform_class": "microcontroller_board",
+      "architecture": "ESP32-C6",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "Wi-Fi 6",
+        "BLE",
+        "802.15.4",
+        "USB-C"
+      ],
+      "recommended_use": "Matter/Thread/Zigbee en formato mínimo",
+      "primary_risk": "Pocos pines; antena/caja y strapping condicionan el diseño.",
+      "tags": [
+        "matter",
+        "thread",
+        "zigbee",
+        "wifi6",
+        "compact"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 104,
+        "document_page": 97,
+        "section": "22.36"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-m5stack-cores3",
+      "name": "M5Stack CoreS3",
+      "manufacturer": "M5Stack",
+      "platform_class": "integrated_controller",
+      "architecture": "ESP32-S3",
+      "logic_and_power": "3,3 V interna",
+      "interfaces": [
+        "display táctil",
+        "audio",
+        "batería",
+        "Wi-Fi/BLE"
+      ],
+      "recommended_use": "HMI y prototipos cerrados",
+      "primary_risk": "Los pines internos están ocupados por pantalla/audio/PMIC; consultar mapa del modelo.",
+      "tags": [
+        "hmi",
+        "touch",
+        "audio",
+        "wifi",
+        "ble"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 105,
+        "document_page": 98,
+        "section": "22.37"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-particle-boron",
+      "name": "Particle Boron",
+      "manufacturer": "Particle",
+      "platform_class": "microcontroller_board",
+      "architecture": "nRF52840 + módem celular",
+      "logic_and_power": "3,3 V",
+      "interfaces": [
+        "LTE-M/NB-IoT",
+        "BLE",
+        "cloud/OTA"
+      ],
+      "recommended_use": "IoT celular gestionado",
+      "primary_risk": "Dependencia de SIM, cobertura, plan de datos y plataforma cloud.",
+      "tags": [
+        "cellular",
+        "lte-m",
+        "nb-iot",
+        "cloud",
+        "ota"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 106,
+        "document_page": 99,
+        "section": "22.38"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-digilent-arty-a7",
+      "name": "Digilent Arty A7",
+      "manufacturer": "Digilent",
+      "platform_class": "fpga_board",
+      "architecture": "AMD/Xilinx Artix-7 FPGA",
+      "logic_and_power": "3,3 V y bancos configurables",
+      "interfaces": [
+        "PMOD",
+        "DDR",
+        "Ethernet según modelo"
+      ],
+      "recommended_use": "FPGA, soft-core y DSP digital",
+      "primary_risk": "Las tensiones de banco y constraints XDC son obligatorias; no hay firmware sin bitstream.",
+      "tags": [
+        "fpga",
+        "artix-7",
+        "dsp",
+        "soft-core"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 107,
+        "document_page": 100,
+        "section": "22.39"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-terasic-de10-nano",
+      "name": "Terasic DE10-Nano",
+      "manufacturer": "Terasic",
+      "platform_class": "soc_fpga_board",
+      "architecture": "Intel Cyclone V SoC FPGA + Cortex-A9",
+      "logic_and_power": "múltiples rails",
+      "interfaces": [
+        "HPS Linux",
+        "FPGA fabric",
+        "GPIO",
+        "HDMI/USB según carrier"
+      ],
+      "recommended_use": "Procesamiento heterogéneo y visión",
+      "primary_risk": "Cruces HPS-FPGA, clocks y device tree aumentan complejidad.",
+      "tags": [
+        "fpga",
+        "linux",
+        "heterogeneous",
+        "vision"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 108,
+        "document_page": 101,
+        "section": "22.40"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    },
+    {
+      "id": "emb-lattice-ice40-upduino",
+      "name": "Lattice iCE40 / UPduino",
+      "manufacturer": "Lattice/community",
+      "platform_class": "fpga_board",
+      "architecture": "FPGA iCE40",
+      "logic_and_power": "3,3 V/1,2 V según placa",
+      "interfaces": [
+        "GPIO",
+        "SPI flash",
+        "toolchains open source"
+      ],
+      "recommended_use": "Lógica compacta y aprendizaje FPGA",
+      "primary_risk": "Revisar tensión de bancos, clock y pinout exacto de la placa.",
+      "tags": [
+        "fpga",
+        "open-source",
+        "compact",
+        "education"
+      ],
+      "source_refs": [
+        "SRC-EMBEDDED-ENCYCLOPEDIA-2026"
+      ],
+      "source_locator": {
+        "pdf_page": 109,
+        "document_page": 102,
+        "section": "22.41"
+      },
+      "review": {
+        "status": "source_identified",
+        "confidence": 0.82,
+        "basis": "Ficha importada de la enciclopedia aportada; revisión oficial por modelo y revisión de placa aún pendiente.",
+        "requires_exact_revision_check": true
+      }
+    }
+  ]
+}

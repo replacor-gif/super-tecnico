@@ -8,7 +8,10 @@
     "supertecnico_search_regulations",
     "supertecnico_search_connectors",
     "supertecnico_get_connector",
-    "supertecnico_resolve_connector_contact"
+    "supertecnico_resolve_connector_contact",
+    "supertecnico_search_embedded_platforms",
+    "supertecnico_get_embedded_platform",
+    "supertecnico_recommend_embedded_platforms"
   ],
   "provider_neutral": true,
   "instructions": "Primero usa supertecnico_check_coverage. Solicita después solo el nivel mínimo que resuelva el caso. Conserva marcas, familias, unidades, lugar de lectura, lado y orientación; no mezcles variantes. Muestra incertidumbre y procedencia. Usa ElectroIA únicamente cuando ya hayas decidido la topología y los componentes.",
@@ -361,6 +364,45 @@
       "delegate": "../connectors/tool-manifest.json#supertecnico_resolve_connector_contact",
       "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
       "input_schema": {"type": "object", "additionalProperties": false, "required": ["connector_id", "contact_or_signal"], "properties": {"connector_id": {"type": "string", "minLength": 3, "maxLength": 80}, "contact_or_signal": {"type": "string", "minLength": 1, "maxLength": 80}}}
+    },
+    {
+      "name": "supertecnico_search_embedded_platforms",
+      "title": "Buscar plataformas embebidas",
+      "description": "Busca placas por nombre, fabricante, arquitectura, interfaz o uso y conserva riesgo, revisión y procedencia.",
+      "state": "public_http_beta",
+      "result_level": "basic",
+      "billing_tier": "free_preview",
+      "http_endpoint": "../../api/index.php?action=embedded-search",
+      "target_output_tokens": 600,
+      "delegate": "../embedded-platforms/tool-manifest.json#supertecnico_search_embedded_platforms",
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {"type": "object", "additionalProperties": false, "required": ["query"], "properties": {"query": {"type": "string", "minLength": 1, "maxLength": 160}, "manufacturer": {"type": "string", "maxLength": 80}, "platform_class": {"type": "string", "maxLength": 60}, "limit": {"type": "integer", "minimum": 1, "maximum": 20, "default": 8}}}
+    },
+    {
+      "name": "supertecnico_get_embedded_platform",
+      "title": "Obtener ficha de plataforma embebida",
+      "description": "Devuelve arquitectura, alimentación, interfaces, riesgo, pruebas de recepción, integración y procedencia.",
+      "state": "public_http_beta",
+      "result_level": "basic",
+      "billing_tier": "free_preview",
+      "http_endpoint": "../../api/index.php?action=embedded-get",
+      "target_output_tokens": 800,
+      "delegate": "../embedded-platforms/tool-manifest.json#supertecnico_get_embedded_platform",
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {"type": "object", "additionalProperties": false, "required": ["platform_id"], "properties": {"platform_id": {"type": "string", "minLength": 3, "maxLength": 100}}}
+    },
+    {
+      "name": "supertecnico_recommend_embedded_platforms",
+      "title": "Preseleccionar plataformas embebidas",
+      "description": "Ordena candidatos por caso de uso e interfaces y devuelve explícitamente una preselección, nunca una decisión final.",
+      "state": "public_http_beta",
+      "result_level": "basic",
+      "billing_tier": "free_preview",
+      "http_endpoint": "../../api/index.php?action=embedded-recommend",
+      "target_output_tokens": 900,
+      "delegate": "../embedded-platforms/tool-manifest.json#supertecnico_recommend_embedded_platforms",
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {"type": "object", "additionalProperties": false, "required": ["use_case"], "properties": {"use_case": {"type": "string", "minLength": 3, "maxLength": 300}, "required_interfaces": {"type": "string", "maxLength": 200}, "needs_linux": {"type": "boolean", "default": false}, "limit": {"type": "integer", "minimum": 1, "maximum": 10, "default": 5}}}
     },
     {
       "name": "supertecnico_search_field_cases",

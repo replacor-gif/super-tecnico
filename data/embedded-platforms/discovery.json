@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "id": "replacor-embedded-platform-core",
+  "title": "Plataformas embebidas",
+  "status": "public_browser_and_http_beta",
+  "provider_neutral": true,
+  "human_entry": "../../plataformas-embebidas.html",
+  "machine_contract": "tool-manifest.json",
+  "catalog": "catalog.json",
+  "sources": "sources.json",
+  "guides": "guides.json",
+  "capabilities": [
+    "platform_search",
+    "traceable_platform_record",
+    "documentary_preselection",
+    "reception_checks",
+    "integration_safety"
+  ],
+  "http": {
+    "search": "../../api/index.php?action=embedded-search",
+    "get": "../../api/index.php?action=embedded-get",
+    "recommend": "../../api/index.php?action=embedded-recommend"
+  },
+  "quality": {
+    "records": 41,
+    "record_status": "source_identified",
+    "exact_revision_official_review": "pending"
+  },
+  "bulk_export": "not_offered_by_api"
+}

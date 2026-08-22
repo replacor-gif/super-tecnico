@@ -65,6 +65,8 @@ def audit(root: Path) -> dict[str, Any]:
     component_counts = component_meta.get("counts") or {}
     connectors = read_json(root / "data" / "connectors" / "catalog.json")
     connector_counts = connectors.get("counts") or {}
+    embedded_platforms = read_json(root / "data" / "embedded-platforms" / "catalog.json")
+    embedded_records = embedded_platforms.get("records") or []
     symbols = read_json(root / "data" / "electroia" / "symbol-library.json")
     symbol_report = read_json(root / "data" / "electroia" / "symbol-normalization-report.json")
     training = read_json(root / "data" / "training" / "collection.json")
@@ -85,6 +87,8 @@ def audit(root: Path) -> dict[str, Any]:
         checkpoint("source_traceability", "Fuentes aplicables por respuesta", "partial", f"{brands_with_sources}/{len(brands)} marcas con fuentes; {brands_with_provenance_policy} políticas históricas específicas"),
         checkpoint("public_regulation_api", "Búsqueda pública de normativa para máquinas", "pass", "GET api/index.php?action=regulation-search con fuentes, páginas, límites y métricas"),
         checkpoint("public_connector_api", "Consulta pública de conectores para máquinas", "pass", "Búsqueda, ficha y resolución de contacto por HTTP con vista, revisión y procedencia"),
+        checkpoint("embedded_platform_core", "Plataformas embebidas para personas y motores", "pass", f"{len(embedded_records)} fichas con riesgo, revisión y procedencia por página"),
+        checkpoint("public_embedded_platform_api", "Consulta y preselección pública de plataformas", "pass", "Búsqueda, ficha y preselección documental por HTTP con límites y métricas"),
         checkpoint("remote_mcp", "Servidor MCP remoto", "planned", "ElectroIA dispone de stdio local; el transporte remoto sigue desactivado"),
         checkpoint("machine_auth", "Autenticación de clientes máquina", "planned", "Contrato API key/OAuth definido; sin emisión de credenciales"),
         checkpoint("metering", "Medición y facturación por uso", "partial", "La búsqueda gratuita registra demanda, cliente, cobertura, latencia y aperturas; la facturación sigue desactivada"),
@@ -102,9 +106,9 @@ def audit(root: Path) -> dict[str, Any]:
     return {
         "schema_version": "1.0",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        "status": "public_free_preview_regulations_and_connectors",
+        "status": "public_free_preview_regulations_connectors_and_embedded_platforms",
         "readiness_score_percent": readiness_score,
-        "score_meaning": "Preparación técnica global; normativa y conectores tienen consultas públicas gratuitas y limitadas.",
+        "score_meaning": "Preparación técnica global; normativa, conectores y plataformas embebidas tienen consultas públicas gratuitas y limitadas.",
         "content_inventory": {
             "brands": len(brands),
             "brands_with_sources": brands_with_sources,
@@ -123,6 +127,8 @@ def audit(root: Path) -> dict[str, Any]:
             "connector_records_reviewed": int(connector_counts.get("reviewed") or 0),
             "connector_records_source_identified": int(connector_counts.get("source_identified") or 0),
             "connector_records_pending_review": int(connector_counts.get("pending_review") or 0),
+            "embedded_platform_records": len(embedded_records),
+            "embedded_platform_records_source_identified": sum(int((item.get("review") or {}).get("status") == "source_identified") for item in embedded_records),
             "electroia_symbols": int(symbols.get("catalog_symbol_count") or 0),
             "electroia_engine_symbols": int(symbols.get("engine_symbol_count") or 0),
             "electroia_internal_templates": int(symbols.get("internal_template_count") or 0),
@@ -140,7 +146,7 @@ def audit(root: Path) -> dict[str, Any]:
         },
         "checkpoints": checks,
         "release_blockers": [
-            "Implementar autenticación y cuotas antes de abrir herramientas distintas de las consultas gratuitas de normativa y conectores.",
+            "Implementar autenticación y cuotas antes de abrir herramientas distintas de las consultas gratuitas de normativa, conectores y plataformas embebidas.",
             "Crear proyecciones de respuesta que nunca expongan registros maestros completos.",
             "Medir coste evitado y utilidad real con el uso de la búsqueda pública.",
             "Implementar las proyecciones de contexto compacto sin exponer registros maestros.",

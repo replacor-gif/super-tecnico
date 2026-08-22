@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-08-22T21:52:08.188176+00:00",
-  "status": "public_free_preview_regulations_and_connectors",
-  "readiness_score_percent": 69,
-  "score_meaning": "Preparación técnica global; normativa y conectores tienen consultas públicas gratuitas y limitadas.",
+  "generated_at_utc": "2026-08-22T22:33:12.168307+00:00",
+  "status": "public_free_preview_regulations_connectors_and_embedded_platforms",
+  "readiness_score_percent": 72,
+  "score_meaning": "Preparación técnica global; normativa, conectores y plataformas embebidas tienen consultas públicas gratuitas y limitadas.",
   "content_inventory": {
     "brands": 30,
     "brands_with_sources": 30,
@@ -22,10 +22,12 @@
     "connector_records_reviewed": 0,
     "connector_records_source_identified": 16,
     "connector_records_pending_review": 1,
+    "embedded_platform_records": 41,
+    "embedded_platform_records_source_identified": 41,
     "electroia_symbols": 460,
     "electroia_engine_symbols": 474,
     "electroia_internal_templates": 14,
-    "electroia_symbols_reviewed": 206,
+    "electroia_symbols_reviewed": 392,
     "technical_project_capabilities": 6,
     "hvac_training_chapters": 167,
     "electronics_chapters": 678,
@@ -85,6 +87,18 @@
       "title": "Consulta pública de conectores para máquinas",
       "status": "pass",
       "evidence": "Búsqueda, ficha y resolución de contacto por HTTP con vista, revisión y procedencia"
+    },
+    {
+      "id": "embedded_platform_core",
+      "title": "Plataformas embebidas para personas y motores",
+      "status": "pass",
+      "evidence": "41 fichas con riesgo, revisión y procedencia por página"
+    },
+    {
+      "id": "public_embedded_platform_api",
+      "title": "Consulta y preselección pública de plataformas",
+      "status": "pass",
+      "evidence": "Búsqueda, ficha y preselección documental por HTTP con límites y métricas"
     },
     {
       "id": "remote_mcp",
@@ -148,7 +162,7 @@
     }
   ],
   "release_blockers": [
-    "Implementar autenticación y cuotas antes de abrir herramientas distintas de las consultas gratuitas de normativa y conectores.",
+    "Implementar autenticación y cuotas antes de abrir herramientas distintas de las consultas gratuitas de normativa, conectores y plataformas embebidas.",
     "Crear proyecciones de respuesta que nunca expongan registros maestros completos.",
     "Medir coste evitado y utilidad real con el uso de la búsqueda pública.",
     "Implementar las proyecciones de contexto compacto sin exponer registros maestros.",

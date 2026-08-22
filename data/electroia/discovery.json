@@ -47,16 +47,17 @@
     "symbol_library": "symbol-library.json",
     "normalization_report": "symbol-normalization-report.json",
     "openapi_discovery": "discovery.openapi.json",
-    "shared_connector_catalog": "../connectors/tool-manifest.json"
+    "shared_connector_catalog": "../connectors/tool-manifest.json",
+    "shared_embedded_platform_catalog": "../embedded-platforms/tool-manifest.json"
   },
   "quality": {
     "catalog_symbols": 460,
     "engine_symbols": 474,
     "internal_templates": 14,
-    "reviewed_catalog_symbols": 206,
-    "auto_draft_catalog_symbols": 254,
-    "reviewed_families": ["connections_and_references", "passive_components", "discrete_semiconductors", "optoelectronics_and_isolation", "electrical_protections", "relays_switches_and_actuators", "machines_and_actuators"],
-    "reviewed_batches": ["hvac_sensors_temperature_pressure_airflow_level_air_quality_leak_frost_current", "passive_components_2026_08", "discrete_semiconductors_2026_08", "opto_isolation_2026_08"],
+    "reviewed_catalog_symbols": 392,
+    "auto_draft_catalog_symbols": 68,
+    "reviewed_families": ["connections_and_references", "passive_components", "discrete_semiconductors", "optoelectronics_and_isolation", "electrical_protections", "relays_switches_and_actuators", "machines_and_actuators", "functional_integrated_circuits", "digital_electronics", "power_and_hvac"],
+    "reviewed_batches": ["hvac_sensors_temperature_pressure_airflow_level_air_quality_leak_frost_current", "passive_components_2026_08", "discrete_semiconductors_2026_08", "opto_isolation_2026_08", "functional_ics_2026_08", "digital_electronics_2026_08", "power_hvac_2026_08"],
     "internal_batches": ["automation_blocks_plc_io_hmi_gateway_network_power_safety"],
     "draft_policy": "An auto_draft symbol is usable only as provisional structure and always produces a warning."
   },

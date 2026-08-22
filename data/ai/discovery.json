@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "service_version": "0.5.0",
+  "service_version": "0.6.0",
   "id": "super-tecnico-ai-gateway",
   "name": "Super Técnico para IAs",
   "title": "Conocimiento técnico verificable y diagramas deterministas para sistemas de IA",
-  "status": "public_free_preview_regulations_and_connectors",
+  "status": "public_free_preview_regulations_connectors_and_embedded_platforms",
   "provider_neutral": true,
   "primary_language": "es",
   "purpose": "Reducir búsquedas, contexto, tokens y errores al resolver consultas de climatización, electrónica de placas, componentes y documentación electrotécnica.",
@@ -27,6 +27,19 @@
         "review_status_and_provenance"
       ],
       "discovery": "../connectors/discovery.json"
+    },
+    {
+      "id": "replacor-embedded-platform-core",
+      "title": "Plataformas embebidas",
+      "status": "public_browser_and_http_beta",
+      "capabilities": [
+        "platform_search",
+        "documentary_preselection",
+        "architecture_and_interface_comparison",
+        "risk_and_reception_checks",
+        "review_status_and_provenance"
+      ],
+      "discovery": "../embedded-platforms/discovery.json"
     },
     {
       "id": "super-tecnico-knowledge",
@@ -152,8 +165,8 @@
       "answer_access": "public_free_preview_for_regulation_search",
       "authentication": "not_required_for_free_preview; api_key_or_oauth_planned_for_future_paid_tools",
       "bulk_dataset_export": "not_offered",
-      "current_execution": "enabled_for_regulation_and_connector_lookup",
-      "public_free_tools": ["supertecnico_search_regulations", "supertecnico_search_connectors", "supertecnico_get_connector", "supertecnico_resolve_connector_contact"]
+      "current_execution": "enabled_for_regulation_connector_and_embedded_platform_lookup",
+      "public_free_tools": ["supertecnico_search_regulations", "supertecnico_search_connectors", "supertecnico_get_connector", "supertecnico_resolve_connector_contact", "supertecnico_search_embedded_platforms", "supertecnico_get_embedded_platform", "supertecnico_recommend_embedded_platforms"]
     }
   },
   "result_levels": [
@@ -192,7 +205,8 @@
     "benchmark_plan": "benchmark-plan.json",
     "tool_strategy": "tool-strategy.json",
     "storage_policy": "storage-policy.json",
-    "public_regulation_search": "../../api/index.php?action=regulation-search"
+    "public_regulation_search": "../../api/index.php?action=regulation-search",
+    "public_embedded_platform_discovery": "../embedded-platforms/discovery.json"
   },
   "discovery_channels": {
     "website": "../../ia-integracion.html",
@@ -220,7 +234,7 @@
     "credentials_in_public_files": false,
     "database_direct_access": false,
     "remote_execution_enabled": true,
-    "remote_execution_scope": ["supertecnico_search_regulations", "supertecnico_search_connectors", "supertecnico_get_connector", "supertecnico_resolve_connector_contact"],
+    "remote_execution_scope": ["supertecnico_search_regulations", "supertecnico_search_connectors", "supertecnico_get_connector", "supertecnico_resolve_connector_contact", "supertecnico_search_embedded_platforms", "supertecnico_get_embedded_platform", "supertecnico_recommend_embedded_platforms"],
     "rate_limits_required": true,
     "usage_audit_required": true,
     "anti_extraction_controls_required": true

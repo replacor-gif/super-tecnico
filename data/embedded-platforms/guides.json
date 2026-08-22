@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "guide_version": "2026.08.1",
+  "selection_questions": [
+    "¿Necesita tiempo real determinista, Linux o ambos?",
+    "¿Qué interfaces son obligatorias y con qué niveles eléctricos?",
+    "¿Qué presupuesto de potencia, arranque y batería existe?",
+    "¿Necesita radio y qué homologación, alcance y coexistencia exige?",
+    "¿Qué ciclo de vida, trazabilidad, actualización y recuperación requiere el producto?",
+    "¿El prototipo se quedará como kit o migrará a módulo o PCB propia?"
+  ],
+  "hard_stops": [
+    "Modelo o revisión de placa desconocidos cuando el pinout o la tolerancia eléctrica condicionan la conexión.",
+    "Conexión directa de 5 V a GPIO de 3,3 V sin tolerancia oficial confirmada.",
+    "Conexión directa de 24 V, red, motores, contactores o cargas inductivas a una placa lógica.",
+    "Presupuesto de corriente o secuencia de alimentación sin verificar.",
+    "Uso como única función de seguridad sin arquitectura y certificación adecuadas."
+  ],
+  "diagnostic_flow": [
+    "Identificar exactamente placa, revisión, módulo, memoria y carrier.",
+    "Separar alimentación, arranque, firmware, interfaz y carga externa.",
+    "Medir los rails antes de conectar periféricos.",
+    "Capturar el log de arranque y registrar versiones.",
+    "Probar una interfaz cada vez con cableado corto y carga conocida.",
+    "Documentar el resultado y la condición de prueba."
+  ]
+}

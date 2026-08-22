@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0",
+  "sources": [
+    {
+      "id": "SRC-EMBEDDED-ENCYCLOPEDIA-2026",
+      "title": "Enciclopedia profesional Arduino, ESP, Raspberry Pi y plataformas embebidas — Edición 2026",
+      "publisher": "REPLACRO / Doctor Micro",
+      "kind": "user_supplied_pdf",
+      "sha256": "7f68105b7732fa4cb7fd408856cad8573225443ed0fd1330b701c1976c826b15",
+      "page_count": 115,
+      "catalog_pages": [
+        69,
+        109
+      ],
+      "official_sources_page": 114,
+      "status": "source_identified",
+      "redistribution": "metadata_and_structured_facts_only"
+    },
+    {
+      "id": "OFF-ARDUINO-DOCS",
+      "title": "Arduino Documentation",
+      "kind": "official_reference",
+      "url": "https://docs.arduino.cc/",
+      "status": "pending_record_linking"
+    },
+    {
+      "id": "OFF-ARDUINO-HARDWARE",
+      "title": "Arduino hardware documentation",
+      "kind": "official_reference",
+      "url": "https://docs.arduino.cc/hardware/",
+      "status": "pending_record_linking"
+    },
+    {
+      "id": "OFF-ESP-SOCS",
+      "title": "Espressif SoCs",
+      "kind": "official_reference",
+      "url": "https://www.espressif.com/en/products/socs",
+      "status": "pending_record_linking"
+    },
+    {
+      "id": "OFF-ESP-DOCS",
+      "title": "Espressif documentation",
+      "kind": "official_reference",
+      "url": "https://docs.espressif.com/",
+      "status": "pending_record_linking"
+    },
+    {
+      "id": "OFF-RPI-DOCS",
+      "title": "Raspberry Pi documentation",
+      "kind": "official_reference",
+      "url": "https://www.raspberrypi.com/documentation/",
+      "status": "pending_record_linking"
+    },
+    {
+      "id": "OFF-RPI-DATASHEETS",
+      "title": "Raspberry Pi datasheets",
+      "kind": "official_reference",
+      "url": "https://datasheets.raspberrypi.com/",
+      "status": "pending_record_linking"
+    },
+    {
+      "id": "OFF-MICROPYTHON",
+      "title": "MicroPython documentation",
+      "kind": "official_reference",
+      "url": "https://docs.micropython.org/",
+      "status": "pending_record_linking"
+    },
+    {
+      "id": "OFF-CIRCUITPYTHON",
+      "title": "CircuitPython documentation",
+      "kind": "official_reference",
+      "url": "https://docs.circuitpython.org/",
+      "status": "pending_record_linking"
+    },
+    {
+      "id": "OFF-ST-NUCLEO",
+      "title": "STMicroelectronics Nucleo boards",
+      "kind": "official_reference",
+      "url": "https://www.st.com/en/evaluation-tools/stm32-nucleo-boards.html",
+      "status": "pending_record_linking"
+    },
+    {
+      "id": "OFF-NORDIC-DK",
+      "title": "Nordic development kits",
+      "kind": "official_reference",
+      "url": "https://www.nordicsemi.com/Products/Development-hardware",
+      "status": "pending_record_linking"
+    },
+    {
+      "id": "OFF-PJRC-TEENSY",
+      "title": "PJRC Teensy",
+      "kind": "official_reference",
+      "url": "https://www.pjrc.com/teensy/",
+      "status": "pending_record_linking"
+    },
+    {
+      "id": "OFF-MICROBIT",
+      "title": "BBC micro:bit technical information",
+      "kind": "official_reference",
+      "url": "https://tech.microbit.org/",
+      "status": "pending_record_linking"
+    },
+    {
+      "id": "OFF-BEAGLEBOARD",
+      "title": "BeagleBoard documentation",
+      "kind": "official_reference",
+      "url": "https://docs.beagleboard.org/",
+      "status": "pending_record_linking"
+    },
+    {
+      "id": "OFF-NVIDIA-JETSON",
+      "title": "NVIDIA Jetson documentation",
+      "kind": "official_reference",
+      "url": "https://docs.nvidia.com/jetson/",
+      "status": "pending_record_linking"
+    }
+  ]
+}

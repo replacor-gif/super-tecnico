@@ -5,13 +5,13 @@
   "engine_symbols": 474,
   "symbols_with_ports": 474,
   "status_counts": {
-    "auto_draft": 254,
+    "auto_draft": 68,
     "engine_internal": 14,
-    "engine_reviewed": 206
+    "engine_reviewed": 392
   },
   "catalog_status_counts": {
-    "auto_draft": 254,
-    "engine_reviewed": 206
+    "auto_draft": 68,
+    "engine_reviewed": 392
   },
   "family_counts": {
     "aux_contact_no": 1,
@@ -166,8 +166,8 @@
   "category_quality": {
     "Circuitos integrados funcionales": {
       "total": 50,
-      "engine_reviewed": 1,
-      "auto_draft": 49
+      "engine_reviewed": 50,
+      "auto_draft": 0
     },
     "Componentes pasivos": {
       "total": 34,
@@ -191,8 +191,8 @@
     },
     "Electrónica digital": {
       "total": 73,
-      "engine_reviewed": 2,
-      "auto_draft": 71
+      "engine_reviewed": 73,
+      "auto_draft": 0
     },
     "Fuentes y alimentación": {
       "total": 11,
@@ -221,8 +221,8 @@
     },
     "Potencia y climatización": {
       "total": 66,
-      "engine_reviewed": 0,
-      "auto_draft": 66
+      "engine_reviewed": 66,
+      "auto_draft": 0
     },
     "Protecciones eléctricas": {
       "total": 16,
@@ -246,10 +246,13 @@
     }
   },
   "fully_reviewed_categories": [
+    "Circuitos integrados funcionales",
     "Componentes pasivos",
     "Conexiones y referencias",
+    "Electrónica digital",
     "Máquinas y actuadores",
     "Optoelectrónica y aislamiento",
+    "Potencia y climatización",
     "Protecciones eléctricas",
     "Relés, interruptores y actuadores",
     "Semiconductores discretos"

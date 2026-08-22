@@ -32,7 +32,7 @@ class AIGatewayFoundationTests(unittest.TestCase):
     def test_discovery_separates_knowledge_and_diagram_services(self):
         discovery = load(ROOT / "data" / "ai" / "discovery.json")
         services = {item["id"]: item for item in discovery["service_families"]}
-        self.assertEqual(discovery["status"], "public_free_preview_regulations_and_connectors")
+        self.assertEqual(discovery["status"], "public_free_preview_regulations_connectors_and_embedded_platforms")
         self.assertTrue(discovery["security"]["remote_execution_enabled"])
         self.assertEqual(
             discovery["security"]["remote_execution_scope"],
@@ -41,13 +41,17 @@ class AIGatewayFoundationTests(unittest.TestCase):
                 "supertecnico_search_connectors",
                 "supertecnico_get_connector",
                 "supertecnico_resolve_connector_contact",
+                "supertecnico_search_embedded_platforms",
+                "supertecnico_get_embedded_platform",
+                "supertecnico_recommend_embedded_platforms",
             ],
         )
         self.assertEqual(discovery["access_model"]["humans"]["site_access"], "free")
-        self.assertEqual(discovery["access_model"]["machines"]["current_execution"], "enabled_for_regulation_and_connector_lookup")
+        self.assertEqual(discovery["access_model"]["machines"]["current_execution"], "enabled_for_regulation_connector_and_embedded_platform_lookup")
         self.assertEqual(discovery["access_model"]["machines"]["bulk_dataset_export"], "not_offered")
         self.assertIn("super-tecnico-knowledge", services)
         self.assertIn("electroia-diagram-engine", services)
+        self.assertIn("replacor-embedded-platform-core", services)
 
     def test_tool_contract_uses_free_preflight_and_compact_paid_levels(self):
         manifest = load(ROOT / "data" / "ai" / "tool-manifest.json")
@@ -60,6 +64,9 @@ class AIGatewayFoundationTests(unittest.TestCase):
                 "supertecnico_search_connectors",
                 "supertecnico_get_connector",
                 "supertecnico_resolve_connector_contact",
+                "supertecnico_search_embedded_platforms",
+                "supertecnico_get_embedded_platform",
+                "supertecnico_recommend_embedded_platforms",
             ],
         )
         self.assertTrue(manifest["routing_policy"]["preflight_first"])
@@ -74,6 +81,7 @@ class AIGatewayFoundationTests(unittest.TestCase):
         self.assertEqual(tools["supertecnico_search_regulations"]["state"], "public_free_preview")
         self.assertEqual(tools["supertecnico_search_regulations"]["billing_tier"], "free_preview")
         self.assertEqual(tools["supertecnico_search_regulations"]["input_schema"]["properties"]["limit"]["maximum"], 20)
+        self.assertEqual(tools["supertecnico_recommend_embedded_platforms"]["state"], "public_http_beta")
         self.assertIn("delegate", tools["supertecnico_render_diagram"])
         self.assertIn("supertecnico_get_compact_context", tools)
         self.assertIn("supertecnico_validate_measurements", tools)

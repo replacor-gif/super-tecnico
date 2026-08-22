@@ -14,11 +14,13 @@ const manifestPath = join(PROJECT_ROOT, "data", "electroia", "tool-manifest.json
 const componentPath = join(PROJECT_ROOT, "data", "components", "catalog.json");
 const symbolPath = join(PROJECT_ROOT, "data", "symbols", "catalog.json");
 const connectorPath = join(PROJECT_ROOT, "data", "connectors", "catalog.json");
+const embeddedPlatformPath = join(PROJECT_ROOT, "data", "embedded-platforms", "catalog.json");
 
 export const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
 
 let resourcesPromise;
 let connectorsPromise;
+let embeddedPlatformsPromise;
 
 async function loadResources() {
   if (!resourcesPromise) {
@@ -44,6 +46,13 @@ async function loadConnectors() {
     connectorsPromise = readFile(connectorPath, "utf8").then(JSON.parse);
   }
   return connectorsPromise;
+}
+
+async function loadEmbeddedPlatforms() {
+  if (!embeddedPlatformsPromise) {
+    embeddedPlatformsPromise = readFile(embeddedPlatformPath, "utf8").then(JSON.parse);
+  }
+  return embeddedPlatformsPromise;
 }
 
 function ensureObject(value, label) {
@@ -91,6 +100,24 @@ function connectorSummary(record) {
     view: record.view,
     review: record.review,
     source_ids: record.source_ids,
+  };
+}
+
+function embeddedPlatformSummary(record) {
+  return {
+    id: record.id,
+    name: record.name,
+    manufacturer: record.manufacturer,
+    platform_class: record.platform_class,
+    architecture: record.architecture,
+    logic_and_power: record.logic_and_power,
+    interfaces: record.interfaces,
+    recommended_use: record.recommended_use,
+    primary_risk: record.primary_risk,
+    tags: record.tags,
+    review: record.review,
+    source_refs: record.source_refs,
+    source_locator: record.source_locator,
   };
 }
 
@@ -177,6 +204,63 @@ export async function callElectroIATool(tool, rawArguments = {}) {
     if (!record) throw new Error(`Conector no encontrado: ${connectorId || "vacío"}`);
     const contacts = record.contacts.filter((contact) => folded(`${contact.id} ${contact.signal} ${contact.description}`).includes(query));
     return {ok: true, tool: name, connector_id: connectorId, view: record.view, review: record.review, contacts};
+  }
+
+  if (name === "supertecnico_search_embedded_platforms") {
+    const query = folded(args.query).trim();
+    if (!query) throw new Error("query debe contener al menos un término de búsqueda");
+    const manufacturer = folded(args.manufacturer).trim();
+    const platformClass = folded(args.platform_class).trim();
+    const limit = Math.max(1, Math.min(20, Number.isInteger(args.limit) ? args.limit : 8));
+    const catalog = await loadEmbeddedPlatforms();
+    const ignored = new Set(["de", "del", "la", "el", "y", "con", "para"]);
+    const queryTerms = query.split(/\s+/).filter((term) => term && !ignored.has(term));
+    const matches = catalog.records.filter((record) => {
+      const haystack = folded([record.id, record.name, record.manufacturer, record.platform_class, record.architecture, record.logic_and_power, record.recommended_use, record.primary_risk, ...(record.interfaces || []), ...(record.tags || [])].join(" "));
+      if (!queryTerms.every((term) => haystack.includes(term))) return false;
+      if (manufacturer && !folded(record.manufacturer).includes(manufacturer)) return false;
+      if (platformClass && folded(record.platform_class) !== platformClass) return false;
+      return true;
+    });
+    return {ok: true, tool: name, catalog_version: catalog.catalog_version, query: args.query, total: matches.length, items: matches.slice(0, limit).map(embeddedPlatformSummary)};
+  }
+
+  if (name === "supertecnico_get_embedded_platform") {
+    const platformId = String(args.platform_id || "").trim();
+    const catalog = await loadEmbeddedPlatforms();
+    const record = catalog.records.find((item) => item.id === platformId);
+    if (!record) throw new Error(`Plataforma no encontrada: ${platformId || "vacía"}`);
+    return {ok: true, tool: name, catalog_version: catalog.catalog_version, record, reception_checks: catalog.shared_reception_checks, integration_requirements: catalog.shared_integration_requirements};
+  }
+
+  if (name === "supertecnico_recommend_embedded_platforms") {
+    const useCase = folded(args.use_case).trim();
+    if (useCase.length < 3) throw new Error("use_case debe describir el objetivo del proyecto");
+    const requiredInterfaces = folded((args.required_interfaces || []).join(" "));
+    const terms = [...new Set(`${useCase} ${requiredInterfaces}`.split(/\s+/).filter((term) => term.length >= 2))];
+    const catalog = await loadEmbeddedPlatforms();
+    const linuxClasses = new Set(["single_board_computer", "system_on_module", "edge_ai_computer", "soc_fpga_board"]);
+    const ranked = catalog.records.flatMap((record) => {
+      if (args.needs_linux === true && !linuxClasses.has(record.platform_class)) return [];
+      const haystack = folded([record.id, record.name, record.manufacturer, record.platform_class, record.architecture, record.recommended_use, ...(record.interfaces || []), ...(record.tags || [])].join(" "));
+      const matchedTerms = terms.filter((term) => haystack.includes(term));
+      const score = matchedTerms.length * 10 + (args.needs_linux === true && linuxClasses.has(record.platform_class) ? 8 : 0);
+      return score ? [{score, matched_terms: matchedTerms, platform: embeddedPlatformSummary(record)}] : [];
+    }).sort((a, b) => b.score - a.score || a.platform.name.localeCompare(b.platform.name));
+    const limit = Math.max(1, Math.min(10, Number.isInteger(args.limit) ? args.limit : 5));
+    const items = ranked.slice(0, limit);
+    return {
+      ok: true,
+      tool: name,
+      catalog_version: catalog.catalog_version,
+      decision_status: items.length ? "preselection_only" : "insufficient_context",
+      total: items.length,
+      items,
+      warnings: [
+        "La puntuación solo ordena coincidencias documentales; no demuestra que una placa sea adecuada.",
+        "Confirma revisión exacta, pinout, niveles, memoria, radio, carrier, software, ciclo de vida y condiciones ambientales.",
+      ],
+    };
   }
 
   if (name === "electroia_render_diagram") {
