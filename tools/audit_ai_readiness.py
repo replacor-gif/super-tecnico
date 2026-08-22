@@ -63,6 +63,8 @@ def audit(root: Path) -> dict[str, Any]:
     components = read_json(root / "data" / "components" / "catalog.json")
     component_meta = components.get("meta") or {}
     component_counts = component_meta.get("counts") or {}
+    connectors = read_json(root / "data" / "connectors" / "catalog.json")
+    connector_counts = connectors.get("counts") or {}
     symbols = read_json(root / "data" / "electroia" / "symbol-library.json")
     symbol_report = read_json(root / "data" / "electroia" / "symbol-normalization-report.json")
     training = read_json(root / "data" / "training" / "collection.json")
@@ -79,6 +81,7 @@ def audit(root: Path) -> dict[str, Any]:
         checkpoint("stable_contracts", "Contratos estables y versionados", "pass", "Manifiesto, JSON Schema y contrato OpenAPI de diseño"),
         checkpoint("focused_tools", "Herramientas centradas en objetivos", "pass", "Preflight, refrigeración P/T progresiva, resolución, diagnóstico, componentes, casos, proyectos y diagramas"),
         checkpoint("quality_labels", "Calidad y confianza explícitas", "pass", f"{brands_with_quality}/{len(brands)} marcas con informe y componentes con confidence"),
+        checkpoint("connector_core", "Conectores normalizados para personas y motores", "pass", f"{connector_counts.get('records', 0)} fichas, {connector_counts.get('contacts', 0)} contactos, orientación y estado de revisión explícitos"),
         checkpoint("source_traceability", "Fuentes aplicables por respuesta", "partial", f"{brands_with_sources}/{len(brands)} marcas con fuentes; {brands_with_provenance_policy} políticas históricas específicas"),
         checkpoint("public_regulation_api", "Búsqueda pública de normativa para máquinas", "pass", "GET api/index.php?action=regulation-search con fuentes, páginas, límites y métricas"),
         checkpoint("remote_mcp", "Servidor MCP remoto", "planned", "ElectroIA dispone de stdio local; el transporte remoto sigue desactivado"),
@@ -114,6 +117,11 @@ def audit(root: Path) -> dict[str, Any]:
             "component_specifications": int(component_counts.get("specifications") or 0),
             "components_reviewed": int(component_counts.get("reviewed") or 0),
             "components_historical": int(component_counts.get("historical") or 0),
+            "connector_records": int(connector_counts.get("records") or 0),
+            "connector_contacts": int(connector_counts.get("contacts") or 0),
+            "connector_records_reviewed": int(connector_counts.get("reviewed") or 0),
+            "connector_records_source_identified": int(connector_counts.get("source_identified") or 0),
+            "connector_records_pending_review": int(connector_counts.get("pending_review") or 0),
             "electroia_symbols": int(symbols.get("catalog_symbol_count") or 0),
             "electroia_engine_symbols": int(symbols.get("engine_symbol_count") or 0),
             "electroia_internal_templates": int(symbols.get("internal_template_count") or 0),

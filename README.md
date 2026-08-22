@@ -15,6 +15,7 @@ Portal técnico estático con herramientas independientes. La publicación es:
 - **Desagües de condensados:** caudal acumulado, pendiente, caída y diámetro interior por tramo para varias unidades.
 - **Normativa técnica:** búsqueda natural dentro de 18 reglamentos oficiales, con jerarquía de ITC, artículo, apartado y tabla cuando puede extraerse de forma fiable; pide contexto cuando la consulta no tiene una única respuesta aplicable.
 - **Referencias de componentes:** consulta por referencia, marcado, fabricante, categoría, encapsulado y parámetros eléctricos.
+- **Conectores y pinouts:** buscador móvil de conectores con contactos, variante, lado, orientación, seguridad, trazabilidad y una edición PDF normalizada; publica además un contrato neutral para motores e IAs.
 - **Comparador documental:** contraste lado a lado de referencias reales y búsqueda conservadora de candidatos MOSFET, IGBT y diodos rápidos revisados.
 - **Averías reales por placa:** casos aportados por técnicos, buscables por referencia o explorables mediante filtros de marca y equipo; se publican únicamente tras moderación.
 - **Ideas y mejoras:** propuestas públicas, apoyos de la comunidad y aportaciones privadas pendientes de revisión.
@@ -37,7 +38,9 @@ Para regenerar el inventario de preparación:
 python tools/audit_ai_readiness.py
 ```
 
-Los módulos de normativa y desagües publican además contratos específicos en `data/regulations/tool-manifest.json` y `data/condensate/tool-manifest.json`. La ejecución remota sigue desactivada.
+Los módulos de normativa, desagües y conectores publican contratos específicos en `data/regulations/tool-manifest.json`, `data/condensate/tool-manifest.json` y `data/connectors/tool-manifest.json`. La ejecución remota sigue desactivada salvo la búsqueda pública de normativa.
+
+El primer registro común de motores está en `data/core/motor-registry.json`. Usa **SINAPSYS** como nombre de la futura capa de orquestación y mantiene separados los estados reales: catálogo disponible en navegador, ElectroIA en vista previa privada y ejecución remota pendiente. La marca pública seguirá evolucionando gradualmente de Super Técnico hacia REPLACOR.
 
 ## Actualizar la normativa oficial
 

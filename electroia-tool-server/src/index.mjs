@@ -106,6 +106,11 @@ function createServer() {
       mirror: z.boolean().optional(),
       label_position: z.enum(["below", "above", "left", "right", "inside"]).optional(),
       role: z.string().max(60).optional(),
+      connector: z.object({
+        connector_id: z.string().min(3).max(80),
+        perspective: z.enum(["mating_face", "wiring_side", "device_front", "logical_only"]).optional(),
+        contact_map: z.record(z.string(), z.string().min(1).max(24)).optional(),
+      }).optional(),
     })).min(1),
     nets: z.array(z.object({
       id: z.string().min(1).max(64),

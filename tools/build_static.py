@@ -461,6 +461,57 @@ def validate_components_catalog(source_root: Path) -> tuple[dict[str, Any], dict
     }
 
 
+def validate_connectors_catalog(source_root: Path) -> tuple[dict[str, Any], dict[str, Any]]:
+    connectors_root = source_root / "data" / "connectors"
+    catalog = read_json(connectors_root / "catalog.json")
+    sources = read_json(connectors_root / "sources.json")
+    records = catalog.get("records") or []
+    source_records = sources.get("sources") or []
+    if not isinstance(records, list) or len(records) < 17:
+        raise BuildError("El catálogo de conectores no contiene las 17 fichas iniciales")
+    ids = [str(record.get("id") or "") for record in records]
+    if any(not connector_id for connector_id in ids) or len(ids) != len(set(ids)):
+        raise BuildError("El catálogo de conectores contiene identificadores vacíos o duplicados")
+    source_ids = {str(source.get("id") or "") for source in source_records}
+    if not source_ids or "" in source_ids or len(source_ids) != len(source_records):
+        raise BuildError("El registro de fuentes de conectores es inválido")
+    allowed_statuses = {"reviewed", "source_identified", "pending_review"}
+    contact_count = 0
+    status_counts = {status: 0 for status in allowed_statuses}
+    for record in records:
+        contacts = record.get("contacts") or []
+        contact_ids = [str(contact.get("id") or "") for contact in contacts]
+        if not contacts or any(not item for item in contact_ids) or len(contact_ids) != len(set(contact_ids)):
+            raise BuildError(f"Contactos vacíos o duplicados en {record.get('id')}")
+        if any(not contact.get("signal") or not contact.get("description") for contact in contacts):
+            raise BuildError(f"Contacto incompleto en {record.get('id')}")
+        view = record.get("view") or {}
+        if not view.get("perspective") or not view.get("orientation_note"):
+            raise BuildError(f"Vista incompleta en {record.get('id')}")
+        review = record.get("review") or {}
+        status = review.get("status")
+        if status not in allowed_statuses or not review.get("scope"):
+            raise BuildError(f"Revisión incompleta en {record.get('id')}")
+        missing_sources = set(record.get("source_ids") or []) - source_ids
+        if missing_sources:
+            raise BuildError(f"Fuentes inexistentes en {record.get('id')}: {sorted(missing_sources)}")
+        contact_count += len(contacts)
+        status_counts[status] += 1
+    counts = catalog.get("counts") or {}
+    expected = {
+        "records": len(records),
+        "contacts": contact_count,
+        **status_counts,
+    }
+    if any(int(counts.get(key) or 0) != value for key, value in expected.items()):
+        raise BuildError(f"Metadatos de conectores incoherentes: esperado {expected}, obtenido {counts}")
+    for source in source_records:
+        url = str(source.get("url") or "")
+        if not (url.startswith("https://") or url.startswith("recursos/")):
+            raise BuildError(f"Fuente de conector insegura: {source.get('id')}")
+    return catalog, {**expected, "sources": len(source_records)}
+
+
 def validate_oem_pcb_catalog(source_root: Path) -> tuple[dict[str, Any], dict[str, int]]:
     catalog = read_json(source_root / "data" / "oem" / "pcb_patterns.json")
     meta = catalog.get("meta") or {}
@@ -542,6 +593,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "ventilacion.html",
         "analitica-privada.html",
         "componentes.html",
+        "conectores.html",
         "comparador.html",
         "averias.html",
         "feedback.html",
@@ -600,6 +652,8 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "assets/common.css",
         "assets/components.css",
         "assets/components.js",
+        "assets/connectors.css",
+        "assets/connectors.js",
         "assets/datasheet-finder.js",
         "assets/comparator.css",
         "assets/comparator.js",
@@ -638,6 +692,11 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "data/refrigerant-piping/design-rules.json",
         "data/refrigerant-piping/property-grid.json",
         "data/electroia/controller-ecosystems.json",
+        "data/connectors/connector-record.schema.json",
+        "data/connectors/sources.json",
+        "data/connectors/tool-manifest.json",
+        "data/connectors/discovery.json",
+        "data/core/motor-registry.json",
         "data/electrical-panels/examples/motor-pump-dol-auto-manual.json",
         "data/electrical-panels/panel-project.schema.json",
         "data/electrical-panels/standards-registry.json",
@@ -645,6 +704,8 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "data/projects/technical-project.schema.json",
         "data/projects/tool-manifest.json",
         "recursos/libro-electronica-inverter-replacor.pdf",
+        "recursos/enciclopedia-conectores-pinouts-edicion-8-origen.pdf",
+        "recursos/catalogo-normalizado-conectores-replacor-edicion-9.pdf",
     ):
         source = source_root / required
         if not source.is_file():
@@ -820,6 +881,8 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
     write_json(output / "data" / "smd" / "catalog.json", smd_catalog)
     components_catalog, components_stats = validate_components_catalog(source_root)
     write_json(output / "data" / "components" / "catalog.json", components_catalog)
+    connectors_catalog, connectors_stats = validate_connectors_catalog(source_root)
+    write_json(output / "data" / "connectors" / "catalog.json", connectors_catalog)
     frigorista_catalog, frigorista_curves, frigorista_mollier, frigorista_stats = validate_frigorista_data(source_root)
     write_json(output / "data" / "frigorista" / "catalog.json", frigorista_catalog)
     write_json(output / "data" / "frigorista" / "pt-curves.json", frigorista_curves)
@@ -914,6 +977,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "brands": manifest,
         "smd": smd_stats,
         "components": components_stats,
+        "connectors": connectors_stats,
         "frigorista": frigorista_stats,
         "regulations": regulations_stats,
         "oem_pcb": oem_stats,

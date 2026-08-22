@@ -322,6 +322,29 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("Últimas mejoras", portal)
         self.assertGreaterEqual(len(updates["entries"]), 1)
 
+    def test_connector_core_is_public_and_machine_readable(self):
+        for relative in (
+            "conectores.html",
+            "assets/connectors.css",
+            "assets/connectors.js",
+            "data/connectors/catalog.json",
+            "data/connectors/connector-record.schema.json",
+            "data/connectors/sources.json",
+            "data/connectors/tool-manifest.json",
+            "data/connectors/discovery.json",
+            "data/core/motor-registry.json",
+            "recursos/enciclopedia-conectores-pinouts-edicion-8-origen.pdf",
+            "recursos/catalogo-normalizado-conectores-replacor-edicion-9.pdf",
+        ):
+            self.assertTrue((self.dist / relative).is_file(), relative)
+        catalog = load(self.dist / "data" / "connectors" / "catalog.json")
+        self.assertEqual(catalog["counts"]["records"], 17)
+        self.assertEqual(catalog["counts"]["contacts"], 185)
+        portal = (self.dist / "index.html").read_text(encoding="utf-8")
+        shell = (self.dist / "assets" / "app-shell.js").read_text(encoding="utf-8")
+        self.assertIn('href="conectores.html"', portal)
+        self.assertIn("Conectores y pinouts", shell)
+
     def test_technical_projects_and_progressive_app_are_public(self):
         for relative in (
             "proyectos.html",

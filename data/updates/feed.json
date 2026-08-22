@@ -10,6 +10,15 @@
   },
   "entries": [
     {
+      "id": "UPD-20260822-CONNECTOR-CORE",
+      "date": "2026-08-22",
+      "title": "Nueva base viva de conectores y pinouts",
+      "summary": "Incorporado el PDF original de conectores, una edición 9 normalizada, un buscador móvil con 17 fichas y 185 contactos y contratos reutilizables por ElectroIA, SINAPSYS y otras IAs.",
+      "areas": ["REPLACOR Core", "Conectores", "ElectroIA", "IA"],
+      "kind": "new_foundation",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
       "id": "UPD-20260822-PROJECTS-MOBILE-AUTOMATION",
       "date": "2026-08-22",
       "title": "Proyectos técnicos, Conductos móvil y automatización ElectroIA",

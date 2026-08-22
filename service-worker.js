@@ -1,11 +1,12 @@
 'use strict';
 
-const CACHE_VERSION = 'super-tecnico-shell-v2';
+const CACHE_VERSION = 'super-tecnico-shell-v4';
 const APP_SHELL = [
-  './', './index.html', './proyectos.html', './conductos.html', './ventilacion.html', './tuberias-frigorificas.html', './frigorista.html', './normativa.html',
+  './', './index.html', './proyectos.html', './conductos.html', './ventilacion.html', './tuberias-frigorificas.html', './frigorista.html', './normativa.html', './conectores.html',
   './assets/common.css', './assets/app-theme.css', './assets/app-shell.js', './assets/project-core.js', './assets/project-manager.css', './assets/project-manager.js', './assets/super-tecnico-logo.png',
   './assets/duct-designer.css', './assets/duct-designer.js', './assets/ventilation-designer.css', './assets/ventilation-rules.js', './assets/ventilation-designer.js',
-  './assets/refrigerant-piping.css', './assets/refrigerant-piping-engine.js', './assets/refrigerant-piping.js', './data/refrigerant-piping/property-grid.json', './data/refrigerant-piping/design-rules.json'
+  './assets/refrigerant-piping.css', './assets/refrigerant-piping-engine.js', './assets/refrigerant-piping.js', './data/refrigerant-piping/property-grid.json', './data/refrigerant-piping/design-rules.json',
+  './assets/connectors.css', './assets/connectors.js', './data/connectors/catalog.json', './data/connectors/sources.json'
 ];
 
 self.addEventListener('install', event => {

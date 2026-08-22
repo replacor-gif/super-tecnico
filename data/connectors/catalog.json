@@ -1,0 +1,316 @@
+{
+  "schema_version": "1.0",
+  "catalog_version": "2026.08.22-beta.1",
+  "updated_at": "2026-08-22",
+  "title": "REPLACOR Core · Catálogo normalizado de conectores",
+  "scope": "Primera migración estructurada de la Enciclopedia de conectores, edición 8. El PDF completo se conserva como fuente; estas fichas son el núcleo consultable.",
+  "counts": {"records": 17, "reviewed": 0, "source_identified": 16, "pending_review": 1, "contacts": 185},
+  "records": [
+    {
+      "id": "rj45-8p8c-t568b-plug",
+      "canonical_name": "8P8C modular · terminación T568B",
+      "aliases": ["RJ45", "RJ-45", "Ethernet T568B", "8P8C"],
+      "category": "network", "interface": "Ethernet sobre par trenzado", "form_factor": "8P8C modular", "gender": "plug",
+      "view": {"perspective": "mating_face", "orientation_note": "Vista frontal del plug, contactos hacia el observador y pestaña de retención hacia abajo; el contacto 1 queda a la izquierda.", "key_position": "Pestaña abajo"},
+      "contacts": [
+        {"id":"1","signal":"BI_DA+ / TX+","description":"Par A positivo; conductor blanco/naranja en T568B.","group":"Par A","direction":"bidirectional"},
+        {"id":"2","signal":"BI_DA- / TX-","description":"Par A negativo; conductor naranja en T568B.","group":"Par A","direction":"bidirectional"},
+        {"id":"3","signal":"BI_DB+ / RX+","description":"Par B positivo; conductor blanco/verde en T568B.","group":"Par B","direction":"bidirectional"},
+        {"id":"4","signal":"BI_DC+","description":"Par C positivo; conductor azul en T568B.","group":"Par C","direction":"bidirectional"},
+        {"id":"5","signal":"BI_DC-","description":"Par C negativo; conductor blanco/azul en T568B.","group":"Par C","direction":"bidirectional"},
+        {"id":"6","signal":"BI_DB- / RX-","description":"Par B negativo; conductor verde en T568B.","group":"Par B","direction":"bidirectional"},
+        {"id":"7","signal":"BI_DD+","description":"Par D positivo; conductor blanco/marrón en T568B.","group":"Par D","direction":"bidirectional"},
+        {"id":"8","signal":"BI_DD-","description":"Par D negativo; conductor marrón en T568B.","group":"Par D","direction":"bidirectional"}
+      ],
+      "variants": ["T568A conserva las parejas eléctricas, pero intercambia los pares naranja y verde.", "10/100BASE-T y 1000BASE-T utilizan los pares de forma diferente; no deduzcas dirección fija solo por el color."],
+      "safety_notes": ["No confundir la vista frontal del plug con la vista trasera de un jack o panel de parcheo.", "En PoE la alimentación puede circular por pares de datos o pares alternativos según el modo negociado."],
+      "review": {"status":"source_identified","confidence":0.82,"scope":"Orden, variante y vista migrados; falta registrar edición y cláusula exactas de TIA para cerrar revisión.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-TIA-568","SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[17,18]},
+      "search_terms": ["ethernet","red","cable de red","t568a","t568b","poe"]
+    },
+    {
+      "id": "usb2-standard-a-receptacle",
+      "canonical_name": "USB 2.0 Standard-A · receptáculo",
+      "aliases": ["USB-A", "USB A hembra", "USB 2 tipo A"],
+      "category": "usb", "interface": "USB 2.0", "form_factor": "Standard-A", "gender": "receptacle",
+      "view": {"perspective":"mating_face","orientation_note":"Vista frontal del receptáculo del equipo, lengüeta interior hacia abajo; numeración de izquierda a derecha 1–4.","key_position":"Lengüeta abajo"},
+      "contacts": [
+        {"id":"1","signal":"VBUS","description":"Alimentación del bus USB.","group":"Power","direction":"power"},
+        {"id":"2","signal":"D-","description":"Línea negativa del par USB 2.0.","group":"USB 2.0","direction":"bidirectional"},
+        {"id":"3","signal":"D+","description":"Línea positiva del par USB 2.0.","group":"USB 2.0","direction":"bidirectional"},
+        {"id":"4","signal":"GND","description":"Retorno de alimentación y referencia.","group":"Power","direction":"ground"}
+      ],
+      "variants": ["El plug se ve especular respecto al receptáculo cuando ambos se dibujan por su cara de acoplamiento.", "La potencia disponible depende de la versión, del puerto y de la negociación aplicable."],
+      "safety_notes": ["No aplicar una tensión externa a VBUS sin conocer el papel del puerto y su circuito de protección."],
+      "review": {"status":"source_identified","confidence":0.9,"scope":"Asignación base y orientación migradas; pendiente anotar edición y tabla exactas de USB-IF.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-USBIF-DOCUMENTS","SRC-IEC-62680","SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[30]},
+      "search_terms": ["usb a","usb 2.0","vbus","d+","d-"]
+    },
+    {
+      "id": "usb3-standard-b-receptacle",
+      "canonical_name": "USB 3.x Standard-B · receptáculo",
+      "aliases": ["USB 3.0 Type-B", "USB-B SuperSpeed", "USB B impresora 3.0"],
+      "category": "usb", "interface": "USB 3.2 legacy SuperSpeed", "form_factor": "Standard-B SuperSpeed", "gender": "receptacle",
+      "view": {"perspective":"mating_face","orientation_note":"Vista frontal del receptáculo; bloque USB 2.0 inferior y bloque SuperSpeed superior. Confirmar la numeración del fabricante antes de cablear.","key_position":"Extensión SuperSpeed arriba"},
+      "contacts": [
+        {"id":"1","signal":"VBUS","description":"Alimentación USB.","group":"USB 2.0","direction":"power"},
+        {"id":"2","signal":"D-","description":"USB 2.0 negativo.","group":"USB 2.0","direction":"bidirectional"},
+        {"id":"3","signal":"D+","description":"USB 2.0 positivo.","group":"USB 2.0","direction":"bidirectional"},
+        {"id":"4","signal":"GND","description":"Retorno USB.","group":"USB 2.0","direction":"ground"},
+        {"id":"5","signal":"StdA_SSRX-","description":"Recepción SuperSpeed negativa desde el punto de vista del host/Standard-A.","group":"SuperSpeed RX","direction":"bidirectional"},
+        {"id":"6","signal":"StdA_SSRX+","description":"Recepción SuperSpeed positiva desde el punto de vista del host/Standard-A.","group":"SuperSpeed RX","direction":"bidirectional"},
+        {"id":"7","signal":"GND_DRAIN","description":"Retorno o drenaje asociado a SuperSpeed.","group":"Shield","direction":"ground"},
+        {"id":"8","signal":"StdA_SSTX-","description":"Transmisión SuperSpeed negativa desde el punto de vista del host/Standard-A.","group":"SuperSpeed TX","direction":"bidirectional"},
+        {"id":"9","signal":"StdA_SSTX+","description":"Transmisión SuperSpeed positiva desde el punto de vista del host/Standard-A.","group":"SuperSpeed TX","direction":"bidirectional"}
+      ],
+      "variants": ["Los nombres TX/RX dependen del extremo de referencia; conserve la nomenclatura completa del estándar.", "No es físicamente intercambiable con un plug USB 2.0 Standard-B en ambos sentidos."],
+      "safety_notes": ["No deducir continuidad de malla o drenaje sin el plano del cable concreto."],
+      "review": {"status":"source_identified","confidence":0.78,"scope":"Migración estructural del manual; orientación y nomenclatura de extremo necesitan contraste exacto con USB-IF.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-USBIF-DOCUMENTS","SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[31,32]},
+      "search_terms": ["usb b","superspeed","impresora","ssrx","sstx"]
+    },
+    {
+      "id": "usb-type-c-full-featured-receptacle",
+      "canonical_name": "USB Type-C® full-featured · receptáculo",
+      "aliases": ["USB-C", "USB tipo C", "Type-C 24 contactos"],
+      "category": "usb", "interface": "USB Type-C", "form_factor": "Type-C 24 contactos", "gender": "receptacle",
+      "view": {"perspective":"mating_face","orientation_note":"Vista frontal del receptáculo. La fila A se representa arriba y la fila B abajo; no trasladar esta vista directamente al lado de soldadura.","key_position":"Conector reversible; filas A y B explícitas"},
+      "contacts": [
+        {"id":"A1","signal":"GND","description":"Retorno de potencia.","group":"Power","direction":"ground"}, {"id":"A2","signal":"SSTX1+","description":"Par TX1 positivo.","group":"High speed","direction":"bidirectional"},
+        {"id":"A3","signal":"SSTX1-","description":"Par TX1 negativo.","group":"High speed","direction":"bidirectional"}, {"id":"A4","signal":"VBUS","description":"Alimentación negociada.","group":"Power","direction":"power"},
+        {"id":"A5","signal":"CC1","description":"Canal de configuración 1.","group":"Configuration","direction":"bidirectional"}, {"id":"A6","signal":"D+","description":"USB 2.0 positivo.","group":"USB 2.0","direction":"bidirectional"},
+        {"id":"A7","signal":"D-","description":"USB 2.0 negativo.","group":"USB 2.0","direction":"bidirectional"}, {"id":"A8","signal":"SBU1","description":"Canal lateral 1 para modos alternativos.","group":"Sideband","direction":"bidirectional"},
+        {"id":"A9","signal":"VBUS","description":"Alimentación negociada.","group":"Power","direction":"power"}, {"id":"A10","signal":"SSRX2-","description":"Par RX2 negativo.","group":"High speed","direction":"bidirectional"},
+        {"id":"A11","signal":"SSRX2+","description":"Par RX2 positivo.","group":"High speed","direction":"bidirectional"}, {"id":"A12","signal":"GND","description":"Retorno de potencia.","group":"Power","direction":"ground"},
+        {"id":"B1","signal":"GND","description":"Retorno de potencia.","group":"Power","direction":"ground"}, {"id":"B2","signal":"SSTX2+","description":"Par TX2 positivo.","group":"High speed","direction":"bidirectional"},
+        {"id":"B3","signal":"SSTX2-","description":"Par TX2 negativo.","group":"High speed","direction":"bidirectional"}, {"id":"B4","signal":"VBUS","description":"Alimentación negociada.","group":"Power","direction":"power"},
+        {"id":"B5","signal":"CC2","description":"Canal de configuración 2; puede actuar como VCONN según orientación y papel.","group":"Configuration","direction":"bidirectional"}, {"id":"B6","signal":"D+","description":"USB 2.0 positivo duplicado en receptáculo.","group":"USB 2.0","direction":"bidirectional"},
+        {"id":"B7","signal":"D-","description":"USB 2.0 negativo duplicado en receptáculo.","group":"USB 2.0","direction":"bidirectional"}, {"id":"B8","signal":"SBU2","description":"Canal lateral 2 para modos alternativos.","group":"Sideband","direction":"bidirectional"},
+        {"id":"B9","signal":"VBUS","description":"Alimentación negociada.","group":"Power","direction":"power"}, {"id":"B10","signal":"SSRX1-","description":"Par RX1 negativo.","group":"High speed","direction":"bidirectional"},
+        {"id":"B11","signal":"SSRX1+","description":"Par RX1 positivo.","group":"High speed","direction":"bidirectional"}, {"id":"B12","signal":"GND","description":"Retorno de potencia.","group":"Power","direction":"ground"}
+      ],
+      "variants": ["Existen receptáculos, plugs y cables USB 2.0, full-featured y power-only con contactos implementados distintos.", "La función efectiva de los pares de alta velocidad depende de la orientación, el controlador y los modos alternativos negociados."],
+      "safety_notes": ["No unir CC1 y CC2 ni aplicar tensión fija a VBUS sin implementar el papel y la negociación correspondientes.", "USB Type-C® y USB-C® son marcas registradas de USB-IF."],
+      "review": {"status":"source_identified","confidence":0.94,"scope":"Fuente primaria localizada y estructura completa; falta fijar release y tabla concreta para elevar a reviewed.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-USBIF-TYPEC","SRC-USBIF-DOCUMENTS","SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[38,39,40]},
+      "search_terms": ["usb c","type c","power delivery","cc1","cc2","vconn","sbu"]
+    },
+    {
+      "id": "hdmi-type-a-receptacle",
+      "canonical_name": "HDMI Type-A · receptáculo",
+      "aliases": ["HDMI", "HDMI hembra", "HDMI 19 pines"],
+      "category": "video", "interface": "HDMI", "form_factor": "Type-A 19 contactos", "gender": "receptacle",
+      "view": {"perspective":"mating_face","orientation_note":"Vista frontal del receptáculo del equipo, lado ancho arriba. Dos filas escalonadas; no usar como vista de soldadura.","key_position":"Lado ancho arriba"},
+      "contacts": [
+        {"id":"1","signal":"TMDS/FRL Data2+","description":"Canal o lane 2 positivo.","group":"High speed","direction":"bidirectional"}, {"id":"2","signal":"Data2 Shield","description":"Pantalla del canal 2.","group":"Shield","direction":"ground"}, {"id":"3","signal":"TMDS/FRL Data2-","description":"Canal o lane 2 negativo.","group":"High speed","direction":"bidirectional"},
+        {"id":"4","signal":"TMDS/FRL Data1+","description":"Canal o lane 1 positivo.","group":"High speed","direction":"bidirectional"}, {"id":"5","signal":"Data1 Shield","description":"Pantalla del canal 1.","group":"Shield","direction":"ground"}, {"id":"6","signal":"TMDS/FRL Data1-","description":"Canal o lane 1 negativo.","group":"High speed","direction":"bidirectional"},
+        {"id":"7","signal":"TMDS/FRL Data0+","description":"Canal o lane 0 positivo.","group":"High speed","direction":"bidirectional"}, {"id":"8","signal":"Data0 Shield","description":"Pantalla del canal 0.","group":"Shield","direction":"ground"}, {"id":"9","signal":"TMDS/FRL Data0-","description":"Canal o lane 0 negativo.","group":"High speed","direction":"bidirectional"},
+        {"id":"10","signal":"TMDS Clock+ / FRL Lane3+","description":"Reloj TMDS o lane FRL 3 positivo.","group":"High speed","direction":"bidirectional"}, {"id":"11","signal":"Clock/Lane3 Shield","description":"Pantalla del reloj o lane 3.","group":"Shield","direction":"ground"}, {"id":"12","signal":"TMDS Clock- / FRL Lane3-","description":"Reloj TMDS o lane FRL 3 negativo.","group":"High speed","direction":"bidirectional"},
+        {"id":"13","signal":"CEC","description":"Control de electrónica de consumo.","group":"Control","direction":"bidirectional"}, {"id":"14","signal":"HEAC+ / Utility","description":"Canal auxiliar; función depende de la versión y del equipo.","group":"Auxiliary","direction":"bidirectional"}, {"id":"15","signal":"DDC SCL","description":"Reloj del canal DDC.","group":"DDC","direction":"bidirectional"},
+        {"id":"16","signal":"DDC SDA","description":"Datos del canal DDC.","group":"DDC","direction":"bidirectional"}, {"id":"17","signal":"DDC/CEC GND","description":"Retorno para DDC y CEC.","group":"Ground","direction":"ground"}, {"id":"18","signal":"+5 V","description":"Alimentación auxiliar del interfaz.","group":"Power","direction":"power"},
+        {"id":"19","signal":"Hot Plug Detect / HEAC-","description":"Detección de conexión; función HEAC según versión.","group":"Control","direction":"bidirectional"}
+      ],
+      "variants": ["Type-C y Type-D tienen forma y numeración distintas.", "ARC/eARC, Ethernet y FRL dependen de versión, cable y capacidades negociadas."],
+      "safety_notes": ["Los pares de alta velocidad requieren impedancia y apantallamiento controlados; un simple cableado de continuidad no garantiza funcionamiento."],
+      "review": {"status":"source_identified","confidence":0.86,"scope":"Tabla completa migrada; la especificación detallada es licenciada y falta registrar revisión/cláusula exacta.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-HDMI-SPEC","SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[54,55]},
+      "search_terms": ["video","tmds","frl","cec","ddc","arc","earc"]
+    },
+    {
+      "id": "displayport-full-receptacle",
+      "canonical_name": "DisplayPort full-size · receptáculo",
+      "aliases": ["DisplayPort", "DP", "Display Port 20 pines"],
+      "category": "video", "interface": "DisplayPort", "form_factor": "Full-size 20 contactos", "gender": "receptacle",
+      "view": {"perspective":"mating_face","orientation_note":"Vista frontal del receptáculo, esquina biselada como referencia. Confirmar la orientación física con el plano mecánico del fabricante.","key_position":"Esquina biselada visible"},
+      "contacts": [
+        {"id":"1","signal":"ML Lane 0+","description":"Main Link lane 0 positiva.","group":"Main Link","direction":"bidirectional"}, {"id":"2","signal":"GND","description":"Retorno de lane 0.","group":"Ground","direction":"ground"}, {"id":"3","signal":"ML Lane 0-","description":"Main Link lane 0 negativa.","group":"Main Link","direction":"bidirectional"},
+        {"id":"4","signal":"ML Lane 1+","description":"Main Link lane 1 positiva.","group":"Main Link","direction":"bidirectional"}, {"id":"5","signal":"GND","description":"Retorno de lane 1.","group":"Ground","direction":"ground"}, {"id":"6","signal":"ML Lane 1-","description":"Main Link lane 1 negativa.","group":"Main Link","direction":"bidirectional"},
+        {"id":"7","signal":"ML Lane 2+","description":"Main Link lane 2 positiva.","group":"Main Link","direction":"bidirectional"}, {"id":"8","signal":"GND","description":"Retorno de lane 2.","group":"Ground","direction":"ground"}, {"id":"9","signal":"ML Lane 2-","description":"Main Link lane 2 negativa.","group":"Main Link","direction":"bidirectional"},
+        {"id":"10","signal":"ML Lane 3+","description":"Main Link lane 3 positiva.","group":"Main Link","direction":"bidirectional"}, {"id":"11","signal":"GND","description":"Retorno de lane 3.","group":"Ground","direction":"ground"}, {"id":"12","signal":"ML Lane 3-","description":"Main Link lane 3 negativa.","group":"Main Link","direction":"bidirectional"},
+        {"id":"13","signal":"CONFIG1","description":"Configuración; uso según plug y adaptador.","group":"Configuration","direction":"passive"}, {"id":"14","signal":"CONFIG2","description":"Configuración; uso según plug y adaptador.","group":"Configuration","direction":"passive"}, {"id":"15","signal":"AUX+","description":"Canal auxiliar positivo.","group":"AUX","direction":"bidirectional"},
+        {"id":"16","signal":"GND","description":"Retorno del canal auxiliar.","group":"Ground","direction":"ground"}, {"id":"17","signal":"AUX-","description":"Canal auxiliar negativo.","group":"AUX","direction":"bidirectional"}, {"id":"18","signal":"HPD","description":"Hot Plug Detect.","group":"Control","direction":"input"},
+        {"id":"19","signal":"RETURN","description":"Retorno de alimentación auxiliar.","group":"Power","direction":"ground"}, {"id":"20","signal":"DP_PWR","description":"Alimentación auxiliar del interfaz; no usar para alimentar cables convencionales sin comprobar la aplicación.","group":"Power","direction":"power"}
+      ],
+      "variants": ["Mini DisplayPort usa otra geometría.", "Los adaptadores activos o pasivos pueden dar funciones específicas a CONFIG1/CONFIG2."],
+      "safety_notes": ["No cortocircuitar DP_PWR entre dos fuentes; verificar el diseño del cable y la función del equipo."],
+      "review": {"status":"source_identified","confidence":0.82,"scope":"Tabla completa migrada; VESA limita el acceso público a la especificación detallada y falta referencia de cláusula.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-VESA-DP","SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[61,62]},
+      "search_terms": ["display port","dp","main link","aux","hpd","display"]
+    },
+    {
+      "id": "vga-de15-receptacle",
+      "canonical_name": "VGA DE-15 · receptáculo",
+      "aliases": ["VGA", "HD-15", "D-Sub 15 vídeo"],
+      "category": "video", "interface": "VGA analógico", "form_factor": "DE-15 tres filas", "gender": "receptacle",
+      "view": {"perspective":"mating_face","orientation_note":"Vista frontal del receptáculo del equipo, fila de cinco contactos superior; pin 1 arriba a la izquierda.","key_position":"Fila de 5 contactos arriba"},
+      "contacts": [
+        {"id":"1","signal":"RED","description":"Vídeo analógico rojo.","group":"Video","direction":"output"}, {"id":"2","signal":"GREEN","description":"Vídeo analógico verde.","group":"Video","direction":"output"}, {"id":"3","signal":"BLUE","description":"Vídeo analógico azul.","group":"Video","direction":"output"}, {"id":"4","signal":"ID2 / Reserved","description":"Identificación histórica o reservado según implementación.","group":"Legacy","direction":"implementation_dependent"}, {"id":"5","signal":"GND","description":"Masa o retorno.","group":"Ground","direction":"ground"},
+        {"id":"6","signal":"RED GND","description":"Retorno del canal rojo.","group":"Ground","direction":"ground"}, {"id":"7","signal":"GREEN GND","description":"Retorno del canal verde.","group":"Ground","direction":"ground"}, {"id":"8","signal":"BLUE GND","description":"Retorno del canal azul.","group":"Ground","direction":"ground"}, {"id":"9","signal":"KEY / +5 V","description":"Ausente en algunos conectores antiguos; +5 V para DDC en implementaciones compatibles.","group":"DDC","direction":"implementation_dependent"}, {"id":"10","signal":"SYNC GND","description":"Retorno de sincronismos.","group":"Ground","direction":"ground"},
+        {"id":"11","signal":"ID0 / Reserved","description":"Identificación histórica o reservado.","group":"Legacy","direction":"implementation_dependent"}, {"id":"12","signal":"DDC SDA / ID1","description":"Datos DDC o identificación histórica.","group":"DDC","direction":"bidirectional"}, {"id":"13","signal":"H-SYNC","description":"Sincronismo horizontal.","group":"Sync","direction":"output"}, {"id":"14","signal":"V-SYNC","description":"Sincronismo vertical.","group":"Sync","direction":"output"}, {"id":"15","signal":"DDC SCL / ID3","description":"Reloj DDC o identificación histórica.","group":"DDC","direction":"bidirectional"}
+      ],
+      "variants": ["Equipos antiguos pueden usar pines de identificación en lugar de DDC.", "La presencia del contacto 9 y su función no es universal en hardware antiguo."],
+      "safety_notes": ["No inyectar alimentación en el pin 9 sin identificar el equipo."],
+      "review": {"status":"source_identified","confidence":0.7,"scope":"Ficha histórica útil para diagnóstico; falta fijar una fuente primaria accesible y separar variantes por época.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[66]},
+      "search_terms": ["de15","hd15","rgb","monitor","analógico"]
+    },
+    {
+      "id": "rs232-de9-dte-plug",
+      "canonical_name": "RS-232 DE-9 · DTE",
+      "aliases": ["DB9 serie", "DE9 RS232", "Puerto COM"],
+      "category": "serial_industrial", "interface": "TIA-232 / RS-232", "form_factor": "DE-9", "gender": "plug",
+      "view": {"perspective":"mating_face","orientation_note":"Vista frontal del conector DTE macho: fila de cinco contactos arriba, numerados 1–5 de izquierda a derecha; fila inferior 6–9.","key_position":"Fila de 5 contactos arriba"},
+      "contacts": [
+        {"id":"1","signal":"DCD","description":"Data Carrier Detect.","group":"Control","direction":"input"}, {"id":"2","signal":"RXD","description":"Datos recibidos por el DTE.","group":"Data","direction":"input"}, {"id":"3","signal":"TXD","description":"Datos transmitidos por el DTE.","group":"Data","direction":"output"}, {"id":"4","signal":"DTR","description":"Data Terminal Ready.","group":"Control","direction":"output"}, {"id":"5","signal":"Signal GND","description":"Referencia de señal.","group":"Ground","direction":"ground"},
+        {"id":"6","signal":"DSR","description":"Data Set Ready.","group":"Control","direction":"input"}, {"id":"7","signal":"RTS","description":"Request To Send.","group":"Control","direction":"output"}, {"id":"8","signal":"CTS","description":"Clear To Send.","group":"Control","direction":"input"}, {"id":"9","signal":"RI","description":"Ring Indicator.","group":"Control","direction":"input"}
+      ],
+      "variants": ["En DCE las direcciones se interpretan desde el otro equipo.", "Muchos equipos industriales reutilizan físicamente el DE-9 con pinouts no RS-232."],
+      "safety_notes": ["No asumir niveles TTL/CMOS: RS-232 usa niveles eléctricos diferentes y requiere transceptor apropiado."],
+      "review": {"status":"source_identified","confidence":0.88,"scope":"Pinout DTE normalizado; pendiente registrar edición y tabla exacta de TIA-232.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-EIA-RS232","SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[88]},
+      "search_terms": ["serie","com","dte","dce","txd","rxd","db9"]
+    },
+    {
+      "id": "canopen-de9-device",
+      "canonical_name": "CANopen DE-9 · dispositivo",
+      "aliases": ["CAN DB9", "CANopen D-Sub 9", "CiA DE9"],
+      "category": "serial_industrial", "interface": "CAN / CANopen", "form_factor": "DE-9", "gender": "device_side",
+      "view": {"perspective":"mating_face","orientation_note":"Vista de cara de acoplamiento; confirme si el equipo monta plug o receptáculo antes de trasladar la numeración.","key_position":"Carcasa trapezoidal"},
+      "contacts": [
+        {"id":"1","signal":"Reserved","description":"Reservado; no conectar salvo documentación específica.","group":"Reserved","direction":"implementation_dependent"}, {"id":"2","signal":"CAN_L","description":"Línea CAN baja.","group":"CAN","direction":"bidirectional"}, {"id":"3","signal":"CAN_GND","description":"Referencia CAN opcional según red.","group":"Ground","direction":"ground"}, {"id":"4","signal":"Reserved","description":"Reservado.","group":"Reserved","direction":"implementation_dependent"}, {"id":"5","signal":"CAN_SHLD","description":"Pantalla opcional.","group":"Shield","direction":"passive"},
+        {"id":"6","signal":"GND / optional","description":"Retorno opcional de alimentación.","group":"Power","direction":"ground"}, {"id":"7","signal":"CAN_H","description":"Línea CAN alta.","group":"CAN","direction":"bidirectional"}, {"id":"8","signal":"Reserved","description":"Reservado.","group":"Reserved","direction":"implementation_dependent"}, {"id":"9","signal":"CAN_V+ / optional","description":"Alimentación opcional de transceptor o dispositivo.","group":"Power","direction":"power"}
+      ],
+      "variants": ["CAN no impone un conector universal; automoción, maquinaria y fabricantes usan otros pinouts.", "La alimentación en 6/9 es opcional y su tensión no debe suponerse."],
+      "safety_notes": ["Verificar terminación, potencial de masa y aislamiento antes de conectar analizadores o equipos alimentados."],
+      "review": {"status":"source_identified","confidence":0.85,"scope":"Recomendación CiA localizada; falta cerrar versión, sección y orientación física exactas.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-CIA-303","SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[96]},
+      "search_terms": ["can","canopen","can_h","can_l","cia","bus"]
+    },
+    {
+      "id": "m12-d-coded-ethernet-receptacle",
+      "canonical_name": "M12 D-coded · Ethernet 100 Mbit/s",
+      "aliases": ["M12 D", "M12 Ethernet 4 pines", "M12 D-code"],
+      "category": "serial_industrial", "interface": "Ethernet industrial 100BASE-TX", "form_factor": "M12 D-coded 4 contactos", "gender": "receptacle",
+      "view": {"perspective":"mating_face","orientation_note":"Vista frontal del receptáculo. La codificación mecánica D es parte de la identificación; no usar la posición angular de otra codificación M12.","key_position":"D-coded"},
+      "contacts": [
+        {"id":"1","signal":"TX+","description":"Par de transmisión positivo en la asignación indicada.","group":"TX","direction":"output"}, {"id":"2","signal":"RX+","description":"Par de recepción positivo en la asignación indicada.","group":"RX","direction":"input"}, {"id":"3","signal":"TX-","description":"Par de transmisión negativo.","group":"TX","direction":"output"}, {"id":"4","signal":"RX-","description":"Par de recepción negativo.","group":"RX","direction":"input"}, {"id":"Shell","signal":"Shield","description":"Pantalla envolvente cuando está implementada.","group":"Shield","direction":"passive"}
+      ],
+      "variants": ["El papel TX/RX puede expresarse desde el equipo; Auto-MDI/MDIX puede alterar la función efectiva.", "M12 A, B, D, X, L y otras codificaciones no comparten asignación ni llave."],
+      "safety_notes": ["No forzar el acoplamiento entre codificaciones M12 diferentes."],
+      "review": {"status":"source_identified","confidence":0.74,"scope":"Asignación migrada y familia IEC identificada; pendiente edición, cláusula y contraste de orientación.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-IEC-61076","SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[100,101]},
+      "search_terms": ["m12","d code","profinet","ethernet industrial","100base-tx"]
+    },
+    {
+      "id": "m12-x-coded-ethernet-receptacle",
+      "canonical_name": "M12 X-coded · Ethernet cuatro pares",
+      "aliases": ["M12 X", "M12 Ethernet 8 pines", "M12 X-code"],
+      "category": "serial_industrial", "interface": "Ethernet industrial de cuatro pares", "form_factor": "M12 X-coded 8 contactos", "gender": "receptacle",
+      "view": {"perspective":"mating_face","orientation_note":"Vista frontal del receptáculo X-coded; cuatro cuadrantes apantallados. La numeración angular debe contrastarse con el plano del conector concreto.","key_position":"Separador interno en X"},
+      "contacts": [
+        {"id":"1","signal":"BI_DA+","description":"Par A positivo.","group":"Par A","direction":"bidirectional"}, {"id":"2","signal":"BI_DA-","description":"Par A negativo.","group":"Par A","direction":"bidirectional"}, {"id":"3","signal":"BI_DB+","description":"Par B positivo.","group":"Par B","direction":"bidirectional"}, {"id":"4","signal":"BI_DB-","description":"Par B negativo.","group":"Par B","direction":"bidirectional"},
+        {"id":"5","signal":"BI_DD+","description":"Par D positivo.","group":"Par D","direction":"bidirectional"}, {"id":"6","signal":"BI_DD-","description":"Par D negativo.","group":"Par D","direction":"bidirectional"}, {"id":"7","signal":"BI_DC-","description":"Par C negativo.","group":"Par C","direction":"bidirectional"}, {"id":"8","signal":"BI_DC+","description":"Par C positivo.","group":"Par C","direction":"bidirectional"}, {"id":"Shell","signal":"Shield","description":"Pantalla 360° y separación entre pares según construcción.","group":"Shield","direction":"passive"}
+      ],
+      "variants": ["La asignación lógica de pares y la numeración física requieren comprobar la edición de IEC y el fabricante.", "No confundir con M12 D-coded de cuatro contactos."],
+      "safety_notes": ["La categoría de transmisión depende del conjunto completo: conector, cable, terminación, pantalla e instalación."],
+      "review": {"status":"source_identified","confidence":0.68,"scope":"Grupos y señales estructurados; numeración angular pendiente de verificación exacta antes de uso de cableado.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-IEC-61076","SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[99]},
+      "search_terms": ["m12 x","gigabit","ethernet industrial","cuatro pares"]
+    },
+    {
+      "id": "sata-data-device-receptacle",
+      "canonical_name": "SATA Data · dispositivo",
+      "aliases": ["SATA 7 pines", "Serial ATA datos", "SATA data"],
+      "category": "storage", "interface": "Serial ATA", "form_factor": "SATA data 7 contactos", "gender": "device_side",
+      "view": {"perspective":"mating_face","orientation_note":"Vista del conector del dispositivo mirando la cara de acoplamiento, llave en L como referencia; confirme el plano mecánico antes de cablear.","key_position":"Llave en L"},
+      "contacts": [
+        {"id":"1","signal":"GND","description":"Retorno.","group":"Ground","direction":"ground"}, {"id":"2","signal":"A+","description":"Par diferencial A positivo.","group":"Par A","direction":"bidirectional"}, {"id":"3","signal":"A-","description":"Par diferencial A negativo.","group":"Par A","direction":"bidirectional"}, {"id":"4","signal":"GND","description":"Retorno entre pares.","group":"Ground","direction":"ground"}, {"id":"5","signal":"B-","description":"Par diferencial B negativo.","group":"Par B","direction":"bidirectional"}, {"id":"6","signal":"B+","description":"Par diferencial B positivo.","group":"Par B","direction":"bidirectional"}, {"id":"7","signal":"GND","description":"Retorno.","group":"Ground","direction":"ground"}
+      ],
+      "variants": ["El significado host TX/RX de los pares A/B depende del extremo; mantenga el extremo explícito.", "eSATA, mSATA y otros formatos no usan necesariamente esta geometría."],
+      "safety_notes": ["No confundir con el conector SATA Power de 15 contactos."],
+      "review": {"status":"source_identified","confidence":0.8,"scope":"Asignación base migrada; falta versión y tabla exactas de SATA-IO y contraste de extremo.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-SATAIO","SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[115]},
+      "search_terms": ["disco duro","ssd","serial ata","sata data"]
+    },
+    {
+      "id": "sata-power-device-receptacle",
+      "canonical_name": "SATA Power · dispositivo",
+      "aliases": ["SATA alimentación", "SATA 15 pines", "SATA power"],
+      "category": "power", "interface": "Serial ATA power", "form_factor": "SATA power 15 contactos", "gender": "device_side",
+      "view": {"perspective":"mating_face","orientation_note":"Vista del dispositivo por la cara de acoplamiento, llave en L como referencia. No trasladar la numeración al reverso de una PCB sin invertir la vista.","key_position":"Llave en L"},
+      "contacts": [
+        {"id":"1","signal":"+3.3 V","description":"Rail de 3,3 V.","group":"3.3 V","direction":"power"}, {"id":"2","signal":"+3.3 V","description":"Rail de 3,3 V.","group":"3.3 V","direction":"power"}, {"id":"3","signal":"+3.3 V / PWDIS","description":"3,3 V o Power Disable según revisión y unidad.","group":"3.3 V","direction":"implementation_dependent"},
+        {"id":"4","signal":"GND","description":"Retorno.","group":"Ground","direction":"ground"}, {"id":"5","signal":"GND","description":"Retorno; función de precarga según construcción.","group":"Ground","direction":"ground"}, {"id":"6","signal":"GND","description":"Retorno.","group":"Ground","direction":"ground"},
+        {"id":"7","signal":"+5 V","description":"Rail de 5 V.","group":"5 V","direction":"power"}, {"id":"8","signal":"+5 V","description":"Rail de 5 V.","group":"5 V","direction":"power"}, {"id":"9","signal":"+5 V","description":"Rail de 5 V; función de precarga según construcción.","group":"5 V","direction":"power"},
+        {"id":"10","signal":"GND","description":"Retorno.","group":"Ground","direction":"ground"}, {"id":"11","signal":"GND / activity / staggered spin-up","description":"Función dependiente del dispositivo y de la implementación.","group":"Control","direction":"implementation_dependent"}, {"id":"12","signal":"GND","description":"Retorno.","group":"Ground","direction":"ground"},
+        {"id":"13","signal":"+12 V","description":"Rail de 12 V; función de precarga según construcción.","group":"12 V","direction":"power"}, {"id":"14","signal":"+12 V","description":"Rail de 12 V.","group":"12 V","direction":"power"}, {"id":"15","signal":"+12 V","description":"Rail de 12 V.","group":"12 V","direction":"power"}
+      ],
+      "variants": ["PWDIS en el contacto 3 depende de revisión, host, adaptador y unidad.", "El contacto 11 puede participar en funciones opcionales y no debe puentearse por suposición."],
+      "safety_notes": ["Un adaptador que inyecte 3,3 V puede impedir el arranque de unidades con PWDIS; compruebe la documentación exacta.", "No alimentar sin comprobar rail, polaridad y capacidad de corriente."],
+      "review": {"status":"source_identified","confidence":0.8,"scope":"Tabla completa migrada con variantes críticas; falta versión y cláusula exactas de SATA-IO.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-SATAIO","SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[119,120]},
+      "search_terms": ["alimentación disco","ssd","pwdís","power disable","3.3v","5v","12v"]
+    },
+    {
+      "id": "xlr3-balanced-audio",
+      "canonical_name": "XLR 3 · audio balanceado",
+      "aliases": ["XLR3", "Cannon 3 pines", "XLR micrófono"],
+      "category": "audio", "interface": "Audio analógico balanceado", "form_factor": "XLR 3 contactos", "gender": "not_applicable",
+      "view": {"perspective":"mating_face","orientation_note":"Vista frontal de la cara de acoplamiento. La disposición se invierte al mirar el lado de soldadura; use el número grabado en el inserto.","key_position":"Pestillo o guía arriba según modelo"},
+      "contacts": [
+        {"id":"1","signal":"Shield / GND","description":"Pantalla y referencia.","group":"Shield","direction":"ground"}, {"id":"2","signal":"Hot (+)","description":"Señal no invertida.","group":"Audio","direction":"bidirectional"}, {"id":"3","signal":"Cold (-)","description":"Señal invertida.","group":"Audio","direction":"bidirectional"}
+      ],
+      "variants": ["XLR de 4, 5 o más contactos puede utilizarse para otras funciones y no comparte este pinout.", "La alimentación phantom puede estar presente entre los conductores de señal y el pin 1 mediante el circuito correspondiente."],
+      "safety_notes": ["No conectar o desconectar equipos sensibles con phantom activo si el fabricante no lo permite."],
+      "review": {"status":"source_identified","confidence":0.78,"scope":"Convención de audio migrada; pendiente registrar estándar, edición y figura exactos.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-IEC-61076","SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[79]},
+      "search_terms": ["audio","micrófono","balanced","cannon","phantom"]
+    },
+    {
+      "id": "trrs-35mm-ctia-headset-plug",
+      "canonical_name": "TRRS 3,5 mm · CTIA headset",
+      "aliases": ["Jack 4 polos CTIA", "TRRS móvil", "Auriculares con micrófono"],
+      "category": "audio", "interface": "Audio analógico headset CTIA", "form_factor": "TRRS 3,5 mm", "gender": "plug",
+      "view": {"perspective":"logical_only","orientation_note":"Orden longitudinal desde la punta del plug hacia el cable: Tip, Ring 1, Ring 2 y Sleeve.","key_position":"Punta a cable"},
+      "contacts": [
+        {"id":"Tip","signal":"Left","description":"Canal de audio izquierdo.","group":"Audio","direction":"output"}, {"id":"Ring 1","signal":"Right","description":"Canal de audio derecho.","group":"Audio","direction":"output"}, {"id":"Ring 2","signal":"GND","description":"Retorno común en CTIA.","group":"Ground","direction":"ground"}, {"id":"Sleeve","signal":"Mic / remote","description":"Micrófono y mandos mediante red resistiva según dispositivo.","group":"Mic","direction":"input"}
+      ],
+      "variants": ["OMTP intercambia las funciones de Ring 2 y Sleeve.", "La detección de botones y micrófono depende del equipo y de su red resistiva."],
+      "safety_notes": ["Identificar CTIA u OMTP antes de fabricar adaptadores; un error suele causar falta de micrófono o audio defectuoso."],
+      "review": {"status":"source_identified","confidence":0.72,"scope":"Variante CTIA separada explícitamente; pendiente fuente primaria y especificación de tolerancias.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[80]},
+      "search_terms": ["jack","auriculares","headset","ctia","omtp","micrófono"]
+    },
+    {
+      "id": "obd2-j1962-vehicle-receptacle",
+      "canonical_name": "OBD-II SAE J1962 · vehículo",
+      "aliases": ["OBD2", "DLC 16 pines", "Conector diagnosis coche"],
+      "category": "automotive", "interface": "Diagnóstico OBD-II", "form_factor": "J1962 16 contactos", "gender": "receptacle",
+      "view": {"perspective":"mating_face","orientation_note":"Vista frontal del conector del vehículo, fila 1–8 arriba y 9–16 abajo. Confirmar la geometría y numeración moldeada.","key_position":"Forma trapezoidal, fila 1–8 arriba"},
+      "contacts": [
+        {"id":"1","signal":"OEM","description":"Asignación del fabricante; no universal.","group":"OEM","direction":"implementation_dependent"}, {"id":"2","signal":"SAE J1850 Bus+","description":"Bus J1850 positivo cuando está implementado.","group":"Legacy bus","direction":"bidirectional"}, {"id":"3","signal":"OEM","description":"Asignación del fabricante; no universal.","group":"OEM","direction":"implementation_dependent"}, {"id":"4","signal":"Chassis GND","description":"Masa de chasis.","group":"Ground","direction":"ground"}, {"id":"5","signal":"Signal GND","description":"Referencia de señal.","group":"Ground","direction":"ground"}, {"id":"6","signal":"CAN_H","description":"CAN high para ISO 15765 cuando está implementado.","group":"CAN","direction":"bidirectional"}, {"id":"7","signal":"K-Line","description":"Línea K para protocolos compatibles.","group":"Diagnostic bus","direction":"bidirectional"}, {"id":"8","signal":"OEM","description":"Asignación del fabricante; no universal.","group":"OEM","direction":"implementation_dependent"},
+        {"id":"9","signal":"OEM","description":"Asignación del fabricante; no universal.","group":"OEM","direction":"implementation_dependent"}, {"id":"10","signal":"SAE J1850 Bus-","description":"Bus J1850 negativo cuando está implementado.","group":"Legacy bus","direction":"bidirectional"}, {"id":"11","signal":"OEM","description":"Asignación del fabricante; no universal.","group":"OEM","direction":"implementation_dependent"}, {"id":"12","signal":"OEM","description":"Asignación del fabricante; no universal.","group":"OEM","direction":"implementation_dependent"}, {"id":"13","signal":"OEM","description":"Asignación del fabricante; no universal.","group":"OEM","direction":"implementation_dependent"}, {"id":"14","signal":"CAN_L","description":"CAN low para ISO 15765 cuando está implementado.","group":"CAN","direction":"bidirectional"}, {"id":"15","signal":"L-Line","description":"Línea L opcional en protocolos antiguos.","group":"Diagnostic bus","direction":"bidirectional"}, {"id":"16","signal":"Battery +","description":"Positivo de batería sin conmutar según implementación del vehículo.","group":"Power","direction":"power"}
+      ],
+      "variants": ["Los contactos OEM no tienen asignación universal y pueden transportar buses o tensiones del fabricante.", "La presencia del conector no significa que todos los protocolos estén implementados."],
+      "safety_notes": ["El contacto 16 puede permanecer alimentado con el vehículo parado; use protección y limite corriente.", "No sondee contactos OEM con cargas o tensión sin documentación del vehículo."],
+      "review": {"status":"source_identified","confidence":0.83,"scope":"Funciones reguladas y pines OEM separados; pendiente contrastar edición exacta de J1962 y normas de protocolo.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-SAE-J1962","SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[104]},
+      "search_terms": ["diagnosis","coche","vehículo","dlc","can","k line","j1850"]
+    },
+    {
+      "id": "j1939-9pin-vehicle-diagnostic",
+      "canonical_name": "SAE J1939 · diagnóstico circular 9 vías",
+      "aliases": ["J1939 9 pin", "Deutsch 9 pines camión", "Diagnóstico pesado"],
+      "category": "automotive", "interface": "SAE J1939 / CAN vehículo pesado", "form_factor": "Circular 9 vías tipo Deutsch", "gender": "device_side",
+      "view": {"perspective":"mating_face","orientation_note":"Vista de cara de acoplamiento; el color de llave, la serie física y la revisión del vehículo deben identificarse antes de usar esta ficha.","key_position":"Llave y color por variante"},
+      "contacts": [
+        {"id":"A","signal":"GND","description":"Retorno de alimentación.","group":"Power","direction":"ground"}, {"id":"B","signal":"Battery +","description":"Alimentación del vehículo.","group":"Power","direction":"power"}, {"id":"C","signal":"CAN_H / J1939+","description":"Línea alta del bus principal en la variante indicada.","group":"CAN","direction":"bidirectional"}, {"id":"D","signal":"CAN_L / J1939-","description":"Línea baja del bus principal en la variante indicada.","group":"CAN","direction":"bidirectional"}, {"id":"E","signal":"Shield / implementation dependent","description":"Pantalla o función dependiente de variante.","group":"Variant","direction":"implementation_dependent"}, {"id":"F","signal":"OEM / secondary bus","description":"Función dependiente de vehículo y variante.","group":"OEM","direction":"implementation_dependent"}, {"id":"G","signal":"OEM / secondary bus","description":"Función dependiente de vehículo y variante.","group":"OEM","direction":"implementation_dependent"}, {"id":"H","signal":"OEM / secondary bus","description":"Función dependiente de vehículo y variante.","group":"OEM","direction":"implementation_dependent"}, {"id":"J","signal":"OEM / secondary bus","description":"Función dependiente de vehículo y variante.","group":"OEM","direction":"implementation_dependent"}
+      ],
+      "variants": ["Hay conectores verde/negro y revisiones con buses principal y secundario asignados de forma distinta.", "La letra I se omite en la marcación de contactos."],
+      "safety_notes": ["Esta ficha no debe usarse para cablear los contactos E–J sin documentación del vehículo y del adaptador exactos.", "Proteger la entrada de batería y evitar unir masas entre equipos sin analizar diferencias de potencial."],
+      "review": {"status":"pending_review","confidence":0.45,"scope":"Solo A–D se conservan como orientación inicial; E–J quedan deliberadamente pendientes por variantes y documentación insuficiente.","checked_at":"2026-08-22"},
+      "source_ids": ["SRC-USER-MANUAL-V8"], "source_pdf": {"edition":8,"pages":[109]},
+      "search_terms": ["camión","maquinaria","heavy duty","deutsch","can bus"]
+    }
+  ]
+}

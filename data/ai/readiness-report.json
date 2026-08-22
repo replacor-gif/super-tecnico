@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-08-22T20:07:30.466436+00:00",
+  "generated_at_utc": "2026-08-22T20:58:55.479107+00:00",
   "status": "public_free_preview_one_tool",
-  "readiness_score_percent": 66,
+  "readiness_score_percent": 68,
   "score_meaning": "Preparación técnica global; solo la búsqueda de normativa tiene ejecución pública gratuita.",
   "content_inventory": {
     "brands": 30,
@@ -17,6 +17,11 @@
     "component_specifications": 8363,
     "components_reviewed": 8205,
     "components_historical": 3327,
+    "connector_records": 17,
+    "connector_contacts": 185,
+    "connector_records_reviewed": 0,
+    "connector_records_source_identified": 16,
+    "connector_records_pending_review": 1,
     "electroia_symbols": 460,
     "electroia_engine_symbols": 474,
     "electroia_internal_templates": 14,
@@ -56,6 +61,12 @@
       "title": "Calidad y confianza explícitas",
       "status": "pass",
       "evidence": "30/30 marcas con informe y componentes con confidence"
+    },
+    {
+      "id": "connector_core",
+      "title": "Conectores normalizados para personas y motores",
+      "status": "pass",
+      "evidence": "17 fichas, 185 contactos, orientación y estado de revisión explícitos"
     },
     {
       "id": "source_traceability",

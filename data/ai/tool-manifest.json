@@ -6,7 +6,7 @@
   "execution_enabled": true,
   "execution_scope": ["supertecnico_search_regulations"],
   "provider_neutral": true,
-  "instructions": "Primero usa supertecnico_check_coverage. Solicita después solo el nivel mínimo que resuelva el caso. Conserva marcas, familias, unidades y lugar de lectura; no mezcles variantes. Muestra incertidumbre y procedencia. Usa ElectroIA únicamente cuando ya hayas decidido la topología y los componentes.",
+  "instructions": "Primero usa supertecnico_check_coverage. Solicita después solo el nivel mínimo que resuelva el caso. Conserva marcas, familias, unidades, lugar de lectura, lado y orientación; no mezcles variantes. Muestra incertidumbre y procedencia. Usa ElectroIA únicamente cuando ya hayas decidido la topología y los componentes.",
   "routing_policy": {
     "preflight_first": true,
     "smallest_sufficient_result": true,
@@ -91,7 +91,7 @@
         "additionalProperties": false,
         "required": ["domain", "query"],
         "properties": {
-          "domain": {"type": "string", "enum": ["hvac", "refrigeration", "electronics", "components", "field_cases", "diagrams", "regulations", "drainage"]},
+          "domain": {"type": "string", "enum": ["hvac", "refrigeration", "electronics", "components", "connectors", "field_cases", "diagrams", "regulations", "drainage"]},
           "query": {"type": "string", "minLength": 2, "maxLength": 300},
           "brand": {"type": "string", "maxLength": 80},
           "model_or_family": {"type": "string", "maxLength": 120}
@@ -113,7 +113,7 @@
         "additionalProperties": false,
         "required": ["domain", "query", "objective"],
         "properties": {
-          "domain": {"type": "string", "enum": ["hvac", "refrigeration", "electronics", "components", "field_cases", "diagrams", "regulations", "drainage"]},
+          "domain": {"type": "string", "enum": ["hvac", "refrigeration", "electronics", "components", "connectors", "field_cases", "diagrams", "regulations", "drainage"]},
           "query": {"type": "string", "minLength": 2, "maxLength": 300},
           "objective": {"type": "string", "minLength": 3, "maxLength": 300},
           "source_ids": {"type": "array", "maxItems": 20, "items": {"type": "string", "maxLength": 180}},
@@ -217,7 +217,7 @@
         "additionalProperties": false,
         "required": ["domain", "answer"],
         "properties": {
-          "domain": {"type": "string", "enum": ["hvac", "refrigeration", "electronics", "components", "diagrams", "regulations", "drainage"]},
+          "domain": {"type": "string", "enum": ["hvac", "refrigeration", "electronics", "components", "connectors", "diagrams", "regulations", "drainage"]},
           "answer": {"type": "string", "minLength": 10, "maxLength": 6000},
           "source_ids": {"type": "array", "maxItems": 30, "items": {"type": "string", "maxLength": 180}},
           "strictness": {"type": "string", "enum": ["safety_critical", "technical", "informational"], "default": "technical"}
@@ -307,6 +307,40 @@
           "application": {"type": "string", "maxLength": 240}
         }
       }
+    },
+    {
+      "name": "supertecnico_search_connectors",
+      "title": "Buscar conectores y pinouts",
+      "description": "Busca por nombre, interfaz, forma o señal y conserva lado, vista, variante, estado de revisión y procedencia.",
+      "state": "public_browser_beta_remote_planned",
+      "result_level": "basic",
+      "billing_tier": "free_preview_browser",
+      "target_output_tokens": 500,
+      "delegate": "../connectors/tool-manifest.json#supertecnico_search_connectors",
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["query"],
+        "properties": {
+          "query": {"type": "string", "minLength": 1, "maxLength": 120},
+          "category": {"type": "string", "maxLength": 40},
+          "review_status": {"type": "string", "enum": ["reviewed", "source_identified", "pending_review"]},
+          "limit": {"type": "integer", "minimum": 1, "maximum": 20, "default": 8}
+        }
+      }
+    },
+    {
+      "name": "supertecnico_get_connector",
+      "title": "Obtener ficha de conector",
+      "description": "Devuelve contactos, orientación, variantes, advertencias y fuentes de un conector ya identificado.",
+      "state": "public_browser_beta_remote_planned",
+      "result_level": "basic",
+      "billing_tier": "free_preview_browser",
+      "target_output_tokens": 800,
+      "delegate": "../connectors/tool-manifest.json#supertecnico_get_connector",
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {"type": "object", "additionalProperties": false, "required": ["connector_id"], "properties": {"connector_id": {"type": "string", "minLength": 3, "maxLength": 80}}}
     },
     {
       "name": "supertecnico_search_field_cases",

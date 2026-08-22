@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="google-adsense-account" content="ca-pub-6950924617837531">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Buscador técnico de conectores, pinouts, variantes, orientación y fuentes para técnicos e inteligencias artificiales.">
+  <meta name="theme-color" content="#101820">
+  <title>Conectores y pinouts | Super Técnico · REPLACOR</title>
+  <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
+  <link rel="stylesheet" href="assets/connectors.css?v=2">
+  <link rel="stylesheet" href="assets/app-theme.css?v=1">
+  <script src="assets/i18n.js?v=6" defer></script>
+  <script src="assets/app-shell.js?v=9" defer></script>
+  <script src="assets/connectors.js?v=1" defer></script>
+</head>
+<body>
+  <header class="connector-header">
+    <a class="connector-brand" href="index.html" aria-label="Volver al menú de Super Técnico">
+      <img src="assets/super-tecnico-logo.png" alt="">
+      <span><strong>Super Técnico</strong><small>REPLACOR Core · Conectores</small><span class="beta-badge">BETA · Base en revisión</span></span>
+    </a>
+    <nav aria-label="Navegación secundaria"><a href="componentes.html">Componentes</a><a href="simbolos.html">Simbología</a></nav>
+  </header>
+
+  <main>
+    <section class="connector-hero">
+      <div>
+        <p class="connector-eyebrow">Base técnica común · Personas + motores</p>
+        <h1>Identifica el conector antes de seguir el cable</h1>
+        <p>Busca por nombre, señal o uso. La ficha separa forma, variante, lado y orientación para evitar uno de los errores más peligrosos: aplicar un pinout correcto a la vista equivocada.</p>
+      </div>
+      <div class="connector-pulse" id="connectorStatus"><span aria-hidden="true"></span><strong>Cargando base…</strong><small>Origen + normalización</small></div>
+    </section>
+
+    <section class="connector-search" aria-labelledby="connectorSearchTitle">
+      <div>
+        <p class="connector-eyebrow">Consulta rápida</p>
+        <h2 id="connectorSearchTitle">¿Qué conector tienes delante?</h2>
+      </div>
+      <label for="connectorQuery"><span>Nombre, uso o señal</span><div><input id="connectorQuery" type="search" enterkeyhint="search" autocomplete="off" spellcheck="false" placeholder="Ej.: USB-C, CAN_H, HDMI, OBD2, SATA…"><button id="connectorSearchButton" type="button">Buscar</button></div></label>
+      <div class="connector-examples" aria-label="Búsquedas de ejemplo"><span>Prueba:</span><button type="button" data-query="USB-C">USB-C</button><button type="button" data-query="CAN_H">CAN_H</button><button type="button" data-query="HDMI">HDMI</button><button type="button" data-query="M12">M12</button><button type="button" data-query="SATA">SATA</button></div>
+      <details class="connector-filters"><summary>Acotar por familia o revisión</summary><div><label><span>Familia</span><select id="connectorCategory"><option value="">Todas</option></select></label><label><span>Estado</span><select id="connectorReview"><option value="">Todos</option><option value="reviewed">Revisado</option><option value="source_identified">Fuente identificada</option><option value="pending_review">Pendiente</option></select></label></div></details>
+    </section>
+
+    <section class="connector-workspace">
+      <aside class="connector-results" aria-labelledby="connectorResultsTitle">
+        <div class="connector-results-heading"><div><p class="connector-eyebrow">Coincidencias</p><h2 id="connectorResultsTitle">Catálogo inicial</h2></div><strong id="connectorResultCount">—</strong></div>
+        <div id="connectorResults" class="connector-result-list" aria-live="polite"></div>
+      </aside>
+
+      <section id="connectorDetail" class="connector-detail" aria-live="polite">
+        <div class="connector-empty"><span aria-hidden="true">⌁</span><h2>Selecciona una ficha</h2><p>Verás primero lo esencial: qué es, desde qué lado se mira y sus contactos. Las variantes y fuentes quedan en desplegables para no saturar.</p></div>
+      </section>
+    </section>
+
+    <section class="connector-library">
+      <div><p class="connector-eyebrow">Fuente conservada + edición útil</p><h2>El PDF no se pierde: pasa a formar parte de la biblioteca</h2><p>La edición 8 queda archivada íntegra. La nueva edición normalizada explica el método, los estados de revisión y las 17 primeras fichas estructuradas que ya puede consultar cualquier motor.</p></div>
+      <div class="connector-library-actions"><a class="primary" href="recursos/catalogo-normalizado-conectores-replacor-edicion-9.pdf" target="_blank" rel="noopener">Abrir edición normalizada</a><a href="recursos/enciclopedia-conectores-pinouts-edicion-8-origen.pdf" target="_blank" rel="noopener">Consultar PDF original</a><a href="data/connectors/tool-manifest.json" target="_blank" rel="noopener">Contrato para IAs</a></div>
+    </section>
+
+    <aside class="connector-notice"><strong>Regla de seguridad de esta base</strong><p>“Fuente identificada” no significa “pinout definitivamente revisado”. Antes de cablear potencia, vehículo, maquinaria o una variante propietaria, contrasta el fabricante y la orientación física.</p></aside>
+  </main>
+
+  <footer class="st-page-footer"><span>Super Técnico · REPLACOR Core</span><nav class="st-legal-links"><a href="actualizaciones.html">Últimas mejoras</a><a href="feedback.html?type=idea">Aportar un conector</a><a href="https://www.replacor.com/aviso-legal/" target="_blank" rel="noopener">Aviso legal</a><a href="https://www.replacor.com/politica-de-privacidad/" target="_blank" rel="noopener">Privacidad</a></nav></footer>
+  <script src="assets/ads.js?v=1" defer></script>
+  <script src="assets/page-counter.js?v=2" defer></script>
+</body>
+</html>

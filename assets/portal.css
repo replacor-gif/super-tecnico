@@ -432,6 +432,9 @@ h1 {
   color: #08705d;
   background: #e6f8f2;
 }
+.tool-card-connectors .tool-badge { color: #006c7b; background: #dbfbff; }
+.tool-card-connectors .text-icon { background: linear-gradient(145deg, #00eaff, #007a96); color: #061014; font-size: .78rem; }
+.tool-card-connectors .tool-button { background: linear-gradient(110deg, #007f95, #00657e); }
 
 .tool-card-comparator .tool-badge { color: #8a4e0a; background: #fff1dc; }
 .tool-card-faults .tool-badge { color: #0c6680; background: #e5f4f8; }

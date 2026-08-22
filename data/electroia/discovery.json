@@ -13,6 +13,7 @@
       "choose_topology",
       "calculate_values",
       "select_components",
+      "resolve_connector_and_contact_ids_when_needed",
       "submit_structured_diagram"
     ],
     "electroia": [
@@ -45,7 +46,8 @@
     "diagram_schema": "diagram-document.schema.json",
     "symbol_library": "symbol-library.json",
     "normalization_report": "symbol-normalization-report.json",
-    "openapi_discovery": "discovery.openapi.json"
+    "openapi_discovery": "discovery.openapi.json",
+    "shared_connector_catalog": "../connectors/tool-manifest.json"
   },
   "quality": {
     "catalog_symbols": 460,

@@ -46,6 +46,19 @@ Do not call planned endpoints until discovery.json reports remote execution as e
 
 For diagrams, the calling AI interprets the request or image, chooses the topology, calculates values, and selects components. ElectroIA validates symbols, terminals, and nets and renders a deterministic single-canvas SVG.
 
+## Connector and pinout entry points
+
+- Human quick search: /conectores.html
+- Normalized connector catalog: /data/connectors/catalog.json
+- Record schema: /data/connectors/connector-record.schema.json
+- Source and review registry: /data/connectors/sources.json
+- Provider-neutral tool contract: /data/connectors/tool-manifest.json
+- Discovery manifest: /data/connectors/discovery.json
+- Normalized companion manual: /recursos/catalogo-normalizado-conectores-replacor-edicion-9.pdf
+- Preserved contributed source: /recursos/enciclopedia-conectores-pinouts-edicion-8-origen.pdf
+
+Always preserve connector_id, variant, gender, view.perspective, view.orientation_note, review.status, source_ids and warnings. `source_identified` is not equivalent to `reviewed`; `pending_review` must never be completed by inference. Browser search is public, while remote API or MCP execution is not enabled.
+
 ## Frigorista entry points
 
 - Human tool: /frigorista.html

@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "service": "REPLACOR Core connector catalog",
+  "status": "public_browser_beta",
+  "human_entry": "../../conectores.html",
+  "catalog": "catalog.json",
+  "schema": "connector-record.schema.json",
+  "sources": "sources.json",
+  "tool_manifest": "tool-manifest.json",
+  "remote_api_enabled": false,
+  "free_preview": true,
+  "quality_rule": "Una ficha solo puede llamarse reviewed cuando contacto, variante y orientación se han contrastado con una ubicación concreta de una fuente primaria."
+}

@@ -52,7 +52,22 @@
           "rotation": { "enum": [0, 90, 180, 270] },
           "mirror": { "type": "boolean" },
           "label_position": { "enum": ["below", "above", "left", "right", "inside"] },
-          "role": { "type": "string", "maxLength": 60 }
+          "role": { "type": "string", "maxLength": 60 },
+          "connector": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["connector_id"],
+            "properties": {
+              "connector_id": { "type": "string", "minLength": 3, "maxLength": 80 },
+              "perspective": { "enum": ["mating_face", "wiring_side", "device_front", "logical_only"] },
+              "contact_map": {
+                "type": "object",
+                "description": "Mapa entre terminales del símbolo y contact.id del catálogo normalizado.",
+                "additionalProperties": { "type": "string", "minLength": 1, "maxLength": 24 },
+                "maxProperties": 48
+              }
+            }
+          }
         }
       }
     },

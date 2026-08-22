@@ -14,6 +14,10 @@
     "selects_components": false,
     "renders_only": true
   },
+  "shared_catalogs": {
+    "connectors": "../connectors/tool-manifest.json",
+    "connector_usage": "La IA llamante puede resolver connector_id y contact.id antes de construir el documento. ElectroIA conserva esos identificadores como trazabilidad, pero no inventa pinouts."
+  },
   "responsibilities": {
     "diagram_engine": [
       "validate_document",
@@ -57,7 +61,8 @@
       "structured_diagram_json",
       "spanish_text_through_legacy_adapters",
       "image_analysis_from_external_ai",
-      "hand_drawn_sketch_analysis_from_external_ai"
+      "hand_drawn_sketch_analysis_from_external_ai",
+      "connector_ids_and_contact_ids"
     ],
     "raw_inputs_not_yet_supported": ["raw_photo", "raw_hand_drawn_sketch"],
     "image_contract": "La IA que ve la imagen extrae símbolos, terminales y redes; ElectroIA valida y dibuja el documento estructurado."

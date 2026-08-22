@@ -16,6 +16,19 @@
   },
   "service_families": [
     {
+      "id": "replacor-connector-core",
+      "title": "Conectores y pinouts",
+      "status": "public_browser_beta_remote_execution_planned",
+      "capabilities": [
+        "connector_search",
+        "normalized_contact_lookup",
+        "explicit_mating_or_wiring_view",
+        "variant_separation",
+        "review_status_and_provenance"
+      ],
+      "discovery": "../connectors/discovery.json"
+    },
+    {
       "id": "super-tecnico-knowledge",
       "title": "Super Técnico Knowledge",
       "status": "contract_ready_execution_planned",

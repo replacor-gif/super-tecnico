@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-08-22",
+  "verification_policy": {
+    "reviewed": "La tabla y la orientación se han contrastado con una edición y una ubicación concretas de una fuente primaria.",
+    "source_identified": "La organización o norma primaria está identificada, pero falta cerrar la comprobación contacto por contacto y su edición exacta.",
+    "pending_review": "El uso depende de fabricante, vehículo, variante o documentación propietaria y no debe tratarse como universal."
+  },
+  "sources": [
+    {"id": "SRC-USER-MANUAL-V8", "title": "Enciclopedia profesional de cables, conectores e interfaces · Edición 8", "publisher": "Aportación del administrador", "kind": "contributed_source", "url": "recursos/enciclopedia-conectores-pinouts-edicion-8-origen.pdf", "status": "archived_source", "retrieved_at": "2026-08-22"},
+    {"id": "SRC-USBIF-TYPEC", "title": "USB Type-C Cable and Connector Specification", "publisher": "USB Implementers Forum", "kind": "primary_specification", "url": "https://www.usb.org/usb-type-cr-cable-and-connector-specification", "status": "official_family_identified", "retrieved_at": "2026-08-22"},
+    {"id": "SRC-USBIF-DOCUMENTS", "title": "USB-IF Document Library", "publisher": "USB Implementers Forum", "kind": "primary_registry", "url": "https://www.usb.org/documents", "status": "official_registry", "retrieved_at": "2026-08-22"},
+    {"id": "SRC-VESA-DP", "title": "DisplayPort standard overview", "publisher": "VESA", "kind": "primary_registry", "url": "https://vesa.org/about-displayport/", "status": "official_family_identified", "retrieved_at": "2026-08-22"},
+    {"id": "SRC-HDMI-SPEC", "title": "HDMI Specifications", "publisher": "HDMI Licensing Administrator", "kind": "primary_registry", "url": "https://www.hdmi.org/spec/index", "status": "official_family_identified", "retrieved_at": "2026-08-22"},
+    {"id": "SRC-CIA-303", "title": "CiA 303 series and CiA 106 connector recommendations", "publisher": "CAN in Automation", "kind": "primary_registry", "url": "https://www.can-cia.org/can-knowledge/cia-303-series-canopen-related-documents", "status": "official_family_identified", "retrieved_at": "2026-08-22"},
+    {"id": "SRC-SATAIO", "title": "SATA specifications", "publisher": "SATA-IO", "kind": "primary_registry", "url": "https://sata-io.org/developers/purchase-specification", "status": "official_family_identified", "retrieved_at": "2026-08-22"},
+    {"id": "SRC-TIA-568", "title": "ANSI/TIA-568 series", "publisher": "Telecommunications Industry Association", "kind": "standards_registry", "url": "https://tiaonline.org/what-we-do/standards/", "status": "standard_family_identified", "retrieved_at": "2026-08-22"},
+    {"id": "SRC-IEC-61076", "title": "IEC 61076 connector family", "publisher": "IEC", "kind": "standards_registry", "url": "https://webstore.iec.ch/", "status": "standard_family_identified", "retrieved_at": "2026-08-22"},
+    {"id": "SRC-IEC-62680", "title": "IEC 62680 USB interfaces", "publisher": "IEC", "kind": "standards_registry", "url": "https://webstore.iec.ch/", "status": "standard_family_identified", "retrieved_at": "2026-08-22"},
+    {"id": "SRC-IEC-62196", "title": "IEC 62196 vehicle connectors", "publisher": "IEC", "kind": "standards_registry", "url": "https://webstore.iec.ch/", "status": "standard_family_identified", "retrieved_at": "2026-08-22"},
+    {"id": "SRC-SAE-J1962", "title": "SAE J1962 diagnostic connector", "publisher": "SAE International", "kind": "standards_registry", "url": "https://www.sae.org/standards/content/j1962_202109/", "status": "standard_family_identified", "retrieved_at": "2026-08-22"},
+    {"id": "SRC-EIA-RS232", "title": "ANSI/TIA-232 interface family", "publisher": "Telecommunications Industry Association", "kind": "standards_registry", "url": "https://tiaonline.org/what-we-do/standards/", "status": "standard_family_identified", "retrieved_at": "2026-08-22"}
+  ]
+}

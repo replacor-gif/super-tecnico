@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "name": "replacor-connector-catalog",
+  "title": "REPLACOR Core · Conectores y pinouts",
+  "description": "Contrato neutral para que una persona, ElectroIA u otra IA localice un conector sin mezclar variante, lado ni orientación.",
+  "provider_neutral": true,
+  "embedded_ai_model": false,
+  "remote_execution": false,
+  "browser_available": true,
+  "catalog_path": "catalog.json",
+  "schema_path": "connector-record.schema.json",
+  "sources_path": "sources.json",
+  "instructions": "Buscar primero. Antes de devolver contactos, exigir connector_id o conservar varios candidatos. Siempre devolver view, orientation_note, review.status, warnings y source_ids. No convertir source_identified en reviewed.",
+  "tools": [
+    {
+      "name": "supertecnico_search_connectors",
+      "description": "Busca conectores por nombre, alias, interfaz, forma o señal y devuelve candidatos compactos con variante y estado.",
+      "state": "browser_available_remote_planned",
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {"type": "object", "additionalProperties": false, "required": ["query"], "properties": {"query": {"type": "string", "minLength": 1, "maxLength": 120}, "category": {"type": "string", "maxLength": 40}, "review_status": {"type": "string", "enum": ["reviewed", "source_identified", "pending_review"]}, "limit": {"type": "integer", "minimum": 1, "maximum": 20, "default": 8}}}
+    },
+    {
+      "name": "supertecnico_get_connector",
+      "description": "Devuelve una ficha normalizada completa, incluidos contactos, vista, variantes, advertencias, revisión y procedencia.",
+      "state": "browser_available_remote_planned",
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {"type": "object", "additionalProperties": false, "required": ["connector_id"], "properties": {"connector_id": {"type": "string", "minLength": 3, "maxLength": 80}}}
+    },
+    {
+      "name": "supertecnico_resolve_connector_contact",
+      "description": "Resuelve una señal o contacto dentro de una ficha ya identificada sin asumir el lado opuesto ni otra variante.",
+      "state": "contract_ready_remote_planned",
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {"type": "object", "additionalProperties": false, "required": ["connector_id", "contact_or_signal"], "properties": {"connector_id": {"type": "string", "minLength": 3, "maxLength": 80}, "contact_or_signal": {"type": "string", "minLength": 1, "maxLength": 80}}}
+    },
+    {
+      "name": "supertecnico_match_connector_image",
+      "description": "Contrato futuro: recibe rasgos extraídos por una IA con visión y devuelve candidatos; no procesa la imagen bruta en el catálogo.",
+      "state": "planned",
+      "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
+      "input_schema": {"type": "object", "additionalProperties": false, "required": ["observations"], "properties": {"observations": {"type": "array", "minItems": 1, "maxItems": 20, "items": {"type": "string", "maxLength": 120}}, "contact_count": {"type": "integer", "minimum": 1, "maximum": 200}, "limit": {"type": "integer", "minimum": 1, "maximum": 10, "default": 5}}}
+    }
+  ]
+}

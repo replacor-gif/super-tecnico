@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://app.replacor.com/super-tecnico/data/connectors/connector-record.schema.json",
+  "title": "REPLACRO normalized connector record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "canonical_name", "category", "interface", "form_factor", "view", "contacts", "review", "source_ids", "source_pdf"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,79}$"},
+    "canonical_name": {"type": "string", "minLength": 3, "maxLength": 140},
+    "aliases": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 100}},
+    "category": {"type": "string", "enum": ["network", "usb", "video", "audio", "serial_industrial", "automotive", "storage", "power"]},
+    "interface": {"type": "string", "minLength": 2, "maxLength": 120},
+    "form_factor": {"type": "string", "minLength": 2, "maxLength": 120},
+    "gender": {"type": "string", "enum": ["plug", "receptacle", "device_side", "cable_side", "not_applicable"]},
+    "view": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["perspective", "orientation_note"],
+      "properties": {
+        "perspective": {"type": "string", "enum": ["mating_face", "wiring_side", "device_front", "logical_only"]},
+        "orientation_note": {"type": "string", "minLength": 8, "maxLength": 300},
+        "key_position": {"type": "string", "maxLength": 120}
+      }
+    },
+    "contacts": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 48,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "signal", "description"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1, "maxLength": 24},
+          "signal": {"type": "string", "minLength": 1, "maxLength": 80},
+          "description": {"type": "string", "minLength": 2, "maxLength": 260},
+          "group": {"type": "string", "maxLength": 60},
+          "direction": {"type": "string", "enum": ["input", "output", "bidirectional", "power", "ground", "passive", "implementation_dependent"]}
+        }
+      }
+    },
+    "variants": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 3, "maxLength": 260}},
+    "safety_notes": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 3, "maxLength": 300}},
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "confidence", "scope", "checked_at"],
+      "properties": {
+        "status": {"type": "string", "enum": ["reviewed", "source_identified", "pending_review"]},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "scope": {"type": "string", "minLength": 5, "maxLength": 300},
+        "checked_at": {"type": "string", "format": "date"}
+      }
+    },
+    "source_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^SRC-[A-Z0-9-]+$"}},
+    "source_pdf": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edition", "pages"],
+      "properties": {
+        "edition": {"type": "integer", "minimum": 1},
+        "pages": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "integer", "minimum": 1}}
+      }
+    },
+    "search_terms": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 80}}
+  }
+}
