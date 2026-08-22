@@ -70,13 +70,14 @@ def audit(root: Path) -> dict[str, Any]:
     frigorista = read_json(root / "data" / "frigorista" / "catalog.json")
     regulations = read_json(root / "data" / "regulations" / "catalog.json")
     strategy = read_json(root / "data" / "ai" / "tool-strategy.json")
+    projects = read_json(root / "data" / "projects" / "tool-manifest.json")
     regulation_documents = regulations.get("documents") or []
     strategy_tools = strategy.get("tools") or []
 
     checks = [
         checkpoint("public_discovery", "Descubrimiento público para máquinas", "pass", "llms.txt y data/ai/discovery.json"),
         checkpoint("stable_contracts", "Contratos estables y versionados", "pass", "Manifiesto, JSON Schema y contrato OpenAPI de diseño"),
-        checkpoint("focused_tools", "Herramientas centradas en objetivos", "pass", "Preflight, refrigeración P/T progresiva, resolución, diagnóstico, componentes, casos y diagramas"),
+        checkpoint("focused_tools", "Herramientas centradas en objetivos", "pass", "Preflight, refrigeración P/T progresiva, resolución, diagnóstico, componentes, casos, proyectos y diagramas"),
         checkpoint("quality_labels", "Calidad y confianza explícitas", "pass", f"{brands_with_quality}/{len(brands)} marcas con informe y componentes con confidence"),
         checkpoint("source_traceability", "Fuentes aplicables por respuesta", "partial", f"{brands_with_sources}/{len(brands)} marcas con fuentes; {brands_with_provenance_policy} políticas históricas específicas"),
         checkpoint("public_regulation_api", "Búsqueda pública de normativa para máquinas", "pass", "GET api/index.php?action=regulation-search con fuentes, páginas, límites y métricas"),
@@ -87,6 +88,7 @@ def audit(root: Path) -> dict[str, Any]:
         checkpoint("anti_extraction", "Protección contra extracción masiva", "pass", "La primera API limita frecuencia y resultados y no ofrece exportación del catálogo"),
         checkpoint("viability_catalog", "Catálogo de viabilidad de herramientas", "pass", f"{len(strategy_tools)} propuestas evaluadas con decisión, fase, coste y riesgo"),
         checkpoint("storage_governance", "Gobierno de almacenamiento y caché", "pass", "Política pública de copia canónica, caché versionada y respuesta mínima"),
+        checkpoint("cross_tool_projects", "Contrato común de Proyecto Técnico", "pass", "Conductos, ventilación y tuberías frigoríficas producen artefactos y mediciones sin precio sobre el mismo esquema local"),
         checkpoint("compact_context", "Contexto técnico compacto", "partial", "Contrato definido; proyecciones remotas todavía sin ejecutar"),
         checkpoint("validation_tools", "Validadores de medidas y respuestas", "planned", "Contratos definidos; ejecución pendiente por dominios y cobertura de reglas"),
     ]
@@ -113,7 +115,10 @@ def audit(root: Path) -> dict[str, Any]:
             "components_reviewed": int(component_counts.get("reviewed") or 0),
             "components_historical": int(component_counts.get("historical") or 0),
             "electroia_symbols": int(symbols.get("catalog_symbol_count") or 0),
+            "electroia_engine_symbols": int(symbols.get("engine_symbol_count") or 0),
+            "electroia_internal_templates": int(symbols.get("internal_template_count") or 0),
             "electroia_symbols_reviewed": int((symbol_report.get("catalog_status_counts") or {}).get("engine_reviewed") or 0),
+            "technical_project_capabilities": len(projects.get("capabilities") or []),
             "hvac_training_chapters": int((training.get("stats") or {}).get("chapters") or 0),
             "electronics_chapters": int((electronics.get("stats") or {}).get("chapters") or 0),
             "frigorista_refrigerants": int((frigorista.get("counts") or {}).get("catalog") or 0),

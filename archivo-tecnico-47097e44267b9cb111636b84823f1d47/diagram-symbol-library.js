@@ -18718,6 +18718,537 @@ const ElectroDiagramSymbols = Object.freeze({
     "review_status": "engine_reviewed",
     "geometry_source": "reviewed_seed"
   },
+  "ST-AUTO-AI-2": {
+    "id": "ST-AUTO-AI-2",
+    "catalog_id": null,
+    "name": "Módulo de dos entradas analógicas",
+    "kind": "plc_ai_module",
+    "designator": "AI",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 12,
+    "height": 14,
+    "ports": {
+      "AI0+": {
+        "x": -6,
+        "y": -5,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "AI0-": {
+        "x": -6,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "AI1+": {
+        "x": -6,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "AI1-": {
+        "x": -6,
+        "y": 4,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "L+": {
+        "x": 6,
+        "y": -4,
+        "side": "east",
+        "electrical_type": "power_in"
+      },
+      "MANA": {
+        "x": 6,
+        "y": 4,
+        "side": "east",
+        "electrical_type": "power_in"
+      }
+    },
+    "review_status": "engine_internal",
+    "geometry_source": "internal_seed"
+  },
+  "ST-AUTO-AO-2": {
+    "id": "ST-AUTO-AO-2",
+    "catalog_id": null,
+    "name": "Módulo de dos salidas analógicas",
+    "kind": "plc_ao_module",
+    "designator": "AO",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 12,
+    "height": 14,
+    "ports": {
+      "AQ0+": {
+        "x": 6,
+        "y": -5,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "AQ0-": {
+        "x": 6,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "AQ1+": {
+        "x": 6,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "AQ1-": {
+        "x": 6,
+        "y": 4,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "L+": {
+        "x": -6,
+        "y": -4,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "MANA": {
+        "x": -6,
+        "y": 4,
+        "side": "west",
+        "electrical_type": "power_in"
+      }
+    },
+    "review_status": "engine_internal",
+    "geometry_source": "internal_seed"
+  },
+  "ST-AUTO-DI-4": {
+    "id": "ST-AUTO-DI-4",
+    "catalog_id": null,
+    "name": "Módulo de cuatro entradas digitales",
+    "kind": "plc_di_module",
+    "designator": "DI",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 12,
+    "height": 16,
+    "ports": {
+      "I0": {
+        "x": -6,
+        "y": -6,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "I1": {
+        "x": -6,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "I2": {
+        "x": -6,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "I3": {
+        "x": -6,
+        "y": 6,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "L+": {
+        "x": 6,
+        "y": -5,
+        "side": "east",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": 6,
+        "y": 5,
+        "side": "east",
+        "electrical_type": "power_in"
+      }
+    },
+    "review_status": "engine_internal",
+    "geometry_source": "internal_seed"
+  },
+  "ST-AUTO-DO-4": {
+    "id": "ST-AUTO-DO-4",
+    "catalog_id": null,
+    "name": "Módulo de cuatro salidas digitales",
+    "kind": "plc_do_module",
+    "designator": "DO",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 12,
+    "height": 16,
+    "ports": {
+      "Q0": {
+        "x": 6,
+        "y": -6,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "Q1": {
+        "x": 6,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "Q2": {
+        "x": 6,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "Q3": {
+        "x": 6,
+        "y": 6,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "L+": {
+        "x": -6,
+        "y": -5,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": -6,
+        "y": 5,
+        "side": "west",
+        "electrical_type": "power_in"
+      }
+    },
+    "review_status": "engine_internal",
+    "geometry_source": "internal_seed"
+  },
+  "ST-AUTO-GATEWAY": {
+    "id": "ST-AUTO-GATEWAY",
+    "catalog_id": null,
+    "name": "Pasarela de comunicaciones industrial",
+    "kind": "industrial_gateway",
+    "designator": "GW",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 14,
+    "height": 12,
+    "ports": {
+      "L+": {
+        "x": -7,
+        "y": -4,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": -7,
+        "y": 4,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "FIELD_BUS": {
+        "x": -7,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "ETH": {
+        "x": 7,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "UPLINK": {
+        "x": 7,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_internal",
+    "geometry_source": "internal_seed"
+  },
+  "ST-AUTO-HMI": {
+    "id": "ST-AUTO-HMI",
+    "catalog_id": null,
+    "name": "Interfaz de operador HMI",
+    "kind": "industrial_hmi",
+    "designator": "HMI",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 14,
+    "height": 10,
+    "ports": {
+      "L+": {
+        "x": -7,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": -7,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "ETH": {
+        "x": 7,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "SERIAL": {
+        "x": 7,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_internal",
+    "geometry_source": "internal_seed"
+  },
+  "ST-AUTO-PLC-CPU": {
+    "id": "ST-AUTO-PLC-CPU",
+    "catalog_id": null,
+    "name": "CPU de PLC industrial",
+    "kind": "plc_cpu",
+    "designator": "CPU",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 14,
+    "height": 14,
+    "ports": {
+      "L+": {
+        "x": -7,
+        "y": -5,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": -7,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "DI_BUS": {
+        "x": -7,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DO_BUS": {
+        "x": 7,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "FIELD_BUS": {
+        "x": 7,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "ETH": {
+        "x": 7,
+        "y": -5,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_internal",
+    "geometry_source": "internal_seed"
+  },
+  "ST-AUTO-PSU-24V": {
+    "id": "ST-AUTO-PSU-24V",
+    "catalog_id": null,
+    "name": "Fuente industrial de 24 V DC",
+    "kind": "industrial_psu_24v",
+    "designator": "PS",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 12,
+    "height": 12,
+    "ports": {
+      "L": {
+        "x": -6,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "N": {
+        "x": -6,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "PE": {
+        "x": -6,
+        "y": 4,
+        "side": "west",
+        "electrical_type": "protective_earth"
+      },
+      "+24V": {
+        "x": 6,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "0V": {
+        "x": 6,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_internal",
+    "geometry_source": "internal_seed"
+  },
+  "ST-AUTO-REMOTE-IO": {
+    "id": "ST-AUTO-REMOTE-IO",
+    "catalog_id": null,
+    "name": "Cabecera de E/S remota",
+    "kind": "remote_io_head",
+    "designator": "RIO",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 14,
+    "height": 12,
+    "ports": {
+      "L+": {
+        "x": -7,
+        "y": -4,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": -7,
+        "y": 4,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "BUS_IN": {
+        "x": 7,
+        "y": -4,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "BUS_OUT": {
+        "x": 7,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "IO_BUS": {
+        "x": 7,
+        "y": 4,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_internal",
+    "geometry_source": "internal_seed"
+  },
+  "ST-AUTO-SAFETY-PLC": {
+    "id": "ST-AUTO-SAFETY-PLC",
+    "catalog_id": null,
+    "name": "PLC de seguridad certificado",
+    "kind": "safety_plc",
+    "designator": "F-CPU",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 14,
+    "height": 14,
+    "ports": {
+      "L+": {
+        "x": -7,
+        "y": -5,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": -7,
+        "y": 5,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "F_DI": {
+        "x": -7,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "F_DO": {
+        "x": 7,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "SAFE_BUS": {
+        "x": 7,
+        "y": -5,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "TEST": {
+        "x": 7,
+        "y": 5,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_internal",
+    "geometry_source": "internal_seed"
+  },
+  "ST-AUTO-SWITCH-4": {
+    "id": "ST-AUTO-SWITCH-4",
+    "catalog_id": null,
+    "name": "Switch Ethernet industrial de cuatro puertos",
+    "kind": "industrial_switch",
+    "designator": "SW",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 14,
+    "height": 14,
+    "ports": {
+      "L+": {
+        "x": -7,
+        "y": -5,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": -7,
+        "y": 5,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "P1": {
+        "x": 7,
+        "y": -5,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "P2": {
+        "x": 7,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "P3": {
+        "x": 7,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "P4": {
+        "x": 7,
+        "y": 5,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_internal",
+    "geometry_source": "internal_seed"
+  },
   "ST-CONTROL-PORT": {
     "id": "ST-CONTROL-PORT",
     "catalog_id": null,

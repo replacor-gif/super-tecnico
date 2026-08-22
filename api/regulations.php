@@ -254,6 +254,21 @@ function st_regulation_refinement(string $query): ?array
         foreach ($services as $service) if (strpos($query, $service) !== false) return null;
         return ['message' => 'El diámetro depende del servicio de la tubería. Indica qué transporta o a qué instalación pertenece.', 'suggested_terms' => ['agua de consumo', 'saneamiento', 'gas', 'refrigerante', 'calefacción'], 'required' => true];
     }
+    if (strpos($query, 'proteccion') !== false) {
+        $specific = ['motor', 'vivienda', 'fotovoltaica', 'recarga', 'vehiculo', 'maquina', 'cuadro', 'linea', 'circuito'];
+        foreach ($specific as $term) if (strpos($query, $term) !== false) return null;
+        return ['message' => 'La protección depende del circuito, la carga y el lugar. Añade qué equipo o instalación se protege.', 'suggested_terms' => ['motor', 'vivienda', 'máquina', 'instalación fotovoltaica', 'recarga de vehículo'], 'required' => true];
+    }
+    if (strpos($query, 'cuadro') !== false && strpos($query, 'electrico') !== false) {
+        $specific = ['vivienda', 'industrial', 'maquina', 'obra', 'publica', 'publico', 'local'];
+        foreach ($specific as $term) if (strpos($query, $term) !== false) return null;
+        return ['message' => 'Las exigencias del cuadro cambian según su función y emplazamiento. Añade el tipo de instalación.', 'suggested_terms' => ['vivienda', 'cuadro industrial', 'cuadro de máquina', 'obra provisional', 'local de pública concurrencia'], 'required' => true];
+    }
+    if (strpos($query, 'desague') !== false) {
+        $specific = ['condensado', 'saneamiento', 'residual', 'pluvial', 'refrigeracion', 'climatizacion'];
+        foreach ($specific as $term) if (strpos($query, $term) !== false) return null;
+        return ['message' => 'Indica qué agua debe evacuar el desagüe para evitar mezclar prescripciones distintas.', 'suggested_terms' => ['condensados de climatización', 'saneamiento', 'aguas residuales', 'aguas pluviales'], 'required' => true];
+    }
     return null;
 }
 

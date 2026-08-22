@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="google-adsense-account" content="ca-pub-6950924617837531">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Organiza diseños, cálculos, planos y mediciones de Super Técnico dentro de un único proyecto técnico.">
+  <meta name="theme-color" content="#030912">
+  <title>Mis proyectos técnicos | Super Técnico</title>
+  <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
+  <link rel="stylesheet" href="assets/app-theme.css?v=1">
+  <link rel="stylesheet" href="assets/project-manager.css?v=1">
+  <script src="assets/app-shell.js?v=8" defer></script>
+  <script src="assets/project-core.js?v=1" defer></script>
+  <script src="assets/project-manager.js?v=1" defer></script>
+</head>
+<body class="project-page">
+  <header class="portal-header">
+    <a class="portal-brand" href="index.html"><img src="assets/super-tecnico-logo.png" alt=""><span><strong>SUPER <b>TÉCNICO</b></strong><small>PROYECTOS DE CAMPO</small></span></a>
+  </header>
+  <main class="project-main">
+    <section class="project-hero">
+      <div><p class="eyebrow">TODO EL TRABAJO EN UN MISMO SITIO</p><h1>Tu instalación, convertida en un <span>proyecto técnico.</span></h1><p>Guarda en el móvil los resultados de cada herramienta, reúne sus mediciones sin precio y reabre el trabajo cuando vuelvas a la obra.</p></div>
+      <div class="project-hero-metrics"><article><strong id="projectCount">0</strong><span>proyectos</span></article><article><strong id="artifactCount">0</strong><span>resultados activos</span></article></div>
+    </section>
+    <div class="project-layout">
+      <aside class="project-sidebar">
+        <form id="projectCreateForm" class="project-create">
+          <h2>Crear proyecto</h2>
+          <label>Nombre<input id="projectName" required maxlength="80" placeholder="Ej.: Reforma vivienda López"></label>
+          <label>Tipo<select id="projectDiscipline"><option value="multidisciplinar">Multidisciplinar</option><option value="climatizacion">Climatización</option><option value="ventilacion">Ventilación</option><option value="refrigeracion">Refrigeración</option><option value="electricidad">Electricidad</option><option value="fontaneria">Fontanería</option></select></label>
+          <label>Cliente <small>(opcional)</small><input id="projectClient" maxlength="80"></label>
+          <label>Ubicación <small>(opcional)</small><input id="projectLocation" maxlength="120"></label>
+          <label>Notas <small>(opcional)</small><textarea id="projectNotes" maxlength="800"></textarea></label>
+          <button type="submit">Crear y activar proyecto</button>
+        </form>
+        <div class="project-list-wrap"><div class="project-list-head"><span>Mis proyectos</span><span>Resultados</span></div><div id="projectList" class="project-list"></div><p id="projectEmpty" class="project-empty">Crea el primer proyecto para empezar a reunir herramientas.</p></div>
+      </aside>
+      <section id="projectWorkspace" class="project-workspace" hidden>
+        <header class="workspace-head"><div><span>PROYECTO ACTIVO</span><h2 id="activeProjectName"></h2><p id="activeProjectMeta"></p></div><div class="project-actions"><button id="projectExport" type="button">Exportar datos</button><button id="projectPrint" type="button">Imprimir / PDF</button><button id="projectDelete" class="danger" type="button">Eliminar</button></div></header>
+        <section class="workspace-section"><div class="workspace-section-head"><h2>Resultados incorporados</h2><span>La última versión de cada herramienta sustituye a la anterior</span></div><div id="artifactList" class="artifact-list"></div></section>
+        <section class="workspace-section"><div class="workspace-section-head"><h2>Añadir trabajo al proyecto</h2><span>El proyecto activo aparecerá al guardar</span></div><nav class="project-tools"><a href="conductos.html"><strong>Conductos</strong><small>Dibuja, calcula y guarda el plano.</small></a><a href="ventilacion.html"><strong>Ventilación</strong><small>Incorpora recintos, rejillas y redes.</small></a><a href="tuberias-frigorificas.html"><strong>Tuberías frigoríficas</strong><small>Guarda diámetros, aislamiento y partidas.</small></a></nav></section>
+        <section class="workspace-section"><div class="workspace-section-head"><h2>Mediciones conjuntas sin precio</h2><span>Preparadas para el futuro estimador privado</span></div><p id="measurementEmpty" class="workspace-empty">Los resultados guardados todavía no contienen mediciones.</p><div class="project-table-wrap"><table class="project-table"><thead><tr><th>Partida</th><th>Unidad</th><th>Cantidad</th></tr></thead><tbody id="projectMeasurementRows"></tbody></table></div><p class="project-offline-note"><strong>Guardado local y privado:</strong> esta primera versión permanece en este dispositivo. La sincronización entre móvil y ordenador se incorporará cuando exista una cuenta segura.</p></section>
+      </section>
+    </div>
+  </main>
+  <footer class="st-page-footer"><strong>SUPER TÉCNICO</strong><p>Proyecto técnico vivo para el trabajo de campo.</p></footer>
+  <script src="assets/page-counter.js?v=3" defer></script>
+</body>
+</html>

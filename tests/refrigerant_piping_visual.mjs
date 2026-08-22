@@ -37,9 +37,15 @@ async function verify(viewport, filename) {
   await page.locator("#rpResults:not([hidden])").waitFor();
   assert.equal(await page.locator("#rpDiagram svg").count(), 1);
   assert((await page.locator("#rpMeasurements tr").count()) >= 5);
+  await page.screenshot({ path: resolve(ARTIFACTS, filename), fullPage: true });
+  assert.equal(await page.locator("#rpSaveProject").isEnabled(), true);
+  await page.locator("#rpSaveProject").click();
+  assert.match(await page.locator("#rpSaveProject").innerText(), /Guardado/i);
+  await page.goto(`http://127.0.0.1:${port}/proyectos.html`, { waitUntil: "networkidle" });
+  assert.match(await page.locator("#artifactList").innerText(), /Tuberías frigoríficas/i);
+  assert((await page.locator("#projectMeasurementRows tr").count()) >= 5);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1), true);
   assert.deepEqual(errors, []);
-  await page.screenshot({ path: resolve(ARTIFACTS, filename), fullPage: true });
   await page.close();
 }
 

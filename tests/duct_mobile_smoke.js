@@ -46,10 +46,27 @@ const {chromium} = require('playwright');
     assert.ok(match, `Missing duct dimensions in ${value}`);
     assert.equal(Number(match[1]) % 5, 0, `Duct width is not a 5 cm step: ${value}`);
   });
+
+  await page.locator('#planFocusToggle').click();
+  assert.equal(await page.locator('.plan-frame.is-focus-mode').count(), 1);
+  assert.equal(await page.locator('#planFocusToggle').getAttribute('aria-pressed'), 'true');
+  await page.locator('#planFocusToggle').click();
+  assert.equal(await page.locator('.plan-frame.is-focus-mode').count(), 0);
+  await page.screenshot({path: 'test-artifacts/duct-mobile-adjustment.png', fullPage: true});
+
+  assert.equal(await page.locator('#saveDuctProject').isEnabled(), true);
+  await page.locator('#saveDuctProject').click();
+  assert.match(await page.locator('#assistantMessage').innerText(), /Guardado en/i);
+  await page.goto(new URL('proyectos.html', base).href, {waitUntil: 'networkidle'});
+  assert.equal(await page.locator('.project-row').count(), 1);
+  assert.match(await page.locator('#artifactList').innerText(), /Conductos/i);
+  assert.ok(await page.locator('#projectMeasurementRows tr').count() > 0);
+  assert.match(await page.locator('#activeProjectName').innerText(), /Proyecto de campo/i);
+  await page.screenshot({path: 'test-artifacts/projects-mobile-with-duct.png', fullPage: true});
+
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   assert.ok(overflow <= 1, `Mobile horizontal overflow: ${overflow}px`);
   assert.deepEqual(pageErrors, []);
-  await page.screenshot({path: 'test-artifacts/duct-mobile-adjustment.png', fullPage: true});
   await browser.close();
   console.log('Duct mobile interaction smoke: OK');
 })().catch(error => {

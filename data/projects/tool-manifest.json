@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "tool_id": "super_tecnico.technical_projects",
+  "status": "public_local_first_beta",
+  "page": "proyectos.html",
+  "project_schema": "technical-project.schema.json",
+  "storage": "browser_local_storage",
+  "capabilities": ["multiple_projects", "active_project", "cross_tool_artifacts", "unpriced_bill_of_quantities", "json_export", "printable_summary"],
+  "limits": ["no_cloud_sync", "no_accounts", "no_public_prices", "not_a_signed_technical_project"]
+}

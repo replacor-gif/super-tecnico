@@ -530,6 +530,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
 
     for required in (
         "index.html",
+        "proyectos.html",
         "climatizacion.html",
         "frigorista.html",
         "desagues-condensados.html",
@@ -549,6 +550,8 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "llms.txt",
         "robots.txt",
         "sitemap.xml",
+        "manifest.webmanifest",
+        "service-worker.js",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/index.html",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/styles.css",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/engine.js",
@@ -568,6 +571,9 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "assets/app.js",
         "assets/app-shell.js",
         "assets/app-theme.css",
+        "assets/project-core.js",
+        "assets/project-manager.js",
+        "assets/project-manager.css",
         "assets/ads.js",
         "assets/calculations.js",
         "assets/calculators.css",
@@ -636,6 +642,8 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "data/electrical-panels/panel-project.schema.json",
         "data/electrical-panels/standards-registry.json",
         "data/electrical-panels/tool-manifest.json",
+        "data/projects/technical-project.schema.json",
+        "data/projects/tool-manifest.json",
         "recursos/libro-electronica-inverter-replacor.pdf",
     ):
         source = source_root / required

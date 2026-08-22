@@ -36,6 +36,15 @@ const {chromium} = require('playwright');
 
   await page.setViewportSize({width: 1365, height: 900});
   await page.screenshot({path: 'test-artifacts/regulations-structured-desktop.png', fullPage: true});
+
+  await page.locator('#queryInput').fill('protección');
+  await page.locator('#searchForm').evaluate(form => form.requestSubmit());
+  await page.locator('.rg-refinement.is-required').waitFor();
+  assert.match(await page.locator('.rg-refinement').innerText(), /circuito, la carga y el lugar/i);
+  await page.locator('[data-refine="motor"]').click();
+  await page.locator('.rg-refinement.is-required').waitFor({state: 'detached'});
+  assert.match(await page.locator('#queryInput').inputValue(), /protección motor/i);
+
   await browser.close();
   console.log('Regulations structured browser smoke: OK');
 })().catch(error => {

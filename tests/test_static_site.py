@@ -322,6 +322,31 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("Últimas mejoras", portal)
         self.assertGreaterEqual(len(updates["entries"]), 1)
 
+    def test_technical_projects_and_progressive_app_are_public(self):
+        for relative in (
+            "proyectos.html",
+            "manifest.webmanifest",
+            "service-worker.js",
+            "assets/project-core.js",
+            "assets/project-manager.js",
+            "assets/project-manager.css",
+            "data/projects/technical-project.schema.json",
+            "data/projects/tool-manifest.json",
+        ):
+            self.assertTrue((self.dist / relative).is_file(), relative)
+        portal = (self.dist / "index.html").read_text(encoding="utf-8")
+        shell = (self.dist / "assets" / "app-shell.js").read_text(encoding="utf-8")
+        service_worker = (self.dist / "service-worker.js").read_text(encoding="utf-8")
+        manifest = load(self.dist / "manifest.webmanifest")
+        self.assertIn('href="proyectos.html"', portal)
+        self.assertIn("serviceWorker.register('service-worker.js')", shell)
+        self.assertIn("ignoreSearch: true", service_worker)
+        self.assertEqual(manifest["display"], "standalone")
+        self.assertTrue(any(icon.get("sizes") == "1254x1254" for icon in manifest["icons"]))
+        self.assertIn("Guardar en Proyecto", (self.dist / "conductos.html").read_text(encoding="utf-8"))
+        self.assertIn("Guardar en Proyecto", (self.dist / "ventilacion.html").read_text(encoding="utf-8"))
+        self.assertIn("Guardar en Proyecto", (self.dist / "tuberias-frigorificas.html").read_text(encoding="utf-8"))
+
     def test_private_backend_is_present_only_in_source(self):
         for relative in (
             "api/index.php",
@@ -3075,7 +3100,7 @@ class StaticSiteTests(unittest.TestCase):
         for filename in public_pages:
             html = (self.dist / filename).read_text(encoding="utf-8")
             self.assertIn('assets/app-theme.css?v=1', html, filename)
-            self.assertIn('assets/app-shell.js?v=7', html, filename)
+            self.assertIn('assets/app-shell.js?v=8', html, filename)
 
         shell = (self.dist / "assets" / "app-shell.js").read_text(encoding="utf-8")
         for marker in ("st-app-drawer", "st-bottom-nav", "st-drawer-search", "Calculadoras", "Componentes"):
@@ -3220,7 +3245,7 @@ class StaticSiteTests(unittest.TestCase):
         self.assertIn("branch-drag", css)
         self.assertIn("wall-snap-target", css)
         self.assertIn(".drag-hit { r: 40px; }", css)
-        self.assertIn("duct-designer.js?v=9", html)
+        self.assertIn("duct-designer.js?v=10", html)
         self.assertIn('href="conductos.html"', portal)
         self.assertNotIn("ductSizing", script)
 

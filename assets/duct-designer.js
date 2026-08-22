@@ -779,6 +779,8 @@
     const { state } = result;
     const drawingPoints = options.drawingPoints || [];
     const selectedAdjustment = options.selectedAdjustment || null;
+    const compactConfigure = Boolean(options.compactConfigure);
+    const selectedRoomId = options.selectedRoomId || '';
     const width = state.gridCols * CELL_PX;
     const height = state.gridRows * CELL_PX;
     const px = value => value * CELL_PX;
@@ -793,13 +795,18 @@
       const controls = roomControlPoints(room);
       const d = pathData(room.points, px);
       const typeOptions = Object.entries(ROOM_TYPES).map(([value, definition]) => `<option value="${value}"${value === room.type ? ' selected' : ''}>${escapeHtml(definition.label)}</option>`).join('');
-      parts.push(`<g class="plan-room room-type-${room.type}${room.conditioned ? ' has-grille' : ' no-grille'}" data-id="${escapeHtml(room.id)}"><path class="room-fill" d="${d}"/>${state.phase !== 'draw' && room.type !== 'unassigned' ? `<path class="room-hatch room-hatch-${room.type}" d="${d}"/>` : ''}<path class="room-wall" d="${d}"/>`);
+      parts.push(`<g class="plan-room room-type-${room.type}${room.conditioned ? ' has-grille' : ' no-grille'}${selectedRoomId === room.id ? ' is-context-selected' : ''}" data-id="${escapeHtml(room.id)}"${state.phase === 'configure' && compactConfigure ? ` data-kind="room-select"` : ''}><path class="room-fill" d="${d}"/>${state.phase !== 'draw' && room.type !== 'unassigned' ? `<path class="room-hatch room-hatch-${room.type}" d="${d}"/>` : ''}<path class="room-wall" d="${d}"/>`);
       if (state.phase === 'draw') {
         parts.push(`<text class="room-number-label" x="${px(controls.center.x)}" y="${px(controls.center.y) + 5}" text-anchor="middle">${roomIndex + 1}</text><g class="room-delete" data-kind="room-delete" data-id="${escapeHtml(room.id)}" transform="translate(${px(controls.machine.x)} ${px(controls.machine.y)})"><circle class="room-delete-hit" r="28"/><circle class="room-delete-button" r="13"/><path d="M-4-4l8 8M4-4l-8 8"/></g>`);
       } else if (state.phase === 'configure') {
         const editorWidth = clamp(polygonBounds(room.points).width * CELL_PX - 36, 112, 190);
-        parts.push(`<foreignObject class="room-type-editor" x="${px(controls.center.x) - editorWidth / 2}" y="${px(controls.center.y) - 42}" width="${editorWidth}" height="38"><div xmlns="http://www.w3.org/1999/xhtml"><select data-kind="room-type" data-id="${escapeHtml(room.id)}" aria-label="Tipo de ${escapeHtml(room.name)}">${typeOptions}</select></div></foreignObject>`);
-        if (room.type === 'living' || room.type === 'kitchen') {
+        if (compactConfigure) {
+          const mobileLabel = room.type === 'unassigned' ? `ESTANCIA ${roomIndex + 1} · TOCA` : room.name.toUpperCase();
+          parts.push(`<text class="room-name-label room-context-label" x="${px(controls.center.x)}" y="${px(controls.center.y) + 5}" text-anchor="middle">${escapeHtml(mobileLabel)}</text>`);
+        } else {
+          parts.push(`<foreignObject class="room-type-editor" x="${px(controls.center.x) - editorWidth / 2}" y="${px(controls.center.y) - 42}" width="${editorWidth}" height="38"><div xmlns="http://www.w3.org/1999/xhtml"><select data-kind="room-type" data-id="${escapeHtml(room.id)}" aria-label="Tipo de ${escapeHtml(room.name)}">${typeOptions}</select></div></foreignObject>`);
+        }
+        if (!compactConfigure && (room.type === 'living' || room.type === 'kitchen')) {
           const loadOptions = Object.entries(LOAD_TIERS).map(([value, tier]) => `<option value="${value}"${value === room.loadTier ? ' selected' : ''}>${tier.label} · ${formatNumber(tier.loadFg)} frg/h</option>`).join('');
           parts.push(`<foreignObject class="room-load-editor" x="${px(controls.center.x) - editorWidth / 2}" y="${px(controls.center.y) + 2}" width="${editorWidth}" height="34"><div xmlns="http://www.w3.org/1999/xhtml"><select data-kind="room-load" data-id="${escapeHtml(room.id)}" aria-label="Tamaño de ${escapeHtml(room.name)}">${loadOptions}</select></div></foreignObject>`);
         }
@@ -863,7 +870,8 @@
       drawingSettings: $('drawingSettings'), technicalSettings: $('technicalSettings'), cellSize: $('cellSize'), ductHeight: $('ductHeightCm'), grilleHeight: $('grilleHeightCm'),
       phaseBadge: $('phaseBadge'), message: $('assistantMessage'), planStatus: $('planStatus'), planScroll: $('planScroll'), planStage: $('planStage'), planSummary: $('planSummary'), phaseAction: $('phaseAction'),
       automaticResult: $('automaticResult'), networkStatus: $('networkStatus'), resultSummary: $('resultSummary'), alerts: $('ductAlerts'), networkResults: $('networkResults'), roomResults: $('roomResults'),
-      legend: $('planControlLegend'), undo: $('undoProject'), redo: $('redoProject'),
+      legend: $('planControlLegend'), undo: $('undoProject'), redo: $('redoProject'), planFrame: document.querySelector('.plan-frame'), focus: $('planFocusToggle'), cancelAdjustment: $('cancelAdjustment'), saveProject: $('saveDuctProject'),
+      roomContext: $('ductRoomContext'), contextTitle: $('ductRoomContextTitle'), contextClose: $('ductRoomContextClose'), contextType: $('ductContextType'), contextLoad: $('ductContextLoad'), contextLoadField: $('ductContextLoadField'), contextGrille: $('ductContextGrille'), contextMachine: $('ductContextMachine'),
     };
     let state = loadState();
     let result = calculateProject(state);
@@ -872,9 +880,16 @@
     let zoom = 1;
     let drag = null;
     let selectedAdjustment = null;
+    let selectedRoomId = '';
     let suppressClick = false;
+    let focusMode = false;
+    const touchPointers = new Map();
+    let pinch = null;
     const history = [];
     const future = [];
+
+    elements.contextType.innerHTML = Object.entries(ROOM_TYPES).map(([value, definition]) => `<option value="${value}">${escapeHtml(definition.label)}</option>`).join('');
+    elements.contextLoad.innerHTML = Object.entries(LOAD_TIERS).map(([value, tier]) => `<option value="${value}">${escapeHtml(tier.label)} · ${formatNumber(tier.loadFg)} frg/h</option>`).join('');
 
     function loadState() {
       try {
@@ -1002,7 +1017,7 @@
     }
 
     function renderPlan() {
-      const rendered = renderPlanSvg(result, { drawingPoints, selectedAdjustment });
+      const rendered = renderPlanSvg(result, { drawingPoints, selectedAdjustment, selectedRoomId, compactConfigure: window.matchMedia('(max-width: 760px)').matches });
       elements.planStage.innerHTML = rendered.svg;
       elements.planStage.dataset.width = rendered.width;
       applyZoom();
@@ -1024,9 +1039,27 @@
       elements.phaseAction.classList.toggle('is-complete', !drawing);
       elements.phaseAction.classList.toggle('is-layout', state.phase === 'layout');
       elements.phaseAction.querySelector('span').textContent = drawing ? 'He terminado de dibujar' : state.phase === 'configure' ? 'Calcular y ajustar' : 'Editar estancias';
+      elements.cancelAdjustment.hidden = !selectedAdjustment;
+      elements.saveProject.disabled = state.phase !== 'layout' || !ready;
       elements.legend.innerHTML = state.phase === 'layout'
         ? '<span><i class="legend-grille">▤</i><b>Rejilla centrada en pared</b></span><span><i class="legend-branch">◆</i><b>Toca o mueve ramal</b></span><span><i class="legend-live">↻</i><b>Recálculo inmediato</b></span>'
         : '<span><i class="legend-type">▼</i><b>Qué estancia es</b></span><span><i class="legend-grille">▤</i><b>Lleva rejilla</b></span><span><i class="legend-machine">M</i><b>Aquí va la máquina</b></span>';
+    }
+
+    function renderRoomContext() {
+      const room = state.rooms.find(item => item.id === selectedRoomId);
+      const visible = state.phase === 'configure' && Boolean(room) && window.matchMedia('(max-width: 760px)').matches;
+      elements.roomContext.hidden = !visible;
+      if (!visible) return;
+      elements.contextTitle.textContent = room.name || `Estancia ${state.rooms.indexOf(room) + 1}`;
+      elements.contextType.value = room.type;
+      const adjustableLoad = room.type === 'living' || room.type === 'kitchen';
+      elements.contextLoadField.hidden = !adjustableLoad;
+      elements.contextLoad.value = room.loadTier || 'normal';
+      elements.contextGrille.classList.toggle('is-active', room.conditioned);
+      elements.contextMachine.classList.toggle('is-active', state.machine?.roomId === room.id);
+      elements.contextGrille.querySelector('span').textContent = room.conditioned ? 'Con rejilla' : 'Sin rejilla';
+      elements.contextMachine.querySelector('span').textContent = state.machine?.roomId === room.id ? 'Máquina aquí' : 'Poner máquina';
     }
 
     function renderMessage() {
@@ -1090,6 +1123,7 @@
       renderControls();
       renderMessage();
       renderPlan();
+      renderRoomContext();
       renderSummary();
       renderResults();
       elements.undo.disabled = !history.length && !drawingPoints.length;
@@ -1164,7 +1198,10 @@
       }
       if (state.phase !== 'configure') return;
       if (!target) return;
-      if (target.dataset.kind === 'zone-toggle') {
+      if (target.dataset.kind === 'room-select') {
+        selectedRoomId = target.dataset.id;
+        render();
+      } else if (target.dataset.kind === 'zone-toggle') {
         commit({ ...state, rooms: state.rooms.map(room => room.id === target.dataset.id ? { ...room, conditioned: !room.conditioned } : room) });
       } else if (target.dataset.kind === 'machine-toggle') {
         const room = state.rooms.find(item => item.id === target.dataset.id);
@@ -1173,6 +1210,70 @@
         commit({ ...state, machine: state.machine?.roomId === room.id ? null : { roomId: room.id, ...machinePoint } });
         setTimeout(() => { if (!elements.automaticResult.hidden) elements.automaticResult.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 250);
       }
+    }
+
+    function toggleFocus(force) {
+      focusMode = typeof force === 'boolean' ? force : !focusMode;
+      elements.planFrame.classList.toggle('is-focus-mode', focusMode);
+      document.body.classList.toggle('duct-plan-focus', focusMode);
+      elements.focus.setAttribute('aria-pressed', String(focusMode));
+      elements.focus.textContent = focusMode ? 'Cerrar plano' : 'Plano grande';
+      setTimeout(fitPlan, 50);
+    }
+
+    function touchDistance(points) {
+      const [a, b] = [...points.values()];
+      return Math.hypot(a.x - b.x, a.y - b.y);
+    }
+
+    function touchMidpoint(points) {
+      const [a, b] = [...points.values()];
+      return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+    }
+
+    function trackTouchStart(event) {
+      if (event.pointerType !== 'touch' || !focusMode) return;
+      touchPointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      if (touchPointers.size === 2) {
+        pinch = { distance: touchDistance(touchPointers), zoom, midpoint: touchMidpoint(touchPointers), left: elements.planScroll.scrollLeft, top: elements.planScroll.scrollTop };
+        suppressClick = true;
+      }
+    }
+
+    function trackTouchMove(event) {
+      if (!touchPointers.has(event.pointerId) || !pinch) return;
+      event.preventDefault();
+      touchPointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      if (touchPointers.size < 2) return;
+      const midpoint = touchMidpoint(touchPointers);
+      zoom = clamp(pinch.zoom * touchDistance(touchPointers) / Math.max(1, pinch.distance), .3, 2.2);
+      applyZoom();
+      elements.planScroll.scrollLeft = pinch.left - (midpoint.x - pinch.midpoint.x);
+      elements.planScroll.scrollTop = pinch.top - (midpoint.y - pinch.midpoint.y);
+    }
+
+    function trackTouchEnd(event) {
+      touchPointers.delete(event.pointerId);
+      if (touchPointers.size < 2 && pinch) {
+        pinch = null;
+        setTimeout(() => { suppressClick = false; }, 160);
+      }
+    }
+
+    function saveInProject() {
+      const API = window.SuperTecnicoProjects;
+      if (!API || state.phase !== 'layout') return;
+      const measurements = [];
+      result.sections.forEach(section => measurements.push({ code: `DUCT-RECT-${section.widthCm}X${section.heightCm}`, description: `Conducto rectangular ${section.widthCm} × ${section.heightCm} cm`, unit: 'm', quantity: section.lengthM }));
+      result.rooms.filter(room => room.conditioned && room.type !== 'unassigned').forEach(room => measurements.push({ code: `GRILLE-${room.grille.widthCm}X${room.grille.heightCm}`, description: `Rejilla ${room.grille.widthCm} × ${room.grille.heightCm} cm`, unit: 'ud', quantity: 1 }));
+      const saved = API.attachArtifact({
+        module_id: 'ducts', discipline: 'climatizacion', title: state.projectName || 'Diseño de conductos', source_page: 'conductos.html', status: 'predesign',
+        summary: `${result.totals.selectedRooms} zonas · ${formatNumber(result.totals.airflowM3h)} m³/h · principal ${result.totals.mainDuct.widthCm} × ${result.totals.mainDuct.heightCm} cm`,
+        warnings: result.warnings.map(item => item.text), measurements,
+        snapshot: { state, totals: result.totals, sections: result.sections.map(section => ({ id: section.id, lengthM: section.lengthM, airflowM3h: section.airflowM3h, widthCm: section.widthCm, heightCm: section.heightCm, rooms: section.rooms.map(room => room.name) })), rooms: result.rooms.map(room => ({ id: room.id, name: room.name, type: room.type, conditioned: room.conditioned, loadFg: room.loadFg, airflowM3h: room.airflowM3h, branchDuct: room.branchDuct, grille: room.grille })) },
+      });
+      transientMessage = `<strong>Guardado en «${escapeHtml(saved.project.name)}».</strong> Puedes abrir Mis proyectos para reunirlo con otras herramientas.`;
+      render();
     }
 
     elements.planStage.addEventListener('pointerdown', beginPlanDrag);
@@ -1202,8 +1303,34 @@
     window.addEventListener('pointermove', movePlanDrag, { passive: false });
     window.addEventListener('pointerup', endPlanDrag);
     window.addEventListener('pointercancel', endPlanDrag);
+    window.addEventListener('pointerup', trackTouchEnd);
+    window.addEventListener('pointercancel', trackTouchEnd);
     elements.undo.addEventListener('click', undo);
     elements.redo.addEventListener('click', redo);
+    elements.focus.addEventListener('click', () => toggleFocus());
+    elements.cancelAdjustment.addEventListener('click', () => { selectedAdjustment = null; render(); });
+    elements.contextClose.addEventListener('click', () => { selectedRoomId = ''; render(); });
+    elements.contextType.addEventListener('change', () => {
+      const roomId = selectedRoomId;
+      commit({ ...state, rooms: state.rooms.map(room => room.id === roomId ? { ...room, type: elements.contextType.value, loadTier: 'normal' } : room) });
+    });
+    elements.contextLoad.addEventListener('change', () => {
+      const roomId = selectedRoomId;
+      commit({ ...state, rooms: state.rooms.map(room => room.id === roomId ? { ...room, loadTier: elements.contextLoad.value } : room) });
+    });
+    elements.contextGrille.addEventListener('click', () => {
+      const roomId = selectedRoomId;
+      commit({ ...state, rooms: state.rooms.map(room => room.id === roomId ? { ...room, conditioned: !room.conditioned } : room) });
+    });
+    elements.contextMachine.addEventListener('click', () => {
+      const room = state.rooms.find(item => item.id === selectedRoomId);
+      if (!room) return;
+      const machinePoint = point(roomControlPoints(room).machine, state.gridCols, state.gridRows);
+      commit({ ...state, machine: state.machine?.roomId === room.id ? null : { roomId: room.id, ...machinePoint } });
+    });
+    elements.saveProject.addEventListener('click', saveInProject);
+    elements.planScroll.addEventListener('pointerdown', trackTouchStart);
+    elements.planScroll.addEventListener('pointermove', trackTouchMove, { passive: false });
     $('zoomIn').addEventListener('click', () => { zoom = clamp(zoom + .12, .3, 2); applyZoom(); });
     $('zoomOut').addEventListener('click', () => { zoom = clamp(zoom - .12, .3, 2); applyZoom(); });
     $('zoomFit').addEventListener('click', fitPlan);
@@ -1214,6 +1341,8 @@
     window.addEventListener('keydown', event => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') { event.preventDefault(); event.shiftKey ? redo() : undo(); }
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'y') { event.preventDefault(); redo(); }
+      if (event.key === 'Escape' && focusMode) { toggleFocus(false); return; }
+      if (event.key === 'Escape' && selectedAdjustment) { selectedAdjustment = null; render(); return; }
       if (event.key === 'Escape' && drawingPoints.length) { drawingPoints = []; render(); }
     });
 

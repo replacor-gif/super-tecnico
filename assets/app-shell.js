@@ -3,6 +3,7 @@
 
   const tools = [
     { href: 'index.html', label: 'Inicio', short: 'Inicio', color: '#ff7a00', icon: 'home', terms: 'inicio portada herramientas' },
+    { href: 'proyectos.html', label: 'Mis proyectos técnicos', short: 'Proyectos', color: '#ffe438', icon: 'project', terms: 'proyectos guardar obra instalación resultados mediciones planos pdf' },
     { href: 'climatizacion.html', label: 'Climatización', short: 'Clima', color: '#00c8ff', icon: 'fan', terms: 'clima hvac errores códigos marcas aire acondicionado' },
     { href: 'frigorista.html', label: 'Asistente frigorista', short: 'Frigorista', color: '#00f0d0', icon: 'gauge', terms: 'frigorista refrigerante presión temperatura evaporación condensación recalentamiento subenfriamiento' },
     { href: 'conductos.html', label: 'Diseño de conductos', short: 'Conductos', color: '#51ff7d', icon: 'duct', terms: 'conductos diseño instalación estancias rejillas caudal distribución aire' },
@@ -26,6 +27,7 @@
     close: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19"/></svg>',
     search: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m15.8 15.8 4.2 4.2"/></svg>',
     home: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="m7 23 17-15 17 15v18H29V29H19v12H7z"/><path class="detail" d="M13 20h22"/></svg>',
+    project: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 12h13l4 5h17v25H7z"/><path d="M12 24h24M12 31h16M12 37h20"/><circle class="detail" cx="37" cy="12" r="7"/><path class="detail" d="M37 8v8M33 12h8"/></svg>',
     fan: '<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="5"/><path d="M24 19c-4-9 1-14 6-13 7 2 7 12-1 17M29 24c9-4 14 1 13 6-2 7-12 7-17-1M24 29c4 9-1 14-6 13-7-2-7-12 1-17M19 24c-9 4-14-1-13-6 2-7 12-7 17 1"/><circle class="detail" cx="24" cy="24" r="19"/></svg>',
     gauge: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 36a18 18 0 1 1 32 0"/><path d="M24 14v4M12 24h4M32 24h4M16 17l3 3M32 17l-3 3M24 28l10-8"/><circle cx="24" cy="28" r="3"/><path class="detail" d="M13 36h22"/></svg>',
     duct: '<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="17" y="17" width="14" height="14" rx="3"/><circle cx="24" cy="24" r="4"/><path d="M4 24h13M31 24h13M10 24V10M38 24v14M5 7h10v5H5zM33 36h10v5H33z"/><path class="detail" d="M24 20c5 2 5 6 0 8M20 24c2 5 6 5 8 0"/></svg>',
@@ -81,12 +83,13 @@
         </div>
         <label class="st-drawer-search"><span>${icons.search}</span><input type="search" autocomplete="off" placeholder="Buscar una herramienta…" aria-label="Buscar una herramienta"></label>
         <div class="st-drawer-status"><span>ACCESO RÁPIDO</span><b>${tools.length - 1} HERRAMIENTAS</b></div>
+        <button class="st-install-app" type="button" data-st-install hidden><span>${icons.project}</span><span><strong>Instalar Super Técnico</strong><small>Acceso directo y herramientas disponibles sin cobertura</small></span><b>INSTALAR</b></button>
         <nav class="st-drawer-grid" aria-label="Todas las herramientas">${tools.map(tool => toolLink(tool)).join('')}</nav>
         <a class="st-drawer-updates${currentFile() === 'actualizaciones.html' ? ' is-active' : ''}" href="actualizaciones.html" style="--tool-color:#ffe438"><span class="st-tool-icon">${icons.updates}</span><span><strong>Últimas mejoras</strong><small>Consulta cómo sigue creciendo la aplicación</small></span><b>VER →</b></a>
         <div class="st-drawer-foot"><strong>TÉCNICA REAL.</strong><span>DECISIONES RÁPIDAS.</span></div>
       </aside>
       <nav class="st-bottom-nav" aria-label="Navegación rápida">
-        ${tools.filter(tool => ['index.html', 'climatizacion.html', 'frigorista.html', 'conductos.html'].includes(tool.href)).map(tool => toolLink(tool, 'st-bottom-link')).join('')}
+        ${tools.filter(tool => ['index.html', 'proyectos.html', 'frigorista.html', 'conductos.html'].includes(tool.href)).map(tool => toolLink(tool, 'st-bottom-link')).join('')}
         <button class="st-bottom-link st-bottom-more" type="button" data-st-open style="--tool-color:#ff3fa7"><span class="st-tool-icon">${icons.menu}</span><span>Más</span></button>
       </nav>`;
     document.body.append(...shell.childNodes);
@@ -97,6 +100,8 @@
     const closeButtons = document.querySelectorAll('[data-st-close]');
     const search = drawer.querySelector('input[type="search"]');
     const drawerTools = [...drawer.querySelectorAll('[data-st-tool]')];
+    const installButton = drawer.querySelector('[data-st-install]');
+    let installPrompt = null;
 
     const setOpen = open => {
       document.body.classList.toggle('st-drawer-open', open);
@@ -119,6 +124,20 @@
       });
     });
 
+    window.addEventListener('beforeinstallprompt', event => {
+      event.preventDefault();
+      installPrompt = event;
+      installButton.hidden = false;
+    });
+    installButton.addEventListener('click', async () => {
+      if (!installPrompt) return;
+      installPrompt.prompt();
+      await installPrompt.userChoice;
+      installPrompt = null;
+      installButton.hidden = true;
+    });
+    window.addEventListener('appinstalled', () => { installButton.hidden = true; });
+
     const portalSearch = document.querySelector('[data-st-portal-search]');
     if (portalSearch) {
       portalSearch.addEventListener('input', () => {
@@ -130,6 +149,19 @@
     }
   }
 
+  function enableProgressiveApp() {
+    if (!document.querySelector('link[rel="manifest"]')) {
+      const manifest = document.createElement('link');
+      manifest.rel = 'manifest';
+      manifest.href = 'manifest.webmanifest';
+      document.head.appendChild(manifest);
+    }
+    if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('service-worker.js').catch(() => {}), { once: true });
+    }
+  }
+
+  enableProgressiveApp();
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', installShell);
   else installShell();
 })();

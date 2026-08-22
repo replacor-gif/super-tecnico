@@ -122,6 +122,15 @@
       const services = ['agua','desague','saneamiento','gas','refrigerante','calefaccion','climatizacion'];
       if (!services.some(service => query.includes(service))) return {message: 'El diámetro depende del servicio de la tubería. Indica qué transporta o a qué instalación pertenece.', suggested_terms: ['agua de consumo','saneamiento','gas','refrigerante','calefacción'], required: true};
     }
+    if (query.includes('proteccion') && !['motor','vivienda','fotovoltaica','recarga','vehiculo','maquina','cuadro','linea','circuito'].some(term => query.includes(term))) {
+      return {message: 'La protección depende del circuito, la carga y el lugar. Añade qué equipo o instalación se protege.', suggested_terms: ['motor','vivienda','máquina','instalación fotovoltaica','recarga de vehículo'], required: true};
+    }
+    if (query.includes('cuadro') && query.includes('electrico') && !['vivienda','industrial','maquina','obra','publica','publico','local'].some(term => query.includes(term))) {
+      return {message: 'Las exigencias del cuadro cambian según su función y emplazamiento. Añade el tipo de instalación.', suggested_terms: ['vivienda','cuadro industrial','cuadro de máquina','obra provisional','local de pública concurrencia'], required: true};
+    }
+    if (query.includes('desague') && !['condensado','saneamiento','residual','pluvial','refrigeracion','climatizacion'].some(term => query.includes(term))) {
+      return {message: 'Indica qué agua debe evacuar el desagüe para evitar mezclar prescripciones distintas.', suggested_terms: ['condensados de climatización','saneamiento','aguas residuales','aguas pluviales'], required: true};
+    }
     return null;
   }
 
@@ -167,7 +176,7 @@
       </article>`).join('');
     el('referencedStandards').innerHTML = (catalog.referenced_not_stored || []).map(item => `<div class="rg-standard-item"><b>${escapeHtml(item.family)}</b><br><small>${escapeHtml(item.reason)}</small></div>`).join('');
 
-    const topics = ['caída de tensión', 'puesta a tierra', 'ventilación', 'recuperación de calor', 'extracción de humos', 'gases fluorados', 'calderas', 'ICT'];
+    const topics = ['caída de tensión', 'puesta a tierra', 'ventilación de vivienda', 'recuperación de calor', 'extracción de humos', 'desagües de condensados', 'cuadro eléctrico industrial', 'gases fluorados', 'calderas', 'ICT'];
     el('topicButtons').innerHTML = topics.map(topic => `<button type="button">${topic}</button>`).join('');
     el('topicButtons').querySelectorAll('button').forEach(button => button.addEventListener('click', () => {
       el('queryInput').value = button.textContent;

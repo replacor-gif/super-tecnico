@@ -457,6 +457,14 @@ footer, .st-page-footer { color: #78879b !important; }
 .st-drawer-search input::placeholder { color: #657080; }
 .st-drawer-status { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: #8090a5; font-size: .66rem; letter-spacing: .09em; }
 .st-drawer-status b { padding: 5px 8px; border-radius: 999px; color: #ffe3c5; background: rgba(255,122,0,.16); }
+.st-install-app { display:grid; grid-template-columns:42px minmax(0,1fr) auto; align-items:center; gap:10px; width:100%; padding:10px; border:1px solid rgba(81,255,125,.42); border-radius:13px; color:#eaffef; background:linear-gradient(135deg,rgba(81,255,125,.11),rgba(0,234,255,.07)); text-align:left; cursor:pointer; }
+.st-install-app[hidden] { display:none; }
+.st-install-app > span:first-child { display:grid; place-items:center; width:42px; height:42px; border-radius:11px; color:#04130a; background:#51ff7d; }
+.st-install-app svg { width:28px; height:28px; fill:none; stroke:currentColor; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+.st-install-app > span:nth-child(2) { display:grid; gap:3px; min-width:0; }
+.st-install-app strong { font-size:.72rem; }
+.st-install-app small { overflow:hidden; color:#8da79b; font-size:.55rem; text-overflow:ellipsis; white-space:nowrap; }
+.st-install-app > b { padding:6px 7px; border-radius:8px; color:#51ff7d; background:rgba(81,255,125,.09); font-size:.55rem; }
 .st-drawer-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 9px; }
 .st-drawer-tool {
   --tool-color: var(--st-blue);

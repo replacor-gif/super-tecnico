@@ -60,6 +60,12 @@ const { chromium } = require('playwright');
   assert.ok(overflow <= 1, `Mobile horizontal overflow: ${overflow}px`);
   assert.deepEqual(pageErrors, []);
   await page.screenshot({ path: 'test-artifacts/ventilation-mobile.png', fullPage: true });
+  assert.equal(await page.locator('#ventSaveProject').isEnabled(), true);
+  await page.locator('#ventSaveProject').click();
+  assert.match(await page.locator('#ventAssistantMessage').innerText(), /Guardado en/i);
+  await page.goto(new URL('proyectos.html', base).href, { waitUntil: 'networkidle' });
+  assert.match(await page.locator('#artifactList').innerText(), /Ventilación/i);
+  assert.ok(await page.locator('#projectMeasurementRows tr').count() > 0);
 
   const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
   const desktopErrors = [];

@@ -49,10 +49,13 @@
   },
   "quality": {
     "catalog_symbols": 460,
+    "engine_symbols": 474,
+    "internal_templates": 14,
     "reviewed_catalog_symbols": 127,
     "auto_draft_catalog_symbols": 333,
     "reviewed_families": ["connections_and_references", "electrical_protections", "relays_switches_and_actuators", "machines_and_actuators"],
     "reviewed_batches": ["hvac_sensors_temperature_pressure_airflow_level_air_quality_leak_frost_current"],
+    "internal_batches": ["automation_blocks_plc_io_hmi_gateway_network_power_safety"],
     "draft_policy": "An auto_draft symbol is usable only as provisional structure and always produces a warning."
   },
   "recommended_ai_workflow": [

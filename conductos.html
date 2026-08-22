@@ -10,10 +10,11 @@
   <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
   <link rel="stylesheet" href="assets/common.css?v=1">
   <link rel="stylesheet" href="assets/app-theme.css?v=1">
-  <link rel="stylesheet" href="assets/duct-designer.css?v=7">
+  <link rel="stylesheet" href="assets/duct-designer.css?v=8">
   <script src="assets/i18n.js?v=6" defer></script>
-  <script src="assets/app-shell.js?v=7" defer></script>
-  <script src="assets/duct-designer.js?v=9" defer></script>
+  <script src="assets/app-shell.js?v=8" defer></script>
+  <script src="assets/project-core.js?v=1" defer></script>
+  <script src="assets/duct-designer.js?v=10" defer></script>
 </head>
 <body>
   <header class="duct-header">
@@ -23,6 +24,7 @@
     </a>
     <div class="duct-header-actions">
       <span>PRUEBA · VERSIÓN 0.5.1</span>
+      <button id="saveDuctProject" type="button" disabled>Guardar en Proyecto</button>
       <button id="printProject" type="button">Imprimir / PDF</button>
     </div>
   </header>
@@ -71,7 +73,7 @@
       <div class="plan-frame">
         <div class="plan-topline">
           <div><span id="planStatusDot"></span><strong id="planStatus">Preparado para dibujar</strong></div>
-          <div class="zoom-actions"><button id="zoomOut" type="button" aria-label="Alejar">−</button><button id="zoomFit" type="button">Ajustar</button><button id="zoomIn" type="button" aria-label="Acercar">＋</button></div>
+          <div class="zoom-actions"><button id="cancelAdjustment" type="button" hidden>Cancelar</button><button id="planFocusToggle" type="button" aria-pressed="false">Plano grande</button><button id="zoomOut" type="button" aria-label="Alejar">−</button><button id="zoomFit" type="button">Ajustar</button><button id="zoomIn" type="button" aria-label="Acercar">＋</button></div>
         </div>
         <div class="plan-canvas-wrap">
           <button id="phaseAction" class="finish-drawing" type="button" disabled>
@@ -81,6 +83,16 @@
         </div>
         <div class="plan-foot"><div id="planSummary" class="plan-summary"></div></div>
       </div>
+
+      <section id="ductRoomContext" class="duct-room-context" hidden aria-label="Editor de la estancia seleccionada">
+        <header><span>ESTANCIA SELECCIONADA</span><strong id="ductRoomContextTitle">Estancia</strong><button id="ductRoomContextClose" type="button" aria-label="Cerrar editor">×</button></header>
+        <div class="duct-context-fields">
+          <label><span>Qué estancia es</span><select id="ductContextType"></select></label>
+          <label id="ductContextLoadField" hidden><span>Tamaño</span><select id="ductContextLoad"></select></label>
+          <button id="ductContextGrille" type="button"><i>▤</i><span>Rejilla</span></button>
+          <button id="ductContextMachine" type="button"><i>M</i><span>Máquina</span></button>
+        </div>
+      </section>
     </section>
 
     <section id="automaticResult" class="automatic-result" hidden>

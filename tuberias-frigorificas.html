@@ -11,9 +11,10 @@
   <link rel="stylesheet" href="assets/common.css?v=1">
   <link rel="stylesheet" href="assets/app-theme.css?v=1">
   <link rel="stylesheet" href="assets/refrigerant-piping.css?v=1">
-  <script src="assets/app-shell.js?v=7" defer></script>
+  <script src="assets/app-shell.js?v=8" defer></script>
+  <script src="assets/project-core.js?v=1" defer></script>
   <script src="assets/refrigerant-piping-engine.js?v=1" defer></script>
-  <script src="assets/refrigerant-piping.js?v=1" defer></script>
+  <script src="assets/refrigerant-piping.js?v=2" defer></script>
 </head>
 <body>
   <header class="rp-header">
@@ -85,7 +86,7 @@
     </section>
 
     <section id="rpResults" class="rp-results" aria-live="polite" hidden>
-      <div class="rp-result-head"><div><p class="rp-eyebrow">RESULTADO PROFESIONAL</p><h2 id="rpResultTitle">Instalación frigorífica</h2><p id="rpResultSubtitle"></p></div><div class="rp-result-actions"><span id="rpStatus" class="rp-status"></span><button id="rpPrint" class="rp-quiet" type="button">Imprimir</button></div></div>
+      <div class="rp-result-head"><div><p class="rp-eyebrow">RESULTADO PROFESIONAL</p><h2 id="rpResultTitle">Instalación frigorífica</h2><p id="rpResultSubtitle"></p></div><div class="rp-result-actions"><span id="rpStatus" class="rp-status"></span><button id="rpSaveProject" class="rp-quiet" type="button" disabled>Guardar en Proyecto</button><button id="rpPrint" class="rp-quiet" type="button">Imprimir</button></div></div>
 
       <div class="rp-summary-grid">
         <article class="rp-summary-gas"><span>Línea de gas / aspiración</span><strong id="rpGasSize">—</strong><small id="rpGasDetail">—</small></article>

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://replacor.es/schemas/super-tecnico/technical-project.schema.json",
+  "title": "Super Técnico technical project",
+  "type": "object",
+  "required": ["id", "name", "discipline", "created_at", "updated_at", "artifacts"],
+  "properties": {
+    "id": { "type": "string", "minLength": 3, "maxLength": 90 },
+    "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "discipline": { "type": "string" },
+    "client": { "type": "string" },
+    "location": { "type": "string" },
+    "notes": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "module_id", "title", "created_at", "measurements", "snapshot"],
+        "properties": {
+          "id": { "type": "string" },
+          "module_id": { "type": "string" },
+          "title": { "type": "string" },
+          "summary": { "type": "string" },
+          "source_page": { "type": "string" },
+          "status": { "enum": ["draft", "predesign", "reviewed"] },
+          "created_at": { "type": "string", "format": "date-time" },
+          "warnings": { "type": "array" },
+          "measurements": { "type": "array" },
+          "snapshot": { "type": "object" }
+        }
+      }
+    }
+  }
+}

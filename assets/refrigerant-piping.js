@@ -15,7 +15,7 @@
     dischargeSummary: $('#rpDischargeSummary'), dischargeSize: $('#rpDischargeSize'), dischargeDetail: $('#rpDischargeDetail'),
     oilStatus: $('#rpOilStatus'), oilDetail: $('#rpOilDetail'), insulation: $('#rpInsulation'), insulationDetail: $('#rpInsulationDetail'),
     diagram: $('#rpDiagram'), diagramCaption: $('#rpDiagramCaption'), oilPlan: $('#rpOilPlan'), insulationPlan: $('#rpInsulationPlan'),
-    warnings: $('#rpWarnings'), measurements: $('#rpMeasurements'), technicalRows: $('#rpTechnicalRows'),
+    warnings: $('#rpWarnings'), measurements: $('#rpMeasurements'), technicalRows: $('#rpTechnicalRows'), saveProject: $('#rpSaveProject'),
   };
   let datasets = null;
   let lastResult = null;
@@ -129,6 +129,8 @@
 
   function render(result) {
     lastResult = result;
+    elements.saveProject.disabled = false;
+    try { localStorage.setItem('st.refrigerantPiping.v1', JSON.stringify({ saved_at: new Date().toISOString(), input: result.input, result })); } catch (_) {}
     const suction = result.lines.find(item => item.kind === 'suction');
     const liquid = result.lines.find(item => item.kind === 'liquid');
     const discharge = result.lines.find(item => item.kind === 'discharge');
@@ -171,6 +173,21 @@
     elements.technicalRows.innerHTML = result.lines.map(line => `<tr><td>${escapeHtml(lineNames[line.kind] || line.kind)}</td><td>${escapeHtml(line.displaySize)} · Ø ext. ${String(line.odMm).replace('.', ',')} mm</td><td>${String(line.velocityFullMS).replace('.', ',')} m/s</td><td>${line.velocityMinimumMS == null ? '—' : `${String(line.velocityMinimumMS).replace('.', ',')} m/s`}</td><td>${String(line.saturationDropK).replace('.', ',')} K</td></tr>`).join('');
     elements.results.hidden = false;
     elements.results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function saveInProject() {
+    const API = window.SuperTecnicoProjects;
+    if (!API || !lastResult) return;
+    const suction = lastResult.lines.find(item => item.kind === 'suction');
+    const liquid = lastResult.lines.find(item => item.kind === 'liquid');
+    const saved = API.attachArtifact({
+      module_id: 'refrigerant_piping', discipline: 'refrigeracion', title: elements.title.textContent || 'Tuberías frigoríficas', source_page: 'tuberias-frigorificas.html', status: 'predesign',
+      summary: `${lastResult.fluid.designation} · gas ${suction.displaySize} · líquido ${liquid.displaySize} · ${lastResult.route.actualLengthM} m`,
+      warnings: lastResult.warnings, measurements: lastResult.billOfQuantities,
+      snapshot: { input: lastResult.input, fluid: lastResult.fluid, route: lastResult.route, lines: lastResult.lines, oilManagement: lastResult.oilManagement, insulation: lastResult.insulation, resultLevel: lastResult.resultLevel },
+    });
+    elements.saveProject.textContent = `Guardado · ${saved.project.name}`;
+    setTimeout(() => { elements.saveProject.textContent = 'Guardar en Proyecto'; }, 2600);
   }
 
   function calculate(event) {
@@ -228,6 +245,7 @@
   elements.system.addEventListener('change', applyProfileDefaults);
   form.addEventListener('submit', calculate);
   $('#rpExample').addEventListener('click', loadExample);
+  elements.saveProject.addEventListener('click', saveInProject);
   $('#rpPrint').addEventListener('click', () => window.print());
   start();
 })();

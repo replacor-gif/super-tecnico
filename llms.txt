@@ -83,3 +83,11 @@ The browser engine accumulates condensate flow from the furthest unit to the out
 - Machine contract: /data/ventilation/tool-manifest.json
 
 The browser engine accepts a polygonal floor plan, room heights, occupancy or parking data where required, and manually positioned grilles and fans. It applies a declared CTE DB HS 3, RITE, or technician-supplied air-change profile, then returns room airflow, fan airflow, routed networks, and 5 cm stepped rectangular duct sizes. It does not yet calculate a final fan pressure duty point or replace project-specific fire, acoustic, discharge, filtration, regional, local, or licensed-standard checks. Remote execution is not enabled.
+
+## Technical project entry points
+
+- Human project workspace: /proyectos.html
+- Neutral project schema: /data/projects/technical-project.schema.json
+- Capability manifest: /data/projects/tool-manifest.json
+
+The local-first workspace joins artifacts from duct design, ventilation/extraction and refrigerant piping into one technical job. It aggregates unpriced measurements and exports a neutral JSON document so future estimating, cloud synchronization or AI consumers can build on the same contract. It is not a signed technical project and currently remains in the user's browser; no remote project execution or cloud storage is enabled.

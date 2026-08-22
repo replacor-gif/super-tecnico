@@ -2,11 +2,11 @@
   "schema_version": "1.0",
   "catalog_symbols": 460,
   "normalized_catalog_symbols": 460,
-  "engine_symbols": 463,
-  "symbols_with_ports": 463,
+  "engine_symbols": 474,
+  "symbols_with_ports": 474,
   "status_counts": {
     "auto_draft": 333,
-    "engine_internal": 3,
+    "engine_internal": 14,
     "engine_reviewed": 127
   },
   "catalog_status_counts": {

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-17",
+  "updated_at": "2026-08-22",
   "title": "Últimas mejoras de Super Técnico",
   "author_policy": {
     "maintainer": "Administrador",
@@ -9,6 +9,15 @@
     "personal_data": "Do not publish private identifiers unless the contributor explicitly chose that text as a public nickname."
   },
   "entries": [
+    {
+      "id": "UPD-20260822-PROJECTS-MOBILE-AUTOMATION",
+      "date": "2026-08-22",
+      "title": "Proyectos técnicos, Conductos móvil y automatización ElectroIA",
+      "summary": "Super Técnico ya puede reunir resultados y mediciones de Conductos, Ventilación y Tuberías en proyectos locales. Conductos incorpora plano ampliado y editor móvil contextual, y ElectroIA suma once bloques internos de automatización industrial.",
+      "areas": ["Proyectos", "Conductos", "ElectroIA", "Móvil"],
+      "kind": "platform_improvement",
+      "author": { "type": "maintainer", "label": "Administrador" }
+    },
     {
       "id": "UPD-20260817-REFRIGERANT-PIPING",
       "date": "2026-08-17",

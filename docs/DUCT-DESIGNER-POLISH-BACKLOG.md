@@ -1,21 +1,20 @@
 # Pendientes de perfeccionamiento del diseñador de conductos
 
-Fecha de revisión: 2026-08-17
+Fecha de revisión: 2026-08-22
 
 ## Situación actual
 
-El diseñador ya permite dibujar estancias poligonales, identificarlas sobre el plano, seleccionar las zonas climatizadas, situar la unidad interior, crear un trazado automático, mover rejillas y ramales con toque o arrastre y recalcular secciones en escalones de 5 cm.
+El diseñador ya permite dibujar estancias poligonales, identificarlas sobre el plano, seleccionar las zonas climatizadas, situar la unidad interior, crear un trazado automático, mover rejillas y ramales con toque o arrastre y recalcular secciones en escalones de 5 cm. En móvil dispone además de plano ampliado, gesto de zoom, editor contextual de estancias y cancelación visible del ajuste.
 
 Sigue siendo una propuesta de diseño previo basada en criterios prácticos. Todavía no debe presentarse como cálculo aerodinámico completo ni como plano de ejecución definitivo.
 
-## Prioridad 1: comodidad real en móvil
+## Prioridad 1: comodidad real en móvil — realizada en 0.5.1
 
-- Crear un modo de plano ampliado que utilice casi toda la pantalla y deje las acciones en una barra inferior compacta.
-- Añadir zoom con dos dedos y desplazamiento del plano sin confundirlo con la colocación de puntos.
-- Sustituir los selectores que quedan dentro de estancias pequeñas por un editor contextual inferior al tocar la estancia.
-- Mantener siempre visible una instrucción única y la siguiente acción, ocultando información secundaria mientras se dibuja.
-- Hacer más clara la selección activa de rejilla o ramal e incorporar un botón visible para cancelar el movimiento.
-- Probar el recorrido completo en teléfonos estrechos y con estancias pequeñas o irregulares.
+- Plano ampliado que utiliza casi toda la pantalla y conserva controles compactos.
+- Zoom con dos dedos y desplazamiento del plano sin confundirlo con la colocación de puntos.
+- Editor contextual inferior al tocar una estancia, sin selectores diminutos dentro del plano móvil.
+- Instrucción única, selección activa de rejilla o ramal y botón visible para cancelar el movimiento.
+- Prueba automatizada en un teléfono de 390 × 844 px; quedan pendientes más casos reales de estancias irregulares.
 
 ## Prioridad 2: trazado profesional y editable
 
@@ -36,7 +35,7 @@ Sigue siendo una propuesta de diseño previo basada en criterios prácticos. Tod
 
 ## Prioridad 4: proyecto y trabajo de campo
 
-- Guardar, duplicar, nombrar y exportar proyectos además del almacenamiento local automático.
+- Guardar, nombrar y exportar proyectos además del almacenamiento local automático: disponible en la primera versión de Proyecto Técnico. Duplicado y sincronización entre dispositivos siguen pendientes.
 - Generar una memoria resumida con plano, tramos, rejillas, advertencias y criterios utilizados.
 - Incorporar cotas y una escala verificable en el PDF.
 - Poder reabrir el plano en otro dispositivo sin reconstruirlo.
@@ -44,4 +43,4 @@ Sigue siendo una propuesta de diseño previo basada en criterios prácticos. Tod
 
 ## Próximo incremento recomendado
 
-El siguiente cambio debe concentrarse en el modo de plano ampliado para móvil y el editor contextual de estancias. Es la mejora con mayor impacto inmediato y prepara después la edición avanzada del conducto principal y de las restricciones de paso.
+El siguiente cambio debe concentrarse en marcar zonas preferentes o prohibidas de paso y en mover o bloquear el conducto principal. Es la base necesaria para que el trazado automático respete falsos techos, vigas y decisiones reales del técnico.

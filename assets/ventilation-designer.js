@@ -584,7 +584,7 @@
       phaseBadge: $('ventPhaseBadge'), message: $('ventAssistantMessage'), status: $('ventPlanStatus'), stage: $('ventPlanStage'), scroll: $('ventPlanScroll'), summary: $('ventPlanSummary'), phaseAction: $('ventPhaseAction'),
       roomEditor: $('ventRoomEditor'), roomName: $('ventRoomName'), roomType: $('ventRoomType'), roomHeight: $('ventRoomHeight'), occupantsField: $('ventOccupantsField'), occupants: $('ventRoomOccupants'), parkingField: $('ventParkingField'), parking: $('ventRoomParking'),
       toolbar: $('ventPlacementToolbar'), results: $('ventAutomaticResult'), resultSummary: $('ventResultSummary'), alerts: $('ventAlerts'), networks: $('ventNetworkResults'), rooms: $('ventRoomResults'), fans: $('ventFanResults'), networkStatus: $('ventNetworkStatus'),
-      undo: $('ventUndo'), redo: $('ventRedo'), example: $('ventLoadExample'), clear: $('ventClearProject'), print: $('ventPrintProject'),
+      undo: $('ventUndo'), redo: $('ventRedo'), example: $('ventLoadExample'), clear: $('ventClearProject'), print: $('ventPrintProject'), saveProject: $('ventSaveProject'),
     };
     let state = loadState();
     let result = calculateProject(state);
@@ -790,6 +790,7 @@
       });
       elements.undo.disabled = !history.length && !drawingPoints.length;
       elements.redo.disabled = !future.length || drawingPoints.length > 0;
+      elements.saveProject.disabled = state.phase !== 'equipment' || result.totals.terminals < 1;
     }
 
     function renderMessage() {
@@ -856,6 +857,23 @@
       renderPlan();
       renderResults();
       save();
+    }
+
+    function saveInProject() {
+      const API = window.SuperTecnicoProjects;
+      if (!API || state.phase !== 'equipment') return;
+      const measurements = [];
+      result.sections.forEach(section => measurements.push({ code: `VENT-DUCT-${section.widthCm}X${section.heightCm}`, description: `Conducto de ${section.kind === 'supply' ? 'impulsión' : 'extracción'} ${section.widthCm} × ${section.heightCm} cm`, unit: 'm', quantity: section.lengthM }));
+      result.terminals.forEach(terminal => measurements.push({ code: `VENT-GRILLE-${terminal.kind.toUpperCase()}-${terminal.grille.widthCm}X${terminal.grille.heightCm}`, description: `Rejilla de ${terminal.kind === 'supply' ? 'impulsión' : 'extracción'} ${terminal.grille.widthCm} × ${terminal.grille.heightCm} cm`, unit: 'ud', quantity: 1 }));
+      result.fanResults.forEach(fan => measurements.push({ code: `VENT-FAN-${fan.kind.toUpperCase()}`, description: `Turbina de ${fan.kind === 'supply' ? 'impulsión' : 'extracción'} · ${formatNumber(fan.airflowM3h)} m³/h`, unit: 'ud', quantity: 1 }));
+      const saved = API.attachArtifact({
+        module_id: 'ventilation', discipline: 'ventilacion', title: `${result.profile.short} · ventilación y extracción`, source_page: 'ventilacion.html', status: 'predesign',
+        summary: `${result.totals.volumeM3.toLocaleString('es-ES', { maximumFractionDigits: 1 })} m³ · impulsión ${formatNumber(result.totals.supplyM3h)} m³/h · extracción ${formatNumber(result.totals.extractM3h)} m³/h`,
+        warnings: result.warnings.map(item => item.text), measurements,
+        snapshot: { state, profile: result.profile, source: result.source, totals: result.totals, rooms: result.rooms.map(room => ({ id: room.id, name: room.name, type: room.type, areaM2: room.areaM2, volumeM3: room.volumeM3, supplyLps: room.supplyLps, extractLps: room.extractLps, demandBasis: room.demandBasis })), terminals: result.terminals, fans: result.fanResults, sections: result.sections.map(section => ({ id: section.id, kind: section.kind, lengthM: section.lengthM, airflowM3h: section.airflowM3h, widthCm: section.widthCm, heightCm: section.heightCm, velocityMps: section.velocityMps })) },
+      });
+      transientMessage = `<strong>Guardado en «${escapeHtml(saved.project.name)}».</strong> Ya forma parte de sus mediciones conjuntas.`;
+      render();
     }
 
     elements.stage.addEventListener('click', handlePlanClick);
@@ -928,6 +946,7 @@
       commit(emptyState({ profileId: state.profileId, systemMode: Rules.PROFILES[state.profileId].defaultMode }));
     });
     elements.print.addEventListener('click', () => window.print());
+    elements.saveProject.addEventListener('click', saveInProject);
     $('ventZoomIn').addEventListener('click', () => { zoom = clamp(zoom + .12, .28, 2); applyZoom(); });
     $('ventZoomOut').addEventListener('click', () => { zoom = clamp(zoom - .12, .28, 2); applyZoom(); });
     $('ventZoomFit').addEventListener('click', fitPlan);

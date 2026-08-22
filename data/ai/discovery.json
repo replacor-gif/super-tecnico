@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "service_version": "0.3.0",
+  "service_version": "0.4.0",
   "id": "super-tecnico-ai-gateway",
   "name": "Super Técnico para IAs",
   "title": "Conocimiento técnico verificable y diagramas deterministas para sistemas de IA",
@@ -114,6 +114,18 @@
         "slope_and_fall_calculation"
       ],
       "discovery": "../condensate/tool-manifest.json"
+    },
+    {
+      "id": "super-tecnico-technical-projects",
+      "title": "Proyecto Técnico",
+      "status": "public_local_first_beta",
+      "capabilities": [
+        "multiple_projects",
+        "cross_tool_artifacts",
+        "unpriced_bill_of_quantities",
+        "neutral_json_export"
+      ],
+      "discovery": "../projects/tool-manifest.json"
     }
   ],
   "access_model": {

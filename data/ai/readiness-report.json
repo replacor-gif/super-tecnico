@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-08-17T11:19:26.819284+00:00",
+  "generated_at_utc": "2026-08-22T20:07:30.466436+00:00",
   "status": "public_free_preview_one_tool",
-  "readiness_score_percent": 63,
+  "readiness_score_percent": 66,
   "score_meaning": "Preparación técnica global; solo la búsqueda de normativa tiene ejecución pública gratuita.",
   "content_inventory": {
     "brands": 30,
@@ -18,7 +18,10 @@
     "components_reviewed": 8205,
     "components_historical": 3327,
     "electroia_symbols": 460,
+    "electroia_engine_symbols": 474,
+    "electroia_internal_templates": 14,
     "electroia_symbols_reviewed": 127,
+    "technical_project_capabilities": 6,
     "hvac_training_chapters": 167,
     "electronics_chapters": 678,
     "frigorista_refrigerants": 71,
@@ -46,7 +49,7 @@
       "id": "focused_tools",
       "title": "Herramientas centradas en objetivos",
       "status": "pass",
-      "evidence": "Preflight, refrigeración P/T progresiva, resolución, diagnóstico, componentes, casos y diagramas"
+      "evidence": "Preflight, refrigeración P/T progresiva, resolución, diagnóstico, componentes, casos, proyectos y diagramas"
     },
     {
       "id": "quality_labels",
@@ -107,6 +110,12 @@
       "title": "Gobierno de almacenamiento y caché",
       "status": "pass",
       "evidence": "Política pública de copia canónica, caché versionada y respuesta mínima"
+    },
+    {
+      "id": "cross_tool_projects",
+      "title": "Contrato común de Proyecto Técnico",
+      "status": "pass",
+      "evidence": "Conductos, ventilación y tuberías frigoríficas producen artefactos y mediciones sin precio sobre el mismo esquema local"
     },
     {
       "id": "compact_context",

@@ -11,12 +11,13 @@ Fecha de revisión: 2026-08-17
 - Familias completas: conexiones y referencias; protecciones eléctricas; relés, interruptores y actuadores; máquinas y actuadores.
 - Lote de sensores HVAC revisado: 17 símbolos de temperatura, presión, humedad, flujo, nivel, calidad de aire, seguridad y medida de corriente.
 - Lote de señales y comunicaciones revisado: 10 símbolos de RS-485, CAN, Ethernet, 4-20 mA, 0-10 V, UART, JTAG/SWD, Modbus RTU, BACnet MS/TP y DALI.
+- Base de automatización disponible en el motor: 11 bloques con canales explícitos para CPU de PLC, DI, DO, AI, AO, E/S remota, PLC de seguridad, HMI, fuente de 24 V, switch y pasarela industrial. Son elementos internos del motor hasta incorporarlos como familia pública del catálogo.
 
 Un símbolo solo cambia a `engine_reviewed` cuando dispone de geometría propia, terminales identificados, anclajes sobre la rejilla común y una prueba de representación. Estar presente en el catálogo o compartir una plantilla provisional no equivale a estar revisado.
 
 ## Cola priorizada
 
-1. Base de automatización: CPU de PLC, módulos DI/DO/AI/AO, E/S remota, PLC y relé de seguridad, HMI, fuente industrial de 24 V, switch y pasarela industrial.
+1. Convertir la base interna de automatización en familia pública: revisar representación, variantes de canales, comunes, potenciales, aislamiento y borneros de CPU, DI/DO/AI/AO, E/S remota, seguridad, HMI, fuente, switch y pasarela.
 2. Controladores abiertos e industriales: bloques de interfaz para Arduino de 5 V y 3,3 V, Arduino Opta, Portenta Machine Control, Raspberry Pi/Compute Module y controlador embebido genérico.
 3. Componentes pasivos: condensadores polarizados, inductores, choque de modo común, MOV, PTC y transformadores con distintas tomas.
 4. Completar sensores: proximidad, posición, vibración, encoders, gases y sensores de proceso pendientes.

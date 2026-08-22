@@ -1,7 +1,7 @@
 "use strict";
 
 const ElectroDiagramCore = (() => {
-  const ENGINE_VERSION = "1.8.0-alpha.1";
+  const ENGINE_VERSION = "1.9.0-alpha.1";
   const CONTRACT_VERSION = "1.0";
   const GRID_PITCH_MIL = 50;
   const UNIT = 24;
@@ -809,6 +809,16 @@ const ElectroDiagramCore = (() => {
       "machine_block", "protection_block", "power_block", "isolation_block",
       "installation_block", "meter_block", "source_block",
     ]);
+    const automationLabels = {
+      plc_cpu: "PLC CPU", plc_di_module: "DI", plc_do_module: "DO", plc_ai_module: "AI", plc_ao_module: "AO",
+      remote_io_head: "REMOTE I/O", safety_plc: "SAFETY PLC", industrial_hmi: "HMI", industrial_psu_24v: "24 V DC",
+      industrial_switch: "ETH SWITCH", industrial_gateway: "GATEWAY",
+    };
+    if (automationLabels[kind]) {
+      const safetyMark = kind === "safety_plc" ? `<path class="symbol-accent" d="M${-1.15 * u} ${-2.7 * u}h${2.3 * u}v${1.55 * u}h${-2.3 * u}zM${-0.65 * u} ${-2.7 * u}v${-0.65 * u}a${0.65 * u} ${0.65 * u} 0 01${1.3 * u} 0v${0.65 * u}"/>` : "";
+      const ioMark = ["plc_di_module", "plc_do_module", "plc_ai_module", "plc_ao_module"].includes(kind) ? `<path class="symbol-accent" d="M${-2.6 * u} ${-2.3 * u}h${1.1 * u}m${-1.1 * u} ${1.5 * u}h${1.1 * u}m${-1.1 * u} ${1.5 * u}h${1.1 * u}m${-1.1 * u} ${1.5 * u}h${1.1 * u}"/>` : "";
+      return sensorBody(automationLabels[kind], `${safetyMark}${ioMark}`, "rect", 0, 5);
+    }
     if (kind === "transceiver_rs485") {
       return sensorBody("RS-485", `<path class="symbol-accent" d="M${-2.7 * u} ${-1.8 * u}H${1.8 * u}m0 0l${-0.7 * u} ${-0.55 * u}m${0.7 * u} ${0.55 * u}l${-0.7 * u} ${0.55 * u}M${2.7 * u} ${0.25 * u}H${-1.8 * u}m0 0l${0.7 * u} ${-0.55 * u}m${-0.7 * u} ${0.55 * u}l${0.7 * u} ${0.55 * u}"/><text class="component-value" x="0" y="${2.35 * u}">A / B</text>`, "rect", 0, 1.25 * u);
     }

@@ -58,4 +58,16 @@ if (($pipe['result']['answer_status'] ?? '') !== 'needs_context' || empty($pipe[
     quality_fail('The misspelled ambiguous pipe diameter query did not request the missing service.');
 }
 
+foreach (['proteccion', 'cuadro electrico', 'desague'] as $broadQuery) {
+    $refinement = st_regulation_refinement(st_regulation_normalize($broadQuery));
+    if (empty($refinement['required']) || empty($refinement['suggested_terms'])) {
+        quality_fail('The broad query did not request its missing technical scope: ' . $broadQuery);
+    }
+}
+foreach (['proteccion motor', 'cuadro electrico industrial', 'desague condensados climatizacion'] as $specificQuery) {
+    if (st_regulation_refinement(st_regulation_normalize($specificQuery)) !== null) {
+        quality_fail('A specific query was incorrectly treated as ambiguous: ' . $specificQuery);
+    }
+}
+
 fwrite(STDOUT, "Regulation search quality: OK\n");

@@ -8,7 +8,7 @@ const core = require("../archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagra
 
 const registryResult = core.getRegistry();
 assert.equal(registryResult.version, "0.9");
-assert.equal(registryResult.engine_version, "1.8.0-alpha.1");
+assert.equal(registryResult.engine_version, "1.9.0-alpha.1");
 const registry = registryResult.symbols;
 const selected = registry.filter((item) => item.category === "Máquinas y actuadores");
 const newlyReviewedIds = [
