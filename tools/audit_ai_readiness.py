@@ -84,6 +84,7 @@ def audit(root: Path) -> dict[str, Any]:
         checkpoint("connector_core", "Conectores normalizados para personas y motores", "pass", f"{connector_counts.get('records', 0)} fichas, {connector_counts.get('contacts', 0)} contactos, orientación y estado de revisión explícitos"),
         checkpoint("source_traceability", "Fuentes aplicables por respuesta", "partial", f"{brands_with_sources}/{len(brands)} marcas con fuentes; {brands_with_provenance_policy} políticas históricas específicas"),
         checkpoint("public_regulation_api", "Búsqueda pública de normativa para máquinas", "pass", "GET api/index.php?action=regulation-search con fuentes, páginas, límites y métricas"),
+        checkpoint("public_connector_api", "Consulta pública de conectores para máquinas", "pass", "Búsqueda, ficha y resolución de contacto por HTTP con vista, revisión y procedencia"),
         checkpoint("remote_mcp", "Servidor MCP remoto", "planned", "ElectroIA dispone de stdio local; el transporte remoto sigue desactivado"),
         checkpoint("machine_auth", "Autenticación de clientes máquina", "planned", "Contrato API key/OAuth definido; sin emisión de credenciales"),
         checkpoint("metering", "Medición y facturación por uso", "partial", "La búsqueda gratuita registra demanda, cliente, cobertura, latencia y aperturas; la facturación sigue desactivada"),
@@ -101,9 +102,9 @@ def audit(root: Path) -> dict[str, Any]:
     return {
         "schema_version": "1.0",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        "status": "public_free_preview_one_tool",
+        "status": "public_free_preview_regulations_and_connectors",
         "readiness_score_percent": readiness_score,
-        "score_meaning": "Preparación técnica global; solo la búsqueda de normativa tiene ejecución pública gratuita.",
+        "score_meaning": "Preparación técnica global; normativa y conectores tienen consultas públicas gratuitas y limitadas.",
         "content_inventory": {
             "brands": len(brands),
             "brands_with_sources": brands_with_sources,
@@ -139,7 +140,7 @@ def audit(root: Path) -> dict[str, Any]:
         },
         "checkpoints": checks,
         "release_blockers": [
-            "Implementar autenticación y cuotas antes de abrir herramientas distintas de la búsqueda gratuita de normativa.",
+            "Implementar autenticación y cuotas antes de abrir herramientas distintas de las consultas gratuitas de normativa y conectores.",
             "Crear proyecciones de respuesta que nunca expongan registros maestros completos.",
             "Medir coste evitado y utilidad real con el uso de la búsqueda pública.",
             "Implementar las proyecciones de contexto compacto sin exponer registros maestros.",

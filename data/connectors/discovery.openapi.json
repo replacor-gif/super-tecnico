@@ -1,0 +1,43 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "REPLACOR Connector Core API",
+    "version": "1.0.0-beta.1",
+    "description": "Consulta pública limitada del catálogo normalizado de conectores. La respuesta conserva orientación, variante, estado de revisión y procedencia."
+  },
+  "servers": [{"url": "https://app.replacor.com/super-tecnico/api/index.php"}],
+  "paths": {
+    "/?action=connector-search": {
+      "get": {
+        "operationId": "supertecnico_search_connectors",
+        "summary": "Buscar conectores",
+        "parameters": [
+          {"name": "q", "in": "query", "required": true, "schema": {"type": "string", "minLength": 1, "maxLength": 120}},
+          {"name": "category", "in": "query", "schema": {"type": "string", "maxLength": 40}},
+          {"name": "review_status", "in": "query", "schema": {"type": "string", "enum": ["reviewed", "source_identified", "pending_review"]}},
+          {"name": "limit", "in": "query", "schema": {"type": "integer", "minimum": 1, "maximum": 20, "default": 8}}
+        ],
+        "responses": {"200": {"description": "Candidatos compactos", "content": {"application/json": {"schema": {"type": "object"}}}}}
+      }
+    },
+    "/?action=connector-get": {
+      "get": {
+        "operationId": "supertecnico_get_connector",
+        "summary": "Obtener una ficha normalizada",
+        "parameters": [{"name": "connector_id", "in": "query", "required": true, "schema": {"type": "string", "minLength": 3, "maxLength": 80}}],
+        "responses": {"200": {"description": "Ficha completa", "content": {"application/json": {"schema": {"type": "object"}}}}, "404": {"description": "Conector no encontrado"}}
+      }
+    },
+    "/?action=connector-resolve": {
+      "get": {
+        "operationId": "supertecnico_resolve_connector_contact",
+        "summary": "Resolver un contacto o señal",
+        "parameters": [
+          {"name": "connector_id", "in": "query", "required": true, "schema": {"type": "string", "minLength": 3, "maxLength": 80}},
+          {"name": "contact_or_signal", "in": "query", "required": true, "schema": {"type": "string", "minLength": 1, "maxLength": 80}}
+        ],
+        "responses": {"200": {"description": "Contactos coincidentes con vista y estado", "content": {"application/json": {"schema": {"type": "object"}}}}}
+      }
+    }
+  }
+}

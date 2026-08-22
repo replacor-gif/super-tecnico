@@ -13,10 +13,12 @@ const diagramCore = require(join(PROJECT_ROOT, ROUTE, "diagram-core.js"));
 const manifestPath = join(PROJECT_ROOT, "data", "electroia", "tool-manifest.json");
 const componentPath = join(PROJECT_ROOT, "data", "components", "catalog.json");
 const symbolPath = join(PROJECT_ROOT, "data", "symbols", "catalog.json");
+const connectorPath = join(PROJECT_ROOT, "data", "connectors", "catalog.json");
 
 export const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
 
 let resourcesPromise;
+let connectorsPromise;
 
 async function loadResources() {
   if (!resourcesPromise) {
@@ -35,6 +37,13 @@ async function loadResources() {
     }));
   }
   return resourcesPromise;
+}
+
+async function loadConnectors() {
+  if (!connectorsPromise) {
+    connectorsPromise = readFile(connectorPath, "utf8").then(JSON.parse);
+  }
+  return connectorsPromise;
 }
 
 function ensureObject(value, label) {
@@ -66,6 +75,22 @@ function symbolSummary(symbol) {
       side: definition.side,
       electrical_type: definition.electrical_type,
     })),
+  };
+}
+
+function connectorSummary(record) {
+  return {
+    id: record.id,
+    canonical_name: record.canonical_name,
+    aliases: record.aliases,
+    category: record.category,
+    interface: record.interface,
+    form_factor: record.form_factor,
+    gender: record.gender,
+    contact_count: record.contacts.length,
+    view: record.view,
+    review: record.review,
+    source_ids: record.source_ids,
   };
 }
 
@@ -117,6 +142,41 @@ export async function callElectroIATool(tool, rawArguments = {}) {
     const symbol = diagramCore.getRegistry().symbols.find((item) => item.id === symbolId);
     if (!symbol) throw new Error(`Símbolo no encontrado: ${symbolId || "vacío"}`);
     return { ok: true, tool: name, symbol };
+  }
+
+  if (name === "supertecnico_search_connectors") {
+    const query = folded(args.query).trim();
+    if (!query) throw new Error("query debe contener al menos un término de búsqueda");
+    const category = folded(args.category).trim();
+    const status = String(args.review_status || "").trim();
+    const limit = Math.max(1, Math.min(20, Number.isInteger(args.limit) ? args.limit : 8));
+    const catalog = await loadConnectors();
+    const matches = catalog.records.filter((record) => {
+      const haystack = folded([record.id, record.canonical_name, record.category, record.interface, record.form_factor, ...(record.aliases || []), ...(record.search_terms || []), ...record.contacts.flatMap((contact) => [contact.id, contact.signal])].join(" "));
+      if (!haystack.includes(query)) return false;
+      if (category && !folded(record.category).includes(category)) return false;
+      if (status && record.review.status !== status) return false;
+      return true;
+    });
+    return {ok: true, tool: name, query: args.query, total: matches.length, items: matches.slice(0, limit).map(connectorSummary)};
+  }
+
+  if (name === "supertecnico_get_connector") {
+    const connectorId = String(args.connector_id || "").trim();
+    const catalog = await loadConnectors();
+    const record = catalog.records.find((item) => item.id === connectorId);
+    if (!record) throw new Error(`Conector no encontrado: ${connectorId || "vacío"}`);
+    return {ok: true, tool: name, record};
+  }
+
+  if (name === "supertecnico_resolve_connector_contact") {
+    const connectorId = String(args.connector_id || "").trim();
+    const query = folded(args.contact_or_signal).trim();
+    const catalog = await loadConnectors();
+    const record = catalog.records.find((item) => item.id === connectorId);
+    if (!record) throw new Error(`Conector no encontrado: ${connectorId || "vacío"}`);
+    const contacts = record.contacts.filter((contact) => folded(`${contact.id} ${contact.signal} ${contact.description}`).includes(query));
+    return {ok: true, tool: name, connector_id: connectorId, view: record.view, review: record.review, contacts};
   }
 
   if (name === "electroia_render_diagram") {

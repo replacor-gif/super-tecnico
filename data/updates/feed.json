@@ -10,6 +10,15 @@
   },
   "entries": [
     {
+      "id": "UPD-20260822-KNOWLEDGE-DESK-ELECTROIA-3F",
+      "date": "2026-08-22",
+      "title": "Mesa de conocimiento, API de conectores y tres familias ElectroIA",
+      "summary": "Creada la revisión privada con evidencia e historial, la cola segura de importaciones y la consulta HTTP para IAs. ElectroIA eleva a geometría revisada los pasivos, semiconductores discretos y optoelectrónica/aislamiento: 206 símbolos revisados en el motor.",
+      "areas": ["SINAPSYS", "Conectores", "ElectroIA", "IA", "Simbología"],
+      "kind": "platform_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
       "id": "UPD-20260822-CONNECTOR-CORE",
       "date": "2026-08-22",
       "title": "Nueva base viva de conectores y pinouts",

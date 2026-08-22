@@ -170,3 +170,69 @@ CREATE TABLE IF NOT EXISTS st_regulation_search_events (
   KEY idx_regulation_search_client (client_type, created_at),
   KEY idx_regulation_search_document (top_document_id, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS st_connector_reviews (
+  connector_id VARCHAR(80) NOT NULL,
+  review_status ENUM('pending_review','source_identified','reviewed','rejected') NOT NULL DEFAULT 'pending_review',
+  confidence DECIMAL(4,3) NOT NULL DEFAULT 0.000,
+  reviewer_alias VARCHAR(40) NOT NULL DEFAULT 'Administrador',
+  evidence_source_id VARCHAR(80) NULL,
+  evidence_locator VARCHAR(180) NULL,
+  notes TEXT NULL,
+  contacts_checked TINYINT(1) NOT NULL DEFAULT 0,
+  orientation_checked TINYINT(1) NOT NULL DEFAULT 0,
+  variants_checked TINYINT(1) NOT NULL DEFAULT 0,
+  catalog_version VARCHAR(40) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  reviewed_at TIMESTAMP NULL,
+  PRIMARY KEY (connector_id),
+  KEY idx_connector_review_status (review_status, updated_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS st_connector_review_events (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  connector_id VARCHAR(80) NOT NULL,
+  review_status VARCHAR(32) NOT NULL,
+  reviewer_alias VARCHAR(40) NOT NULL,
+  evidence_source_id VARCHAR(80) NULL,
+  evidence_locator VARCHAR(180) NULL,
+  details_json JSON NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY idx_connector_review_event (connector_id, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS st_connector_import_batches (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  original_filename VARCHAR(255) NOT NULL,
+  stored_filename VARCHAR(100) NOT NULL,
+  sha256 CHAR(64) NOT NULL,
+  media_type VARCHAR(100) NOT NULL,
+  file_size BIGINT UNSIGNED NOT NULL,
+  import_status ENUM('uploaded','needs_extractor','extracted','ready_for_review','merged','rejected') NOT NULL DEFAULT 'uploaded',
+  summary VARCHAR(500) NULL,
+  extracted_json JSON NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_connector_import_sha (sha256),
+  KEY idx_connector_import_status (import_status, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS st_connector_usage_events (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  action_name ENUM('search','get','resolve') NOT NULL,
+  client_hash CHAR(64) NOT NULL,
+  client_type ENUM('human','ai','software','unknown') NOT NULL DEFAULT 'unknown',
+  query_hash CHAR(64) NULL,
+  query_sample VARCHAR(120) NULL,
+  connector_id VARCHAR(80) NULL,
+  result_count SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  latency_ms INT UNSIGNED NOT NULL DEFAULT 0,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY idx_connector_usage_date (created_at),
+  KEY idx_connector_usage_connector (connector_id, created_at),
+  KEY idx_connector_usage_client (client_type, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

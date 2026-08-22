@@ -38,7 +38,7 @@ Para regenerar el inventario de preparación:
 python tools/audit_ai_readiness.py
 ```
 
-Los módulos de normativa, desagües y conectores publican contratos específicos en `data/regulations/tool-manifest.json`, `data/condensate/tool-manifest.json` y `data/connectors/tool-manifest.json`. La ejecución remota sigue desactivada salvo la búsqueda pública de normativa.
+Los módulos de normativa, desagües y conectores publican contratos específicos en `data/regulations/tool-manifest.json`, `data/condensate/tool-manifest.json` y `data/connectors/tool-manifest.json`. Normativa y conectores ya ofrecen consulta HTTP pública limitada; el resto de motores continúa sin ejecución remota.
 
 El primer registro común de motores está en `data/core/motor-registry.json`. Usa **SINAPSYS** como nombre de la futura capa de orquestación y mantiene separados los estados reales: catálogo disponible en navegador, ElectroIA en vista previa privada y ejecución remota pendiente. La marca pública seguirá evolucionando gradualmente de Super Técnico hacia REPLACOR.
 

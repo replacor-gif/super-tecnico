@@ -5,20 +5,23 @@
   "engine_symbols": 474,
   "symbols_with_ports": 474,
   "status_counts": {
-    "auto_draft": 333,
+    "auto_draft": 254,
     "engine_internal": 14,
-    "engine_reviewed": 127
+    "engine_reviewed": 206
   },
   "catalog_status_counts": {
-    "auto_draft": 333,
-    "engine_reviewed": 127
+    "auto_draft": 254,
+    "engine_reviewed": 206
   },
   "family_counts": {
     "aux_contact_no": 1,
+    "bjt_npn": 7,
+    "bjt_pnp": 3,
+    "bridge_rectifier": 1,
     "bus_bacnet_mstp": 1,
     "bus_dali": 1,
     "bus_modbus_rtu": 1,
-    "capacitor": 1,
+    "capacitor": 9,
     "chassis_ground": 1,
     "circuit_breaker": 1,
     "circuit_breaker_3p": 1,
@@ -31,12 +34,16 @@
     "contactor_3p": 1,
     "cross_no_connection": 1,
     "crowbar_scr": 1,
+    "crystal": 2,
     "debug_jtag_swd": 1,
     "digital_block": 71,
-    "diode": 1,
+    "diode": 11,
+    "diode_emit": 2,
+    "diode_receive": 1,
     "dip_switch": 1,
     "distribution_board": 1,
     "drain_pump": 1,
+    "dual_diode": 2,
     "eev_stepper": 1,
     "efuse": 1,
     "emergency_stop_nc": 1,
@@ -50,14 +57,15 @@
     "functional_earth": 1,
     "fuse": 1,
     "gas_discharge_tube": 1,
-    "generic_2p": 36,
+    "generic_2p": 7,
     "generic_3p": 2,
+    "generic_4p": 2,
     "ground": 1,
     "heater": 1,
+    "inductor": 3,
     "inrush_limiter_ntc": 1,
     "installation_block": 8,
     "isolation_barrier": 1,
-    "isolation_block": 9,
     "isolation_transformer": 1,
     "isolator": 1,
     "jumper": 1,
@@ -70,7 +78,7 @@
     "mcb_2p": 1,
     "mcb_4p": 1,
     "meter_block": 12,
-    "mosfet_n": 1,
+    "mosfet_n": 10,
     "motor_1phase": 1,
     "motor_3phase": 1,
     "motor_bldc": 1,
@@ -82,9 +90,9 @@
     "net_tie": 1,
     "no_connect": 1,
     "offpage_connector": 1,
-    "optocoupler": 1,
+    "optocoupler": 12,
     "overload_3p": 1,
-    "potentiometer": 1,
+    "potentiometer": 3,
     "power_block": 66,
     "power_port": 1,
     "pressure_switch": 1,
@@ -100,10 +108,9 @@
     "relay_spdt": 1,
     "resettable_fuse_ptc": 1,
     "residual_current_device": 1,
-    "resistor_iec": 1,
+    "resistor_iec": 5,
     "reverse_polarity_protection": 1,
     "selector_switch": 1,
-    "semiconductor_block": 41,
     "sensor_air_quality": 1,
     "sensor_block": 25,
     "sensor_co2": 1,
@@ -144,12 +151,14 @@
     "test_point": 1,
     "thermal_fuse": 1,
     "thermal_protector_klixon": 1,
-    "thermistor_ntc": 1,
+    "thermistor_ntc": 3,
     "thermocouple": 1,
     "thermostat_switch": 1,
+    "thyristor": 3,
     "transceiver_can": 1,
     "transceiver_rs485": 1,
-    "transformer": 1,
+    "transformer": 7,
+    "triac": 1,
     "uart_port": 1,
     "voltage_relay": 1,
     "wire": 1
@@ -162,8 +171,8 @@
     },
     "Componentes pasivos": {
       "total": 34,
-      "engine_reviewed": 5,
-      "auto_draft": 29
+      "engine_reviewed": 34,
+      "auto_draft": 0
     },
     "Conectores y comunicaciones": {
       "total": 19,
@@ -207,8 +216,8 @@
     },
     "Optoelectrónica y aislamiento": {
       "total": 10,
-      "engine_reviewed": 1,
-      "auto_draft": 9
+      "engine_reviewed": 10,
+      "auto_draft": 0
     },
     "Potencia y climatización": {
       "total": 66,
@@ -227,8 +236,8 @@
     },
     "Semiconductores discretos": {
       "total": 43,
-      "engine_reviewed": 2,
-      "auto_draft": 41
+      "engine_reviewed": 43,
+      "auto_draft": 0
     },
     "Sensores y transductores": {
       "total": 42,
@@ -237,10 +246,13 @@
     }
   },
   "fully_reviewed_categories": [
+    "Componentes pasivos",
     "Conexiones y referencias",
     "Máquinas y actuadores",
+    "Optoelectrónica y aislamiento",
     "Protecciones eléctricas",
-    "Relés, interruptores y actuadores"
+    "Relés, interruptores y actuadores",
+    "Semiconductores discretos"
   ],
   "coverage_percent": 100,
   "quality_policy": {

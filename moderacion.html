@@ -1,5 +1,67 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Moderación | Super Técnico</title><link rel="icon" href="assets/super-tecnico-logo.png"><link rel="stylesheet" href="assets/common.css?v=1"><link rel="stylesheet" href="assets/moderation.css?v=1"><script src="assets/community-api.js?v=1" defer></script><script src="assets/moderation.js?v=1" defer></script></head><body>
-<header><a href="index.html"><img src="assets/super-tecnico-logo.png" alt=""><span><strong>Super Técnico</strong><small>Panel privado de moderación</small></span></a><button id="logoutButton" type="button" hidden>Cerrar sesión</button></header>
-<main><section id="loginPanel" class="login-panel"><h1>Acceso de administración</h1><p>Este panel no admite cuentas públicas.</p><form id="loginForm"><label>Contraseña<input id="adminPassword" type="password" autocomplete="current-password" required></label><button type="submit">Entrar</button><p id="loginMessage" role="status"></p></form></section>
-<section id="adminPanel" hidden><div class="admin-heading"><div><p class="eyebrow">Revisión y publicación</p><h1>Aportaciones pendientes</h1></div><div class="admin-tabs"><button class="is-active" type="button" data-kind="proposals">Ideas y mejoras</button><button type="button" data-kind="faults">Casos de avería</button><button type="button" data-kind="solutions">Soluciones</button><button type="button" data-export="json">Exportar JSON</button><button type="button" data-export="csv">Exportar CSV</button></div></div><p id="adminMessage" role="status"></p><div id="adminList" class="admin-list"></div></section></main>
-</body></html>
+<!doctype html>
+<html lang="es" data-api-endpoint="api/index.php">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+  <title>Mesa de conocimiento | REPLACOR</title>
+  <link rel="icon" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
+  <link rel="stylesheet" href="assets/moderation.css?v=2">
+  <style>[hidden]{display:none!important}</style>
+  <script src="assets/community-api.js?v=2" defer></script>
+  <script src="assets/moderation.js?v=2" defer></script>
+</head>
+<body>
+  <header>
+    <a href="index.html"><img src="assets/super-tecnico-logo.png" alt=""><span><strong>REPLACOR</strong><small>Mesa privada de conocimiento</small></span></a>
+    <button id="logoutButton" type="button" hidden>Cerrar sesión</button>
+  </header>
+  <main>
+    <section id="loginPanel" class="login-panel">
+      <p class="eyebrow">Acceso privado</p>
+      <h1>Revisión técnica</h1>
+      <p>Este panel permite validar conocimiento y preparar nuevas incorporaciones. No admite cuentas públicas.</p>
+      <form id="loginForm">
+        <label>Clave de administración<input id="adminPassword" type="password" autocomplete="current-password" required></label>
+        <button type="submit">Entrar</button>
+        <p id="loginMessage" role="status"></p>
+      </form>
+    </section>
+    <section id="adminPanel" hidden>
+      <div class="admin-heading">
+        <div><p class="eyebrow">SINAPSYS · control humano</p><h1>Mesa de conocimiento</h1><p>Revisión trazable, importaciones y aportaciones en un mismo lugar.</p></div>
+        <div class="admin-tabs" aria-label="Secciones de revisión">
+          <button type="button" data-kind="connectors" class="is-active">Conectores</button>
+          <button type="button" data-kind="connector-imports">Importaciones</button>
+          <button type="button" data-kind="proposals">Ideas</button>
+          <button type="button" data-kind="faults">Averías</button>
+          <button type="button" data-kind="solutions">Soluciones</button>
+          <button type="button" data-export="json">JSON</button>
+          <button type="button" data-export="csv">CSV</button>
+        </div>
+      </div>
+      <p id="adminMessage" role="status"></p>
+      <div id="connectorToolbar" class="connector-toolbar">
+        <label>Buscar<input id="connectorReviewSearch" type="search" placeholder="USB-C, HDMI, señal…"></label>
+        <label>Estado<select id="connectorReviewStatus"><option value="">Todos</option><option value="pending_review">Pendiente</option><option value="source_identified">Fuente identificada</option><option value="reviewed">Revisado</option><option value="rejected">Descartado</option></select></label>
+        <div id="connectorReviewSummary" class="review-summary" aria-live="polite"></div>
+      </div>
+      <section id="importWorkspace" class="import-workspace" hidden>
+        <div>
+          <p class="eyebrow">Entrada controlada</p>
+          <h2>Incorporar documento</h2>
+          <p>JSON, CSV, TSV y TXT pueden adjuntar una extracción estructurada. PDF, Excel e imágenes se conservan de forma privada y pasan a extracción asistida antes de mezclarse con el catálogo.</p>
+        </div>
+        <form id="connectorImportForm">
+          <label>Archivo<input id="connectorImportFile" name="document" type="file" accept=".pdf,.xlsx,.csv,.tsv,.json,.txt,.png,.jpg,.jpeg,.webp" required></label>
+          <label>Descripción breve<textarea id="connectorImportSummary" maxlength="500" placeholder="Contenido, procedencia y qué debería aportar"></textarea></label>
+          <button type="submit">Guardar y preparar</button>
+          <p id="connectorImportMessage" role="status"></p>
+        </form>
+      </section>
+      <div id="adminList" class="admin-list"></div>
+    </section>
+  </main>
+</body>
+</html>

@@ -23,7 +23,8 @@ function st_origin_headers(): bool
     $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
     $action = preg_replace('/[^a-z0-9-]/', '', strtolower((string) ($_GET['action'] ?? '')));
     $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
-    if ($action === 'regulation-search' && in_array($method, ['GET', 'OPTIONS'], true)) {
+    $publicReadActions = ['regulation-search', 'connector-search', 'connector-get', 'connector-resolve'];
+    if (in_array($action, $publicReadActions, true) && in_array($method, ['GET', 'OPTIONS'], true)) {
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Headers: Content-Type, X-ST-Client, X-ST-Client-Type');
         header('Access-Control-Allow-Methods: GET, OPTIONS');
@@ -166,7 +167,9 @@ function st_start_admin_session(): void
 {
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_name('st_admin');
-        session_set_cookie_params(['httponly' => true, 'secure' => true, 'samesite' => 'Strict', 'path' => '/']);
+        $scriptPath = str_replace('\\', '/', (string) ($_SERVER['SCRIPT_NAME'] ?? '/api/index.php'));
+        $cookiePath = preg_replace('#/api/[^/]+$#', '/', $scriptPath) ?: '/';
+        session_set_cookie_params(['httponly' => true, 'secure' => true, 'samesite' => 'Strict', 'path' => $cookiePath]);
         session_start();
     }
 }

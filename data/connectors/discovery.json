@@ -1,13 +1,19 @@
 {
   "schema_version": "1.0",
   "service": "REPLACOR Core connector catalog",
-  "status": "public_browser_beta",
+  "status": "public_browser_and_http_beta",
   "human_entry": "../../conectores.html",
   "catalog": "catalog.json",
   "schema": "connector-record.schema.json",
   "sources": "sources.json",
   "tool_manifest": "tool-manifest.json",
-  "remote_api_enabled": false,
+  "openapi": "discovery.openapi.json",
+  "http_endpoints": {
+    "search": "../../api/index.php?action=connector-search",
+    "get": "../../api/index.php?action=connector-get",
+    "resolve": "../../api/index.php?action=connector-resolve"
+  },
+  "remote_api_enabled": true,
   "free_preview": true,
   "quality_rule": "Una ficha solo puede llamarse reviewed cuando contacto, variante y orientación se han contrastado con una ubicación concreta de una fuente primaria."
 }

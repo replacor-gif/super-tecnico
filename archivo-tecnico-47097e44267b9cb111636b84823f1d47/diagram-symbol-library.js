@@ -833,9 +833,30 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0024",
     "catalog_id": "SYM-0024",
     "name": "Resistencia ANSI",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "resistor_ansi",
+    "geometry_template": "resistor_iec",
     "designator": "R",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 4,
+    "ports": {
+      "1": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 3,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Resistencias y dependientes",
     "aliases": "resistor, zigzag",
@@ -844,10 +865,20 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El zigzag es la representación ANSI/IEEE habitual.",
     "catalog_standard": "ANSI/IEEE",
     "catalog_drawing_type": "resistor_ansi",
+    "source_asset": "assets/symbols/SYM-0024_resistencia-ansi.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0025": {
+    "id": "SYM-0025",
+    "catalog_id": "SYM-0025",
+    "name": "Resistencia variable",
+    "kind": "resistor_var",
+    "geometry_template": "potentiometer",
+    "designator": "R",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
-    "height": 4,
+    "height": 6,
     "ports": {
       "1": {
         "x": -3,
@@ -860,19 +891,17 @@ const ElectroDiagramSymbols = Object.freeze({
         "y": 0,
         "side": "east",
         "electrical_type": "passive"
+      },
+      "W": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0024_resistencia-ansi.svg"
-  },
-  "SYM-0025": {
-    "id": "SYM-0025",
-    "catalog_id": "SYM-0025",
-    "name": "Resistencia variable",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "R",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Resistencias y dependientes",
     "aliases": "reóstato, variable",
@@ -881,27 +910,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La flecha indica ajuste mecánico o electrónico.",
     "catalog_standard": "Común",
     "catalog_drawing_type": "resistor_var",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0025_resistencia-variable.svg"
+    "source_asset": "assets/symbols/SYM-0025_resistencia-variable.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0026": {
     "id": "SYM-0026",
@@ -949,9 +959,36 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0027",
     "catalog_id": "SYM-0027",
     "name": "Trimmer",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "trimmer",
+    "geometry_template": "potentiometer",
     "designator": "RV",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 3,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "W": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Resistencias y dependientes",
     "aliases": "preset, ajuste",
@@ -960,6 +997,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Suele ajustarse durante servicio o fabricación.",
     "catalog_standard": "Común",
     "catalog_drawing_type": "trimmer",
+    "source_asset": "assets/symbols/SYM-0027_trimmer.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0028": {
+    "id": "SYM-0028",
+    "catalog_id": "SYM-0028",
+    "name": "Resistencia fusible",
+    "kind": "resistor_fusible",
+    "geometry_template": "resistor_iec",
+    "designator": "RF",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -978,17 +1025,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0027_trimmer.svg"
-  },
-  "SYM-0028": {
-    "id": "SYM-0028",
-    "catalog_id": "SYM-0028",
-    "name": "Resistencia fusible",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "RF",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Resistencias y dependientes",
     "aliases": "fusible resistor",
@@ -997,6 +1036,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "No debe sustituirse por una resistencia común sin comprobar seguridad.",
     "catalog_standard": "Común",
     "catalog_drawing_type": "resistor_fusible",
+    "source_asset": "assets/symbols/SYM-0028_resistencia-fusible.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0029": {
+    "id": "SYM-0029",
+    "catalog_id": "SYM-0029",
+    "name": "Shunt de corriente",
+    "kind": "shunt",
+    "geometry_template": "resistor_iec",
+    "designator": "RS",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -1015,17 +1064,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0028_resistencia-fusible.svg"
-  },
-  "SYM-0029": {
-    "id": "SYM-0029",
-    "catalog_id": "SYM-0029",
-    "name": "Shunt de corriente",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "RS",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Resistencias y dependientes",
     "aliases": "current shunt",
@@ -1034,6 +1075,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La caída de tensión es proporcional a la corriente.",
     "catalog_standard": "Común",
     "catalog_drawing_type": "shunt",
+    "source_asset": "assets/symbols/SYM-0029_shunt-de-corriente.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0030": {
+    "id": "SYM-0030",
+    "catalog_id": "SYM-0030",
+    "name": "Resistencia dependiente de luz",
+    "kind": "ldr",
+    "geometry_template": "resistor_iec",
+    "designator": "LDR",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -1052,17 +1103,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0029_shunt-de-corriente.svg"
-  },
-  "SYM-0030": {
-    "id": "SYM-0030",
-    "catalog_id": "SYM-0030",
-    "name": "Resistencia dependiente de luz",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "LDR",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Resistencias y dependientes",
     "aliases": "fotoresistencia",
@@ -1071,27 +1114,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Flechas entrantes indican luz incidente.",
     "catalog_standard": "Común",
     "catalog_drawing_type": "ldr",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0030_resistencia-dependiente-de-luz.svg"
+    "source_asset": "assets/symbols/SYM-0030_resistencia-dependiente-de-luz.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0031": {
     "id": "SYM-0031",
@@ -1133,9 +1157,30 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0032",
     "catalog_id": "SYM-0032",
     "name": "Termistor PTC",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "ptc",
+    "geometry_template": "thermistor_ntc",
     "designator": "PTC",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 4,
+    "ports": {
+      "1": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 3,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Resistencias y dependientes",
     "aliases": "posistor",
@@ -1144,6 +1189,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Se usa en protección, desmagnetización y calentamiento autorregulado.",
     "catalog_standard": "IEC / común",
     "catalog_drawing_type": "ptc",
+    "source_asset": "assets/symbols/SYM-0032_termistor-ptc.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0033": {
+    "id": "SYM-0033",
+    "catalog_id": "SYM-0033",
+    "name": "Varistor MOV",
+    "kind": "varistor",
+    "geometry_template": "thermistor_ntc",
+    "designator": "RV",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -1162,17 +1217,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0032_termistor-ptc.svg"
-  },
-  "SYM-0033": {
-    "id": "SYM-0033",
-    "catalog_id": "SYM-0033",
-    "name": "Varistor MOV",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "RV",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Resistencias y dependientes",
     "aliases": "MOV VDR",
@@ -1181,35 +1228,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Normalmente queda en paralelo con la red o carga protegida.",
     "catalog_standard": "IEC / común",
     "catalog_drawing_type": "varistor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0033_varistor-mov.svg"
+    "source_asset": "assets/symbols/SYM-0033_varistor-mov.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0034": {
     "id": "SYM-0034",
     "catalog_id": "SYM-0034",
     "name": "Red resistiva",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "resistor_array",
+    "geometry_template": "generic_4p",
     "designator": "RN",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "3": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "4": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Resistencias y dependientes",
     "aliases": "array, pack",
@@ -1218,27 +1279,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Comprueba si comparten terminal común.",
     "catalog_standard": "Común",
     "catalog_drawing_type": "resistor_array",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0034_red-resistiva.svg"
+    "source_asset": "assets/symbols/SYM-0034_red-resistiva.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0035": {
     "id": "SYM-0035",
@@ -1280,9 +1322,30 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0036",
     "catalog_id": "SYM-0036",
     "name": "Condensador polarizado",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "capacitor_polar",
+    "geometry_template": "capacitor",
     "designator": "C",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 4,
+    "ports": {
+      "+": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "-": {
+        "x": 3,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Condensadores",
     "aliases": "electrolítico, tantalio",
@@ -1291,6 +1354,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Observa polaridad, clase de seguridad y posición en el circuito.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "capacitor_polar",
+    "source_asset": "assets/symbols/SYM-0036_condensador-polarizado.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0037": {
+    "id": "SYM-0037",
+    "catalog_id": "SYM-0037",
+    "name": "Condensador variable",
+    "kind": "capacitor_var",
+    "geometry_template": "capacitor",
+    "designator": "CV",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -1309,17 +1382,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0036_condensador-polarizado.svg"
-  },
-  "SYM-0037": {
-    "id": "SYM-0037",
-    "catalog_id": "SYM-0037",
-    "name": "Condensador variable",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "CV",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Condensadores",
     "aliases": "variable, tuning",
@@ -1328,6 +1393,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Observa polaridad, clase de seguridad y posición en el circuito.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "capacitor_var",
+    "source_asset": "assets/symbols/SYM-0037_condensador-variable.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0038": {
+    "id": "SYM-0038",
+    "catalog_id": "SYM-0038",
+    "name": "Condensador ajustable",
+    "kind": "capacitor_trim",
+    "geometry_template": "capacitor",
+    "designator": "CT",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -1346,17 +1421,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0037_condensador-variable.svg"
-  },
-  "SYM-0038": {
-    "id": "SYM-0038",
-    "catalog_id": "SYM-0038",
-    "name": "Condensador ajustable",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "CT",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Condensadores",
     "aliases": "trimmer capacitor",
@@ -1365,6 +1432,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Observa polaridad, clase de seguridad y posición en el circuito.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "capacitor_trim",
+    "source_asset": "assets/symbols/SYM-0038_condensador-ajustable.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0039": {
+    "id": "SYM-0039",
+    "catalog_id": "SYM-0039",
+    "name": "Condensador de paso",
+    "kind": "feedthrough_cap",
+    "geometry_template": "capacitor",
+    "designator": "C",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -1383,17 +1460,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0038_condensador-ajustable.svg"
-  },
-  "SYM-0039": {
-    "id": "SYM-0039",
-    "catalog_id": "SYM-0039",
-    "name": "Condensador de paso",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "C",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Condensadores",
     "aliases": "feed-through",
@@ -1402,6 +1471,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Observa polaridad, clase de seguridad y posición en el circuito.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "feedthrough_cap",
+    "source_asset": "assets/symbols/SYM-0039_condensador-de-paso.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0040": {
+    "id": "SYM-0040",
+    "catalog_id": "SYM-0040",
+    "name": "Condensador de seguridad X",
+    "kind": "capacitor_x",
+    "geometry_template": "capacitor",
+    "designator": "CX",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -1420,17 +1499,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0039_condensador-de-paso.svg"
-  },
-  "SYM-0040": {
-    "id": "SYM-0040",
-    "catalog_id": "SYM-0040",
-    "name": "Condensador de seguridad X",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "CX",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Condensadores",
     "aliases": "X1 X2",
@@ -1439,6 +1510,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Observa polaridad, clase de seguridad y posición en el circuito.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "capacitor_x",
+    "source_asset": "assets/symbols/SYM-0040_condensador-de-seguridad-x.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0041": {
+    "id": "SYM-0041",
+    "catalog_id": "SYM-0041",
+    "name": "Condensador de seguridad Y",
+    "kind": "capacitor_y",
+    "geometry_template": "capacitor",
+    "designator": "CY",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -1457,17 +1538,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0040_condensador-de-seguridad-x.svg"
-  },
-  "SYM-0041": {
-    "id": "SYM-0041",
-    "catalog_id": "SYM-0041",
-    "name": "Condensador de seguridad Y",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "CY",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Condensadores",
     "aliases": "Y1 Y2",
@@ -1476,35 +1549,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Observa polaridad, clase de seguridad y posición en el circuito.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "capacitor_y",
+    "source_asset": "assets/symbols/SYM-0041_condensador-de-seguridad-y.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0042": {
+    "id": "SYM-0042",
+    "catalog_id": "SYM-0042",
+    "name": "Supercondensador",
+    "kind": "supercap",
+    "geometry_template": "capacitor",
+    "designator": "C",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
     "height": 4,
     "ports": {
-      "1": {
+      "+": {
         "x": -3,
         "y": 0,
         "side": "west",
         "electrical_type": "passive"
       },
-      "2": {
+      "-": {
         "x": 3,
         "y": 0,
         "side": "east",
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0041_condensador-de-seguridad-y.svg"
-  },
-  "SYM-0042": {
-    "id": "SYM-0042",
-    "catalog_id": "SYM-0042",
-    "name": "Supercondensador",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "C",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Condensadores",
     "aliases": "EDLC supercapacitor",
@@ -1513,35 +1588,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Observa polaridad, clase de seguridad y posición en el circuito.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "supercap",
+    "source_asset": "assets/symbols/SYM-0042_supercondensador.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0043": {
+    "id": "SYM-0043",
+    "catalog_id": "SYM-0043",
+    "name": "Micrófono capacitivo",
+    "kind": "mic_cap",
+    "geometry_template": "capacitor",
+    "designator": "MIC",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
     "height": 4,
     "ports": {
-      "1": {
+      "+": {
         "x": -3,
         "y": 0,
         "side": "west",
         "electrical_type": "passive"
       },
-      "2": {
+      "-": {
         "x": 3,
         "y": 0,
         "side": "east",
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0042_supercondensador.svg"
-  },
-  "SYM-0043": {
-    "id": "SYM-0043",
-    "catalog_id": "SYM-0043",
-    "name": "Micrófono capacitivo",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "MIC",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Condensadores",
     "aliases": "electret",
@@ -1550,6 +1627,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Observa polaridad, clase de seguridad y posición en el circuito.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "mic_cap",
+    "source_asset": "assets/symbols/SYM-0043_microfono-capacitivo.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0044": {
+    "id": "SYM-0044",
+    "catalog_id": "SYM-0044",
+    "name": "Inductor / bobina",
+    "kind": "inductor",
+    "geometry_template": "inductor",
+    "designator": "L",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -1568,17 +1655,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0043_microfono-capacitivo.svg"
-  },
-  "SYM-0044": {
-    "id": "SYM-0044",
-    "catalog_id": "SYM-0044",
-    "name": "Inductor / bobina",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "L",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Inductivos y resonadores",
     "aliases": "choke, bobina",
@@ -1587,6 +1666,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue devanados, puntos de fase, núcleo y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "inductor",
+    "source_asset": "assets/symbols/SYM-0044_inductor-bobina.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0045": {
+    "id": "SYM-0045",
+    "catalog_id": "SYM-0045",
+    "name": "Inductor con núcleo",
+    "kind": "inductor_core",
+    "geometry_template": "inductor",
+    "designator": "L",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -1605,17 +1694,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0044_inductor-bobina.svg"
-  },
-  "SYM-0045": {
-    "id": "SYM-0045",
-    "catalog_id": "SYM-0045",
-    "name": "Inductor con núcleo",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "L",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Inductivos y resonadores",
     "aliases": "bobina ferrita",
@@ -1624,6 +1705,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue devanados, puntos de fase, núcleo y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "inductor_core",
+    "source_asset": "assets/symbols/SYM-0045_inductor-con-nucleo.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0046": {
+    "id": "SYM-0046",
+    "catalog_id": "SYM-0046",
+    "name": "Inductor variable",
+    "kind": "inductor_var",
+    "geometry_template": "inductor",
+    "designator": "L",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -1642,17 +1733,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0045_inductor-con-nucleo.svg"
-  },
-  "SYM-0046": {
-    "id": "SYM-0046",
-    "catalog_id": "SYM-0046",
-    "name": "Inductor variable",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "L",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Inductivos y resonadores",
     "aliases": "bobina ajustable",
@@ -1661,35 +1744,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue devanados, puntos de fase, núcleo y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "inductor_var",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0046_inductor-variable.svg"
+    "source_asset": "assets/symbols/SYM-0046_inductor-variable.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0047": {
     "id": "SYM-0047",
     "catalog_id": "SYM-0047",
     "name": "Choque de modo común",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "common_mode",
+    "geometry_template": "transformer",
     "designator": "L",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "L1": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "L2": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "R1": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "R2": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Inductivos y resonadores",
     "aliases": "common mode choke, filtro EMI",
@@ -1698,27 +1795,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue devanados, puntos de fase, núcleo y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "common_mode",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0047_choque-de-modo-comun.svg"
+    "source_asset": "assets/symbols/SYM-0047_choque-de-modo-comun.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0048": {
     "id": "SYM-0048",
@@ -1760,9 +1838,48 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0049",
     "catalog_id": "SYM-0049",
     "name": "Transformador con toma central",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "transformer_ct",
+    "geometry_template": "transformer",
     "designator": "T",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "P1": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "P2": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "S1": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "CT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "S2": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Inductivos y resonadores",
     "aliases": "center tap",
@@ -1771,35 +1888,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue devanados, puntos de fase, núcleo y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "transformer_ct",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0049_transformador-con-toma-central.svg"
+    "source_asset": "assets/symbols/SYM-0049_transformador-con-toma-central.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0050": {
     "id": "SYM-0050",
     "catalog_id": "SYM-0050",
     "name": "Autotransformador",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "autotransformer",
+    "geometry_template": "transformer",
     "designator": "T",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "A": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "TAP": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "B": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Inductivos y resonadores",
     "aliases": "variac",
@@ -1808,35 +1933,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue devanados, puntos de fase, núcleo y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "autotransformer",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0050_autotransformador.svg"
+    "source_asset": "assets/symbols/SYM-0050_autotransformador.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0051": {
     "id": "SYM-0051",
     "catalog_id": "SYM-0051",
     "name": "Transformador de corriente",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "current_transformer",
+    "geometry_template": "transformer",
     "designator": "CT",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "P1": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "P2": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "S1": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "S2": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Inductivos y resonadores",
     "aliases": "TC, current transformer",
@@ -1845,35 +1984,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue devanados, puntos de fase, núcleo y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "current_transformer",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0051_transformador-de-corriente.svg"
+    "source_asset": "assets/symbols/SYM-0051_transformador-de-corriente.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0052": {
     "id": "SYM-0052",
     "catalog_id": "SYM-0052",
     "name": "Transformador de impulsos",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "pulse_transformer",
+    "geometry_template": "transformer",
     "designator": "T",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "P1": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "P2": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "S1": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "S2": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Inductivos y resonadores",
     "aliases": "gate transformer",
@@ -1882,35 +2035,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue devanados, puntos de fase, núcleo y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pulse_transformer",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0052_transformador-de-impulsos.svg"
+    "source_asset": "assets/symbols/SYM-0052_transformador-de-impulsos.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0053": {
     "id": "SYM-0053",
     "catalog_id": "SYM-0053",
     "name": "Bobina acoplada",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "coupled_inductors",
+    "geometry_template": "transformer",
     "designator": "L",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "P1": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "P2": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "S1": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "S2": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Inductivos y resonadores",
     "aliases": "inductores acoplados",
@@ -1919,6 +2086,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue devanados, puntos de fase, núcleo y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "coupled_inductors",
+    "source_asset": "assets/symbols/SYM-0053_bobina-acoplada.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0054": {
+    "id": "SYM-0054",
+    "catalog_id": "SYM-0054",
+    "name": "Cristal de cuarzo",
+    "kind": "crystal",
+    "geometry_template": "crystal",
+    "designator": "Y",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -1937,17 +2114,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0053_bobina-acoplada.svg"
-  },
-  "SYM-0054": {
-    "id": "SYM-0054",
-    "catalog_id": "SYM-0054",
-    "name": "Cristal de cuarzo",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "Y",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Inductivos y resonadores",
     "aliases": "quartz crystal",
@@ -1956,10 +2125,20 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue devanados, puntos de fase, núcleo y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "crystal",
+    "source_asset": "assets/symbols/SYM-0054_cristal-de-cuarzo.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0055": {
+    "id": "SYM-0055",
+    "catalog_id": "SYM-0055",
+    "name": "Resonador cerámico",
+    "kind": "resonator",
+    "geometry_template": "crystal",
+    "designator": "Y",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
-    "height": 4,
+    "height": 6,
     "ports": {
       "1": {
         "x": -3,
@@ -1972,19 +2151,17 @@ const ElectroDiagramSymbols = Object.freeze({
         "y": 0,
         "side": "east",
         "electrical_type": "passive"
+      },
+      "GND": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "ground"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0054_cristal-de-cuarzo.svg"
-  },
-  "SYM-0055": {
-    "id": "SYM-0055",
-    "catalog_id": "SYM-0055",
-    "name": "Resonador cerámico",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
-    "designator": "Y",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Inductivos y resonadores",
     "aliases": "ceramic resonator",
@@ -1993,35 +2170,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue devanados, puntos de fase, núcleo y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "resonator",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0055_resonador-ceramico.svg"
+    "source_asset": "assets/symbols/SYM-0055_resonador-ceramico.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0056": {
     "id": "SYM-0056",
     "catalog_id": "SYM-0056",
     "name": "Filtro EMI",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "emi_filter",
+    "geometry_template": "generic_4p",
     "designator": "FL",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN+": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "IN-": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "OUT+": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "OUT-": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "passive_components_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Componentes pasivos",
     "subcategory": "Inductivos y resonadores",
     "aliases": "filtro red",
@@ -2030,27 +2221,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Sigue devanados, puntos de fase, núcleo y aislamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "emi_filter",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0056_filtro-emi.svg"
+    "source_asset": "assets/symbols/SYM-0056_filtro-emi.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0057": {
     "id": "SYM-0057",
@@ -2092,9 +2264,30 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0058",
     "catalog_id": "SYM-0058",
     "name": "Diodo Zener",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "zener",
+    "geometry_template": "diode",
     "designator": "D",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 4,
+    "ports": {
+      "A": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "K": {
+        "x": 3,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Diodos",
     "aliases": "zener, referencia",
@@ -2103,6 +2296,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La barra identifica el cátodo en los diodos polarizados.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "zener",
+    "source_asset": "assets/symbols/SYM-0058_diodo-zener.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0059": {
+    "id": "SYM-0059",
+    "catalog_id": "SYM-0059",
+    "name": "Diodo Schottky",
+    "kind": "schottky",
+    "geometry_template": "diode",
+    "designator": "D",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -2121,17 +2324,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0058_diodo-zener.svg"
-  },
-  "SYM-0059": {
-    "id": "SYM-0059",
-    "catalog_id": "SYM-0059",
-    "name": "Diodo Schottky",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
-    "designator": "D",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Diodos",
     "aliases": "schottky, barrera",
@@ -2140,6 +2335,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La barra identifica el cátodo en los diodos polarizados.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "schottky",
+    "source_asset": "assets/symbols/SYM-0059_diodo-schottky.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0060": {
+    "id": "SYM-0060",
+    "catalog_id": "SYM-0060",
+    "name": "Diodo ultrarrápido",
+    "kind": "diode_fast",
+    "geometry_template": "diode",
+    "designator": "D",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -2158,17 +2363,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0059_diodo-schottky.svg"
-  },
-  "SYM-0060": {
-    "id": "SYM-0060",
-    "catalog_id": "SYM-0060",
-    "name": "Diodo ultrarrápido",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
-    "designator": "D",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Diodos",
     "aliases": "fast recovery, ultrafast",
@@ -2177,6 +2374,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La barra identifica el cátodo en los diodos polarizados.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "diode_fast",
+    "source_asset": "assets/symbols/SYM-0060_diodo-ultrarrapido.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0061": {
+    "id": "SYM-0061",
+    "catalog_id": "SYM-0061",
+    "name": "Diodo TVS unidireccional",
+    "kind": "tvs_uni",
+    "geometry_template": "diode",
+    "designator": "D",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -2195,17 +2402,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0060_diodo-ultrarrapido.svg"
-  },
-  "SYM-0061": {
-    "id": "SYM-0061",
-    "catalog_id": "SYM-0061",
-    "name": "Diodo TVS unidireccional",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
-    "designator": "D",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Diodos",
     "aliases": "TVS transil",
@@ -2214,6 +2413,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La barra identifica el cátodo en los diodos polarizados.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "tvs_uni",
+    "source_asset": "assets/symbols/SYM-0061_diodo-tvs-unidireccional.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0062": {
+    "id": "SYM-0062",
+    "catalog_id": "SYM-0062",
+    "name": "Diodo TVS bidireccional",
+    "kind": "tvs_bi",
+    "geometry_template": "diode",
+    "designator": "D",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -2232,17 +2441,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0061_diodo-tvs-unidireccional.svg"
-  },
-  "SYM-0062": {
-    "id": "SYM-0062",
-    "catalog_id": "SYM-0062",
-    "name": "Diodo TVS bidireccional",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
-    "designator": "D",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Diodos",
     "aliases": "TVS bidireccional",
@@ -2251,35 +2452,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La barra identifica el cátodo en los diodos polarizados.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "tvs_bi",
+    "source_asset": "assets/symbols/SYM-0062_diodo-tvs-bidireccional.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0063": {
+    "id": "SYM-0063",
+    "catalog_id": "SYM-0063",
+    "name": "Diodo varicap",
+    "kind": "varactor",
+    "geometry_template": "diode",
+    "designator": "D",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
     "height": 4,
     "ports": {
-      "1": {
+      "A": {
         "x": -3,
         "y": 0,
         "side": "west",
         "electrical_type": "passive"
       },
-      "2": {
+      "K": {
         "x": 3,
         "y": 0,
         "side": "east",
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0062_diodo-tvs-bidireccional.svg"
-  },
-  "SYM-0063": {
-    "id": "SYM-0063",
-    "catalog_id": "SYM-0063",
-    "name": "Diodo varicap",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
-    "designator": "D",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Diodos",
     "aliases": "varactor, varicap",
@@ -2288,35 +2491,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La barra identifica el cátodo en los diodos polarizados.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "varactor",
+    "source_asset": "assets/symbols/SYM-0063_diodo-varicap.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0064": {
+    "id": "SYM-0064",
+    "catalog_id": "SYM-0064",
+    "name": "Diodo túnel",
+    "kind": "tunnel_diode",
+    "geometry_template": "diode",
+    "designator": "D",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
     "height": 4,
     "ports": {
-      "1": {
+      "A": {
         "x": -3,
         "y": 0,
         "side": "west",
         "electrical_type": "passive"
       },
-      "2": {
+      "K": {
         "x": 3,
         "y": 0,
         "side": "east",
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0063_diodo-varicap.svg"
-  },
-  "SYM-0064": {
-    "id": "SYM-0064",
-    "catalog_id": "SYM-0064",
-    "name": "Diodo túnel",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
-    "designator": "D",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Diodos",
     "aliases": "tunnel, Esaki",
@@ -2325,6 +2530,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La barra identifica el cátodo en los diodos polarizados.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "tunnel_diode",
+    "source_asset": "assets/symbols/SYM-0064_diodo-tunel.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0065": {
+    "id": "SYM-0065",
+    "catalog_id": "SYM-0065",
+    "name": "Diodo PIN",
+    "kind": "pin_diode",
+    "geometry_template": "diode",
+    "designator": "D",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -2343,17 +2558,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0064_diodo-tunel.svg"
-  },
-  "SYM-0065": {
-    "id": "SYM-0065",
-    "catalog_id": "SYM-0065",
-    "name": "Diodo PIN",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
-    "designator": "D",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Diodos",
     "aliases": "PIN",
@@ -2362,6 +2569,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La barra identifica el cátodo en los diodos polarizados.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pin_diode",
+    "source_asset": "assets/symbols/SYM-0065_diodo-pin.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0066": {
+    "id": "SYM-0066",
+    "catalog_id": "SYM-0066",
+    "name": "Diodo láser",
+    "kind": "laser_diode",
+    "geometry_template": "diode_emit",
+    "designator": "D",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -2380,17 +2597,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0065_diodo-pin.svg"
-  },
-  "SYM-0066": {
-    "id": "SYM-0066",
-    "catalog_id": "SYM-0066",
-    "name": "Diodo láser",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
-    "designator": "D",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Diodos",
     "aliases": "LD",
@@ -2399,6 +2608,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La barra identifica el cátodo en los diodos polarizados.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "laser_diode",
+    "source_asset": "assets/symbols/SYM-0066_diodo-laser.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0067": {
+    "id": "SYM-0067",
+    "catalog_id": "SYM-0067",
+    "name": "LED",
+    "kind": "led",
+    "geometry_template": "diode_emit",
+    "designator": "D",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -2417,17 +2636,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0066_diodo-laser.svg"
-  },
-  "SYM-0067": {
-    "id": "SYM-0067",
-    "catalog_id": "SYM-0067",
-    "name": "LED",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
-    "designator": "D",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Diodos",
     "aliases": "diodo emisor luz",
@@ -2436,35 +2647,37 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La barra identifica el cátodo en los diodos polarizados.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "led",
+    "source_asset": "assets/symbols/SYM-0067_led.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0068": {
+    "id": "SYM-0068",
+    "catalog_id": "SYM-0068",
+    "name": "Fotodiodo",
+    "kind": "photodiode",
+    "geometry_template": "diode_receive",
+    "designator": "D",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
     "height": 4,
     "ports": {
-      "1": {
+      "A": {
         "x": -3,
         "y": 0,
         "side": "west",
         "electrical_type": "passive"
       },
-      "2": {
+      "K": {
         "x": 3,
         "y": 0,
         "side": "east",
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0067_led.svg"
-  },
-  "SYM-0068": {
-    "id": "SYM-0068",
-    "catalog_id": "SYM-0068",
-    "name": "Fotodiodo",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
-    "designator": "D",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Diodos",
     "aliases": "sensor luz",
@@ -2473,35 +2686,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La barra identifica el cátodo en los diodos polarizados.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "photodiode",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "A": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "K": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0068_fotodiodo.svg"
+    "source_asset": "assets/symbols/SYM-0068_fotodiodo.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0069": {
     "id": "SYM-0069",
     "catalog_id": "SYM-0069",
     "name": "Diodo doble cátodo común",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "dual_diode_k",
+    "geometry_template": "dual_diode",
     "designator": "D",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "A1": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "A2": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "K": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Diodos",
     "aliases": "doble diodo K común",
@@ -2510,35 +2731,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La barra identifica el cátodo en los diodos polarizados.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dual_diode_k",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "A": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "K": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0069_diodo-doble-catodo-comun.svg"
+    "source_asset": "assets/symbols/SYM-0069_diodo-doble-catodo-comun.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0070": {
     "id": "SYM-0070",
     "catalog_id": "SYM-0070",
     "name": "Diodo doble ánodo común",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "dual_diode_a",
+    "geometry_template": "dual_diode",
     "designator": "D",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "A": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "K1": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "K2": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Diodos",
     "aliases": "doble diodo A común",
@@ -2547,35 +2776,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La barra identifica el cátodo en los diodos polarizados.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dual_diode_a",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "A": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "K": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0070_diodo-doble-anodo-comun.svg"
+    "source_asset": "assets/symbols/SYM-0070_diodo-doble-anodo-comun.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0071": {
     "id": "SYM-0071",
     "catalog_id": "SYM-0071",
     "name": "Puente rectificador",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "bridge",
+    "geometry_template": "bridge_rectifier",
     "designator": "D",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "AC1": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "AC2": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "+": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "-": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Diodos",
     "aliases": "bridge rectifier, Graetz",
@@ -2584,35 +2827,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La barra identifica el cátodo en los diodos polarizados.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bridge",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0071_puente-rectificador.svg"
+    "source_asset": "assets/symbols/SYM-0071_puente-rectificador.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0072": {
     "id": "SYM-0072",
     "catalog_id": "SYM-0072",
     "name": "Transistor NPN",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "npn",
+    "geometry_template": "bjt_npn",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "B": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "C": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "E": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Transistores",
     "aliases": "BJT NPN",
@@ -2621,35 +2872,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica tipo, terminales y diodos internos antes de seguir la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "npn",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0072_transistor-npn.svg"
+    "source_asset": "assets/symbols/SYM-0072_transistor-npn.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0073": {
     "id": "SYM-0073",
     "catalog_id": "SYM-0073",
     "name": "Transistor PNP",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "pnp",
+    "geometry_template": "bjt_pnp",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "B": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "C": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "E": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Transistores",
     "aliases": "BJT PNP",
@@ -2658,35 +2917,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica tipo, terminales y diodos internos antes de seguir la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pnp",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0073_transistor-pnp.svg"
+    "source_asset": "assets/symbols/SYM-0073_transistor-pnp.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0074": {
     "id": "SYM-0074",
     "catalog_id": "SYM-0074",
     "name": "Darlington NPN",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "darlington_npn",
+    "geometry_template": "bjt_npn",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "B": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "C": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "E": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Transistores",
     "aliases": "NPN Darlington",
@@ -2695,41 +2962,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica tipo, terminales y diodos internos antes de seguir la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "darlington_npn",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "B": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "C": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "E": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0074_darlington-npn.svg"
+    "source_asset": "assets/symbols/SYM-0074_darlington-npn.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0075": {
     "id": "SYM-0075",
     "catalog_id": "SYM-0075",
     "name": "Darlington PNP",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "darlington_pnp",
+    "geometry_template": "bjt_pnp",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "B": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "C": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "E": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Transistores",
     "aliases": "PNP Darlington",
@@ -2738,41 +3007,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica tipo, terminales y diodos internos antes de seguir la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "darlington_pnp",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "B": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "C": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "E": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0075_darlington-pnp.svg"
+    "source_asset": "assets/symbols/SYM-0075_darlington-pnp.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0076": {
     "id": "SYM-0076",
     "catalog_id": "SYM-0076",
     "name": "Transistor digital NPN",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "digital_npn",
+    "geometry_template": "bjt_npn",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "IN": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "C": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "E": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Transistores",
     "aliases": "NPN con resistencias",
@@ -2781,35 +3052,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica tipo, terminales y diodos internos antes de seguir la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "digital_npn",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0076_transistor-digital-npn.svg"
+    "source_asset": "assets/symbols/SYM-0076_transistor-digital-npn.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0077": {
     "id": "SYM-0077",
     "catalog_id": "SYM-0077",
     "name": "Transistor digital PNP",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "digital_pnp",
+    "geometry_template": "bjt_pnp",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "IN": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "C": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "E": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Transistores",
     "aliases": "PNP con resistencias",
@@ -2818,35 +3097,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica tipo, terminales y diodos internos antes de seguir la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "digital_pnp",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0077_transistor-digital-pnp.svg"
+    "source_asset": "assets/symbols/SYM-0077_transistor-digital-pnp.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0078": {
     "id": "SYM-0078",
     "catalog_id": "SYM-0078",
     "name": "MOSFET canal N",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "nmos",
+    "geometry_template": "mosfet_n",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "G": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "D": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "S": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Transistores",
     "aliases": "NMOS",
@@ -2855,35 +3142,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica tipo, terminales y diodos internos antes de seguir la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "nmos",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0078_mosfet-canal-n.svg"
+    "source_asset": "assets/symbols/SYM-0078_mosfet-canal-n.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0079": {
     "id": "SYM-0079",
     "catalog_id": "SYM-0079",
     "name": "MOSFET canal P",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "pmos",
+    "geometry_template": "mosfet_n",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "G": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "D": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "S": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Transistores",
     "aliases": "PMOS",
@@ -2892,27 +3187,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica tipo, terminales y diodos internos antes de seguir la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pmos",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0079_mosfet-canal-p.svg"
+    "source_asset": "assets/symbols/SYM-0079_mosfet-canal-p.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0080": {
     "id": "SYM-0080",
@@ -2960,9 +3236,36 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0081",
     "catalog_id": "SYM-0081",
     "name": "MOSFET P con diodo de cuerpo",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "pmos_body",
+    "geometry_template": "mosfet_n",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "G": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "D": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "S": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Transistores",
     "aliases": "PMOS body diode",
@@ -2971,35 +3274,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica tipo, terminales y diodos internos antes de seguir la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pmos_body",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0081_mosfet-p-con-diodo-de-cuerpo.svg"
+    "source_asset": "assets/symbols/SYM-0081_mosfet-p-con-diodo-de-cuerpo.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0082": {
     "id": "SYM-0082",
     "catalog_id": "SYM-0082",
     "name": "MOSFET de doble puerta",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "dual_gate_mos",
+    "geometry_template": "mosfet_n",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "G1": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "G2": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "D": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "S": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Transistores",
     "aliases": "dual gate",
@@ -3008,41 +3325,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica tipo, terminales y diodos internos antes de seguir la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dual_gate_mos",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "A": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "B": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "Q": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0082_mosfet-de-doble-puerta.svg"
+    "source_asset": "assets/symbols/SYM-0082_mosfet-de-doble-puerta.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0083": {
     "id": "SYM-0083",
     "catalog_id": "SYM-0083",
     "name": "JFET canal N",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "njfet",
+    "geometry_template": "mosfet_n",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "G": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "D": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "S": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Transistores",
     "aliases": "N-JFET",
@@ -3051,41 +3370,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica tipo, terminales y diodos internos antes de seguir la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "njfet",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "G": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "D": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "S": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0083_jfet-canal-n.svg"
+    "source_asset": "assets/symbols/SYM-0083_jfet-canal-n.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0084": {
     "id": "SYM-0084",
     "catalog_id": "SYM-0084",
     "name": "JFET canal P",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "pjfet",
+    "geometry_template": "mosfet_n",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "G": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "D": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "S": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Transistores",
     "aliases": "P-JFET",
@@ -3094,41 +3415,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica tipo, terminales y diodos internos antes de seguir la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pjfet",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "G": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "D": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "S": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0084_jfet-canal-p.svg"
+    "source_asset": "assets/symbols/SYM-0084_jfet-canal-p.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0085": {
     "id": "SYM-0085",
     "catalog_id": "SYM-0085",
     "name": "IGBT canal N",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "igbt_n",
+    "geometry_template": "bjt_npn",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "G": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "C": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "E": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Transistores",
     "aliases": "IGBT N",
@@ -3137,41 +3460,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica tipo, terminales y diodos internos antes de seguir la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "igbt_n",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "G": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "C": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "E": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0085_igbt-canal-n.svg"
+    "source_asset": "assets/symbols/SYM-0085_igbt-canal-n.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0086": {
     "id": "SYM-0086",
     "catalog_id": "SYM-0086",
     "name": "IGBT con diodo antiparalelo",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "igbt_diode",
+    "geometry_template": "bjt_npn",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "G": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "C": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "E": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Transistores",
     "aliases": "IGBT freewheel",
@@ -3180,35 +3505,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica tipo, terminales y diodos internos antes de seguir la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "igbt_diode",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "A": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "K": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0086_igbt-con-diodo-antiparalelo.svg"
+    "source_asset": "assets/symbols/SYM-0086_igbt-con-diodo-antiparalelo.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0087": {
     "id": "SYM-0087",
     "catalog_id": "SYM-0087",
     "name": "UJT",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "ujt",
+    "geometry_template": "bjt_npn",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "E": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "B1": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "B2": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Transistores",
     "aliases": "transistor uniunión",
@@ -3217,35 +3550,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica tipo, terminales y diodos internos antes de seguir la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ujt",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0087_ujt.svg"
+    "source_asset": "assets/symbols/SYM-0087_ujt.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0088": {
     "id": "SYM-0088",
     "catalog_id": "SYM-0088",
     "name": "Fototransistor NPN",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "phototransistor",
+    "geometry_template": "bjt_npn",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "B": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "C": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "E": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Transistores",
     "aliases": "foto transistor",
@@ -3254,41 +3595,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica tipo, terminales y diodos internos antes de seguir la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "phototransistor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "B": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "C": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "E": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0088_fototransistor-npn.svg"
+    "source_asset": "assets/symbols/SYM-0088_fototransistor-npn.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0089": {
     "id": "SYM-0089",
     "catalog_id": "SYM-0089",
     "name": "SCR / tiristor",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "scr",
+    "geometry_template": "thyristor",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "G": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "A": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "K": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Tiristores y control AC",
     "aliases": "thyristor",
@@ -3297,35 +3640,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Distingue terminal principal, puerta y comportamiento de enclavamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "scr",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0089_scr-tiristor.svg"
+    "source_asset": "assets/symbols/SYM-0089_scr-tiristor.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0090": {
     "id": "SYM-0090",
     "catalog_id": "SYM-0090",
     "name": "TRIAC",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "triac",
+    "geometry_template": "triac",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "G": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "MT2": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "MT1": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Tiristores y control AC",
     "aliases": "triac bidireccional",
@@ -3334,6 +3685,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Distingue terminal principal, puerta y comportamiento de enclavamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "triac",
+    "source_asset": "assets/symbols/SYM-0090_triac.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0091": {
+    "id": "SYM-0091",
+    "catalog_id": "SYM-0091",
+    "name": "DIAC",
+    "kind": "diac",
+    "geometry_template": "diode",
+    "designator": "Q",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -3352,17 +3713,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0090_triac.svg"
-  },
-  "SYM-0091": {
-    "id": "SYM-0091",
-    "catalog_id": "SYM-0091",
-    "name": "DIAC",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
-    "designator": "Q",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Tiristores y control AC",
     "aliases": "diac trigger",
@@ -3371,35 +3724,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Distingue terminal principal, puerta y comportamiento de enclavamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "diac",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0091_diac.svg"
+    "source_asset": "assets/symbols/SYM-0091_diac.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0092": {
     "id": "SYM-0092",
     "catalog_id": "SYM-0092",
     "name": "GTO",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "gto",
+    "geometry_template": "thyristor",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "G": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "A": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "K": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Tiristores y control AC",
     "aliases": "gate turn-off thyristor",
@@ -3408,35 +3769,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Distingue terminal principal, puerta y comportamiento de enclavamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gto",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0092_gto.svg"
+    "source_asset": "assets/symbols/SYM-0092_gto.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0093": {
     "id": "SYM-0093",
     "catalog_id": "SYM-0093",
     "name": "SCS",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "scs",
+    "geometry_template": "thyristor",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "GA": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "GK": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "A": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "K": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Tiristores y control AC",
     "aliases": "silicon controlled switch",
@@ -3445,6 +3820,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Distingue terminal principal, puerta y comportamiento de enclavamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "scs",
+    "source_asset": "assets/symbols/SYM-0093_scs.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0094": {
+    "id": "SYM-0094",
+    "catalog_id": "SYM-0094",
+    "name": "SIDAC",
+    "kind": "sidac",
+    "geometry_template": "diode",
+    "designator": "Q",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 6,
@@ -3463,17 +3848,9 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "passive"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0093_scs.svg"
-  },
-  "SYM-0094": {
-    "id": "SYM-0094",
-    "catalog_id": "SYM-0094",
-    "name": "SIDAC",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
-    "designator": "Q",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Tiristores y control AC",
     "aliases": "trigger diode",
@@ -3482,35 +3859,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Distingue terminal principal, puerta y comportamiento de enclavamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "sidac",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0094_sidac.svg"
+    "source_asset": "assets/symbols/SYM-0094_sidac.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0095": {
     "id": "SYM-0095",
     "catalog_id": "SYM-0095",
     "name": "Optotriac",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "optotriac",
+    "geometry_template": "optocoupler",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "A": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "K": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "MT1": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "MT2": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Tiristores y control AC",
     "aliases": "optoacoplador triac",
@@ -3519,6 +3910,16 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Distingue terminal principal, puerta y comportamiento de enclavamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "optotriac",
+    "source_asset": "assets/symbols/SYM-0095_optotriac.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0096": {
+    "id": "SYM-0096",
+    "catalog_id": "SYM-0096",
+    "name": "Optotriac de cruce por cero",
+    "kind": "optotriac_zero",
+    "geometry_template": "optocoupler",
+    "designator": "Q",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -3536,30 +3937,22 @@ const ElectroDiagramSymbols = Object.freeze({
         "side": "west",
         "electrical_type": "input"
       },
-      "C": {
+      "MT1": {
         "x": 4,
         "y": -1,
         "side": "east",
         "electrical_type": "output"
       },
-      "E": {
+      "MT2": {
         "x": 4,
         "y": 1,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0095_optotriac.svg"
-  },
-  "SYM-0096": {
-    "id": "SYM-0096",
-    "catalog_id": "SYM-0096",
-    "name": "Optotriac de cruce por cero",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
-    "designator": "Q",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Tiristores y control AC",
     "aliases": "zero cross optotriac",
@@ -3568,39 +3961,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Distingue terminal principal, puerta y comportamiento de enclavamiento.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "optotriac_zero",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "A": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "K": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "C": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "E": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0096_optotriac-de-cruce-por-cero.svg"
+    "source_asset": "assets/symbols/SYM-0096_optotriac-de-cruce-por-cero.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0097": {
     "id": "SYM-0097",
@@ -3654,103 +4016,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0098",
     "catalog_id": "SYM-0098",
     "name": "Optoacoplador de fotodarlington",
-    "kind": "isolation_block",
-    "geometry_template": "isolation_block",
+    "kind": "opto_darlington",
+    "geometry_template": "optocoupler",
     "designator": "U/OK/K",
-    "category": "Optoelectrónica y aislamiento",
-    "subcategory": "Aislamiento",
-    "aliases": "photo darlington",
-    "keywords": "optoacoplador aislamiento ssr photomos",
-    "description": "Mayor ganancia de salida con menor velocidad.",
-    "interpretation": "La separación gráfica indica que no existe conexión galvánica directa.",
-    "catalog_standard": "Común / educativa",
-    "catalog_drawing_type": "opto_darlington",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "B": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "C": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "E": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0098_optoacoplador-de-fotodarlington.svg"
-  },
-  "SYM-0099": {
-    "id": "SYM-0099",
-    "catalog_id": "SYM-0099",
-    "name": "Optoacoplador de salida lógica",
-    "kind": "isolation_block",
-    "geometry_template": "isolation_block",
-    "designator": "U/OK/K",
-    "category": "Optoelectrónica y aislamiento",
-    "subcategory": "Aislamiento",
-    "aliases": "logic optocoupler",
-    "keywords": "optoacoplador aislamiento ssr photomos",
-    "description": "Salida digital acondicionada, a menudo rápida.",
-    "interpretation": "La separación gráfica indica que no existe conexión galvánica directa.",
-    "catalog_standard": "Común / educativa",
-    "catalog_drawing_type": "opto_logic",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0099_optoacoplador-de-salida-logica.svg"
-  },
-  "SYM-0100": {
-    "id": "SYM-0100",
-    "catalog_id": "SYM-0100",
-    "name": "Optoacoplador lineal",
-    "kind": "isolation_block",
-    "geometry_template": "isolation_block",
-    "designator": "U/OK/K",
-    "category": "Optoelectrónica y aislamiento",
-    "subcategory": "Aislamiento",
-    "aliases": "linear optocoupler",
-    "keywords": "optoacoplador aislamiento ssr photomos",
-    "description": "Usa fotodiodos para realimentación analógica aislada.",
-    "interpretation": "La separación gráfica indica que no existe conexión galvánica directa.",
-    "catalog_standard": "Común / educativa",
-    "catalog_drawing_type": "opto_linear",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
@@ -3781,17 +4049,192 @@ const ElectroDiagramSymbols = Object.freeze({
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0100_optoacoplador-lineal.svg"
+    "review_status": "engine_reviewed",
+    "normalization_batch": "opto_isolation_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
+    "category": "Optoelectrónica y aislamiento",
+    "subcategory": "Aislamiento",
+    "aliases": "photo darlington",
+    "keywords": "optoacoplador aislamiento ssr photomos",
+    "description": "Mayor ganancia de salida con menor velocidad.",
+    "interpretation": "La separación gráfica indica que no existe conexión galvánica directa.",
+    "catalog_standard": "Común / educativa",
+    "catalog_drawing_type": "opto_darlington",
+    "source_asset": "assets/symbols/SYM-0098_optoacoplador-de-fotodarlington.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0099": {
+    "id": "SYM-0099",
+    "catalog_id": "SYM-0099",
+    "name": "Optoacoplador de salida lógica",
+    "kind": "opto_logic",
+    "geometry_template": "optocoupler",
+    "designator": "U/OK/K",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "A": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "K": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "VCC1": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "GND1": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "VCC2": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "power_in"
+      },
+      "GND2": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "ground"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "opto_isolation_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
+    "category": "Optoelectrónica y aislamiento",
+    "subcategory": "Aislamiento",
+    "aliases": "logic optocoupler",
+    "keywords": "optoacoplador aislamiento ssr photomos",
+    "description": "Salida digital acondicionada, a menudo rápida.",
+    "interpretation": "La separación gráfica indica que no existe conexión galvánica directa.",
+    "catalog_standard": "Común / educativa",
+    "catalog_drawing_type": "opto_logic",
+    "source_asset": "assets/symbols/SYM-0099_optoacoplador-de-salida-logica.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0100": {
+    "id": "SYM-0100",
+    "catalog_id": "SYM-0100",
+    "name": "Optoacoplador lineal",
+    "kind": "opto_linear",
+    "geometry_template": "optocoupler",
+    "designator": "U/OK/K",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "A": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "K": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "PD1+": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "PD1-": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "PD2+": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "PD2-": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "opto_isolation_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
+    "category": "Optoelectrónica y aislamiento",
+    "subcategory": "Aislamiento",
+    "aliases": "linear optocoupler",
+    "keywords": "optoacoplador aislamiento ssr photomos",
+    "description": "Usa fotodiodos para realimentación analógica aislada.",
+    "interpretation": "La separación gráfica indica que no existe conexión galvánica directa.",
+    "catalog_standard": "Común / educativa",
+    "catalog_drawing_type": "opto_linear",
+    "source_asset": "assets/symbols/SYM-0100_optoacoplador-lineal.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0101": {
     "id": "SYM-0101",
     "catalog_id": "SYM-0101",
     "name": "Relé PhotoMOS",
-    "kind": "isolation_block",
-    "geometry_template": "isolation_block",
+    "kind": "photomos",
+    "geometry_template": "optocoupler",
     "designator": "U/OK/K",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN+": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "IN-": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT1": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "OUT2": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "opto_isolation_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Optoelectrónica y aislamiento",
     "subcategory": "Aislamiento",
     "aliases": "MOS relay, solid state relay",
@@ -3800,41 +4243,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La separación gráfica indica que no existe conexión galvánica directa.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "photomos",
+    "source_asset": "assets/symbols/SYM-0101_rele-photomos.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0102": {
+    "id": "SYM-0102",
+    "catalog_id": "SYM-0102",
+    "name": "Relé de estado sólido AC",
+    "kind": "ssr_ac",
+    "geometry_template": "optocoupler",
+    "designator": "U/OK/K",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
     "height": 6,
     "ports": {
-      "VCC": {
+      "IN+": {
         "x": -4,
-        "y": 0,
+        "y": -1,
         "side": "west",
         "electrical_type": "input"
       },
-      "GND": {
+      "IN-": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT1": {
         "x": 4,
         "y": -1,
         "side": "east",
         "electrical_type": "output"
       },
-      "OUT": {
+      "OUT2": {
         "x": 4,
         "y": 1,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0101_rele-photomos.svg"
-  },
-  "SYM-0102": {
-    "id": "SYM-0102",
-    "catalog_id": "SYM-0102",
-    "name": "Relé de estado sólido AC",
-    "kind": "isolation_block",
-    "geometry_template": "isolation_block",
-    "designator": "U/OK/K",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "opto_isolation_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Optoelectrónica y aislamiento",
     "subcategory": "Aislamiento",
     "aliases": "SSR AC",
@@ -3843,41 +4294,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La separación gráfica indica que no existe conexión galvánica directa.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ssr_ac",
+    "source_asset": "assets/symbols/SYM-0102_rele-de-estado-solido-ac.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0103": {
+    "id": "SYM-0103",
+    "catalog_id": "SYM-0103",
+    "name": "Relé de estado sólido DC",
+    "kind": "ssr_dc",
+    "geometry_template": "optocoupler",
+    "designator": "U/OK/K",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
     "width": 8,
     "height": 6,
     "ports": {
-      "VCC": {
+      "IN+": {
         "x": -4,
-        "y": 0,
+        "y": -1,
         "side": "west",
         "electrical_type": "input"
       },
-      "GND": {
+      "IN-": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT1": {
         "x": 4,
         "y": -1,
         "side": "east",
         "electrical_type": "output"
       },
-      "OUT": {
+      "OUT2": {
         "x": 4,
         "y": 1,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0102_rele-de-estado-solido-ac.svg"
-  },
-  "SYM-0103": {
-    "id": "SYM-0103",
-    "catalog_id": "SYM-0103",
-    "name": "Relé de estado sólido DC",
-    "kind": "isolation_block",
-    "geometry_template": "isolation_block",
-    "designator": "U/OK/K",
+    "review_status": "engine_reviewed",
+    "normalization_batch": "opto_isolation_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Optoelectrónica y aislamiento",
     "subcategory": "Aislamiento",
     "aliases": "SSR DC",
@@ -3886,41 +4345,61 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La separación gráfica indica que no existe conexión galvánica directa.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ssr_dc",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0103_rele-de-estado-solido-dc.svg"
+    "source_asset": "assets/symbols/SYM-0103_rele-de-estado-solido-dc.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0104": {
     "id": "SYM-0104",
     "catalog_id": "SYM-0104",
     "name": "Aislador digital",
-    "kind": "isolation_block",
-    "geometry_template": "isolation_block",
+    "kind": "digital_isolator",
+    "geometry_template": "optocoupler",
     "designator": "U/OK/K",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "VDD1": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "GND1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "IN": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "VDD2": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_in"
+      },
+      "GND2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "ground"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "opto_isolation_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Optoelectrónica y aislamiento",
     "subcategory": "Aislamiento",
     "aliases": "capacitive isolator, magnetic isolator",
@@ -3929,41 +4408,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La separación gráfica indica que no existe conexión galvánica directa.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "digital_isolator",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0104_aislador-digital.svg"
+    "source_asset": "assets/symbols/SYM-0104_aislador-digital.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0105": {
     "id": "SYM-0105",
     "catalog_id": "SYM-0105",
     "name": "Transformador digital aislado",
-    "kind": "isolation_block",
-    "geometry_template": "isolation_block",
+    "kind": "iso_transformer_block",
+    "geometry_template": "optocoupler",
     "designator": "U/OK/K",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "LOGIC": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "GND1": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "BUS": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "GND2": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "ground"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "opto_isolation_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Optoelectrónica y aislamiento",
     "subcategory": "Aislamiento",
     "aliases": "isolated transceiver",
@@ -3972,27 +4459,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La separación gráfica indica que no existe conexión galvánica directa.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "iso_transformer_block",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0105_transformador-digital-aislado.svg"
+    "source_asset": "assets/symbols/SYM-0105_transformador-digital-aislado.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0106": {
     "id": "SYM-0106",
@@ -18146,9 +18614,36 @@ const ElectroDiagramSymbols = Object.freeze({
     "id": "SYM-0448",
     "catalog_id": "SYM-0448",
     "name": "MOSFET SiC canal N",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "semiconductor",
+    "geometry_template": "mosfet_n",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "G": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "D": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "S": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Semiconductores de banda ancha",
     "aliases": "silicon carbide MOSFET",
@@ -18157,35 +18652,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "El símbolo puede añadir diodo de cuerpo; verifica tensiones de puerta y condiciones del fabricante.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "semiconductor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0448_mosfet-sic-canal-n.svg"
+    "source_asset": "assets/symbols/SYM-0448_mosfet-sic-canal-n.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0449": {
     "id": "SYM-0449",
     "catalog_id": "SYM-0449",
     "name": "Transistor GaN HEMT",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "semiconductor",
+    "geometry_template": "mosfet_n",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "G": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "D": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "S": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "Semiconductores de banda ancha",
     "aliases": "gallium nitride HEMT, eGaN",
@@ -18194,35 +18697,43 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La tensión de puerta admisible y la referencia Kelvin pueden ser críticas.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "semiconductor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0449_transistor-gan-hemt.svg"
+    "source_asset": "assets/symbols/SYM-0449_transistor-gan-hemt.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0450": {
     "id": "SYM-0450",
     "catalog_id": "SYM-0450",
     "name": "MOSFET de deplexión canal N",
-    "kind": "semiconductor_block",
-    "geometry_template": "semiconductor_block",
+    "kind": "semiconductor",
+    "geometry_template": "mosfet_n",
     "designator": "Q",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 6,
+    "height": 7,
+    "ports": {
+      "G": {
+        "x": -3,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "D": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "passive"
+      },
+      "S": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "discrete_semiconductors_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Semiconductores discretos",
     "subcategory": "MOSFET",
     "aliases": "depletion mode MOSFET, normally on",
@@ -18231,35 +18742,49 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Necesita tensión de puerta adecuada para reducir o cortar la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "semiconductor",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0450_mosfet-de-deplexion-canal-n.svg"
+    "source_asset": "assets/symbols/SYM-0450_mosfet-de-deplexion-canal-n.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0451": {
     "id": "SYM-0451",
     "catalog_id": "SYM-0451",
     "name": "Optoacoplador fotovoltaico",
-    "kind": "isolation_block",
-    "geometry_template": "isolation_block",
+    "kind": "opto_pv",
+    "geometry_template": "optocoupler",
     "designator": "U",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "IN+": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "IN-": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT1": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "OUT2": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "opto_isolation_2026_08",
+    "review_scope": "Geometría, anclajes y terminales revisados para el motor experimental; no equivale a certificación normativa del símbolo.",
     "category": "Optoelectrónica y aislamiento",
     "subcategory": "Optoacopladores",
     "aliases": "photovoltaic optocoupler, photovoltaic isolator",
@@ -18268,39 +18793,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La salida entrega tensión con corriente pequeña y puede necesitar tiempo de descarga.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "opto_pv",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "A": {
-        "x": -4,
-        "y": -1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "K": {
-        "x": -4,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "C": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "E": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0451_optoacoplador-fotovoltaico.svg"
+    "source_asset": "assets/symbols/SYM-0451_optoacoplador-fotovoltaico.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0452": {
     "id": "SYM-0452",

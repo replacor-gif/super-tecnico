@@ -20,7 +20,7 @@
     });
     const init = {
       method: options.method || (options.body ? 'POST' : 'GET'),
-      credentials: 'omit',
+      credentials: 'same-origin',
       headers: {'X-ST-Client': clientToken(), ...(options.headers || {})},
     };
     if (options.body) {
@@ -41,5 +41,22 @@
     return data;
   }
 
-  window.ST_COMMUNITY_API = {request, clientToken, endpoint: API_ENDPOINT};
+  async function upload(action, formData, options = {}) {
+    const url = new URL(API_ENDPOINT, window.location.href);
+    url.searchParams.set('action', action);
+    const response = await fetch(url, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {'X-ST-Client': clientToken(), ...(options.headers || {})},
+      body: formData,
+    });
+    let data;
+    try { data = await response.json(); } catch { data = {ok: false, error: 'invalid_response'}; }
+    if (!response.ok || data.ok === false) {
+      throw Object.assign(new Error(data.error || `http_${response.status}`), {code: data.error || `http_${response.status}`, status: response.status, data});
+    }
+    return data;
+  }
+
+  window.ST_COMMUNITY_API = {request, upload, clientToken, endpoint: API_ENDPOINT};
 })();

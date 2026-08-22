@@ -54,10 +54,14 @@ For diagrams, the calling AI interprets the request or image, chooses the topolo
 - Source and review registry: /data/connectors/sources.json
 - Provider-neutral tool contract: /data/connectors/tool-manifest.json
 - Discovery manifest: /data/connectors/discovery.json
+- OpenAPI discovery: /data/connectors/discovery.openapi.json
+- HTTP search: /api/index.php?action=connector-search&q=USB-C
+- HTTP record: /api/index.php?action=connector-get&connector_id=usb-type-c-full-featured-receptacle
+- HTTP contact resolution: /api/index.php?action=connector-resolve&connector_id=usb-type-c-full-featured-receptacle&contact_or_signal=CC1
 - Normalized companion manual: /recursos/catalogo-normalizado-conectores-replacor-edicion-9.pdf
 - Preserved contributed source: /recursos/enciclopedia-conectores-pinouts-edicion-8-origen.pdf
 
-Always preserve connector_id, variant, gender, view.perspective, view.orientation_note, review.status, source_ids and warnings. `source_identified` is not equivalent to `reviewed`; `pending_review` must never be completed by inference. Browser search is public, while remote API or MCP execution is not enabled.
+Always preserve connector_id, variant, gender, view.perspective, view.orientation_note, review.status, source_ids and warnings. `source_identified` is not equivalent to `reviewed`; `pending_review` must never be completed by inference. Browser search and rate-limited HTTP lookup are public. Local MCP lookup is also available through ElectroIA's provider-neutral tool server.
 
 ## Frigorista entry points
 

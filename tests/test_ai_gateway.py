@@ -19,7 +19,7 @@ class AIGatewayFoundationTests(unittest.TestCase):
         html = (ROOT / "ia-integracion.html").read_text(encoding="utf-8")
         home = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("Buscador de normativa abierto y gratuito", html)
-        self.assertIn("los demás contratos siguen siendo diseño", html)
+        self.assertIn("los demás contratos siguen siendo diseño remoto", html)
         self.assertIn("Normativa · API activa", html)
         self.assertIn("data/ai/discovery.json", html)
         self.assertIn("data/ai/readiness-report.json", html)
@@ -32,11 +32,19 @@ class AIGatewayFoundationTests(unittest.TestCase):
     def test_discovery_separates_knowledge_and_diagram_services(self):
         discovery = load(ROOT / "data" / "ai" / "discovery.json")
         services = {item["id"]: item for item in discovery["service_families"]}
-        self.assertEqual(discovery["status"], "public_free_preview_one_tool")
+        self.assertEqual(discovery["status"], "public_free_preview_regulations_and_connectors")
         self.assertTrue(discovery["security"]["remote_execution_enabled"])
-        self.assertEqual(discovery["security"]["remote_execution_scope"], ["supertecnico_search_regulations"])
+        self.assertEqual(
+            discovery["security"]["remote_execution_scope"],
+            [
+                "supertecnico_search_regulations",
+                "supertecnico_search_connectors",
+                "supertecnico_get_connector",
+                "supertecnico_resolve_connector_contact",
+            ],
+        )
         self.assertEqual(discovery["access_model"]["humans"]["site_access"], "free")
-        self.assertEqual(discovery["access_model"]["machines"]["current_execution"], "enabled_for_supertecnico_search_regulations")
+        self.assertEqual(discovery["access_model"]["machines"]["current_execution"], "enabled_for_regulation_and_connector_lookup")
         self.assertEqual(discovery["access_model"]["machines"]["bulk_dataset_export"], "not_offered")
         self.assertIn("super-tecnico-knowledge", services)
         self.assertIn("electroia-diagram-engine", services)
@@ -45,7 +53,15 @@ class AIGatewayFoundationTests(unittest.TestCase):
         manifest = load(ROOT / "data" / "ai" / "tool-manifest.json")
         tools = {item["name"]: item for item in manifest["tools"]}
         self.assertTrue(manifest["execution_enabled"])
-        self.assertEqual(manifest["execution_scope"], ["supertecnico_search_regulations"])
+        self.assertEqual(
+            manifest["execution_scope"],
+            [
+                "supertecnico_search_regulations",
+                "supertecnico_search_connectors",
+                "supertecnico_get_connector",
+                "supertecnico_resolve_connector_contact",
+            ],
+        )
         self.assertTrue(manifest["routing_policy"]["preflight_first"])
         self.assertFalse(manifest["routing_policy"]["bulk_export_allowed"])
         self.assertIn("status", manifest["default_output_schema"]["required"])

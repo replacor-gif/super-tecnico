@@ -19,8 +19,15 @@ assert.equal(diagramContract.contract.selects_components, false);
 assert.equal(diagramContract.contract.grid_pitch_mil, 50);
 assert.equal(diagramContract.symbol_registry.symbols.length, 474);
 assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.catalog_id).length, 460);
-assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "engine_reviewed").length, 127);
-assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "auto_draft").length, 333);
+assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "engine_reviewed").length, 206);
+assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "auto_draft").length, 254);
+
+const connectorSearch = await callElectroIATool("supertecnico_search_connectors", {query: "USB-C"});
+assert.equal(connectorSearch.total, 1);
+const connector = await callElectroIATool("supertecnico_get_connector", {connector_id: connectorSearch.items[0].id});
+assert.equal(connector.record.contacts.length, 24);
+const contact = await callElectroIATool("supertecnico_resolve_connector_contact", {connector_id: connector.record.id, contact_or_signal: "CC1"});
+assert.equal(contact.contacts.length, 1);
 assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "engine_internal").length, 14);
 for (const symbolId of ["SYM-0001", "SYM-0006", "SYM-0011", "SYM-0109", "SYM-0110", "SYM-0114", "SYM-0122", "SYM-0123", "SYM-0125", "SYM-0129", "SYM-0130", "SYM-0151", "SYM-0160", "SYM-0163", "SYM-0167", "SYM-0173", "SYM-0356", "SYM-0439", "SYM-0299", "SYM-0387", "SYM-0390", "SYM-0427", "SYM-0445", "SYM-0460"]) {
   assert.ok(diagramContract.symbol_registry.symbols.some((symbol) => symbol.id === symbolId), symbolId);

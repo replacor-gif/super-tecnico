@@ -696,6 +696,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "data/connectors/sources.json",
         "data/connectors/tool-manifest.json",
         "data/connectors/discovery.json",
+        "data/connectors/discovery.openapi.json",
         "data/core/motor-registry.json",
         "data/electrical-panels/examples/motor-pump-dol-auto-manual.json",
         "data/electrical-panels/panel-project.schema.json",

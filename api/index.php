@@ -5,6 +5,7 @@ require __DIR__ . '/electroia.php';
 require __DIR__ . '/ratings.php';
 require __DIR__ . '/regulations.php';
 require __DIR__ . '/analytics.php';
+require __DIR__ . '/connectors.php';
 
 $action = preg_replace('/[^a-z0-9-]/', '', strtolower((string) ($_GET['action'] ?? 'health')));
 $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
@@ -35,7 +36,7 @@ try {
 
     if ($action === 'health' && $method === 'GET') {
         st_db()->query('SELECT 1');
-        st_json(['ok' => true, 'service' => 'super-tecnico-api', 'version' => ST_REGULATION_SERVICE_VERSION, 'public_tools' => [ST_REGULATION_TOOL_ID]]);
+        st_json(['ok' => true, 'service' => 'super-tecnico-api', 'version' => ST_REGULATION_SERVICE_VERSION, 'public_tools' => [ST_REGULATION_TOOL_ID, 'supertecnico_search_connectors', 'supertecnico_get_connector', 'supertecnico_resolve_connector_contact']]);
     }
 
     if ($action === 'regulation-search' && in_array($method, ['GET', 'POST'], true)) {
@@ -50,6 +51,24 @@ try {
         $clientHash = st_client_hash($input);
         st_rate_limit('regulation-result-open', $clientHash, 240, 86400);
         st_json(st_regulations_record_open($input, $clientHash));
+    }
+
+    if ($action === 'connector-search' && $method === 'GET') {
+        $clientHash = st_client_hash($_GET);
+        st_rate_limit('connector-search', $clientHash, 240, 3600);
+        st_json(st_connectors_search($_GET, $clientHash));
+    }
+
+    if ($action === 'connector-get' && $method === 'GET') {
+        $clientHash = st_client_hash($_GET);
+        st_rate_limit('connector-get', $clientHash, 240, 3600);
+        st_json(st_connectors_get($_GET, $clientHash));
+    }
+
+    if ($action === 'connector-resolve' && $method === 'GET') {
+        $clientHash = st_client_hash($_GET);
+        st_rate_limit('connector-resolve', $clientHash, 240, 3600);
+        st_json(st_connectors_resolve($_GET, $clientHash));
     }
 
     if ($action === 'page-view' && $method === 'POST') {
@@ -362,6 +381,36 @@ try {
     if ($action === 'admin-session' && $method === 'GET') {
         st_require_admin();
         st_json(['ok' => true, 'csrf' => $_SESSION['csrf']]);
+    }
+
+    if ($action === 'admin-connector-catalog' && $method === 'GET') {
+        st_require_admin();
+        st_json(st_connectors_admin_catalog($_GET));
+    }
+
+    if ($action === 'admin-connector-review' && $method === 'POST') {
+        st_require_admin(true);
+        st_json(st_connectors_admin_review(st_body()));
+    }
+
+    if ($action === 'admin-connector-history' && $method === 'GET') {
+        st_require_admin();
+        st_json(st_connectors_admin_history($_GET));
+    }
+
+    if ($action === 'admin-connector-imports' && $method === 'GET') {
+        st_require_admin();
+        st_json(st_connectors_admin_imports());
+    }
+
+    if ($action === 'admin-connector-import' && $method === 'POST') {
+        st_require_admin(true);
+        st_json(st_connectors_admin_import(), 201);
+    }
+
+    if ($action === 'admin-connector-import-update' && $method === 'POST') {
+        st_require_admin(true);
+        st_json(st_connectors_admin_import_update(st_body()));
     }
 
     if ($action === 'admin-logout' && $method === 'POST') {

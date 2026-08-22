@@ -332,6 +332,7 @@ class StaticSiteTests(unittest.TestCase):
             "data/connectors/sources.json",
             "data/connectors/tool-manifest.json",
             "data/connectors/discovery.json",
+            "data/connectors/discovery.openapi.json",
             "data/core/motor-registry.json",
             "recursos/enciclopedia-conectores-pinouts-edicion-8-origen.pdf",
             "recursos/catalogo-normalizado-conectores-replacor-edicion-9.pdf",

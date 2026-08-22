@@ -18,7 +18,7 @@ function toolError(error) {
 }
 
 function createServer() {
-  const server = new McpServer({ name: "electroia-tools", version: "0.9.0" });
+  const server = new McpServer({ name: "electroia-tools", version: "0.10.0" });
 
   server.registerTool(
     "electroia_get_capabilities",
@@ -82,6 +82,47 @@ function createServer() {
       } catch (error) {
         return toolError(error);
       }
+    }
+  );
+
+  server.registerTool(
+    "supertecnico_search_connectors",
+    {
+      description: "Busca conectores por nombre, interfaz, forma o señal sin perder variante, vista ni estado de revisión.",
+      inputSchema: z.object({
+        query: z.string().min(1).max(120),
+        category: z.string().max(40).optional(),
+        review_status: z.enum(["reviewed", "source_identified", "pending_review"]).optional(),
+        limit: z.number().int().min(1).max(20).optional(),
+      }),
+    },
+    async (args) => {
+      try { return toolResult(await callElectroIATool("supertecnico_search_connectors", args)); }
+      catch (error) { return toolError(error); }
+    }
+  );
+
+  server.registerTool(
+    "supertecnico_get_connector",
+    {
+      description: "Devuelve una ficha completa de conector con contactos, orientación, variantes, seguridad y fuentes.",
+      inputSchema: z.object({connector_id: z.string().min(3).max(80)}),
+    },
+    async (args) => {
+      try { return toolResult(await callElectroIATool("supertecnico_get_connector", args)); }
+      catch (error) { return toolError(error); }
+    }
+  );
+
+  server.registerTool(
+    "supertecnico_resolve_connector_contact",
+    {
+      description: "Resuelve un contacto o señal dentro de un conector previamente identificado.",
+      inputSchema: z.object({connector_id: z.string().min(3).max(80), contact_or_signal: z.string().min(1).max(80)}),
+    },
+    async (args) => {
+      try { return toolResult(await callElectroIATool("supertecnico_resolve_connector_contact", args)); }
+      catch (error) { return toolError(error); }
     }
   );
 

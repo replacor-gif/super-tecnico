@@ -43,6 +43,9 @@ class ConnectorCatalogTests(unittest.TestCase):
         tools = {tool["name"]: tool for tool in self.manifest["tools"]}
         self.assertIn("supertecnico_search_connectors", tools)
         self.assertIn("supertecnico_get_connector", tools)
+        self.assertIn("supertecnico_resolve_connector_contact", tools)
+        self.assertTrue(self.manifest["remote_execution"])
+        self.assertEqual(tools["supertecnico_search_connectors"]["state"], "public_http_beta")
         get_schema = tools["supertecnico_get_connector"]["input_schema"]
         self.assertEqual(get_schema["required"], ["connector_id"])
         self.assertIn("view", self.manifest["instructions"])
@@ -56,6 +59,21 @@ class ConnectorCatalogTests(unittest.TestCase):
         self.assertIn("catalogo-normalizado-conectores-replacor-edicion-9.pdf", html)
         self.assertTrue((ROOT / "recursos" / "catalogo-normalizado-conectores-replacor-edicion-9.pdf").is_file())
         self.assertTrue((ROOT / "recursos" / "enciclopedia-conectores-pinouts-edicion-8-origen.pdf").is_file())
+
+    def test_private_review_and_import_workflow_is_server_side(self):
+        moderation = (ROOT / "moderacion.html").read_text(encoding="utf-8")
+        app = (ROOT / "assets" / "moderation.js").read_text(encoding="utf-8")
+        backend = (ROOT / "api" / "connectors.php").read_text(encoding="utf-8")
+        router = (ROOT / "api" / "index.php").read_text(encoding="utf-8")
+        schema = (ROOT / "database" / "schema.sql").read_text(encoding="utf-8")
+        self.assertIn("SINAPSYS · control humano", moderation)
+        self.assertIn("admin-connector-review", app)
+        self.assertIn("admin-connector-import", app)
+        self.assertIn("review_evidence_incomplete", backend)
+        self.assertIn("connector-search", router)
+        self.assertIn("st_connector_reviews", schema)
+        self.assertIn("st_connector_import_batches", schema)
+        self.assertTrue((ROOT / "data" / "connectors" / "discovery.openapi.json").is_file())
 
 
 if __name__ == "__main__":

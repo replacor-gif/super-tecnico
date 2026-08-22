@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-08-22T20:58:55.479107+00:00",
-  "status": "public_free_preview_one_tool",
-  "readiness_score_percent": 68,
-  "score_meaning": "Preparación técnica global; solo la búsqueda de normativa tiene ejecución pública gratuita.",
+  "generated_at_utc": "2026-08-22T21:52:08.188176+00:00",
+  "status": "public_free_preview_regulations_and_connectors",
+  "readiness_score_percent": 69,
+  "score_meaning": "Preparación técnica global; normativa y conectores tienen consultas públicas gratuitas y limitadas.",
   "content_inventory": {
     "brands": 30,
     "brands_with_sources": 30,
@@ -25,7 +25,7 @@
     "electroia_symbols": 460,
     "electroia_engine_symbols": 474,
     "electroia_internal_templates": 14,
-    "electroia_symbols_reviewed": 127,
+    "electroia_symbols_reviewed": 206,
     "technical_project_capabilities": 6,
     "hvac_training_chapters": 167,
     "electronics_chapters": 678,
@@ -79,6 +79,12 @@
       "title": "Búsqueda pública de normativa para máquinas",
       "status": "pass",
       "evidence": "GET api/index.php?action=regulation-search con fuentes, páginas, límites y métricas"
+    },
+    {
+      "id": "public_connector_api",
+      "title": "Consulta pública de conectores para máquinas",
+      "status": "pass",
+      "evidence": "Búsqueda, ficha y resolución de contacto por HTTP con vista, revisión y procedencia"
     },
     {
       "id": "remote_mcp",
@@ -142,7 +148,7 @@
     }
   ],
   "release_blockers": [
-    "Implementar autenticación y cuotas antes de abrir herramientas distintas de la búsqueda gratuita de normativa.",
+    "Implementar autenticación y cuotas antes de abrir herramientas distintas de las consultas gratuitas de normativa y conectores.",
     "Crear proyecciones de respuesta que nunca expongan registros maestros completos.",
     "Medir coste evitado y utilidad real con el uso de la búsqueda pública.",
     "Implementar las proyecciones de contexto compacto sin exponer registros maestros.",

@@ -1,7 +1,7 @@
 "use strict";
 
 const ElectroDiagramCore = (() => {
-  const ENGINE_VERSION = "1.9.0-alpha.1";
+  const ENGINE_VERSION = "1.10.0-alpha.1";
   const CONTRACT_VERSION = "1.0";
   const GRID_PITCH_MIL = 50;
   const UNIT = 24;
@@ -751,7 +751,7 @@ const ElectroDiagramCore = (() => {
     const x = mapX(component.position.x);
     const y = mapY(component.position.y);
     const scaleX = component.mirror ? -1 : 1;
-    const body = drawSymbolBody(definition.kind, definition);
+    const body = drawSymbolBody(definition.geometry_template || definition.kind, definition);
     const rotated = [90, 270].includes(component.rotation || 0);
     const halfWidth = (rotated ? definition.height : definition.width) / 2;
     const halfHeight = (rotated ? definition.width : definition.height) / 2;
@@ -895,6 +895,12 @@ const ElectroDiagramCore = (() => {
     if (kind === "resistor_iec") {
       return `${line(-3, 0, -1.35, 0)}<rect class="symbol-fill" x="${-1.35 * u}" y="${-0.62 * u}" width="${2.7 * u}" height="${1.24 * u}"/>${line(1.35, 0, 3, 0)}`;
     }
+    if (kind === "inductor") {
+      return `${line(-3, 0, -1.6, 0)}<path class="symbol-line" d="M${-1.6 * u} 0q${0.4 * u} ${-0.9 * u} ${0.8 * u} 0t${0.8 * u} 0t${0.8 * u} 0t${0.8 * u} 0"/>${line(1.6, 0, 3, 0)}`;
+    }
+    if (kind === "crystal") {
+      return `${line(-3, 0, -0.8, 0)}${line(-0.8, -1.15, -0.8, 1.15)}<rect class="symbol-fill" x="${-0.42 * u}" y="${-1.4 * u}" width="${0.84 * u}" height="${2.8 * u}"/>${line(0.8, -1.15, 0.8, 1.15)}${line(0.8, 0, 3, 0)}`;
+    }
     if (kind === "thermistor_ntc") {
       return `${line(-3, 0, -1.35, 0)}<rect class="symbol-fill" x="${-1.35 * u}" y="${-0.62 * u}" width="${2.7 * u}" height="${1.24 * u}"/>${line(1.35, 0, 3, 0)}${line(-1.55, 1.05, 1.55, -1.05, "symbol-accent")}`;
     }
@@ -903,6 +909,32 @@ const ElectroDiagramCore = (() => {
     }
     if (kind === "diode") {
       return `${line(-3, 0, -1.25, 0)}<path class="symbol-line" d="M${-1.25 * u} ${-1.1 * u}L${1.05 * u} 0L${-1.25 * u} ${1.1 * u}Z"/>${line(1.25, -1.1, 1.25, 1.1)}${line(1.25, 0, 3, 0)}`;
+    }
+    if (kind === "diode_emit" || kind === "diode_receive") {
+      const arrows = kind === "diode_emit"
+        ? `<path class="symbol-accent" d="M${0.15 * u} ${-1.45 * u}l${0.75 * u} ${-0.75 * u}m${-0.1 * u} ${0.55 * u}l${0.1 * u} ${0.2 * u}l${-0.2 * u} ${-0.1 * u}M${0.75 * u} ${-1.05 * u}l${0.75 * u} ${-0.75 * u}m${-0.1 * u} ${0.55 * u}l${0.1 * u} ${0.2 * u}l${-0.2 * u} ${-0.1 * u}"/>`
+        : `<path class="symbol-accent" d="M${1.4 * u} ${-2.1 * u}l${-0.75 * u} ${0.75 * u}m${0.1 * u} ${-0.55 * u}l${-0.1 * u} ${-0.2 * u}l${0.2 * u} ${0.1 * u}M${0.8 * u} ${-1.7 * u}l${-0.75 * u} ${0.75 * u}m${0.1 * u} ${-0.55 * u}l${-0.1 * u} ${-0.2 * u}l${0.2 * u} ${0.1 * u}"/>`;
+      return `${line(-3, 0, -1.25, 0)}<path class="symbol-line" d="M${-1.25 * u} ${-1.1 * u}L${1.05 * u} 0L${-1.25 * u} ${1.1 * u}Z"/>${line(1.25, -1.1, 1.25, 1.1)}${line(1.25, 0, 3, 0)}${arrows}`;
+    }
+    if (kind === "dual_diode") {
+      const left = Object.values(definition.ports).filter(item => item.side === "west").map(item => `${line(item.x, item.y, -1.45, item.y)}<path class="symbol-line" d="M${-1.45 * u} ${(item.y - .75) * u}L${-.15 * u} ${item.y * u}L${-1.45 * u} ${(item.y + .75) * u}Z"/>`).join("");
+      const right = Object.values(definition.ports).filter(item => item.side === "east").map(item => `${line(.15, item.y, item.x, item.y)}${line(.15, item.y - .75, .15, item.y + .75)}`).join("");
+      return `${left}${right}${line(0, -2.2, 0, 2.2, "symbol-linkage")}`;
+    }
+    if (kind === "bridge_rectifier") {
+      return `${line(-4, -1, -2.1, -1)}${line(-4, 1, -2.1, 1)}${line(2.1, -1, 4, -1)}${line(2.1, 1, 4, 1)}<path class="symbol-fill" d="M0 ${-2.35 * u}L${2.35 * u} 0L0 ${2.35 * u}L${-2.35 * u} 0Z"/><text class="polarity" x="${1.1 * u}" y="${-.85 * u}">+</text><text class="polarity" x="${1.1 * u}" y="${1.25 * u}">−</text><text class="component-value" x="${-1.15 * u}" y="4">~</text>`;
+    }
+    if (kind === "bjt_npn" || kind === "bjt_pnp") {
+      const arrow = kind === "bjt_npn"
+        ? `<path class="symbol-line" d="M${.3 * u} ${1.35 * u}l${.8 * u} ${.65 * u}l${-.15 * u} ${-.8 * u}Z"/>`
+        : `<path class="symbol-line" d="M${1.05 * u} ${1.95 * u}l${-.8 * u} ${-.65 * u}l${.15 * u} ${.8 * u}Z"/>`;
+      return `${line(-3, 0, -1.1, 0)}${line(-.9, -1.7, -.9, 1.7)}${line(-.9, -.85, 0, -.85)}${line(0, -.85, 0, -3)}${line(-.9, .85, 0, .85)}${line(0, .85, 0, 3)}${arrow}`;
+    }
+    if (kind === "thyristor") {
+      return `${line(-3, 0, -1.25, 0)}<path class="symbol-line" d="M${-1.25 * u} ${-1.1 * u}L${.75 * u} 0L${-1.25 * u} ${1.1 * u}Z"/>${line(.9, -1.1, .9, 1.1)}${line(.9, 0, 3, 0)}${line(-.15, 2.15, .65, .85, "symbol-accent")}`;
+    }
+    if (kind === "triac") {
+      return `${line(0, -3, 0, -1.4)}${line(0, 1.4, 0, 3)}<path class="symbol-line" d="M${-1.15 * u} ${-1.15 * u}L${1.15 * u} 0L${-1.15 * u} ${1.15 * u}ZM${1.15 * u} ${-1.15 * u}L${-1.15 * u} 0L${1.15 * u} ${1.15 * u}Z"/>${line(-3, 0, -1.05, .75, "symbol-accent")}`;
     }
     if (kind === "source_dc") {
       return `${line(0, -3, 0, -1.55)}<circle class="symbol-fill" cx="0" cy="0" r="${1.55 * u}"/>${line(0, 1.55, 0, 3)}<text class="polarity" x="0" y="${-0.55 * u}">+</text><text class="polarity" x="0" y="${0.85 * u}">−</text>`;
@@ -1218,7 +1250,8 @@ const ElectroDiagramCore = (() => {
     const body = round
       ? `<ellipse class="symbol-fill" cx="0" cy="0" rx="${halfWidth * u}" ry="${halfHeight * u}"/>`
       : `<rect class="symbol-fill" x="${-halfWidth * u}" y="${-halfHeight * u}" width="${halfWidth * 2 * u}" height="${halfHeight * 2 * u}" rx="5"/>`;
-    return `${leads}${body}<text class="family-code" x="0" y="5">${escapeXml(codes[definition.kind] || "X")}</text><text class="draft-badge" x="${(halfWidth - 0.25) * u}" y="${(-halfHeight + 0.55) * u}">D</text>`;
+    const badge = definition.review_status === "auto_draft" ? `<text class="draft-badge" x="${(halfWidth - 0.25) * u}" y="${(-halfHeight + 0.55) * u}">D</text>` : "";
+    return `${leads}${body}<text class="family-code" x="0" y="5">${escapeXml(codes[definition.kind] || "X")}</text>${badge}`;
   }
 
   function getContract() {

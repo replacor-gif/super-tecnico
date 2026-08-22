@@ -5,7 +5,7 @@
   "description": "Contrato neutral para que una persona, ElectroIA u otra IA localice un conector sin mezclar variante, lado ni orientación.",
   "provider_neutral": true,
   "embedded_ai_model": false,
-  "remote_execution": false,
+  "remote_execution": true,
   "browser_available": true,
   "catalog_path": "catalog.json",
   "schema_path": "connector-record.schema.json",
@@ -15,21 +15,24 @@
     {
       "name": "supertecnico_search_connectors",
       "description": "Busca conectores por nombre, alias, interfaz, forma o señal y devuelve candidatos compactos con variante y estado.",
-      "state": "browser_available_remote_planned",
+      "state": "public_http_beta",
+      "http_endpoint": "../../api/index.php?action=connector-search",
       "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
       "input_schema": {"type": "object", "additionalProperties": false, "required": ["query"], "properties": {"query": {"type": "string", "minLength": 1, "maxLength": 120}, "category": {"type": "string", "maxLength": 40}, "review_status": {"type": "string", "enum": ["reviewed", "source_identified", "pending_review"]}, "limit": {"type": "integer", "minimum": 1, "maximum": 20, "default": 8}}}
     },
     {
       "name": "supertecnico_get_connector",
       "description": "Devuelve una ficha normalizada completa, incluidos contactos, vista, variantes, advertencias, revisión y procedencia.",
-      "state": "browser_available_remote_planned",
+      "state": "public_http_beta",
+      "http_endpoint": "../../api/index.php?action=connector-get",
       "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
       "input_schema": {"type": "object", "additionalProperties": false, "required": ["connector_id"], "properties": {"connector_id": {"type": "string", "minLength": 3, "maxLength": 80}}}
     },
     {
       "name": "supertecnico_resolve_connector_contact",
       "description": "Resuelve una señal o contacto dentro de una ficha ya identificada sin asumir el lado opuesto ni otra variante.",
-      "state": "contract_ready_remote_planned",
+      "state": "public_http_beta",
+      "http_endpoint": "../../api/index.php?action=connector-resolve",
       "annotations": {"readOnlyHint": true, "destructiveHint": false, "openWorldHint": false},
       "input_schema": {"type": "object", "additionalProperties": false, "required": ["connector_id", "contact_or_signal"], "properties": {"connector_id": {"type": "string", "minLength": 3, "maxLength": 80}, "contact_or_signal": {"type": "string", "minLength": 1, "maxLength": 80}}}
     },
