@@ -3,14 +3,16 @@
   const CATALOG_URL='data/embedded-platforms/catalog.json';
   const CLASS_LABELS={microcontroller_board:'Placa MCU',development_kit:'Kit de desarrollo',evaluation_board:'Placa de evaluación',industrial_controller:'Control industrial',single_board_computer:'Ordenador SBC',system_on_module:'Módulo SoM',edge_ai_computer:'Ordenador Edge AI',edge_ai_accelerator:'Acelerador Edge AI',integrated_controller:'Control integrado',fpga_board:'Placa FPGA',soc_fpga_board:'SoC + FPGA'};
   const COLORS=['#00eaff','#ff3fa7','#ffe438','#54ff82','#ff7a00','#a66bff'];
+  const IGNORED_TERMS=new Set(['a','al','de','del','la','las','el','los','y','o','u','con','para','por','en','un','una','unos','unas','que','como','quiero','necesito','the','and','with','for','from','to','an','of','on','in']);
   let catalog=null; let records=[]; let selectedId=''; let rankedIds=null;
   const byId=id=>document.getElementById(id);
   const esc=value=>String(value??'').replace(/[&<>'"]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
   const fold=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
   const list=value=>Array.isArray(value)?value:[];
+  const terms=value=>[...new Set(fold(value).split(/\s+/).filter(term=>term.length>=2&&!IGNORED_TERMS.has(term)))];
 
   function haystack(record){return fold([record.id,record.name,record.manufacturer,record.platform_class,record.architecture,record.logic_and_power,record.recommended_use,record.primary_risk,...list(record.interfaces),...list(record.tags)].join(' '));}
-  function queryMatches(record,query){const ignored=new Set(['de','del','la','el','y','con','para']);const terms=fold(query).split(/\s+/).filter(term=>term&&!ignored.has(term));const text=haystack(record);return !terms.length||terms.every(term=>text.includes(term));}
+  function queryMatches(record,query){const queryTerms=terms(query);const text=haystack(record);return !queryTerms.length||queryTerms.every(term=>text.includes(term));}
   function filtered(){
     const q=byId('epQuery').value.trim(); const manufacturer=byId('epManufacturer').value; const platformClass=byId('epClass').value;
     let items=records.filter(record=>queryMatches(record,q)&&(!manufacturer||record.manufacturer===manufacturer)&&(!platformClass||record.platform_class===platformClass));
@@ -36,8 +38,8 @@
   }
   function recommend(){
     const useCase=byId('epUseCase').value.trim(); const interfaces=byId('epInterfaces').value.trim(); if(useCase.length<3){byId('epUseCase').focus();return;}
-    const terms=[...new Set(fold(`${useCase} ${interfaces}`).split(/\s+/).filter(term=>term.length>=2))]; const linuxClasses=new Set(['single_board_computer','system_on_module','edge_ai_computer','soc_fpga_board']); const needsLinux=byId('epLinux').checked;
-    rankedIds=records.flatMap(record=>{if(needsLinux&&!linuxClasses.has(record.platform_class))return[];const text=haystack(record);const matched=terms.filter(term=>text.includes(term));const score=matched.length*10+(needsLinux&&linuxClasses.has(record.platform_class)?8:0);return score?[{id:record.id,score}]:[];}).sort((a,b)=>b.score-a.score).slice(0,10).map(item=>item.id);
+    const queryTerms=terms(`${useCase} ${interfaces}`); const linuxClasses=new Set(['single_board_computer','system_on_module','edge_ai_computer','soc_fpga_board']); const needsLinux=byId('epLinux').checked||queryTerms.includes('linux');
+    rankedIds=records.flatMap(record=>{if(needsLinux&&!linuxClasses.has(record.platform_class))return[];const text=haystack(record);const matched=queryTerms.filter(term=>text.includes(term));const score=matched.length*10+(needsLinux&&linuxClasses.has(record.platform_class)?8:0);return score?[{id:record.id,score}]:[];}).sort((a,b)=>b.score-a.score).slice(0,10).map(item=>item.id);
     byId('epQuery').value=''; byId('epManufacturer').value=''; byId('epClass').value=''; renderResults({autoSelect:true});
   }
   async function load(){

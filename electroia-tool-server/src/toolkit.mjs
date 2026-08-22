@@ -69,6 +69,12 @@ function folded(value) {
     .toLowerCase();
 }
 
+const EMBEDDED_IGNORED_TERMS = new Set(["a", "al", "de", "del", "la", "las", "el", "los", "y", "o", "u", "con", "para", "por", "en", "un", "una", "unos", "unas", "que", "como", "quiero", "necesito", "the", "and", "with", "for", "from", "to", "an", "of", "on", "in"]);
+
+function embeddedTerms(value) {
+  return [...new Set(folded(value).split(/\s+/).filter((term) => term.length >= 2 && !EMBEDDED_IGNORED_TERMS.has(term)))];
+}
+
 function symbolSummary(symbol) {
   return {
     id: symbol.id,
@@ -213,8 +219,7 @@ export async function callElectroIATool(tool, rawArguments = {}) {
     const platformClass = folded(args.platform_class).trim();
     const limit = Math.max(1, Math.min(20, Number.isInteger(args.limit) ? args.limit : 8));
     const catalog = await loadEmbeddedPlatforms();
-    const ignored = new Set(["de", "del", "la", "el", "y", "con", "para"]);
-    const queryTerms = query.split(/\s+/).filter((term) => term && !ignored.has(term));
+    const queryTerms = embeddedTerms(query);
     const matches = catalog.records.filter((record) => {
       const haystack = folded([record.id, record.name, record.manufacturer, record.platform_class, record.architecture, record.logic_and_power, record.recommended_use, record.primary_risk, ...(record.interfaces || []), ...(record.tags || [])].join(" "));
       if (!queryTerms.every((term) => haystack.includes(term))) return false;
@@ -237,14 +242,15 @@ export async function callElectroIATool(tool, rawArguments = {}) {
     const useCase = folded(args.use_case).trim();
     if (useCase.length < 3) throw new Error("use_case debe describir el objetivo del proyecto");
     const requiredInterfaces = folded((args.required_interfaces || []).join(" "));
-    const terms = [...new Set(`${useCase} ${requiredInterfaces}`.split(/\s+/).filter((term) => term.length >= 2))];
+    const terms = embeddedTerms(`${useCase} ${requiredInterfaces}`);
     const catalog = await loadEmbeddedPlatforms();
     const linuxClasses = new Set(["single_board_computer", "system_on_module", "edge_ai_computer", "soc_fpga_board"]);
+    const needsLinux = args.needs_linux === true || terms.includes("linux");
     const ranked = catalog.records.flatMap((record) => {
-      if (args.needs_linux === true && !linuxClasses.has(record.platform_class)) return [];
+      if (needsLinux && !linuxClasses.has(record.platform_class)) return [];
       const haystack = folded([record.id, record.name, record.manufacturer, record.platform_class, record.architecture, record.recommended_use, ...(record.interfaces || []), ...(record.tags || [])].join(" "));
       const matchedTerms = terms.filter((term) => haystack.includes(term));
-      const score = matchedTerms.length * 10 + (args.needs_linux === true && linuxClasses.has(record.platform_class) ? 8 : 0);
+      const score = matchedTerms.length * 10 + (needsLinux && linuxClasses.has(record.platform_class) ? 8 : 0);
       return score ? [{score, matched_terms: matchedTerms, platform: embeddedPlatformSummary(record)}] : [];
     }).sort((a, b) => b.score - a.score || a.platform.name.localeCompare(b.platform.name));
     const limit = Math.max(1, Math.min(10, Number.isInteger(args.limit) ? args.limit : 5));

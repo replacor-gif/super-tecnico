@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-08-22T22:33:12.168307+00:00",
+  "generated_at_utc": "2026-08-22T22:55:59.913145+00:00",
   "status": "public_free_preview_regulations_connectors_and_embedded_platforms",
   "readiness_score_percent": 72,
   "score_meaning": "Preparación técnica global; normativa, conectores y plataformas embebidas tienen consultas públicas gratuitas y limitadas.",
@@ -27,7 +27,7 @@
     "electroia_symbols": 460,
     "electroia_engine_symbols": 474,
     "electroia_internal_templates": 14,
-    "electroia_symbols_reviewed": 392,
+    "electroia_symbols_reviewed": 439,
     "technical_project_capabilities": 6,
     "hvac_training_chapters": 167,
     "electronics_chapters": 678,

@@ -15,6 +15,25 @@
 .updates-pulse { min-width:160px; padding:17px; display:grid; justify-items:center; gap:10px; border:1px solid rgba(0,234,255,.35); border-radius:18px; background:rgba(3,12,19,.7); color:var(--updates-cyan); font-size:.72rem; letter-spacing:.12em; }
 .updates-pulse span { width:20px; height:20px; border-radius:50%; background:#4dff88; box-shadow:0 0 0 7px rgba(77,255,136,.12),0 0 25px #4dff88; }
 .updates-workspace { margin:34px 0; padding:clamp(22px,4vw,40px); border:1px solid var(--updates-line); border-radius:24px; background:linear-gradient(180deg,#111b26,#0d151e); }
+.updates-roadmap { margin:34px 0; padding:clamp(22px,4vw,40px); border:1px solid #315269; border-radius:24px; background:radial-gradient(circle at 92% 8%,rgba(255,63,167,.13),transparent 24%),linear-gradient(145deg,#0d1823,#101e2b); }
+.updates-roadmap h2 { margin:4px 0 0; color:#fff; font-size:clamp(1.7rem,4vw,2.7rem); }
+.roadmap-live { padding:7px 10px; border:1px solid rgba(84,255,130,.35); border-radius:999px; color:#54ff82; background:rgba(84,255,130,.08); font-size:.7rem; font-weight:900; letter-spacing:.08em; }
+.roadmap-summary { margin:28px 0 10px; display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.roadmap-summary article { min-width:0; padding:18px; display:grid; gap:5px; border:1px solid #294258; border-radius:16px; background:rgba(5,14,22,.72); }
+.roadmap-summary span { color:#8fa5b7; font-size:.7rem; font-weight:850; text-transform:uppercase; letter-spacing:.06em; }
+.roadmap-summary strong { color:#fff; font-size:clamp(1.45rem,3vw,2.15rem); }
+.roadmap-summary small { color:var(--updates-cyan); line-height:1.3; }
+.roadmap-priorities { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; counter-reset:roadmap; }
+.roadmap-item { position:relative; overflow:hidden; padding:20px 21px 20px 69px; border:1px solid #283d50; border-radius:17px; background:#09131c; }
+.roadmap-item::before { content:var(--roadmap-order); position:absolute; left:18px; top:18px; color:var(--updates-yellow); font-size:1.35rem; font-weight:950; font-style:italic; }
+.roadmap-item > div:first-child { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.roadmap-item > div:first-child span { color:var(--updates-cyan); font-size:.7rem; font-weight:900; text-transform:uppercase; }
+.roadmap-item em { padding:4px 7px; border-radius:999px; color:#54ff82; background:rgba(84,255,130,.08); font-size:.65rem; font-weight:850; font-style:normal; text-transform:uppercase; }
+.roadmap-item h3 { margin:9px 0; color:#fff; font-size:1.02rem; }
+.roadmap-item p { margin:8px 0 0; color:#9eb0bf; font-size:.88rem; }
+.roadmap-item > small { display:block; margin-top:6px; color:#91a5b7; }
+.roadmap-progress { height:7px; overflow:hidden; border-radius:999px; background:#1b2a37; }
+.roadmap-progress i { height:100%; display:block; border-radius:inherit; background:linear-gradient(90deg,var(--updates-cyan),#54ff82); box-shadow:0 0 16px rgba(0,234,255,.45); }
 .updates-heading { display:flex; align-items:end; justify-content:space-between; gap:20px; }
 .updates-heading h2 { margin:4px 0 0; color:#fff; font-size:clamp(1.7rem,4vw,2.7rem); }
 .updates-filters { margin:28px 0 12px; display:grid; grid-template-columns:2fr 1fr; gap:14px; }
@@ -64,4 +83,6 @@
   .updates-community { align-items:stretch; flex-direction:column; }
   .updates-community > a { text-align:center; }
   .portal-updates-head { align-items:flex-start; flex-direction:column; }
+  .roadmap-summary,.roadmap-priorities { grid-template-columns:1fr; }
+  .roadmap-item { padding-left:60px; }
 }

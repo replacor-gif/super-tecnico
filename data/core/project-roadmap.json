@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-08-23",
+  "release_stage": "beta_publica_competente",
+  "summary": {
+    "electroia_catalog_symbols": 460,
+    "electroia_reviewed_symbols": 439,
+    "electroia_pending_symbols": 21,
+    "electroia_reviewed_percent": 95.4,
+    "electroia_complete_families": 13,
+    "electroia_total_families": 16,
+    "public_ai_tools": 7,
+    "ai_readiness_percent": 72
+  },
+  "remaining_electroia_families": [
+    {
+      "family": "Fuentes y alimentación",
+      "pending_symbols": 8
+    },
+    {
+      "family": "Instalaciones y señalización",
+      "pending_symbols": 8
+    },
+    {
+      "family": "Dispositivos especiales",
+      "pending_symbols": 5
+    }
+  ],
+  "priorities": [
+    {
+      "id": "electroia-finish-catalog",
+      "area": "ElectroIA",
+      "title": "Completar las tres familias finales",
+      "status": "in_progress",
+      "progress": {
+        "done": 439,
+        "total": 460,
+        "unit": "símbolos"
+      },
+      "next_action": "Normalizar Fuentes y alimentación, Instalaciones y señalización y Dispositivos especiales; después ampliar las pruebas de esquemas completos."
+    },
+    {
+      "id": "diagram-real-cases",
+      "area": "ElectroIA",
+      "title": "Validar diagramas completos de casos reales",
+      "status": "in_progress",
+      "next_action": "Crear una batería de cuadros, automatismos, electrónica HVAC y controladores embebidos con comprobación visual de cruces, etiquetas y legibilidad."
+    },
+    {
+      "id": "duct-field-validation",
+      "area": "Conductos",
+      "title": "Afinar el diseñador con casos de campo",
+      "status": "field_validation",
+      "next_action": "Añadir pérdida de carga, accesorios, presión disponible y ruido sin perder la edición táctil sencilla del plano."
+    },
+    {
+      "id": "frigorista-field-validation",
+      "area": "Frigorista",
+      "title": "Ampliar diagnóstico Mollier con evidencias reales",
+      "status": "field_validation",
+      "next_action": "Contrastar diagnósticos completos, tuberías y desagües con instalaciones y modelos aportados por técnicos."
+    },
+    {
+      "id": "regulation-reviewed-rules",
+      "area": "Normativa",
+      "title": "Convertir consultas frecuentes en reglas revisadas",
+      "status": "in_progress",
+      "next_action": "Priorizar las búsquedas reales y documentar ámbito, excepciones, versión y fuente exacta de cada regla de cálculo."
+    },
+    {
+      "id": "ai-remote-service",
+      "area": "SINAPSYS / IA",
+      "title": "Preparar el servicio remoto para IAs",
+      "status": "planned",
+      "next_action": "Medir utilidad y coste de las herramientas gratuitas antes de activar MCP remoto, autenticación, cuotas o cobro."
+    },
+    {
+      "id": "cross-domain-budgeting",
+      "area": "Proyectos",
+      "title": "Presupuesto técnico transversal",
+      "status": "foundation_only",
+      "next_action": "Conectar mediciones de climatización, electricidad, agua y refrigeración con bases de precios versionadas sin mezclar cálculo técnico y precio."
+    }
+  ],
+  "status_labels": {
+    "in_progress": "En desarrollo",
+    "field_validation": "Necesita casos de campo",
+    "planned": "Planificado",
+    "foundation_only": "Base preparada"
+  },
+  "notice": "El estado indica cobertura de la beta, no certificación normativa ni sustitución del criterio profesional."
+}

@@ -10,6 +10,15 @@
   },
   "entries": [
     {
+      "id": "UPD-20260823-ELECTROIA-ROUND3-ROADMAP",
+      "date": "2026-08-23",
+      "title": "Tres familias ElectroIA y estado vivo del proyecto",
+      "summary": "Completadas Sensores y transductores, Medida e indicación y Conectores y comunicaciones: ElectroIA alcanza 439 símbolos revisados de 460. La pantalla de mejoras muestra ahora métricas y prioridades reales, y la preselección de placas filtra mejor el requisito Linux.",
+      "areas": ["ElectroIA", "Simbología", "SINAPSYS", "Plataformas embebidas", "Proyecto vivo"],
+      "kind": "platform_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
       "id": "UPD-20260823-EMBEDDED-ELECTROIA-ROUND2",
       "date": "2026-08-23",
       "title": "Plataformas embebidas y tres grandes familias ElectroIA",

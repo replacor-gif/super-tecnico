@@ -18,7 +18,7 @@ function toolError(error) {
 }
 
 function createServer() {
-  const server = new McpServer({ name: "electroia-tools", version: "0.11.0" });
+  const server = new McpServer({ name: "electroia-tools", version: "0.12.0" });
 
   server.registerTool(
     "electroia_get_capabilities",

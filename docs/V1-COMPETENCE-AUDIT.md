@@ -1,6 +1,6 @@
 # Auditoría de competencia de la versión 1
 
-Fecha de revisión: 2026-08-16
+Fecha de revisión: 2026-08-23
 
 ## Alcance de la primera versión
 
@@ -27,16 +27,16 @@ Se considera competente cuando:
 - Buscador normativo con sinónimos, preguntas naturales, detección de contexto insuficiente, jerarquía ITC/artículo/apartado/tabla, página, huellas y enlace oficial.
 - API gratuita de normativa para personas, software e IAs, con límites y medición anónima.
 - Vigilancia de cambios de fuentes oficiales y bloqueo de reglas dependientes hasta revisión.
-- 89 pruebas Python, motores JavaScript, pruebas PHP, compilación estática y recorridos reales en navegador superados.
+- Más de 119 pruebas Python, motores JavaScript, pruebas PHP, compilación estática y recorridos reales en navegador superados.
 
 ## Límites que deben seguir visibles
 
 - Una coincidencia normativa es evidencia documental, no una conclusión automática sobre aplicabilidad.
 - Todavía no hay una biblioteca suficiente de reglas normativas revisadas para contestar directamente todos los dimensionados.
-- ElectroIA conserva 460 símbolos normalizados, pero solo 127 tienen revisión gráfica completa; no debe prometer diagramas perfectos para cualquier instalación.
+- ElectroIA conserva 460 símbolos normalizados: 439 tienen revisión gráfica y terminales funcionales y 21 siguen marcados como borrador. Todavía no debe prometer diagramas perfectos para cualquier instalación.
 - La entrada por foto o boceto está prevista en el contrato, pero no es una función terminada.
 - El diseñador de conductos ofrece un diseño previo práctico y editable; todavía no calcula toda la pérdida de carga, los accesorios, el ruido ni la presión disponible necesarios para considerarlo un plano de ejecución definitivo.
-- Solo el buscador normativo está abierto como herramienta remota para IAs. Frigorista, desagües, componentes y diagramas siguen siendo motores de navegador o vista previa privada.
+- Normativa, conectores y plataformas embebidas ofrecen consultas HTTP públicas limitadas. Frigorista, desagües, componentes y diagramas siguen siendo motores de navegador o vista previa privada.
 - El 63 % del informe de preparación para IAs mide el proyecto comercial futuro (MCP remoto, autenticación, cuotas, validadores y benchmark económico), no la competencia de esta beta para técnicos.
 
 ## Siguiente orden de trabajo

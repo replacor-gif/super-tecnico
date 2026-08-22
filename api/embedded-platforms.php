@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-const ST_EMBEDDED_SERVICE_VERSION = '0.1.0-beta.1';
+const ST_EMBEDDED_SERVICE_VERSION = '0.2.0-beta.1';
 
 function st_embedded_catalog(): array
 {
@@ -95,11 +95,19 @@ function st_embedded_haystack(array $record): string
 
 function st_embedded_matches_query(array $record, string $query): bool
 {
-    $ignored = ['de', 'del', 'la', 'el', 'y', 'con', 'para'];
-    $terms = array_values(array_filter(explode(' ', st_embedded_fold($query)), fn(string $term): bool => $term !== '' && !in_array($term, $ignored, true)));
+    $terms = st_embedded_terms($query);
     $haystack = st_embedded_haystack($record);
     foreach ($terms as $term) if (!str_contains($haystack, $term)) return false;
     return count($terms) > 0;
+}
+
+function st_embedded_terms(string $value): array
+{
+    $ignored = ['a', 'al', 'de', 'del', 'la', 'las', 'el', 'los', 'y', 'o', 'u', 'con', 'para', 'por', 'en', 'un', 'una', 'unos', 'unas', 'que', 'como', 'quiero', 'necesito', 'the', 'and', 'with', 'for', 'from', 'to', 'an', 'of', 'on', 'in'];
+    return array_values(array_unique(array_filter(
+        explode(' ', st_embedded_fold($value)),
+        fn(string $term): bool => strlen($term) >= 2 && !in_array($term, $ignored, true)
+    )));
 }
 
 function st_embedded_search(array $input, string $clientHash): array
@@ -139,8 +147,8 @@ function st_embedded_recommend(array $input, string $clientHash): array
     $useCase = trim((string) ($input['use_case'] ?? $input['q'] ?? ''));
     if (st_embedded_length($useCase) < 3 || st_embedded_length($useCase) > 300) st_json(['ok' => false, 'error' => 'invalid_use_case'], 422);
     $required = trim((string) ($input['required_interfaces'] ?? ''));
-    $needsLinux = filter_var($input['needs_linux'] ?? false, FILTER_VALIDATE_BOOLEAN);
-    $queryTerms = array_values(array_unique(array_filter(explode(' ', st_embedded_fold($useCase . ' ' . $required)), fn(string $item): bool => strlen($item) >= 2)));
+    $queryTerms = st_embedded_terms($useCase . ' ' . $required);
+    $needsLinux = filter_var($input['needs_linux'] ?? false, FILTER_VALIDATE_BOOLEAN) || in_array('linux', $queryTerms, true);
     $ranked = [];
     foreach (st_embedded_catalog()['records'] as $record) {
         $haystack = st_embedded_haystack($record);

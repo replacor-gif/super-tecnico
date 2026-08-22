@@ -46,6 +46,12 @@ jobs:
           php -l api/embedded-platforms.php
           php -l api/index.php
 
+      - name: Verificar datos derivados y panel de evolución
+        run: |
+          node --check assets/updates.js
+          python tools/normalize_symbol_library.py --check
+          python tools/build_project_roadmap.py --check
+
       - name: Verificar buscador universal de datasheets
         run: node tests/test_datasheet_finder.js
 

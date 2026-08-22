@@ -4159,6 +4159,320 @@
       }
     },
     {
+      "id": "SYM-0139",
+      "catalog_id": "SYM-0139",
+      "name": "Voltímetro",
+      "kind": "voltmeter",
+      "geometry_template": "meter_block",
+      "designator": "V",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "V+": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "V-": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "input"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "measurement_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0140",
+      "catalog_id": "SYM-0140",
+      "name": "Amperímetro",
+      "kind": "ammeter",
+      "geometry_template": "meter_block",
+      "designator": "A",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "I+": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "I-": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "measurement_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0141",
+      "catalog_id": "SYM-0141",
+      "name": "Ohmímetro",
+      "kind": "ohmmeter",
+      "geometry_template": "meter_block",
+      "designator": "Ω",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "Ω+": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "output"
+        },
+        "Ω-": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "input"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "measurement_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0142",
+      "catalog_id": "SYM-0142",
+      "name": "Vatímetro",
+      "kind": "wattmeter",
+      "geometry_template": "meter_block",
+      "designator": "W",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "I+": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "V+": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "I-": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "passive"
+        },
+        "V-": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "input"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "measurement_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0143",
+      "catalog_id": "SYM-0143",
+      "name": "Frecuencímetro",
+      "kind": "freqmeter",
+      "geometry_template": "meter_block",
+      "designator": "Hz",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "IN+": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "IN-": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "input"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "measurement_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0144",
+      "catalog_id": "SYM-0144",
+      "name": "Osciloscopio / punto de osciloscopio",
+      "kind": "scope",
+      "geometry_template": "meter_block",
+      "designator": "OSC",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "CH1": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "REF": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "ground"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "measurement_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0145",
+      "catalog_id": "SYM-0145",
+      "name": "Lámpara indicadora",
+      "kind": "lamp",
+      "geometry_template": "meter_block",
+      "designator": "H",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "+": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "-": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "measurement_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0146",
+      "catalog_id": "SYM-0146",
+      "name": "Zumbador",
+      "kind": "buzzer",
+      "geometry_template": "meter_block",
+      "designator": "BZ",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "+": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "-": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "measurement_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0147",
+      "catalog_id": "SYM-0147",
+      "name": "Altavoz",
+      "kind": "speaker",
+      "geometry_template": "meter_block",
+      "designator": "LS",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "+": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "-": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "measurement_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0148",
+      "catalog_id": "SYM-0148",
+      "name": "Display de 7 segmentos",
+      "kind": "sevenseg",
+      "geometry_template": "meter_block",
+      "designator": "DS",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "SEGMENTS[]": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "COMMON[]": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        },
+        "VCC": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "ground"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "measurement_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
       "id": "SYM-0149",
       "name": "Motor DC",
       "kind": "motor_dc",
@@ -4761,6 +5075,76 @@
       }
     },
     {
+      "id": "SYM-0168",
+      "catalog_id": "SYM-0168",
+      "name": "Sensor Hall digital",
+      "kind": "hall_switch",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "OUT": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "VCC": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "ground"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0169",
+      "catalog_id": "SYM-0169",
+      "name": "Sensor Hall lineal",
+      "kind": "hall_linear",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "OUT": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "VCC": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "ground"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
       "id": "SYM-0170",
       "name": "Sensor de corriente Hall",
       "kind": "sensor_current_hall",
@@ -4927,6 +5311,298 @@
           "electrical_type": "output"
         }
       }
+    },
+    {
+      "id": "SYM-0175",
+      "catalog_id": "SYM-0175",
+      "name": "Sensor de proximidad inductivo",
+      "kind": "prox_ind",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "OUT": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "VCC": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "ground"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0176",
+      "catalog_id": "SYM-0176",
+      "name": "Sensor de proximidad capacitivo",
+      "kind": "prox_cap",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "OUT": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "VCC": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "ground"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0177",
+      "catalog_id": "SYM-0177",
+      "name": "Encoder incremental",
+      "kind": "encoder",
+      "geometry_template": "sensor_block",
+      "designator": "ENC",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "A": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "B": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "Z": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "VCC": {
+          "x": 0,
+          "y": -4,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": 0,
+          "y": 4,
+          "side": "south",
+          "electrical_type": "ground"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0178",
+      "catalog_id": "SYM-0178",
+      "name": "Tacogenerador",
+      "kind": "tachogenerator",
+      "geometry_template": "sensor_block",
+      "designator": "TG",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "SIG+": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "SIG-": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0179",
+      "catalog_id": "SYM-0179",
+      "name": "Sensor de vibración",
+      "kind": "vibration",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "OUT": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "VCC": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "ground"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0180",
+      "catalog_id": "SYM-0180",
+      "name": "Sensor de luz",
+      "kind": "light_sensor",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "OUT": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "VCC": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "ground"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0181",
+      "catalog_id": "SYM-0181",
+      "name": "Receptor infrarrojo",
+      "kind": "ir_receiver",
+      "geometry_template": "sensor_block",
+      "designator": "IR",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "OUT": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "VCC": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "ground"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0182",
+      "catalog_id": "SYM-0182",
+      "name": "Sensor de gas",
+      "kind": "gas_sensor",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "H+": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "H-": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "SIG+": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "SIG-": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
     },
     {
       "id": "SYM-0183",
@@ -8323,6 +8999,52 @@
       "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa."
     },
     {
+      "id": "SYM-0256",
+      "catalog_id": "SYM-0256",
+      "name": "Conector macho",
+      "kind": "connector_male",
+      "geometry_template": "connector_block",
+      "designator": "J",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "1": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "connectors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0257",
+      "catalog_id": "SYM-0257",
+      "name": "Conector hembra",
+      "kind": "connector_female",
+      "geometry_template": "connector_block",
+      "designator": "J",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "1": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "connectors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
       "id": "SYM-0258",
       "catalog_id": "SYM-0258",
       "name": "Bornera",
@@ -8347,6 +9069,216 @@
         }
       },
       "review_status": "draft"
+    },
+    {
+      "id": "SYM-0259",
+      "catalog_id": "SYM-0259",
+      "name": "Conector multipin",
+      "kind": "connector_multi",
+      "geometry_template": "connector_block",
+      "designator": "J",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "PINS[]": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "SHIELD": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "shield"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "connectors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0260",
+      "catalog_id": "SYM-0260",
+      "name": "Conector coaxial",
+      "kind": "coax",
+      "geometry_template": "connector_block",
+      "designator": "J",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "CENTER": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "SHIELD": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "shield"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "connectors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0261",
+      "catalog_id": "SYM-0261",
+      "name": "Par trenzado",
+      "kind": "twisted_pair",
+      "geometry_template": "connector_block",
+      "designator": "W",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "A_IN": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "B_IN": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "A_OUT": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "B_OUT": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "connectors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0262",
+      "catalog_id": "SYM-0262",
+      "name": "Cable apantallado",
+      "kind": "shielded_cable",
+      "geometry_template": "connector_block",
+      "designator": "W",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "LINES_IN[]": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "SHIELD_IN": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "shield"
+        },
+        "LINES_OUT[]": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "SHIELD_OUT": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "shield"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "connectors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0263",
+      "catalog_id": "SYM-0263",
+      "name": "Antena",
+      "kind": "antenna",
+      "geometry_template": "connector_block",
+      "designator": "AE",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "RF": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "connectors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0264",
+      "catalog_id": "SYM-0264",
+      "name": "Puerto USB",
+      "kind": "usb",
+      "geometry_template": "connector_block",
+      "designator": "J",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "VBUS": {
+          "x": -4,
+          "y": -2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "D+": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "D-": {
+          "x": -4,
+          "y": 2,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "GND": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "ground"
+        },
+        "SHIELD": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "shield"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "connectors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
     },
     {
       "id": "SYM-0265",
@@ -8413,6 +9345,76 @@
           "electrical_type": "shield"
         }
       }
+    },
+    {
+      "id": "SYM-0266",
+      "catalog_id": "SYM-0266",
+      "name": "Línea diferencial",
+      "kind": "differential_line",
+      "geometry_template": "connector_block",
+      "designator": "NET",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "P_IN": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "N_IN": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "P_OUT": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "N_OUT": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "connectors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0267",
+      "catalog_id": "SYM-0267",
+      "name": "Fibra óptica",
+      "kind": "fiber",
+      "geometry_template": "connector_block",
+      "designator": "FO",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "OPT_IN": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "OPT_OUT": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "connectors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
     },
     {
       "id": "SYM-0268",
@@ -11814,6 +12816,175 @@
       "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa."
     },
     {
+      "id": "SYM-0348",
+      "catalog_id": "SYM-0348",
+      "name": "Galga extensométrica",
+      "kind": "strain_gauge",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "EXC+": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "EXC-": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "SIG+": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "SIG-": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0349",
+      "catalog_id": "SYM-0349",
+      "name": "Célula de carga",
+      "kind": "load_cell",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "EXC+": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "EXC-": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "SIG+": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "SIG-": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0350",
+      "catalog_id": "SYM-0350",
+      "name": "Sensor piezoeléctrico",
+      "kind": "piezo_sensor",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "+": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "-": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0351",
+      "catalog_id": "SYM-0351",
+      "name": "Sensor ultrasónico",
+      "kind": "ultrasonic",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "TX": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "RX": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0352",
+      "catalog_id": "SYM-0352",
+      "name": "Termopila",
+      "kind": "thermopile",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "+": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "-": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
       "id": "SYM-0353",
       "name": "Sensor de CO2",
       "kind": "sensor_co2",
@@ -11986,6 +13157,334 @@
           "electrical_type": "output"
         }
       }
+    },
+    {
+      "id": "SYM-0358",
+      "catalog_id": "SYM-0358",
+      "name": "Sensor de posición resistivo",
+      "kind": "position_pot",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "A": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "W": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "B": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0359",
+      "catalog_id": "SYM-0359",
+      "name": "Sensor LVDT",
+      "kind": "lvdt",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "PRI+": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "PRI-": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "S1+": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "S1-": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "S2+": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "S2-": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0360",
+      "catalog_id": "SYM-0360",
+      "name": "Sensor magnetorresistivo",
+      "kind": "magnetoresistive",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "OUT+": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "OUT-": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "VCC": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "ground"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0361",
+      "catalog_id": "SYM-0361",
+      "name": "Giroscopio",
+      "kind": "gyroscope",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "BUS": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "IRQ": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "VCC": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "ground"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0362",
+      "catalog_id": "SYM-0362",
+      "name": "Acelerómetro",
+      "kind": "accelerometer",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "BUS": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "IRQ": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "VCC": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "ground"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0363",
+      "catalog_id": "SYM-0363",
+      "name": "Sensor de color",
+      "kind": "color_sensor",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "BUS": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "OUT": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "VCC": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "ground"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0364",
+      "catalog_id": "SYM-0364",
+      "name": "Sensor de pH",
+      "kind": "ph_sensor",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "ELECTRODE": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "REF": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "SIGNAL": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0365",
+      "catalog_id": "SYM-0365",
+      "name": "Sensor de conductividad",
+      "kind": "conductivity",
+      "geometry_template": "sensor_block",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "E1": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "E2": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "SENSE": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "EXC": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_in"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
     },
     {
       "id": "SYM-0366",
@@ -14082,6 +15581,64 @@
       }
     },
     {
+      "id": "SYM-0434",
+      "catalog_id": "SYM-0434",
+      "name": "Sonda de tensión",
+      "kind": "probe_v",
+      "geometry_template": "meter_block",
+      "designator": "TP",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "TIP": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "REF": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "ground"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "measurement_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0435",
+      "catalog_id": "SYM-0435",
+      "name": "Sonda de corriente",
+      "kind": "probe_i",
+      "geometry_template": "meter_block",
+      "designator": "IP",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "IP+": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "IP-": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "measurement_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
       "id": "SYM-0436",
       "name": "Fusible rearmable PTC",
       "kind": "resettable_fuse_ptc",
@@ -14218,6 +15775,100 @@
           "electrical_type": "output"
         }
       }
+    },
+    {
+      "id": "SYM-0440",
+      "catalog_id": "SYM-0440",
+      "name": "Encoder absoluto",
+      "kind": "sensor",
+      "geometry_template": "sensor_block",
+      "designator": "ENC",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "CLOCK": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "DATA": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "VCC": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "ground"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
+    },
+    {
+      "id": "SYM-0441",
+      "catalog_id": "SYM-0441",
+      "name": "Resolver",
+      "kind": "sensor",
+      "geometry_template": "sensor_block",
+      "designator": "RES",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "REF+": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "REF-": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "SIN+": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "SIN-": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "COS+": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "COS-": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "sensors_complete_2026_08",
+      "review_scope": "Geometría funcional, anclajes y terminales eléctricos revisados para el motor experimental. Los grupos de terminales representan la función; el pinout físico y la variante exacta deben confirmarse con la ficha del equipo."
     },
     {
       "id": "SYM-0442",

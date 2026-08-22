@@ -46,6 +46,8 @@ class EmbeddedPlatformCatalogTests(unittest.TestCase):
         backend = (ROOT / "api" / "embedded-platforms.php").read_text(encoding="utf-8")
         routes = (ROOT / "api" / "index.php").read_text(encoding="utf-8")
         self.assertIn("st_embedded_recommend", backend)
+        self.assertIn("st_embedded_terms", backend)
+        self.assertIn("in_array('linux', $queryTerms, true)", backend)
         self.assertIn("embedded-recommend", routes)
         self.assertNotIn("api.openai.com", backend)
 

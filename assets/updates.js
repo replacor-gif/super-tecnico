@@ -2,10 +2,33 @@
   'use strict';
 
   const FEED_URL = 'data/updates/feed.json';
+  const ROADMAP_URL = 'data/core/project-roadmap.json';
   const esc = value => String(value ?? '').replace(/[&<>'"]/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[character]));
   const normalize = value => String(value ?? '').normalize('NFD').replace(/\p{Diacritic}/gu, '').toLocaleLowerCase('es');
   const formatDate = value => new Intl.DateTimeFormat('es-ES', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value}T12:00:00Z`));
   let entries = [];
+
+  function renderRoadmap(data) {
+    const summary = document.getElementById('roadmapSummary');
+    const priorities = document.getElementById('roadmapPriorities');
+    const status = document.getElementById('roadmapStatus');
+    if (!summary || !priorities || !status) return;
+    const metrics = data.summary || {};
+    summary.innerHTML = [
+      ['ElectroIA revisado', `${metrics.electroia_reviewed_symbols || 0} / ${metrics.electroia_catalog_symbols || 0}`, `${metrics.electroia_reviewed_percent || 0}%`],
+      ['Familias completas', `${metrics.electroia_complete_families || 0} / ${metrics.electroia_total_families || 0}`, `${metrics.electroia_pending_symbols || 0} símbolos pendientes`],
+      ['Herramientas para IAs', String(metrics.public_ai_tools || 0), 'consultas públicas gratuitas'],
+      ['Preparación técnica IA', `${metrics.ai_readiness_percent || 0}%`, 'servicio remoto aún planificado'],
+    ].map(([label, value, detail]) => `<article><span>${esc(label)}</span><strong>${esc(value)}</strong><small>${esc(detail)}</small></article>`).join('');
+    const labels = data.status_labels || {};
+    priorities.innerHTML = (data.priorities || []).map((item, index) => {
+      const progress = item.progress;
+      const percent = progress?.total ? Math.round(progress.done * 1000 / progress.total) / 10 : null;
+      return `<article class="roadmap-item" style="--roadmap-order:'${String(index + 1).padStart(2, '0')}'"><div><span>${esc(item.area)}</span><em>${esc(labels[item.status] || item.status)}</em></div><h3>${esc(item.title)}</h3>${progress ? `<div class="roadmap-progress" aria-label="${esc(`${progress.done} de ${progress.total} ${progress.unit}`)}"><i style="width:${percent}%"></i></div><small>${esc(`${progress.done} de ${progress.total} ${progress.unit} · ${percent}%`)}</small>` : ''}<p>${esc(item.next_action)}</p></article>`;
+    }).join('');
+    const remaining = (data.remaining_electroia_families || []).map(item => `${item.family} (${item.pending_symbols})`).join(', ');
+    status.textContent = remaining ? `ElectroIA: solo quedan ${remaining}.` : 'ElectroIA no tiene familias pendientes.';
+  }
 
   function entryCard(entry, compact = false) {
     const author = entry.author?.label || 'Usuario anónimo';
@@ -55,6 +78,16 @@
       populateAreas();
       renderPreview();
       renderFull();
+      if (document.getElementById('roadmapSummary')) {
+        try {
+          const roadmapResponse = await fetch(new URL(ROADMAP_URL, document.baseURI), { headers: { Accept: 'application/json' } });
+          if (!roadmapResponse.ok) throw new Error(`HTTP ${roadmapResponse.status}`);
+          renderRoadmap(await roadmapResponse.json());
+        } catch (roadmapError) {
+          console.error(roadmapError);
+          document.getElementById('roadmapStatus').textContent = 'No se pudo cargar el estado medible en este momento.';
+        }
+      }
     } catch (error) {
       console.error(error);
       const status = document.getElementById('updatesStatus');

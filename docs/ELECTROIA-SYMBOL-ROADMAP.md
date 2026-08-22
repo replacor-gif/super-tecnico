@@ -1,14 +1,14 @@
 # Plan continuo de normalización de símbolos de ElectroIA
 
-Fecha de revisión: 2026-08-17
+Fecha de revisión: 2026-08-23
 
 ## Estado medible
 
 - Catálogo público: 460 símbolos.
 - Símbolos con estructura y terminales: 460.
-- Símbolos revisados individualmente: 127.
-- Borradores por familia pendientes de revisión gráfica: 333.
-- Familias completas: conexiones y referencias; protecciones eléctricas; relés, interruptores y actuadores; máquinas y actuadores.
+- Símbolos revisados individualmente: 439.
+- Borradores por familia pendientes de revisión gráfica: 21.
+- Familias completas: 13 de 16. Solo faltan Fuentes y alimentación, Instalaciones y señalización y Dispositivos especiales.
 - Lote de sensores HVAC revisado: 17 símbolos de temperatura, presión, humedad, flujo, nivel, calidad de aire, seguridad y medida de corriente.
 - Lote de señales y comunicaciones revisado: 10 símbolos de RS-485, CAN, Ethernet, 4-20 mA, 0-10 V, UART, JTAG/SWD, Modbus RTU, BACnet MS/TP y DALI.
 - Base de automatización disponible en el motor: 11 bloques con canales explícitos para CPU de PLC, DI, DO, AI, AO, E/S remota, PLC de seguridad, HMI, fuente de 24 V, switch y pasarela industrial. Son elementos internos del motor hasta incorporarlos como familia pública del catálogo.
@@ -17,13 +17,11 @@ Un símbolo solo cambia a `engine_reviewed` cuando dispone de geometría propia,
 
 ## Cola priorizada
 
-1. Convertir la base interna de automatización en familia pública: revisar representación, variantes de canales, comunes, potenciales, aislamiento y borneros de CPU, DI/DO/AI/AO, E/S remota, seguridad, HMI, fuente, switch y pasarela.
-2. Controladores abiertos e industriales: bloques de interfaz para Arduino de 5 V y 3,3 V, Arduino Opta, Portenta Machine Control, Raspberry Pi/Compute Module y controlador embebido genérico.
-3. Componentes pasivos: condensadores polarizados, inductores, choque de modo común, MOV, PTC y transformadores con distintas tomas.
-4. Completar sensores: proximidad, posición, vibración, encoders, gases y sensores de proceso pendientes.
-5. Semiconductores discretos: BJT, MOSFET P, IGBT, SCR, TRIAC, Zener, TVS y puentes rectificadores.
-6. Potencia y climatización: PFC, inverter, IPM, drivers, contactores de estado sólido y módulos de potencia.
-7. Conectores, medida, aislamiento, lógica digital y bloques funcionales.
+1. Completar los 21 símbolos restantes: ocho de Fuentes y alimentación, ocho de Instalaciones y señalización y cinco Dispositivos especiales.
+2. Ampliar las pruebas desde láminas de familias a diagramas completos de automatismos, cuadros, electrónica HVAC y control embebido.
+3. Convertir la base interna de automatización en familia pública: revisar variantes de canales, comunes, potenciales, aislamiento y borneros de CPU, DI/DO/AI/AO, E/S remota, seguridad, HMI, fuente, switch y pasarela.
+4. Añadir bloques de interfaz para Arduino de 5 V y 3,3 V, Arduino Opta, Portenta Machine Control, Raspberry Pi/Compute Module y controlador embebido genérico.
+5. Preparar la interpretación de foto o boceto como entrada separada, conservando revisión humana antes de generar conectividad definitiva.
 
 La base de automatización no se representará con una sola caja genérica. Cada bloque debe exponer sus canales reales, comunes, alimentaciones, potenciales, aislamiento, dirección de señal y correspondencia con borneros. Las capacidades y límites de cada ecosistema se definen en `data/electroia/controller-ecosystems.json`.
 

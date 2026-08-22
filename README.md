@@ -43,6 +43,8 @@ Los módulos de normativa, desagües, conectores y plataformas embebidas publica
 
 El primer registro común de motores está en `data/core/motor-registry.json`. Usa **SINAPSYS** como nombre de la futura capa de orquestación y mantiene separados los estados reales: catálogo disponible en navegador, ElectroIA en vista previa privada y ejecución remota pendiente. La marca pública seguirá evolucionando gradualmente de Super Técnico hacia REPLACOR.
 
+El estado medible y la cola priorizada se publican en `data/core/project-roadmap.json` y se muestran en `actualizaciones.html`. El archivo se genera desde los informes reales de ElectroIA y preparación para IAs, por lo que permite ver cobertura y trabajo pendiente sin mantener cifras duplicadas a mano.
+
 ## Actualizar la normativa oficial
 
 Las fuentes se administran desde `data/regulations/sources.json`. Para descargar de nuevo los PDF oficiales, extraer el texto y regenerar catálogo, índices y huellas digitales:

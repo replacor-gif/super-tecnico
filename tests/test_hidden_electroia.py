@@ -139,7 +139,7 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn('"electroia_search_symbols"', manifest)
         self.assertIn('"electroia_get_symbol"', manifest)
         self.assertIn('"electroia_render_diagram"', manifest)
-        self.assertIn('"diagram_engine_version": "1.11.0-alpha.1"', manifest)
+        self.assertIn('"diagram_engine_version": "1.12.0-alpha.1"', manifest)
         self.assertIn('"normalized_symbol_count": 460', manifest)
         self.assertIn('"calculates_values"', manifest)
         self.assertIn('server.registerTool(', server)
@@ -180,7 +180,7 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertEqual(library["engine_symbol_count"], 474)
         self.assertTrue(all(item["ports"] for item in library["symbols"]))
         self.assertEqual(report["status_counts"]["engine_internal"], 14)
-        self.assertEqual(report["catalog_status_counts"], {"auto_draft": 68, "engine_reviewed": 392})
+        self.assertEqual(report["catalog_status_counts"], {"auto_draft": 21, "engine_reviewed": 439})
         self.assertIn("Componentes pasivos", report["fully_reviewed_categories"])
         self.assertIn("Semiconductores discretos", report["fully_reviewed_categories"])
         self.assertIn("Optoelectrónica y aislamiento", report["fully_reviewed_categories"])
@@ -191,6 +191,9 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn("Circuitos integrados funcionales", report["fully_reviewed_categories"])
         self.assertIn("Electrónica digital", report["fully_reviewed_categories"])
         self.assertIn("Potencia y climatización", report["fully_reviewed_categories"])
+        self.assertIn("Sensores y transductores", report["fully_reviewed_categories"])
+        self.assertIn("Medida e indicación", report["fully_reviewed_categories"])
+        self.assertIn("Conectores y comunicaciones", report["fully_reviewed_categories"])
         self.assertEqual(
             report["category_quality"]["Conexiones y referencias"],
             {"total": 17, "engine_reviewed": 17, "auto_draft": 0},
@@ -209,8 +212,10 @@ class HiddenElectroIATests(unittest.TestCase):
         )
         self.assertEqual(
             report["category_quality"]["Sensores y transductores"],
-            {"total": 42, "engine_reviewed": 17, "auto_draft": 25},
+            {"total": 42, "engine_reviewed": 42, "auto_draft": 0},
         )
+        self.assertEqual(report["category_quality"]["Medida e indicación"], {"total": 12, "engine_reviewed": 12, "auto_draft": 0})
+        self.assertEqual(report["category_quality"]["Conectores y comunicaciones"], {"total": 19, "engine_reviewed": 19, "auto_draft": 0})
         self.assertEqual(report["coverage_percent"], 100)
 
     def test_ai_discovery_files_are_consistent_and_keep_remote_execution_private(self):
@@ -219,13 +224,14 @@ class HiddenElectroIATests(unittest.TestCase):
         server = json.loads((ROOT / "electroia-tool-server" / "server.json").read_text(encoding="utf-8"))
         llms = (ROOT / "llms.txt").read_text(encoding="utf-8")
         self.assertEqual(discovery["status"], "private_preview")
-        self.assertEqual(discovery["quality"]["reviewed_catalog_symbols"], 392)
+        self.assertEqual(discovery["quality"]["reviewed_catalog_symbols"], 439)
+        self.assertEqual(discovery["quality"]["auto_draft_catalog_symbols"], 21)
         self.assertEqual(discovery["interfaces"]["remote_mcp"]["status"], "planned")
         self.assertFalse(discovery["security"]["remote_public_execution"])
         self.assertEqual(openapi["openapi"], "3.1.0")
         self.assertNotIn("electroia_render_diagram", json.dumps(openapi))
         self.assertEqual(server["name"], "io.github.replacor-gif/electroia-diagrams")
-        self.assertEqual(server["version"], "0.11.0")
+        self.assertEqual(server["version"], "0.12.0")
         self.assertNotIn("4097", llms)
 
 
