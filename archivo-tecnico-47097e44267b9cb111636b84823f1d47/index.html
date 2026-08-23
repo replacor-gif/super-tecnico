@@ -29,19 +29,19 @@
     </section>
     <div class="noise" aria-hidden="true"></div>
     <header class="topbar">
-      <a class="brand" href="#" aria-label="ElectroIA, inicio">
+      <a class="brand" href="../index.html" aria-label="Volver a Super Técnico">
         <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
         <span>Super Técnico <span>· ElectroIA</span></span>
       </a>
       <div id="engineStatus" class="case-pill local">
-        <span></span><b id="engineStatusLabel">Motor gráfico neutral</b><em> · Núcleo 1.0</em>
+        <span></span><b id="engineStatusLabel">Motor gráfico neutral</b><em> · Motor 1.14 beta</em>
       </div>
     </header>
 
     <main>
       <section id="introView" class="view intro-view active">
         <div class="eyebrow">Motor de diagramas para cualquier IA</div>
-        <h1>De una red eléctrica<br /><em>a un plano legible.</em></h1>
+        <h1>De un circuito definido<br /><em>a un plano legible.</em></h1>
         <p class="lede">
           La IA decide el circuito; ElectroIA normaliza símbolos y terminales, comprueba las redes
           y dibuja todo sobre una única rejilla.
@@ -67,12 +67,20 @@
           <button class="example" type="button" data-request="Quiero que un ventilador de 12 V se encienda cuando llegue a 40 °C.">Ventilador de 12 V al llegar a 40 °C</button>
           <button class="example" type="button" data-diagram-example="../data/electroia/examples/motor-starter-direct.json">Plano patrón: motor trifásico</button>
           <button class="example" type="button" data-diagram-example="../data/electroia/examples/distribution-board-single-line.json">Plano patrón: cuadro unifilar</button>
+          <button class="example" type="button" data-diagram-example="../data/electroia/examples/plc-vfd-motor-system.json">Sistema PLC, variador y motor</button>
+          <button class="example" type="button" data-diagram-example="../data/electroia/examples/arduino-industrial-interface.json">Arduino en entorno industrial</button>
+          <button class="example" type="button" data-diagram-example="../data/electroia/examples/bms-ahu-building-control.json">BMS y climatizador</button>
         </div>
 
         <div class="input-modes" aria-label="Formas de iniciar un diseño">
           <span class="active">Entrada humana o de una IA</span>
-          <span>Foto o boceto interpretado por una IA · próxima fase</span>
+          <span>Foto o boceto: contrato preparado; reconocimiento aún no disponible</span>
         </div>
+
+        <details id="engineAuditCard" class="engine-audit-card">
+          <summary><span>Estado comprobado del motor</span><strong id="engineAuditHeadline">Cargando auditoría…</strong></summary>
+          <div id="engineAuditContent"><p>Comprobando catálogo, terminales y ejemplos profesionales.</p></div>
+        </details>
 
         <div class="process-strip" aria-label="Proceso de diseño">
           <div><b>01</b><span><strong>Define</strong>La IA entrega símbolos y redes</span></div>

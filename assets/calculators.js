@@ -364,7 +364,7 @@
     const displayTool = translatedTool(tool);
     const displayGroup = groupLabel(groupForTool(tool));
     node.querySelector('.category').textContent = displayGroup.toUpperCase();
-    node.querySelector('h1').textContent = displayTool.title;
+    node.querySelector('h2').textContent = displayTool.title;
     node.querySelector('.description').textContent = displayTool.description;
     node.querySelector('.calculator-icon').textContent = toolIcons[tool.id] || '∑';
     node.querySelector('.calculator-body').innerHTML = tool.body();

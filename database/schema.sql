@@ -236,3 +236,20 @@ CREATE TABLE IF NOT EXISTS st_connector_usage_events (
   KEY idx_connector_usage_connector (connector_id, created_at),
   KEY idx_connector_usage_client (client_type, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS st_private_backlog (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  item_type ENUM('idea','improvement','bug','content') NOT NULL DEFAULT 'idea',
+  area VARCHAR(100) NOT NULL,
+  title VARCHAR(140) NOT NULL,
+  details TEXT NULL,
+  priority ENUM('normal','high','urgent') NOT NULL DEFAULT 'normal',
+  status ENUM('pending','in_progress','done','archived') NOT NULL DEFAULT 'pending',
+  author_alias VARCHAR(40) NOT NULL DEFAULT 'Administrador',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  completed_at TIMESTAMP NULL,
+  PRIMARY KEY (id),
+  KEY idx_private_backlog_status_priority (status, priority, updated_at),
+  KEY idx_private_backlog_area (area, updated_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

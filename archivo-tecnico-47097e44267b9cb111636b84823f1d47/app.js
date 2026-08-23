@@ -6,6 +6,7 @@ const state = {
   answers: {},
   resourcesPromise: null,
   accessReady: false,
+  auditLoaded: false,
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -55,6 +56,29 @@ function enterPrivateLab() {
   document.body.classList.remove("access-checking");
   $("#pinGate").hidden = true;
   setToolMode();
+  loadEngineAudit();
+}
+
+async function loadEngineAudit() {
+  if (state.auditLoaded) return;
+  state.auditLoaded = true;
+  try {
+    const report = await fetchJson("../data/electroia/engine-audit-report.json", "la auditoría del motor");
+    const summary = report.summary || {};
+    $("#engineAuditHeadline").textContent = report.status === "pass"
+      ? `${summary.reviewed_public_symbols || 0} símbolos revisados · 0 fallos críticos`
+      : "La auditoría necesita revisión";
+    const limitations = (report.known_limitations || []).map((item) => `<li><b>${escapeHtml(item.message)}</b></li>`).join("");
+    $("#engineAuditContent").innerHTML = `<div class="engine-audit-metrics">
+      <span><b>${Number(summary.public_symbols || 0)}</b> símbolos públicos</span>
+      <span><b>${Number(summary.ports || 0)}</b> terminales definidos</span>
+      <span><b>${Number(summary.professional_symbols || 0)}</b> bloques profesionales</span>
+      <span><b>${Number(summary.example_documents || 0)}</b> planos patrón validados</span>
+    </div><p>Auditoría estructural: <strong>${report.status === "pass" ? "superada" : "pendiente"}</strong>. Límites que el motor no oculta:</p><ul>${limitations}</ul>`;
+  } catch (_error) {
+    $("#engineAuditHeadline").textContent = "Auditoría no disponible";
+    $("#engineAuditContent").innerHTML = "<p>No se ha podido cargar el informe. El motor sigue disponible, pero el estado no se puede confirmar.</p>";
+  }
 }
 
 function showPinGate(message = "") {
@@ -241,11 +265,18 @@ function publicDesignFromDiagramDocument(document) {
   if (typeof ElectroDiagramCore === "undefined") throw new Error("El registro normalizado no está disponible");
   const registry = new Map(ElectroDiagramCore.getRegistry().symbols.map((symbol) => [symbol.id, symbol]));
   const singleLine = document.document_kind === "single_line_diagram";
+  const summaries = {
+    "ELECTROIA-DOL-001": "Esquema patrón de arranque directo con potencia, mando, enclavamiento, parada de emergencia y protección térmica en una sola hoja.",
+    "ELECTROIA-DB-001": "Esquema patrón unifilar con alimentación, contador, protección general, diferencial y circuitos derivados en una sola hoja.",
+    "ELECTROIA-PLC-VFD-001": "Arquitectura patrón de automatización con alimentación trifásica, PLC, seguridad, variador, motor y comunicaciones industriales.",
+    "ELECTROIA-ARDUINO-IND-001": "Interfaz patrón para integrar una plataforma Arduino con alimentación, protección y señales de campo industriales.",
+    "ELECTROIA-BMS-AHU-001": "Arquitectura patrón de control de climatizador mediante BMS, sensores, actuadores y red de edificio.",
+  };
   return {
     title: document.title,
-    summary: singleLine
-      ? "Esquema patrón unifilar con alimentación, contador, protección general, diferencial y tres circuitos derivados en una sola hoja."
-      : "Esquema patrón de arranque directo con potencia, mando, enclavamiento, parada de emergencia y protección térmica en una sola hoja.",
+    summary: summaries[document.document_id] || (singleLine
+      ? "Esquema patrón unifilar trazado sobre una única rejilla normalizada."
+      : "Esquema patrón multifilar trazado sobre una única rejilla normalizada."),
     status: "provisional",
     components: document.components.map((component) => {
       const symbol = registry.get(component.symbol_id);
@@ -259,9 +290,7 @@ function publicDesignFromDiagramDocument(document) {
     connections: document.nets.map((net) => `${net.label || net.id}: ${net.connections.join(" · ")}`),
     warnings: [
       "Es un patrón gráfico: la IA o el proyectista debe aportar tensiones, secciones, calibres, protecciones y referencias reales.",
-      singleLine
-        ? "Antes del montaje deben verificarse la normativa aplicable, la previsión de cargas, la selectividad y la protección de cada circuito."
-        : "Antes del montaje deben verificarse la normativa aplicable, la coordinación de protecciones y los datos de placa del motor.",
+      "Antes del montaje deben verificarse el modelo exacto, los datos de placa, las protecciones, la coordinación y la normativa aplicable.",
     ],
     circuit_model: {
       schema_version: "1.0",
@@ -392,11 +421,23 @@ function renderPublicResult(design) {
   $("#designTitle").textContent = design.title;
   $("#designSummary").textContent = design.summary;
 
+  let validation = null;
+  let relevantWarnings = [];
+  if (design.diagram_document && typeof ElectroDiagramCore !== "undefined") {
+    validation = ElectroDiagramCore.validate(design.diagram_document);
+    if (!validation.valid) {
+      throw new Error(`El documento no supera la validación: ${validation.errors.map((item) => item.message).join(" ")}`);
+    }
+    relevantWarnings = validation.warnings.filter((item) => ["EXACT_MODEL_REQUIRED", "OUTPUT_CONTENTION", "EARTH_DOMAIN_MIX", "SIGNAL_POWER_DOMAIN_MIX", "NET_ROLE_MISMATCH"].includes(item.code));
+    design.warnings = [...new Set([...(design.warnings || []), ...relevantWarnings.map((item) => item.message)])];
+  }
+
   const banner = $("#statusBanner");
   banner.className = `status-banner ${design.status}`;
+  const validationText = validation ? ` Validación: 0 errores · ${relevantWarnings.length} avisos relevantes.` : "";
   banner.innerHTML = design.status === "ready"
-    ? "<b>Circuito preparado.</b> Revisa las conexiones antes de montarlo."
-    : "<b>Esquema generado.</b> Confirma las piezas marcadas como «por confirmar» antes de montarlo.";
+    ? `<b>Circuito preparado.</b> Revisa las conexiones antes de montarlo.${validationText}`
+    : `<b>Esquema generado.</b> Confirma las piezas marcadas como «por confirmar» antes de montarlo.${validationText}`;
 
   $("#componentsList").innerHTML = design.components.map((item) => {
     const pending = item.source_kind === "specification"

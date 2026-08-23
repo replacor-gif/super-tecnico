@@ -37,7 +37,7 @@ Se considera competente cuando:
 - La entrada por foto o boceto está prevista en el contrato, pero no es una función terminada.
 - El diseñador de conductos ofrece un diseño previo práctico y editable; todavía no calcula toda la pérdida de carga, los accesorios, el ruido ni la presión disponible necesarios para considerarlo un plano de ejecución definitivo.
 - Normativa, conectores y plataformas embebidas ofrecen consultas HTTP públicas limitadas. Frigorista, desagües, componentes y diagramas siguen siendo motores de navegador o vista previa privada.
-- El 63 % del informe de preparación para IAs mide el proyecto comercial futuro (MCP remoto, autenticación, cuotas, validadores y benchmark económico), no la competencia de esta beta para técnicos.
+- El 72 % del informe de preparación para IAs mide el proyecto comercial futuro (MCP remoto, autenticación, cuotas, validadores y benchmark económico), no la competencia de esta beta para técnicos.
 
 ## Siguiente orden de trabajo
 

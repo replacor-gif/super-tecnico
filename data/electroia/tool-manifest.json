@@ -6,7 +6,7 @@
   "provider_neutral": true,
   "embedded_ai_model": false,
   "billing_required_by_electroia": false,
-  "diagram_engine_version": "1.13.0-alpha.1",
+  "diagram_engine_version": "1.14.0-alpha.1",
   "diagram_contract_version": "1.0",
   "design_model_version": "0.9",
   "core_policy": {

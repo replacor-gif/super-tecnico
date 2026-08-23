@@ -6,6 +6,7 @@
   const RATING_DISMISS_KEY = 'st.rating.dismissed.v1.';
   const ELECTROIA_PATH = 'archivo-tecnico-47097e44267b9cb111636b84823f1d47/';
   const ANALYTICS_PATH = 'analitica-privada.html';
+  const BACKLOG_PATH = 'bitacora-privada.html';
 
   const RATING_TEXT = {
     es: {
@@ -75,7 +76,12 @@
     analytics.href = ANALYTICS_PATH;
     analytics.textContent = '\u03b2';
     analytics.setAttribute('aria-label', 'Panel privado de análisis de visitas');
-    tools.append(access, analytics);
+    const backlog = document.createElement('a');
+    backlog.className = 'st-electro-access st-backlog-access';
+    backlog.href = BACKLOG_PATH;
+    backlog.textContent = '\u03a3';
+    backlog.setAttribute('aria-label', 'Lista privada de ideas y trabajo pendiente');
+    tools.append(access, analytics, backlog);
     footer.append(tools);
     return tools;
   }

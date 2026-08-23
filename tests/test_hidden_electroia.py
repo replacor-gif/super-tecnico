@@ -41,7 +41,7 @@ class HiddenElectroIATests(unittest.TestCase):
         dashboard = (ROOT / "assets" / "analytics.js").read_text(encoding="utf-8")
         self.assertIn("const ANALYTICS_PATH = 'analitica-privada.html'", counter)
         self.assertIn("analytics.textContent = '\\u03b2'", counter)
-        self.assertLess(counter.index("tools.append(access, analytics)"), counter.index("footer.append(tools)"))
+        self.assertLess(counter.index("tools.append(access, analytics, backlog)"), counter.index("footer.append(tools)"))
         self.assertIn("noindex,nofollow,noarchive,nosnippet,noimageindex", html)
         self.assertIn("electroia-access", app)
         self.assertIn("electroia-unlock", app)
@@ -52,6 +52,28 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn("st_page_ratings", ratings_backend)
         self.assertIn("analyticsComments", dashboard)
         for content in (counter, html, app, backend, analytics_backend):
+            self.assertNotIn("4097", content)
+
+    def test_sigma_access_opens_persistent_private_backlog(self):
+        counter = (ROOT / "assets" / "page-counter.js").read_text(encoding="utf-8")
+        html = (ROOT / "bitacora-privada.html").read_text(encoding="utf-8")
+        app = (ROOT / "assets" / "backlog.js").read_text(encoding="utf-8")
+        backend = (ROOT / "api" / "index.php").read_text(encoding="utf-8")
+        service = (ROOT / "api" / "private-backlog.php").read_text(encoding="utf-8")
+        schema = (ROOT / "database" / "schema.sql").read_text(encoding="utf-8")
+        self.assertIn("const BACKLOG_PATH = 'bitacora-privada.html'", counter)
+        self.assertIn("backlog.textContent = '\\u03a3'", counter)
+        self.assertLess(counter.index("tools.append(access, analytics, backlog)"), counter.index("footer.append(tools)"))
+        self.assertIn("noindex,nofollow,noarchive,nosnippet,noimageindex", html)
+        self.assertIn("private-backlog", app)
+        self.assertIn("electroia-access", app)
+        self.assertIn("electroia-unlock", app)
+        self.assertIn("st_require_electroia_access", backend)
+        self.assertIn("st_private_backlog_list", backend)
+        self.assertIn("CREATE TABLE IF NOT EXISTS st_private_backlog", service)
+        self.assertIn("CREATE TABLE IF NOT EXISTS st_private_backlog", schema)
+        self.assertNotIn("DELETE FROM st_private_backlog", service)
+        for content in (counter, html, app, backend, service, schema):
             self.assertNotIn("4097", content)
 
     def test_lab_uses_public_component_and_symbol_databases(self):
@@ -139,7 +161,7 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn('"electroia_search_symbols"', manifest)
         self.assertIn('"electroia_get_symbol"', manifest)
         self.assertIn('"electroia_render_diagram"', manifest)
-        self.assertIn('"diagram_engine_version": "1.13.0-alpha.1"', manifest)
+        self.assertIn('"diagram_engine_version": "1.14.0-alpha.1"', manifest)
         self.assertIn('"normalized_symbol_count": 501', manifest)
         self.assertIn('"calculates_values"', manifest)
         self.assertIn('server.registerTool(', server)
@@ -163,6 +185,7 @@ class HiddenElectroIATests(unittest.TestCase):
             self.assertTrue((output / "data" / "electroia" / "symbol-library.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "symbol-normalization-report.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "engine-audit-report.json").is_file())
+            self.assertTrue((output / "data" / "core" / "app-quality-audit.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "examples" / "motor-starter-direct.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "examples" / "distribution-board-single-line.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "examples" / "plc-vfd-motor-system.json").is_file())
@@ -174,6 +197,9 @@ class HiddenElectroIATests(unittest.TestCase):
             self.assertTrue((output / "llms.txt").is_file())
             self.assertTrue((output / "analitica-privada.html").is_file())
             self.assertTrue((output / "assets" / "analytics.js").is_file())
+            self.assertTrue((output / "bitacora-privada.html").is_file())
+            self.assertTrue((output / "assets" / "backlog.css").is_file())
+            self.assertTrue((output / "assets" / "backlog.js").is_file())
             self.assertTrue((output / "electroia-tool-server" / "server.json").is_file())
 
     def test_complete_symbol_library_is_normalized_and_quality_labeled(self):

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "updated_at": "2026-08-23",
-  "engine_version_expected": "1.13.0-alpha.1",
+  "engine_version_expected": "1.14.0-alpha.1",
   "status": "pass",
   "release_class": "hardened_beta_engine",
   "summary": {
@@ -16,6 +16,8 @@
     "exact_model_required": 81,
     "professional_symbols": 41,
     "example_documents": 5,
+    "example_components": 59,
+    "example_nets": 69,
     "fatal_failures": 0
   },
   "structural_gates": {
@@ -26,7 +28,8 @@
     "unique_port_coordinates_per_symbol": true,
     "valid_port_sides": true,
     "valid_electrical_types": true,
-    "internal_automation_duplicates_removed": true
+    "internal_automation_duplicates_removed": true,
+    "professional_examples_are_structurally_valid": true
   },
   "professional_domain_coverage": {
     "automation": {
@@ -127,6 +130,7 @@
     }
   ],
   "failure_details": [],
+  "example_failure_details": [],
   "samples": {
     "exact_model_required_ids": [
       "SYM-0148",

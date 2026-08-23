@@ -1,7 +1,7 @@
 "use strict";
 
 const ElectroDiagramCore = (() => {
-  const ENGINE_VERSION = "1.13.0-alpha.1";
+  const ENGINE_VERSION = "1.14.0-alpha.1";
   const CONTRACT_VERSION = "1.0";
   const GRID_PITCH_MIL = 50;
   const UNIT = 24;
@@ -359,11 +359,16 @@ const ElectroDiagramCore = (() => {
       netIds.add(netId);
       const connections = Array.isArray(net?.connections) ? net.connections : [];
       const connectedTypes = [];
+      const connectionsSeen = new Set();
       if (connections.length < 2) warnings.push(diagnostic("OPEN_NET", `La red ${netId || "sin nombre"} solo tiene un terminal.`, netId));
       if (document.document_kind === "single_line_diagram" && !Number.isInteger(net.conductors)) {
         warnings.push(diagnostic("CONDUCTOR_COUNT", `La red ${netId} no declara cuántos conductores resume.`, netId));
       }
       for (const rawConnection of connections) {
+        if (connectionsSeen.has(rawConnection)) {
+          errors.push(diagnostic("DUPLICATE_CONNECTION", `${rawConnection} está repetido dentro de la red ${netId}.`, rawConnection));
+        }
+        connectionsSeen.add(rawConnection);
         const connection = splitConnection(rawConnection);
         if (!connection) {
           errors.push(diagnostic("CONNECTION_FORMAT", `Conexión no válida: ${rawConnection}.`, netId));
@@ -378,7 +383,11 @@ const ElectroDiagramCore = (() => {
         if (definition && !definition.ports[connection.port]) {
           errors.push(diagnostic("MISSING_PORT", `${rawConnection} menciona un terminal inexistente.`, connection.ref));
         } else if (definition) {
-          connectedTypes.push(definition.ports[connection.port].electrical_type || "passive");
+          const electricalType = definition.ports[connection.port].electrical_type || "passive";
+          connectedTypes.push(electricalType);
+          if (electricalType === "no_connect") {
+            errors.push(diagnostic("NO_CONNECT_USED", `${rawConnection} está declarado como no conectable y no puede pertenecer a una red.`, rawConnection));
+          }
         }
         if (terminalUse.has(rawConnection) && terminalUse.get(rawConnection) !== netId) {
           errors.push(diagnostic("PORT_ON_MULTIPLE_NETS", `${rawConnection} pertenece a más de una red.`, rawConnection));
@@ -404,6 +413,22 @@ const ElectroDiagramCore = (() => {
           `La red ${netId} mezcla PE con una referencia de señal o tierra funcional; la unión debe estar documentada.`,
           netId,
         ));
+      }
+      const signalTypes = new Set(["input", "output", "open_collector", "tri_state"]);
+      const powerTypes = new Set(["power_in", "power_out"]);
+      if (connectedTypes.some((type) => signalTypes.has(type)) && connectedTypes.some((type) => powerTypes.has(type))) {
+        warnings.push(diagnostic(
+          "SIGNAL_POWER_DOMAIN_MIX",
+          `La red ${netId} une terminales de señal con alimentación; confirma que existe la interfaz o adaptación adecuada.`,
+          netId,
+        ));
+      }
+      const role = String(net?.role || "signal");
+      if (role === "protective_earth" && !connectedTypes.includes("protective_earth")) {
+        warnings.push(diagnostic("NET_ROLE_MISMATCH", `La red ${netId} se declara PE pero no contiene ningún terminal PE.`, netId));
+      }
+      if (role === "ground" && !connectedTypes.some((type) => ["ground", "functional_earth"].includes(type))) {
+        warnings.push(diagnostic("NET_ROLE_MISMATCH", `La red ${netId} se declara tierra o referencia pero no contiene un terminal compatible.`, netId));
       }
     }
 

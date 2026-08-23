@@ -203,7 +203,7 @@ kbd { padding: 6px 9px; border: 1px solid var(--line); border-radius: 7px; backg
 .calculator-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 28px; padding: 30px 32px; border-bottom: 1px solid var(--line); }
 .calculator-identity { display: flex; gap: 18px; align-items: flex-start; }
 .calculator-icon { width: 60px; height: 60px; border-radius: 17px; font-size: 1.32rem; }
-.calculator-header h1 { margin-bottom: 8px; font-size: clamp(1.55rem, 3vw, 2.25rem); letter-spacing: -.025em; }
+.calculator-header h2 { margin-bottom: 8px; font-size: clamp(1.55rem, 3vw, 2.25rem); letter-spacing: -.025em; }
 .description { margin-bottom: 0; max-width: 760px; color: var(--muted); line-height: 1.55; }
 .status-pill { flex: 0 0 auto; border: 1px solid rgba(66,202,185,.42); color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 7px 10px; font-size: .67rem; font-weight: 850; letter-spacing: .1em; }
 .calculator-layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(360px, .9fr); }

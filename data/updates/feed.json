@@ -10,6 +10,15 @@
   },
   "entries": [
     {
+      "id": "UPD-20260823-PRIVATE-BACKLOG-AUDITS",
+      "date": "2026-08-23",
+      "title": "Bitácora privada y auditoría integral de la aplicación",
+      "summary": "Incorporada la sección privada Σ para conservar ideas, fallos y mejoras entre sesiones, con prioridades, estados, filtros y exportación. La auditoría automática revisa la aplicación completa y ElectroIA 1.14 añade controles profesionales de conexiones, puertos y dominios eléctricos.",
+      "areas": ["Super Técnico", "ElectroIA", "Calidad", "Proyecto vivo"],
+      "kind": "platform_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
       "id": "UPD-20260823-ELECTROIA-PROFESSIONAL-AUDIT",
       "date": "2026-08-23",
       "title": "ElectroIA completa el catálogo y abre el pack profesional",

@@ -8,7 +8,7 @@ const core = require("../archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagra
 const registryResult = core.getRegistry();
 const registry = registryResult.symbols;
 
-assert.equal(registryResult.engine_version, "1.13.0-alpha.1");
+assert.equal(registryResult.engine_version, "1.14.0-alpha.1");
 assert.equal(registry.length, 504);
 assert.equal(registry.filter((item) => item.catalog_id).length, 501);
 assert.equal(registry.filter((item) => item.review_status === "engine_reviewed").length, 501);
@@ -69,6 +69,44 @@ const contention = core.render({
   nets: [{id:"BAD_OUTPUTS",connections:["DO1.Q0","DO2.Q0"]}],
 });
 assert.ok(contention.diagnostics.warnings.some((item) => item.code === "OUTPUT_CONTENTION"));
+
+const signalPowerMix = core.validate({
+  schema_version: "1.0",
+  document_kind: "circuit_diagram",
+  standard_profile: "IEC_EXPERIMENTAL",
+  title: "Dominio de señal unido a potencia",
+  components: [
+    {ref:"DO1",symbol_id:"SYM-0464",model:"TEST"},
+    {ref:"T1",symbol_id:"SYM-0047"},
+  ],
+  nets: [{id:"BAD_DOMAIN",connections:["DO1.Q0","T1.L1"]}],
+});
+assert.ok(signalPowerMix.warnings.some((item) => item.code === "SIGNAL_POWER_DOMAIN_MIX"));
+
+const noConnect = core.validate({
+  schema_version: "1.0",
+  document_kind: "circuit_diagram",
+  standard_profile: "IEC_EXPERIMENTAL",
+  title: "Terminal no conectable",
+  components: [
+    {ref:"NC1",symbol_id:"SYM-0428"},
+    {ref:"X1",symbol_id:"ST-GENERIC-2P"},
+  ],
+  nets: [{id:"BAD_NC",connections:["NC1.1","X1.1"]}],
+});
+assert.equal(noConnect.valid, false);
+assert.ok(noConnect.errors.some((item) => item.code === "NO_CONNECT_USED"));
+
+const duplicateConnection = core.validate({
+  schema_version: "1.0",
+  document_kind: "circuit_diagram",
+  standard_profile: "IEC_EXPERIMENTAL",
+  title: "Conexión repetida",
+  components: [{ref:"X1",symbol_id:"ST-GENERIC-2P"}],
+  nets: [{id:"BAD_DUP",connections:["X1.1","X1.1"]}],
+});
+assert.equal(duplicateConnection.valid, false);
+assert.ok(duplicateConnection.errors.some((item) => item.code === "DUPLICATE_CONNECTION"));
 
 const overlap = core.render({
   schema_version: "1.0",

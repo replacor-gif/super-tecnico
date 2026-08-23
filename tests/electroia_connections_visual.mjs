@@ -16,11 +16,15 @@ const components = selected.map((symbol, index) => ({
   value: symbol.kind,
   position: { x: 7 + (index % 4) * 15, y: 7 + Math.floor(index / 4) * 13 },
 }));
-const nets = components.map((component, index) => ({
-  id: `N${index + 1}`,
-  show_label: false,
-  connections: [`${component.ref}.${Object.keys(selected[index].ports)[0]}`],
-}));
+const nets = components.map((component, index) => {
+  const firstPort = Object.keys(selected[index].ports)[0];
+  if (selected[index].ports[firstPort].electrical_type === "no_connect") return null;
+  return {
+    id: `N${index + 1}`,
+    show_label: false,
+    connections: [`${component.ref}.${firstPort}`],
+  };
+}).filter(Boolean);
 const result = core.render({
   schema_version: "1.0",
   document_kind: "circuit_diagram",

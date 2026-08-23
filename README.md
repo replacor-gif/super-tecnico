@@ -59,7 +59,7 @@ Los índices de búsqueda separan texto normativo, tablas, encabezados e índice
 
 El identificador SMD publica 439 candidatos de seis fabricantes, todos con marcaje, encapsulado, patillaje, parámetros eléctricos y una fuente oficial. Cuando un código tiene varios significados, muestra todos los candidatos cerrados y no selecciona ninguno automáticamente.
 
-La base de referencias publica 11.532 componentes y 8.363 parámetros. Separa 8.205 fichas oficiales, revisadas o confirmadas en índices de fabricante de 3.327 candidatos históricos pendientes de contrastar. Para priorizar cobertura, admite dos niveles: ficha desarrollada y ficha índice oficial. La primera contiene parámetros cuando están documentados; la segunda confirma referencia, fabricante, familia, categoría, catálogo y página sin inventar valores que todavía no se hayan extraído. La ampliación masiva inicial incorpora 6.551 referencias de los catálogos oficiales de Nexperia y Texas Instruments, además de IPM, MOSFET, lógica, temporizadores, operacionales, reguladores y drivers ya desarrollados. Ninguna coincidencia se presenta como sustitución automática.
+La base de referencias publica 38.618 componentes y 8.363 parámetros. Separa 8.205 fichas oficiales, revisadas o confirmadas en índices de fabricante de 3.327 candidatos históricos pendientes de contrastar; el resto son referencias de localización que no inventan parámetros. La ficha rápida sigue siendo el flujo principal y la búsqueda de documentación externa queda como ampliación. Ninguna coincidencia se presenta como sustitución automática.
 
 ## Versión beta e idiomas
 

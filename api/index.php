@@ -7,6 +7,7 @@ require __DIR__ . '/regulations.php';
 require __DIR__ . '/analytics.php';
 require __DIR__ . '/connectors.php';
 require __DIR__ . '/embedded-platforms.php';
+require __DIR__ . '/private-backlog.php';
 
 $action = preg_replace('/[^a-z0-9-]/', '', strtolower((string) ($_GET['action'] ?? 'health')));
 $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
@@ -115,6 +116,25 @@ try {
     if ($action === 'analytics-summary' && $method === 'GET') {
         st_require_electroia_access();
         st_json(st_analytics_summary((int) ($_GET['days'] ?? 30)));
+    }
+
+    if ($action === 'private-backlog' && $method === 'GET') {
+        st_require_electroia_access();
+        st_json(st_private_backlog_list($_GET));
+    }
+
+    if ($action === 'private-backlog' && $method === 'POST') {
+        st_require_electroia_access();
+        $body = st_body();
+        st_rate_limit('private-backlog-create', st_client_hash($body), 120, 3600);
+        st_json(st_private_backlog_create($body), 201);
+    }
+
+    if ($action === 'private-backlog-update' && $method === 'POST') {
+        st_require_electroia_access();
+        $body = st_body();
+        st_rate_limit('private-backlog-update', st_client_hash($body), 300, 3600);
+        st_json(st_private_backlog_update($body));
     }
 
     if ($action === 'fault-search' && $method === 'GET') {

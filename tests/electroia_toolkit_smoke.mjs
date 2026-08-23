@@ -92,14 +92,18 @@ assert.doesNotMatch(exactModelDiagram.diagram.svg, /class="component review-auto
 
 for (const symbol of diagramContract.symbol_registry.symbols) {
   const firstPort = Object.keys(symbol.ports)[0];
+  const isNoConnect = symbol.ports[firstPort].electrical_type === "no_connect";
   const rendered = await callElectroIATool("electroia_render_diagram", {
     document: {
       schema_version: "1.0",
       document_kind: "circuit_diagram",
       standard_profile: "IEC_EXPERIMENTAL",
       title: symbol.name,
-      components: [{ ref: "X1", symbol_id: symbol.id, position: { x: 6, y: 6 } }],
-      nets: [{ id: "N1", show_label: false, connections: [`X1.${firstPort}`] }],
+      components: [
+        { ref: "X1", symbol_id: symbol.id, position: { x: 6, y: 6 } },
+        ...(isNoConnect ? [{ ref: "Y1", symbol_id: "ST-GENERIC-2P", position: { x: 16, y: 6 } }] : []),
+      ],
+      nets: [{ id: "N1", show_label: false, connections: [isNoConnect ? "Y1.1" : `X1.${firstPort}`] }],
     },
   });
   assert.equal(rendered.ok, true, symbol.id);

@@ -90,6 +90,56 @@ def build_report() -> tuple[dict, list[str]]:
     terminal_models = Counter(item.get("terminal_model", "explicit") for item in public)
     exact_model = [item["id"] for item in public if item.get("requires_exact_model")]
     example_files = sorted(path.name for path in EXAMPLES.glob("*.json"))
+    symbols_by_id = {item["id"]: item for item in symbols}
+    example_components = 0
+    example_nets = 0
+    example_failures: list[str] = []
+    for filename in example_files:
+        document = read(EXAMPLES / filename)
+        prefix = f"{filename}:"
+        for key in ("schema_version", "document_kind", "standard_profile", "title", "document_id", "revision"):
+            if not document.get(key):
+                example_failures.append(prefix + "missing_" + key)
+        components = document.get("components") or []
+        nets = document.get("nets") or []
+        example_components += len(components)
+        example_nets += len(nets)
+        refs = [str(item.get("ref") or "") for item in components]
+        if any(not ref for ref in refs) or len(refs) != len(set(refs)):
+            example_failures.append(prefix + "invalid_component_refs")
+        components_by_ref = {str(item.get("ref") or ""): item for item in components}
+        for component in components:
+            symbol = symbols_by_id.get(component.get("symbol_id"))
+            if not symbol:
+                example_failures.append(prefix + "unknown_symbol:" + str(component.get("symbol_id")))
+                continue
+            if symbol.get("requires_exact_model") and not any(component.get(key) for key in ("model", "part_number", "exact_model")):
+                example_failures.append(prefix + "exact_model_missing:" + str(component.get("ref")))
+        net_ids = [str(item.get("id") or "") for item in nets]
+        if any(not net_id for net_id in net_ids) or len(net_ids) != len(set(net_ids)):
+            example_failures.append(prefix + "invalid_net_ids")
+        used_terminals: set[str] = set()
+        for net in nets:
+            connections = list(net.get("connections") or [])
+            if len(connections) < 2 or len(connections) != len(set(connections)):
+                example_failures.append(prefix + "invalid_net_connections:" + str(net.get("id")))
+            for raw in connections:
+                if "." not in str(raw):
+                    example_failures.append(prefix + "invalid_connection:" + str(raw))
+                    continue
+                ref, port = str(raw).rsplit(".", 1)
+                component = components_by_ref.get(ref)
+                symbol = symbols_by_id.get(component.get("symbol_id")) if component else None
+                if not component or not symbol or port not in (symbol.get("ports") or {}):
+                    example_failures.append(prefix + "unknown_terminal:" + str(raw))
+                    continue
+                if (symbol["ports"][port].get("electrical_type") or "passive") == "no_connect":
+                    example_failures.append(prefix + "no_connect_used:" + str(raw))
+                if raw in used_terminals:
+                    example_failures.append(prefix + "terminal_on_multiple_nets:" + str(raw))
+                used_terminals.add(str(raw))
+    if example_failures:
+        failures.append("invalid_professional_examples")
     warnings.extend([
         {
             "id": "FUNCTIONAL_GROUPS_REQUIRE_MODEL",
@@ -112,7 +162,7 @@ def build_report() -> tuple[dict, list[str]]:
     report = {
         "schema_version": "1.0",
         "updated_at": "2026-08-23",
-        "engine_version_expected": "1.13.0-alpha.1",
+        "engine_version_expected": "1.14.0-alpha.1",
         "status": "pass" if not failures else "fail",
         "release_class": "hardened_beta_engine",
         "summary": {
@@ -124,6 +174,8 @@ def build_report() -> tuple[dict, list[str]]:
             "exact_model_required": len(exact_model),
             "professional_symbols": sum(item["available"] for item in domain_coverage.values()),
             "example_documents": len(example_files),
+            "example_components": example_components,
+            "example_nets": example_nets,
             "fatal_failures": len(failures),
         },
         "structural_gates": {
@@ -135,6 +187,7 @@ def build_report() -> tuple[dict, list[str]]:
             "valid_port_sides": not invalid_sides,
             "valid_electrical_types": not invalid_types,
             "internal_automation_duplicates_removed": not any(item["id"].startswith("ST-AUTO-") for item in internal),
+            "professional_examples_are_structurally_valid": not example_failures,
         },
         "professional_domain_coverage": domain_coverage,
         "known_limitations": warnings,
@@ -165,6 +218,7 @@ def build_report() -> tuple[dict, list[str]]:
             },
         ],
         "failure_details": failures,
+        "example_failure_details": example_failures,
         "samples": {
             "exact_model_required_ids": exact_model[:25],
             "example_files": example_files,

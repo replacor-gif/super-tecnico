@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-08-23",
+  "status": "pass",
+  "scope": "Super Técnico root pages, public references, shared UX, critical copy and published text integrity",
+  "summary": {
+    "root_pages": 25,
+    "public_pages_with_common_feedback": 22,
+    "local_references_checked": 358,
+    "fatal_findings": 0,
+    "warnings": 0,
+    "component_count_verified": 38618,
+    "ai_readiness_verified_percent": 72
+  },
+  "quality_gates": {
+    "local_references_exist": true,
+    "unique_dom_ids": true,
+    "interactive_controls_are_named": true,
+    "images_have_alt_attributes": true,
+    "external_tabs_are_isolated": true,
+    "published_text_has_no_replacement_characters": true,
+    "authoritative_counts_match_copy": true
+  },
+  "findings": [],
+  "known_product_limits": [
+    "La beta no sustituye manuales, normativa aplicable ni criterio profesional.",
+    "Las pantallas privadas y su contenido dependen del backend PHP/MariaDB de IONOS.",
+    "Las comprobaciones estructurales no sustituyen la validación visual y táctil en dispositivos reales."
+  ]
+}

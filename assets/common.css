@@ -254,6 +254,11 @@
   font-style: italic;
 }
 
+.st-backlog-access {
+  margin-top: 0;
+  color: #98722b;
+}
+
 .st-rating-widget {
   position: fixed;
   right: 20px;
