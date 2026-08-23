@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "document_kind": "multi_line_diagram",
+  "standard_profile": "IEC_EXPERIMENTAL",
+  "title": "PLC, seguridad y variador para motor trifásico",
+  "document_id": "ELECTROIA-PRO-AUTO-001",
+  "revision": "A",
+  "notes": [
+    "EJEMPLO FUNCIONAL: LOS BORNES FÍSICOS DEPENDEN DEL MODELO EXACTO",
+    "LA FUNCIÓN STO Y EL CIRCUITO DE SEGURIDAD REQUIEREN CÁLCULO Y VALIDACIÓN ESPECÍFICOS"
+  ],
+  "grid": {"pitch_mil": 50, "show": true},
+  "layout": {"direction": "left_to_right", "single_canvas": true},
+  "components": [
+    {"ref":"SUP1","symbol_id":"SYM-0501","value":"Red 400/230 V · ejemplo","model":"RED_3N_EJEMPLO"},
+    {"ref":"PS1","symbol_id":"SYM-0469","value":"Fuente 24 V DC","model":"MODELO_PENDIENTE"},
+    {"ref":"PLC1","symbol_id":"SYM-0461","value":"PLC industrial","model":"MODELO_PENDIENTE"},
+    {"ref":"DO1","symbol_id":"SYM-0464","value":"4 salidas digitales","model":"MODELO_PENDIENTE"},
+    {"ref":"SR1","symbol_id":"SYM-0489","value":"Relé de seguridad","model":"MODELO_PENDIENTE"},
+    {"ref":"S0","symbol_id":"SYM-0381","value":"Parada de emergencia"},
+    {"ref":"HMI1","symbol_id":"SYM-0468","value":"Panel operador","model":"MODELO_PENDIENTE"},
+    {"ref":"VFD1","symbol_id":"SYM-0481","value":"Variador motor","model":"MODELO_PENDIENTE"},
+    {"ref":"M1","symbol_id":"SYM-0151","value":"Motor 3~"},
+    {"ref":"PE1","symbol_id":"SYM-0011","value":"PE"}
+  ],
+  "nets": [
+    {"id":"L1","role":"power","connections":["SUP1.L1","VFD1.R_L1","PS1.L"]},
+    {"id":"L2","role":"power","connections":["SUP1.L2","VFD1.S_L2"]},
+    {"id":"L3","role":"power","connections":["SUP1.L3","VFD1.T_L3"]},
+    {"id":"N","role":"power","connections":["SUP1.N","PS1.N"]},
+    {"id":"PE","role":"protective_earth","connections":["SUP1.PE","VFD1.PE","M1.PE","PS1.PE","PE1.1"]},
+    {"id":"24V","role":"power","connections":["PS1.L+","PLC1.L+","DO1.L+","SR1.A1","HMI1.L+"]},
+    {"id":"M","role":"ground","connections":["PS1.M","PLC1.M","DO1.M","SR1.A2","HMI1.M"]},
+    {"id":"ESTOP_FEED","role":"signal","connections":["PS1.DC_OK","S0.1"]},
+    {"id":"ESTOP_CH1","role":"signal","connections":["S0.2","SR1.CH1"]},
+    {"id":"SAFE_TORQUE_OFF","role":"signal","connections":["SR1.13_14","VFD1.STO"]},
+    {"id":"RUN_COMMAND","role":"signal","connections":["DO1.Q0","VFD1.DI_AI"]},
+    {"id":"PLC_IO_BUS","role":"bus","connections":["PLC1.IO_BUS","DO1.BACKPLANE"]},
+    {"id":"VFD_FIELD_BUS","role":"bus","connections":["PLC1.FIELD_BUS","VFD1.BUS"]},
+    {"id":"HMI_ETH","role":"bus","connections":["PLC1.ETH","HMI1.ETH"]},
+    {"id":"MOTOR_U","role":"power","connections":["VFD1.U","M1.U"]},
+    {"id":"MOTOR_V","role":"power","connections":["VFD1.V","M1.V"]},
+    {"id":"MOTOR_W","role":"power","connections":["VFD1.W","M1.W"]}
+  ]
+}

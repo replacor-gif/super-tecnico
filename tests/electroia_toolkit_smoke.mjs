@@ -17,10 +17,10 @@ assert.equal(diagramContract.contract.responsibility, "render_only");
 assert.equal(diagramContract.contract.calculates_values, false);
 assert.equal(diagramContract.contract.selects_components, false);
 assert.equal(diagramContract.contract.grid_pitch_mil, 50);
-assert.equal(diagramContract.symbol_registry.symbols.length, 474);
-assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.catalog_id).length, 460);
-assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "engine_reviewed").length, 439);
-assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "auto_draft").length, 21);
+assert.equal(diagramContract.symbol_registry.symbols.length, 504);
+assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.catalog_id).length, 501);
+assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "engine_reviewed").length, 501);
+assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "auto_draft").length, 0);
 
 const connectorSearch = await callElectroIATool("supertecnico_search_connectors", {query: "USB-C"});
 assert.equal(connectorSearch.total, 1);
@@ -49,7 +49,7 @@ const roundTwoDiagram = await callElectroIATool("electroia_render_diagram", {doc
 assert.match(roundTwoDiagram.diagram.svg, />&amp;<\/text>/);
 assert.match(roundTwoDiagram.diagram.svg, />ƒ<\/text>/);
 assert.match(roundTwoDiagram.diagram.svg, />W<\/text>/);
-assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "engine_internal").length, 14);
+assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "engine_internal").length, 3);
 for (const symbolId of ["SYM-0001", "SYM-0006", "SYM-0011", "SYM-0109", "SYM-0110", "SYM-0114", "SYM-0122", "SYM-0123", "SYM-0125", "SYM-0129", "SYM-0130", "SYM-0139", "SYM-0142", "SYM-0151", "SYM-0160", "SYM-0163", "SYM-0167", "SYM-0168", "SYM-0173", "SYM-0177", "SYM-0256", "SYM-0264", "SYM-0356", "SYM-0439", "SYM-0441", "SYM-0299", "SYM-0387", "SYM-0390", "SYM-0427", "SYM-0445", "SYM-0460"]) {
   assert.ok(diagramContract.symbol_registry.symbols.some((symbol) => symbol.id === symbolId), symbolId);
 }
@@ -73,25 +73,22 @@ assert.equal(protectionSearch.symbols[0].id, "SYM-0447");
 assert.deepEqual(protectionSearch.symbols[0].terminals.map((item) => item.name), ["1", "2"]);
 await assert.rejects(callElectroIATool("electroia_get_symbol", { symbol_id: "SYM-9999" }), /no encontrado/);
 
-const autoDraftSymbol = diagramContract.symbol_registry.symbols.find((symbol) => symbol.review_status === "auto_draft");
-const autoDraftPort = Object.keys(autoDraftSymbol.ports)[0];
-const draftDiagram = await callElectroIATool("electroia_render_diagram", {
+const exactModelDiagram = await callElectroIATool("electroia_render_diagram", {
   document: {
     schema_version: "1.0",
     document_kind: "circuit_diagram",
     standard_profile: "IEC_EXPERIMENTAL",
-    title: "Prueba de símbolo provisional",
+    title: "Prueba de modelo exacto obligatorio",
     components: [
-      { ref: "W1", symbol_id: autoDraftSymbol.id, position: { x: 4, y: 4 } },
-      { ref: "W2", symbol_id: autoDraftSymbol.id, position: { x: 12, y: 4 } },
+      { ref: "PLC1", symbol_id: "SYM-0461", position: { x: 4, y: 4 } },
+      { ref: "X1", symbol_id: "ST-GENERIC-2P", position: { x: 18, y: 4 } },
     ],
-    nets: [{ id: "N1", connections: [`W1.${autoDraftPort}`, `W2.${autoDraftPort}`] }],
+    nets: [{ id: "N1", connections: ["PLC1.IO_BUS", "X1.1"] }],
   },
 });
-assert.equal(draftDiagram.ok, true);
-assert.ok(draftDiagram.diagram.diagnostics.warnings.some((item) => item.code === "AUTO_DRAFT_SYMBOL"));
-assert.match(draftDiagram.diagram.svg, /class="component review-auto_draft"/);
-assert.match(draftDiagram.diagram.svg, /data-review-status="auto_draft"/);
+assert.equal(exactModelDiagram.ok, true);
+assert.ok(exactModelDiagram.diagram.diagnostics.warnings.some((item) => item.code === "EXACT_MODEL_REQUIRED"));
+assert.doesNotMatch(exactModelDiagram.diagram.svg, /class="component review-auto_draft"/);
 
 for (const symbol of diagramContract.symbol_registry.symbols) {
   const firstPort = Object.keys(symbol.ports)[0];

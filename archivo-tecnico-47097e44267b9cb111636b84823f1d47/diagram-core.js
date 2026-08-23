@@ -1,7 +1,7 @@
 "use strict";
 
 const ElectroDiagramCore = (() => {
-  const ENGINE_VERSION = "1.12.0-alpha.1";
+  const ENGINE_VERSION = "1.13.0-alpha.1";
   const CONTRACT_VERSION = "1.0";
   const GRID_PITCH_MIL = 50;
   const UNIT = 24;
@@ -333,6 +333,13 @@ const ElectroDiagramCore = (() => {
           ref,
         ));
       }
+      if (definition?.requires_exact_model && !component.model && !component.part_number && !component.exact_model) {
+        warnings.push(diagnostic(
+          "EXACT_MODEL_REQUIRED",
+          `${ref} es un bloque funcional: indica fabricante y modelo exactos antes de convertir sus grupos en bornes físicos.`,
+          ref,
+        ));
+      }
       if (component.position) {
         if (!Number.isInteger(component.position.x) || !Number.isInteger(component.position.y)) {
           errors.push(diagnostic("OFF_GRID", `${ref} no está colocado en coordenadas enteras de rejilla.`, ref));
@@ -351,6 +358,7 @@ const ElectroDiagramCore = (() => {
       if (netIds.has(netId)) errors.push(diagnostic("DUPLICATE_NET", `La red ${netId} está repetida.`, netId));
       netIds.add(netId);
       const connections = Array.isArray(net?.connections) ? net.connections : [];
+      const connectedTypes = [];
       if (connections.length < 2) warnings.push(diagnostic("OPEN_NET", `La red ${netId || "sin nombre"} solo tiene un terminal.`, netId));
       if (document.document_kind === "single_line_diagram" && !Number.isInteger(net.conductors)) {
         warnings.push(diagnostic("CONDUCTOR_COUNT", `La red ${netId} no declara cuántos conductores resume.`, netId));
@@ -369,11 +377,33 @@ const ElectroDiagramCore = (() => {
         const definition = SYMBOLS[component.symbol_id];
         if (definition && !definition.ports[connection.port]) {
           errors.push(diagnostic("MISSING_PORT", `${rawConnection} menciona un terminal inexistente.`, connection.ref));
+        } else if (definition) {
+          connectedTypes.push(definition.ports[connection.port].electrical_type || "passive");
         }
         if (terminalUse.has(rawConnection) && terminalUse.get(rawConnection) !== netId) {
           errors.push(diagnostic("PORT_ON_MULTIPLE_NETS", `${rawConnection} pertenece a más de una red.`, rawConnection));
         }
         terminalUse.set(rawConnection, netId);
+      }
+      const signalDrivers = connectedTypes.filter((type) => type === "output");
+      const powerSources = connectedTypes.filter((type) => type === "power_out");
+      if (signalDrivers.length > 1 || powerSources.length > 1) {
+        const driverCount = Math.max(signalDrivers.length, powerSources.length);
+        warnings.push(diagnostic(
+          "OUTPUT_CONTENTION",
+          `La red ${netId} une ${driverCount} salidas activas del mismo dominio; confirma que no existe contención ni paralelización indebida.`,
+          netId,
+        ));
+      }
+      const earthTypes = new Set(connectedTypes.filter((type) =>
+        ["ground", "protective_earth", "functional_earth"].includes(type)
+      ));
+      if (earthTypes.has("protective_earth") && earthTypes.size > 1) {
+        warnings.push(diagnostic(
+          "EARTH_DOMAIN_MIX",
+          `La red ${netId} mezcla PE con una referencia de señal o tierra funcional; la unión debe estar documentada.`,
+          netId,
+        ));
       }
     }
 
@@ -454,15 +484,42 @@ const ElectroDiagramCore = (() => {
     for (const component of ordered) {
       if (!rank.has(component.ref)) rank.set(component.ref, disconnectedRank++);
     }
-    const rowsByRank = new Map();
+    const groups = new Map();
     for (const component of ordered) {
       const column = rank.get(component.ref);
-      const row = rowsByRank.get(column) || 0;
-      rowsByRank.set(column, row + 1);
-      if (!component.position) {
-        component.position = document.layout?.direction === "top_to_bottom"
-          ? { x: 5 + row * 9, y: 5 + column * 8 }
-          : { x: 5 + column * 9, y: 5 + row * 8 };
+      if (!groups.has(column)) groups.set(column, []);
+      groups.get(column).push(component);
+    }
+    const orderedRanks = [...groups.keys()].sort((a, b) => a - b);
+    const horizontal = document.layout?.direction !== "top_to_bottom";
+    const primaryCenters = new Map();
+    let primaryCursor = 5;
+    for (const column of orderedRanks) {
+      const span = Math.max(...groups.get(column).map((component) => {
+        const definition = SYMBOLS[component.symbol_id];
+        const rotated = [90, 270].includes(component.rotation || 0);
+        return horizontal
+          ? (rotated ? definition.height : definition.width)
+          : (rotated ? definition.width : definition.height);
+      }));
+      primaryCenters.set(column, primaryCursor + span / 2);
+      primaryCursor += span + 7;
+    }
+    for (const column of orderedRanks) {
+      let secondaryCursor = 5;
+      for (const component of groups.get(column)) {
+        const definition = SYMBOLS[component.symbol_id];
+        const rotated = [90, 270].includes(component.rotation || 0);
+        const secondarySpan = horizontal
+          ? (rotated ? definition.width : definition.height)
+          : (rotated ? definition.height : definition.width);
+        const secondaryCenter = secondaryCursor + secondarySpan / 2;
+        secondaryCursor += secondarySpan + 6;
+        if (!component.position) {
+          component.position = horizontal
+            ? { x: Math.round(primaryCenters.get(column)), y: Math.round(secondaryCenter) }
+            : { x: Math.round(secondaryCenter), y: Math.round(primaryCenters.get(column)) };
+        }
       }
     }
   }
@@ -492,8 +549,67 @@ const ElectroDiagramCore = (() => {
     return map;
   }
 
+  function componentBounds(component, margin = 0) {
+    const definition = SYMBOLS[component.symbol_id];
+    const rotated = [90, 270].includes(component.rotation || 0);
+    const halfWidth = (rotated ? definition.height : definition.width) / 2 + margin;
+    const halfHeight = (rotated ? definition.width : definition.height) / 2 + margin;
+    return {
+      ref: component.ref,
+      minX: component.position.x - halfWidth,
+      maxX: component.position.x + halfWidth,
+      minY: component.position.y - halfHeight,
+      maxY: component.position.y + halfHeight,
+    };
+  }
+
+  function boxesOverlap(first, second) {
+    return first.minX < second.maxX && first.maxX > second.minX
+      && first.minY < second.maxY && first.maxY > second.minY;
+  }
+
+  function segmentCrossesBoxInterior(segment, box) {
+    const horizontal = segment.start.y === segment.end.y;
+    if (horizontal) {
+      const minX = Math.min(segment.start.x, segment.end.x);
+      const maxX = Math.max(segment.start.x, segment.end.x);
+      return segment.start.y > box.minY && segment.start.y < box.maxY
+        && maxX > box.minX && minX < box.maxX;
+    }
+    const minY = Math.min(segment.start.y, segment.end.y);
+    const maxY = Math.max(segment.start.y, segment.end.y);
+    return segment.start.x > box.minX && segment.start.x < box.maxX
+      && maxY > box.minY && minY < box.maxY;
+  }
+
+  function analyzeLayout(document, routing) {
+    const boxes = document.components.map((component) => componentBounds(component, 0.2));
+    const overlaps = [];
+    for (let index = 0; index < boxes.length; index += 1) {
+      for (let other = index + 1; other < boxes.length; other += 1) {
+        if (boxesOverlap(boxes[index], boxes[other])) {
+          overlaps.push([boxes[index].ref, boxes[other].ref]);
+        }
+      }
+    }
+    const wireComponentConflicts = [];
+    for (const segment of routing.segments) {
+      const connectedRefs = new Set((segment.net.connections || []).map(splitConnection).filter(Boolean).map((item) => item.ref));
+      for (const box of boxes) {
+        if (!connectedRefs.has(box.ref) && segmentCrossesBoxInterior(segment, box)) {
+          wireComponentConflicts.push({ net: segment.net.id, ref: box.ref });
+        }
+      }
+    }
+    const uniqueWireConflicts = [...new Map(
+      wireComponentConflicts.map((item) => [`${item.net}:${item.ref}`, item])
+    ).values()];
+    return { overlaps, wire_component_conflicts: uniqueWireConflicts };
+  }
+
   function routeDocument(document) {
     const terminals = terminalMap(document);
+    const obstacles = document.components.map((component) => componentBounds(component, 0.35));
     const allTerminalPoints = [...terminals.values()];
     const minTerminalY = Math.min(...allTerminalPoints.map((item) => item.y));
     const maxTerminalY = Math.max(...allTerminalPoints.map((item) => item.y));
@@ -519,44 +635,99 @@ const ElectroDiagramCore = (() => {
         continue;
       }
       if (points.length === 2) {
-        routePair(segments, net, points[0], points[1], netIndex);
+        routePair(segments, net, points[0], points[1], netIndex, obstacles);
         if (net.show_label) labels.push({ net, point: net.label_position || midpoint(points[0], points[1]), position: "signal" });
         continue;
       }
-      const sortedX = points.map((item) => item.x).sort((a, b) => a - b);
-      const trunkX = sortedX[Math.floor(sortedX.length / 2)];
-      const minY = Math.min(...points.map((item) => item.y));
-      const maxY = Math.max(...points.map((item) => item.y));
-      addSegment(segments, net, { x: trunkX, y: minY }, { x: trunkX, y: maxY });
+      const root = points.reduce((best, candidate) => {
+        const distance = points.reduce((total, item) =>
+          total + Math.abs(candidate.x - item.x) + Math.abs(candidate.y - item.y), 0
+        );
+        return !best || distance < best.distance ? { point: candidate, distance } : best;
+      }, null).point;
+      let branchIndex = 0;
       for (const pointValue of points) {
-        addSegment(segments, net, pointValue, { x: trunkX, y: pointValue.y });
-        junctions.push({ net, x: trunkX, y: pointValue.y });
+        if (pointValue === root) continue;
+        routePair(segments, net, root, pointValue, netIndex + branchIndex, obstacles);
+        branchIndex += 1;
       }
-      if (net.show_label) labels.push({ net, point: net.label_position || { x: trunkX, y: minY }, position: "signal" });
+      junctions.push({ net, x: root.x, y: root.y });
+      if (net.show_label) labels.push({ net, point: net.label_position || root, position: "signal" });
     }
     const crossings = findCrossings(segments);
     return { segments, junctions: uniquePoints(junctions), labels, crossings };
   }
 
-  function routePair(segments, net, first, second, netIndex) {
+  function routePair(segments, net, first, second, netIndex, obstacles) {
     if (first.x === second.x || first.y === second.y) {
-      addSegment(segments, net, first, second);
-      return;
+      const direct = [{ start: first, end: second }];
+      if (pathObstacleHits(direct, obstacles) === 0) {
+        addSegment(segments, net, first, second);
+        return;
+      }
     }
-    const preferVerticalChannel = Math.abs(first.x - second.x) >= Math.abs(first.y - second.y);
-    if (preferVerticalChannel) {
-      let channelX = Math.round((first.x + second.x) / 2);
-      if (channelX === first.x || channelX === second.x) channelX += netIndex % 2 ? 1 : -1;
-      addSegment(segments, net, first, { x: channelX, y: first.y });
-      addSegment(segments, net, { x: channelX, y: first.y }, { x: channelX, y: second.y });
-      addSegment(segments, net, { x: channelX, y: second.y }, second);
-    } else {
-      let channelY = Math.round((first.y + second.y) / 2);
-      if (channelY === first.y || channelY === second.y) channelY += netIndex % 2 ? 1 : -1;
-      addSegment(segments, net, first, { x: first.x, y: channelY });
-      addSegment(segments, net, { x: first.x, y: channelY }, { x: second.x, y: channelY });
-      addSegment(segments, net, { x: second.x, y: channelY }, second);
+    const minObstacleX = Math.min(first.x, second.x, ...obstacles.map((item) => item.minX));
+    const maxObstacleX = Math.max(first.x, second.x, ...obstacles.map((item) => item.maxX));
+    const minObstacleY = Math.min(first.y, second.y, ...obstacles.map((item) => item.minY));
+    const maxObstacleY = Math.max(first.y, second.y, ...obstacles.map((item) => item.maxY));
+    const offset = 2 + netIndex % 3;
+    const xChannels = [
+      Math.round((first.x + second.x) / 2),
+      Math.floor(minObstacleX - offset),
+      Math.ceil(maxObstacleX + offset),
+    ];
+    const yChannels = [
+      Math.round((first.y + second.y) / 2),
+      Math.floor(minObstacleY - offset),
+      Math.ceil(maxObstacleY + offset),
+    ];
+    const candidates = [];
+    for (const x of xChannels) {
+      candidates.push([
+        { start: first, end: { x, y: first.y } },
+        { start: { x, y: first.y }, end: { x, y: second.y } },
+        { start: { x, y: second.y }, end: second },
+      ]);
     }
+    for (const y of yChannels) {
+      candidates.push([
+        { start: first, end: { x: first.x, y } },
+        { start: { x: first.x, y }, end: { x: second.x, y } },
+        { start: { x: second.x, y }, end: second },
+      ]);
+    }
+    const usable = candidates.map((candidate) => candidate.filter((item) =>
+      item.start.x !== item.end.x || item.start.y !== item.end.y
+    ));
+    usable.sort((a, b) => pathScore(a, obstacles, segments) - pathScore(b, obstacles, segments));
+    for (const item of usable[0]) addSegment(segments, net, item.start, item.end);
+  }
+
+  function pathScore(path, obstacles, existing) {
+    const obstaclePenalty = pathObstacleHits(path, obstacles) * 10000;
+    const crossingPenalty = path.reduce((total, candidate) =>
+      total + existing.filter((segment) => orthogonalIntersection(candidate, segment)).length * 80, 0
+    );
+    const length = path.reduce((total, item) =>
+      total + Math.abs(item.start.x - item.end.x) + Math.abs(item.start.y - item.end.y), 0
+    );
+    return obstaclePenalty + crossingPenalty + length;
+  }
+
+  function pathObstacleHits(path, obstacles) {
+    return path.reduce((total, segment) =>
+      total + obstacles.filter((box) => segmentCrossesBoxInterior(segment, box)).length, 0
+    );
+  }
+
+  function orthogonalIntersection(first, second) {
+    const firstHorizontal = first.start.y === first.end.y;
+    const secondHorizontal = second.start.y === second.end.y;
+    if (firstHorizontal === secondHorizontal) return false;
+    const horizontal = firstHorizontal ? first : second;
+    const vertical = firstHorizontal ? second : first;
+    return betweenStrict(vertical.start.x, horizontal.start.x, horizontal.end.x)
+      && betweenStrict(horizontal.start.y, vertical.start.y, vertical.end.y);
   }
 
   function addSegment(collection, net, start, end) {
@@ -625,6 +796,19 @@ const ElectroDiagramCore = (() => {
     }
     const document = normalizeDocument(rawDocument);
     const routing = routeDocument(document);
+    const layoutAudit = analyzeLayout(document, routing);
+    const layoutWarnings = [
+      ...layoutAudit.overlaps.map((pair) => diagnostic(
+        "COMPONENT_OVERLAP",
+        `Los símbolos ${pair[0]} y ${pair[1]} se solapan; ajusta posiciones o usa colocación automática.`,
+        pair.join(":"),
+      )),
+      ...layoutAudit.wire_component_conflicts.map((item) => diagnostic(
+        "WIRE_THROUGH_COMPONENT",
+        `La red ${item.net} atraviesa el cuerpo de ${item.ref}; revisa el recorrido propuesto.`,
+        `${item.net}:${item.ref}`,
+      )),
+    ];
     const extents = documentExtents(document, routing);
     const svg = renderSvg(document, routing, extents);
     return {
@@ -635,12 +819,14 @@ const ElectroDiagramCore = (() => {
       diagnostics: {
         valid: true,
         errors: [],
-        warnings: validation.warnings,
+        warnings: [...validation.warnings, ...layoutWarnings],
         metrics: {
           symbols: document.components.length,
           nets: document.nets.length,
           terminals: [...terminalMap(document).keys()].length,
           bridged_crossings: routing.crossings.length,
+          component_overlaps: layoutAudit.overlaps.length,
+          wire_component_conflicts: layoutAudit.wire_component_conflicts.length,
           off_grid_terminals: 0,
           pages: 1,
           single_canvas: true,
@@ -809,15 +995,34 @@ const ElectroDiagramCore = (() => {
       "machine_block", "protection_block", "power_block", "isolation_block",
       "installation_block", "meter_block", "source_block",
     ]);
-    const automationLabels = {
+    const blockLabels = {
+      power_down: "−V", cell: "CELL", battery: "BATTERY", source_current: "I SOURCE",
+      generator: "GEN", solar_panel: "PV", dependent_voltage_source: "V DEP", dependent_current_source: "I DEP",
+      bell: "BELL", siren: "SIREN", smoke_detector: "SMOKE", pir_detector: "PIR", door_contact: "DOOR",
+      timer_on_delay: "T ON", timer_off_delay: "T OFF", socket_3phase: "3P SOCKET",
+      vacuum_diode: "TUBE D", vacuum_triode: "TRIODE", vacuum_pentode: "PENTODE",
+      fluorescent_lamp: "FLUOR", neon_lamp: "NEON",
       plc_cpu: "PLC CPU", plc_di_module: "DI", plc_do_module: "DO", plc_ai_module: "AI", plc_ao_module: "AO",
       remote_io_head: "REMOTE I/O", safety_plc: "SAFETY PLC", industrial_hmi: "HMI", industrial_psu_24v: "24 V DC",
       industrial_switch: "ETH SWITCH", industrial_gateway: "GATEWAY",
+      arduino_5v: "ARDUINO 5V", arduino_3v3: "ARDUINO 3V3", arduino_opta: "OPTA",
+      portenta_machine_control: "PORTENTA MC", raspberry_pi_controller: "RASPBERRY PI",
+      esp32_controller: "ESP32", embedded_controller: "EMBEDDED", fieldbus_coupler: "BUS COUPLER",
+      iolink_master: "IO-LINK",
+      variable_frequency_drive: "VFD", soft_starter_3phase: "SOFT START", servo_drive: "SERVO",
+      industrial_stepper_drive: "STEPPER", dc_motor_drive: "DC DRIVE", star_delta_starter: "STAR / DELTA",
+      reversing_starter: "REV START", motor_protection_breaker: "MPCB", safety_relay: "SAFETY RELAY",
+      solid_state_contactor_3phase: "3P SSR", automatic_transfer_switch: "ATS", ups_system: "UPS",
+      bms_ddc_controller: "DDC / BMS", room_controller: "ROOM CTRL", ahu_controller: "AHU / UTA",
+      refrigeration_controller: "REFRIG CTRL", burner_boiler_controller: "BURNER CTRL",
+      booster_pump_controller: "PUMP CTRL", fire_alarm_panel: "FIRE PANEL", knx_device: "KNX",
+      source_3phase: "3N~ SUPPLY",
     };
-    if (automationLabels[kind]) {
+    if (blockLabels[kind]) {
       const safetyMark = kind === "safety_plc" ? `<path class="symbol-accent" d="M${-1.15 * u} ${-2.7 * u}h${2.3 * u}v${1.55 * u}h${-2.3 * u}zM${-0.65 * u} ${-2.7 * u}v${-0.65 * u}a${0.65 * u} ${0.65 * u} 0 01${1.3 * u} 0v${0.65 * u}"/>` : "";
       const ioMark = ["plc_di_module", "plc_do_module", "plc_ai_module", "plc_ao_module"].includes(kind) ? `<path class="symbol-accent" d="M${-2.6 * u} ${-2.3 * u}h${1.1 * u}m${-1.1 * u} ${1.5 * u}h${1.1 * u}m${-1.1 * u} ${1.5 * u}h${1.1 * u}m${-1.1 * u} ${1.5 * u}h${1.1 * u}"/>` : "";
-      return sensorBody(automationLabels[kind], `${safetyMark}${ioMark}`, "rect", 0, 5);
+      const roundKinds = new Set(["cell", "battery", "source_current", "generator", "bell", "siren", "neon_lamp"]);
+      return sensorBody(blockLabels[kind], `${safetyMark}${ioMark}`, roundKinds.has(kind) ? "round" : "rect", 0, 5);
     }
     if (kind === "transceiver_rs485") {
       return sensorBody("RS-485", `<path class="symbol-accent" d="M${-2.7 * u} ${-1.8 * u}H${1.8 * u}m0 0l${-0.7 * u} ${-0.55 * u}m${0.7 * u} ${0.55 * u}l${-0.7 * u} ${0.55 * u}M${2.7 * u} ${0.25 * u}H${-1.8 * u}m0 0l${0.7 * u} ${-0.55 * u}m${-0.7 * u} ${0.55 * u}l${0.7 * u} ${0.55 * u}"/><text class="component-value" x="0" y="${2.35 * u}">A / B</text>`, "rect", 0, 1.25 * u);

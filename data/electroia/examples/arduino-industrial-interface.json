@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "document_kind": "circuit_diagram",
+  "standard_profile": "IEC_EXPERIMENTAL",
+  "title": "Arduino de 5 V con interfaz aislada a campo de 24 V",
+  "document_id": "ELECTROIA-PRO-EMBEDDED-001",
+  "revision": "A",
+  "notes": [
+    "EL ARDUINO NO SE CONECTA DIRECTAMENTE AL CAMPO DE 24 V",
+    "LA INTERFAZ, EL PINOUT Y LAS PROTECCIONES SE DEFINEN PARA LA PLACA EXACTA"
+  ],
+  "grid": {"pitch_mil": 50, "show": true},
+  "layout": {"direction": "left_to_right", "single_canvas": true},
+  "components": [
+    {"ref":"PS1","symbol_id":"SYM-0469","value":"24 V DC","model":"MODELO_PENDIENTE"},
+    {"ref":"V5","symbol_id":"SYM-0018","value":"Fuente lógica 5 V"},
+    {"ref":"MCU1","symbol_id":"SYM-0472","value":"Arduino 5 V","model":"PLACA_PENDIENTE"},
+    {"ref":"S1","symbol_id":"SYM-0303","value":"Sensor PIR 24 V","model":"MODELO_PENDIENTE"},
+    {"ref":"R1","symbol_id":"SYM-0023","value":"Limitación LED"},
+    {"ref":"ISO1","symbol_id":"SYM-0097","value":"Entrada optoaislada"},
+    {"ref":"R2","symbol_id":"SYM-0023","value":"Pull-up 5 V"},
+    {"ref":"Q1","symbol_id":"SYM-0080","value":"Driver MOSFET"},
+    {"ref":"K1","symbol_id":"SYM-0119","value":"Relé 24 V"},
+    {"ref":"D1","symbol_id":"SYM-0057","value":"Rueda libre"},
+    {"ref":"PE1","symbol_id":"SYM-0011","value":"PE"}
+  ],
+  "nets": [
+    {"id":"24V","role":"power","connections":["PS1.L+","S1.V+","K1.A1","D1.K"]},
+    {"id":"0V_FIELD","role":"ground","connections":["PS1.M","S1.GND","Q1.S","ISO1.K"]},
+    {"id":"SENSOR_OUT","role":"signal","connections":["S1.OUT","R1.1"]},
+    {"id":"OPTO_LED","role":"signal","connections":["R1.2","ISO1.A"]},
+    {"id":"5V","role":"power","connections":["V5.+","MCU1.5V","R2.1"]},
+    {"id":"GND_LOGIC","role":"ground","connections":["V5.-","MCU1.GND","ISO1.E"]},
+    {"id":"INPUT_ISOLATED","role":"signal","connections":["ISO1.C","MCU1.GPIO","R2.2"]},
+    {"id":"RELAY_COMMAND","role":"signal","connections":["MCU1.PWM","Q1.G"]},
+    {"id":"RELAY_RETURN","role":"power","connections":["K1.A2","D1.A","Q1.D"]},
+    {"id":"PE","role":"protective_earth","connections":["PS1.PE","PE1.1"]}
+  ]
+}

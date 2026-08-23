@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-labelledby="title desc">
+<title id="title">Relé de seguridad</title><desc id="desc">Representación didáctica: Relé de seguridad</desc>
+<rect width="200" height="150" fill="#f8fafc"/><g fill="none" stroke="#132f3f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 45h35m-35 25h35m-35 25h35m90-50h35m-35 25h35m-35 25h35"/><rect x="55" y="27" width="90" height="86" rx="7"/><path d="M72 91l18-42 20 42 18-42"/><text x="100" y="108">DRIVE</text></g>
+<g fill="#132f3f" font-family="Arial,sans-serif" font-size="13" font-weight="700" text-anchor="middle"><text x="100" y="18">Relé de seguridad</text><text x="100" y="137">A1/A2, canales S11/S12/S21/S22, reset, 13-14/23-24 y diagnóstico</text></g></svg>

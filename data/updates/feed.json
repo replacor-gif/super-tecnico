@@ -10,6 +10,15 @@
   },
   "entries": [
     {
+      "id": "UPD-20260823-ELECTROIA-PROFESSIONAL-AUDIT",
+      "date": "2026-08-23",
+      "title": "ElectroIA completa el catálogo y abre el pack profesional",
+      "summary": "Normalizadas las 501 fichas públicas, sin borradores. Se añaden 41 símbolos de PLC, Arduino/ESP/Raspberry, variadores, arrancadores, seguridad y control de edificios, junto con diagnóstico de modelos exactos, contención, solapes y cables sobre componentes.",
+      "areas": ["ElectroIA", "Simbología", "Automatización", "Control industrial", "Plataformas embebidas"],
+      "kind": "platform_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
       "id": "UPD-20260823-ELECTROIA-ROUND3-ROADMAP",
       "date": "2026-08-23",
       "title": "Tres familias ElectroIA y estado vivo del proyecto",

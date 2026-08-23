@@ -51,12 +51,12 @@ def build() -> dict:
         "remaining_electroia_families": remaining,
         "priorities": [
             {
-                "id": "electroia-finish-catalog",
+                "id": "electroia-professional-hardening",
                 "area": "ElectroIA",
-                "title": "Completar las tres familias finales",
+                "title": "Ampliar pruebas y perfiles profesionales",
                 "status": "in_progress",
                 "progress": {"done": reviewed, "total": total, "unit": "símbolos"},
-                "next_action": "Normalizar Fuentes y alimentación, Instalaciones y señalización y Dispositivos especiales; después ampliar las pruebas de esquemas completos.",
+                "next_action": "Validar más esquemas reales y ampliar ICT, energía, documentación de cuadros y perfiles normativos sin degradar el catálogo ya revisado.",
             },
             {
                 "id": "diagram-real-cases",

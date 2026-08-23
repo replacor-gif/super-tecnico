@@ -153,7 +153,7 @@ class AIGatewayFoundationTests(unittest.TestCase):
         self.assertEqual(current["content_inventory"], published["content_inventory"])
         self.assertEqual(published["content_inventory"]["brands"], 30)
         self.assertEqual(published["content_inventory"]["components"], 38618)
-        self.assertEqual(published["content_inventory"]["electroia_symbols"], 460)
+        self.assertEqual(published["content_inventory"]["electroia_symbols"], 501)
         self.assertEqual(published["content_inventory"]["regulation_documents"], 18)
         self.assertEqual(published["content_inventory"]["strategy_tools_evaluated"], 16)
         self.assertEqual(published["content_inventory"]["strategy_phase_one_tools"], 5)

@@ -2988,9 +2988,9 @@ class StaticSiteTests(unittest.TestCase):
         symbols = catalog["symbols"]
         lessons = [lesson for module in course["modules"] for lesson in module["lessons"]]
 
-        self.assertEqual(catalog["count"], 460)
-        self.assertEqual(len(symbols), 460)
-        self.assertEqual(len({item["id"] for item in symbols}), 460)
+        self.assertEqual(catalog["count"], 501)
+        self.assertEqual(len(symbols), 501)
+        self.assertEqual(len({item["id"] for item in symbols}), 501)
         self.assertEqual(course["module_count"], 6)
         self.assertEqual(course["lesson_count"], 24)
         self.assertEqual(len(lessons), 24)
@@ -3018,7 +3018,7 @@ class StaticSiteTests(unittest.TestCase):
         for marker in ("st.symbolCourseProgress", "newTrainerQuestion", "data-quiz-answer"):
             self.assertIn(marker, script)
         self.assertIn('href="simbolos.html"', portal)
-        self.assertEqual(self.report["symbols"], {"symbols": 460, "lessons": 24, "modules": 6})
+        self.assertEqual(self.report["symbols"], {"symbols": 501, "lessons": 24, "modules": 6})
 
     def test_hvac_training_course_is_complete_searchable_and_public_safe(self):
         collection = load(self.dist / "data" / "training" / "collection.json")

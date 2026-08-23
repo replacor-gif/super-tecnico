@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-labelledby="title desc">
+<title id="title">Controlador ESP32</title><desc id="desc">Representación didáctica: Controlador ESP32</desc>
+<rect width="200" height="150" fill="#f8fafc"/><g fill="none" stroke="#132f3f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 45h35m90 0h35M20 70h35m90 0h35M20 95h35m90 0h35"/><rect x="55" y="27" width="90" height="86" rx="7"/><path d="M72 43h56M72 58h56M72 73h35M72 88h45"/><text x="100" y="106">CTRL</text></g>
+<g fill="#132f3f" font-family="Arial,sans-serif" font-size="13" font-weight="700" text-anchor="middle"><text x="100" y="18">Controlador ESP32</text><text x="100" y="137">3V3, GND, GPIO, ADC, PWM, I2C, SPI, UART y radio</text></g></svg>

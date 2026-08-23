@@ -3,41 +3,28 @@
   "updated_at": "2026-08-23",
   "release_stage": "beta_publica_competente",
   "summary": {
-    "electroia_catalog_symbols": 460,
-    "electroia_reviewed_symbols": 439,
-    "electroia_pending_symbols": 21,
-    "electroia_reviewed_percent": 95.4,
-    "electroia_complete_families": 13,
-    "electroia_total_families": 16,
+    "electroia_catalog_symbols": 501,
+    "electroia_reviewed_symbols": 501,
+    "electroia_pending_symbols": 0,
+    "electroia_reviewed_percent": 100.0,
+    "electroia_complete_families": 19,
+    "electroia_total_families": 19,
     "public_ai_tools": 7,
     "ai_readiness_percent": 72
   },
-  "remaining_electroia_families": [
-    {
-      "family": "Fuentes y alimentación",
-      "pending_symbols": 8
-    },
-    {
-      "family": "Instalaciones y señalización",
-      "pending_symbols": 8
-    },
-    {
-      "family": "Dispositivos especiales",
-      "pending_symbols": 5
-    }
-  ],
+  "remaining_electroia_families": [],
   "priorities": [
     {
-      "id": "electroia-finish-catalog",
+      "id": "electroia-professional-hardening",
       "area": "ElectroIA",
-      "title": "Completar las tres familias finales",
+      "title": "Ampliar pruebas y perfiles profesionales",
       "status": "in_progress",
       "progress": {
-        "done": 439,
-        "total": 460,
+        "done": 501,
+        "total": 501,
         "unit": "símbolos"
       },
-      "next_action": "Normalizar Fuentes y alimentación, Instalaciones y señalización y Dispositivos especiales; después ampliar las pruebas de esquemas completos."
+      "next_action": "Validar más esquemas reales y ampliar ICT, energía, documentación de cuadros y perfiles normativos sin degradar el catálogo ya revisado."
     },
     {
       "id": "diagram-real-cases",

@@ -730,7 +730,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
     symbols = symbols_catalog.get("symbols") or []
     modules = symbols_course.get("modules") or []
     lessons = [lesson for module in modules for lesson in (module.get("lessons") or [])]
-    if len(symbols) < 460 or len({item.get("id") for item in symbols}) != len(symbols):
+    if len(symbols) < 501 or len({item.get("id") for item in symbols}) != len(symbols):
         raise BuildError("La biblioteca pública de símbolos está incompleta o contiene ID duplicados")
     if len(modules) < 6 or len(lessons) < 24 or len({item.get("id") for item in lessons}) != len(lessons):
         raise BuildError("El curso de esquemas está incompleto o contiene lecciones duplicadas")
@@ -956,13 +956,11 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         read_json(source_root / "data" / "electroia" / "symbol-normalization-report.json"),
     )
     write_json(
-        output / "data" / "electroia" / "examples" / "motor-starter-direct.json",
-        read_json(source_root / "data" / "electroia" / "examples" / "motor-starter-direct.json"),
+        output / "data" / "electroia" / "engine-audit-report.json",
+        read_json(source_root / "data" / "electroia" / "engine-audit-report.json"),
     )
-    write_json(
-        output / "data" / "electroia" / "examples" / "distribution-board-single-line.json",
-        read_json(source_root / "data" / "electroia" / "examples" / "distribution-board-single-line.json"),
-    )
+    for path in sorted((source_root / "data" / "electroia" / "examples").glob("*.json")):
+        write_json(output / "data" / "electroia" / "examples" / path.name, read_json(path))
     for filename in (
         "discovery.json",
         "tool-manifest.json",

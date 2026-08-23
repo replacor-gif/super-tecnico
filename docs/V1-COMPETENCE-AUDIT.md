@@ -33,7 +33,7 @@ Se considera competente cuando:
 
 - Una coincidencia normativa es evidencia documental, no una conclusión automática sobre aplicabilidad.
 - Todavía no hay una biblioteca suficiente de reglas normativas revisadas para contestar directamente todos los dimensionados.
-- ElectroIA conserva 460 símbolos normalizados: 439 tienen revisión gráfica y terminales funcionales y 21 siguen marcados como borrador. Todavía no debe prometer diagramas perfectos para cualquier instalación.
+- ElectroIA conserva 501 símbolos públicos revisados y ningún borrador. Aun así, los bloques con terminales agrupados necesitan el modelo exacto y todavía no debe prometer planos ejecutivos perfectos para cualquier instalación.
 - La entrada por foto o boceto está prevista en el contrato, pero no es una función terminada.
 - El diseñador de conductos ofrece un diseño previo práctico y editable; todavía no calcula toda la pérdida de carga, los accesorios, el ruido ni la presión disponible necesarios para considerarlo un plano de ejecución definitivo.
 - Normativa, conectores y plataformas embebidas ofrecen consultas HTTP públicas limitadas. Frigorista, desagües, componentes y diagramas siguen siendo motores de navegador o vista previa privada.
@@ -43,7 +43,7 @@ Se considera competente cuando:
 
 1. Publicar esta candidata y recoger búsquedas, aperturas, votos y comentarios reales.
 2. Convertir las consultas normativas más repetidas en reglas revisadas con ámbito, excepciones y fuente exacta.
-3. Revisar por familias los símbolos de ElectroIA y ampliar las pruebas visuales de esquemas completos.
+3. Ampliar los perfiles y pruebas de ElectroIA con esquemas completos de casos reales, ICT, energía y documentación física de cuadros.
 4. Afinar conductos y frigorista con casos de campo aportados por técnicos.
 5. Abrir una segunda herramienta gratuita para IAs cuando su contrato, límites y trazabilidad igualen al buscador normativo.
 6. Medir coste y ahorro por consulta antes de decidir autenticación o cobro.

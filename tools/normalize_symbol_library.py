@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build ElectroIA's deterministic CAD symbol registry from the 460-row catalog."""
+"""Build ElectroIA's deterministic CAD symbol registry from the public catalog."""
 
 from __future__ import annotations
 
@@ -153,6 +153,9 @@ def normalize_record(record: dict, reviewed: dict | None) -> dict:
             "review_status": "engine_reviewed",
             "geometry_source": "reviewed_seed",
         })
+        grouped = any("[]" in name or name.endswith("_GROUP") for name in result.get("ports", {}))
+        result["terminal_model"] = result.get("terminal_model") or ("functional_group" if grouped else "explicit")
+        result["requires_exact_model"] = bool(result.get("requires_exact_model") or grouped)
         return result
 
     names = inferred_terminal_names(record)
@@ -181,6 +184,8 @@ def normalize_record(record: dict, reviewed: dict | None) -> dict:
         "review_status": "auto_draft",
         "geometry_source": "family_template",
         "source_asset": record.get("archivo_svg") or "",
+        "terminal_model": "functional_group" if any("[]" in name for name in names) else "explicit",
+        "requires_exact_model": any("[]" in name for name in names),
     }
 
 
@@ -189,10 +194,12 @@ def serialized(value: dict) -> str:
 
 
 def build_outputs() -> tuple[str, str, str]:
-    catalog = read_json(CATALOG_PATH).get("symbols", [])
+    catalog_payload = read_json(CATALOG_PATH)
+    catalog = catalog_payload.get("symbols", [])
     seeds = {item["id"]: item for item in read_json(SEEDS_PATH).get("symbols", [])}
-    if len(catalog) != 460:
-        raise SystemExit(f"Se esperaban 460 fichas y hay {len(catalog)}")
+    expected_count = int(catalog_payload.get("count", len(catalog)))
+    if len(catalog) != expected_count:
+        raise SystemExit(f"El catálogo declara {expected_count} fichas y contiene {len(catalog)}")
     ids = [item.get("id") for item in catalog]
     if len(ids) != len(set(ids)):
         raise SystemExit("El catálogo contiene identificadores duplicados")
@@ -215,6 +222,10 @@ def build_outputs() -> tuple[str, str, str]:
     symbols = catalog_symbols + internal_symbols
     status_counts = Counter(item["review_status"] for item in symbols)
     catalog_status_counts = Counter(item["review_status"] for item in catalog_symbols)
+    for status in ("engine_internal", "engine_reviewed", "auto_draft"):
+        status_counts.setdefault(status, 0)
+    for status in ("engine_reviewed", "auto_draft"):
+        catalog_status_counts.setdefault(status, 0)
     family_counts = Counter(item.get("geometry_template") or item["kind"] for item in catalog_symbols)
     category_quality = {}
     for item in catalog_symbols:
@@ -223,7 +234,7 @@ def build_outputs() -> tuple[str, str, str]:
         quality[item["review_status"]] += 1
     library = {
         "schema_version": "1.0",
-        "library_version": "0.9",
+        "library_version": "1.0",
         "engine_contract_version": "1.0",
         "standard_profile": "IEC_EXPERIMENTAL",
         "grid_pitch_mil": 50,
@@ -243,6 +254,8 @@ def build_outputs() -> tuple[str, str, str]:
         "status_counts": dict(sorted(status_counts.items())),
         "catalog_status_counts": dict(sorted(catalog_status_counts.items())),
         "family_counts": dict(sorted(family_counts.items())),
+        "terminal_model_counts": dict(sorted(Counter(item.get("terminal_model", "explicit") for item in catalog_symbols).items())),
+        "exact_model_required": sum(bool(item.get("requires_exact_model")) for item in catalog_symbols),
         "category_quality": dict(sorted(category_quality.items())),
         "fully_reviewed_categories": sorted(
             category for category, quality in category_quality.items() if quality["auto_draft"] == 0

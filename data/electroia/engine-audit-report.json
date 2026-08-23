@@ -1,0 +1,166 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-08-23",
+  "engine_version_expected": "1.13.0-alpha.1",
+  "status": "pass",
+  "release_class": "hardened_beta_engine",
+  "summary": {
+    "public_symbols": 501,
+    "internal_symbols": 3,
+    "reviewed_public_symbols": 501,
+    "ports": 1980,
+    "terminal_models": {
+      "explicit": 426,
+      "functional_group": 75
+    },
+    "exact_model_required": 81,
+    "professional_symbols": 41,
+    "example_documents": 5,
+    "fatal_failures": 0
+  },
+  "structural_gates": {
+    "unique_symbol_ids": true,
+    "all_public_symbols_reviewed": true,
+    "all_symbols_have_ports": true,
+    "all_ports_on_integer_grid": true,
+    "unique_port_coordinates_per_symbol": true,
+    "valid_port_sides": true,
+    "valid_electrical_types": true,
+    "internal_automation_duplicates_removed": true
+  },
+  "professional_domain_coverage": {
+    "automation": {
+      "required": 20,
+      "available": 20,
+      "missing": []
+    },
+    "drives_and_motor_control": {
+      "required": 12,
+      "available": 12,
+      "missing": []
+    },
+    "building_services_control": {
+      "required": 8,
+      "available": 8,
+      "missing": []
+    },
+    "three_phase_power_interface": {
+      "required": 1,
+      "available": 1,
+      "missing": []
+    }
+  },
+  "known_limitations": [
+    {
+      "id": "FUNCTIONAL_GROUPS_REQUIRE_MODEL",
+      "severity": "controlled",
+      "count": 75,
+      "message": "Los bloques funcionales no se convierten en pinout físico sin fabricante, modelo, variante y manual."
+    },
+    {
+      "id": "IEC_PROFILE_EXPERIMENTAL",
+      "severity": "open",
+      "message": "El motor mantiene un único perfil IEC experimental; faltan perfiles nacionales y reglas documentales específicas por oficio."
+    },
+    {
+      "id": "SINGLE_CANVAS_ONLY",
+      "severity": "open",
+      "message": "El núcleo genera un lienzo único. La paginación con referencias cruzadas queda para documentos realmente grandes."
+    }
+  ],
+  "next_symbol_packs": [
+    {
+      "priority": 1,
+      "domain": "ICT, seguridad y comunicaciones de edificios",
+      "symbols": [
+        "rack y patch panel",
+        "switch PoE",
+        "punto de acceso",
+        "CCTV/NVR",
+        "control de accesos",
+        "interfonía",
+        "fibra y repartidores"
+      ],
+      "reason": "Necesarios para esquemas ICT y sistemas auxiliares completos, no solo control HVAC."
+    },
+    {
+      "priority": 2,
+      "domain": "Energía distribuida y movilidad eléctrica",
+      "symbols": [
+        "cargador EV",
+        "batería BESS",
+        "BMS de batería",
+        "contador bidireccional",
+        "protección DC",
+        "backup box",
+        "grupo electrógeno"
+      ],
+      "reason": "Completar unifilares actuales de autoconsumo, respaldo y recarga."
+    },
+    {
+      "priority": 3,
+      "domain": "Hidráulica, neumática y P&ID",
+      "symbols": [
+        "válvulas de proceso",
+        "actuadores",
+        "filtros",
+        "reguladores",
+        "cilindros",
+        "instrumentación ISA",
+        "líneas de proceso"
+      ],
+      "reason": "ElectroIA puede reutilizar el motor, pero necesita otro perfil gráfico y reglas de conectividad."
+    },
+    {
+      "priority": 4,
+      "domain": "Documentación de cuadros",
+      "symbols": [
+        "borneros multinivel",
+        "puentes de borna",
+        "canaletas",
+        "carril DIN",
+        "envolvente",
+        "ventilación de armario",
+        "placas y reservas"
+      ],
+      "reason": "Permiten pasar del esquema lógico al plano de fabricación y cableado."
+    }
+  ],
+  "failure_details": [],
+  "samples": {
+    "exact_model_required_ids": [
+      "SYM-0148",
+      "SYM-0191",
+      "SYM-0192",
+      "SYM-0193",
+      "SYM-0229",
+      "SYM-0230",
+      "SYM-0231",
+      "SYM-0232",
+      "SYM-0233",
+      "SYM-0234",
+      "SYM-0235",
+      "SYM-0236",
+      "SYM-0237",
+      "SYM-0238",
+      "SYM-0239",
+      "SYM-0243",
+      "SYM-0249",
+      "SYM-0254",
+      "SYM-0259",
+      "SYM-0262",
+      "SYM-0288",
+      "SYM-0290",
+      "SYM-0302",
+      "SYM-0303",
+      "SYM-0329"
+    ],
+    "example_files": [
+      "arduino-industrial-interface.json",
+      "bms-ahu-building-control.json",
+      "distribution-board-single-line.json",
+      "motor-starter-direct.json",
+      "plc-vfd-motor-system.json"
+    ]
+  }
+}

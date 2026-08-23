@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_VERSION = 'super-tecnico-shell-v6';
+const CACHE_VERSION = 'super-tecnico-shell-v7';
 const APP_SHELL = [
   './', './index.html', './proyectos.html', './conductos.html', './ventilacion.html', './tuberias-frigorificas.html', './frigorista.html', './normativa.html', './conectores.html', './plataformas-embebidas.html', './actualizaciones.html',
   './assets/common.css', './assets/app-theme.css', './assets/app-shell.js', './assets/project-core.js', './assets/project-manager.css', './assets/project-manager.js', './assets/super-tecnico-logo.png',
@@ -8,7 +8,7 @@ const APP_SHELL = [
   './assets/refrigerant-piping.css', './assets/refrigerant-piping-engine.js', './assets/refrigerant-piping.js', './data/refrigerant-piping/property-grid.json', './data/refrigerant-piping/design-rules.json',
   './assets/connectors.css', './assets/connectors.js', './data/connectors/catalog.json', './data/connectors/sources.json',
   './assets/embedded-platforms.css', './assets/embedded-platforms.js', './data/embedded-platforms/catalog.json', './data/embedded-platforms/guides.json',
-  './assets/updates.css', './assets/updates.js', './data/updates/feed.json', './data/core/project-roadmap.json'
+  './assets/updates.css', './assets/updates.js', './data/updates/feed.json', './data/core/project-roadmap.json', './data/electroia/engine-audit-report.json'
 ];
 
 self.addEventListener('install', event => {

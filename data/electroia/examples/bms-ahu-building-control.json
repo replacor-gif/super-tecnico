@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "document_kind": "multi_line_diagram",
+  "standard_profile": "IEC_EXPERIMENTAL",
+  "title": "Control BMS de unidad de tratamiento de aire",
+  "document_id": "ELECTROIA-PRO-BUILDING-001",
+  "revision": "A",
+  "notes": [
+    "EJEMPLO FUNCIONAL DE ARQUITECTURA, NO ES UN PROYECTO EJECUTIVO",
+    "LAS SECUENCIAS DE HELADA, INCENDIO, PRESIÓN Y CALIDAD DE AIRE DEBEN DOCUMENTARSE"
+  ],
+  "grid": {"pitch_mil": 50, "show": true},
+  "layout": {"direction": "left_to_right", "single_canvas": true},
+  "components": [
+    {"ref":"PS1","symbol_id":"SYM-0469","value":"24 V DC","model":"MODELO_PENDIENTE"},
+    {"ref":"DDC1","symbol_id":"SYM-0493","value":"Controlador BMS","model":"MODELO_PENDIENTE"},
+    {"ref":"AHU1","symbol_id":"SYM-0495","value":"Control UTA","model":"MODELO_PENDIENTE"},
+    {"ref":"T1","symbol_id":"SYM-0165","value":"Temperatura impulsión"},
+    {"ref":"P1","symbol_id":"SYM-0166","value":"Presión diferencial"},
+    {"ref":"CO2","symbol_id":"SYM-0354","value":"Calidad de aire"},
+    {"ref":"VFD1","symbol_id":"SYM-0481","value":"Variador ventilador","model":"MODELO_PENDIENTE"},
+    {"ref":"M1","symbol_id":"SYM-0151","value":"Ventilador 3~"},
+    {"ref":"FACP1","symbol_id":"SYM-0499","value":"Central incendios","model":"MODELO_PENDIENTE"}
+  ],
+  "nets": [
+    {"id":"24V","role":"power","connections":["PS1.L+","DDC1.24V","AHU1.POWER"]},
+    {"id":"COM","role":"ground","connections":["PS1.M","DDC1.COM"]},
+    {"id":"TEMP","role":"signal","connections":["T1.OUT","AHU1.SENSORS"]},
+    {"id":"PRESSURE","role":"signal","connections":["P1.OUT","DDC1.UI_GROUP"]},
+    {"id":"AIR_QUALITY","role":"signal","connections":["CO2.OUT","DDC1.DI_GROUP"]},
+    {"id":"BMS_NETWORK","role":"bus","connections":["DDC1.RS485","AHU1.BMS_BUS","FACP1.NETWORK","CO2.BUS"]},
+    {"id":"FIRE_STOP","role":"signal","connections":["FACP1.RELAYS","AHU1.SAFETIES"]},
+    {"id":"VFD_REFERENCE","role":"signal","connections":["AHU1.FANS_VFD","VFD1.DI_AI"]},
+    {"id":"VFD_BUS","role":"bus","connections":["DDC1.ETH","VFD1.BUS"]},
+    {"id":"MOTOR_U","role":"power","connections":["VFD1.U","M1.U"]},
+    {"id":"MOTOR_V","role":"power","connections":["VFD1.V","M1.V"]},
+    {"id":"MOTOR_W","role":"power","connections":["VFD1.W","M1.W"]}
+  ]
+}

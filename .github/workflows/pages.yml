@@ -50,6 +50,7 @@ jobs:
         run: |
           node --check assets/updates.js
           python tools/normalize_symbol_library.py --check
+          python tools/audit_electroia_engine.py --check
           python tools/build_project_roadmap.py --check
 
       - name: Verificar buscador universal de datasheets

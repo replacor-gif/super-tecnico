@@ -35,7 +35,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "wire",
     "source_asset": "assets/symbols/SYM-0001_conductor-cable.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0002": {
     "id": "SYM-0002",
@@ -83,7 +85,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "junction",
     "source_asset": "assets/symbols/SYM-0002_union-electrica-con-nodo.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0003": {
     "id": "SYM-0003",
@@ -131,7 +135,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "cross_no",
     "source_asset": "assets/symbols/SYM-0003_cruce-sin-conexion.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0004": {
     "id": "SYM-0004",
@@ -179,7 +185,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "bus",
     "source_asset": "assets/symbols/SYM-0004_bus-de-senales.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0005": {
     "id": "SYM-0005",
@@ -209,7 +217,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "netlabel",
     "source_asset": "assets/symbols/SYM-0005_etiqueta-de-red.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0006": {
     "id": "SYM-0006",
@@ -239,7 +249,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "offpage",
     "source_asset": "assets/symbols/SYM-0006_conector-fuera-de-pagina.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0007": {
     "id": "SYM-0007",
@@ -269,7 +281,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "testpoint",
     "source_asset": "assets/symbols/SYM-0007_punto-de-prueba.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0008": {
     "id": "SYM-0008",
@@ -305,7 +319,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "jumper",
     "source_asset": "assets/symbols/SYM-0008_jumper-puente.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0009": {
     "id": "SYM-0009",
@@ -347,7 +363,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "shield",
     "source_asset": "assets/symbols/SYM-0009_blindaje.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0010": {
     "id": "SYM-0010",
@@ -377,7 +395,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ground_signal",
     "source_asset": "assets/symbols/SYM-0010_masa-de-senal.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0011": {
     "id": "SYM-0011",
@@ -407,7 +427,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "IEC",
     "catalog_drawing_type": "ground_pe",
     "source_asset": "assets/symbols/SYM-0011_tierra-de-proteccion.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0012": {
     "id": "SYM-0012",
@@ -437,7 +459,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "IEC",
     "catalog_drawing_type": "ground_functional",
     "source_asset": "assets/symbols/SYM-0012_tierra-funcional.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0013": {
     "id": "SYM-0013",
@@ -467,7 +491,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "ground_chassis",
     "source_asset": "assets/symbols/SYM-0013_chasis.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0014": {
     "id": "SYM-0014",
@@ -497,15 +523,34 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "power_up",
     "source_asset": "assets/symbols/SYM-0014_alimentacion-positiva.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0015": {
     "id": "SYM-0015",
     "catalog_id": "SYM-0015",
     "name": "Alimentación negativa",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "power_down",
+    "geometry_template": "power_down",
     "designator": "VEE",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "-V": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": false,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Fuentes y alimentación",
     "subcategory": "Rieles",
     "aliases": "VEE VSS -V",
@@ -514,35 +559,39 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "No asumir que VSS siempre es negativo: en lógica puede ser 0 V.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "power_down",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0015_alimentacion-negativa.svg"
+    "source_asset": "assets/symbols/SYM-0015_alimentacion-negativa.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0016": {
     "id": "SYM-0016",
     "catalog_id": "SYM-0016",
     "name": "Celda",
-    "kind": "source_block",
-    "geometry_template": "source_block",
+    "kind": "cell",
+    "geometry_template": "cell",
     "designator": "BT",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "+": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_out"
+      },
+      "-": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": false,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Fuentes y alimentación",
     "subcategory": "Fuentes DC",
     "aliases": "pila",
@@ -551,35 +600,39 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La placa larga representa normalmente el terminal positivo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "cell",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0016_celda.svg"
+    "source_asset": "assets/symbols/SYM-0016_celda.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0017": {
     "id": "SYM-0017",
     "catalog_id": "SYM-0017",
     "name": "Batería",
-    "kind": "source_block",
-    "geometry_template": "source_block",
+    "kind": "battery",
+    "geometry_template": "battery",
     "designator": "BT",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "+": {
+        "x": 0,
+        "y": -3,
+        "side": "north",
+        "electrical_type": "power_out"
+      },
+      "-": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": false,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Fuentes y alimentación",
     "subcategory": "Fuentes DC",
     "aliases": "acumulador",
@@ -588,27 +641,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Varias parejas de placas indican varias celdas.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "battery",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0017_bateria.svg"
+    "source_asset": "assets/symbols/SYM-0017_bateria.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0018": {
     "id": "SYM-0018",
@@ -644,7 +678,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "source_dc",
     "source_asset": "assets/symbols/SYM-0018_fuente-de-tension-continua.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0019": {
     "id": "SYM-0019",
@@ -680,15 +716,40 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "source_ac",
     "source_asset": "assets/symbols/SYM-0019_fuente-de-tension-alterna.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0020": {
     "id": "SYM-0020",
     "catalog_id": "SYM-0020",
     "name": "Fuente de corriente",
-    "kind": "source_block",
-    "geometry_template": "source_block",
+    "kind": "source_current",
+    "geometry_template": "source_current",
     "designator": "I",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "I+": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_out"
+      },
+      "I-": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": false,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Fuentes y alimentación",
     "subcategory": "Fuentes",
     "aliases": "current source",
@@ -697,35 +758,45 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La flecha establece el sentido positivo de la corriente.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "source_current",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0020_fuente-de-corriente.svg"
+    "source_asset": "assets/symbols/SYM-0020_fuente-de-corriente.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0021": {
     "id": "SYM-0021",
     "catalog_id": "SYM-0021",
     "name": "Generador",
-    "kind": "source_block",
-    "geometry_template": "source_block",
+    "kind": "generator",
+    "geometry_template": "generator",
     "designator": "G",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "L": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "N": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "PE": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": false,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Fuentes y alimentación",
     "subcategory": "Generadores",
     "aliases": "alternador",
@@ -734,35 +805,45 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La letra o símbolo interior puede indicar AC, DC o tipo de excitación.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "generator",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0021_generador.svg"
+    "source_asset": "assets/symbols/SYM-0021_generador.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0022": {
     "id": "SYM-0022",
     "catalog_id": "SYM-0022",
     "name": "Panel fotovoltaico",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "solar_panel",
+    "geometry_template": "solar_panel",
     "designator": "PV",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "PV+": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "PV-": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "PE": {
+        "x": 0,
+        "y": 3,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": false,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Fuentes y alimentación",
     "subcategory": "Fuentes renovables",
     "aliases": "célula solar, PV",
@@ -771,27 +852,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Las flechas entrantes representan radiación luminosa.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "solar",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0022_panel-fotovoltaico.svg"
+    "source_asset": "assets/symbols/SYM-0022_panel-fotovoltaico.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0023": {
     "id": "SYM-0023",
@@ -827,7 +889,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "IEC",
     "catalog_drawing_type": "resistor_iec",
     "source_asset": "assets/symbols/SYM-0023_resistencia-iec.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0024": {
     "id": "SYM-0024",
@@ -866,7 +930,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "ANSI/IEEE",
     "catalog_drawing_type": "resistor_ansi",
     "source_asset": "assets/symbols/SYM-0024_resistencia-ansi.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0025": {
     "id": "SYM-0025",
@@ -911,7 +977,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común",
     "catalog_drawing_type": "resistor_var",
     "source_asset": "assets/symbols/SYM-0025_resistencia-variable.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0026": {
     "id": "SYM-0026",
@@ -953,7 +1021,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común",
     "catalog_drawing_type": "potentiometer",
     "source_asset": "assets/symbols/SYM-0026_potenciometro.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0027": {
     "id": "SYM-0027",
@@ -998,7 +1068,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común",
     "catalog_drawing_type": "trimmer",
     "source_asset": "assets/symbols/SYM-0027_trimmer.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0028": {
     "id": "SYM-0028",
@@ -1037,7 +1109,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común",
     "catalog_drawing_type": "resistor_fusible",
     "source_asset": "assets/symbols/SYM-0028_resistencia-fusible.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0029": {
     "id": "SYM-0029",
@@ -1076,7 +1150,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común",
     "catalog_drawing_type": "shunt",
     "source_asset": "assets/symbols/SYM-0029_shunt-de-corriente.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0030": {
     "id": "SYM-0030",
@@ -1115,7 +1191,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común",
     "catalog_drawing_type": "ldr",
     "source_asset": "assets/symbols/SYM-0030_resistencia-dependiente-de-luz.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0031": {
     "id": "SYM-0031",
@@ -1151,7 +1229,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "IEC / común",
     "catalog_drawing_type": "ntc",
     "source_asset": "assets/symbols/SYM-0031_termistor-ntc.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0032": {
     "id": "SYM-0032",
@@ -1190,7 +1270,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "IEC / común",
     "catalog_drawing_type": "ptc",
     "source_asset": "assets/symbols/SYM-0032_termistor-ptc.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0033": {
     "id": "SYM-0033",
@@ -1229,7 +1311,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "IEC / común",
     "catalog_drawing_type": "varistor",
     "source_asset": "assets/symbols/SYM-0033_varistor-mov.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0034": {
     "id": "SYM-0034",
@@ -1280,7 +1364,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común",
     "catalog_drawing_type": "resistor_array",
     "source_asset": "assets/symbols/SYM-0034_red-resistiva.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0035": {
     "id": "SYM-0035",
@@ -1316,7 +1402,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "capacitor",
     "source_asset": "assets/symbols/SYM-0035_condensador-no-polarizado.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0036": {
     "id": "SYM-0036",
@@ -1355,7 +1443,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "capacitor_polar",
     "source_asset": "assets/symbols/SYM-0036_condensador-polarizado.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0037": {
     "id": "SYM-0037",
@@ -1394,7 +1484,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "capacitor_var",
     "source_asset": "assets/symbols/SYM-0037_condensador-variable.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0038": {
     "id": "SYM-0038",
@@ -1433,7 +1525,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "capacitor_trim",
     "source_asset": "assets/symbols/SYM-0038_condensador-ajustable.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0039": {
     "id": "SYM-0039",
@@ -1472,7 +1566,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "feedthrough_cap",
     "source_asset": "assets/symbols/SYM-0039_condensador-de-paso.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0040": {
     "id": "SYM-0040",
@@ -1511,7 +1607,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "capacitor_x",
     "source_asset": "assets/symbols/SYM-0040_condensador-de-seguridad-x.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0041": {
     "id": "SYM-0041",
@@ -1550,7 +1648,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "capacitor_y",
     "source_asset": "assets/symbols/SYM-0041_condensador-de-seguridad-y.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0042": {
     "id": "SYM-0042",
@@ -1589,7 +1689,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "supercap",
     "source_asset": "assets/symbols/SYM-0042_supercondensador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0043": {
     "id": "SYM-0043",
@@ -1628,7 +1730,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "mic_cap",
     "source_asset": "assets/symbols/SYM-0043_microfono-capacitivo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0044": {
     "id": "SYM-0044",
@@ -1667,7 +1771,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "inductor",
     "source_asset": "assets/symbols/SYM-0044_inductor-bobina.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0045": {
     "id": "SYM-0045",
@@ -1706,7 +1812,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "inductor_core",
     "source_asset": "assets/symbols/SYM-0045_inductor-con-nucleo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0046": {
     "id": "SYM-0046",
@@ -1745,7 +1853,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "inductor_var",
     "source_asset": "assets/symbols/SYM-0046_inductor-variable.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0047": {
     "id": "SYM-0047",
@@ -1796,7 +1906,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "common_mode",
     "source_asset": "assets/symbols/SYM-0047_choque-de-modo-comun.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0048": {
     "id": "SYM-0048",
@@ -1832,7 +1944,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "transformer",
     "source_asset": "assets/symbols/SYM-0048_transformador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0049": {
     "id": "SYM-0049",
@@ -1889,7 +2003,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "transformer_ct",
     "source_asset": "assets/symbols/SYM-0049_transformador-con-toma-central.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0050": {
     "id": "SYM-0050",
@@ -1934,7 +2050,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "autotransformer",
     "source_asset": "assets/symbols/SYM-0050_autotransformador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0051": {
     "id": "SYM-0051",
@@ -1985,7 +2103,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "current_transformer",
     "source_asset": "assets/symbols/SYM-0051_transformador-de-corriente.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0052": {
     "id": "SYM-0052",
@@ -2036,7 +2156,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pulse_transformer",
     "source_asset": "assets/symbols/SYM-0052_transformador-de-impulsos.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0053": {
     "id": "SYM-0053",
@@ -2087,7 +2209,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "coupled_inductors",
     "source_asset": "assets/symbols/SYM-0053_bobina-acoplada.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0054": {
     "id": "SYM-0054",
@@ -2126,7 +2250,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "crystal",
     "source_asset": "assets/symbols/SYM-0054_cristal-de-cuarzo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0055": {
     "id": "SYM-0055",
@@ -2171,7 +2297,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "resonator",
     "source_asset": "assets/symbols/SYM-0055_resonador-ceramico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0056": {
     "id": "SYM-0056",
@@ -2222,7 +2350,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "emi_filter",
     "source_asset": "assets/symbols/SYM-0056_filtro-emi.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0057": {
     "id": "SYM-0057",
@@ -2258,7 +2388,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "diode",
     "source_asset": "assets/symbols/SYM-0057_diodo-rectificador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0058": {
     "id": "SYM-0058",
@@ -2297,7 +2429,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "zener",
     "source_asset": "assets/symbols/SYM-0058_diodo-zener.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0059": {
     "id": "SYM-0059",
@@ -2336,7 +2470,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "schottky",
     "source_asset": "assets/symbols/SYM-0059_diodo-schottky.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0060": {
     "id": "SYM-0060",
@@ -2375,7 +2511,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "diode_fast",
     "source_asset": "assets/symbols/SYM-0060_diodo-ultrarrapido.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0061": {
     "id": "SYM-0061",
@@ -2414,7 +2552,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "tvs_uni",
     "source_asset": "assets/symbols/SYM-0061_diodo-tvs-unidireccional.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0062": {
     "id": "SYM-0062",
@@ -2453,7 +2593,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "tvs_bi",
     "source_asset": "assets/symbols/SYM-0062_diodo-tvs-bidireccional.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0063": {
     "id": "SYM-0063",
@@ -2492,7 +2634,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "varactor",
     "source_asset": "assets/symbols/SYM-0063_diodo-varicap.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0064": {
     "id": "SYM-0064",
@@ -2531,7 +2675,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "tunnel_diode",
     "source_asset": "assets/symbols/SYM-0064_diodo-tunel.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0065": {
     "id": "SYM-0065",
@@ -2570,7 +2716,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pin_diode",
     "source_asset": "assets/symbols/SYM-0065_diodo-pin.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0066": {
     "id": "SYM-0066",
@@ -2609,7 +2757,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "laser_diode",
     "source_asset": "assets/symbols/SYM-0066_diodo-laser.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0067": {
     "id": "SYM-0067",
@@ -2648,7 +2798,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "led",
     "source_asset": "assets/symbols/SYM-0067_led.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0068": {
     "id": "SYM-0068",
@@ -2687,7 +2839,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "photodiode",
     "source_asset": "assets/symbols/SYM-0068_fotodiodo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0069": {
     "id": "SYM-0069",
@@ -2732,7 +2886,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dual_diode_k",
     "source_asset": "assets/symbols/SYM-0069_diodo-doble-catodo-comun.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0070": {
     "id": "SYM-0070",
@@ -2777,7 +2933,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dual_diode_a",
     "source_asset": "assets/symbols/SYM-0070_diodo-doble-anodo-comun.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0071": {
     "id": "SYM-0071",
@@ -2828,7 +2986,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bridge",
     "source_asset": "assets/symbols/SYM-0071_puente-rectificador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0072": {
     "id": "SYM-0072",
@@ -2873,7 +3033,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "npn",
     "source_asset": "assets/symbols/SYM-0072_transistor-npn.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0073": {
     "id": "SYM-0073",
@@ -2918,7 +3080,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pnp",
     "source_asset": "assets/symbols/SYM-0073_transistor-pnp.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0074": {
     "id": "SYM-0074",
@@ -2963,7 +3127,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "darlington_npn",
     "source_asset": "assets/symbols/SYM-0074_darlington-npn.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0075": {
     "id": "SYM-0075",
@@ -3008,7 +3174,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "darlington_pnp",
     "source_asset": "assets/symbols/SYM-0075_darlington-pnp.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0076": {
     "id": "SYM-0076",
@@ -3053,7 +3221,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "digital_npn",
     "source_asset": "assets/symbols/SYM-0076_transistor-digital-npn.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0077": {
     "id": "SYM-0077",
@@ -3098,7 +3268,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "digital_pnp",
     "source_asset": "assets/symbols/SYM-0077_transistor-digital-pnp.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0078": {
     "id": "SYM-0078",
@@ -3143,7 +3315,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "nmos",
     "source_asset": "assets/symbols/SYM-0078_mosfet-canal-n.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0079": {
     "id": "SYM-0079",
@@ -3188,7 +3362,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pmos",
     "source_asset": "assets/symbols/SYM-0079_mosfet-canal-p.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0080": {
     "id": "SYM-0080",
@@ -3230,7 +3406,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "nmos_body",
     "source_asset": "assets/symbols/SYM-0080_mosfet-n-con-diodo-de-cuerpo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0081": {
     "id": "SYM-0081",
@@ -3275,7 +3453,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pmos_body",
     "source_asset": "assets/symbols/SYM-0081_mosfet-p-con-diodo-de-cuerpo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0082": {
     "id": "SYM-0082",
@@ -3326,7 +3506,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dual_gate_mos",
     "source_asset": "assets/symbols/SYM-0082_mosfet-de-doble-puerta.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0083": {
     "id": "SYM-0083",
@@ -3371,7 +3553,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "njfet",
     "source_asset": "assets/symbols/SYM-0083_jfet-canal-n.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0084": {
     "id": "SYM-0084",
@@ -3416,7 +3600,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pjfet",
     "source_asset": "assets/symbols/SYM-0084_jfet-canal-p.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0085": {
     "id": "SYM-0085",
@@ -3461,7 +3647,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "igbt_n",
     "source_asset": "assets/symbols/SYM-0085_igbt-canal-n.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0086": {
     "id": "SYM-0086",
@@ -3506,7 +3694,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "igbt_diode",
     "source_asset": "assets/symbols/SYM-0086_igbt-con-diodo-antiparalelo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0087": {
     "id": "SYM-0087",
@@ -3551,7 +3741,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ujt",
     "source_asset": "assets/symbols/SYM-0087_ujt.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0088": {
     "id": "SYM-0088",
@@ -3596,7 +3788,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "phototransistor",
     "source_asset": "assets/symbols/SYM-0088_fototransistor-npn.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0089": {
     "id": "SYM-0089",
@@ -3641,7 +3835,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "scr",
     "source_asset": "assets/symbols/SYM-0089_scr-tiristor.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0090": {
     "id": "SYM-0090",
@@ -3686,7 +3882,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "triac",
     "source_asset": "assets/symbols/SYM-0090_triac.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0091": {
     "id": "SYM-0091",
@@ -3725,7 +3923,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "diac",
     "source_asset": "assets/symbols/SYM-0091_diac.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0092": {
     "id": "SYM-0092",
@@ -3770,7 +3970,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gto",
     "source_asset": "assets/symbols/SYM-0092_gto.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0093": {
     "id": "SYM-0093",
@@ -3821,7 +4023,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "scs",
     "source_asset": "assets/symbols/SYM-0093_scs.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0094": {
     "id": "SYM-0094",
@@ -3860,7 +4064,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "sidac",
     "source_asset": "assets/symbols/SYM-0094_sidac.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0095": {
     "id": "SYM-0095",
@@ -3911,7 +4117,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "optotriac",
     "source_asset": "assets/symbols/SYM-0095_optotriac.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0096": {
     "id": "SYM-0096",
@@ -3962,7 +4170,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "optotriac_zero",
     "source_asset": "assets/symbols/SYM-0096_optotriac-de-cruce-por-cero.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0097": {
     "id": "SYM-0097",
@@ -4010,7 +4220,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "opto_transistor",
     "source_asset": "assets/symbols/SYM-0097_optoacoplador-de-fototransistor.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0098": {
     "id": "SYM-0098",
@@ -4061,7 +4273,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "opto_darlington",
     "source_asset": "assets/symbols/SYM-0098_optoacoplador-de-fotodarlington.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0099": {
     "id": "SYM-0099",
@@ -4130,7 +4344,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "opto_logic",
     "source_asset": "assets/symbols/SYM-0099_optoacoplador-de-salida-logica.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0100": {
     "id": "SYM-0100",
@@ -4193,7 +4409,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "opto_linear",
     "source_asset": "assets/symbols/SYM-0100_optoacoplador-lineal.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0101": {
     "id": "SYM-0101",
@@ -4244,7 +4462,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "photomos",
     "source_asset": "assets/symbols/SYM-0101_rele-photomos.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0102": {
     "id": "SYM-0102",
@@ -4295,7 +4515,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ssr_ac",
     "source_asset": "assets/symbols/SYM-0102_rele-de-estado-solido-ac.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0103": {
     "id": "SYM-0103",
@@ -4346,7 +4568,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ssr_dc",
     "source_asset": "assets/symbols/SYM-0103_rele-de-estado-solido-dc.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0104": {
     "id": "SYM-0104",
@@ -4409,7 +4633,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "digital_isolator",
     "source_asset": "assets/symbols/SYM-0104_aislador-digital.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0105": {
     "id": "SYM-0105",
@@ -4460,7 +4686,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "iso_transformer_block",
     "source_asset": "assets/symbols/SYM-0105_transformador-digital-aislado.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0106": {
     "id": "SYM-0106",
@@ -4496,7 +4724,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "switch_spst_no",
     "source_asset": "assets/symbols/SYM-0106_interruptor-spst-abierto.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0107": {
     "id": "SYM-0107",
@@ -4532,7 +4762,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "switch_spst_nc",
     "source_asset": "assets/symbols/SYM-0107_interruptor-spst-cerrado.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0108": {
     "id": "SYM-0108",
@@ -4574,7 +4806,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "switch_spdt",
     "source_asset": "assets/symbols/SYM-0108_conmutador-spdt.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0109": {
     "id": "SYM-0109",
@@ -4634,7 +4868,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "switch_dpdt",
     "source_asset": "assets/symbols/SYM-0109_conmutador-dpdt.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0110": {
     "id": "SYM-0110",
@@ -4670,7 +4906,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "push_no",
     "source_asset": "assets/symbols/SYM-0110_pulsador-normalmente-abierto.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0111": {
     "id": "SYM-0111",
@@ -4706,7 +4944,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "push_nc",
     "source_asset": "assets/symbols/SYM-0111_pulsador-normalmente-cerrado.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0112": {
     "id": "SYM-0112",
@@ -4742,7 +4982,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "limit_switch",
     "source_asset": "assets/symbols/SYM-0112_final-de-carrera.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0113": {
     "id": "SYM-0113",
@@ -4778,7 +5020,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "float_switch",
     "source_asset": "assets/symbols/SYM-0113_interruptor-de-flotador.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0114": {
     "id": "SYM-0114",
@@ -4814,7 +5058,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "pressure_switch",
     "source_asset": "assets/symbols/SYM-0114_presostato.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0115": {
     "id": "SYM-0115",
@@ -4850,7 +5096,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "thermostat_switch",
     "source_asset": "assets/symbols/SYM-0115_termostato.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0116": {
     "id": "SYM-0116",
@@ -4886,7 +5134,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "reed_switch",
     "source_asset": "assets/symbols/SYM-0116_interruptor-magnetico-reed.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0117": {
     "id": "SYM-0117",
@@ -4922,7 +5172,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "rotary_switch",
     "source_asset": "assets/symbols/SYM-0117_selector-rotativo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0118": {
     "id": "SYM-0118",
@@ -4958,7 +5210,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "dip_switch",
     "source_asset": "assets/symbols/SYM-0118_dip-switch.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0119": {
     "id": "SYM-0119",
@@ -4994,7 +5248,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "relay_coil",
     "source_asset": "assets/symbols/SYM-0119_rele-bobina.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0120": {
     "id": "SYM-0120",
@@ -5030,7 +5286,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "relay_no",
     "source_asset": "assets/symbols/SYM-0120_rele-contacto-no.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0121": {
     "id": "SYM-0121",
@@ -5066,7 +5324,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "relay_nc",
     "source_asset": "assets/symbols/SYM-0121_rele-contacto-nc.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0122": {
     "id": "SYM-0122",
@@ -5120,7 +5380,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "relay_spdt",
     "source_asset": "assets/symbols/SYM-0122_rele-conmutado.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0123": {
     "id": "SYM-0123",
@@ -5180,7 +5442,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "contactor",
     "source_asset": "assets/symbols/SYM-0123_contactor-trifasico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0124": {
     "id": "SYM-0124",
@@ -5216,7 +5480,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "solenoid",
     "source_asset": "assets/symbols/SYM-0124_solenoide.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0125": {
     "id": "SYM-0125",
@@ -5252,7 +5518,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "solenoid_valve",
     "source_asset": "assets/symbols/SYM-0125_valvula-solenoide.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0126": {
     "id": "SYM-0126",
@@ -5288,7 +5556,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fuse",
     "source_asset": "assets/symbols/SYM-0126_fusible.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0127": {
     "id": "SYM-0127",
@@ -5324,7 +5594,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "thermal_fuse",
     "source_asset": "assets/symbols/SYM-0127_fusible-termico.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0128": {
     "id": "SYM-0128",
@@ -5360,7 +5632,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "breaker",
     "source_asset": "assets/symbols/SYM-0128_disyuntor.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0129": {
     "id": "SYM-0129",
@@ -5396,7 +5670,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "rcd",
     "source_asset": "assets/symbols/SYM-0129_interruptor-diferencial.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0130": {
     "id": "SYM-0130",
@@ -5456,7 +5732,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "overload",
     "source_asset": "assets/symbols/SYM-0130_rele-termico-de-sobrecarga.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0131": {
     "id": "SYM-0131",
@@ -5492,7 +5770,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "gdt",
     "source_asset": "assets/symbols/SYM-0131_descargador-de-gas.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0132": {
     "id": "SYM-0132",
@@ -5528,7 +5808,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "surge_arrester",
     "source_asset": "assets/symbols/SYM-0132_pararrayos-descargador.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0133": {
     "id": "SYM-0133",
@@ -5564,7 +5846,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "esd",
     "source_asset": "assets/symbols/SYM-0133_protector-esd.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0134": {
     "id": "SYM-0134",
@@ -5606,7 +5890,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "efuse",
     "source_asset": "assets/symbols/SYM-0134_efuse.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0135": {
     "id": "SYM-0135",
@@ -5642,7 +5928,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "crowbar",
     "source_asset": "assets/symbols/SYM-0135_crowbar-con-scr.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0136": {
     "id": "SYM-0136",
@@ -5678,7 +5966,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "inrush_ntc",
     "source_asset": "assets/symbols/SYM-0136_limitador-de-corriente-de-arranque-ntc.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0137": {
     "id": "SYM-0137",
@@ -5720,7 +6010,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "voltage_relay",
     "source_asset": "assets/symbols/SYM-0137_rele-de-tension.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0138": {
     "id": "SYM-0138",
@@ -5756,7 +6048,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "reverse_protection",
     "source_asset": "assets/symbols/SYM-0138_proteccion-contra-inversion.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0139": {
     "id": "SYM-0139",
@@ -5795,7 +6089,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "voltmeter",
     "source_asset": "assets/symbols/SYM-0139_voltimetro.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0140": {
     "id": "SYM-0140",
@@ -5834,7 +6130,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ammeter",
     "source_asset": "assets/symbols/SYM-0140_amperimetro.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0141": {
     "id": "SYM-0141",
@@ -5873,7 +6171,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ohmmeter",
     "source_asset": "assets/symbols/SYM-0141_ohmimetro.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0142": {
     "id": "SYM-0142",
@@ -5924,7 +6224,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "wattmeter",
     "source_asset": "assets/symbols/SYM-0142_vatimetro.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0143": {
     "id": "SYM-0143",
@@ -5963,7 +6265,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "freqmeter",
     "source_asset": "assets/symbols/SYM-0143_frecuencimetro.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0144": {
     "id": "SYM-0144",
@@ -6002,7 +6306,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "scope",
     "source_asset": "assets/symbols/SYM-0144_osciloscopio-punto-de-osciloscopio.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0145": {
     "id": "SYM-0145",
@@ -6041,7 +6347,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "lamp",
     "source_asset": "assets/symbols/SYM-0145_lampara-indicadora.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0146": {
     "id": "SYM-0146",
@@ -6080,7 +6388,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "buzzer",
     "source_asset": "assets/symbols/SYM-0146_zumbador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0147": {
     "id": "SYM-0147",
@@ -6119,7 +6429,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "speaker",
     "source_asset": "assets/symbols/SYM-0147_altavoz.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0148": {
     "id": "SYM-0148",
@@ -6170,7 +6482,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "sevenseg",
     "source_asset": "assets/symbols/SYM-0148_display-de-7-segmentos.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0149": {
     "id": "SYM-0149",
@@ -6206,7 +6520,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "motor_dc",
     "source_asset": "assets/symbols/SYM-0149_motor-dc.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0150": {
     "id": "SYM-0150",
@@ -6248,7 +6564,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "motor_ac1",
     "source_asset": "assets/symbols/SYM-0150_motor-ac-monofasico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0151": {
     "id": "SYM-0151",
@@ -6296,7 +6614,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "motor_3ph",
     "source_asset": "assets/symbols/SYM-0151_motor-trifasico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0152": {
     "id": "SYM-0152",
@@ -6344,7 +6664,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "motor_bldc",
     "source_asset": "assets/symbols/SYM-0152_motor-bldc.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0153": {
     "id": "SYM-0153",
@@ -6392,7 +6714,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "stepper_bipolar",
     "source_asset": "assets/symbols/SYM-0153_motor-paso-a-paso-bipolar.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0154": {
     "id": "SYM-0154",
@@ -6452,7 +6776,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "stepper_unipolar",
     "source_asset": "assets/symbols/SYM-0154_motor-paso-a-paso-unipolar.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0155": {
     "id": "SYM-0155",
@@ -6500,7 +6826,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "servo",
     "source_asset": "assets/symbols/SYM-0155_servomotor.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0156": {
     "id": "SYM-0156",
@@ -6536,7 +6864,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fan",
     "source_asset": "assets/symbols/SYM-0156_ventilador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0157": {
     "id": "SYM-0157",
@@ -6572,7 +6902,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pump",
     "source_asset": "assets/symbols/SYM-0157_bomba.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0158": {
     "id": "SYM-0158",
@@ -6620,7 +6952,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "compressor",
     "source_asset": "assets/symbols/SYM-0158_compresor-hermetico.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0159": {
     "id": "SYM-0159",
@@ -6656,7 +6990,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "heater",
     "source_asset": "assets/symbols/SYM-0159_calentador-resistencia-calefactora.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0160": {
     "id": "SYM-0160",
@@ -6704,7 +7040,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "eev",
     "source_asset": "assets/symbols/SYM-0160_valvula-de-expansion-electronica.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0161": {
     "id": "SYM-0161",
@@ -6740,7 +7078,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "four_way_valve",
     "source_asset": "assets/symbols/SYM-0161_valvula-de-cuatro-vias.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0162": {
     "id": "SYM-0162",
@@ -6776,7 +7116,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "drain_pump",
     "source_asset": "assets/symbols/SYM-0162_bomba-de-drenaje.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0163": {
     "id": "SYM-0163",
@@ -6824,7 +7166,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "sensor_temp_res",
     "source_asset": "assets/symbols/SYM-0163_sensor-de-temperatura-resistivo.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0164": {
     "id": "SYM-0164",
@@ -6860,7 +7204,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "thermocouple",
     "source_asset": "assets/symbols/SYM-0164_termopar.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0165": {
     "id": "SYM-0165",
@@ -6902,7 +7248,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "sensor_temp_ic",
     "source_asset": "assets/symbols/SYM-0165_sensor-de-temperatura-integrado.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0166": {
     "id": "SYM-0166",
@@ -6944,7 +7292,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "pressure_analog",
     "source_asset": "assets/symbols/SYM-0166_sensor-de-presion-analogico.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0167": {
     "id": "SYM-0167",
@@ -6992,7 +7342,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "pressure_digital",
     "source_asset": "assets/symbols/SYM-0167_sensor-de-presion-digital.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0168": {
     "id": "SYM-0168",
@@ -7037,7 +7389,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "hall_switch",
     "source_asset": "assets/symbols/SYM-0168_sensor-hall-digital.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0169": {
     "id": "SYM-0169",
@@ -7082,7 +7436,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "hall_linear",
     "source_asset": "assets/symbols/SYM-0169_sensor-hall-lineal.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0170": {
     "id": "SYM-0170",
@@ -7136,7 +7492,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "current_hall",
     "source_asset": "assets/symbols/SYM-0170_sensor-de-corriente-hall.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0171": {
     "id": "SYM-0171",
@@ -7184,7 +7542,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "ct_sensor",
     "source_asset": "assets/symbols/SYM-0171_transformador-de-corriente-sensor.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0172": {
     "id": "SYM-0172",
@@ -7226,7 +7586,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "humidity",
     "source_asset": "assets/symbols/SYM-0172_sensor-de-humedad.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0173": {
     "id": "SYM-0173",
@@ -7268,7 +7630,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "flow_sensor",
     "source_asset": "assets/symbols/SYM-0173_sensor-de-flujo.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0174": {
     "id": "SYM-0174",
@@ -7310,7 +7674,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "level_sensor",
     "source_asset": "assets/symbols/SYM-0174_sensor-de-nivel.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0175": {
     "id": "SYM-0175",
@@ -7355,7 +7721,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "prox_ind",
     "source_asset": "assets/symbols/SYM-0175_sensor-de-proximidad-inductivo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0176": {
     "id": "SYM-0176",
@@ -7400,7 +7768,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "prox_cap",
     "source_asset": "assets/symbols/SYM-0176_sensor-de-proximidad-capacitivo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0177": {
     "id": "SYM-0177",
@@ -7457,7 +7827,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "encoder",
     "source_asset": "assets/symbols/SYM-0177_encoder-incremental.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0178": {
     "id": "SYM-0178",
@@ -7496,7 +7868,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "tachogenerator",
     "source_asset": "assets/symbols/SYM-0178_tacogenerador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0179": {
     "id": "SYM-0179",
@@ -7541,7 +7915,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "vibration",
     "source_asset": "assets/symbols/SYM-0179_sensor-de-vibracion.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0180": {
     "id": "SYM-0180",
@@ -7586,7 +7962,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "light_sensor",
     "source_asset": "assets/symbols/SYM-0180_sensor-de-luz.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0181": {
     "id": "SYM-0181",
@@ -7631,7 +8009,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ir_receiver",
     "source_asset": "assets/symbols/SYM-0181_receptor-infrarrojo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0182": {
     "id": "SYM-0182",
@@ -7682,7 +8062,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gas_sensor",
     "source_asset": "assets/symbols/SYM-0182_sensor-de-gas.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0183": {
     "id": "SYM-0183",
@@ -7739,7 +8121,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "opamp",
     "source_asset": "assets/symbols/SYM-0183_amplificador-operacional.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0184": {
     "id": "SYM-0184",
@@ -7793,7 +8177,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "comparator",
     "source_asset": "assets/symbols/SYM-0184_comparador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0185": {
     "id": "SYM-0185",
@@ -7856,7 +8242,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "instrumentation_amp",
     "source_asset": "assets/symbols/SYM-0185_amplificador-de-instrumentacion.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0186": {
     "id": "SYM-0186",
@@ -7913,7 +8301,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "difference_amp",
     "source_asset": "assets/symbols/SYM-0186_amplificador-diferencial.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0187": {
     "id": "SYM-0187",
@@ -7970,7 +8360,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "current_amp",
     "source_asset": "assets/symbols/SYM-0187_amplificador-de-corriente.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0188": {
     "id": "SYM-0188",
@@ -8039,7 +8431,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "isolation_amp",
     "source_asset": "assets/symbols/SYM-0188_amplificador-de-aislamiento.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0189": {
     "id": "SYM-0189",
@@ -8090,7 +8484,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "buffer_analog",
     "source_asset": "assets/symbols/SYM-0189_buffer-analogico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0190": {
     "id": "SYM-0190",
@@ -8147,7 +8543,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "analog_switch",
     "source_asset": "assets/symbols/SYM-0190_interruptor-analogico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0191": {
     "id": "SYM-0191",
@@ -8204,7 +8602,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "analog_mux",
     "source_asset": "assets/symbols/SYM-0191_multiplexor-analogico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0192": {
     "id": "SYM-0192",
@@ -8261,7 +8661,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "analog_demux",
     "source_asset": "assets/symbols/SYM-0192_demultiplexor-analogico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0193": {
     "id": "SYM-0193",
@@ -8318,7 +8720,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "adc",
     "source_asset": "assets/symbols/SYM-0193_convertidor-adc.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0194": {
     "id": "SYM-0194",
@@ -8375,7 +8779,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dac",
     "source_asset": "assets/symbols/SYM-0194_convertidor-dac.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0195": {
     "id": "SYM-0195",
@@ -8426,7 +8832,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "voltage_ref",
     "source_asset": "assets/symbols/SYM-0195_referencia-de-tension.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0196": {
     "id": "SYM-0196",
@@ -8483,7 +8891,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "linear_reg",
     "source_asset": "assets/symbols/SYM-0196_regulador-lineal.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0197": {
     "id": "SYM-0197",
@@ -8540,7 +8950,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ldo",
     "source_asset": "assets/symbols/SYM-0197_ldo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0198": {
     "id": "SYM-0198",
@@ -8597,7 +9009,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "buck",
     "source_asset": "assets/symbols/SYM-0198_convertidor-buck.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0199": {
     "id": "SYM-0199",
@@ -8654,7 +9068,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "boost",
     "source_asset": "assets/symbols/SYM-0199_convertidor-boost.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0200": {
     "id": "SYM-0200",
@@ -8717,7 +9133,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "buckboost",
     "source_asset": "assets/symbols/SYM-0200_convertidor-buck-boost.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0201": {
     "id": "SYM-0201",
@@ -8774,7 +9192,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "flyback_ctrl",
     "source_asset": "assets/symbols/SYM-0201_controlador-flyback.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0202": {
     "id": "SYM-0202",
@@ -8837,7 +9257,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "llc_ctrl",
     "source_asset": "assets/symbols/SYM-0202_controlador-llc.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0203": {
     "id": "SYM-0203",
@@ -8906,7 +9328,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pfc_ctrl",
     "source_asset": "assets/symbols/SYM-0203_controlador-pfc.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0204": {
     "id": "SYM-0204",
@@ -8969,7 +9393,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pwm_ctrl",
     "source_asset": "assets/symbols/SYM-0204_controlador-pwm.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0205": {
     "id": "SYM-0205",
@@ -9038,7 +9464,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "timer555",
     "source_asset": "assets/symbols/SYM-0205_temporizador-555.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0206": {
     "id": "SYM-0206",
@@ -9083,7 +9511,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "oscillator_block",
     "source_asset": "assets/symbols/SYM-0206_oscilador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0207": {
     "id": "SYM-0207",
@@ -9146,7 +9576,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pll",
     "source_asset": "assets/symbols/SYM-0207_pll.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0208": {
     "id": "SYM-0208",
@@ -9197,7 +9629,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "zero_cross",
     "source_asset": "assets/symbols/SYM-0208_detector-de-cruce-por-cero.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0209": {
     "id": "SYM-0209",
@@ -9248,7 +9682,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "rms_detector",
     "source_asset": "assets/symbols/SYM-0209_detector-rms.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0210": {
     "id": "SYM-0210",
@@ -9299,7 +9735,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "supervisor",
     "source_asset": "assets/symbols/SYM-0210_supervisor-de-tension.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0211": {
     "id": "SYM-0211",
@@ -9350,7 +9788,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "watchdog",
     "source_asset": "assets/symbols/SYM-0211_watchdog.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0212": {
     "id": "SYM-0212",
@@ -9395,7 +9835,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_and",
     "source_asset": "assets/symbols/SYM-0212_puerta-and.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0213": {
     "id": "SYM-0213",
@@ -9440,7 +9882,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_nand",
     "source_asset": "assets/symbols/SYM-0213_puerta-nand.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0214": {
     "id": "SYM-0214",
@@ -9485,7 +9929,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_or",
     "source_asset": "assets/symbols/SYM-0214_puerta-or.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0215": {
     "id": "SYM-0215",
@@ -9530,7 +9976,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_nor",
     "source_asset": "assets/symbols/SYM-0215_puerta-nor.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0216": {
     "id": "SYM-0216",
@@ -9575,7 +10023,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_xor",
     "source_asset": "assets/symbols/SYM-0216_puerta-xor.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0217": {
     "id": "SYM-0217",
@@ -9620,7 +10070,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_xnor",
     "source_asset": "assets/symbols/SYM-0217_puerta-xnor.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0218": {
     "id": "SYM-0218",
@@ -9659,7 +10111,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_not",
     "source_asset": "assets/symbols/SYM-0218_inversor-not.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0219": {
     "id": "SYM-0219",
@@ -9698,7 +10152,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_buffer",
     "source_asset": "assets/symbols/SYM-0219_buffer-digital.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0220": {
     "id": "SYM-0220",
@@ -9743,7 +10199,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_tristate",
     "source_asset": "assets/symbols/SYM-0220_buffer-triestado.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0221": {
     "id": "SYM-0221",
@@ -9782,7 +10240,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_schmitt",
     "source_asset": "assets/symbols/SYM-0221_entrada-schmitt.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0222": {
     "id": "SYM-0222",
@@ -9821,7 +10281,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "open_collector",
     "source_asset": "assets/symbols/SYM-0222_salida-colector-abierto.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0223": {
     "id": "SYM-0223",
@@ -9860,7 +10322,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "open_drain",
     "source_asset": "assets/symbols/SYM-0223_salida-drenador-abierto.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0224": {
     "id": "SYM-0224",
@@ -9935,7 +10399,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "flipflop_d",
     "source_asset": "assets/symbols/SYM-0224_biestable-d.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0225": {
     "id": "SYM-0225",
@@ -10004,7 +10470,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "flipflop_jk",
     "source_asset": "assets/symbols/SYM-0225_biestable-jk.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0226": {
     "id": "SYM-0226",
@@ -10061,7 +10529,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "flipflop_t",
     "source_asset": "assets/symbols/SYM-0226_biestable-t.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0227": {
     "id": "SYM-0227",
@@ -10124,7 +10594,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "latch_sr",
     "source_asset": "assets/symbols/SYM-0227_latch-sr.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0228": {
     "id": "SYM-0228",
@@ -10181,7 +10653,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "latch_d",
     "source_asset": "assets/symbols/SYM-0228_latch-d.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0229": {
     "id": "SYM-0229",
@@ -10238,7 +10712,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "counter",
     "source_asset": "assets/symbols/SYM-0229_contador-binario.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0230": {
     "id": "SYM-0230",
@@ -10295,7 +10771,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "register",
     "source_asset": "assets/symbols/SYM-0230_registro.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0231": {
     "id": "SYM-0231",
@@ -10358,7 +10836,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "shift_register",
     "source_asset": "assets/symbols/SYM-0231_registro-de-desplazamiento.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0232": {
     "id": "SYM-0232",
@@ -10415,7 +10895,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "digital_mux",
     "source_asset": "assets/symbols/SYM-0232_multiplexor-digital.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0233": {
     "id": "SYM-0233",
@@ -10472,7 +10954,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "digital_demux",
     "source_asset": "assets/symbols/SYM-0233_demultiplexor-digital.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0234": {
     "id": "SYM-0234",
@@ -10523,7 +11007,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "encoder_block",
     "source_asset": "assets/symbols/SYM-0234_codificador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0235": {
     "id": "SYM-0235",
@@ -10574,7 +11060,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "decoder_block",
     "source_asset": "assets/symbols/SYM-0235_decodificador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0236": {
     "id": "SYM-0236",
@@ -10643,7 +11131,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "digital_comparator",
     "source_asset": "assets/symbols/SYM-0236_comparador-de-magnitud.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0237": {
     "id": "SYM-0237",
@@ -10712,7 +11202,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "adder",
     "source_asset": "assets/symbols/SYM-0237_sumador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0238": {
     "id": "SYM-0238",
@@ -10769,7 +11261,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "rom",
     "source_asset": "assets/symbols/SYM-0238_memoria-rom.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0239": {
     "id": "SYM-0239",
@@ -10832,7 +11326,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ram",
     "source_asset": "assets/symbols/SYM-0239_memoria-ram.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0240": {
     "id": "SYM-0240",
@@ -10889,7 +11385,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "eeprom",
     "source_asset": "assets/symbols/SYM-0240_eeprom.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0241": {
     "id": "SYM-0241",
@@ -10946,7 +11444,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "flash",
     "source_asset": "assets/symbols/SYM-0241_memoria-flash.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0242": {
     "id": "SYM-0242",
@@ -11021,7 +11521,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "mcu",
     "source_asset": "assets/symbols/SYM-0242_microcontrolador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0243": {
     "id": "SYM-0243",
@@ -11090,7 +11592,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "cpu",
     "source_asset": "assets/symbols/SYM-0243_microprocesador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0244": {
     "id": "SYM-0244",
@@ -11153,7 +11657,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dsp",
     "source_asset": "assets/symbols/SYM-0244_dsp.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0245": {
     "id": "SYM-0245",
@@ -11216,7 +11722,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fpga",
     "source_asset": "assets/symbols/SYM-0245_fpga.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0246": {
     "id": "SYM-0246",
@@ -11273,7 +11781,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "cpld",
     "source_asset": "assets/symbols/SYM-0246_cpld-gal.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0247": {
     "id": "SYM-0247",
@@ -11330,7 +11840,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "rtc",
     "source_asset": "assets/symbols/SYM-0247_reloj-en-tiempo-real.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0248": {
     "id": "SYM-0248",
@@ -11393,7 +11905,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "display_driver",
     "source_asset": "assets/symbols/SYM-0248_controlador-de-display.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0249": {
     "id": "SYM-0249",
@@ -11450,7 +11964,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "io_expander",
     "source_asset": "assets/symbols/SYM-0249_expansor-de-e-s.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0250": {
     "id": "SYM-0250",
@@ -11513,7 +12029,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "rs232",
     "source_asset": "assets/symbols/SYM-0250_transceptor-rs-232.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0251": {
     "id": "SYM-0251",
@@ -11585,7 +12103,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "rs485",
     "source_asset": "assets/symbols/SYM-0251_transceptor-rs-485.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0252": {
     "id": "SYM-0252",
@@ -11645,7 +12165,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "can",
     "source_asset": "assets/symbols/SYM-0252_transceptor-can.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0253": {
     "id": "SYM-0253",
@@ -11702,7 +12224,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "lin",
     "source_asset": "assets/symbols/SYM-0253_transceptor-lin.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0254": {
     "id": "SYM-0254",
@@ -11759,7 +12283,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "level_shifter",
     "source_asset": "assets/symbols/SYM-0254_traductor-de-nivel.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0255": {
     "id": "SYM-0255",
@@ -11810,7 +12336,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bus_isolator",
     "source_asset": "assets/symbols/SYM-0255_aislador-de-bus.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0256": {
     "id": "SYM-0256",
@@ -11843,7 +12371,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "connector_male",
     "source_asset": "assets/symbols/SYM-0256_conector-macho.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0257": {
     "id": "SYM-0257",
@@ -11876,7 +12406,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "connector_female",
     "source_asset": "assets/symbols/SYM-0257_conector-hembra.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0258": {
     "id": "SYM-0258",
@@ -11912,7 +12444,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "terminal_block",
     "source_asset": "assets/symbols/SYM-0258_bornera.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0259": {
     "id": "SYM-0259",
@@ -11951,7 +12485,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "connector_multi",
     "source_asset": "assets/symbols/SYM-0259_conector-multipin.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0260": {
     "id": "SYM-0260",
@@ -11990,7 +12526,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "coax",
     "source_asset": "assets/symbols/SYM-0260_conector-coaxial.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0261": {
     "id": "SYM-0261",
@@ -12041,7 +12579,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "twisted_pair",
     "source_asset": "assets/symbols/SYM-0261_par-trenzado.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0262": {
     "id": "SYM-0262",
@@ -12092,7 +12632,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "shielded_cable",
     "source_asset": "assets/symbols/SYM-0262_cable-apantallado.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0263": {
     "id": "SYM-0263",
@@ -12125,7 +12667,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "antenna",
     "source_asset": "assets/symbols/SYM-0263_antena.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0264": {
     "id": "SYM-0264",
@@ -12182,7 +12726,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "usb",
     "source_asset": "assets/symbols/SYM-0264_puerto-usb.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0265": {
     "id": "SYM-0265",
@@ -12260,7 +12806,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "ethernet",
     "source_asset": "assets/symbols/SYM-0265_puerto-ethernet.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0266": {
     "id": "SYM-0266",
@@ -12311,7 +12859,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "differential_line",
     "source_asset": "assets/symbols/SYM-0266_linea-diferencial.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0267": {
     "id": "SYM-0267",
@@ -12350,7 +12900,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fiber",
     "source_asset": "assets/symbols/SYM-0267_fibra-optica.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0268": {
     "id": "SYM-0268",
@@ -12407,7 +12959,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "hbridge",
     "source_asset": "assets/symbols/SYM-0268_puente-h.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0269": {
     "id": "SYM-0269",
@@ -12464,7 +13018,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "halfbridge",
     "source_asset": "assets/symbols/SYM-0269_medio-puente.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0270": {
     "id": "SYM-0270",
@@ -12539,7 +13095,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "inverter3",
     "source_asset": "assets/symbols/SYM-0270_puente-inversor-trifasico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0271": {
     "id": "SYM-0271",
@@ -12614,7 +13172,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ipm",
     "source_asset": "assets/symbols/SYM-0271_modulo-ipm.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0272": {
     "id": "SYM-0272",
@@ -12689,7 +13249,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "igbt_module",
     "source_asset": "assets/symbols/SYM-0272_modulo-igbt.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0273": {
     "id": "SYM-0273",
@@ -12764,7 +13326,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pim",
     "source_asset": "assets/symbols/SYM-0273_modulo-pim.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0274": {
     "id": "SYM-0274",
@@ -12839,7 +13403,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "rectifier3",
     "source_asset": "assets/symbols/SYM-0274_rectificador-trifasico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0275": {
     "id": "SYM-0275",
@@ -12890,7 +13456,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pfc_stage",
     "source_asset": "assets/symbols/SYM-0275_etapa-pfc-boost.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0276": {
     "id": "SYM-0276",
@@ -12941,7 +13509,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "flyback_stage",
     "source_asset": "assets/symbols/SYM-0276_fuente-flyback-aislada.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0277": {
     "id": "SYM-0277",
@@ -12986,7 +13556,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "noniso_supply",
     "source_asset": "assets/symbols/SYM-0277_fuente-auxiliar-no-aislada.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0278": {
     "id": "SYM-0278",
@@ -13049,7 +13621,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gate_driver",
     "source_asset": "assets/symbols/SYM-0278_driver-de-puerta-high-low-side.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0279": {
     "id": "SYM-0279",
@@ -13106,7 +13680,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bldc_driver",
     "source_asset": "assets/symbols/SYM-0279_driver-bldc-trifasico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0280": {
     "id": "SYM-0280",
@@ -13169,7 +13745,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "stepper_driver",
     "source_asset": "assets/symbols/SYM-0280_driver-paso-a-paso.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0281": {
     "id": "SYM-0281",
@@ -13226,7 +13804,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "eev_driver",
     "source_asset": "assets/symbols/SYM-0281_driver-de-valvula-eev.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0282": {
     "id": "SYM-0282",
@@ -13283,7 +13863,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "compressor_ctrl",
     "source_asset": "assets/symbols/SYM-0282_controlador-de-compresor-inverter.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0283": {
     "id": "SYM-0283",
@@ -13334,7 +13916,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fan_ctrl",
     "source_asset": "assets/symbols/SYM-0283_controlador-de-ventilador-bldc.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0284": {
     "id": "SYM-0284",
@@ -13373,7 +13957,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "hvac_comm",
     "source_asset": "assets/symbols/SYM-0284_comunicacion-interior-exterior.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0285": {
     "id": "SYM-0285",
@@ -13424,7 +14010,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "mains_filter",
     "source_asset": "assets/symbols/SYM-0285_filtro-de-entrada-de-red.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0286": {
     "id": "SYM-0286",
@@ -13481,7 +14069,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dc_bus",
     "source_asset": "assets/symbols/SYM-0286_bus-dc-inverter.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0287": {
     "id": "SYM-0287",
@@ -13532,7 +14122,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "brake_chopper",
     "source_asset": "assets/symbols/SYM-0287_freno-dinamico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0288": {
     "id": "SYM-0288",
@@ -13571,7 +14163,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "phase_current",
     "source_asset": "assets/symbols/SYM-0288_deteccion-de-corriente-de-fase.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0289": {
     "id": "SYM-0289",
@@ -13616,7 +14210,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "mains_zero",
     "source_asset": "assets/symbols/SYM-0289_deteccion-de-cruce-por-cero-de-red.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0290": {
     "id": "SYM-0290",
@@ -13661,7 +14257,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ntc_chain",
     "source_asset": "assets/symbols/SYM-0290_cadena-de-ntc-de-climatizacion.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0291": {
     "id": "SYM-0291",
@@ -13712,7 +14310,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pressure_switch_pair",
     "source_asset": "assets/symbols/SYM-0291_presostato-alta-baja.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0292": {
     "id": "SYM-0292",
@@ -13763,7 +14363,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "refrig_pressure",
     "source_asset": "assets/symbols/SYM-0292_transductor-de-presion-frigorifica.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0293": {
     "id": "SYM-0293",
@@ -13802,7 +14404,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "crankcase_heater",
     "source_asset": "assets/symbols/SYM-0293_calentador-de-carter.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0294": {
     "id": "SYM-0294",
@@ -13841,7 +14445,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "tray_heater",
     "source_asset": "assets/symbols/SYM-0294_resistencia-de-bandeja.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0295": {
     "id": "SYM-0295",
@@ -13886,7 +14492,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "defrost_block",
     "source_asset": "assets/symbols/SYM-0295_circuito-de-desescarche.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0296": {
     "id": "SYM-0296",
@@ -13922,7 +14530,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "luminaire",
     "source_asset": "assets/symbols/SYM-0296_luminaria.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0297": {
     "id": "SYM-0297",
@@ -13952,7 +14562,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "socket_outlet",
     "source_asset": "assets/symbols/SYM-0297_toma-de-corriente.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0298": {
     "id": "SYM-0298",
@@ -14000,7 +14612,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "junction_box",
     "source_asset": "assets/symbols/SYM-0298_caja-de-derivacion.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0299": {
     "id": "SYM-0299",
@@ -14048,15 +14662,40 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "panelboard",
     "source_asset": "assets/symbols/SYM-0299_cuadro-electrico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0300": {
     "id": "SYM-0300",
     "catalog_id": "SYM-0300",
     "name": "Timbre",
-    "kind": "installation_block",
-    "geometry_template": "installation_block",
+    "kind": "bell",
+    "geometry_template": "bell",
     "designator": "H",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "L": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "N": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_in"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": false,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Instalaciones y señalización",
     "subcategory": "Planos eléctricos",
     "aliases": "bell",
@@ -14065,35 +14704,39 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "En planos de instalación, la posición física y el circuito asociado son tan importantes como la forma del símbolo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bell",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0300_timbre.svg"
+    "source_asset": "assets/symbols/SYM-0300_timbre.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0301": {
     "id": "SYM-0301",
     "catalog_id": "SYM-0301",
     "name": "Sirena",
-    "kind": "installation_block",
-    "geometry_template": "installation_block",
+    "kind": "siren",
+    "geometry_template": "siren",
     "designator": "H",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "+": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "-": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_in"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": false,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Instalaciones y señalización",
     "subcategory": "Planos eléctricos",
     "aliases": "alarm siren",
@@ -14102,35 +14745,45 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "En planos de instalación, la posición física y el circuito asociado son tan importantes como la forma del símbolo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "siren",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0301_sirena.svg"
+    "source_asset": "assets/symbols/SYM-0301_sirena.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0302": {
     "id": "SYM-0302",
     "catalog_id": "SYM-0302",
     "name": "Detector de humo",
-    "kind": "installation_block",
-    "geometry_template": "installation_block",
+    "kind": "smoke_detector",
+    "geometry_template": "smoke_detector",
     "designator": "B",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "L+": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "L-": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "ALARM": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": true,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Instalaciones y señalización",
     "subcategory": "Planos eléctricos",
     "aliases": "smoke",
@@ -14139,35 +14792,45 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "En planos de instalación, la posición física y el circuito asociado son tan importantes como la forma del símbolo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "smoke_detector",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0302_detector-de-humo.svg"
+    "source_asset": "assets/symbols/SYM-0302_detector-de-humo.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0303": {
     "id": "SYM-0303",
     "catalog_id": "SYM-0303",
     "name": "Detector de movimiento PIR",
-    "kind": "installation_block",
-    "geometry_template": "installation_block",
+    "kind": "pir_detector",
+    "geometry_template": "pir_detector",
     "designator": "B",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "V+": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "OUT": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": true,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Instalaciones y señalización",
     "subcategory": "Planos eléctricos",
     "aliases": "PIR motion",
@@ -14176,35 +14839,45 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "En planos de instalación, la posición física y el circuito asociado son tan importantes como la forma del símbolo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pir",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0303_detector-de-movimiento-pir.svg"
+    "source_asset": "assets/symbols/SYM-0303_detector-de-movimiento-pir.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0304": {
     "id": "SYM-0304",
     "catalog_id": "SYM-0304",
     "name": "Contacto de puerta",
-    "kind": "installation_block",
-    "geometry_template": "installation_block",
+    "kind": "door_contact",
+    "geometry_template": "door_contact",
     "designator": "S",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "COM": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "NC": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NO": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": false,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Instalaciones y señalización",
     "subcategory": "Planos eléctricos",
     "aliases": "magnetic contact",
@@ -14213,27 +14886,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "En planos de instalación, la posición física y el circuito asociado son tan importantes como la forma del símbolo.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "door_contact",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0304_contacto-de-puerta.svg"
+    "source_asset": "assets/symbols/SYM-0304_contacto-de-puerta.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0305": {
     "id": "SYM-0305",
@@ -14290,7 +14944,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "transimpedance",
     "source_asset": "assets/symbols/SYM-0305_amplificador-transimpedancia.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0306": {
     "id": "SYM-0306",
@@ -14347,7 +15003,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "log_amp",
     "source_asset": "assets/symbols/SYM-0306_amplificador-logaritmico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0307": {
     "id": "SYM-0307",
@@ -14404,7 +15062,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "pga",
     "source_asset": "assets/symbols/SYM-0307_amplificador-de-ganancia-programable.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0308": {
     "id": "SYM-0308",
@@ -14455,7 +15115,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "audio_amp",
     "source_asset": "assets/symbols/SYM-0308_amplificador-de-audio.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0309": {
     "id": "SYM-0309",
@@ -14512,7 +15174,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "rf_amp",
     "source_asset": "assets/symbols/SYM-0309_amplificador-de-rf.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0310": {
     "id": "SYM-0310",
@@ -14569,7 +15233,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "mixer",
     "source_asset": "assets/symbols/SYM-0310_mezclador-de-rf.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0311": {
     "id": "SYM-0311",
@@ -14626,7 +15292,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "modulator",
     "source_asset": "assets/symbols/SYM-0311_modulador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0312": {
     "id": "SYM-0312",
@@ -14677,7 +15345,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "demodulator",
     "source_asset": "assets/symbols/SYM-0312_demodulador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0313": {
     "id": "SYM-0313",
@@ -14728,7 +15398,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "envelope_detector",
     "source_asset": "assets/symbols/SYM-0313_detector-de-envolvente.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0314": {
     "id": "SYM-0314",
@@ -14785,7 +15457,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "sample_hold",
     "source_asset": "assets/symbols/SYM-0314_muestreador-y-retenedor.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0315": {
     "id": "SYM-0315",
@@ -14836,7 +15510,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "vco",
     "source_asset": "assets/symbols/SYM-0315_oscilador-controlado-por-tension.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0316": {
     "id": "SYM-0316",
@@ -14893,7 +15569,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "constant_current",
     "source_asset": "assets/symbols/SYM-0316_fuente-de-corriente-constante.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0317": {
     "id": "SYM-0317",
@@ -14944,7 +15622,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "current_mirror",
     "source_asset": "assets/symbols/SYM-0317_espejo-de-corriente.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0318": {
     "id": "SYM-0318",
@@ -15001,7 +15681,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "shunt_reg",
     "source_asset": "assets/symbols/SYM-0318_regulador-shunt.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0319": {
     "id": "SYM-0319",
@@ -15064,7 +15746,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "window_comp",
     "source_asset": "assets/symbols/SYM-0319_comparador-de-ventana.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0320": {
     "id": "SYM-0320",
@@ -15115,7 +15799,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "precision_rect",
     "source_asset": "assets/symbols/SYM-0320_rectificador-de-precision.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0321": {
     "id": "SYM-0321",
@@ -15178,7 +15864,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "charge_pump",
     "source_asset": "assets/symbols/SYM-0321_bomba-de-carga.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0322": {
     "id": "SYM-0322",
@@ -15235,7 +15923,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "agc",
     "source_asset": "assets/symbols/SYM-0322_control-automatico-de-ganancia.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0323": {
     "id": "SYM-0323",
@@ -15286,7 +15976,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "active_lpf",
     "source_asset": "assets/symbols/SYM-0323_filtro-activo-paso-bajo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0324": {
     "id": "SYM-0324",
@@ -15337,7 +16029,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "active_hpf",
     "source_asset": "assets/symbols/SYM-0324_filtro-activo-paso-alto.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0325": {
     "id": "SYM-0325",
@@ -15388,7 +16082,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "active_bpf",
     "source_asset": "assets/symbols/SYM-0325_filtro-activo-pasabanda.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0326": {
     "id": "SYM-0326",
@@ -15445,7 +16141,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "monostable",
     "source_asset": "assets/symbols/SYM-0326_monoestable.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0327": {
     "id": "SYM-0327",
@@ -15502,7 +16200,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "freq_divider",
     "source_asset": "assets/symbols/SYM-0327_divisor-de-frecuencia.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0328": {
     "id": "SYM-0328",
@@ -15553,7 +16253,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "edge_detector",
     "source_asset": "assets/symbols/SYM-0328_detector-de-flanco.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0329": {
     "id": "SYM-0329",
@@ -15622,7 +16324,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "alu",
     "source_asset": "assets/symbols/SYM-0329_alu.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0330": {
     "id": "SYM-0330",
@@ -15685,7 +16389,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bus_transceiver",
     "source_asset": "assets/symbols/SYM-0330_transceptor-de-bus.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0331": {
     "id": "SYM-0331",
@@ -15736,7 +16442,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "line_driver",
     "source_asset": "assets/symbols/SYM-0331_driver-de-linea.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0332": {
     "id": "SYM-0332",
@@ -15793,7 +16501,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "line_receiver",
     "source_asset": "assets/symbols/SYM-0332_receptor-de-linea.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0333": {
     "id": "SYM-0333",
@@ -15844,7 +16554,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "debounce",
     "source_asset": "assets/symbols/SYM-0333_acondicionador-antirrebote.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0334": {
     "id": "SYM-0334",
@@ -15895,7 +16607,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "clock_gen",
     "source_asset": "assets/symbols/SYM-0334_generador-de-reloj.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0335": {
     "id": "SYM-0335",
@@ -15946,7 +16660,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "clock_buffer",
     "source_asset": "assets/symbols/SYM-0335_distribuidor-de-reloj.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0336": {
     "id": "SYM-0336",
@@ -16021,7 +16737,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "sram",
     "source_asset": "assets/symbols/SYM-0336_memoria-sram.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0337": {
     "id": "SYM-0337",
@@ -16090,7 +16808,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dram",
     "source_asset": "assets/symbols/SYM-0337_memoria-dram.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0338": {
     "id": "SYM-0338",
@@ -16147,7 +16867,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fram",
     "source_asset": "assets/symbols/SYM-0338_memoria-fram.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0339": {
     "id": "SYM-0339",
@@ -16210,7 +16932,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "nvram",
     "source_asset": "assets/symbols/SYM-0339_memoria-nvram.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0340": {
     "id": "SYM-0340",
@@ -16279,7 +17003,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fifo",
     "source_asset": "assets/symbols/SYM-0340_fifo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0341": {
     "id": "SYM-0341",
@@ -16336,7 +17062,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "keyboard_ctrl",
     "source_asset": "assets/symbols/SYM-0341_controlador-de-teclado.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0342": {
     "id": "SYM-0342",
@@ -16393,7 +17121,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "touch_ctrl",
     "source_asset": "assets/symbols/SYM-0342_controlador-tactil-capacitivo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0343": {
     "id": "SYM-0343",
@@ -16450,7 +17180,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "crc",
     "source_asset": "assets/symbols/SYM-0343_generador-crc.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0344": {
     "id": "SYM-0344",
@@ -16513,7 +17245,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dma",
     "source_asset": "assets/symbols/SYM-0344_controlador-dma.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0345": {
     "id": "SYM-0345",
@@ -16564,7 +17298,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bus_bridge",
     "source_asset": "assets/symbols/SYM-0345_puente-de-buses.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0346": {
     "id": "SYM-0346",
@@ -16627,7 +17363,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "usb_ctrl",
     "source_asset": "assets/symbols/SYM-0346_controlador-usb.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0347": {
     "id": "SYM-0347",
@@ -16684,7 +17422,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ethernet_ctrl",
     "source_asset": "assets/symbols/SYM-0347_controlador-ethernet.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0348": {
     "id": "SYM-0348",
@@ -16735,7 +17475,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "strain_gauge",
     "source_asset": "assets/symbols/SYM-0348_galga-extensometrica.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0349": {
     "id": "SYM-0349",
@@ -16786,7 +17528,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "load_cell",
     "source_asset": "assets/symbols/SYM-0349_celula-de-carga.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0350": {
     "id": "SYM-0350",
@@ -16825,7 +17569,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "piezo_sensor",
     "source_asset": "assets/symbols/SYM-0350_sensor-piezoelectrico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0351": {
     "id": "SYM-0351",
@@ -16864,7 +17610,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ultrasonic",
     "source_asset": "assets/symbols/SYM-0351_sensor-ultrasonico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0352": {
     "id": "SYM-0352",
@@ -16903,7 +17651,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "thermopile",
     "source_asset": "assets/symbols/SYM-0352_termopila.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0353": {
     "id": "SYM-0353",
@@ -16951,7 +17701,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "co2_sensor",
     "source_asset": "assets/symbols/SYM-0353_sensor-de-co2.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0354": {
     "id": "SYM-0354",
@@ -16999,7 +17751,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "air_quality",
     "source_asset": "assets/symbols/SYM-0354_sensor-de-calidad-de-aire.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0355": {
     "id": "SYM-0355",
@@ -17041,7 +17795,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "flame_sensor",
     "source_asset": "assets/symbols/SYM-0355_detector-de-llama.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0356": {
     "id": "SYM-0356",
@@ -17095,7 +17851,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "leak_sensor",
     "source_asset": "assets/symbols/SYM-0356_detector-de-fugas-de-agua.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0357": {
     "id": "SYM-0357",
@@ -17137,7 +17895,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "frost_sensor",
     "source_asset": "assets/symbols/SYM-0357_sensor-de-escarcha.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0358": {
     "id": "SYM-0358",
@@ -17182,7 +17942,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "position_pot",
     "source_asset": "assets/symbols/SYM-0358_sensor-de-posicion-resistivo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0359": {
     "id": "SYM-0359",
@@ -17245,7 +18007,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "lvdt",
     "source_asset": "assets/symbols/SYM-0359_sensor-lvdt.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0360": {
     "id": "SYM-0360",
@@ -17296,7 +18060,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "magnetoresistive",
     "source_asset": "assets/symbols/SYM-0360_sensor-magnetorresistivo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0361": {
     "id": "SYM-0361",
@@ -17347,7 +18113,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "gyroscope",
     "source_asset": "assets/symbols/SYM-0361_giroscopio.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0362": {
     "id": "SYM-0362",
@@ -17398,7 +18166,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "accelerometer",
     "source_asset": "assets/symbols/SYM-0362_acelerometro.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0363": {
     "id": "SYM-0363",
@@ -17449,7 +18219,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "color_sensor",
     "source_asset": "assets/symbols/SYM-0363_sensor-de-color.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0364": {
     "id": "SYM-0364",
@@ -17494,7 +18266,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ph_sensor",
     "source_asset": "assets/symbols/SYM-0364_sensor-de-ph.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0365": {
     "id": "SYM-0365",
@@ -17545,7 +18319,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "conductivity",
     "source_asset": "assets/symbols/SYM-0365_sensor-de-conductividad.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0366": {
     "id": "SYM-0366",
@@ -17590,7 +18366,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "soft_start",
     "source_asset": "assets/symbols/SYM-0366_arranque-suave.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0367": {
     "id": "SYM-0367",
@@ -17641,7 +18419,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "hot_swap",
     "source_asset": "assets/symbols/SYM-0367_controlador-hot-swap.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0368": {
     "id": "SYM-0368",
@@ -17686,7 +18466,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "sync_rect",
     "source_asset": "assets/symbols/SYM-0368_rectificador-sincrono.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0369": {
     "id": "SYM-0369",
@@ -17743,7 +18525,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "isolated_gate_driver",
     "source_asset": "assets/symbols/SYM-0369_driver-de-puerta-aislado.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0370": {
     "id": "SYM-0370",
@@ -17788,7 +18572,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "forward_stage",
     "source_asset": "assets/symbols/SYM-0370_convertidor-forward.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0371": {
     "id": "SYM-0371",
@@ -17839,7 +18625,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "push_pull",
     "source_asset": "assets/symbols/SYM-0371_convertidor-push-pull.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0372": {
     "id": "SYM-0372",
@@ -17884,7 +18672,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "halfbridge_supply",
     "source_asset": "assets/symbols/SYM-0372_convertidor-half-bridge.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0373": {
     "id": "SYM-0373",
@@ -17929,7 +18719,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fullbridge_supply",
     "source_asset": "assets/symbols/SYM-0373_convertidor-full-bridge.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0374": {
     "id": "SYM-0374",
@@ -17980,7 +18772,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "active_clamp",
     "source_asset": "assets/symbols/SYM-0374_flyback-active-clamp.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0375": {
     "id": "SYM-0375",
@@ -18031,7 +18825,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "solar_inverter",
     "source_asset": "assets/symbols/SYM-0375_inversor-solar.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0376": {
     "id": "SYM-0376",
@@ -18082,7 +18878,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "battery_charger",
     "source_asset": "assets/symbols/SYM-0376_cargador-de-bateria.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0377": {
     "id": "SYM-0377",
@@ -18139,7 +18937,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "bms",
     "source_asset": "assets/symbols/SYM-0377_bms-gestor-de-bateria.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0378": {
     "id": "SYM-0378",
@@ -18178,7 +18978,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "cell_balancer",
     "source_asset": "assets/symbols/SYM-0378_balanceador-de-celdas.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true
   },
   "SYM-0379": {
     "id": "SYM-0379",
@@ -18229,7 +19031,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "regen_brake",
     "source_asset": "assets/symbols/SYM-0379_controlador-de-freno-regenerativo.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0380": {
     "id": "SYM-0380",
@@ -18265,7 +19069,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "isolator_switch",
     "source_asset": "assets/symbols/SYM-0380_seccionador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0381": {
     "id": "SYM-0381",
@@ -18301,7 +19107,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "emergency_stop",
     "source_asset": "assets/symbols/SYM-0381_parada-de-emergencia.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0382": {
     "id": "SYM-0382",
@@ -18337,15 +19145,58 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "aux_contact",
     "source_asset": "assets/symbols/SYM-0382_contacto-auxiliar-de-contactor.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0383": {
     "id": "SYM-0383",
     "catalog_id": "SYM-0383",
     "name": "Relé temporizado a la conexión",
-    "kind": "installation_block",
-    "geometry_template": "installation_block",
+    "kind": "timer_on_delay",
+    "geometry_template": "timer_on_delay",
     "designator": "Q/K/X",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "A1": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "A2": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "COM": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NO": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NC": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": true,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Instalaciones y señalización",
     "subcategory": "Maniobra y distribución",
     "aliases": "on-delay relay",
@@ -18354,35 +19205,57 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee número de polos, estado de reposo, acoplamiento mecánico y función de seguridad.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "timer_on",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0383_rele-temporizado-a-la-conexion.svg"
+    "source_asset": "assets/symbols/SYM-0383_rele-temporizado-a-la-conexion.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0384": {
     "id": "SYM-0384",
     "catalog_id": "SYM-0384",
     "name": "Relé temporizado a la desconexión",
-    "kind": "installation_block",
-    "geometry_template": "installation_block",
+    "kind": "timer_off_delay",
+    "geometry_template": "timer_off_delay",
     "designator": "Q/K/X",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "A1": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "A2": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "COM": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NO": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "NC": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": true,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Instalaciones y señalización",
     "subcategory": "Maniobra y distribución",
     "aliases": "off-delay relay",
@@ -18391,27 +19264,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee número de polos, estado de reposo, acoplamiento mecánico y función de seguridad.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "timer_off",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0384_rele-temporizado-a-la-desconexion.svg"
+    "source_asset": "assets/symbols/SYM-0384_rele-temporizado-a-la-desconexion.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0385": {
     "id": "SYM-0385",
@@ -18447,7 +19301,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "mcb_1p",
     "source_asset": "assets/symbols/SYM-0385_magnetotermico-unipolar.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0386": {
     "id": "SYM-0386",
@@ -18483,7 +19339,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "mcb_2p",
     "source_asset": "assets/symbols/SYM-0386_magnetotermico-bipolar.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0387": {
     "id": "SYM-0387",
@@ -18543,7 +19401,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "mcb_3p",
     "source_asset": "assets/symbols/SYM-0387_magnetotermico-tripolar.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0388": {
     "id": "SYM-0388",
@@ -18579,15 +19439,58 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "mcb_4p",
     "source_asset": "assets/symbols/SYM-0388_magnetotermico-tetrapolar.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0389": {
     "id": "SYM-0389",
     "catalog_id": "SYM-0389",
     "name": "Toma trifásica",
-    "kind": "installation_block",
-    "geometry_template": "installation_block",
+    "kind": "socket_3phase",
+    "geometry_template": "socket_3phase",
     "designator": "Q/K/X",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "L1": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "L2": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "L3": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "N": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "PE": {
+        "x": 0,
+        "y": 5,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": true,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Instalaciones y señalización",
     "subcategory": "Maniobra y distribución",
     "aliases": "3-phase socket",
@@ -18596,27 +19499,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Lee número de polos, estado de reposo, acoplamiento mecánico y función de seguridad.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "socket_3ph",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0389_toma-trifasica.svg"
+    "source_asset": "assets/symbols/SYM-0389_toma-trifasica.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0390": {
     "id": "SYM-0390",
@@ -18652,7 +19536,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "energy_meter",
     "source_asset": "assets/symbols/SYM-0390_contador-de-energia.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0391": {
     "id": "SYM-0391",
@@ -18688,7 +19574,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "isolation_transformer",
     "source_asset": "assets/symbols/SYM-0391_transformador-de-aislamiento.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0392": {
     "id": "SYM-0392",
@@ -18727,7 +19615,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ntc_room",
     "source_asset": "assets/symbols/SYM-0392_sensor-ntc-de-aire-interior.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0393": {
     "id": "SYM-0393",
@@ -18766,7 +19656,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ntc_indoor_coil",
     "source_asset": "assets/symbols/SYM-0393_sensor-ntc-de-bateria-interior.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0394": {
     "id": "SYM-0394",
@@ -18805,7 +19697,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ntc_outdoor_coil",
     "source_asset": "assets/symbols/SYM-0394_sensor-ntc-de-bateria-exterior.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0395": {
     "id": "SYM-0395",
@@ -18844,7 +19738,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ntc_discharge",
     "source_asset": "assets/symbols/SYM-0395_sensor-ntc-de-descarga.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0396": {
     "id": "SYM-0396",
@@ -18883,7 +19779,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ntc_suction",
     "source_asset": "assets/symbols/SYM-0396_sensor-ntc-de-aspiracion.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0397": {
     "id": "SYM-0397",
@@ -18922,7 +19820,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ntc_ambient",
     "source_asset": "assets/symbols/SYM-0397_sensor-ntc-ambiente-exterior.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0398": {
     "id": "SYM-0398",
@@ -18961,7 +19861,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fan_capacitor",
     "source_asset": "assets/symbols/SYM-0398_condensador-de-ventilador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0399": {
     "id": "SYM-0399",
@@ -19036,7 +19938,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "compressor_contactor",
     "source_asset": "assets/symbols/SYM-0399_contactor-de-compresor.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0400": {
     "id": "SYM-0400",
@@ -19093,7 +19997,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fan_relay",
     "source_asset": "assets/symbols/SYM-0400_rele-de-ventilador.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0401": {
     "id": "SYM-0401",
@@ -19132,7 +20038,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "drain_float",
     "source_asset": "assets/symbols/SYM-0401_flotador-de-condensados.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0402": {
     "id": "SYM-0402",
@@ -19171,7 +20079,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "defrost_thermostat",
     "source_asset": "assets/symbols/SYM-0402_termostato-de-desescarche.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0403": {
     "id": "SYM-0403",
@@ -19222,7 +20132,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "high_pressure_sensor",
     "source_asset": "assets/symbols/SYM-0403_sonda-de-presion-alta.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0404": {
     "id": "SYM-0404",
@@ -19273,7 +20185,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "low_pressure_sensor",
     "source_asset": "assets/symbols/SYM-0404_sonda-de-presion-baja.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0405": {
     "id": "SYM-0405",
@@ -19312,7 +20226,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "four_way_coil",
     "source_asset": "assets/symbols/SYM-0405_bobina-de-valvula-de-cuatro-vias.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0406": {
     "id": "SYM-0406",
@@ -19351,7 +20267,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "compressor_heater",
     "source_asset": "assets/symbols/SYM-0406_calentador-de-compresor.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0407": {
     "id": "SYM-0407",
@@ -19390,7 +20308,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "compressor_thermal",
     "source_asset": "assets/symbols/SYM-0407_protector-termico-de-compresor.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0408": {
     "id": "SYM-0408",
@@ -19441,7 +20361,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "powerline_hvac",
     "source_asset": "assets/symbols/SYM-0408_comunicacion-por-modulacion-sobre-red.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0409": {
     "id": "SYM-0409",
@@ -19480,7 +20402,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "input_reactor",
     "source_asset": "assets/symbols/SYM-0409_reactor-de-entrada-inverter.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0410": {
     "id": "SYM-0410",
@@ -19519,7 +20443,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dc_reactor",
     "source_asset": "assets/symbols/SYM-0410_reactor-de-bus-dc.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0411": {
     "id": "SYM-0411",
@@ -19558,7 +20484,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "precharge_resistor",
     "source_asset": "assets/symbols/SYM-0411_resistencia-de-precarga.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0412": {
     "id": "SYM-0412",
@@ -19609,15 +20537,52 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "precharge_relay",
     "source_asset": "assets/symbols/SYM-0412_rele-de-precarga.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0413": {
     "id": "SYM-0413",
     "catalog_id": "SYM-0413",
     "name": "Válvula diodo",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "vacuum_diode",
+    "geometry_template": "vacuum_diode",
     "designator": "V/H",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "A": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "H1": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "K": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "H2": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_in"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": false,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Dispositivos especiales",
     "subcategory": "Válvulas y descarga",
     "aliases": "vacuum diode",
@@ -19626,35 +20591,57 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica electrodos, filamento y circuito de polarización o encendido.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "tube_diode",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "A": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "K": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0413_valvula-diodo.svg"
+    "source_asset": "assets/symbols/SYM-0413_valvula-diodo.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0414": {
     "id": "SYM-0414",
     "catalog_id": "SYM-0414",
     "name": "Válvula triodo",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "vacuum_triode",
+    "geometry_template": "vacuum_triode",
     "designator": "V/H",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "G": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "H1": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "A": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "K": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "H2": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "power_in"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": false,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Dispositivos especiales",
     "subcategory": "Válvulas y descarga",
     "aliases": "vacuum triode",
@@ -19663,35 +20650,69 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica electrodos, filamento y circuito de polarización o encendido.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "tube_triode",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0414_valvula-triodo.svg"
+    "source_asset": "assets/symbols/SYM-0414_valvula-triodo.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0415": {
     "id": "SYM-0415",
     "catalog_id": "SYM-0415",
     "name": "Válvula pentodo",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "vacuum_pentode",
+    "geometry_template": "vacuum_pentode",
     "designator": "V/H",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "G1": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "G2": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "G3": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "H1": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "A": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "K": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "H2": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "power_in"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": false,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Dispositivos especiales",
     "subcategory": "Válvulas y descarga",
     "aliases": "vacuum pentode",
@@ -19700,35 +20721,51 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica electrodos, filamento y circuito de polarización o encendido.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "tube_pentode",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0415_valvula-pentodo.svg"
+    "source_asset": "assets/symbols/SYM-0415_valvula-pentodo.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0416": {
     "id": "SYM-0416",
     "catalog_id": "SYM-0416",
     "name": "Tubo fluorescente",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "fluorescent_lamp",
+    "geometry_template": "fluorescent_lamp",
     "designator": "V/H",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "E1A": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "E1B": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "E2A": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "passive"
+      },
+      "E2B": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": true,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Dispositivos especiales",
     "subcategory": "Válvulas y descarga",
     "aliases": "fluorescent tube",
@@ -19737,35 +20774,39 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica electrodos, filamento y circuito de polarización o encendido.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "fluorescent_lamp",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0416_tubo-fluorescente.svg"
+    "source_asset": "assets/symbols/SYM-0416_tubo-fluorescente.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0417": {
     "id": "SYM-0417",
     "catalog_id": "SYM-0417",
     "name": "Lámpara de neón",
-    "kind": "generic_2p",
-    "geometry_template": "generic_2p",
+    "kind": "neon_lamp",
+    "geometry_template": "neon_lamp",
     "designator": "V/H",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "passive"
+      },
+      "2": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "passive"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": false,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Dispositivos especiales",
     "subcategory": "Válvulas y descarga",
     "aliases": "neon indicator",
@@ -19774,27 +20815,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "Identifica electrodos, filamento y circuito de polarización o encendido.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "neon_lamp",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 6,
-    "height": 4,
-    "ports": {
-      "1": {
-        "x": -3,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "passive"
-      },
-      "2": {
-        "x": 3,
-        "y": 0,
-        "side": "east",
-        "electrical_type": "passive"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0417_lampara-de-neon.svg"
+    "source_asset": "assets/symbols/SYM-0417_lampara-de-neon.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0418": {
     "id": "SYM-0418",
@@ -19839,7 +20861,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "IEC",
     "catalog_drawing_type": "gate_iec",
     "source_asset": "assets/symbols/SYM-0418_puerta-and-estilo-iec.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0419": {
     "id": "SYM-0419",
@@ -19884,7 +20908,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "IEC",
     "catalog_drawing_type": "gate_iec",
     "source_asset": "assets/symbols/SYM-0419_puerta-or-estilo-iec.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0420": {
     "id": "SYM-0420",
@@ -19929,7 +20955,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "IEC",
     "catalog_drawing_type": "gate_iec",
     "source_asset": "assets/symbols/SYM-0420_puerta-xor-estilo-iec.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0421": {
     "id": "SYM-0421",
@@ -19974,7 +21002,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "IEC",
     "catalog_drawing_type": "gate_iec",
     "source_asset": "assets/symbols/SYM-0421_puerta-not-estilo-iec.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0422": {
     "id": "SYM-0422",
@@ -20019,7 +21049,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "IEC",
     "catalog_drawing_type": "gate_iec",
     "source_asset": "assets/symbols/SYM-0422_puerta-nand-estilo-iec.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0423": {
     "id": "SYM-0423",
@@ -20064,7 +21096,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "IEC",
     "catalog_drawing_type": "gate_iec",
     "source_asset": "assets/symbols/SYM-0423_puerta-nor-estilo-iec.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0424": {
     "id": "SYM-0424",
@@ -20109,7 +21143,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "IEC",
     "catalog_drawing_type": "gate_iec",
     "source_asset": "assets/symbols/SYM-0424_puerta-xnor-estilo-iec.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0425": {
     "id": "SYM-0425",
@@ -20181,7 +21217,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "relay_multi",
     "source_asset": "assets/symbols/SYM-0425_rele-de-2-polos.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0426": {
     "id": "SYM-0426",
@@ -20271,7 +21309,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "relay_multi",
     "source_asset": "assets/symbols/SYM-0426_rele-de-3-polos.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0427": {
     "id": "SYM-0427",
@@ -20379,7 +21419,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "relay_multi",
     "source_asset": "assets/symbols/SYM-0427_rele-de-4-polos.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0428": {
     "id": "SYM-0428",
@@ -20409,7 +21451,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "no_connect",
     "source_asset": "assets/symbols/SYM-0428_marca-de-no-conectado.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0429": {
     "id": "SYM-0429",
@@ -20445,7 +21489,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "net_tie",
     "source_asset": "assets/symbols/SYM-0429_net-tie-union-controlada-de-redes.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0430": {
     "id": "SYM-0430",
@@ -20493,7 +21539,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "kelvin",
     "source_asset": "assets/symbols/SYM-0430_conexion-kelvin-de-cuatro-hilos.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0431": {
     "id": "SYM-0431",
@@ -20529,15 +21577,52 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "barrier",
     "source_asset": "assets/symbols/SYM-0431_barrera-de-aislamiento-galvanico.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0432": {
     "id": "SYM-0432",
     "catalog_id": "SYM-0432",
     "name": "Fuente de tensión dependiente",
-    "kind": "generic_3p",
-    "geometry_template": "generic_3p",
+    "kind": "dependent_voltage_source",
+    "geometry_template": "dependent_voltage_source",
     "designator": "E/H",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "CTRL+": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CTRL-": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT+": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "OUT-": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": false,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Fuentes y alimentación",
     "subcategory": "Fuentes controladas",
     "aliases": "VCVS, CCVS, fuente controlada",
@@ -20546,41 +21631,51 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La relación de control se indica junto al rombo o mediante una ecuación.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dependent_v",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0432_fuente-de-tension-dependiente.svg"
+    "source_asset": "assets/symbols/SYM-0432_fuente-de-tension-dependiente.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0433": {
     "id": "SYM-0433",
     "catalog_id": "SYM-0433",
     "name": "Fuente de corriente dependiente",
-    "kind": "generic_3p",
-    "geometry_template": "generic_3p",
+    "kind": "dependent_current_source",
+    "geometry_template": "dependent_current_source",
     "designator": "G/F",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 6,
+    "ports": {
+      "CTRL+": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CTRL-": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUT+": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "OUT-": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "original_catalog_complete_2026_08",
+    "terminal_model": "explicit",
+    "requires_exact_model": false,
+    "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique.",
     "category": "Fuentes y alimentación",
     "subcategory": "Fuentes controladas",
     "aliases": "VCCS, CCCS, fuente controlada",
@@ -20589,33 +21684,8 @@ const ElectroDiagramSymbols = Object.freeze({
     "interpretation": "La flecha define el sentido de referencia de la corriente de salida.",
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "dependent_i",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 8,
-    "height": 6,
-    "ports": {
-      "VCC": {
-        "x": -4,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "GND": {
-        "x": 4,
-        "y": -1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "OUT": {
-        "x": 4,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      }
-    },
-    "review_status": "auto_draft",
-    "geometry_source": "family_template",
-    "source_asset": "assets/symbols/SYM-0433_fuente-de-corriente-dependiente.svg"
+    "source_asset": "assets/symbols/SYM-0433_fuente-de-corriente-dependiente.svg",
+    "geometry_source": "reviewed_seed"
   },
   "SYM-0434": {
     "id": "SYM-0434",
@@ -20654,7 +21724,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "probe_v",
     "source_asset": "assets/symbols/SYM-0434_sonda-de-tension.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0435": {
     "id": "SYM-0435",
@@ -20693,7 +21765,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "probe_i",
     "source_asset": "assets/symbols/SYM-0435_sonda-de-corriente.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0436": {
     "id": "SYM-0436",
@@ -20729,7 +21803,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "ptc_fuse",
     "source_asset": "assets/symbols/SYM-0436_fusible-rearmable-ptc.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0437": {
     "id": "SYM-0437",
@@ -20765,7 +21841,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "spark",
     "source_asset": "assets/symbols/SYM-0437_descargador-de-chispa.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0438": {
     "id": "SYM-0438",
@@ -20813,7 +21891,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "coil",
     "source_asset": "assets/symbols/SYM-0438_bobina-rogowski.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0439": {
     "id": "SYM-0439",
@@ -20879,7 +21959,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "sensor",
     "source_asset": "assets/symbols/SYM-0439_sensor-de-corriente-aislado-por-shunt.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0440": {
     "id": "SYM-0440",
@@ -20930,7 +22012,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "sensor",
     "source_asset": "assets/symbols/SYM-0440_encoder-absoluto.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0441": {
     "id": "SYM-0441",
@@ -20993,7 +22077,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "sensor",
     "source_asset": "assets/symbols/SYM-0441_resolver.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0442": {
     "id": "SYM-0442",
@@ -21041,7 +22127,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "motor",
     "source_asset": "assets/symbols/SYM-0442_motor-psc-con-condensador-permanente.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0443": {
     "id": "SYM-0443",
@@ -21077,7 +22165,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "motor",
     "source_asset": "assets/symbols/SYM-0443_motor-de-polo-sombreado.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0444": {
     "id": "SYM-0444",
@@ -21119,7 +22209,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "motor",
     "source_asset": "assets/symbols/SYM-0444_motor-ec.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0445": {
     "id": "SYM-0445",
@@ -21161,7 +22253,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "compressor",
     "source_asset": "assets/symbols/SYM-0445_compresor-monofasico-c-r-s.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0446": {
     "id": "SYM-0446",
@@ -21200,7 +22294,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "ptc_fuse",
     "source_asset": "assets/symbols/SYM-0446_ptc-de-arranque-de-compresor.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0447": {
     "id": "SYM-0447",
@@ -21236,7 +22332,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "protector",
     "source_asset": "assets/symbols/SYM-0447_protector-termico-klixon.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0448": {
     "id": "SYM-0448",
@@ -21281,7 +22379,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "semiconductor",
     "source_asset": "assets/symbols/SYM-0448_mosfet-sic-canal-n.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0449": {
     "id": "SYM-0449",
@@ -21326,7 +22426,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "semiconductor",
     "source_asset": "assets/symbols/SYM-0449_transistor-gan-hemt.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0450": {
     "id": "SYM-0450",
@@ -21371,7 +22473,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "semiconductor",
     "source_asset": "assets/symbols/SYM-0450_mosfet-de-deplexion-canal-n.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0451": {
     "id": "SYM-0451",
@@ -21422,7 +22526,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "opto_pv",
     "source_asset": "assets/symbols/SYM-0451_optoacoplador-fotovoltaico.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0452": {
     "id": "SYM-0452",
@@ -21467,7 +22573,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "module",
     "source_asset": "assets/symbols/SYM-0452_modulo-de-tiristores-scr.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0453": {
     "id": "SYM-0453",
@@ -21512,7 +22620,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_standard": "Común / educativa",
     "catalog_drawing_type": "module",
     "source_asset": "assets/symbols/SYM-0453_modulo-de-diodos-de-potencia.svg",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0454": {
     "id": "SYM-0454",
@@ -21548,7 +22658,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "signal",
     "source_asset": "assets/symbols/SYM-0454_lazo-de-corriente-4-20-ma.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0455": {
     "id": "SYM-0455",
@@ -21584,7 +22696,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "signal",
     "source_asset": "assets/symbols/SYM-0455_senal-analogica-0-10-v.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0456": {
     "id": "SYM-0456",
@@ -21632,7 +22746,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "bus",
     "source_asset": "assets/symbols/SYM-0456_puerto-uart.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0457": {
     "id": "SYM-0457",
@@ -21698,7 +22814,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "bus",
     "source_asset": "assets/symbols/SYM-0457_interfaz-jtag-swd.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0458": {
     "id": "SYM-0458",
@@ -21746,7 +22864,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "bus",
     "source_asset": "assets/symbols/SYM-0458_bus-modbus-rtu-sobre-rs-485.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0459": {
     "id": "SYM-0459",
@@ -21794,7 +22914,9 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "bus",
     "source_asset": "assets/symbols/SYM-0459_bus-bacnet-ms-tp.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
   "SYM-0460": {
     "id": "SYM-0460",
@@ -21830,538 +22952,3046 @@ const ElectroDiagramSymbols = Object.freeze({
     "catalog_drawing_type": "bus",
     "source_asset": "assets/symbols/SYM-0460_bus-dali.svg",
     "review_status": "engine_reviewed",
-    "geometry_source": "reviewed_seed"
+    "geometry_source": "reviewed_seed",
+    "terminal_model": "explicit",
+    "requires_exact_model": false
   },
-  "ST-AUTO-AI-2": {
-    "id": "ST-AUTO-AI-2",
-    "catalog_id": null,
-    "name": "Módulo de dos entradas analógicas",
-    "kind": "plc_ai_module",
-    "designator": "AI",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 12,
-    "height": 14,
-    "ports": {
-      "AI0+": {
-        "x": -6,
-        "y": -5,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "AI0-": {
-        "x": -6,
-        "y": -3,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "AI1+": {
-        "x": -6,
-        "y": 2,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "AI1-": {
-        "x": -6,
-        "y": 4,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "L+": {
-        "x": 6,
-        "y": -4,
-        "side": "east",
-        "electrical_type": "power_in"
-      },
-      "MANA": {
-        "x": 6,
-        "y": 4,
-        "side": "east",
-        "electrical_type": "power_in"
-      }
-    },
-    "review_status": "engine_internal",
-    "geometry_source": "internal_seed"
-  },
-  "ST-AUTO-AO-2": {
-    "id": "ST-AUTO-AO-2",
-    "catalog_id": null,
-    "name": "Módulo de dos salidas analógicas",
-    "kind": "plc_ao_module",
-    "designator": "AO",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 12,
-    "height": 14,
-    "ports": {
-      "AQ0+": {
-        "x": 6,
-        "y": -5,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "AQ0-": {
-        "x": 6,
-        "y": -3,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "AQ1+": {
-        "x": 6,
-        "y": 2,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "AQ1-": {
-        "x": 6,
-        "y": 4,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "L+": {
-        "x": -6,
-        "y": -4,
-        "side": "west",
-        "electrical_type": "power_in"
-      },
-      "MANA": {
-        "x": -6,
-        "y": 4,
-        "side": "west",
-        "electrical_type": "power_in"
-      }
-    },
-    "review_status": "engine_internal",
-    "geometry_source": "internal_seed"
-  },
-  "ST-AUTO-DI-4": {
-    "id": "ST-AUTO-DI-4",
-    "catalog_id": null,
-    "name": "Módulo de cuatro entradas digitales",
-    "kind": "plc_di_module",
-    "designator": "DI",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 12,
-    "height": 16,
-    "ports": {
-      "I0": {
-        "x": -6,
-        "y": -6,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "I1": {
-        "x": -6,
-        "y": -2,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "I2": {
-        "x": -6,
-        "y": 2,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "I3": {
-        "x": -6,
-        "y": 6,
-        "side": "west",
-        "electrical_type": "input"
-      },
-      "L+": {
-        "x": 6,
-        "y": -5,
-        "side": "east",
-        "electrical_type": "power_in"
-      },
-      "M": {
-        "x": 6,
-        "y": 5,
-        "side": "east",
-        "electrical_type": "power_in"
-      }
-    },
-    "review_status": "engine_internal",
-    "geometry_source": "internal_seed"
-  },
-  "ST-AUTO-DO-4": {
-    "id": "ST-AUTO-DO-4",
-    "catalog_id": null,
-    "name": "Módulo de cuatro salidas digitales",
-    "kind": "plc_do_module",
-    "designator": "DO",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 12,
-    "height": 16,
-    "ports": {
-      "Q0": {
-        "x": 6,
-        "y": -6,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "Q1": {
-        "x": 6,
-        "y": -2,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "Q2": {
-        "x": 6,
-        "y": 2,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "Q3": {
-        "x": 6,
-        "y": 6,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "L+": {
-        "x": -6,
-        "y": -5,
-        "side": "west",
-        "electrical_type": "power_in"
-      },
-      "M": {
-        "x": -6,
-        "y": 5,
-        "side": "west",
-        "electrical_type": "power_in"
-      }
-    },
-    "review_status": "engine_internal",
-    "geometry_source": "internal_seed"
-  },
-  "ST-AUTO-GATEWAY": {
-    "id": "ST-AUTO-GATEWAY",
-    "catalog_id": null,
-    "name": "Pasarela de comunicaciones industrial",
-    "kind": "industrial_gateway",
-    "designator": "GW",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 14,
-    "height": 12,
-    "ports": {
-      "L+": {
-        "x": -7,
-        "y": -4,
-        "side": "west",
-        "electrical_type": "power_in"
-      },
-      "M": {
-        "x": -7,
-        "y": 4,
-        "side": "west",
-        "electrical_type": "power_in"
-      },
-      "FIELD_BUS": {
-        "x": -7,
-        "y": 0,
-        "side": "west",
-        "electrical_type": "bidirectional"
-      },
-      "ETH": {
-        "x": 7,
-        "y": -3,
-        "side": "east",
-        "electrical_type": "bidirectional"
-      },
-      "UPLINK": {
-        "x": 7,
-        "y": 3,
-        "side": "east",
-        "electrical_type": "bidirectional"
-      }
-    },
-    "review_status": "engine_internal",
-    "geometry_source": "internal_seed"
-  },
-  "ST-AUTO-HMI": {
-    "id": "ST-AUTO-HMI",
-    "catalog_id": null,
-    "name": "Interfaz de operador HMI",
-    "kind": "industrial_hmi",
-    "designator": "HMI",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 14,
-    "height": 10,
-    "ports": {
-      "L+": {
-        "x": -7,
-        "y": -3,
-        "side": "west",
-        "electrical_type": "power_in"
-      },
-      "M": {
-        "x": -7,
-        "y": 3,
-        "side": "west",
-        "electrical_type": "power_in"
-      },
-      "ETH": {
-        "x": 7,
-        "y": -3,
-        "side": "east",
-        "electrical_type": "bidirectional"
-      },
-      "SERIAL": {
-        "x": 7,
-        "y": 3,
-        "side": "east",
-        "electrical_type": "bidirectional"
-      }
-    },
-    "review_status": "engine_internal",
-    "geometry_source": "internal_seed"
-  },
-  "ST-AUTO-PLC-CPU": {
-    "id": "ST-AUTO-PLC-CPU",
-    "catalog_id": null,
+  "SYM-0461": {
+    "id": "SYM-0461",
+    "catalog_id": "SYM-0461",
     "name": "CPU de PLC industrial",
     "kind": "plc_cpu",
-    "designator": "CPU",
+    "geometry_template": "plc_cpu",
+    "designator": "PLC",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
-    "width": 14,
-    "height": 14,
+    "width": 8,
+    "height": 8,
     "ports": {
       "L+": {
-        "x": -7,
-        "y": -5,
+        "x": -4,
+        "y": -2,
         "side": "west",
         "electrical_type": "power_in"
       },
       "M": {
-        "x": -7,
-        "y": -3,
+        "x": -4,
+        "y": 0,
         "side": "west",
-        "electrical_type": "power_in"
+        "electrical_type": "ground"
       },
-      "DI_BUS": {
-        "x": -7,
-        "y": 1,
+      "IO_BUS": {
+        "x": -4,
+        "y": 2,
         "side": "west",
-        "electrical_type": "input"
-      },
-      "DO_BUS": {
-        "x": 7,
-        "y": 1,
-        "side": "east",
-        "electrical_type": "output"
-      },
-      "FIELD_BUS": {
-        "x": 7,
-        "y": -3,
-        "side": "east",
         "electrical_type": "bidirectional"
       },
       "ETH": {
-        "x": 7,
-        "y": -5,
-        "side": "east",
-        "electrical_type": "bidirectional"
-      }
-    },
-    "review_status": "engine_internal",
-    "geometry_source": "internal_seed"
-  },
-  "ST-AUTO-PSU-24V": {
-    "id": "ST-AUTO-PSU-24V",
-    "catalog_id": null,
-    "name": "Fuente industrial de 24 V DC",
-    "kind": "industrial_psu_24v",
-    "designator": "PS",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 12,
-    "height": 12,
-    "ports": {
-      "L": {
-        "x": -6,
-        "y": -3,
-        "side": "west",
-        "electrical_type": "power_in"
-      },
-      "N": {
-        "x": -6,
-        "y": 1,
-        "side": "west",
-        "electrical_type": "power_in"
-      },
-      "PE": {
-        "x": -6,
-        "y": 4,
-        "side": "west",
-        "electrical_type": "protective_earth"
-      },
-      "+24V": {
-        "x": 6,
-        "y": -3,
-        "side": "east",
-        "electrical_type": "power_out"
-      },
-      "0V": {
-        "x": 6,
-        "y": 3,
-        "side": "east",
-        "electrical_type": "power_out"
-      }
-    },
-    "review_status": "engine_internal",
-    "geometry_source": "internal_seed"
-  },
-  "ST-AUTO-REMOTE-IO": {
-    "id": "ST-AUTO-REMOTE-IO",
-    "catalog_id": null,
-    "name": "Cabecera de E/S remota",
-    "kind": "remote_io_head",
-    "designator": "RIO",
-    "standard_profile": "IEC_EXPERIMENTAL",
-    "grid_pitch_mil": 50,
-    "width": 14,
-    "height": 12,
-    "ports": {
-      "L+": {
-        "x": -7,
-        "y": -4,
-        "side": "west",
-        "electrical_type": "power_in"
-      },
-      "M": {
-        "x": -7,
-        "y": 4,
-        "side": "west",
-        "electrical_type": "power_in"
-      },
-      "BUS_IN": {
-        "x": 7,
-        "y": -4,
+        "x": 4,
+        "y": -2,
         "side": "east",
         "electrical_type": "bidirectional"
       },
-      "BUS_OUT": {
-        "x": 7,
+      "FIELD_BUS": {
+        "x": 4,
         "y": 0,
         "side": "east",
         "electrical_type": "bidirectional"
       },
-      "IO_BUS": {
-        "x": 7,
-        "y": 4,
+      "SERVICE": {
+        "x": 4,
+        "y": 2,
         "side": "east",
         "electrical_type": "bidirectional"
       }
     },
-    "review_status": "engine_internal",
-    "geometry_source": "internal_seed"
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "PLC y control industrial",
+    "aliases": "PLC CPU, autómata programable",
+    "keywords": "plc automata cpu industrial control",
+    "description": "Controlador industrial que ejecuta la lógica y coordina E/S y comunicaciones.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "IEC funcional / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0461_cpu-de-plc-industrial.svg",
+    "geometry_source": "reviewed_seed"
   },
-  "ST-AUTO-SAFETY-PLC": {
-    "id": "ST-AUTO-SAFETY-PLC",
-    "catalog_id": null,
+  "SYM-0462": {
+    "id": "SYM-0462",
+    "catalog_id": "SYM-0462",
     "name": "PLC de seguridad certificado",
     "kind": "safety_plc",
-    "designator": "F-CPU",
+    "geometry_template": "safety_plc",
+    "designator": "FPLC",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
-    "width": 14,
-    "height": 14,
+    "width": 8,
+    "height": 8,
     "ports": {
       "L+": {
-        "x": -7,
-        "y": -5,
+        "x": -4,
+        "y": -2,
         "side": "west",
         "electrical_type": "power_in"
       },
       "M": {
-        "x": -7,
-        "y": 5,
-        "side": "west",
-        "electrical_type": "power_in"
-      },
-      "F_DI": {
-        "x": -7,
+        "x": -4,
         "y": 0,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "SAFE_IN": {
+        "x": -4,
+        "y": 2,
         "side": "west",
         "electrical_type": "input"
       },
-      "F_DO": {
-        "x": 7,
-        "y": 0,
+      "SAFE_OUT": {
+        "x": 4,
+        "y": -2,
         "side": "east",
         "electrical_type": "output"
       },
       "SAFE_BUS": {
-        "x": 7,
-        "y": -5,
+        "x": 4,
+        "y": 0,
         "side": "east",
         "electrical_type": "bidirectional"
       },
-      "TEST": {
-        "x": 7,
-        "y": 5,
+      "DIAG": {
+        "x": 4,
+        "y": 2,
         "side": "east",
         "electrical_type": "output"
       }
     },
-    "review_status": "engine_internal",
-    "geometry_source": "internal_seed"
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Seguridad funcional",
+    "aliases": "safety PLC, F-CPU",
+    "keywords": "plc seguridad safety sil pl automata",
+    "description": "Controlador destinado a funciones de seguridad cuando el conjunto exacto está certificado y validado.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Modelo y certificación obligatorios",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0462_plc-de-seguridad-certificado.svg",
+    "geometry_source": "reviewed_seed"
   },
-  "ST-AUTO-SWITCH-4": {
-    "id": "ST-AUTO-SWITCH-4",
-    "catalog_id": null,
-    "name": "Switch Ethernet industrial de cuatro puertos",
-    "kind": "industrial_switch",
-    "designator": "SW",
+  "SYM-0463": {
+    "id": "SYM-0463",
+    "catalog_id": "SYM-0463",
+    "name": "Módulo de entradas digitales PLC",
+    "kind": "plc_di_module",
+    "geometry_template": "plc_di_module",
+    "designator": "DI",
     "standard_profile": "IEC_EXPERIMENTAL",
     "grid_pitch_mil": 50,
-    "width": 14,
-    "height": 14,
+    "width": 8,
+    "height": 10,
     "ports": {
-      "L+": {
-        "x": -7,
-        "y": -5,
+      "I0": {
+        "x": -4,
+        "y": -3,
         "side": "west",
+        "electrical_type": "input"
+      },
+      "I1": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "I2": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "I3": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "L+": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
         "electrical_type": "power_in"
       },
       "M": {
-        "x": -7,
-        "y": 5,
-        "side": "west",
-        "electrical_type": "power_in"
-      },
-      "P1": {
-        "x": 7,
-        "y": -5,
+        "x": 4,
+        "y": 0,
         "side": "east",
-        "electrical_type": "bidirectional"
+        "electrical_type": "ground"
       },
-      "P2": {
-        "x": 7,
-        "y": -2,
-        "side": "east",
-        "electrical_type": "bidirectional"
-      },
-      "P3": {
-        "x": 7,
+      "BACKPLANE": {
+        "x": 4,
         "y": 2,
-        "side": "east",
-        "electrical_type": "bidirectional"
-      },
-      "P4": {
-        "x": 7,
-        "y": 5,
         "side": "east",
         "electrical_type": "bidirectional"
       }
     },
-    "review_status": "engine_internal",
-    "geometry_source": "internal_seed"
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Módulos de E/S",
+    "aliases": "PLC DI module, entradas 24 V",
+    "keywords": "plc di entradas digitales 24v pnp npn",
+    "description": "Recibe señales digitales de campo con comunes y grupos de potencial definidos.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0463_modulo-de-entradas-digitales-plc.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0464": {
+    "id": "SYM-0464",
+    "catalog_id": "SYM-0464",
+    "name": "Módulo de salidas digitales PLC",
+    "kind": "plc_do_module",
+    "geometry_template": "plc_do_module",
+    "designator": "DO",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "L+": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "BACKPLANE": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "Q0": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "Q1": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "Q2": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "Q3": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Módulos de E/S",
+    "aliases": "PLC DO module, salidas transistor relé",
+    "keywords": "plc do salidas digitales transistor rele",
+    "description": "Entrega órdenes digitales mediante transistor, relé o semiconductor según variante.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0464_modulo-de-salidas-digitales-plc.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0465": {
+    "id": "SYM-0465",
+    "catalog_id": "SYM-0465",
+    "name": "Módulo de entradas analógicas PLC",
+    "kind": "plc_ai_module",
+    "geometry_template": "plc_ai_module",
+    "designator": "AI",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "AI0+": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "AI0-": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "AI1+": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "AI1-": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "L+": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_in"
+      },
+      "MANA": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "ground"
+      },
+      "BACKPLANE": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Módulos de E/S",
+    "aliases": "PLC AI module, 0-10V, 4-20mA",
+    "keywords": "plc ai analogica 4-20ma 0-10v rtd",
+    "description": "Adquiere señales analógicas con referencia, rango y aislamiento definidos por canal o grupo.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0465_modulo-de-entradas-analogicas-plc.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0466": {
+    "id": "SYM-0466",
+    "catalog_id": "SYM-0466",
+    "name": "Módulo de salidas analógicas PLC",
+    "kind": "plc_ao_module",
+    "geometry_template": "plc_ao_module",
+    "designator": "AO",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "L+": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "MANA": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "BACKPLANE": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "AQ0+": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "AQ0-": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "AQ1+": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "AQ1-": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Módulos de E/S",
+    "aliases": "PLC AO module, 0-10V, 4-20mA",
+    "keywords": "plc ao salida analogica 4-20ma 0-10v",
+    "description": "Genera consignas analógicas de tensión o corriente hacia actuadores y reguladores.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0466_modulo-de-salidas-analogicas-plc.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0467": {
+    "id": "SYM-0467",
+    "catalog_id": "SYM-0467",
+    "name": "Cabecera de E/S remota",
+    "kind": "remote_io_head",
+    "geometry_template": "remote_io_head",
+    "designator": "RIO",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "L+": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "FIELD_BUS": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "BACKPLANE": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "AUX_OUT": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "FE": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "functional_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "E/S distribuida",
+    "aliases": "remote IO head, coupler",
+    "keywords": "remote io e/s remota bus industrial",
+    "description": "Acopla módulos de E/S distribuidos a una red industrial y a sus potenciales de campo.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0467_cabecera-de-e-s-remota.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0468": {
+    "id": "SYM-0468",
+    "catalog_id": "SYM-0468",
+    "name": "Interfaz de operador HMI",
+    "kind": "industrial_hmi",
+    "geometry_template": "industrial_hmi",
+    "designator": "HMI",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "L+": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "ETH": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "SERIAL": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "USB": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Operación y supervisión",
+    "aliases": "HMI panel, pantalla operador",
+    "keywords": "hmi pantalla operador supervision",
+    "description": "Presenta variables, alarmas y mandos de una máquina o proceso.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0468_interfaz-de-operador-hmi.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0469": {
+    "id": "SYM-0469",
+    "catalog_id": "SYM-0469",
+    "name": "Fuente industrial de 24 V DC",
+    "kind": "industrial_psu_24v",
+    "geometry_template": "industrial_psu_24v",
+    "designator": "PS",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "L": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "N": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "L+": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "M": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "DC_OK": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "PE": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Alimentación de control",
+    "aliases": "industrial PSU 24V, fuente carril DIN",
+    "keywords": "fuente industrial 24vdc din plc",
+    "description": "Convierte la alimentación de entrada en 24 V DC para control e instrumentación.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0469_fuente-industrial-de-24-v-dc.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0470": {
+    "id": "SYM-0470",
+    "catalog_id": "SYM-0470",
+    "name": "Switch Ethernet industrial",
+    "kind": "industrial_switch",
+    "geometry_template": "industrial_switch",
+    "designator": "SW",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "L+": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "ETH1": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "ETH2": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "ETH3": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "ETH4": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "FE": {
+        "x": 0,
+        "y": 5,
+        "side": "south",
+        "electrical_type": "functional_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Redes industriales",
+    "aliases": "industrial Ethernet switch",
+    "keywords": "switch ethernet industrial red managed",
+    "description": "Interconecta equipos Ethernet en una red industrial gestionada o no gestionada.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0470_switch-ethernet-industrial.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0471": {
+    "id": "SYM-0471",
+    "catalog_id": "SYM-0471",
+    "name": "Pasarela de protocolos industrial",
+    "kind": "industrial_gateway",
+    "geometry_template": "industrial_gateway",
+    "designator": "GW",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "L+": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "NETWORK_A": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "NETWORK_B": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "SERVICE": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Redes industriales",
+    "aliases": "industrial gateway, protocol converter",
+    "keywords": "gateway pasarela protocolos modbus bacnet",
+    "description": "Intercambia datos entre dos redes o protocolos con mapeo explícito de variables.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0471_pasarela-de-protocolos-industrial.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0472": {
+    "id": "SYM-0472",
+    "catalog_id": "SYM-0472",
+    "name": "Controlador Arduino de lógica 5 V",
+    "kind": "arduino_5v",
+    "geometry_template": "arduino_5v",
+    "designator": "MCU",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "VIN": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "5V": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "GPIO": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "ADC": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "input"
+      },
+      "PWM": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "I2C": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "SPI_UART": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Controladores embebidos",
+    "aliases": "Arduino Uno Mega 5V, microcontrolador",
+    "keywords": "arduino 5v uno mega gpio microcontrolador",
+    "description": "Bloque funcional para una placa Arduino de 5 V usada en prototipos o control no seguro.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0472_controlador-arduino-de-logica-5-v.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0473": {
+    "id": "SYM-0473",
+    "catalog_id": "SYM-0473",
+    "name": "Controlador Arduino de lógica 3,3 V",
+    "kind": "arduino_3v3",
+    "geometry_template": "arduino_3v3",
+    "designator": "MCU",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "VIN": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "3V3": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "GPIO": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "ADC": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "input"
+      },
+      "PWM": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "I2C": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "SPI_UART": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Controladores embebidos",
+    "aliases": "Arduino 3.3V, Nano, MKR, Portenta",
+    "keywords": "arduino 3v3 nano mkr portenta gpio",
+    "description": "Bloque funcional para una placa Arduino de 3,3 V y sus interfaces lógicas.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0473_controlador-arduino-de-logica-3-3-v.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0474": {
+    "id": "SYM-0474",
+    "catalog_id": "SYM-0474",
+    "name": "Arduino Opta",
+    "kind": "arduino_opta",
+    "geometry_template": "arduino_opta",
+    "designator": "PLC",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "L+": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "DI_GROUP": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "AI_GROUP": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "RELAY_GROUP": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "RS485": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "ETH": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Micro PLC industrial",
+    "aliases": "Arduino Opta micro PLC",
+    "keywords": "arduino opta plc industrial relay ethernet rs485",
+    "description": "Micro PLC industrial programable cuya variante y expansiones deben identificarse.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0474_arduino-opta.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0475": {
+    "id": "SYM-0475",
+    "catalog_id": "SYM-0475",
+    "name": "Arduino Portenta Machine Control",
+    "kind": "portenta_machine_control",
+    "geometry_template": "portenta_machine_control",
+    "designator": "PMC",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "L+": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "DI_AI_GROUP": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "ENCODER": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DO_AO_GROUP": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "CAN": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "RS485": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "ETH": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Control industrial embebido",
+    "aliases": "Portenta Machine Control PMC",
+    "keywords": "arduino portenta machine control industrial",
+    "description": "Controlador industrial con E/S acondicionadas para máquina, siempre dependiente de revisión exacta.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0475_arduino-portenta-machine-control.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0476": {
+    "id": "SYM-0476",
+    "catalog_id": "SYM-0476",
+    "name": "Raspberry Pi / Compute Module",
+    "kind": "raspberry_pi_controller",
+    "geometry_template": "raspberry_pi_controller",
+    "designator": "SBC",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "5V": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "3V3": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_out"
+      },
+      "GND": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "GPIO": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "I2C_SPI": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "UART": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "USB": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "ETH": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Controladores embebidos",
+    "aliases": "Raspberry Pi SBC CM4 CM5",
+    "keywords": "raspberry pi compute module sbc gpio linux",
+    "description": "Ordenador embebido para pasarela, supervisión, HMI o control no seguro con interfaz industrial externa.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0476_raspberry-pi-compute-module.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0477": {
+    "id": "SYM-0477",
+    "catalog_id": "SYM-0477",
+    "name": "Controlador ESP32",
+    "kind": "esp32_controller",
+    "geometry_template": "esp32_controller",
+    "designator": "MCU",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "VIN": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "3V3": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "GPIO": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "ADC": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "input"
+      },
+      "PWM": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "I2C_SPI_UART": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "RADIO": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Controladores embebidos",
+    "aliases": "ESP32 ESP32-S3 ESP32-C6",
+    "keywords": "esp32 espressif wifi bluetooth gpio 3v3",
+    "description": "Microcontrolador conectado de 3,3 V para IoT y control no seguro.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0477_controlador-esp32.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0478": {
+    "id": "SYM-0478",
+    "catalog_id": "SYM-0478",
+    "name": "Controlador embebido genérico",
+    "kind": "embedded_controller",
+    "geometry_template": "embedded_controller",
+    "designator": "CTRL",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "POWER": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "GND": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "ANALOG_IN": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DIGITAL_IO": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "COMM": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "PROGRAM": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "TEST": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Controladores embebidos",
+    "aliases": "custom MCU board, embedded controller",
+    "keywords": "embedded controller mcu custom pcb firmware",
+    "description": "Controlador personalizado definido mediante contrato eléctrico, firmware y revisión de hardware.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0478_controlador-embebido-generico.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0479": {
+    "id": "SYM-0479",
+    "catalog_id": "SYM-0479",
+    "name": "Acoplador de bus de campo",
+    "kind": "fieldbus_coupler",
+    "geometry_template": "fieldbus_coupler",
+    "designator": "BC",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "L+": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "FIELD_BUS": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "BACKPLANE": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "AUX_OUT": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "FE": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "functional_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Redes industriales",
+    "aliases": "fieldbus coupler, bus coupler",
+    "keywords": "fieldbus coupler profinet ethercat modbus",
+    "description": "Une un sistema modular de E/S con un bus de campo concreto.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0479_acoplador-de-bus-de-campo.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0480": {
+    "id": "SYM-0480",
+    "catalog_id": "SYM-0480",
+    "name": "Maestro IO-Link",
+    "kind": "iolink_master",
+    "geometry_template": "iolink_master",
+    "designator": "IOLM",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "L+": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "M": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "PORT1_CQ": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "PORT2_CQ": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "PORT3_CQ": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "PORT4_CQ": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "UPLINK": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "FE": {
+        "x": 0,
+        "y": 5,
+        "side": "south",
+        "electrical_type": "functional_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Automatización y control programable",
+    "subcategory": "Redes de sensores",
+    "aliases": "IO-Link master",
+    "keywords": "io-link master sensor smart iodD",
+    "description": "Concentra puertos IO-Link y los integra en una red industrial superior.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "controller_block",
+    "source_asset": "assets/symbols/SYM-0480_maestro-io-link.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0481": {
+    "id": "SYM-0481",
+    "catalog_id": "SYM-0481",
+    "name": "Variador de frecuencia trifásico",
+    "kind": "variable_frequency_drive",
+    "geometry_template": "variable_frequency_drive",
+    "designator": "VFD",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 14,
+    "ports": {
+      "R_L1": {
+        "x": -4,
+        "y": -5,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "S_L2": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "T_L3": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "DI_AI": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "STO": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "BUS": {
+        "x": -4,
+        "y": 5,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "U": {
+        "x": 4,
+        "y": -4,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "V": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "W": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "AO_RELAY": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "DC_BUS": {
+        "x": 4,
+        "y": 4,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "PE": {
+        "x": 0,
+        "y": 7,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Accionamientos y maniobra",
+    "subcategory": "Variadores y convertidores",
+    "aliases": "VFD, frequency inverter, variador velocidad",
+    "keywords": "vfd variador frecuencia motor trifasico inverter",
+    "description": "Accionamiento que regula un motor AC y expone potencia, mando, seguridad y comunicaciones.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "drive_block",
+    "source_asset": "assets/symbols/SYM-0481_variador-de-frecuencia-trifasico.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0482": {
+    "id": "SYM-0482",
+    "catalog_id": "SYM-0482",
+    "name": "Arrancador suave trifásico",
+    "kind": "soft_starter_3phase",
+    "geometry_template": "soft_starter_3phase",
+    "designator": "SS",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "1L1": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "3L2": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "5L3": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "2T1": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "4T2": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "6T3": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "STATUS": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "PE": {
+        "x": 0,
+        "y": 5,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Accionamientos y maniobra",
+    "subcategory": "Arranque de motores",
+    "aliases": "soft starter 3 phase",
+    "keywords": "arrancador suave soft starter trifasico motor",
+    "description": "Reduce corriente y par durante arranque y parada de un motor trifásico.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "drive_block",
+    "source_asset": "assets/symbols/SYM-0482_arrancador-suave-trifasico.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0483": {
+    "id": "SYM-0483",
+    "catalog_id": "SYM-0483",
+    "name": "Servoaccionamiento",
+    "kind": "servo_drive",
+    "geometry_template": "servo_drive",
+    "designator": "SD",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 14,
+    "ports": {
+      "L1": {
+        "x": -4,
+        "y": -5,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "L2": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "L3": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "ENCODER": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "STO": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "BUS": {
+        "x": -4,
+        "y": 5,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "U": {
+        "x": 4,
+        "y": -4,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "V": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "W": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "BRAKE": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "DIAG": {
+        "x": 4,
+        "y": 4,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "PE": {
+        "x": 0,
+        "y": 7,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Accionamientos y maniobra",
+    "subcategory": "Control de movimiento",
+    "aliases": "servo drive, servovariador",
+    "keywords": "servo drive motor encoder sto motion",
+    "description": "Controla par, velocidad y posición de un servomotor con realimentación.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "drive_block",
+    "source_asset": "assets/symbols/SYM-0483_servoaccionamiento.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0484": {
+    "id": "SYM-0484",
+    "catalog_id": "SYM-0484",
+    "name": "Driver industrial de motor paso a paso",
+    "kind": "industrial_stepper_drive",
+    "geometry_template": "industrial_stepper_drive",
+    "designator": "STEP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 12,
+    "ports": {
+      "DC+": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "DC-": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "STEP_DIR": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "ENABLE": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "A+": {
+        "x": 4,
+        "y": -4,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "A-": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "B+": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "B-": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "ALARM": {
+        "x": 4,
+        "y": 4,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Accionamientos y maniobra",
+    "subcategory": "Control de movimiento",
+    "aliases": "stepper drive, driver paso a paso",
+    "keywords": "stepper driver paso a paso motor industrial",
+    "description": "Excita las fases de un motor paso a paso desde órdenes de movimiento o bus.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "drive_block",
+    "source_asset": "assets/symbols/SYM-0484_driver-industrial-de-motor-paso-a-paso.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0485": {
+    "id": "SYM-0485",
+    "catalog_id": "SYM-0485",
+    "name": "Accionamiento de motor DC",
+    "kind": "dc_motor_drive",
+    "geometry_template": "dc_motor_drive",
+    "designator": "DCD",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 12,
+    "ports": {
+      "POWER_IN": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "FIELD_REF": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SPEED_REF": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "FEEDBACK": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "A+": {
+        "x": 4,
+        "y": -4,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "A-": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "F+": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "F-": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "ALARM": {
+        "x": 4,
+        "y": 4,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "PE": {
+        "x": 0,
+        "y": 6,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Accionamientos y maniobra",
+    "subcategory": "Variadores y convertidores",
+    "aliases": "DC drive, variador corriente continua",
+    "keywords": "dc drive motor corriente continua armadura campo",
+    "description": "Regula un motor DC mediante armadura y, cuando procede, campo separado.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "drive_block",
+    "source_asset": "assets/symbols/SYM-0485_accionamiento-de-motor-dc.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0486": {
+    "id": "SYM-0486",
+    "catalog_id": "SYM-0486",
+    "name": "Arrancador estrella-triángulo",
+    "kind": "star_delta_starter",
+    "geometry_template": "star_delta_starter",
+    "designator": "YΔ",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 12,
+    "ports": {
+      "L1": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "L2": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "L3": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "START_STOP": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "U1": {
+        "x": 4,
+        "y": -4,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "V1": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "W1": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "U2_V2_W2": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "STATUS": {
+        "x": 4,
+        "y": 4,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Accionamientos y maniobra",
+    "subcategory": "Arranque de motores",
+    "aliases": "star delta starter, estrella triangulo",
+    "keywords": "arrancador estrella triangulo motor contactores",
+    "description": "Conjunto funcional de contactores y temporización para arrancar un motor de seis bornes.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "drive_block",
+    "source_asset": "assets/symbols/SYM-0486_arrancador-estrella-triangulo.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0487": {
+    "id": "SYM-0487",
+    "catalog_id": "SYM-0487",
+    "name": "Arrancador inversor de giro",
+    "kind": "reversing_starter",
+    "geometry_template": "reversing_starter",
+    "designator": "REV",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "L1": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "L2": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "L3": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "FWD_REV": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "U": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "V": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "W": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "STATUS": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Accionamientos y maniobra",
+    "subcategory": "Arranque de motores",
+    "aliases": "reversing starter, inversión de giro",
+    "keywords": "inversor giro contactores motor reversing starter",
+    "description": "Dos contactores enclavados invierten dos fases para cambiar el sentido de un motor.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "drive_block",
+    "source_asset": "assets/symbols/SYM-0487_arrancador-inversor-de-giro.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0488": {
+    "id": "SYM-0488",
+    "catalog_id": "SYM-0488",
+    "name": "Guardamotor magnetotérmico",
+    "kind": "motor_protection_breaker",
+    "geometry_template": "motor_protection_breaker",
+    "designator": "QF",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "1L1": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "3L2": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "5L3": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "2T1": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "4T2": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "6T3": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "AUX": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Accionamientos y maniobra",
+    "subcategory": "Protección de motores",
+    "aliases": "motor protection circuit breaker, MPCB",
+    "keywords": "guardamotor mpcb magnetotermico motor",
+    "description": "Protege y secciona un motor frente a sobrecarga y cortocircuito dentro de sus límites.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "drive_block",
+    "source_asset": "assets/symbols/SYM-0488_guardamotor-magnetotermico.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0489": {
+    "id": "SYM-0489",
+    "catalog_id": "SYM-0489",
+    "name": "Relé de seguridad",
+    "kind": "safety_relay",
+    "geometry_template": "safety_relay",
+    "designator": "SR",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 12,
+    "ports": {
+      "A1": {
+        "x": -4,
+        "y": -4,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "A2": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "CH1": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "CH2": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "RESET": {
+        "x": -4,
+        "y": 4,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "13_14": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "23_24": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "DIAG": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Accionamientos y maniobra",
+    "subcategory": "Seguridad funcional",
+    "aliases": "safety relay, módulo seguridad",
+    "keywords": "rele seguridad safety relay parada emergencia",
+    "description": "Supervisa entradas redundantes y gobierna salidas seguras según un modelo certificado.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "drive_block",
+    "source_asset": "assets/symbols/SYM-0489_rele-de-seguridad.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0490": {
+    "id": "SYM-0490",
+    "catalog_id": "SYM-0490",
+    "name": "Contactor semiconductor trifásico",
+    "kind": "solid_state_contactor_3phase",
+    "geometry_template": "solid_state_contactor_3phase",
+    "designator": "SSR",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "L1": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "L2": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "L3": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "T1": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "T2": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "T3": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "ALARM": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "PE": {
+        "x": 0,
+        "y": 5,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Accionamientos y maniobra",
+    "subcategory": "Conmutación electrónica",
+    "aliases": "3 phase SSR, solid state contactor",
+    "keywords": "ssr trifasico contactor semiconductor tiristor",
+    "description": "Conmuta cargas trifásicas mediante semiconductores sin aislamiento mecánico de potencia.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "drive_block",
+    "source_asset": "assets/symbols/SYM-0490_contactor-semiconductor-trifasico.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0491": {
+    "id": "SYM-0491",
+    "catalog_id": "SYM-0491",
+    "name": "Conmutador automático de redes",
+    "kind": "automatic_transfer_switch",
+    "geometry_template": "automatic_transfer_switch",
+    "designator": "ATS",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "NORMAL": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "RESERVE": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "CONTROL": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "LOAD": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "STATUS": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "PE_N": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Accionamientos y maniobra",
+    "subcategory": "Transferencia de alimentación",
+    "aliases": "ATS, automatic transfer switch",
+    "keywords": "ats transferencia automatica red grupo",
+    "description": "Transfiere una carga entre dos fuentes con enclavamiento y lógica de supervisión.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "drive_block",
+    "source_asset": "assets/symbols/SYM-0491_conmutador-automatico-de-redes.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0492": {
+    "id": "SYM-0492",
+    "catalog_id": "SYM-0492",
+    "name": "Sistema de alimentación ininterrumpida",
+    "kind": "ups_system",
+    "geometry_template": "ups_system",
+    "designator": "UPS",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "INPUT": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "BYPASS": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "BATTERY": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "EPO": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OUTPUT": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "STATUS": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "COMM": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "PE": {
+        "x": 0,
+        "y": 5,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Accionamientos y maniobra",
+    "subcategory": "Continuidad de servicio",
+    "aliases": "UPS, SAI",
+    "keywords": "ups sai alimentacion ininterrumpida bateria bypass",
+    "description": "Mantiene una carga mediante rectificador, baterías e inversor según topología.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "drive_block",
+    "source_asset": "assets/symbols/SYM-0492_sistema-de-alimentacion-ininterrumpida.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0493": {
+    "id": "SYM-0493",
+    "catalog_id": "SYM-0493",
+    "name": "Controlador DDC / BMS",
+    "kind": "bms_ddc_controller",
+    "geometry_template": "bms_ddc_controller",
+    "designator": "DDC",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "24V": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "COM": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "ground"
+      },
+      "UI_GROUP": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DI_GROUP": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "UO_GROUP": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "DO_GROUP": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "RS485": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "ETH": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Control técnico de edificios",
+    "subcategory": "Gestión técnica centralizada",
+    "aliases": "DDC controller, BMS controller",
+    "keywords": "ddc bms controlador edificio hvac bacnet",
+    "description": "Controlador programable de instalaciones de edificio con E/S y redes de automatización.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "building_control",
+    "source_asset": "assets/symbols/SYM-0493_controlador-ddc-bms.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0494": {
+    "id": "SYM-0494",
+    "catalog_id": "SYM-0494",
+    "name": "Controlador de ambiente / termostato",
+    "kind": "room_controller",
+    "geometry_template": "room_controller",
+    "designator": "RC",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "POWER": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "SENSOR": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "OCCUPANCY": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "VALVE": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "FAN": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "BUS": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Control técnico de edificios",
+    "subcategory": "Control de zona",
+    "aliases": "room controller, thermostat, controlador zona",
+    "keywords": "termostato room controller zona fan coil",
+    "description": "Mide condiciones de una zona y gobierna consignas, válvulas, ventilador o comunicación.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "building_control",
+    "source_asset": "assets/symbols/SYM-0494_controlador-de-ambiente-termostato.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0495": {
+    "id": "SYM-0495",
+    "catalog_id": "SYM-0495",
+    "name": "Controlador de unidad de tratamiento de aire",
+    "kind": "ahu_controller",
+    "geometry_template": "ahu_controller",
+    "designator": "AHU",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "POWER": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "SENSORS": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SAFETIES": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "BMS_BUS": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "FANS_VFD": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "DAMPERS": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "COILS": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "ALARMS": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Control técnico de edificios",
+    "subcategory": "Climatización central",
+    "aliases": "AHU controller, UTA control",
+    "keywords": "ahu uta controlador ventilacion recuperador",
+    "description": "Coordina ventiladores, compuertas, baterías, recuperación, filtros y seguridades de una UTA.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "building_control",
+    "source_asset": "assets/symbols/SYM-0495_controlador-de-unidad-de-tratamiento-de-aire.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0496": {
+    "id": "SYM-0496",
+    "catalog_id": "SYM-0496",
+    "name": "Controlador electrónico de refrigeración",
+    "kind": "refrigeration_controller",
+    "geometry_template": "refrigeration_controller",
+    "designator": "ERC",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 12,
+    "ports": {
+      "POWER": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "PROBES": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "DIGITAL_IN": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "BUS": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "COMPRESSOR": {
+        "x": 4,
+        "y": -4,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "FANS": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "DEFROST": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "EEV": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "ALARM": {
+        "x": 4,
+        "y": 4,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Control técnico de edificios",
+    "subcategory": "Refrigeración",
+    "aliases": "refrigeration controller, cold room controller",
+    "keywords": "controlador refrigeracion camara desescarche eev",
+    "description": "Gestiona compresor, ventiladores, desescarche, sondas, alarmas y comunicaciones.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "building_control",
+    "source_asset": "assets/symbols/SYM-0496_controlador-electronico-de-refrigeracion.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0497": {
+    "id": "SYM-0497",
+    "catalog_id": "SYM-0497",
+    "name": "Control de quemador / caldera",
+    "kind": "burner_boiler_controller",
+    "geometry_template": "burner_boiler_controller",
+    "designator": "BC",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "POWER": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "THERMOSTATS": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "PRESSOSTATS": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "FLAME": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "FAN": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "IGNITION": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VALVES": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "BUS": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Control técnico de edificios",
+    "subcategory": "Calefacción y combustión",
+    "aliases": "burner controller, boiler control",
+    "keywords": "caldera quemador control llama gas ventilador",
+    "description": "Secuencia encendido, llama, ventilación, válvulas, temperaturas y seguridades de combustión.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "building_control",
+    "source_asset": "assets/symbols/SYM-0497_control-de-quemador-caldera.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0498": {
+    "id": "SYM-0498",
+    "catalog_id": "SYM-0498",
+    "name": "Controlador de grupo de presión",
+    "kind": "booster_pump_controller",
+    "geometry_template": "booster_pump_controller",
+    "designator": "PCTRL",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "POWER": {
+        "x": -4,
+        "y": -3,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "PRESSURE": {
+        "x": -4,
+        "y": -1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "LEVEL": {
+        "x": -4,
+        "y": 1,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "SAFETIES": {
+        "x": -4,
+        "y": 3,
+        "side": "west",
+        "electrical_type": "input"
+      },
+      "PUMP1": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "PUMP2": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "VFD_REF": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "ALARM_BUS": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Control técnico de edificios",
+    "subcategory": "Agua y bombeo",
+    "aliases": "booster pump controller, grupo presión",
+    "keywords": "grupo presion controlador bombas agua variador",
+    "description": "Coordina una o varias bombas a partir de presión, nivel, demanda y alarmas.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "building_control",
+    "source_asset": "assets/symbols/SYM-0498_controlador-de-grupo-de-presion.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0499": {
+    "id": "SYM-0499",
+    "catalog_id": "SYM-0499",
+    "name": "Central de detección de incendios",
+    "kind": "fire_alarm_panel",
+    "geometry_template": "fire_alarm_panel",
+    "designator": "FACP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "MAINS": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "BATTERY": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "LOOP_ZONES": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "SOUNDERS": {
+        "x": 4,
+        "y": -2,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "RELAYS": {
+        "x": 4,
+        "y": 0,
+        "side": "east",
+        "electrical_type": "output"
+      },
+      "NETWORK": {
+        "x": 4,
+        "y": 2,
+        "side": "east",
+        "electrical_type": "bidirectional"
+      },
+      "PE": {
+        "x": 0,
+        "y": 4,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Control técnico de edificios",
+    "subcategory": "Seguridad y alarmas",
+    "aliases": "fire alarm control panel, CIE",
+    "keywords": "central incendios facp deteccion lazo sirena",
+    "description": "Supervisa lazos o zonas de detección y gobierna avisos e interfaces según el sistema exacto.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "building_control",
+    "source_asset": "assets/symbols/SYM-0499_central-de-deteccion-de-incendios.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0500": {
+    "id": "SYM-0500",
+    "catalog_id": "SYM-0500",
+    "name": "Acoplador / dispositivo KNX",
+    "kind": "knx_device",
+    "geometry_template": "knx_device",
+    "designator": "KNX",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 8,
+    "ports": {
+      "KNX+": {
+        "x": -4,
+        "y": -2,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "KNX-": {
+        "x": -4,
+        "y": 0,
+        "side": "west",
+        "electrical_type": "bidirectional"
+      },
+      "AUX_POWER": {
+        "x": -4,
+        "y": 2,
+        "side": "west",
+        "electrical_type": "power_in"
+      },
+      "INPUTS": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "input"
+      },
+      "OUTPUTS": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "output"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Control técnico de edificios",
+    "subcategory": "Automatización de edificios",
+    "aliases": "KNX device, bus coupler",
+    "keywords": "knx bus edificio actuador sensor automatizacion",
+    "description": "Dispositivo de automatización conectado al bus KNX y a sus entradas o salidas funcionales.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "building_control",
+    "source_asset": "assets/symbols/SYM-0500_acoplador-dispositivo-knx.svg",
+    "geometry_source": "reviewed_seed"
+  },
+  "SYM-0501": {
+    "id": "SYM-0501",
+    "catalog_id": "SYM-0501",
+    "name": "Alimentación trifásica con neutro y PE",
+    "kind": "source_3phase",
+    "geometry_template": "source_3phase",
+    "designator": "SUP",
+    "standard_profile": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "width": 8,
+    "height": 10,
+    "ports": {
+      "L1": {
+        "x": 4,
+        "y": -3,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "L2": {
+        "x": 4,
+        "y": -1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "L3": {
+        "x": 4,
+        "y": 1,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "N": {
+        "x": 4,
+        "y": 3,
+        "side": "east",
+        "electrical_type": "power_out"
+      },
+      "PE": {
+        "x": 0,
+        "y": 5,
+        "side": "south",
+        "electrical_type": "protective_earth"
+      }
+    },
+    "review_status": "engine_reviewed",
+    "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+    "terminal_model": "functional_group",
+    "requires_exact_model": true,
+    "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios.",
+    "category": "Fuentes y alimentación",
+    "subcategory": "Redes de alimentación",
+    "aliases": "three-phase supply, red 3N~",
+    "keywords": "fuente red trifasica 3n l1 l2 l3 neutro pe",
+    "description": "Punto funcional de entrada de una red trifásica, con neutro opcional y conductor de protección separado.",
+    "interpretation": "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+    "catalog_standard": "Bloque funcional IEC experimental / modelo exacto requerido",
+    "catalog_drawing_type": "drive_block",
+    "source_asset": "assets/symbols/SYM-0501_alimentacion-trifasica-con-neutro-y-pe.svg",
+    "geometry_source": "reviewed_seed"
   },
   "ST-CONTROL-PORT": {
     "id": "ST-CONTROL-PORT",

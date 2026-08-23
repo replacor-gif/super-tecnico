@@ -16,10 +16,10 @@ class ProjectRoadmapTests(unittest.TestCase):
         published = json.loads(ROADMAP.read_text(encoding="utf-8"))
         self.assertEqual(published, build_roadmap())
         summary = published["summary"]
-        self.assertEqual(summary["electroia_reviewed_symbols"], 439)
-        self.assertEqual(summary["electroia_pending_symbols"], 21)
-        self.assertEqual(summary["electroia_complete_families"], 13)
-        self.assertEqual([item["pending_symbols"] for item in published["remaining_electroia_families"]], [8, 8, 5])
+        self.assertEqual(summary["electroia_reviewed_symbols"], 501)
+        self.assertEqual(summary["electroia_pending_symbols"], 0)
+        self.assertEqual(summary["electroia_complete_families"], 19)
+        self.assertEqual(published["remaining_electroia_families"], [])
 
     def test_public_page_renders_measurable_priorities(self):
         html = (ROOT / "actualizaciones.html").read_text(encoding="utf-8")

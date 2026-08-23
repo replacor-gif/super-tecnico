@@ -11,6 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "symbols" / "source.json"
+PROFESSIONAL_EXPANSION = ROOT / "data" / "symbols" / "professional-expansion.json"
 OUT = ROOT / "data" / "symbols"
 ASSETS = ROOT / "assets" / "symbols"
 
@@ -44,6 +45,9 @@ def symbol_svg(title: str, kind: str, terminals: str = "") -> str:
         "module": '<path d="M20 70h35m90 0h35"/><rect x="55" y="32" width="90" height="76" rx="8"/><text x="100" y="65">MODULE</text><text x="100" y="86">POWER</text>',
         "signal": '<path d="M20 70h45m70 0h45"/><rect x="65" y="42" width="70" height="56" rx="6"/><text x="100" y="68">SIGNAL</text><text x="100" y="87">I/O</text>',
         "bus": '<path d="M20 50h40m80 0h40M20 90h40m80 0h40"/><rect x="60" y="30" width="80" height="80" rx="7"/><text x="100" y="65">BUS</text><text x="100" y="86">DATA</text>',
+        "controller_block": '<path d="M20 45h35m90 0h35M20 70h35m90 0h35M20 95h35m90 0h35"/><rect x="55" y="27" width="90" height="86" rx="7"/><path d="M72 43h56M72 58h56M72 73h35M72 88h45"/><text x="100" y="106">CTRL</text>',
+        "drive_block": '<path d="M20 45h35m-35 25h35m-35 25h35m90-50h35m-35 25h35m-35 25h35"/><rect x="55" y="27" width="90" height="86" rx="7"/><path d="M72 91l18-42 20 42 18-42"/><text x="100" y="108">DRIVE</text>',
+        "building_control": '<path d="M20 50h35m-35 40h35m90-40h35m-35 40h35"/><rect x="55" y="28" width="90" height="84" rx="7"/><path d="M72 91V58l28-18 28 18v33M84 91V71h32v20"/><text x="100" y="106">BMS</text>',
     }
     drawing = drawings[kind]
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" role="img" aria-labelledby="title desc">
@@ -181,7 +185,33 @@ def main() -> None:
         record = new_symbol(number, name, category, subcategory, kind, **fields)
         if record["id"] in existing_ids:
             raise RuntimeError(f"Duplicate ID: {record['id']}")
+        existing_ids.add(record["id"])
         symbols.append(record)
+
+    professional = json.loads(PROFESSIONAL_EXPANSION.read_text(encoding="utf-8"))
+    for item in professional["symbols"]:
+        fields = dict(item.get("fields", {}))
+        fields.setdefault("norma", "Bloque funcional IEC experimental / modelo exacto requerido")
+        fields.setdefault(
+            "interpretacion",
+            "El bloque representa funciones y grupos; el bornero físico depende del fabricante, modelo y variante exactos.",
+        )
+        if str(fields.get("fuente") or "").startswith("data/"):
+            fields["fuente"] = ""
+        record = new_symbol(
+            int(item["number"]),
+            item["name"],
+            item["category"],
+            item["subcategory"],
+            item["kind"],
+            **fields,
+        )
+        if record["id"] in existing_ids:
+            raise RuntimeError(f"Duplicate ID: {record['id']}")
+        existing_ids.add(record["id"])
+        symbols.append(record)
+    if len(symbols) != 501:
+        raise RuntimeError(f"Expected 501 symbols after professional expansion, found {len(symbols)}")
 
     # Public lessons use their reviewed SVG files copied into assets/symbols.
     for lesson in lessons:
@@ -193,7 +223,7 @@ def main() -> None:
     categories = sorted({item["categoria"] for item in symbols})
     subcategories = sorted({item["subcategoria"] for item in symbols if item.get("subcategoria")})
     catalog = {
-        "version": "1.1",
+        "version": "1.2",
         "generated_from": "Base Simbología Eléctrica y Electrónica Replacor",
         "count": len(symbols),
         "lesson_count": len(lessons),
@@ -223,7 +253,7 @@ def main() -> None:
     }
     (OUT / "catalog.json").write_text(json.dumps(catalog, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     (OUT / "course.json").write_text(json.dumps(course, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    (OUT / "index.json").write_text(json.dumps({"version":"1.1","symbols":len(symbols),"lessons":course["lesson_count"],"modules":len(course_modules)}, ensure_ascii=False, indent=2), encoding="utf-8")
+    (OUT / "index.json").write_text(json.dumps({"version":"1.2","symbols":len(symbols),"lessons":course["lesson_count"],"modules":len(course_modules)}, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Built {len(symbols)} symbols, {course['lesson_count']} lessons and {len(course_modules)} modules")
 
 

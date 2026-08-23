@@ -7,13 +7,13 @@ const { chromium } = require('playwright');
 const core = require('../archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagram-core.js');
 
 const ids = [
-  'ST-AUTO-PLC-CPU', 'ST-AUTO-DI-4', 'ST-AUTO-DO-4', 'ST-AUTO-AI-2', 'ST-AUTO-AO-2',
-  'ST-AUTO-REMOTE-IO', 'ST-AUTO-SAFETY-PLC', 'ST-AUTO-HMI', 'ST-AUTO-PSU-24V', 'ST-AUTO-SWITCH-4', 'ST-AUTO-GATEWAY',
+  'SYM-0461', 'SYM-0463', 'SYM-0464', 'SYM-0465', 'SYM-0466',
+  'SYM-0467', 'SYM-0462', 'SYM-0468', 'SYM-0469', 'SYM-0470', 'SYM-0471',
 ];
 const symbols = core.getRegistry().symbols;
 const selected = ids.map(id => symbols.find(symbol => symbol.id === id));
 assert.ok(selected.every(Boolean));
-assert.ok(selected.every(symbol => symbol.review_status === 'engine_internal'));
+assert.ok(selected.every(symbol => symbol.review_status === 'engine_reviewed'));
 selected.forEach(symbol => Object.entries(symbol.ports).forEach(([name, port]) => {
   assert.ok(Math.abs(port.x) === symbol.width / 2 || Math.abs(port.y) === symbol.height / 2, `${symbol.id}.${name} is not on the shared 50 mil grid boundary`);
 }));
@@ -41,4 +41,4 @@ const page = await browser.newPage({ viewport: { width: 1900, height: 1300 }, de
 await page.setContent(`<style>body{margin:0;background:#e9ece9}svg{display:block;width:100%;height:auto}</style>${rendered.svg}`);
 await page.screenshot({ path: 'test-artifacts/electroia-automation-blocks-reviewed.png', fullPage: true });
 await browser.close();
-process.stdout.write('ElectroIA automation blocks visual: 11 engine symbols OK\n');
+process.stdout.write('ElectroIA automation blocks visual: 11 public reviewed symbols OK\n');

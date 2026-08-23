@@ -342,6 +342,93 @@
       "review_status": "draft"
     },
     {
+      "id": "SYM-0015",
+      "catalog_id": "SYM-0015",
+      "name": "Alimentación negativa",
+      "kind": "power_down",
+      "geometry_template": "power_down",
+      "designator": "VEE",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "-V": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": false,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
+      "id": "SYM-0016",
+      "catalog_id": "SYM-0016",
+      "name": "Celda",
+      "kind": "cell",
+      "geometry_template": "cell",
+      "designator": "BT",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "+": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_out"
+        },
+        "-": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": false,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
+      "id": "SYM-0017",
+      "catalog_id": "SYM-0017",
+      "name": "Batería",
+      "kind": "battery",
+      "geometry_template": "battery",
+      "designator": "BT",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "+": {
+          "x": 0,
+          "y": -3,
+          "side": "north",
+          "electrical_type": "power_out"
+        },
+        "-": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": false,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
       "id": "SYM-0018",
       "catalog_id": "SYM-0018",
       "name": "Fuente de tensión continua",
@@ -392,6 +479,111 @@
         }
       },
       "review_status": "draft"
+    },
+    {
+      "id": "SYM-0020",
+      "catalog_id": "SYM-0020",
+      "name": "Fuente de corriente",
+      "kind": "source_current",
+      "geometry_template": "source_current",
+      "designator": "I",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "I+": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_out"
+        },
+        "I-": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": false,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
+      "id": "SYM-0021",
+      "catalog_id": "SYM-0021",
+      "name": "Generador",
+      "kind": "generator",
+      "geometry_template": "generator",
+      "designator": "G",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "L": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "N": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "PE": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "protective_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": false,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
+      "id": "SYM-0022",
+      "catalog_id": "SYM-0022",
+      "name": "Panel fotovoltaico",
+      "kind": "solar_panel",
+      "geometry_template": "solar_panel",
+      "designator": "PV",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "PV+": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "PV-": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "PE": {
+          "x": 0,
+          "y": 3,
+          "side": "south",
+          "electrical_type": "protective_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": false,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
     },
     {
       "id": "SYM-0023",
@@ -10795,6 +10987,179 @@
       "review_status": "draft"
     },
     {
+      "id": "SYM-0300",
+      "catalog_id": "SYM-0300",
+      "name": "Timbre",
+      "kind": "bell",
+      "geometry_template": "bell",
+      "designator": "H",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "L": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "N": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_in"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": false,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
+      "id": "SYM-0301",
+      "catalog_id": "SYM-0301",
+      "name": "Sirena",
+      "kind": "siren",
+      "geometry_template": "siren",
+      "designator": "H",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "+": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "-": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_in"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": false,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
+      "id": "SYM-0302",
+      "catalog_id": "SYM-0302",
+      "name": "Detector de humo",
+      "kind": "smoke_detector",
+      "geometry_template": "smoke_detector",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "L+": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "L-": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "ALARM": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": true,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
+      "id": "SYM-0303",
+      "catalog_id": "SYM-0303",
+      "name": "Detector de movimiento PIR",
+      "kind": "pir_detector",
+      "geometry_template": "pir_detector",
+      "designator": "B",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "V+": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "OUT": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": true,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
+      "id": "SYM-0304",
+      "catalog_id": "SYM-0304",
+      "name": "Contacto de puerta",
+      "kind": "door_contact",
+      "geometry_template": "door_contact",
+      "designator": "S",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "COM": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "NC": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "passive"
+        },
+        "NO": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": false,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
       "id": "SYM-0305",
       "catalog_id": "SYM-0305",
       "name": "Amplificador transimpedancia",
@@ -14109,6 +14474,104 @@
       "review_status": "draft"
     },
     {
+      "id": "SYM-0383",
+      "catalog_id": "SYM-0383",
+      "name": "Relé temporizado a la conexión",
+      "kind": "timer_on_delay",
+      "geometry_template": "timer_on_delay",
+      "designator": "Q/K/X",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "A1": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "A2": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "COM": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "passive"
+        },
+        "NO": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        },
+        "NC": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": true,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
+      "id": "SYM-0384",
+      "catalog_id": "SYM-0384",
+      "name": "Relé temporizado a la desconexión",
+      "kind": "timer_off_delay",
+      "geometry_template": "timer_off_delay",
+      "designator": "Q/K/X",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "A1": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "A2": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "COM": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "passive"
+        },
+        "NO": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        },
+        "NC": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": true,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
       "id": "SYM-0385",
       "catalog_id": "SYM-0385",
       "name": "Magnetotérmico unipolar",
@@ -14235,6 +14698,55 @@
         }
       },
       "review_status": "draft"
+    },
+    {
+      "id": "SYM-0389",
+      "catalog_id": "SYM-0389",
+      "name": "Toma trifásica",
+      "kind": "socket_3phase",
+      "geometry_template": "socket_3phase",
+      "designator": "Q/K/X",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "L1": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "L2": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "L3": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "N": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "PE": {
+          "x": 0,
+          "y": 5,
+          "side": "south",
+          "electrical_type": "protective_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": true,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
     },
     {
       "id": "SYM-0390",
@@ -15000,6 +15512,233 @@
       "review_scope": "Bloque funcional, anclajes y nombres de terminal revisados para el motor experimental; los grupos no representan el pinout físico de un modelo concreto ni una certificación normativa."
     },
     {
+      "id": "SYM-0413",
+      "catalog_id": "SYM-0413",
+      "name": "Válvula diodo",
+      "kind": "vacuum_diode",
+      "geometry_template": "vacuum_diode",
+      "designator": "V/H",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "A": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "H1": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "K": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "passive"
+        },
+        "H2": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "power_in"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": false,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
+      "id": "SYM-0414",
+      "catalog_id": "SYM-0414",
+      "name": "Válvula triodo",
+      "kind": "vacuum_triode",
+      "geometry_template": "vacuum_triode",
+      "designator": "V/H",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "G": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "H1": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "A": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "passive"
+        },
+        "K": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        },
+        "H2": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "power_in"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": false,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
+      "id": "SYM-0415",
+      "catalog_id": "SYM-0415",
+      "name": "Válvula pentodo",
+      "kind": "vacuum_pentode",
+      "geometry_template": "vacuum_pentode",
+      "designator": "V/H",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "G1": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "G2": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "G3": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "H1": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "A": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "passive"
+        },
+        "K": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        },
+        "H2": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "power_in"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": false,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
+      "id": "SYM-0416",
+      "catalog_id": "SYM-0416",
+      "name": "Tubo fluorescente",
+      "kind": "fluorescent_lamp",
+      "geometry_template": "fluorescent_lamp",
+      "designator": "V/H",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "E1A": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "E1B": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "E2A": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "passive"
+        },
+        "E2B": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": true,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
+      "id": "SYM-0417",
+      "catalog_id": "SYM-0417",
+      "name": "Lámpara de neón",
+      "kind": "neon_lamp",
+      "geometry_template": "neon_lamp",
+      "designator": "V/H",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "1": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "passive"
+        },
+        "2": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "passive"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": false,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
       "id": "SYM-0418",
       "catalog_id": "SYM-0418",
       "name": "Puerta AND estilo IEC",
@@ -15579,6 +16318,92 @@
           "electrical_type": "passive"
         }
       }
+    },
+    {
+      "id": "SYM-0432",
+      "catalog_id": "SYM-0432",
+      "name": "Fuente de tensión dependiente",
+      "kind": "dependent_voltage_source",
+      "geometry_template": "dependent_voltage_source",
+      "designator": "E/H",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "CTRL+": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "CTRL-": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "OUT+": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "OUT-": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": false,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
+    },
+    {
+      "id": "SYM-0433",
+      "catalog_id": "SYM-0433",
+      "name": "Fuente de corriente dependiente",
+      "kind": "dependent_current_source",
+      "geometry_template": "dependent_current_source",
+      "designator": "G/F",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 6,
+      "ports": {
+        "CTRL+": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "CTRL-": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "OUT+": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "OUT-": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "power_out"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "original_catalog_complete_2026_08",
+      "terminal_model": "explicit",
+      "requires_exact_model": false,
+      "review_scope": "Geometría, anclajes, función y terminales explícitos revisados para el motor. La variante exacta debe confirmarse cuando el símbolo lo indique."
     },
     {
       "id": "SYM-0434",
@@ -16494,524 +17319,2631 @@
       }
     },
     {
-      "id": "ST-AUTO-AI-2",
-      "catalog_id": null,
-      "name": "Módulo de dos entradas analógicas",
-      "kind": "plc_ai_module",
-      "designator": "AI",
-      "standard_profile": "IEC_EXPERIMENTAL",
-      "grid_pitch_mil": 50,
-      "width": 12,
-      "height": 14,
-      "ports": {
-        "AI0+": {
-          "x": -6,
-          "y": -5,
-          "side": "west",
-          "electrical_type": "input"
-        },
-        "AI0-": {
-          "x": -6,
-          "y": -3,
-          "side": "west",
-          "electrical_type": "input"
-        },
-        "AI1+": {
-          "x": -6,
-          "y": 2,
-          "side": "west",
-          "electrical_type": "input"
-        },
-        "AI1-": {
-          "x": -6,
-          "y": 4,
-          "side": "west",
-          "electrical_type": "input"
-        },
-        "L+": {
-          "x": 6,
-          "y": -4,
-          "side": "east",
-          "electrical_type": "power_in"
-        },
-        "MANA": {
-          "x": 6,
-          "y": 4,
-          "side": "east",
-          "electrical_type": "power_in"
-        }
-      },
-      "review_status": "internal"
-    },
-    {
-      "id": "ST-AUTO-AO-2",
-      "catalog_id": null,
-      "name": "Módulo de dos salidas analógicas",
-      "kind": "plc_ao_module",
-      "designator": "AO",
-      "standard_profile": "IEC_EXPERIMENTAL",
-      "grid_pitch_mil": 50,
-      "width": 12,
-      "height": 14,
-      "ports": {
-        "AQ0+": {
-          "x": 6,
-          "y": -5,
-          "side": "east",
-          "electrical_type": "output"
-        },
-        "AQ0-": {
-          "x": 6,
-          "y": -3,
-          "side": "east",
-          "electrical_type": "output"
-        },
-        "AQ1+": {
-          "x": 6,
-          "y": 2,
-          "side": "east",
-          "electrical_type": "output"
-        },
-        "AQ1-": {
-          "x": 6,
-          "y": 4,
-          "side": "east",
-          "electrical_type": "output"
-        },
-        "L+": {
-          "x": -6,
-          "y": -4,
-          "side": "west",
-          "electrical_type": "power_in"
-        },
-        "MANA": {
-          "x": -6,
-          "y": 4,
-          "side": "west",
-          "electrical_type": "power_in"
-        }
-      },
-      "review_status": "internal"
-    },
-    {
-      "id": "ST-AUTO-DI-4",
-      "catalog_id": null,
-      "name": "Módulo de cuatro entradas digitales",
-      "kind": "plc_di_module",
-      "designator": "DI",
-      "standard_profile": "IEC_EXPERIMENTAL",
-      "grid_pitch_mil": 50,
-      "width": 12,
-      "height": 16,
-      "ports": {
-        "I0": {
-          "x": -6,
-          "y": -6,
-          "side": "west",
-          "electrical_type": "input"
-        },
-        "I1": {
-          "x": -6,
-          "y": -2,
-          "side": "west",
-          "electrical_type": "input"
-        },
-        "I2": {
-          "x": -6,
-          "y": 2,
-          "side": "west",
-          "electrical_type": "input"
-        },
-        "I3": {
-          "x": -6,
-          "y": 6,
-          "side": "west",
-          "electrical_type": "input"
-        },
-        "L+": {
-          "x": 6,
-          "y": -5,
-          "side": "east",
-          "electrical_type": "power_in"
-        },
-        "M": {
-          "x": 6,
-          "y": 5,
-          "side": "east",
-          "electrical_type": "power_in"
-        }
-      },
-      "review_status": "internal"
-    },
-    {
-      "id": "ST-AUTO-DO-4",
-      "catalog_id": null,
-      "name": "Módulo de cuatro salidas digitales",
-      "kind": "plc_do_module",
-      "designator": "DO",
-      "standard_profile": "IEC_EXPERIMENTAL",
-      "grid_pitch_mil": 50,
-      "width": 12,
-      "height": 16,
-      "ports": {
-        "Q0": {
-          "x": 6,
-          "y": -6,
-          "side": "east",
-          "electrical_type": "output"
-        },
-        "Q1": {
-          "x": 6,
-          "y": -2,
-          "side": "east",
-          "electrical_type": "output"
-        },
-        "Q2": {
-          "x": 6,
-          "y": 2,
-          "side": "east",
-          "electrical_type": "output"
-        },
-        "Q3": {
-          "x": 6,
-          "y": 6,
-          "side": "east",
-          "electrical_type": "output"
-        },
-        "L+": {
-          "x": -6,
-          "y": -5,
-          "side": "west",
-          "electrical_type": "power_in"
-        },
-        "M": {
-          "x": -6,
-          "y": 5,
-          "side": "west",
-          "electrical_type": "power_in"
-        }
-      },
-      "review_status": "internal"
-    },
-    {
-      "id": "ST-AUTO-GATEWAY",
-      "catalog_id": null,
-      "name": "Pasarela de comunicaciones industrial",
-      "kind": "industrial_gateway",
-      "designator": "GW",
-      "standard_profile": "IEC_EXPERIMENTAL",
-      "grid_pitch_mil": 50,
-      "width": 14,
-      "height": 12,
-      "ports": {
-        "L+": {
-          "x": -7,
-          "y": -4,
-          "side": "west",
-          "electrical_type": "power_in"
-        },
-        "M": {
-          "x": -7,
-          "y": 4,
-          "side": "west",
-          "electrical_type": "power_in"
-        },
-        "FIELD_BUS": {
-          "x": -7,
-          "y": 0,
-          "side": "west",
-          "electrical_type": "bidirectional"
-        },
-        "ETH": {
-          "x": 7,
-          "y": -3,
-          "side": "east",
-          "electrical_type": "bidirectional"
-        },
-        "UPLINK": {
-          "x": 7,
-          "y": 3,
-          "side": "east",
-          "electrical_type": "bidirectional"
-        }
-      },
-      "review_status": "internal"
-    },
-    {
-      "id": "ST-AUTO-HMI",
-      "catalog_id": null,
-      "name": "Interfaz de operador HMI",
-      "kind": "industrial_hmi",
-      "designator": "HMI",
-      "standard_profile": "IEC_EXPERIMENTAL",
-      "grid_pitch_mil": 50,
-      "width": 14,
-      "height": 10,
-      "ports": {
-        "L+": {
-          "x": -7,
-          "y": -3,
-          "side": "west",
-          "electrical_type": "power_in"
-        },
-        "M": {
-          "x": -7,
-          "y": 3,
-          "side": "west",
-          "electrical_type": "power_in"
-        },
-        "ETH": {
-          "x": 7,
-          "y": -3,
-          "side": "east",
-          "electrical_type": "bidirectional"
-        },
-        "SERIAL": {
-          "x": 7,
-          "y": 3,
-          "side": "east",
-          "electrical_type": "bidirectional"
-        }
-      },
-      "review_status": "internal"
-    },
-    {
-      "id": "ST-AUTO-PLC-CPU",
-      "catalog_id": null,
+      "id": "SYM-0461",
+      "catalog_id": "SYM-0461",
       "name": "CPU de PLC industrial",
       "kind": "plc_cpu",
-      "designator": "CPU",
+      "geometry_template": "plc_cpu",
+      "designator": "PLC",
       "standard_profile": "IEC_EXPERIMENTAL",
       "grid_pitch_mil": 50,
-      "width": 14,
-      "height": 14,
+      "width": 8,
+      "height": 8,
       "ports": {
         "L+": {
-          "x": -7,
-          "y": -5,
+          "x": -4,
+          "y": -2,
           "side": "west",
           "electrical_type": "power_in"
         },
         "M": {
-          "x": -7,
-          "y": -3,
+          "x": -4,
+          "y": 0,
           "side": "west",
-          "electrical_type": "power_in"
+          "electrical_type": "ground"
         },
-        "DI_BUS": {
-          "x": -7,
-          "y": 1,
+        "IO_BUS": {
+          "x": -4,
+          "y": 2,
           "side": "west",
-          "electrical_type": "input"
-        },
-        "DO_BUS": {
-          "x": 7,
-          "y": 1,
-          "side": "east",
-          "electrical_type": "output"
-        },
-        "FIELD_BUS": {
-          "x": 7,
-          "y": -3,
-          "side": "east",
           "electrical_type": "bidirectional"
         },
         "ETH": {
-          "x": 7,
-          "y": -5,
-          "side": "east",
-          "electrical_type": "bidirectional"
-        }
-      },
-      "review_status": "internal"
-    },
-    {
-      "id": "ST-AUTO-PSU-24V",
-      "catalog_id": null,
-      "name": "Fuente industrial de 24 V DC",
-      "kind": "industrial_psu_24v",
-      "designator": "PS",
-      "standard_profile": "IEC_EXPERIMENTAL",
-      "grid_pitch_mil": 50,
-      "width": 12,
-      "height": 12,
-      "ports": {
-        "L": {
-          "x": -6,
-          "y": -3,
-          "side": "west",
-          "electrical_type": "power_in"
-        },
-        "N": {
-          "x": -6,
-          "y": 1,
-          "side": "west",
-          "electrical_type": "power_in"
-        },
-        "PE": {
-          "x": -6,
-          "y": 4,
-          "side": "west",
-          "electrical_type": "protective_earth"
-        },
-        "+24V": {
-          "x": 6,
-          "y": -3,
-          "side": "east",
-          "electrical_type": "power_out"
-        },
-        "0V": {
-          "x": 6,
-          "y": 3,
-          "side": "east",
-          "electrical_type": "power_out"
-        }
-      },
-      "review_status": "internal"
-    },
-    {
-      "id": "ST-AUTO-REMOTE-IO",
-      "catalog_id": null,
-      "name": "Cabecera de E/S remota",
-      "kind": "remote_io_head",
-      "designator": "RIO",
-      "standard_profile": "IEC_EXPERIMENTAL",
-      "grid_pitch_mil": 50,
-      "width": 14,
-      "height": 12,
-      "ports": {
-        "L+": {
-          "x": -7,
-          "y": -4,
-          "side": "west",
-          "electrical_type": "power_in"
-        },
-        "M": {
-          "x": -7,
-          "y": 4,
-          "side": "west",
-          "electrical_type": "power_in"
-        },
-        "BUS_IN": {
-          "x": 7,
-          "y": -4,
+          "x": 4,
+          "y": -2,
           "side": "east",
           "electrical_type": "bidirectional"
         },
-        "BUS_OUT": {
-          "x": 7,
+        "FIELD_BUS": {
+          "x": 4,
           "y": 0,
           "side": "east",
           "electrical_type": "bidirectional"
         },
-        "IO_BUS": {
-          "x": 7,
-          "y": 4,
+        "SERVICE": {
+          "x": 4,
+          "y": 2,
           "side": "east",
           "electrical_type": "bidirectional"
         }
       },
-      "review_status": "internal"
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
     },
     {
-      "id": "ST-AUTO-SAFETY-PLC",
-      "catalog_id": null,
+      "id": "SYM-0462",
+      "catalog_id": "SYM-0462",
       "name": "PLC de seguridad certificado",
       "kind": "safety_plc",
-      "designator": "F-CPU",
+      "geometry_template": "safety_plc",
+      "designator": "FPLC",
       "standard_profile": "IEC_EXPERIMENTAL",
       "grid_pitch_mil": 50,
-      "width": 14,
-      "height": 14,
+      "width": 8,
+      "height": 8,
       "ports": {
         "L+": {
-          "x": -7,
-          "y": -5,
+          "x": -4,
+          "y": -2,
           "side": "west",
           "electrical_type": "power_in"
         },
         "M": {
-          "x": -7,
-          "y": 5,
-          "side": "west",
-          "electrical_type": "power_in"
-        },
-        "F_DI": {
-          "x": -7,
+          "x": -4,
           "y": 0,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "SAFE_IN": {
+          "x": -4,
+          "y": 2,
           "side": "west",
           "electrical_type": "input"
         },
-        "F_DO": {
-          "x": 7,
-          "y": 0,
+        "SAFE_OUT": {
+          "x": 4,
+          "y": -2,
           "side": "east",
           "electrical_type": "output"
         },
         "SAFE_BUS": {
-          "x": 7,
-          "y": -5,
+          "x": 4,
+          "y": 0,
           "side": "east",
           "electrical_type": "bidirectional"
         },
-        "TEST": {
-          "x": 7,
-          "y": 5,
+        "DIAG": {
+          "x": 4,
+          "y": 2,
           "side": "east",
           "electrical_type": "output"
         }
       },
-      "review_status": "internal"
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
     },
     {
-      "id": "ST-AUTO-SWITCH-4",
-      "catalog_id": null,
-      "name": "Switch Ethernet industrial de cuatro puertos",
-      "kind": "industrial_switch",
-      "designator": "SW",
+      "id": "SYM-0463",
+      "catalog_id": "SYM-0463",
+      "name": "Módulo de entradas digitales PLC",
+      "kind": "plc_di_module",
+      "geometry_template": "plc_di_module",
+      "designator": "DI",
       "standard_profile": "IEC_EXPERIMENTAL",
       "grid_pitch_mil": 50,
-      "width": 14,
-      "height": 14,
+      "width": 8,
+      "height": 10,
       "ports": {
-        "L+": {
-          "x": -7,
-          "y": -5,
+        "I0": {
+          "x": -4,
+          "y": -3,
           "side": "west",
+          "electrical_type": "input"
+        },
+        "I1": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "I2": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "I3": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "L+": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
           "electrical_type": "power_in"
         },
         "M": {
-          "x": -7,
-          "y": 5,
-          "side": "west",
-          "electrical_type": "power_in"
-        },
-        "P1": {
-          "x": 7,
-          "y": -5,
+          "x": 4,
+          "y": 0,
           "side": "east",
-          "electrical_type": "bidirectional"
+          "electrical_type": "ground"
         },
-        "P2": {
-          "x": 7,
-          "y": -2,
-          "side": "east",
-          "electrical_type": "bidirectional"
-        },
-        "P3": {
-          "x": 7,
+        "BACKPLANE": {
+          "x": 4,
           "y": 2,
-          "side": "east",
-          "electrical_type": "bidirectional"
-        },
-        "P4": {
-          "x": 7,
-          "y": 5,
           "side": "east",
           "electrical_type": "bidirectional"
         }
       },
-      "review_status": "internal"
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0464",
+      "catalog_id": "SYM-0464",
+      "name": "Módulo de salidas digitales PLC",
+      "kind": "plc_do_module",
+      "geometry_template": "plc_do_module",
+      "designator": "DO",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "L+": {
+          "x": -4,
+          "y": -2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "M": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "BACKPLANE": {
+          "x": -4,
+          "y": 2,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "Q0": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "Q1": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "Q2": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "Q3": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0465",
+      "catalog_id": "SYM-0465",
+      "name": "Módulo de entradas analógicas PLC",
+      "kind": "plc_ai_module",
+      "geometry_template": "plc_ai_module",
+      "designator": "AI",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "AI0+": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "AI0-": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "AI1+": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "AI1-": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "L+": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "power_in"
+        },
+        "MANA": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "ground"
+        },
+        "BACKPLANE": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0466",
+      "catalog_id": "SYM-0466",
+      "name": "Módulo de salidas analógicas PLC",
+      "kind": "plc_ao_module",
+      "geometry_template": "plc_ao_module",
+      "designator": "AO",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "L+": {
+          "x": -4,
+          "y": -2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "MANA": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "BACKPLANE": {
+          "x": -4,
+          "y": 2,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "AQ0+": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "AQ0-": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "AQ1+": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "AQ1-": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0467",
+      "catalog_id": "SYM-0467",
+      "name": "Cabecera de E/S remota",
+      "kind": "remote_io_head",
+      "geometry_template": "remote_io_head",
+      "designator": "RIO",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "L+": {
+          "x": -4,
+          "y": -2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "M": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "FIELD_BUS": {
+          "x": -4,
+          "y": 2,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "BACKPLANE": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "AUX_OUT": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "FE": {
+          "x": 0,
+          "y": 4,
+          "side": "south",
+          "electrical_type": "functional_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0468",
+      "catalog_id": "SYM-0468",
+      "name": "Interfaz de operador HMI",
+      "kind": "industrial_hmi",
+      "geometry_template": "industrial_hmi",
+      "designator": "HMI",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "L+": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "M": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "ETH": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "SERIAL": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "USB": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0469",
+      "catalog_id": "SYM-0469",
+      "name": "Fuente industrial de 24 V DC",
+      "kind": "industrial_psu_24v",
+      "geometry_template": "industrial_psu_24v",
+      "designator": "PS",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "L": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "N": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "L+": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "M": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "DC_OK": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "PE": {
+          "x": 0,
+          "y": 4,
+          "side": "south",
+          "electrical_type": "protective_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0470",
+      "catalog_id": "SYM-0470",
+      "name": "Switch Ethernet industrial",
+      "kind": "industrial_switch",
+      "geometry_template": "industrial_switch",
+      "designator": "SW",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "L+": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "M": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "ETH1": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "ETH2": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "ETH3": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "ETH4": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "FE": {
+          "x": 0,
+          "y": 5,
+          "side": "south",
+          "electrical_type": "functional_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0471",
+      "catalog_id": "SYM-0471",
+      "name": "Pasarela de protocolos industrial",
+      "kind": "industrial_gateway",
+      "geometry_template": "industrial_gateway",
+      "designator": "GW",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "L+": {
+          "x": -4,
+          "y": -2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "M": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "NETWORK_A": {
+          "x": -4,
+          "y": 2,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "NETWORK_B": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "SERVICE": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0472",
+      "catalog_id": "SYM-0472",
+      "name": "Controlador Arduino de lógica 5 V",
+      "kind": "arduino_5v",
+      "geometry_template": "arduino_5v",
+      "designator": "MCU",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "VIN": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "5V": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "GPIO": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "ADC": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "input"
+        },
+        "PWM": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "I2C": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "SPI_UART": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0473",
+      "catalog_id": "SYM-0473",
+      "name": "Controlador Arduino de lógica 3,3 V",
+      "kind": "arduino_3v3",
+      "geometry_template": "arduino_3v3",
+      "designator": "MCU",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "VIN": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "3V3": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "GPIO": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "ADC": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "input"
+        },
+        "PWM": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "I2C": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "SPI_UART": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0474",
+      "catalog_id": "SYM-0474",
+      "name": "Arduino Opta",
+      "kind": "arduino_opta",
+      "geometry_template": "arduino_opta",
+      "designator": "PLC",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "L+": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "M": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "DI_GROUP": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "AI_GROUP": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "RELAY_GROUP": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "RS485": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "ETH": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0475",
+      "catalog_id": "SYM-0475",
+      "name": "Arduino Portenta Machine Control",
+      "kind": "portenta_machine_control",
+      "geometry_template": "portenta_machine_control",
+      "designator": "PMC",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "L+": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "M": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "DI_AI_GROUP": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "ENCODER": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "DO_AO_GROUP": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "CAN": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "RS485": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "ETH": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0476",
+      "catalog_id": "SYM-0476",
+      "name": "Raspberry Pi / Compute Module",
+      "kind": "raspberry_pi_controller",
+      "geometry_template": "raspberry_pi_controller",
+      "designator": "SBC",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "5V": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "3V3": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_out"
+        },
+        "GND": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "GPIO": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "I2C_SPI": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "UART": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "USB": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "ETH": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0477",
+      "catalog_id": "SYM-0477",
+      "name": "Controlador ESP32",
+      "kind": "esp32_controller",
+      "geometry_template": "esp32_controller",
+      "designator": "MCU",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "VIN": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "3V3": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "GPIO": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "ADC": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "input"
+        },
+        "PWM": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "I2C_SPI_UART": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "RADIO": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0478",
+      "catalog_id": "SYM-0478",
+      "name": "Controlador embebido genérico",
+      "kind": "embedded_controller",
+      "geometry_template": "embedded_controller",
+      "designator": "CTRL",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "POWER": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "GND": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "ANALOG_IN": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "DIGITAL_IO": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "COMM": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "PROGRAM": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "TEST": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0479",
+      "catalog_id": "SYM-0479",
+      "name": "Acoplador de bus de campo",
+      "kind": "fieldbus_coupler",
+      "geometry_template": "fieldbus_coupler",
+      "designator": "BC",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "L+": {
+          "x": -4,
+          "y": -2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "M": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "FIELD_BUS": {
+          "x": -4,
+          "y": 2,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "BACKPLANE": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "AUX_OUT": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "FE": {
+          "x": 0,
+          "y": 4,
+          "side": "south",
+          "electrical_type": "functional_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0480",
+      "catalog_id": "SYM-0480",
+      "name": "Maestro IO-Link",
+      "kind": "iolink_master",
+      "geometry_template": "iolink_master",
+      "designator": "IOLM",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "L+": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "M": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "PORT1_CQ": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "PORT2_CQ": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "PORT3_CQ": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "PORT4_CQ": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "UPLINK": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "FE": {
+          "x": 0,
+          "y": 5,
+          "side": "south",
+          "electrical_type": "functional_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0481",
+      "catalog_id": "SYM-0481",
+      "name": "Variador de frecuencia trifásico",
+      "kind": "variable_frequency_drive",
+      "geometry_template": "variable_frequency_drive",
+      "designator": "VFD",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 14,
+      "ports": {
+        "R_L1": {
+          "x": -4,
+          "y": -5,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "S_L2": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "T_L3": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "DI_AI": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "STO": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "BUS": {
+          "x": -4,
+          "y": 5,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "U": {
+          "x": 4,
+          "y": -4,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "V": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "W": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "AO_RELAY": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "DC_BUS": {
+          "x": 4,
+          "y": 4,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "PE": {
+          "x": 0,
+          "y": 7,
+          "side": "south",
+          "electrical_type": "protective_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0482",
+      "catalog_id": "SYM-0482",
+      "name": "Arrancador suave trifásico",
+      "kind": "soft_starter_3phase",
+      "geometry_template": "soft_starter_3phase",
+      "designator": "SS",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "1L1": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "3L2": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "5L3": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "CONTROL": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "2T1": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "4T2": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "6T3": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "STATUS": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "PE": {
+          "x": 0,
+          "y": 5,
+          "side": "south",
+          "electrical_type": "protective_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0483",
+      "catalog_id": "SYM-0483",
+      "name": "Servoaccionamiento",
+      "kind": "servo_drive",
+      "geometry_template": "servo_drive",
+      "designator": "SD",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 14,
+      "ports": {
+        "L1": {
+          "x": -4,
+          "y": -5,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "L2": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "L3": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "ENCODER": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "STO": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "BUS": {
+          "x": -4,
+          "y": 5,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "U": {
+          "x": 4,
+          "y": -4,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "V": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "W": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "BRAKE": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "DIAG": {
+          "x": 4,
+          "y": 4,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "PE": {
+          "x": 0,
+          "y": 7,
+          "side": "south",
+          "electrical_type": "protective_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0484",
+      "catalog_id": "SYM-0484",
+      "name": "Driver industrial de motor paso a paso",
+      "kind": "industrial_stepper_drive",
+      "geometry_template": "industrial_stepper_drive",
+      "designator": "STEP",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 12,
+      "ports": {
+        "DC+": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "DC-": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "STEP_DIR": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "ENABLE": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "A+": {
+          "x": 4,
+          "y": -4,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "A-": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "B+": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "B-": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "ALARM": {
+          "x": 4,
+          "y": 4,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0485",
+      "catalog_id": "SYM-0485",
+      "name": "Accionamiento de motor DC",
+      "kind": "dc_motor_drive",
+      "geometry_template": "dc_motor_drive",
+      "designator": "DCD",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 12,
+      "ports": {
+        "POWER_IN": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "FIELD_REF": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "SPEED_REF": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "FEEDBACK": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "A+": {
+          "x": 4,
+          "y": -4,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "A-": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "F+": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "F-": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "ALARM": {
+          "x": 4,
+          "y": 4,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "PE": {
+          "x": 0,
+          "y": 6,
+          "side": "south",
+          "electrical_type": "protective_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0486",
+      "catalog_id": "SYM-0486",
+      "name": "Arrancador estrella-triángulo",
+      "kind": "star_delta_starter",
+      "geometry_template": "star_delta_starter",
+      "designator": "YΔ",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 12,
+      "ports": {
+        "L1": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "L2": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "L3": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "START_STOP": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "U1": {
+          "x": 4,
+          "y": -4,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "V1": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "W1": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "U2_V2_W2": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "STATUS": {
+          "x": 4,
+          "y": 4,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0487",
+      "catalog_id": "SYM-0487",
+      "name": "Arrancador inversor de giro",
+      "kind": "reversing_starter",
+      "geometry_template": "reversing_starter",
+      "designator": "REV",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "L1": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "L2": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "L3": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "FWD_REV": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "U": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "V": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "W": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "STATUS": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0488",
+      "catalog_id": "SYM-0488",
+      "name": "Guardamotor magnetotérmico",
+      "kind": "motor_protection_breaker",
+      "geometry_template": "motor_protection_breaker",
+      "designator": "QF",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "1L1": {
+          "x": -4,
+          "y": -2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "3L2": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "5L3": {
+          "x": -4,
+          "y": 2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "2T1": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "4T2": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "6T3": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "AUX": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0489",
+      "catalog_id": "SYM-0489",
+      "name": "Relé de seguridad",
+      "kind": "safety_relay",
+      "geometry_template": "safety_relay",
+      "designator": "SR",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 12,
+      "ports": {
+        "A1": {
+          "x": -4,
+          "y": -4,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "A2": {
+          "x": -4,
+          "y": -2,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "CH1": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "CH2": {
+          "x": -4,
+          "y": 2,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "RESET": {
+          "x": -4,
+          "y": 4,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "13_14": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "23_24": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "DIAG": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0490",
+      "catalog_id": "SYM-0490",
+      "name": "Contactor semiconductor trifásico",
+      "kind": "solid_state_contactor_3phase",
+      "geometry_template": "solid_state_contactor_3phase",
+      "designator": "SSR",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "L1": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "L2": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "L3": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "CONTROL": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "T1": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "T2": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "T3": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "ALARM": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "PE": {
+          "x": 0,
+          "y": 5,
+          "side": "south",
+          "electrical_type": "protective_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0491",
+      "catalog_id": "SYM-0491",
+      "name": "Conmutador automático de redes",
+      "kind": "automatic_transfer_switch",
+      "geometry_template": "automatic_transfer_switch",
+      "designator": "ATS",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "NORMAL": {
+          "x": -4,
+          "y": -2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "RESERVE": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "CONTROL": {
+          "x": -4,
+          "y": 2,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "LOAD": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "STATUS": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "PE_N": {
+          "x": 0,
+          "y": 4,
+          "side": "south",
+          "electrical_type": "protective_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0492",
+      "catalog_id": "SYM-0492",
+      "name": "Sistema de alimentación ininterrumpida",
+      "kind": "ups_system",
+      "geometry_template": "ups_system",
+      "designator": "UPS",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "INPUT": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "BYPASS": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "BATTERY": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "EPO": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "OUTPUT": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "STATUS": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "COMM": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "PE": {
+          "x": 0,
+          "y": 5,
+          "side": "south",
+          "electrical_type": "protective_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0493",
+      "catalog_id": "SYM-0493",
+      "name": "Controlador DDC / BMS",
+      "kind": "bms_ddc_controller",
+      "geometry_template": "bms_ddc_controller",
+      "designator": "DDC",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "24V": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "COM": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "ground"
+        },
+        "UI_GROUP": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "DI_GROUP": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "UO_GROUP": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "DO_GROUP": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "RS485": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "ETH": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0494",
+      "catalog_id": "SYM-0494",
+      "name": "Controlador de ambiente / termostato",
+      "kind": "room_controller",
+      "geometry_template": "room_controller",
+      "designator": "RC",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "POWER": {
+          "x": -4,
+          "y": -2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "SENSOR": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "OCCUPANCY": {
+          "x": -4,
+          "y": 2,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "VALVE": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "FAN": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "BUS": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0495",
+      "catalog_id": "SYM-0495",
+      "name": "Controlador de unidad de tratamiento de aire",
+      "kind": "ahu_controller",
+      "geometry_template": "ahu_controller",
+      "designator": "AHU",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "POWER": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "SENSORS": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "SAFETIES": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "BMS_BUS": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "FANS_VFD": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "DAMPERS": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "COILS": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "ALARMS": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0496",
+      "catalog_id": "SYM-0496",
+      "name": "Controlador electrónico de refrigeración",
+      "kind": "refrigeration_controller",
+      "geometry_template": "refrigeration_controller",
+      "designator": "ERC",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 12,
+      "ports": {
+        "POWER": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "PROBES": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "DIGITAL_IN": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "BUS": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "COMPRESSOR": {
+          "x": 4,
+          "y": -4,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "FANS": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "DEFROST": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "EEV": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "ALARM": {
+          "x": 4,
+          "y": 4,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0497",
+      "catalog_id": "SYM-0497",
+      "name": "Control de quemador / caldera",
+      "kind": "burner_boiler_controller",
+      "geometry_template": "burner_boiler_controller",
+      "designator": "BC",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "POWER": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "THERMOSTATS": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "PRESSOSTATS": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "FLAME": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "FAN": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "IGNITION": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "VALVES": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "BUS": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0498",
+      "catalog_id": "SYM-0498",
+      "name": "Controlador de grupo de presión",
+      "kind": "booster_pump_controller",
+      "geometry_template": "booster_pump_controller",
+      "designator": "PCTRL",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "POWER": {
+          "x": -4,
+          "y": -3,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "PRESSURE": {
+          "x": -4,
+          "y": -1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "LEVEL": {
+          "x": -4,
+          "y": 1,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "SAFETIES": {
+          "x": -4,
+          "y": 3,
+          "side": "west",
+          "electrical_type": "input"
+        },
+        "PUMP1": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "PUMP2": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "VFD_REF": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "ALARM_BUS": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0499",
+      "catalog_id": "SYM-0499",
+      "name": "Central de detección de incendios",
+      "kind": "fire_alarm_panel",
+      "geometry_template": "fire_alarm_panel",
+      "designator": "FACP",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "MAINS": {
+          "x": -4,
+          "y": -2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "BATTERY": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "LOOP_ZONES": {
+          "x": -4,
+          "y": 2,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "SOUNDERS": {
+          "x": 4,
+          "y": -2,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "RELAYS": {
+          "x": 4,
+          "y": 0,
+          "side": "east",
+          "electrical_type": "output"
+        },
+        "NETWORK": {
+          "x": 4,
+          "y": 2,
+          "side": "east",
+          "electrical_type": "bidirectional"
+        },
+        "PE": {
+          "x": 0,
+          "y": 4,
+          "side": "south",
+          "electrical_type": "protective_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0500",
+      "catalog_id": "SYM-0500",
+      "name": "Acoplador / dispositivo KNX",
+      "kind": "knx_device",
+      "geometry_template": "knx_device",
+      "designator": "KNX",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 8,
+      "ports": {
+        "KNX+": {
+          "x": -4,
+          "y": -2,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "KNX-": {
+          "x": -4,
+          "y": 0,
+          "side": "west",
+          "electrical_type": "bidirectional"
+        },
+        "AUX_POWER": {
+          "x": -4,
+          "y": 2,
+          "side": "west",
+          "electrical_type": "power_in"
+        },
+        "INPUTS": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "input"
+        },
+        "OUTPUTS": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "output"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
+    },
+    {
+      "id": "SYM-0501",
+      "catalog_id": "SYM-0501",
+      "name": "Alimentación trifásica con neutro y PE",
+      "kind": "source_3phase",
+      "geometry_template": "source_3phase",
+      "designator": "SUP",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "grid_pitch_mil": 50,
+      "width": 8,
+      "height": 10,
+      "ports": {
+        "L1": {
+          "x": 4,
+          "y": -3,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "L2": {
+          "x": 4,
+          "y": -1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "L3": {
+          "x": 4,
+          "y": 1,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "N": {
+          "x": 4,
+          "y": 3,
+          "side": "east",
+          "electrical_type": "power_out"
+        },
+        "PE": {
+          "x": 0,
+          "y": 5,
+          "side": "south",
+          "electrical_type": "protective_earth"
+        }
+      },
+      "review_status": "draft",
+      "normalization_batch": "professional_pack_automation_drives_buildings_2026_08",
+      "terminal_model": "functional_group",
+      "requires_exact_model": true,
+      "review_scope": "Bloque funcional profesional con dominios de potencia, señal, comunicaciones, seguridad y tierra separados. No representa el pinout de un fabricante: el modelo, variante, manual y borneros exactos son obligatorios."
     },
     {
       "id": "ST-CONTROL-PORT",
