@@ -18,6 +18,7 @@ def read(relative: str) -> dict:
 
 def build() -> dict:
     symbols = read("data/electroia/symbol-normalization-report.json")
+    electroia_release = read("data/electroia/public-release-readiness.json")
     readiness = read("data/ai/readiness-report.json")
     regulations = read("data/regulations/tool-manifest.json")
     connectors = read("data/connectors/tool-manifest.json")
@@ -34,9 +35,11 @@ def build() -> dict:
     public_ai_tools = int(str(regulations.get("status", "")).startswith("public"))
     public_ai_tools += sum(str(item.get("state", "")).startswith("public") for item in connectors.get("tools", []))
     public_ai_tools += sum(str(item.get("state", "")).startswith("public") for item in embedded.get("tools", []))
+    if electroia_release["summary"]["public_information_surface_ready"]:
+        public_ai_tools += 2
     return {
         "schema_version": "1.0",
-        "updated_at": "2026-08-23",
+        "updated_at": "2026-08-24",
         "release_stage": "beta_publica_competente",
         "summary": {
             "electroia_catalog_symbols": total,
@@ -45,6 +48,11 @@ def build() -> dict:
             "electroia_reviewed_percent": round(reviewed * 100 / total, 1),
             "electroia_complete_families": len(symbols["fully_reviewed_categories"]),
             "electroia_total_families": len(symbols["category_quality"]),
+            "electroia_release_stage": electroia_release["release_stage"],
+            "electroia_professional_examples": electroia_release["summary"]["professional_examples"],
+            "electroia_component_overlaps": electroia_release["summary"]["component_overlaps"],
+            "electroia_wire_component_conflicts": electroia_release["summary"]["wire_component_conflicts"],
+            "electroia_public_execution_ready": electroia_release["summary"]["public_execution_ready"],
             "public_ai_tools": public_ai_tools,
             "ai_readiness_percent": readiness["readiness_score_percent"],
         },
@@ -62,8 +70,9 @@ def build() -> dict:
                 "id": "diagram-real-cases",
                 "area": "ElectroIA",
                 "title": "Validar diagramas completos de casos reales",
-                "status": "in_progress",
-                "next_action": "Crear una batería de cuadros, automatismos, electrónica HVAC y controladores embebidos con comprobación visual de cruces, etiquetas y legibilidad.",
+                "status": "field_validation",
+                "progress": {"done": electroia_release["summary"]["professional_examples"], "total": 20, "unit": "casos reales"},
+                "next_action": "Probar en móvil otros quince esquemas reales de cuadros, automatismos, electrónica HVAC y controladores embebidos y registrar cualquier corrección visual.",
             },
             {
                 "id": "duct-field-validation",

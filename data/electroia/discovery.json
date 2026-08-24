@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "name": "ElectroIA",
   "title": "Motor neutral de diagramas electrotécnicos para IAs",
-  "status": "private_preview",
+  "status": "public_discovery_private_execution",
   "provider_neutral": true,
   "embedded_ai_model": false,
   "purpose": "Validar símbolos, terminales y redes decididos por una IA y generar un SVG determinista sobre una rejilla común.",
@@ -36,6 +36,12 @@
       "engine": "../../archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagram-core.js",
       "symbol_library": "../../archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagram-symbol-library.js"
     },
+    "http_discovery": {
+      "status": "public_read_only",
+      "status_endpoint": "../../api/index.php?action=electroia-public-status",
+      "symbol_search_endpoint": "../../api/index.php?action=electroia-symbol-search&q={query}",
+      "execution_available": false
+    },
     "remote_mcp": {
       "status": "planned",
       "transport": "streamable-http"
@@ -47,6 +53,7 @@
     "symbol_library": "symbol-library.json",
     "normalization_report": "symbol-normalization-report.json",
     "engine_audit_report": "engine-audit-report.json",
+    "public_release_readiness": "public-release-readiness.json",
     "openapi_discovery": "discovery.openapi.json",
     "shared_connector_catalog": "../connectors/tool-manifest.json",
     "shared_embedded_platform_catalog": "../embedded-platforms/tool-manifest.json"
@@ -70,6 +77,7 @@
   ],
   "security": {
     "preview_access": "private",
+    "public_metadata_and_limited_search": true,
     "credentials_in_discovery_files": false,
     "remote_public_execution": false
   }

@@ -9,7 +9,8 @@ Super Técnico is a Spanish technical knowledge project for HVAC, electronics, c
 - Remote MCP server: not active
 - Commercial machine access: not open
 - Regulation search billing: free preview, no API key, rate limited
-- Local ElectroIA MCP source: private-preview development only
+- ElectroIA public status and reviewed-symbol search: available, read-only and rate limited
+- ElectroIA rendering: private-preview development only; no anonymous remote execution
 - Embedded-platform search and documentary preselection: public free preview, rate limited
 
 Do not call planned endpoints until discovery.json reports remote execution as enabled. Public JSON files contain metadata and contracts, not credentials.
@@ -41,7 +42,10 @@ Do not call planned endpoints until discovery.json reports remote execution as e
 - Neutral diagram JSON Schema: /data/electroia/diagram-document.schema.json
 - Normalized symbol library: /data/electroia/symbol-library.json
 - Symbol quality report: /data/electroia/symbol-normalization-report.json
+- Public-release readiness report: /data/electroia/public-release-readiness.json
 - Read-only OpenAPI discovery: /data/electroia/discovery.openapi.json
+- Public status: /api/index.php?action=electroia-public-status
+- Reviewed-symbol search: /api/index.php?action=electroia-symbol-search&q=rele
 - MCP Registry metadata draft: /electroia-tool-server/server.json
 - Source repository: https://github.com/replacor-gif/super-tecnico
 

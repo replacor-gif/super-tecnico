@@ -69,7 +69,7 @@
     {
       "id": "electroia-diagram-engine",
       "title": "ElectroIA Diagram Engine",
-      "status": "private_preview",
+      "status": "public_discovery_private_execution",
       "capabilities": [
         "normalized_symbol_search",
         "diagram_validation",

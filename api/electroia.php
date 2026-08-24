@@ -132,3 +132,126 @@ function st_electroia_status(): array
         ],
     ];
 }
+
+function st_electroia_read_json_file(string $relativePath): array
+{
+    $path = dirname(__DIR__) . '/' . ltrim($relativePath, '/');
+    $raw = is_file($path) ? file_get_contents($path) : false;
+    if ($raw === false) throw new RuntimeException('electroia_public_data_unavailable');
+    $data = json_decode($raw, true);
+    if (!is_array($data)) throw new RuntimeException('electroia_public_data_invalid');
+    return $data;
+}
+
+function st_electroia_public_status(): array
+{
+    $release = st_electroia_read_json_file('data/electroia/public-release-readiness.json');
+    $manifest = st_electroia_read_json_file('data/electroia/tool-manifest.json');
+    $summary = is_array($release['summary'] ?? null) ? $release['summary'] : [];
+    $capabilities = is_array($manifest['capabilities'] ?? null) ? $manifest['capabilities'] : [];
+    return [
+        'ok' => true,
+        'service' => 'electroia-public-discovery',
+        'release_stage' => (string) ($release['release_stage'] ?? 'unknown'),
+        'public_execution_available' => false,
+        'private_preview_available' => ($summary['private_human_preview_ready'] ?? false) === true,
+        'provider_neutral' => true,
+        'embedded_ai_model' => false,
+        'engine_version' => (string) ($manifest['diagram_engine_version'] ?? ''),
+        'document_kinds' => array_values($capabilities['document_kinds'] ?? []),
+        'standard_profiles' => array_values($capabilities['standard_profiles'] ?? []),
+        'quality' => [
+            'reviewed_symbols' => (int) ($summary['reviewed_symbols'] ?? 0),
+            'professional_examples' => (int) ($summary['professional_examples'] ?? 0),
+            'component_overlaps' => (int) ($summary['component_overlaps'] ?? 0),
+            'wire_component_conflicts' => (int) ($summary['wire_component_conflicts'] ?? 0),
+            'dangerous_warnings' => (int) ($summary['dangerous_warnings'] ?? 0),
+        ],
+        'responsibility_boundary' => [
+            'calling_ai' => 'Interpreta, calcula, selecciona componentes y entrega un documento estructurado.',
+            'electroia' => 'Valida símbolos, terminales y redes y genera el plano determinista.',
+        ],
+        'notice' => 'La consulta pública es informativa. El renderizado remoto continúa privado hasta completar validación de campo y límites operativos.',
+    ];
+}
+
+function st_electroia_search_normalize(string $value): string
+{
+    $value = strtr(trim($value), [
+        'á' => 'a', 'é' => 'e', 'í' => 'i', 'ó' => 'o', 'ú' => 'u', 'ü' => 'u', 'ñ' => 'n',
+        'Á' => 'A', 'É' => 'E', 'Í' => 'I', 'Ó' => 'O', 'Ú' => 'U', 'Ü' => 'U', 'Ñ' => 'N',
+    ]);
+    $transliterated = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $value);
+    $value = $transliterated === false ? $value : $transliterated;
+    $value = strtoupper($value);
+    return trim(preg_replace('/[^A-Z0-9]+/', ' ', $value) ?? '');
+}
+
+function st_electroia_public_symbol_search(array $input): array
+{
+    $query = trim((string) ($input['q'] ?? ''));
+    if (strlen($query) < 2 || strlen($query) > 80) {
+        st_json(['ok' => false, 'error' => 'invalid_query'], 422);
+    }
+    $limit = min(12, max(1, (int) ($input['limit'] ?? 8)));
+    $category = st_electroia_search_normalize(trim((string) ($input['category'] ?? '')));
+    if (strlen($category) > 80) st_json(['ok' => false, 'error' => 'invalid_category'], 422);
+    $normalizedQuery = st_electroia_search_normalize($query);
+    $terms = array_values(array_filter(explode(' ', $normalizedQuery), static fn(string $term): bool => strlen($term) > 1));
+    if (!$terms) st_json(['ok' => false, 'error' => 'invalid_query'], 422);
+
+    $library = st_electroia_read_json_file('data/electroia/symbol-library.json');
+    $matches = [];
+    foreach (($library['symbols'] ?? []) as $symbol) {
+        if (!is_array($symbol) || empty($symbol['catalog_id']) || ($symbol['review_status'] ?? '') !== 'engine_reviewed') continue;
+        $symbolCategory = st_electroia_search_normalize((string) ($symbol['category'] ?? ''));
+        if ($category !== '' && !str_contains($symbolCategory, $category)) continue;
+        $id = (string) ($symbol['id'] ?? '');
+        $name = (string) ($symbol['name'] ?? '');
+        $haystack = st_electroia_search_normalize(implode(' ', [
+            $id,
+            $name,
+            (string) ($symbol['category'] ?? ''),
+            (string) ($symbol['subcategory'] ?? ''),
+            (string) ($symbol['aliases'] ?? ''),
+            (string) ($symbol['keywords'] ?? ''),
+            (string) ($symbol['description'] ?? ''),
+        ]));
+        if (!array_reduce($terms, static fn(bool $found, string $term): bool => $found && str_contains($haystack, $term), true)) continue;
+        $normalizedName = st_electroia_search_normalize($name);
+        $score = $normalizedQuery === st_electroia_search_normalize($id) ? 1000 : 0;
+        if ($normalizedQuery === $normalizedName) $score += 500;
+        elseif (str_starts_with($normalizedName, $normalizedQuery)) $score += 250;
+        foreach ($terms as $term) {
+            if (str_contains($normalizedName, $term)) $score += 50;
+            if (str_contains(st_electroia_search_normalize((string) ($symbol['aliases'] ?? '')), $term)) $score += 20;
+        }
+        $ports = is_array($symbol['ports'] ?? null) ? $symbol['ports'] : [];
+        $matches[] = [
+            'score' => $score,
+            'id' => $id,
+            'name' => $name,
+            'category' => (string) ($symbol['category'] ?? ''),
+            'subcategory' => (string) ($symbol['subcategory'] ?? ''),
+            'designator' => (string) ($symbol['designator'] ?? ''),
+            'terminal_names' => array_values(array_map('strval', array_keys($ports))),
+            'terminal_count' => count($ports),
+            'terminal_model' => (string) ($symbol['terminal_model'] ?? 'explicit'),
+            'requires_exact_model' => ($symbol['requires_exact_model'] ?? false) === true,
+        ];
+    }
+    usort($matches, static function(array $left, array $right): int {
+        return ($right['score'] <=> $left['score']) ?: strnatcasecmp($left['name'], $right['name']);
+    });
+    $items = array_slice($matches, 0, $limit);
+    foreach ($items as &$item) unset($item['score']);
+    unset($item);
+    return [
+        'ok' => true,
+        'query' => $query,
+        'total' => count($matches),
+        'limit' => $limit,
+        'items' => $items,
+        'notice' => 'Resultados limitados a símbolos públicos revisados. Los bloques funcionales con requires_exact_model=true no representan un pinout físico.',
+    ];
+}

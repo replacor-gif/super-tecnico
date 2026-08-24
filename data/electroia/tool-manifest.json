@@ -6,7 +6,7 @@
   "provider_neutral": true,
   "embedded_ai_model": false,
   "billing_required_by_electroia": false,
-  "diagram_engine_version": "1.14.0-alpha.1",
+  "diagram_engine_version": "1.14.1-alpha.1",
   "diagram_contract_version": "1.0",
   "design_model_version": "0.9",
   "core_policy": {
@@ -71,13 +71,16 @@
     "image_contract": "La IA que ve la imagen extrae símbolos, terminales y redes; ElectroIA valida y dibuja el documento estructurado."
   },
   "discovery": {
-    "status": "private_preview",
+    "status": "public_discovery_private_execution",
     "llms_path": "llms.txt",
     "machine_manifest_path": "data/electroia/discovery.json",
     "openapi_path": "data/electroia/discovery.openapi.json",
     "mcp_server_metadata_path": "electroia-tool-server/server.json",
     "remote_mcp_available": false,
-    "local_mcp_available": true
+    "local_mcp_available": true,
+    "public_status_endpoint": "api/index.php?action=electroia-public-status",
+    "public_symbol_search_endpoint": "api/index.php?action=electroia-symbol-search&q={query}",
+    "release_readiness_path": "data/electroia/public-release-readiness.json"
   },
   "tools": [
     {

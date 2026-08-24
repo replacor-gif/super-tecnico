@@ -26,6 +26,16 @@ try {
         st_json(['ok' => true, 'unlocked' => true]);
     }
 
+    if ($action === 'electroia-public-status' && $method === 'GET') {
+        st_rate_limit('electroia-public-status', st_client_hash($_GET), 240, 3600);
+        st_json(st_electroia_public_status());
+    }
+
+    if ($action === 'electroia-symbol-search' && $method === 'GET') {
+        st_rate_limit('electroia-symbol-search', st_client_hash($_GET), 240, 3600);
+        st_json(st_electroia_public_symbol_search($_GET));
+    }
+
     if ($action === 'electroia-status' && $method === 'GET') {
         st_require_electroia_access();
         st_json(st_electroia_status());
@@ -38,7 +48,7 @@ try {
 
     if ($action === 'health' && $method === 'GET') {
         st_db()->query('SELECT 1');
-        st_json(['ok' => true, 'service' => 'super-tecnico-api', 'version' => ST_REGULATION_SERVICE_VERSION, 'public_tools' => [ST_REGULATION_TOOL_ID, 'supertecnico_search_connectors', 'supertecnico_get_connector', 'supertecnico_resolve_connector_contact', 'supertecnico_search_embedded_platforms', 'supertecnico_get_embedded_platform', 'supertecnico_recommend_embedded_platforms']]);
+        st_json(['ok' => true, 'service' => 'super-tecnico-api', 'version' => ST_REGULATION_SERVICE_VERSION, 'public_tools' => [ST_REGULATION_TOOL_ID, 'electroia_public_status', 'electroia_search_symbols', 'supertecnico_search_connectors', 'supertecnico_get_connector', 'supertecnico_resolve_connector_contact', 'supertecnico_search_embedded_platforms', 'supertecnico_get_embedded_platform', 'supertecnico_recommend_embedded_platforms']]);
     }
 
     if ($action === 'regulation-search' && in_array($method, ['GET', 'POST'], true)) {

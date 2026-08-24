@@ -63,18 +63,24 @@ async function loadEngineAudit() {
   if (state.auditLoaded) return;
   state.auditLoaded = true;
   try {
-    const report = await fetchJson("../data/electroia/engine-audit-report.json", "la auditoría del motor");
+    const [report, release] = await Promise.all([
+      fetchJson("../data/electroia/engine-audit-report.json", "la auditoría del motor"),
+      fetchJson("../data/electroia/public-release-readiness.json", "el estado de publicación"),
+    ]);
     const summary = report.summary || {};
-    $("#engineAuditHeadline").textContent = report.status === "pass"
-      ? `${summary.reviewed_public_symbols || 0} símbolos revisados · 0 fallos críticos`
+    const releaseSummary = release.summary || {};
+    const gatesPass = report.status === "pass" && releaseSummary.automated_gates_pass === true;
+    $("#engineAuditHeadline").textContent = gatesPass
+      ? `Candidata privada · ${releaseSummary.professional_examples || 0} planos sin conflictos`
       : "La auditoría necesita revisión";
     const limitations = (report.known_limitations || []).map((item) => `<li><b>${escapeHtml(item.message)}</b></li>`).join("");
+    const blockers = (release.manual_release_blockers || []).map((item) => `<li><b>${escapeHtml(item.exit_criteria)}</b></li>`).join("");
     $("#engineAuditContent").innerHTML = `<div class="engine-audit-metrics">
       <span><b>${Number(summary.public_symbols || 0)}</b> símbolos públicos</span>
-      <span><b>${Number(summary.ports || 0)}</b> terminales definidos</span>
-      <span><b>${Number(summary.professional_symbols || 0)}</b> bloques profesionales</span>
-      <span><b>${Number(summary.example_documents || 0)}</b> planos patrón validados</span>
-    </div><p>Auditoría estructural: <strong>${report.status === "pass" ? "superada" : "pendiente"}</strong>. Límites que el motor no oculta:</p><ul>${limitations}</ul>`;
+      <span><b>${Number(releaseSummary.professional_examples || 0)}</b> planos patrón</span>
+      <span><b>${Number(releaseSummary.component_overlaps || 0)}</b> solapes</span>
+      <span><b>${Number(releaseSummary.wire_component_conflicts || 0)}</b> cables sobre símbolos</span>
+    </div><p>Puertas automáticas: <strong>${gatesPass ? "superadas" : "pendientes"}</strong>. El motor seguirá privado hasta completar:</p><ul>${blockers}</ul><p>Límites técnicos declarados:</p><ul>${limitations}</ul>`;
   } catch (_error) {
     $("#engineAuditHeadline").textContent = "Auditoría no disponible";
     $("#engineAuditContent").innerHTML = "<p>No se ha podido cargar el informe. El motor sigue disponible, pero el estado no se puede confirmar.</p>";

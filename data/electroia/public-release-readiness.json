@@ -1,0 +1,202 @@
+{
+  "schema_version": "1.0",
+  "generated_on": "2026-08-24",
+  "engine_version": "1.14.1-alpha.1",
+  "release_stage": "private_release_candidate",
+  "decision": "keep_execution_private_until_field_validation",
+  "summary": {
+    "automated_gates_pass": true,
+    "public_information_surface_ready": true,
+    "private_human_preview_ready": true,
+    "public_execution_ready": false,
+    "reviewed_symbols": 501,
+    "professional_examples": 5,
+    "example_components": 59,
+    "example_nets": 69,
+    "component_overlaps": 0,
+    "wire_component_conflicts": 0,
+    "dangerous_warnings": 0
+  },
+  "automated_gates": {
+    "technical_quality": [
+      {
+        "id": "engine_audit_passes",
+        "passed": true,
+        "evidence": "0 fallos críticos"
+      },
+      {
+        "id": "public_symbols_reviewed",
+        "passed": true,
+        "evidence": "501/501 revisados"
+      },
+      {
+        "id": "five_professional_examples",
+        "passed": true,
+        "evidence": "5 planos patrón"
+      },
+      {
+        "id": "examples_have_no_validation_errors",
+        "passed": true,
+        "evidence": "0 errores"
+      },
+      {
+        "id": "examples_have_no_dangerous_warnings",
+        "passed": true,
+        "evidence": "0 avisos peligrosos"
+      },
+      {
+        "id": "examples_have_no_component_overlaps",
+        "passed": true,
+        "evidence": "0 solapes"
+      },
+      {
+        "id": "examples_have_no_wire_component_conflicts",
+        "passed": true,
+        "evidence": "0 cruces por componentes"
+      },
+      {
+        "id": "examples_stay_on_grid",
+        "passed": true,
+        "evidence": "0 terminales fuera de rejilla"
+      },
+      {
+        "id": "examples_use_single_canvas",
+        "passed": true,
+        "evidence": "5/5 en lienzo único"
+      }
+    ],
+    "safe_exposure": [
+      {
+        "id": "private_preview_is_noindex",
+        "passed": true,
+        "evidence": "laboratorio excluido de buscadores"
+      },
+      {
+        "id": "private_execution_requires_access",
+        "passed": true,
+        "evidence": "ejecución protegida por servidor"
+      },
+      {
+        "id": "openapi_does_not_expose_render",
+        "passed": true,
+        "evidence": "solo consulta pública de estado y catálogo"
+      },
+      {
+        "id": "raw_images_are_not_claimed_as_supported",
+        "passed": true,
+        "evidence": "foto y boceto se declaran pendientes"
+      },
+      {
+        "id": "remote_execution_remains_disabled",
+        "passed": true,
+        "evidence": "motor remoto no abierto"
+      }
+    ]
+  },
+  "manual_release_blockers": [
+    {
+      "id": "FIELD_VALIDATION_REQUIRED",
+      "owner": "Administrador y técnicos colaboradores",
+      "exit_criteria": "Validar en móvil al menos 20 esquemas reales de cuatro ámbitos: cuadros, automatización, electrónica HVAC y sistemas embebidos."
+    },
+    {
+      "id": "IEC_PROFILE_REMAINS_EXPERIMENTAL",
+      "owner": "ElectroIA",
+      "exit_criteria": "Separar reglas gráficas generales de los perfiles documentales y verificar el perfil usado para cada clase de esquema."
+    },
+    {
+      "id": "PUBLIC_EXECUTION_GUARDRAILS_REQUIRED",
+      "owner": "Super Técnico",
+      "exit_criteria": "Añadir autenticación por clave, cuotas, límites de tamaño, registro de diagnósticos y apagado de emergencia antes de ofrecer renderizado remoto."
+    }
+  ],
+  "allowed_public_scope_now": [
+    "estado y capacidades resumidas",
+    "búsqueda limitada de símbolos revisados",
+    "contrato JSON y ejemplos profesionales revisados",
+    "documentación para integrar el servidor MCP local"
+  ],
+  "forbidden_public_scope_now": [
+    "ejecución HTTP anónima del renderizador",
+    "prometer esquemas listos para montaje sin revisión técnica",
+    "interpretar fotos o bocetos directamente",
+    "inferir pinouts de bloques funcionales sin modelo exacto"
+  ],
+  "examples": [
+    {
+      "id": "ELECTROIA-PRO-EMBEDDED-001",
+      "file": "arduino-industrial-interface.json",
+      "title": "Arduino de 5 V con interfaz aislada a campo de 24 V",
+      "document_kind": "circuit_diagram",
+      "components": 11,
+      "nets": 10,
+      "errors": 0,
+      "warnings": 7,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "off_grid_terminals": 0,
+      "single_canvas": true
+    },
+    {
+      "id": "ELECTROIA-PRO-BUILDING-001",
+      "file": "bms-ahu-building-control.json",
+      "title": "Control BMS de unidad de tratamiento de aire",
+      "document_kind": "multi_line_diagram",
+      "components": 9,
+      "nets": 12,
+      "errors": 0,
+      "warnings": 28,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "off_grid_terminals": 0,
+      "single_canvas": true
+    },
+    {
+      "id": "ELECTROIA-PATTERN-SLD-001",
+      "file": "distribution-board-single-line.json",
+      "title": "Cuadro unifilar 230 V",
+      "document_kind": "single_line_diagram",
+      "components": 11,
+      "nets": 10,
+      "errors": 0,
+      "warnings": 0,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "off_grid_terminals": 0,
+      "single_canvas": true
+    },
+    {
+      "id": "ELECTROIA-PATTERN-MOTOR-001",
+      "file": "motor-starter-direct.json",
+      "title": "Arranque directo de motor 3~",
+      "document_kind": "multi_line_diagram",
+      "components": 18,
+      "nets": 20,
+      "errors": 0,
+      "warnings": 0,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "off_grid_terminals": 0,
+      "single_canvas": true
+    },
+    {
+      "id": "ELECTROIA-PRO-AUTO-001",
+      "file": "plc-vfd-motor-system.json",
+      "title": "PLC, seguridad y variador para motor trifásico",
+      "document_kind": "multi_line_diagram",
+      "components": 10,
+      "nets": 17,
+      "errors": 0,
+      "warnings": 12,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "off_grid_terminals": 0,
+      "single_canvas": true
+    }
+  ]
+}

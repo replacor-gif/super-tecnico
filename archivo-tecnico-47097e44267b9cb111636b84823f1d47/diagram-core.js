@@ -1,7 +1,7 @@
 "use strict";
 
 const ElectroDiagramCore = (() => {
-  const ENGINE_VERSION = "1.14.0-alpha.1";
+  const ENGINE_VERSION = "1.14.1-alpha.1";
   const CONTRACT_VERSION = "1.0";
   const GRID_PITCH_MIL = 50;
   const UNIT = 24;
@@ -414,16 +414,17 @@ const ElectroDiagramCore = (() => {
           netId,
         ));
       }
+      const role = String(net?.role || "signal");
       const signalTypes = new Set(["input", "output", "open_collector", "tri_state"]);
       const powerTypes = new Set(["power_in", "power_out"]);
-      if (connectedTypes.some((type) => signalTypes.has(type)) && connectedTypes.some((type) => powerTypes.has(type))) {
+      const isReferenceNet = ["ground", "protective_earth"].includes(role);
+      if (!isReferenceNet && connectedTypes.some((type) => signalTypes.has(type)) && connectedTypes.some((type) => powerTypes.has(type))) {
         warnings.push(diagnostic(
           "SIGNAL_POWER_DOMAIN_MIX",
           `La red ${netId} une terminales de señal con alimentación; confirma que existe la interfaz o adaptación adecuada.`,
           netId,
         ));
       }
-      const role = String(net?.role || "signal");
       if (role === "protective_earth" && !connectedTypes.includes("protective_earth")) {
         warnings.push(diagnostic("NET_ROLE_MISMATCH", `La red ${netId} se declara PE pero no contiene ningún terminal PE.`, netId));
       }

@@ -2,13 +2,45 @@
   "openapi": "3.1.0",
   "info": {
     "title": "ElectroIA Discovery API",
-    "version": "0.1.0",
-    "description": "Read-only discovery contracts for the ElectroIA private preview. Diagram execution is currently provided through the local MCP stdio server, not through this HTTP description."
+    "version": "0.2.0",
+    "description": "Public read-only discovery and limited reviewed-symbol search for ElectroIA. Diagram execution remains private and is not exposed by this HTTP description."
   },
   "servers": [
     { "url": "https://app.replacor.com/super-tecnico" }
   ],
   "paths": {
+    "/api/index.php?action=electroia-public-status": {
+      "get": {
+        "operationId": "getElectroIAPublicStatus",
+        "summary": "Get the safe public release and capability summary",
+        "responses": {
+          "200": {
+            "description": "Curated status without private route or credentials",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          },
+          "429": { "description": "Rate limit exceeded" }
+        }
+      }
+    },
+    "/api/index.php?action=electroia-symbol-search": {
+      "get": {
+        "operationId": "searchElectroIAReviewedSymbols",
+        "summary": "Search the reviewed public symbol catalog",
+        "parameters": [
+          { "name": "q", "in": "query", "required": true, "schema": { "type": "string", "minLength": 2, "maxLength": 80 } },
+          { "name": "category", "in": "query", "required": false, "schema": { "type": "string", "maxLength": 80 } },
+          { "name": "limit", "in": "query", "required": false, "schema": { "type": "integer", "minimum": 1, "maximum": 12, "default": 8 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ranked summaries of reviewed public symbols",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          },
+          "422": { "description": "Invalid search query" },
+          "429": { "description": "Rate limit exceeded" }
+        }
+      }
+    },
     "/data/electroia/discovery.json": {
       "get": {
         "operationId": "getElectroIADiscovery",

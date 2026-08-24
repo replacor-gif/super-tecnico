@@ -8,7 +8,7 @@ const core = require("../archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagra
 const registryResult = core.getRegistry();
 const registry = registryResult.symbols;
 
-assert.equal(registryResult.engine_version, "1.14.0-alpha.1");
+assert.equal(registryResult.engine_version, "1.14.1-alpha.1");
 assert.equal(registry.length, 504);
 assert.equal(registry.filter((item) => item.catalog_id).length, 501);
 assert.equal(registry.filter((item) => item.review_status === "engine_reviewed").length, 501);
@@ -28,10 +28,21 @@ assert.equal(vfd.terminal_model, "functional_group");
 assert.equal(vfd.requires_exact_model, true);
 
 const exampleNames = [
+  "motor-starter-direct.json",
+  "distribution-board-single-line.json",
   "plc-vfd-motor-system.json",
   "arduino-industrial-interface.json",
   "bms-ahu-building-control.json",
 ];
+const dangerousWarningCodes = new Set([
+  "COMPONENT_OVERLAP",
+  "EARTH_DOMAIN_MIX",
+  "EXACT_MODEL_REQUIRED",
+  "NET_ROLE_MISMATCH",
+  "OUTPUT_CONTENTION",
+  "SIGNAL_POWER_DOMAIN_MIX",
+  "WIRE_THROUGH_COMPONENT",
+]);
 const rendered = [];
 for (const name of exampleNames) {
   const document = JSON.parse(await readFile(new URL(`../data/electroia/examples/${name}`, import.meta.url), "utf8"));
@@ -39,6 +50,13 @@ for (const name of exampleNames) {
   assert.equal(result.diagnostics.errors.length, 0, name);
   assert.equal(result.diagnostics.metrics.component_overlaps, 0, name);
   assert.equal(result.diagnostics.metrics.wire_component_conflicts, 0, name);
+  assert.equal(result.diagnostics.metrics.off_grid_terminals, 0, name);
+  assert.equal(result.diagnostics.metrics.single_canvas, true, name);
+  assert.deepEqual(
+    result.diagnostics.warnings.filter((item) => dangerousWarningCodes.has(item.code)),
+    [],
+    name,
+  );
   assert.doesNotMatch(result.svg, /class="component review-auto_draft"/, name);
   assert.match(result.svg, /data-grid-pitch-mil="50"/, name);
   rendered.push(result.svg);
@@ -132,4 +150,4 @@ const page = await browser.newPage({viewport:{width:1800,height:1200},deviceScal
 await page.setContent(`<style>body{margin:0;padding:20px;background:#dfe5e2}section{margin:0 0 28px;background:white;border:1px solid #aeb8b3}svg{display:block;width:100%;height:auto}</style>${rendered.map((svg) => `<section>${svg}</section>`).join("")}`);
 await page.screenshot({path:"test-artifacts/electroia-professional-systems.png",fullPage:true});
 await browser.close();
-process.stdout.write("ElectroIA professional audit visual: 501 public symbols and 3 systems OK\n");
+process.stdout.write("ElectroIA professional audit visual: 501 public symbols and 5 systems OK\n");

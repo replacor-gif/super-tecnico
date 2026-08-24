@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-23",
+  "updated_at": "2026-08-24",
   "release_stage": "beta_publica_competente",
   "summary": {
     "electroia_catalog_symbols": 501,
@@ -9,7 +9,12 @@
     "electroia_reviewed_percent": 100.0,
     "electroia_complete_families": 19,
     "electroia_total_families": 19,
-    "public_ai_tools": 7,
+    "electroia_release_stage": "private_release_candidate",
+    "electroia_professional_examples": 5,
+    "electroia_component_overlaps": 0,
+    "electroia_wire_component_conflicts": 0,
+    "electroia_public_execution_ready": false,
+    "public_ai_tools": 9,
     "ai_readiness_percent": 72
   },
   "remaining_electroia_families": [],
@@ -30,8 +35,13 @@
       "id": "diagram-real-cases",
       "area": "ElectroIA",
       "title": "Validar diagramas completos de casos reales",
-      "status": "in_progress",
-      "next_action": "Crear una batería de cuadros, automatismos, electrónica HVAC y controladores embebidos con comprobación visual de cruces, etiquetas y legibilidad."
+      "status": "field_validation",
+      "progress": {
+        "done": 5,
+        "total": 20,
+        "unit": "casos reales"
+      },
+      "next_action": "Probar en móvil otros quince esquemas reales de cuadros, automatismos, electrónica HVAC y controladores embebidos y registrar cualquier corrección visual."
     },
     {
       "id": "duct-field-validation",

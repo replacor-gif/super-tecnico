@@ -10,6 +10,15 @@
   },
   "entries": [
     {
+      "id": "UPD-20260824-ELECTROIA-RELEASE-GATES",
+      "date": "2026-08-24",
+      "title": "ElectroIA entra en fase de candidata privada a publicación",
+      "summary": "Corregido el plano patrón de arranque directo y afinada la validación de masas. Cinco sistemas profesionales superan ya puertas automáticas con cero errores, solapes, cables sobre símbolos y avisos peligrosos. Se abre una consulta pública limitada de estado y símbolos, mientras la ejecución continúa protegida.",
+      "areas": ["ElectroIA", "IA", "Calidad", "Simbología", "Seguridad"],
+      "kind": "platform_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
       "id": "UPD-20260824-SEARCH-DUCTS-ELECTROIA-MOLLIER",
       "date": "2026-08-24",
       "title": "Normativa más trazable, conductos móviles y diagnóstico frigorista reforzado",
