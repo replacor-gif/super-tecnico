@@ -18,7 +18,7 @@ function toolError(error) {
 }
 
 function createServer() {
-  const server = new McpServer({ name: "electroia-tools", version: "0.13.0" });
+  const server = new McpServer({ name: "electroia-tools", version: "0.14.0" });
 
   server.registerTool(
     "electroia_get_capabilities",
@@ -53,7 +53,7 @@ function createServer() {
   server.registerTool(
     "electroia_search_symbols",
     {
-      description: "Busca símbolos normalizados por nombre, tipo o categoría y devuelve sus terminales y estado de revisión.",
+      description: "Busca y ordena símbolos normalizados por términos técnicos, alias, nombre, tipo o categoría; devuelve coincidencia, terminales y revisión.",
       inputSchema: z.object({
         query: z.string().min(1).max(100),
         category: z.string().min(1).max(100).optional(),

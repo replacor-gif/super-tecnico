@@ -16,10 +16,17 @@ Sigue siendo una propuesta de diseño previo basada en criterios prácticos. Tod
 - Instrucción única, selección activa de rejilla o ramal y botón visible para cancelar el movimiento.
 - Prueba automatizada en un teléfono de 390 × 844 px; quedan pendientes más casos reales de estancias irregulares.
 
+## Recorrido principal ajustable — realizado en 0.6.0
+
+- El trazado automático sigue favoreciendo pasillos y distribuidores.
+- El cuadrado turquesa permite mover el punto de paso del conducto principal; todos los ramales y secciones se recalculan.
+- En móvil se puede tocar el cuadrado y después el paso real, sin arrastre de precisión.
+- «Principal automático» elimina la corrección manual y recupera la propuesta del motor.
+
 ## Prioridad 2: trazado profesional y editable
 
 - Permitir marcar zonas preferentes de paso, zonas prohibidas, falsos techos disponibles, vigas y pasos entre habitaciones.
-- Permitir fijar y mover también el conducto principal, no solo una guía de cada ramal.
+- Permitir bloquear varios tramos del conducto principal, además del punto de paso ya ajustable.
 - Conservar los tramos bloqueados por el técnico cuando se recalcula el resto de la red.
 - Evitar recorridos con demasiados giros y mostrar por qué se eligió un trazado.
 - Añadir transiciones, derivaciones, codos y reducciones como elementos identificables.

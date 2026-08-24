@@ -10,11 +10,11 @@
   <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
   <link rel="stylesheet" href="assets/common.css?v=1">
   <link rel="stylesheet" href="assets/app-theme.css?v=1">
-  <link rel="stylesheet" href="assets/duct-designer.css?v=8">
+  <link rel="stylesheet" href="assets/duct-designer.css?v=9">
   <script src="assets/i18n.js?v=6" defer></script>
   <script src="assets/app-shell.js?v=8" defer></script>
   <script src="assets/project-core.js?v=1" defer></script>
-  <script src="assets/duct-designer.js?v=10" defer></script>
+  <script src="assets/duct-designer.js?v=11" defer></script>
 </head>
 <body>
   <header class="duct-header">
@@ -23,7 +23,7 @@
       <span><strong>Super Técnico</strong><small>Diseño de conductos</small></span>
     </a>
     <div class="duct-header-actions">
-      <span>PRUEBA · VERSIÓN 0.5.1</span>
+      <span>PRUEBA · VERSIÓN 0.6.0</span>
       <button id="saveDuctProject" type="button" disabled>Guardar en Proyecto</button>
       <button id="printProject" type="button">Imprimir / PDF</button>
     </div>
@@ -73,7 +73,7 @@
       <div class="plan-frame">
         <div class="plan-topline">
           <div><span id="planStatusDot"></span><strong id="planStatus">Preparado para dibujar</strong></div>
-          <div class="zoom-actions"><button id="cancelAdjustment" type="button" hidden>Cancelar</button><button id="planFocusToggle" type="button" aria-pressed="false">Plano grande</button><button id="zoomOut" type="button" aria-label="Alejar">−</button><button id="zoomFit" type="button">Ajustar</button><button id="zoomIn" type="button" aria-label="Acercar">＋</button></div>
+          <div class="zoom-actions"><button id="cancelAdjustment" type="button" hidden>Cancelar</button><button id="resetTrunkGuide" type="button" hidden>Principal automático</button><button id="planFocusToggle" type="button" aria-pressed="false">Plano grande</button><button id="zoomOut" type="button" aria-label="Alejar">−</button><button id="zoomFit" type="button">Ajustar</button><button id="zoomIn" type="button" aria-label="Acercar">＋</button></div>
         </div>
         <div class="plan-canvas-wrap">
           <button id="phaseAction" class="finish-drawing" type="button" disabled>
@@ -97,7 +97,7 @@
 
     <section id="automaticResult" class="automatic-result" hidden>
       <header>
-        <div><p class="duct-eyebrow">PROPUESTA AJUSTABLE</p><h2>Instalación calculada sobre tu plano</h2><p>Elige una pared para cada rejilla: quedará centrada y girada en su misma dirección. Arrastra los rombos para ajustar los ramales. En móvil basta con tocar y recolocar; todo se recalcula inmediatamente.</p></div>
+        <div><p class="duct-eyebrow">PROPUESTA AJUSTABLE</p><h2>Instalación calculada sobre tu plano</h2><p>Elige una pared para cada rejilla: quedará centrada y girada en su misma dirección. Ajusta el principal con el cuadrado y los ramales con los rombos. En móvil basta con tocar el elemento y después el paso real; todo se recalcula inmediatamente.</p></div>
         <span id="networkStatus" class="network-status">RED COMPLETA</span>
       </header>
       <div id="resultSummary" class="result-summary"></div>

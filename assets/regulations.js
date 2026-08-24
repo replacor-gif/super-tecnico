@@ -234,7 +234,7 @@
         <div class="rg-result-rank"><span>${index === 0 ? 'PRIMERA COINCIDENCIA' : relevanceLabel(item, result.match_mode)}</span><div>${item.scope_hint ? `<em>Ámbito: ${escapeHtml(item.scope_hint)}</em>` : ''}${item.locator ? `<b>${escapeHtml(item.locator)}</b>` : ''}</div></div>
         <div class="rg-result-meta"><b>${escapeHtml(item.short_title)} · ${escapeHtml(item.legal_reference)}</b><span>PÁGINA ${item.page}</span></div>
         <p>${highlighted(item.text, query)}</p>
-        <div class="rg-evidence-row"><span>${recordTypeLabel(item.record_type)}</span><small>${escapeHtml(item.authority)} · ${escapeHtml(domainLabel(item.domain))} · ${relevanceLabel(item, result.match_mode).toLocaleLowerCase('es')}</small></div>
+        <div class="rg-evidence-row"><span>${recordTypeLabel(item.record_type)}</span><small>${escapeHtml(item.authority)} · ${escapeHtml(domainLabel(item.domain))} · ${relevanceLabel(item, result.match_mode).toLocaleLowerCase('es')}${item.source_last_official_update ? ` · fuente ${dateLabel(item.source_last_official_update)}` : ''}</small></div>
         <div class="rg-result-actions"><a data-result-open href="${escapeHtml(item.local_pdf_path)}${escapeHtml(item.local_pdf_fragment || `#page=${item.page}`)}" target="_blank" rel="noopener">Abrir esta página en el PDF</a><a href="${escapeHtml(item.official_page_url)}" target="_blank" rel="noopener">Comprobar fuente oficial</a></div>
       </article>`).join('');
     el('resultList').querySelectorAll('[data-refine]').forEach(button => button.addEventListener('click', () => {
@@ -307,6 +307,7 @@
         matched_terms: item.matched, term_coverage: item.coverage, relevance_score: Math.max(0, Math.min(1, item.rank / 320)), local_pdf_path: item.document.local_pdf,
         local_pdf_fragment: `#page=${item.record.page}`, official_page_url: item.document.official_page_url,
         source_sha256: item.document.sha256, source_content_sha256: item.document.content_sha256, evidence_level: 'document_hit',
+        source_last_official_update: item.document.last_official_update || null, source_catalog_verified_at: state.catalog.verified_at || null,
       });
     });
     const refinement = queryRefinement(phrase);

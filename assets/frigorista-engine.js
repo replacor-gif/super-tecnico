@@ -428,7 +428,8 @@
     }
 
     if (superheat !== null) {
-      if (superheat < 1) observation('superheat', 'danger', 'Recalentamiento casi nulo', 'Existe riesgo de que llegue refrigerante sin evaporar completamente a la aspiración. Confirma la medida antes de mantener el equipo en estas condiciones.', superheat, 'K');
+      if (superheat < -1) observation('superheat', 'danger', 'Medida de aspiración incompatible', 'La temperatura indicada queda por debajo de la saturación de rocío calculada. Antes de diagnosticar, confirma refrigerante, lado del manómetro, referencia absoluta/manométrica y sujeción de la sonda.', superheat, 'K');
+      else if (superheat < 1) observation('superheat', 'danger', 'Recalentamiento casi nulo', 'Existe riesgo de que llegue refrigerante sin evaporar completamente a la aspiración. Confirma la medida antes de mantener el equipo en estas condiciones.', superheat, 'K');
       else if (superheat < 3) observation('superheat', 'warning', 'Recalentamiento bajo', 'La aspiración está muy próxima a la saturación. Puede ser normal en algún control específico, pero requiere comprobar el objetivo del fabricante.', superheat, 'K');
       else if (superheat <= 12) observation('superheat', 'ok', 'Recalentamiento en zona orientativa', 'No destaca por sí solo. La referencia definitiva es el objetivo del fabricante para esta carga y condiciones.', superheat, 'K');
       else if (superheat <= 20) observation('superheat', 'warning', 'Recalentamiento elevado', 'El evaporador parece recibir poco refrigerante o trabajar con poca alimentación efectiva.', superheat, 'K');
@@ -436,7 +437,8 @@
     }
 
     if (subcooling !== null) {
-      if (subcooling < 1) observation('subcooling', 'warning', 'Subenfriamiento casi nulo', 'La línea de líquido dispone de muy poco margen frente a la formación de gas antes de la expansión.', subcooling, 'K');
+      if (subcooling < -1) observation('subcooling', 'danger', 'Medida de líquido incompatible', 'La temperatura indicada supera la saturación de burbuja calculada. Puede no existir líquido estable en ese punto o haber un error de refrigerante, presión, referencia o sonda.', subcooling, 'K');
+      else if (subcooling < 1) observation('subcooling', 'warning', 'Subenfriamiento casi nulo', 'La línea de líquido dispone de muy poco margen frente a la formación de gas antes de la expansión.', subcooling, 'K');
       else if (subcooling < 4) observation('subcooling', 'info', 'Subenfriamiento bajo', 'Conviene contrastarlo con el objetivo del fabricante y comprobar que no haya pérdidas de carga o calentamiento de la línea.', subcooling, 'K');
       else if (subcooling <= 12) observation('subcooling', 'ok', 'Subenfriamiento en zona orientativa', 'No destaca por sí solo. Debe compararse con el valor previsto para el equipo y sus condiciones actuales.', subcooling, 'K');
       else if (subcooling <= 20) observation('subcooling', 'warning', 'Subenfriamiento elevado', 'Hay una acumulación de líquido o rechazo de calor que merece comprobación.', subcooling, 'K');
@@ -455,7 +457,14 @@
       else observation('air_delta', 'ok', 'Salto térmico de aire coherente', 'No presenta una desviación orientativa evidente, aunque depende de humedad, caudal y carga.', airDelta, 'K');
     }
 
-    if (superheat !== null && subcooling !== null) {
+    const inconsistentMeasurements = (superheat !== null && superheat < -1) || (subcooling !== null && subcooling < -1);
+    if (inconsistentMeasurements) {
+      hypothesis('measurement_inconsistency', 'danger', 'Primero hay que corregir una medida incompatible', 'El estado introducido no permite aplicar con seguridad los patrones de carga, alimentación o restricción. El motor detiene esa interpretación para no convertir un dato incoherente en una avería falsa.', [
+        'Confirmar refrigerante, lado de baja/alta y si el manómetro indica presión manométrica o absoluta.',
+        'Repetir la temperatura sobre tubo limpio, con la sonda firmemente sujeta y aislada del ambiente.',
+        'Comprobar que la toma corresponde realmente a aspiración o líquido y que el equipo está estabilizado.',
+      ]);
+    } else if (superheat !== null && subcooling !== null) {
       if (superheat >= 12 && subcooling < 4) {
         hypothesis('possible_underfeed', 'warning', 'Patrón compatible con alimentación insuficiente', 'Coinciden recalentamiento elevado y poco subenfriamiento. Es compatible con carga baja, falta de líquido o alimentación insuficiente del evaporador, pero no identifica por sí solo la causa.', [
           'Confirmar ambas temperaturas con las sondas bien sujetas y el equipo estabilizado.',
@@ -505,10 +514,11 @@
     const completedCore = superheat !== null && subcooling !== null;
     return {
       schema_version: '1.0.0',
-      status: cycle?.errors?.length ? 'review' : (hypotheses.length ? 'attention' : (completedCore ? 'no_dominant_pattern' : 'collecting')),
-      confidence: cycle?.status === 'complete' && completedCore ? 'orientative_pattern' : 'preliminary',
+      status: cycle?.errors?.length || inconsistentMeasurements ? 'review' : (hypotheses.length ? 'attention' : (completedCore ? 'no_dominant_pattern' : 'collecting')),
+      confidence: cycle?.status === 'complete' && completedCore && !inconsistentMeasurements ? 'orientative_pattern' : 'preliminary',
       headline: cycle?.errors?.length
         ? 'Primero hay que revisar los datos introducidos.'
+        : inconsistentMeasurements ? 'Las medidas no forman todavía un estado termodinámico coherente.'
         : hypotheses.length ? hypotheses[0].title
           : completedCore ? 'No aparece un patrón dominante con las medidas disponibles.'
             : 'Faltan medidas para interpretar el comportamiento del ciclo.',
@@ -516,7 +526,8 @@
       hypotheses,
       next_check: nextCheck,
       values: {superheat_k: superheat, subcooling_k: subcooling, air_delta_k: airDelta},
-      limitation: 'Las zonas son orientativas y no sustituyen los objetivos del fabricante, el tipo de expansión ni las condiciones de carga.',
+      input_consistency: inconsistentMeasurements ? 'inconsistent' : 'plausible',
+      limitation: 'Las zonas son orientativas y no sustituyen los objetivos del fabricante, el tipo de expansión ni las condiciones de carga. No se exige conocer las revoluciones reales del compresor ni la apertura interna de la válvula.',
     };
   }
 

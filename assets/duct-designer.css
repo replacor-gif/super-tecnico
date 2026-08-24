@@ -254,9 +254,11 @@ button { cursor: pointer; }
 .plan-machine text { fill: #ffc06c; font-size: 10px; font-weight: 950; letter-spacing: 1px; }
 .plan-outlet { filter: drop-shadow(0 0 5px rgba(255, 63, 167, .45)); }
 .plan-outlet.is-draggable,
-.branch-drag { cursor: grab; pointer-events: all; touch-action: none; }
+.branch-drag,
+.trunk-drag { cursor: grab; pointer-events: all; touch-action: none; }
 .plan-outlet.is-draggable:active,
 .branch-drag:active,
+.trunk-drag:active,
 .is-dragging-duct { cursor: grabbing; }
 .drag-hit { fill: transparent; stroke: none; }
 .plan-outlet rect { fill: #24081a; stroke: var(--duct-pink); stroke-width: 3; }
@@ -264,10 +266,15 @@ button { cursor: pointer; }
 .branch-drag { filter: drop-shadow(0 0 7px rgba(255, 228, 56, .72)); }
 .branch-drag > path { fill: #2b2400; stroke: var(--duct-yellow); stroke-width: 3; }
 .branch-drag > circle:not(.drag-hit) { fill: var(--duct-yellow); stroke: #2b2400; stroke-width: 2; }
+.trunk-drag { filter: drop-shadow(0 0 8px rgba(0, 234, 208, .8)); }
+.trunk-drag > rect { fill: #042b2a; stroke: #00ead0; stroke-width: 3; }
+.trunk-drag > path { fill: none; stroke: #b9fff5; stroke-width: 3; stroke-linecap: round; }
 .plan-outlet.is-selected rect,
-.branch-drag.is-selected > path { stroke: #fff; stroke-width: 5; filter: url(#planGlow); }
+.branch-drag.is-selected > path,
+.trunk-drag.is-selected > rect { stroke: #fff; stroke-width: 5; filter: url(#planGlow); }
 .plan-outlet.is-selected,
-.branch-drag.is-selected { animation: selected-adjustment 1s ease-in-out infinite alternate; }
+.branch-drag.is-selected,
+.trunk-drag.is-selected { animation: selected-adjustment 1s ease-in-out infinite alternate; }
 .wall-snap-target { cursor: pointer; pointer-events: all; touch-action: manipulation; }
 .wall-snap-hit { stroke: transparent; stroke-width: 34; }
 .wall-snap-line { stroke: var(--duct-pink); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 12 8; opacity: .82; filter: url(#planGlow); pointer-events: none; }

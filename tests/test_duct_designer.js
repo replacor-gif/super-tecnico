@@ -121,6 +121,7 @@ assert.match(configured.svg, /room-hatch-bedroom/);
 assert.match(configured.svg, /class="route-edge is-main through-hallway"/);
 assert.match(configured.svg, /data-kind="outlet-drag"/);
 assert.match(configured.svg, /data-kind="branch-drag"/);
+assert.match(configured.svg, /data-kind="trunk-drag"/);
 assert.match(configured.svg, /UNIDAD INTERIOR/);
 const selectedOnTouch = D.renderPlanSvg(example, { selectedAdjustment: { kind: 'outlet-drag', roomId: 'bed-1' } });
 assert.match(selectedOnTouch.svg, /plan-outlet is-draggable is-selected/);
@@ -135,6 +136,7 @@ const movedState = D.normalizeState({
   phase: 'layout',
   outletOverrides: { 'bed-1': { x: 7.8, y: 4 } },
   branchGuides: { 'bed-1': { x: 9, y: 5 } },
+  trunkGuide: { x: 8, y: 12 },
 });
 const moved = D.calculateProject(movedState);
 assert.deepEqual(moved.outletMap.get('bed-1'), {
@@ -142,5 +144,9 @@ assert.deepEqual(moved.outletMap.get('bed-1'), {
   wallA: { x: 8, y: 1 }, wallB: { x: 8, y: 7 }, centered: true,
 });
 assert.deepEqual(moved.roomConnections.get('bed-1').branchHandle, { x: 9, y: 5 });
+assert.deepEqual(moved.state.trunkGuide, { x: 8, y: 12 });
+assert.deepEqual(moved.trunkHandle, { x: 8, y: 12 });
+assert.ok(moved.activeEdges.some(edge => [edge.a, edge.b].some(point => point.x === 8 && point.y === 12)), 'El principal no respeta el punto de paso manual');
+assert.match(D.renderPlanSvg(moved, { selectedAdjustment: { kind: 'trunk-drag', roomId: 'main' } }).svg, /trunk-drag is-selected/);
 
 console.log('Plano poligonal y red principal de conductos: pruebas superadas.');

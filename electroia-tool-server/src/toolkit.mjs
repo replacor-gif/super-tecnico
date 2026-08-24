@@ -69,13 +69,70 @@ function folded(value) {
     .toLowerCase();
 }
 
+function searchFolded(value) {
+  return folded(value).replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+const SYMBOL_IGNORED_TERMS = new Set(["a", "al", "de", "del", "la", "las", "el", "los", "y", "o", "con", "para", "por", "en", "un", "una", "tipo", "simbolo", "componente"]);
+const SYMBOL_TERM_ALIASES = Object.freeze({
+  rele: ["relay"], relay: ["rele"],
+  pulsador: ["pushbutton", "boton"], boton: ["pulsador", "pushbutton"],
+  abierto: ["no", "normally open"], cerrado: ["nc", "normally closed"],
+  automata: ["plc"], plc: ["automata"],
+  variador: ["vfd", "frecuencia"], vfd: ["variador", "frecuencia"],
+  tierra: ["pe", "ground"], masa: ["gnd", "ground"],
+  alimentacion: ["power", "supply"], sensor: ["transductor"],
+});
+
+function symbolTerms(value) {
+  const normalized = searchFolded(value);
+  return [...new Set(normalized.split(/\s+/).filter((term) => term.length >= 2 && !SYMBOL_IGNORED_TERMS.has(term)))];
+}
+
+function termAppears(haystack, compactHaystack, term) {
+  const variants = [term, ...(SYMBOL_TERM_ALIASES[term] || [])];
+  return variants.some((variant) => {
+    const normalized = searchFolded(variant);
+    return haystack.includes(normalized) || (normalized.length <= 5 && compactHaystack.includes(normalized.replace(/\s+/g, "")));
+  });
+}
+
+function symbolSearchRank(symbol, rawQuery) {
+  const query = searchFolded(rawQuery);
+  const terms = symbolTerms(query);
+  const fields = {
+    id: searchFolded(symbol.id),
+    name: searchFolded(symbol.name),
+    aliases: searchFolded(symbol.aliases),
+    keywords: searchFolded(symbol.keywords),
+    classification: searchFolded(`${symbol.kind} ${symbol.designator} ${symbol.category} ${symbol.subcategory}`),
+    detail: searchFolded(`${symbol.description} ${symbol.interpretation} ${symbol.catalog_drawing_type}`),
+  };
+  const haystack = Object.values(fields).join(" ");
+  const compact = haystack.replace(/\s+/g, "");
+  const matchedTerms = terms.filter((term) => termAppears(haystack, compact, term));
+  if (!matchedTerms.length || (terms.length <= 2 && matchedTerms.length !== terms.length) || (terms.length > 2 && matchedTerms.length / terms.length < 0.6)) return null;
+  let score = matchedTerms.length * 24 + (matchedTerms.length / Math.max(1, terms.length)) * 80;
+  if (fields.id === query) score += 800;
+  if (fields.name === query) score += 500;
+  if (fields.name.includes(query)) score += 220;
+  if (fields.aliases.includes(query)) score += 150;
+  matchedTerms.forEach((term) => {
+    if (termAppears(fields.name, fields.name.replace(/\s+/g, ""), term)) score += 45;
+    else if (termAppears(fields.aliases, fields.aliases.replace(/\s+/g, ""), term)) score += 32;
+    else if (termAppears(fields.keywords, fields.keywords.replace(/\s+/g, ""), term)) score += 20;
+    else if (termAppears(fields.classification, fields.classification.replace(/\s+/g, ""), term)) score += 12;
+  });
+  return {score, matchedTerms, coverage: matchedTerms.length / Math.max(1, terms.length)};
+}
+
 const EMBEDDED_IGNORED_TERMS = new Set(["a", "al", "de", "del", "la", "las", "el", "los", "y", "o", "u", "con", "para", "por", "en", "un", "una", "unos", "unas", "que", "como", "quiero", "necesito", "the", "and", "with", "for", "from", "to", "an", "of", "on", "in"]);
 
 function embeddedTerms(value) {
   return [...new Set(folded(value).split(/\s+/).filter((term) => term.length >= 2 && !EMBEDDED_IGNORED_TERMS.has(term)))];
 }
 
-function symbolSummary(symbol) {
+function symbolSummary(symbol, match = null) {
   return {
     id: symbol.id,
     name: symbol.name,
@@ -90,6 +147,7 @@ function symbolSummary(symbol) {
       side: definition.side,
       electrical_type: definition.electrical_type,
     })),
+    ...(match ? {matched_terms: match.matchedTerms, term_coverage: Number(match.coverage.toFixed(3)), relevance_score: Number(Math.min(1, match.score / 700).toFixed(3))} : {}),
   };
 }
 
@@ -145,28 +203,24 @@ export async function callElectroIATool(tool, rawArguments = {}) {
   }
 
   if (name === "electroia_search_symbols") {
-    const query = folded(args.query).trim();
+    const query = searchFolded(args.query);
     if (!query) throw new Error("query debe contener al menos un término de búsqueda");
-    const category = folded(args.category).trim();
+    const category = searchFolded(args.category);
     const status = String(args.review_status || "").trim();
     const limit = Math.max(1, Math.min(50, Number.isInteger(args.limit) ? args.limit : 12));
-    const matches = diagramCore.getRegistry().symbols.filter((symbol) => {
-      const haystack = folded([
-        symbol.id, symbol.name, symbol.kind, symbol.designator,
-        symbol.category, symbol.subcategory, symbol.catalog_drawing_type,
-        symbol.aliases, symbol.keywords, symbol.description, symbol.interpretation,
-      ].join(" "));
-      if (!haystack.includes(query)) return false;
-      if (category && !folded(`${symbol.category} ${symbol.subcategory}`).includes(category)) return false;
-      if (status && symbol.review_status !== status) return false;
-      return true;
-    });
+    const matches = diagramCore.getRegistry().symbols.flatMap((symbol) => {
+      if (category && !searchFolded(`${symbol.category} ${symbol.subcategory}`).includes(category)) return [];
+      if (status && symbol.review_status !== status) return [];
+      const match = symbolSearchRank(symbol, query);
+      return match ? [{symbol, match}] : [];
+    }).sort((left, right) => right.match.score - left.match.score || left.symbol.id.localeCompare(right.symbol.id));
     return {
       ok: true,
       tool: name,
       query: args.query,
       total: matches.length,
-      symbols: matches.slice(0, limit).map(symbolSummary),
+      search_mode: "ranked_terms",
+      symbols: matches.slice(0, limit).map(({symbol, match}) => symbolSummary(symbol, match)),
     };
   }
 

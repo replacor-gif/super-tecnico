@@ -264,7 +264,7 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertEqual(openapi["openapi"], "3.1.0")
         self.assertNotIn("electroia_render_diagram", json.dumps(openapi))
         self.assertEqual(server["name"], "io.github.replacor-gif/electroia-diagrams")
-        self.assertEqual(server["version"], "0.13.0")
+        self.assertEqual(server["version"], "0.14.0")
         self.assertNotIn("4097", llms)
 
 

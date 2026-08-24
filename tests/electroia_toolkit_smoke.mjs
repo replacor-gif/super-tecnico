@@ -22,6 +22,14 @@ assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.c
 assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "engine_reviewed").length, 501);
 assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "auto_draft").length, 0);
 
+const arduinoSymbols = await callElectroIATool("electroia_search_symbols", {query: "Arduino lógica 5V", limit: 5});
+assert.equal(arduinoSymbols.search_mode, "ranked_terms");
+assert.equal(arduinoSymbols.symbols[0].id, "SYM-0472");
+assert.equal(arduinoSymbols.symbols[0].term_coverage, 1);
+const relayContactSymbols = await callElectroIATool("electroia_search_symbols", {query: "relé contacto normalmente abierto", limit: 5});
+assert.ok(relayContactSymbols.symbols.some((symbol) => symbol.id === "SYM-0120"));
+assert.ok(relayContactSymbols.symbols.every((symbol) => symbol.relevance_score > 0));
+
 const connectorSearch = await callElectroIATool("supertecnico_search_connectors", {query: "USB-C"});
 assert.equal(connectorSearch.total, 1);
 const connector = await callElectroIATool("supertecnico_get_connector", {connector_id: connectorSearch.items[0].id});

@@ -46,6 +46,9 @@ if (!str_contains((string) ($lightingTop['locator'] ?? ''), 'ITC-BT-25') || !str
 if (($lighting['result']['answer_status'] ?? '') !== 'evidence_found' || !empty($lighting['result']['refinement'])) {
     quality_fail('A sufficiently specific circuit query was still treated as ambiguous.');
 }
+if (($lightingTop['source_last_official_update'] ?? '') !== '2025-09-03' || empty($lightingTop['source_catalog_verified_at'])) {
+    quality_fail('The evidence result does not expose official update and catalog verification dates.');
+}
 
 $voltageDrop = quality_search('caida de voltaje instalacion interior');
 $voltageTop = $voltageDrop['result']['items'][0] ?? [];

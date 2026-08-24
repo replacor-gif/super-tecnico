@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 const ST_REGULATION_TOOL_ID = 'supertecnico_search_regulations';
-const ST_REGULATION_TOOL_VERSION = '1.2.0';
-const ST_REGULATION_SERVICE_VERSION = '0.5.0';
+const ST_REGULATION_TOOL_VERSION = '1.3.0';
+const ST_REGULATION_SERVICE_VERSION = '0.6.0';
 
 function st_regulations_ensure_schema(): void
 {
@@ -287,6 +287,18 @@ function st_regulation_snippet(string $text, array $terms, int $max = 900): stri
 {
     $text = trim(preg_replace('/\s+/u', ' ', $text) ?? $text);
     if (mb_strlen($text, 'UTF-8') <= $max) return $text;
+    $sentences = preg_split('/(?<=[.!?])\s+(?=[A-ZÁÉÍÓÚÑ0-9])/u', $text) ?: [];
+    if (count($sentences) > 1) {
+        $ranked = [];
+        foreach ($sentences as $index => $sentence) {
+            $details = st_regulation_match_details(st_regulation_normalize($sentence), $terms);
+            $ranked[] = ['index' => $index, 'score' => ($details['matched'] * 100) + ($details['coverage'] * 40) - min(30, mb_strlen($sentence, 'UTF-8') / 80)];
+        }
+        usort($ranked, static fn(array $left, array $right): int => $right['score'] <=> $left['score']);
+        $best = (int) ($ranked[0]['index'] ?? 0);
+        $selection = trim(($best > 0 ? $sentences[$best - 1] . ' ' : '') . $sentences[$best] . ($best + 1 < count($sentences) ? ' ' . $sentences[$best + 1] : ''));
+        if (mb_strlen($selection, 'UTF-8') <= $max && ($ranked[0]['score'] ?? 0) >= 100) return ($best > 1 ? '…' : '') . $selection . ($best + 2 < count($sentences) ? '…' : '');
+    }
     $normalized = st_regulation_normalize($text);
     $position = false;
     foreach ($terms as $term) {
@@ -419,6 +431,8 @@ function st_regulations_search(array $input, string $clientHash, bool $recordUsa
             'official_page_url' => (string) $document['official_page_url'],
             'source_sha256' => (string) $document['sha256'],
             'source_content_sha256' => (string) $document['content_sha256'],
+            'source_last_official_update' => $document['last_official_update'] ?? null,
+            'source_catalog_verified_at' => $catalog['verified_at'] ?? null,
             'evidence_level' => 'document_hit',
             'relevance_score' => min(1, max(0, round(((int) $candidate['score']) / 320, 3))),
         ];

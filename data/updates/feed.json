@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-23",
+  "updated_at": "2026-08-24",
   "title": "Últimas mejoras de Super Técnico",
   "author_policy": {
     "maintainer": "Administrador",
@@ -9,6 +9,15 @@
     "personal_data": "Do not publish private identifiers unless the contributor explicitly chose that text as a public nickname."
   },
   "entries": [
+    {
+      "id": "UPD-20260824-SEARCH-DUCTS-ELECTROIA-MOLLIER",
+      "date": "2026-08-24",
+      "title": "Normativa más trazable, conductos móviles y diagnóstico frigorista reforzado",
+      "summary": "El buscador normativo muestra la fecha de la fuente y extractos más enfocados; Conductos permite mover también el trazado principal desde el plano; ElectroIA ordena símbolos por términos y alias; y Mollier detiene diagnósticos cuando las medidas son termodinámicamente incompatibles.",
+      "areas": ["Normativa", "Conductos", "ElectroIA", "Frigorista", "Móvil"],
+      "kind": "platform_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
     {
       "id": "UPD-20260823-PRIVATE-BACKLOG-AUDITS",
       "date": "2026-08-23",

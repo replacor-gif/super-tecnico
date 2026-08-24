@@ -276,6 +276,7 @@
     Object.entries(input.branchGuides || {}).forEach(([roomId, value]) => {
       if (roomById.has(roomId)) branchGuides[roomId] = point(value, gridCols, gridRows);
     });
+    const trunkGuide = input.trunkGuide ? point(input.trunkGuide, gridCols, gridRows) : null;
     return {
       ...DEFAULTS,
       phase: ['configure', 'layout'].includes(input.phase) ? input.phase : input.workflowStep >= 2 ? 'configure' : 'draw',
@@ -289,6 +290,7 @@
       machine,
       outletOverrides,
       branchGuides,
+      trunkGuide,
     };
   }
 
@@ -519,9 +521,9 @@
 
   function automaticNetwork(input = {}) {
     const state = normalizeState(input);
-    if (!state.machine || state.phase === 'draw') return { routeEdges: [], outlets: [], trunkKeys: new Set() };
+    if (!state.machine || state.phase === 'draw') return { routeEdges: [], outlets: [], trunkKeys: new Set(), trunkHandle: null };
     const selectedRooms = state.rooms.filter(room => room.conditioned && room.type !== 'unassigned');
-    if (!selectedRooms.length) return { routeEdges: [], outlets: [], trunkKeys: new Set() };
+    if (!selectedRooms.length) return { routeEdges: [], outlets: [], trunkKeys: new Set(), trunkHandle: null };
     const distanceFromMachine = room => {
       const center = polygonCentroid(room.points);
       return Math.abs(center.x - state.machine.x) + Math.abs(center.y - state.machine.y);
@@ -532,6 +534,7 @@
     const outlets = [];
     const occupiedOutlets = new Set();
     const trunkKeys = new Set();
+    let trunkHandle = null;
 
     ordered.forEach((room, index) => {
       const starts = index === 0 ? [{ x: state.machine.x, y: state.machine.y }] : [...nodes.values()];
@@ -539,24 +542,27 @@
         ? snapOutletToWall(room, state.outletOverrides[room.id])
         : chooseOutletPlacement(room, state, occupiedOutlets);
       if (!outlet) return;
-      const guide = state.branchGuides[room.id];
-      let path;
-      if (guide) {
-        const toGuide = findPath(state, starts, [guide]);
-        const toOutlet = findPath(state, [guide], [outlet]);
-        path = toGuide?.length && toOutlet?.length ? [...toGuide, ...toOutlet.slice(1)] : null;
-      } else {
-        path = findPath(state, starts, [outlet]);
+      const waypoints = [];
+      if (index === 0 && state.trunkGuide) waypoints.push(state.trunkGuide);
+      if (state.branchGuides[room.id]) waypoints.push(state.branchGuides[room.id]);
+      let path = [];
+      let segmentStarts = starts;
+      for (const destination of [...waypoints, outlet]) {
+        const segment = findPath(state, segmentStarts, [destination]);
+        if (!segment?.length) { path = null; break; }
+        path.push(...(path.length ? segment.slice(1) : segment));
+        segmentStarts = [destination];
       }
       if (!path?.length) return;
       addPathToNetwork(path, edges, nodes);
       if (index === 0) {
         for (let pointIndex = 1; pointIndex < path.length; pointIndex += 1) trunkKeys.add(edgeKey(path[pointIndex - 1], path[pointIndex]));
+        trunkHandle = state.trunkGuide || path[Math.floor(path.length / 2)] || path[0];
       }
       occupiedOutlets.add(pointKey(outlet));
       outlets.push({ id: `outlet-${room.id}`, roomId: room.id, ...outlet });
     });
-    return { routeEdges: [...edges.values()], outlets, trunkKeys };
+    return { routeEdges: [...edges.values()], outlets, trunkKeys, trunkHandle };
   }
 
   function buildGraph(edges) {
@@ -729,6 +735,7 @@
       roomMap,
       outletMap,
       roomConnections,
+      trunkHandle: generated.trunkHandle,
       activeEdges,
       sections,
       totals: {
@@ -850,6 +857,10 @@
         const selected = selectedAdjustment?.kind === 'branch-drag' && selectedAdjustment.roomId === roomId;
         parts.push(`<g class="branch-drag${selected ? ' is-selected' : ''}" data-kind="branch-drag" data-id="${escapeHtml(roomId)}" transform="translate(${px(connection.branchHandle.x)} ${px(connection.branchHandle.y)})"><circle class="drag-hit" r="25"/><path d="M0-10L10 0 0 10-10 0Z"/><circle r="3"/><title>Arrastra este punto o tócalo y después toca el recorrido real de ${escapeHtml(room?.name || '')}</title></g>`);
       });
+      if (result.trunkHandle) {
+        const selected = selectedAdjustment?.kind === 'trunk-drag';
+        parts.push(`<g class="trunk-drag${selected ? ' is-selected' : ''}" data-kind="trunk-drag" data-id="main" transform="translate(${px(result.trunkHandle.x)} ${px(result.trunkHandle.y)})"><circle class="drag-hit" r="27"/><rect x="-11" y="-11" width="22" height="22" rx="5"/><path d="M-6 0h12M0-6v12"/><title>Conducto principal · Arrastra o toca y elige el paso real</title></g>`);
+      }
       parts.push(`<g class="plan-machine" transform="translate(${px(state.machine.x)} ${px(state.machine.y)})"><rect x="-35" y="-27" width="70" height="54" rx="12"/><circle cx="0" cy="0" r="15"/><path d="M0-15c9 3 11 8 5 14M15 0c-3 9-8 11-14 5M0 15c-9-3-11-8-5-14M-15 0c3-9 8-11 14-5"/><text x="0" y="-37" text-anchor="middle">UNIDAD INTERIOR</text></g>`);
     }
 
@@ -870,7 +881,7 @@
       drawingSettings: $('drawingSettings'), technicalSettings: $('technicalSettings'), cellSize: $('cellSize'), ductHeight: $('ductHeightCm'), grilleHeight: $('grilleHeightCm'),
       phaseBadge: $('phaseBadge'), message: $('assistantMessage'), planStatus: $('planStatus'), planScroll: $('planScroll'), planStage: $('planStage'), planSummary: $('planSummary'), phaseAction: $('phaseAction'),
       automaticResult: $('automaticResult'), networkStatus: $('networkStatus'), resultSummary: $('resultSummary'), alerts: $('ductAlerts'), networkResults: $('networkResults'), roomResults: $('roomResults'),
-      legend: $('planControlLegend'), undo: $('undoProject'), redo: $('redoProject'), planFrame: document.querySelector('.plan-frame'), focus: $('planFocusToggle'), cancelAdjustment: $('cancelAdjustment'), saveProject: $('saveDuctProject'),
+      legend: $('planControlLegend'), undo: $('undoProject'), redo: $('redoProject'), planFrame: document.querySelector('.plan-frame'), focus: $('planFocusToggle'), cancelAdjustment: $('cancelAdjustment'), resetTrunk: $('resetTrunkGuide'), saveProject: $('saveDuctProject'),
       roomContext: $('ductRoomContext'), contextTitle: $('ductRoomContextTitle'), contextClose: $('ductRoomContextClose'), contextType: $('ductContextType'), contextLoad: $('ductContextLoad'), contextLoadField: $('ductContextLoadField'), contextGrille: $('ductContextGrille'), contextMachine: $('ductContextMachine'),
     };
     let state = loadState();
@@ -944,12 +955,14 @@
 
     function beginPlanDrag(event) {
       if (state.phase !== 'layout') return;
-      const target = event.target.closest('[data-kind="outlet-drag"], [data-kind="branch-drag"]');
+      const target = event.target.closest('[data-kind="outlet-drag"], [data-kind="branch-drag"], [data-kind="trunk-drag"]');
       if (!target) return;
       event.preventDefault();
       const current = target.dataset.kind === 'outlet-drag'
         ? result.outletMap.get(target.dataset.id)
-        : result.roomConnections.get(target.dataset.id)?.branchHandle;
+        : target.dataset.kind === 'branch-drag'
+          ? result.roomConnections.get(target.dataset.id)?.branchHandle
+          : result.trunkHandle;
       drag = { kind: target.dataset.kind, roomId: target.dataset.id, pointerId: event.pointerId, initial: JSON.stringify(state), moved: false, lastPoint: current ? pointKey(current) : '' };
       document.body.classList.add('is-dragging-duct');
     }
@@ -977,9 +990,12 @@
       if (drag.kind === 'outlet-drag') {
         state = normalizeState({ ...state, outletOverrides: { ...state.outletOverrides, [drag.roomId]: position } });
         transientMessage = '<strong>Rejilla ajustada a la pared.</strong> Se centra, se alinea con ella y toda la red se recalcula.';
-      } else {
+      } else if (drag.kind === 'branch-drag') {
         state = normalizeState({ ...state, branchGuides: { ...state.branchGuides, [drag.roomId]: position } });
         transientMessage = '<strong>Ajustando ramal.</strong> Suelta el rombo cuando el conducto pase por el lugar real.';
+      } else {
+        state = normalizeState({ ...state, trunkGuide: position });
+        transientMessage = '<strong>Ajustando el principal.</strong> Suelta el cuadrado sobre el pasillo o paso real; los ramales se recalculan.';
       }
       render();
     }
@@ -1040,9 +1056,10 @@
       elements.phaseAction.classList.toggle('is-layout', state.phase === 'layout');
       elements.phaseAction.querySelector('span').textContent = drawing ? 'He terminado de dibujar' : state.phase === 'configure' ? 'Calcular y ajustar' : 'Editar estancias';
       elements.cancelAdjustment.hidden = !selectedAdjustment;
+      elements.resetTrunk.hidden = state.phase !== 'layout' || !state.trunkGuide;
       elements.saveProject.disabled = state.phase !== 'layout' || !ready;
       elements.legend.innerHTML = state.phase === 'layout'
-        ? '<span><i class="legend-grille">▤</i><b>Rejilla centrada en pared</b></span><span><i class="legend-branch">◆</i><b>Toca o mueve ramal</b></span><span><i class="legend-live">↻</i><b>Recálculo inmediato</b></span>'
+        ? '<span><i class="legend-grille">▤</i><b>Rejilla centrada en pared</b></span><span><i class="legend-branch">◆</i><b>Mueve cada ramal</b></span><span><i class="legend-main">＋</i><b>Mueve el principal</b></span><span><i class="legend-live">↻</i><b>Recálculo inmediato</b></span>'
         : '<span><i class="legend-type">▼</i><b>Qué estancia es</b></span><span><i class="legend-grille">▤</i><b>Lleva rejilla</b></span><span><i class="legend-machine">M</i><b>Aquí va la máquina</b></span>';
     }
 
@@ -1086,9 +1103,9 @@
       } else {
         icon.textContent = '↔';
         if (selectedAdjustment) {
-          const item = selectedAdjustment.kind === 'outlet-drag' ? 'rejilla' : 'ramal';
-          copy.innerHTML = `<strong>${item === 'rejilla' ? 'Rejilla seleccionada' : 'Ramal seleccionado'}.</strong> ${item === 'rejilla' ? 'Toca la pared deseada: quedará centrada y alineada automáticamente.' : 'Ahora toca en el plano el lugar por el que debe pasar.'}`;
-        } else copy.innerHTML = '<strong>Ajusta la instalación a la obra real.</strong> Las rejillas se fijan centradas y alineadas a una pared; los rombos modifican el recorrido. En móvil, toca el elemento y después su nueva zona.';
+          const item = selectedAdjustment.kind === 'outlet-drag' ? 'rejilla' : selectedAdjustment.kind === 'branch-drag' ? 'ramal' : 'principal';
+          copy.innerHTML = `<strong>${item === 'rejilla' ? 'Rejilla seleccionada' : item === 'ramal' ? 'Ramal seleccionado' : 'Conducto principal seleccionado'}.</strong> ${item === 'rejilla' ? 'Toca la pared deseada: quedará centrada y alineada automáticamente.' : 'Ahora toca en el plano el lugar por el que debe pasar.'}`;
+        } else copy.innerHTML = '<strong>Ajusta la instalación a la obra real.</strong> Mueve el cuadrado del conducto principal, los rombos de los ramales o las rejillas. En móvil, toca el elemento y después su nueva zona.';
         elements.planStatus.textContent = drag ? 'Recalculando mientras mueves' : selectedAdjustment ? 'Toca la nueva posición' : 'Plano calculado y ajustable';
       }
     }
@@ -1172,7 +1189,7 @@
         return;
       }
       if (state.phase === 'layout') {
-        if (target && ['outlet-drag', 'branch-drag'].includes(target.dataset.kind)) {
+        if (target && ['outlet-drag', 'branch-drag', 'trunk-drag'].includes(target.dataset.kind)) {
           const next = { kind: target.dataset.kind, roomId: target.dataset.id };
           selectedAdjustment = selectedAdjustment?.kind === next.kind && selectedAdjustment.roomId === next.roomId ? null : next;
           transientMessage = '';
@@ -1189,10 +1206,13 @@
           const roomId = selectedAdjustment.roomId;
           selectedAdjustment = null;
           commit({ ...state, outletOverrides: { ...state.outletOverrides, [roomId]: position } });
-        } else {
+        } else if (selectedAdjustment.kind === 'branch-drag') {
           const roomId = selectedAdjustment.roomId;
           selectedAdjustment = null;
           commit({ ...state, branchGuides: { ...state.branchGuides, [roomId]: position } });
+        } else {
+          selectedAdjustment = null;
+          commit({ ...state, trunkGuide: position });
         }
         return;
       }
@@ -1309,6 +1329,7 @@
     elements.redo.addEventListener('click', redo);
     elements.focus.addEventListener('click', () => toggleFocus());
     elements.cancelAdjustment.addEventListener('click', () => { selectedAdjustment = null; render(); });
+    elements.resetTrunk.addEventListener('click', () => { selectedAdjustment = null; commit({ ...state, trunkGuide: null }); });
     elements.contextClose.addEventListener('click', () => { selectedRoomId = ''; render(); });
     elements.contextType.addEventListener('change', () => {
       const roomId = selectedRoomId;

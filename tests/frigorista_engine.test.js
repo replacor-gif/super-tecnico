@@ -142,6 +142,22 @@ const thermalStressDiagnosis = engine.interpretMollierCycle({
 assert.ok(thermalStressDiagnosis.hypotheses.some(item => item.code === 'compressor_thermal_stress'));
 assert.ok(thermalStressDiagnosis.observations.some(item => item.code === 'discharge_temperature' && item.level === 'danger'));
 
+const inconsistentDiagnosis = engine.interpretMollierCycle({
+  cycle: {status: 'complete', errors: [], performance: {cop_cycle: 3}},
+  measurements: {
+    low_pressure: {result: {dew_temperature_c: 8}},
+    suction_line_temperature: {value: 3},
+    high_pressure: {result: {bubble_temperature_c: 42}},
+    liquid_line_temperature: {value: 47},
+  },
+});
+assert.equal(inconsistentDiagnosis.status, 'review');
+assert.equal(inconsistentDiagnosis.input_consistency, 'inconsistent');
+assert.equal(inconsistentDiagnosis.hypotheses[0].code, 'measurement_inconsistency');
+assert.match(inconsistentDiagnosis.next_check, /refrigerante.*manómetro/i);
+assert.doesNotMatch(inconsistentDiagnosis.headline, /carga baja|restricción|exceso de alimentación/i);
+assert.match(inconsistentDiagnosis.limitation, /revoluciones reales.*apertura interna/i);
+
 assert.throws(
   () => engine.lookupMollierState({
     mollier, designation: 'R32', pressurePaAbs: r32High.pressure_pa_abs, temperatureC: 60, region: 'liquid',

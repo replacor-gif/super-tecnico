@@ -1,5 +1,5 @@
 {
-  "schema_version": "2.1.0",
+  "schema_version": "2.2.0",
   "id": "super-tecnico-regulation-search",
   "tool_name": "supertecnico_search_regulations",
   "name": "Buscador de normativa técnica oficial",
@@ -49,6 +49,8 @@
     "document_and_domain_filtering",
     "exact_and_related_match_modes",
     "page_level_provenance",
+    "source_update_and_catalog_verification_dates",
+    "sentence_focused_evidence_snippets",
     "official_source_link",
     "stored_official_pdf_locator",
     "change_detection_by_sha256",
@@ -58,7 +60,7 @@
   ],
   "response": {
     "top_level_required": ["ok", "status", "request_id", "service_version", "tool_id", "tool_version", "result", "confidence", "source_ids", "warnings", "usage"],
-    "item_required": ["document_id", "document_title", "page", "text", "locator", "breadcrumb", "record_type", "term_coverage", "official_page_url", "source_sha256", "source_content_sha256", "evidence_level"],
+    "item_required": ["document_id", "document_title", "page", "text", "locator", "breadcrumb", "record_type", "term_coverage", "official_page_url", "source_sha256", "source_content_sha256", "source_last_official_update", "source_catalog_verified_at", "evidence_level"],
     "statuses": ["success", "not_found"],
     "answer_statuses": ["evidence_found", "needs_context", "not_found"],
     "match_modes": ["exact", "all_terms", "related", "none"],

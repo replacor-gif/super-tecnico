@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "name": "electroia-tools",
   "title": "ElectroIA — motor gráfico electrotécnico neutral",
   "description": "Herramientas deterministas para validar y dibujar documentos electrotécnicos definidos por una IA o aplicación externa.",
@@ -100,7 +100,7 @@
     },
     {
       "name": "electroia_search_symbols",
-      "description": "Busca símbolos normalizados por nombre, tipo o categoría y devuelve sus terminales y estado de revisión.",
+      "description": "Busca y ordena símbolos normalizados por términos técnicos, alias, nombre, tipo o categoría; devuelve coincidencia, terminales y estado de revisión.",
       "input_schema": {
         "type": "object",
         "additionalProperties": false,
