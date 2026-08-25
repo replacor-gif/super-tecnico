@@ -1,7 +1,7 @@
 "use strict";
 
 const ElectroDiagramCore = (() => {
-  const ENGINE_VERSION = "1.14.1-alpha.1";
+  const ENGINE_VERSION = "1.15.0-alpha.1";
   const CONTRACT_VERSION = "1.0";
   const GRID_PITCH_MIL = 50;
   const UNIT = 24;
@@ -301,6 +301,15 @@ const ElectroDiagramCore = (() => {
     if (!document || typeof document !== "object" || Array.isArray(document)) {
       return { valid: false, errors: [diagnostic("DOCUMENT_REQUIRED", "Se necesita un documento JSON.")], warnings };
     }
+    let serializedBytes = 0;
+    try {
+      serializedBytes = new TextEncoder().encode(JSON.stringify(document)).length;
+    } catch (_error) {
+      errors.push(diagnostic("DOCUMENT_SERIALIZATION", "El documento no se puede serializar de forma segura."));
+    }
+    if (serializedBytes > 262144) {
+      errors.push(diagnostic("DOCUMENT_TOO_LARGE", "El documento supera el límite de 256 KiB."));
+    }
     if (document.schema_version !== CONTRACT_VERSION) {
       errors.push(diagnostic("SCHEMA_VERSION", `schema_version debe ser ${CONTRACT_VERSION}.`));
     }
@@ -314,6 +323,9 @@ const ElectroDiagramCore = (() => {
     const nets = Array.isArray(document.nets) ? document.nets : [];
     if (!components.length) errors.push(diagnostic("COMPONENTS_REQUIRED", "El documento no contiene símbolos."));
     if (!nets.length) errors.push(diagnostic("NETS_REQUIRED", "El documento no contiene redes."));
+    if (components.length > 200) errors.push(diagnostic("COMPONENT_LIMIT", "El documento supera el límite de 200 símbolos."));
+    if (nets.length > 400) errors.push(diagnostic("NET_LIMIT", "El documento supera el límite de 400 redes."));
+    if (String(document.title || "").length > 160) errors.push(diagnostic("TITLE_LIMIT", "El título supera los 160 caracteres."));
 
     const byRef = new Map();
     for (const component of components) {
@@ -352,12 +364,15 @@ const ElectroDiagramCore = (() => {
 
     const terminalUse = new Map();
     const netIds = new Set();
+    let totalConnections = 0;
     for (const net of nets) {
       const netId = String(net?.id || "").trim();
       if (!netId) errors.push(diagnostic("NET_ID_REQUIRED", "Todas las redes necesitan un identificador."));
       if (netIds.has(netId)) errors.push(diagnostic("DUPLICATE_NET", `La red ${netId} está repetida.`, netId));
       netIds.add(netId);
       const connections = Array.isArray(net?.connections) ? net.connections : [];
+      totalConnections += connections.length;
+      if (connections.length > 100) errors.push(diagnostic("CONNECTION_LIMIT", `La red ${netId || "sin nombre"} supera las 100 conexiones.`, netId));
       const connectedTypes = [];
       const connectionsSeen = new Set();
       if (connections.length < 2) warnings.push(diagnostic("OPEN_NET", `La red ${netId || "sin nombre"} solo tiene un terminal.`, netId));
@@ -432,6 +447,7 @@ const ElectroDiagramCore = (() => {
         warnings.push(diagnostic("NET_ROLE_MISMATCH", `La red ${netId} se declara tierra o referencia pero no contiene un terminal compatible.`, netId));
       }
     }
+    if (totalConnections > 2000) errors.push(diagnostic("TOTAL_CONNECTION_LIMIT", "El documento supera las 2.000 conexiones totales."));
 
     for (const component of components) {
       const definition = SYMBOLS[component.symbol_id];
@@ -1498,6 +1514,13 @@ const ElectroDiagramCore = (() => {
       grid_pitch_mil: GRID_PITCH_MIL,
       single_canvas_default: true,
       connection_format: "REFERENCE.PORT",
+      limits: {
+        request_body_bytes: 262144,
+        components_per_document: 200,
+        nets_per_document: 400,
+        connections_per_net: 100,
+        total_connections: 2000,
+      },
     };
   }
 

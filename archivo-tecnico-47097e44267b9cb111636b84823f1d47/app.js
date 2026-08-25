@@ -7,6 +7,10 @@ const state = {
   resourcesPromise: null,
   accessReady: false,
   auditLoaded: false,
+  currentDesign: null,
+  currentCaseKey: "",
+  currentValidation: { errors: 0, warnings: 0 },
+  validationSummary: null,
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -57,6 +61,92 @@ function enterPrivateLab() {
   $("#pinGate").hidden = true;
   setToolMode();
   loadEngineAudit();
+  loadValidationSummary();
+}
+
+async function privateApi(action, { method = "GET", body = null } = {}) {
+  const url = new URL(PRIVATE_API_URL);
+  url.searchParams.set("action", action);
+  const options = { method, credentials: "same-origin", cache: "no-store", headers: { "X-ST-Client": clientToken() } };
+  if (body) {
+    options.headers["Content-Type"] = "application/json";
+    options.body = JSON.stringify({ ...body, client_token: clientToken() });
+  }
+  const response = await fetch(url, options);
+  const data = await response.json().catch(() => null);
+  if (!response.ok || !data?.ok) {
+    const error = new Error(data?.error || `request_failed_${response.status}`);
+    error.status = response.status;
+    throw error;
+  }
+  return data;
+}
+
+function updateValidationSummary(summary) {
+  if (!summary) return;
+  state.validationSummary = summary;
+  const progress = summary.progress || {};
+  $("#validationApproved").textContent = String(progress.approved || 0);
+  $("#validationProgressBar").style.width = `${Math.max(0, Math.min(100, Number(progress.percent || 0)))}%`;
+  $("#validationDomains").innerHTML = (summary.domains || []).map((item) => `
+    <span><b>${escapeHtml(item.label)}</b><em>${Number(item.approved || 0)}/5</em></span>
+  `).join("");
+}
+
+async function loadValidationSummary() {
+  try {
+    updateValidationSummary(await privateApi("electroia-validation-summary"));
+  } catch (_error) {
+    $("#validationMessage").textContent = "El registro de pruebas no está disponible todavía.";
+  }
+}
+
+function detectedDevice() {
+  const width = Math.min(window.innerWidth || 0, window.screen?.width || window.innerWidth || 0);
+  if (width <= 600) return "mobile";
+  if (width <= 1024) return "tablet";
+  return "desktop";
+}
+
+function suggestedDomain(design) {
+  const text = `${design?.title || ""} ${design?.summary || ""}`.toLowerCase();
+  if (/arduino|raspberry|esp32|embebid|microcontrol/.test(text)) return "embedded_systems";
+  if (/bms|climat|hvac|ventil|compresor|frigor/.test(text)) return "hvac_electronics";
+  if (/cuadro|unifilar|distribuci|protecci.n general/.test(text)) return "electrical_panels";
+  if (/plc|variador|motor|automat|contactor|arranque/.test(text)) return "automation";
+  return "";
+}
+
+async function sha256Hex(value) {
+  const bytes = new TextEncoder().encode(value);
+  if (window.crypto?.subtle) {
+    const digest = await window.crypto.subtle.digest("SHA-256", bytes);
+    return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+  }
+  let hash = 2166136261;
+  bytes.forEach((byte) => { hash = Math.imul(hash ^ byte, 16777619); });
+  return (hash >>> 0).toString(16).padStart(8, "0").repeat(8);
+}
+
+async function prepareFieldValidation(design) {
+  state.currentDesign = design;
+  state.currentCaseKey = "";
+  $("#saveValidation").disabled = true;
+  $("#validationMessage").textContent = "Preparando la huella del plano…";
+  $("#fieldValidationForm").reset();
+  $("#validationTester").value = "Administrador";
+  $("#validationDomain").value = suggestedDomain(design);
+  try {
+    const source = design.diagram_document || design;
+    const caseKey = await sha256Hex(JSON.stringify(source));
+    if (state.currentDesign !== design) return;
+    state.currentCaseKey = caseKey;
+    $("#validationMessage").textContent = "La comprobación quedará ligada a la huella de este plano.";
+  } catch (_error) {
+    $("#validationMessage").textContent = "No se ha podido identificar el plano para registrarlo.";
+  } finally {
+    if (state.currentDesign === design) $("#saveValidation").disabled = !state.currentCaseKey;
+  }
 }
 
 async function loadEngineAudit() {
@@ -464,7 +554,98 @@ function renderPublicResult(design) {
   const schematic = ElectroDiagram.render(design);
   $("#schematic").innerHTML = schematic;
   $("#expandedSchematic").innerHTML = schematic;
+  state.currentValidation = {
+    errors: validation?.errors?.length || 0,
+    warnings: relevantWarnings.length,
+  };
+  prepareFieldValidation(design);
 }
+
+function downloadBlob(filename, content, type) {
+  const link = document.createElement("a");
+  const url = URL.createObjectURL(new Blob([content], { type }));
+  link.href = url;
+  link.download = filename;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function designFilename(extension) {
+  const source = state.currentDesign?.diagram_document || state.currentDesign || {};
+  const base = String(source.document_id || source.title || "electroia-plano")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 70);
+  return `${base || "electroia-plano"}.${extension}`;
+}
+
+$("#downloadSvg").addEventListener("click", () => {
+  const svg = $("#schematic svg");
+  if (!svg) return;
+  downloadBlob(designFilename("svg"), `<?xml version="1.0" encoding="UTF-8"?>\n${svg.outerHTML}`, "image/svg+xml;charset=utf-8");
+});
+
+$("#downloadJson").addEventListener("click", () => {
+  const documentData = state.currentDesign?.diagram_document || state.currentDesign;
+  if (!documentData) return;
+  downloadBlob(designFilename("json"), `${JSON.stringify(documentData, null, 2)}\n`, "application/json;charset=utf-8");
+});
+
+$("#fieldValidationForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const outcome = new FormData(event.currentTarget).get("validationOutcome");
+  const domain = $("#validationDomain").value;
+  const notes = $("#validationNotes").value.trim();
+  if (!state.currentDesign || !state.currentCaseKey) {
+    $("#validationMessage").textContent = "Genera primero un plano identificable.";
+    return;
+  }
+  if (!domain || !outcome) {
+    $("#validationMessage").textContent = "Selecciona el ámbito y el resultado.";
+    return;
+  }
+  if (outcome === "needs_changes" && notes.length < 6) {
+    $("#validationMessage").textContent = "Indica brevemente qué debemos corregir.";
+    $("#validationNotes").focus();
+    return;
+  }
+  const button = $("#saveValidation");
+  button.disabled = true;
+  $("#validationMessage").textContent = "Guardando comprobación…";
+  const documentData = state.currentDesign.diagram_document || {};
+  try {
+    const data = await privateApi("electroia-validation", {
+      method: "POST",
+      body: {
+        case_key: state.currentCaseKey,
+        document_id: documentData.document_id || "",
+        title: state.currentDesign.title || documentData.title || "Plano ElectroIA",
+        domain,
+        outcome,
+        device: detectedDevice(),
+        tester_alias: $("#validationTester").value.trim() || "Administrador",
+        notes,
+        engine_version: ElectroDiagramCore?.getContract?.().engine_version || "",
+        validation_errors: state.currentValidation.errors,
+        relevant_warnings: state.currentValidation.warnings,
+      },
+    });
+    updateValidationSummary(data.summary);
+    $("#validationMessage").textContent = outcome === "approved"
+      ? "Comprobación guardada. Este plano cuenta en el progreso real."
+      : "Fallo registrado. Este plano no contará como aprobado hasta corregirlo.";
+  } catch (error) {
+    const messages = {
+      notes_required_for_changes: "Indica brevemente qué debemos corregir.",
+      validation_errors_prevent_approval: "El motor ha detectado errores y no permite aprobar este plano.",
+      rate_limited: "Se han enviado demasiadas comprobaciones. Espera unos minutos.",
+    };
+    $("#validationMessage").textContent = messages[error.message] || "No se ha podido guardar la comprobación.";
+  } finally {
+    button.disabled = false;
+  }
+});
 
 $("#expandDiagram").addEventListener("click", () => $("#diagramDialog").showModal());
 $("#closeDiagram").addEventListener("click", () => $("#diagramDialog").close());

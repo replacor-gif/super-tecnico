@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "ElectroIA Discovery API",
-    "version": "0.2.0",
-    "description": "Public read-only discovery and limited reviewed-symbol search for ElectroIA. Diagram execution remains private and is not exposed by this HTTP description."
+    "version": "0.3.0",
+    "description": "Public read-only discovery, reviewed-symbol search, document profiles and execution-safety policy for ElectroIA. Diagram execution remains private and is not exposed by this HTTP description."
   },
   "servers": [
     { "url": "https://app.replacor.com/super-tecnico" }
@@ -73,6 +73,30 @@
           "200": {
             "description": "JSON Schema",
             "content": { "application/schema+json": { "schema": { "type": "object" } } }
+          }
+        }
+      }
+    },
+    "/data/electroia/document-profiles.json": {
+      "get": {
+        "operationId": "getElectroIADocumentProfiles",
+        "summary": "Get the experimental graphical and document-profile separation",
+        "responses": {
+          "200": {
+            "description": "Machine-readable experimental profiles without a conformity claim",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          }
+        }
+      }
+    },
+    "/data/electroia/public-execution-policy.json": {
+      "get": {
+        "operationId": "getElectroIAExecutionPolicy",
+        "summary": "Get limits and safeguards planned for remote execution",
+        "responses": {
+          "200": {
+            "description": "Disabled-by-default public execution policy",
+            "content": { "application/json": { "schema": { "type": "object" } } }
           }
         }
       }

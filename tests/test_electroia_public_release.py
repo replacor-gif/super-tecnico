@@ -16,6 +16,10 @@ class ElectroIAPublicReleaseTests(unittest.TestCase):
         self.assertTrue(report["summary"]["public_information_surface_ready"])
         self.assertTrue(report["summary"]["private_human_preview_ready"])
         self.assertFalse(report["summary"]["public_execution_ready"])
+        self.assertTrue(report["summary"]["field_validation_recorder_ready"])
+        self.assertEqual(report["summary"]["field_validation_target"], 20)
+        self.assertTrue(report["summary"]["document_profiles_separated"])
+        self.assertTrue(report["summary"]["public_execution_policy_ready"])
         self.assertEqual(report["summary"]["reviewed_symbols"], 501)
         self.assertEqual(report["summary"]["professional_examples"], 5)
         self.assertEqual(report["summary"]["component_overlaps"], 0)
@@ -44,6 +48,10 @@ class ElectroIAPublicReleaseTests(unittest.TestCase):
         self.assertNotIn("electroia_render_diagram", serialized)
         self.assertNotIn("electroia_generate_relay_driver", serialized)
         self.assertNotIn("electroia_generate_temperature_fan", serialized)
+        policy = json.loads((ROOT / "data" / "electroia" / "public-execution-policy.json").read_text(encoding="utf-8"))
+        self.assertFalse(policy["enabled"])
+        self.assertTrue(policy["authentication"]["required"])
+        self.assertFalse(policy["safety"]["anonymous_execution_allowed"])
 
     def test_manual_release_blockers_are_explicit(self):
         report = json.loads(

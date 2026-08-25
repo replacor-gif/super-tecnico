@@ -34,7 +34,7 @@
         <span>Super Técnico <span>· ElectroIA</span></span>
       </a>
       <div id="engineStatus" class="case-pill local">
-        <span></span><b id="engineStatusLabel">Motor gráfico neutral</b><em> · Motor 1.14 beta</em>
+        <span></span><b id="engineStatusLabel">Motor gráfico neutral</b><em> · Motor 1.15 beta</em>
       </div>
     </header>
 
@@ -133,7 +133,11 @@
           <article class="schematic-card panel">
             <div class="panel-title">
               <span>Plano electrotécnico</span>
-              <button id="expandDiagram" class="diagram-button" type="button">Ampliar</button>
+              <div class="panel-title-actions">
+                <button id="downloadSvg" class="diagram-button" type="button">Guardar SVG</button>
+                <button id="downloadJson" class="diagram-button" type="button">Guardar JSON</button>
+                <button id="expandDiagram" class="diagram-button" type="button">Ampliar</button>
+              </div>
             </div>
             <div id="schematic" class="schematic"></div>
             <div class="schematic-legend">
@@ -158,6 +162,45 @@
         <article class="warning-panel">
           <div class="warning-icon">!</div>
           <div><h3>Antes de montar</h3><ul id="warningsList"></ul></div>
+        </article>
+
+        <article id="fieldValidationPanel" class="field-validation panel">
+          <div class="field-validation-head">
+            <div>
+              <span class="eyebrow">Prueba real desde móvil u ordenador</span>
+              <h3>¿Este plano ha quedado correcto?</h3>
+              <p>Cada esquema distinto cuenta una sola vez. Si lo corriges y vuelves a aprobarlo, se actualiza sin duplicarlo.</p>
+            </div>
+            <div class="validation-score"><strong id="validationApproved">0</strong><span>de 20 aprobados</span></div>
+          </div>
+          <div class="validation-track" aria-hidden="true"><i id="validationProgressBar"></i></div>
+          <div id="validationDomains" class="validation-domains" aria-label="Progreso por ámbitos"></div>
+          <form id="fieldValidationForm" class="field-validation-form">
+            <label>Ámbito
+              <select id="validationDomain" required>
+                <option value="">Selecciona…</option>
+                <option value="electrical_panels">Cuadros eléctricos</option>
+                <option value="automation">Automatización</option>
+                <option value="hvac_electronics">Electrónica HVAC</option>
+                <option value="embedded_systems">Sistemas embebidos</option>
+              </select>
+            </label>
+            <fieldset>
+              <legend>Resultado</legend>
+              <div class="validation-outcomes">
+                <label><input type="radio" name="validationOutcome" value="approved" required /><span>✓ Correcto</span></label>
+                <label><input type="radio" name="validationOutcome" value="needs_changes" required /><span>× Necesita cambios</span></label>
+              </div>
+            </fieldset>
+            <label class="validation-notes">Observaciones
+              <textarea id="validationNotes" rows="3" maxlength="1200" placeholder="Si hay un fallo, indica qué símbolo, cable, texto o posición debemos corregir."></textarea>
+            </label>
+            <label>Probado por
+              <input id="validationTester" type="text" maxlength="40" value="Administrador" />
+            </label>
+            <button id="saveValidation" class="primary-button" type="submit">Guardar comprobación <span>→</span></button>
+            <p id="validationMessage" class="validation-message" aria-live="polite"></p>
+          </form>
         </article>
       </section>
     </main>

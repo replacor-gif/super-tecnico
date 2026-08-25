@@ -161,7 +161,7 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn('"electroia_search_symbols"', manifest)
         self.assertIn('"electroia_get_symbol"', manifest)
         self.assertIn('"electroia_render_diagram"', manifest)
-        self.assertIn('"diagram_engine_version": "1.14.1-alpha.1"', manifest)
+        self.assertIn('"diagram_engine_version": "1.15.0-alpha.1"', manifest)
         self.assertIn('"normalized_symbol_count": 501', manifest)
         self.assertIn('"calculates_values"', manifest)
         self.assertIn('server.registerTool(', server)
@@ -186,6 +186,8 @@ class HiddenElectroIATests(unittest.TestCase):
             self.assertTrue((output / "data" / "electroia" / "symbol-normalization-report.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "engine-audit-report.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "public-release-readiness.json").is_file())
+            self.assertTrue((output / "data" / "electroia" / "document-profiles.json").is_file())
+            self.assertTrue((output / "data" / "electroia" / "public-execution-policy.json").is_file())
             self.assertTrue((output / "data" / "core" / "app-quality-audit.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "examples" / "motor-starter-direct.json").is_file())
             self.assertTrue((output / "data" / "electroia" / "examples" / "distribution-board-single-line.json").is_file())
@@ -268,7 +270,7 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn("getElectroIAPublicStatus", json.dumps(openapi))
         self.assertIn("searchElectroIAReviewedSymbols", json.dumps(openapi))
         self.assertEqual(server["name"], "io.github.replacor-gif/electroia-diagrams")
-        self.assertEqual(server["version"], "0.14.1")
+        self.assertEqual(server["version"], "0.15.0")
         self.assertNotIn("4097", llms)
 
 

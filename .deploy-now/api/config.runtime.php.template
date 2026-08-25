@@ -11,4 +11,7 @@ return [
     'turnstile_secret' => '$ST_TURNSTILE_SECRET',
     'require_turnstile' => '$ST_REQUIRE_TURNSTILE' === '1',
     'electroia_pin_hash' => '$ST_ELECTROIA_PIN_HASH',
+    'electroia_public_render_enabled' => '$ST_ELECTROIA_PUBLIC_RENDER_ENABLED' === '1',
+    'electroia_public_api_key_hashes' => '$ST_ELECTROIA_PUBLIC_API_KEY_HASHES',
+    'electroia_emergency_stop' => '$ST_ELECTROIA_EMERGENCY_STOP' !== '0',
 ];

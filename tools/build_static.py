@@ -967,6 +967,14 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         output / "data" / "electroia" / "public-release-readiness.json",
         read_json(source_root / "data" / "electroia" / "public-release-readiness.json"),
     )
+    write_json(
+        output / "data" / "electroia" / "document-profiles.json",
+        read_json(source_root / "data" / "electroia" / "document-profiles.json"),
+    )
+    write_json(
+        output / "data" / "electroia" / "public-execution-policy.json",
+        read_json(source_root / "data" / "electroia" / "public-execution-policy.json"),
+    )
     for path in sorted((source_root / "data" / "electroia" / "examples").glob("*.json")):
         write_json(output / "data" / "electroia" / "examples" / path.name, read_json(path))
     for filename in (

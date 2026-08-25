@@ -46,11 +46,20 @@ jobs:
           php -l api/embedded-platforms.php
           php -l api/index.php
 
+      - name: Verificar validación de campo y límites de ElectroIA
+        run: |
+          node --check archivo-tecnico-47097e44267b9cb111636b84823f1d47/app.js
+          node tests/electroia_guardrails_smoke.mjs
+          node tests/electroia_toolkit_smoke.mjs
+          php -l api/electroia.php
+          php -l api/electroia-validation.php
+
       - name: Verificar datos derivados y panel de evolución
         run: |
           node --check assets/updates.js
           python tools/normalize_symbol_library.py --check
           python tools/audit_electroia_engine.py --check
+          node tools/build_electroia_release_report.mjs --check
           python tools/build_project_roadmap.py --check
 
       - name: Verificar buscador universal de datasheets

@@ -20,12 +20,14 @@ La IA llamante decide la topología, los valores y los componentes. La herramien
 su conectividad y devuelve un SVG sobre una rejilla común.
 
 La biblioteca externa contiene las 501 fichas revisadas del catálogo y 3 elementos auxiliares
-del motor. Cada definición indica su calidad: 206 símbolos del catálogo tienen geometría
-revisada en el motor y 254 son borradores normalizados por familias. Las familias
-de conexiones y referencias, protecciones eléctricas, relés, interruptores y actuadores,
-y máquinas y actuadores ya están revisadas por completo. También hay 17 sensores HVAC
-y de medida revisados individualmente. El motor
-los distingue gráficamente y avisa cuando se utiliza uno pendiente de revisión.
+del motor. Las 19 familias públicas tienen geometría y terminales revisados. Los 75 bloques
+funcionales cuyo bornero depende de fabricante o variante no se convierten en pinout físico
+sin indicar el modelo exacto y consultar su documentación.
+
+La versión 0.15 añade límites deterministas antes del renderizado: 256 KiB por documento,
+200 símbolos, 400 redes, 100 conexiones por red y 2.000 conexiones totales. La política del
+futuro servicio remoto está publicada como datos legibles por máquinas, pero el transporte
+HTTP de ejecución continúa desactivado hasta completar las pruebas de campo.
 
 Los generadores de relé y ventilador se conservan como adaptadores de demostración.
 No forman parte del núcleo gráfico y pueden ser sustituidos por cualquier IA que
@@ -81,3 +83,11 @@ El Caso 002 admite ventiladores DC de dos cables entre 3 V y 30 V. La herramient
 recibe la temperatura de encendido y la histéresis deseada, y devuelve un circuito
 con NTC, comparador, MOSFET y protección. El adaptador entrega ese circuito al nuevo
 motor, que lo dibuja en un único lienzo normalizado.
+
+## Validación de campo
+
+El laboratorio privado permite guardar el SVG y el contrato JSON y registrar, desde móvil
+u ordenador, si un plano es correcto o necesita cambios. Cada documento se identifica por
+su huella SHA-256 y cuenta una sola vez. La apertura remota exige veinte planos distintos:
+cinco de cuadros, cinco de automatización, cinco de electrónica HVAC y cinco de sistemas
+embebidos.

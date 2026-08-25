@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-24",
+  "updated_at": "2026-08-25",
   "release_stage": "beta_publica_competente",
   "summary": {
     "electroia_catalog_symbols": 501,
@@ -14,6 +14,8 @@
     "electroia_component_overlaps": 0,
     "electroia_wire_component_conflicts": 0,
     "electroia_public_execution_ready": false,
+    "electroia_field_validation_recorder_ready": true,
+    "electroia_field_validation_target": 20,
     "public_ai_tools": 9,
     "ai_readiness_percent": 72
   },
@@ -37,11 +39,11 @@
       "title": "Validar diagramas completos de casos reales",
       "status": "field_validation",
       "progress": {
-        "done": 5,
+        "done": 0,
         "total": 20,
-        "unit": "casos reales"
+        "unit": "validaciones de campo registradas"
       },
-      "next_action": "Probar en móvil otros quince esquemas reales de cuadros, automatismos, electrónica HVAC y controladores embebidos y registrar cualquier corrección visual."
+      "next_action": "Usar el nuevo registro móvil para comprobar cinco esquemas distintos de cuadros, automatización, electrónica HVAC y sistemas embebidos; los cinco patrones automáticos no cuentan como validación humana."
     },
     {
       "id": "duct-field-validation",

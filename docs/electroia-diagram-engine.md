@@ -97,7 +97,9 @@ El motor aporta:
 
 La base educativa de Super Técnico conserva 501 fichas y sus SVG de consulta. Todas tienen ahora una definición utilizable por el motor con geometría, terminales tipados y puntos de conexión sobre la rejilla común.
 
-La versión 1.13 dispone de 501 símbolos públicos revisados, 19 familias completas y ningún borrador público. Incluye 41 símbolos profesionales de automatización, control embebido, accionamientos, maniobra y control de edificios. Los equipos cuyo bornero cambia por variante usan terminales por grupo funcional y generan una advertencia hasta indicar fabricante y modelo exactos.
+La versión 1.15 dispone de 501 símbolos públicos revisados, 19 familias completas y ningún borrador público. Incluye 41 símbolos profesionales de automatización, control embebido, accionamientos, maniobra y control de edificios. Los equipos cuyo bornero cambia por variante usan terminales por grupo funcional y generan una advertencia hasta indicar fabricante y modelo exactos.
+
+La capa gráfica general y las reglas de cada clase documental están separadas en `document-profiles.json`. Los perfiles siguen siendo experimentales hasta verificarlos formalmente con normas autorizadas y revisión profesional.
 
 El primer patrón unifilar representa una alimentación monofásica, contador, protección general, diferencial y tres circuitos derivados. Cada red declara explícitamente cuántos conductores resume la línea.
 
@@ -118,3 +120,4 @@ La migración se realiza sin perder la ficha existente:
 - un único lienzo salvo división explícita y justificada;
 - resultado determinista para la misma entrada;
 - diagnóstico estructurado de errores, advertencias y métricas.
+- rechazo previo de documentos que superen 256 KiB, 200 símbolos, 400 redes o 2.000 conexiones.

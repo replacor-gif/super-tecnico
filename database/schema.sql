@@ -253,3 +253,25 @@ CREATE TABLE IF NOT EXISTS st_private_backlog (
   KEY idx_private_backlog_status_priority (status, priority, updated_at),
   KEY idx_private_backlog_area (area, updated_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS st_electroia_field_validations (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  case_key CHAR(64) NOT NULL,
+  document_id VARCHAR(80) NULL,
+  title VARCHAR(160) NOT NULL,
+  domain VARCHAR(32) NOT NULL,
+  outcome ENUM('approved','needs_changes') NOT NULL,
+  device ENUM('mobile','tablet','desktop','unknown') NOT NULL DEFAULT 'unknown',
+  tester_alias VARCHAR(40) NOT NULL DEFAULT 'Administrador',
+  notes TEXT NULL,
+  engine_version VARCHAR(40) NULL,
+  validation_errors SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  relevant_warnings SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  client_hash CHAR(64) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_electroia_validation_case (case_key),
+  KEY idx_electroia_validation_outcome (outcome, updated_at),
+  KEY idx_electroia_validation_domain (domain, outcome, updated_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

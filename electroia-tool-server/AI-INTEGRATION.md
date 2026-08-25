@@ -10,13 +10,17 @@ ElectroIA separa dos responsabilidades: la IA decide qué circuito necesita y el
 4. Construye un documento conforme a `diagram-document.schema.json`.
 5. Llama a `electroia_render_diagram` y revisa los errores y advertencias antes de mostrar el SVG.
 
-Un símbolo `engine_reviewed` tiene geometría y terminales revisados. Un símbolo `auto_draft` es una estructura provisional por familia: puede usarse para desarrollar el documento, pero el motor siempre avisará de que falta revisión gráfica.
+Los 501 símbolos públicos son `engine_reviewed`. Un bloque con `requires_exact_model=true` representa funciones, no un bornero físico: la IA debe aportar fabricante, modelo, variante y manual antes de expandir sus terminales reales.
+
+El contrato impone 256 KiB por documento, 200 símbolos, 400 redes, 100 conexiones por red y 2.000 conexiones totales. Una entrada que supere esos límites se rechaza antes del renderizado.
 
 ## Uso local mediante MCP
 
 Con Node.js 20 o posterior, instala las dependencias dentro de `electroia-tool-server` y ejecuta `node src/index.mjs`. El transporte actual es `stdio`.
 
 La descripción `server.json` ya sigue el formato del MCP Registry. Durante la vista previa no contiene todavía una distribución instalable ni un transporte MCP remoto; se añadirán antes de solicitar la publicación en el registro.
+
+`data/electroia/document-profiles.json` separa las reglas gráficas generales de las reglas experimentales para circuito, unifilar y multifilar. `data/electroia/public-execution-policy.json` define autenticación, cuotas, diagnósticos y apagado de emergencia para el futuro servicio; no activa la ejecución pública.
 
 ## Descubrimiento web
 

@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-08-25",
+  "service": "electroia-remote-rendering",
+  "state": "disabled_until_field_validation",
+  "enabled": false,
+  "default_deny": true,
+  "emergency_stop_default": true,
+  "activation_requirements": [
+    "twenty_distinct_field_validations",
+    "four_professional_domains_covered",
+    "api_keys_provisioned_as_hashes",
+    "quota_storage_available",
+    "diagnostic_logging_available",
+    "load_and_abuse_tests_pass"
+  ],
+  "authentication": {
+    "required": true,
+    "scheme": "api_key",
+    "plaintext_storage_allowed": false,
+    "configuration_key": "ST_ELECTROIA_PUBLIC_API_KEY_HASHES"
+  },
+  "limits": {
+    "request_body_bytes": 262144,
+    "title_characters": 160,
+    "components_per_document": 200,
+    "nets_per_document": 400,
+    "connections_per_net": 100,
+    "total_connections": 2000,
+    "render_timeout_seconds": 8,
+    "svg_output_bytes": 2097152,
+    "requests_per_hour_per_key": 60,
+    "requests_per_day_per_key": 500
+  },
+  "diagnostics": {
+    "record": [
+      "request_id",
+      "api_key_fingerprint",
+      "document_fingerprint",
+      "engine_version",
+      "component_count",
+      "net_count",
+      "diagnostic_codes",
+      "latency_ms",
+      "outcome"
+    ],
+    "never_record": [
+      "plaintext_api_key",
+      "raw_user_photo",
+      "unredacted_personal_data"
+    ],
+    "retention_days": 30
+  },
+  "safety": {
+    "configuration_enable_key": "ST_ELECTROIA_PUBLIC_RENDER_ENABLED",
+    "configuration_stop_key": "ST_ELECTROIA_EMERGENCY_STOP",
+    "requires_exact_model_blocks_are_non_executable": true,
+    "validation_errors_block_rendering": true,
+    "review_warning_required": true,
+    "anonymous_execution_allowed": false
+  },
+  "notice": "Esta política prepara el futuro servicio remoto, pero no lo activa. La ejecución HTTP pública continúa deshabilitada."
+}

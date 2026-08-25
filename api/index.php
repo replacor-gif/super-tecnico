@@ -8,6 +8,7 @@ require __DIR__ . '/analytics.php';
 require __DIR__ . '/connectors.php';
 require __DIR__ . '/embedded-platforms.php';
 require __DIR__ . '/private-backlog.php';
+require __DIR__ . '/electroia-validation.php';
 
 $action = preg_replace('/[^a-z0-9-]/', '', strtolower((string) ($_GET['action'] ?? 'health')));
 $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
@@ -44,6 +45,19 @@ try {
     if ($action === 'electroia-tools' && $method === 'GET') {
         st_require_electroia_access();
         st_json(st_electroia_tool_manifest());
+    }
+
+    if ($action === 'electroia-validation-summary' && $method === 'GET') {
+        st_require_electroia_access();
+        st_json(st_electroia_validation_summary());
+    }
+
+    if ($action === 'electroia-validation' && $method === 'POST') {
+        st_require_electroia_access();
+        $body = st_body();
+        $clientHash = st_client_hash($body);
+        st_rate_limit('electroia-field-validation', $clientHash, 120, 3600);
+        st_json(st_electroia_validation_create($body, $clientHash), 201);
     }
 
     if ($action === 'health' && $method === 'GET') {

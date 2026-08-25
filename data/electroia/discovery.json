@@ -54,6 +54,8 @@
     "normalization_report": "symbol-normalization-report.json",
     "engine_audit_report": "engine-audit-report.json",
     "public_release_readiness": "public-release-readiness.json",
+    "document_profiles": "document-profiles.json",
+    "public_execution_policy": "public-execution-policy.json",
     "openapi_discovery": "discovery.openapi.json",
     "shared_connector_catalog": "../connectors/tool-manifest.json",
     "shared_embedded_platform_catalog": "../embedded-platforms/tool-manifest.json"

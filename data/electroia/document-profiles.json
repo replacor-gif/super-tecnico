@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-08-25",
+  "status": "experimental_not_certified",
+  "base_profile": {
+    "id": "IEC_EXPERIMENTAL",
+    "grid_pitch_mil": 50,
+    "single_canvas_default": true,
+    "connectivity_source": "explicit_nets",
+    "junctions_require_nodes": true,
+    "crossings_do_not_connect_by_proximity": true,
+    "terminal_coordinates_on_primary_grid": true,
+    "reference_designations_required": true
+  },
+  "document_profiles": [
+    {
+      "id": "IEC_EXPERIMENTAL_CIRCUIT",
+      "document_kind": "circuit_diagram",
+      "inherits": "IEC_EXPERIMENTAL",
+      "purpose": "Esquemas electrónicos y de control con terminales y redes explícitos.",
+      "verified": false
+    },
+    {
+      "id": "IEC_EXPERIMENTAL_SINGLE_LINE",
+      "document_kind": "single_line_diagram",
+      "inherits": "IEC_EXPERIMENTAL",
+      "purpose": "Unifilares donde cada red declara el número de conductores resumidos.",
+      "required_fields": ["nets[].conductors"],
+      "verified": false
+    },
+    {
+      "id": "IEC_EXPERIMENTAL_MULTI_LINE",
+      "document_kind": "multi_line_diagram",
+      "inherits": "IEC_EXPERIMENTAL",
+      "purpose": "Multifilares con una red independiente por conductor y referencias funcionales explícitas.",
+      "verified": false
+    }
+  ],
+  "separation": {
+    "general_graphical_rules": "base_profile",
+    "document_specific_rules": "document_profiles",
+    "national_installation_rules": "outside_rendering_engine",
+    "equipment_selection_and_calculation": "calling_ai_or_engine"
+  },
+  "notice": "La separación ya es legible por máquinas. La verificación formal requiere normas autorizadas y revisión profesional; no se declara conformidad IEC."
+}

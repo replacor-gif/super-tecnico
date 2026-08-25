@@ -22,4 +22,7 @@ return array_merge([
     'turnstile_secret' => st_env('ST_TURNSTILE_SECRET'),
     'require_turnstile' => st_env('ST_REQUIRE_TURNSTILE', '0') === '1',
     'electroia_pin_hash' => st_env('ST_ELECTROIA_PIN_HASH'),
+    'electroia_public_render_enabled' => st_env('ST_ELECTROIA_PUBLIC_RENDER_ENABLED', '0') === '1',
+    'electroia_public_api_key_hashes' => st_env('ST_ELECTROIA_PUBLIC_API_KEY_HASHES'),
+    'electroia_emergency_stop' => st_env('ST_ELECTROIA_EMERGENCY_STOP', '1') === '1',
 ], is_array($runtime) ? $runtime : []);

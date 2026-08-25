@@ -18,14 +18,18 @@ function gate(id, passed, evidence) {
 }
 
 async function buildReport() {
-  const [engineAudit, manifest, discovery, openapi, hiddenHtml, apiSource, electroiaApiSource] = await Promise.all([
+  const [engineAudit, manifest, discovery, openapi, executionPolicy, documentProfiles, hiddenHtml, labApp, apiSource, electroiaApiSource, validationApiSource] = await Promise.all([
     readJson("data/electroia/engine-audit-report.json"),
     readJson("data/electroia/tool-manifest.json"),
     readJson("data/electroia/discovery.json"),
     readJson("data/electroia/discovery.openapi.json"),
+    readJson("data/electroia/public-execution-policy.json"),
+    readJson("data/electroia/document-profiles.json"),
     readFile(join(ROOT, "archivo-tecnico-47097e44267b9cb111636b84823f1d47", "index.html"), "utf8"),
+    readFile(join(ROOT, "archivo-tecnico-47097e44267b9cb111636b84823f1d47", "app.js"), "utf8"),
     readFile(join(ROOT, "api", "index.php"), "utf8"),
     readFile(join(ROOT, "api", "electroia.php"), "utf8"),
+    readFile(join(ROOT, "api", "electroia-validation.php"), "utf8"),
   ]);
 
   const exampleDirectory = join(ROOT, "data", "electroia", "examples");
@@ -73,6 +77,8 @@ async function buildReport() {
     gate("examples_have_no_wire_component_conflicts", examples.every((item) => item.wire_component_conflicts === 0), `${examples.reduce((sum, item) => sum + item.wire_component_conflicts, 0)} cruces por componentes`),
     gate("examples_stay_on_grid", examples.every((item) => item.off_grid_terminals === 0), `${examples.reduce((sum, item) => sum + item.off_grid_terminals, 0)} terminales fuera de rejilla`),
     gate("examples_use_single_canvas", examples.every((item) => item.single_canvas === true), `${examples.filter((item) => item.single_canvas).length}/${examples.length} en lienzo único`),
+    gate("hard_input_limits_enforced", core.getContract().limits?.components_per_document === 200 && core.getContract().limits?.total_connections === 2000, "256 KiB, 200 símbolos, 400 redes y 2.000 conexiones"),
+    gate("document_profiles_are_separated", documentProfiles.base_profile?.id === "IEC_EXPERIMENTAL" && documentProfiles.document_profiles?.length === 3, "reglas gráficas generales separadas de circuito, unifilar y multifilar"),
   ];
   const exposureGates = [
     gate("private_preview_is_noindex", hiddenHtml.includes("noindex,nofollow,noarchive,nosnippet,noimageindex"), "laboratorio excluido de buscadores"),
@@ -80,12 +86,14 @@ async function buildReport() {
     gate("openapi_does_not_expose_render", !openapiText.includes("electroia_render_diagram"), "solo consulta pública de estado y catálogo"),
     gate("raw_images_are_not_claimed_as_supported", Array.isArray(manifest.capabilities?.raw_inputs_not_yet_supported) && manifest.capabilities.raw_inputs_not_yet_supported.includes("raw_photo"), "foto y boceto se declaran pendientes"),
     gate("remote_execution_remains_disabled", discovery.security?.remote_public_execution === false, "motor remoto no abierto"),
+    gate("field_validation_is_private_and_traceable", apiSource.includes("electroia-validation-summary") && validationApiSource.includes("case_key CHAR(64)") && labApp.includes('subtle.digest("SHA-256"'), "registro protegido, huella SHA-256 y progreso por ámbito"),
+    gate("remote_execution_policy_is_machine_readable", executionPolicy.enabled === false && executionPolicy.authentication?.required === true && executionPolicy.safety?.anonymous_execution_allowed === false, "autenticación, cuotas, límites, diagnósticos y apagado documentados"),
   ];
   const automatedGatesPass = [...technicalGates, ...exposureGates].every((item) => item.passed);
 
   return {
     schema_version: "1.0",
-    generated_on: "2026-08-24",
+    generated_on: "2026-08-25",
     engine_version: manifest.diagram_engine_version,
     release_stage: automatedGatesPass ? "private_release_candidate" : "engineering_blocked",
     decision: automatedGatesPass ? "keep_execution_private_until_field_validation" : "do_not_publish",
@@ -94,6 +102,10 @@ async function buildReport() {
       public_information_surface_ready: automatedGatesPass,
       private_human_preview_ready: automatedGatesPass,
       public_execution_ready: false,
+      field_validation_recorder_ready: true,
+      field_validation_target: 20,
+      document_profiles_separated: true,
+      public_execution_policy_ready: true,
       reviewed_symbols: manifest.capabilities?.reviewed_catalog_symbol_count ?? 0,
       professional_examples: examples.length,
       example_components: examples.reduce((sum, item) => sum + item.components, 0),
@@ -110,17 +122,17 @@ async function buildReport() {
       {
         id: "FIELD_VALIDATION_REQUIRED",
         owner: "Administrador y técnicos colaboradores",
-        exit_criteria: "Validar en móvil al menos 20 esquemas reales de cuatro ámbitos: cuadros, automatización, electrónica HVAC y sistemas embebidos.",
+        exit_criteria: "Usar el registro privado para aprobar en dispositivos reales 20 esquemas distintos: cinco de cuadros, cinco de automatización, cinco de electrónica HVAC y cinco de sistemas embebidos.",
       },
       {
         id: "IEC_PROFILE_REMAINS_EXPERIMENTAL",
         owner: "ElectroIA",
-        exit_criteria: "Separar reglas gráficas generales de los perfiles documentales y verificar el perfil usado para cada clase de esquema.",
+        exit_criteria: "La separación legible por máquinas ya está hecha; falta verificar formalmente las reglas de circuito, unifilar y multifilar con normas autorizadas y revisión profesional.",
       },
       {
         id: "PUBLIC_EXECUTION_GUARDRAILS_REQUIRED",
         owner: "Super Técnico",
-        exit_criteria: "Añadir autenticación por clave, cuotas, límites de tamaño, registro de diagnósticos y apagado de emergencia antes de ofrecer renderizado remoto.",
+        exit_criteria: "La política, los límites y las variables de apagado ya están preparados; faltan el transporte remoto aislado, aprovisionar claves, persistir cuotas y diagnósticos y superar pruebas de carga y abuso.",
       },
     ],
     allowed_public_scope_now: [
@@ -128,6 +140,7 @@ async function buildReport() {
       "búsqueda limitada de símbolos revisados",
       "contrato JSON y ejemplos profesionales revisados",
       "documentación para integrar el servidor MCP local",
+      "perfiles documentales experimentales y política de futura ejecución",
     ],
     forbidden_public_scope_now: [
       "ejecución HTTP anónima del renderizador",

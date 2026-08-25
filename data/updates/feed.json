@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-24",
+  "updated_at": "2026-08-25",
   "title": "Últimas mejoras de Super Técnico",
   "author_policy": {
     "maintainer": "Administrador",
@@ -9,6 +9,15 @@
     "personal_data": "Do not publish private identifiers unless the contributor explicitly chose that text as a public nickname."
   },
   "entries": [
+    {
+      "id": "UPD-20260825-ELECTROIA-FIELD-VALIDATION",
+      "date": "2026-08-25",
+      "title": "ElectroIA prepara sus pruebas reales desde el móvil",
+      "summary": "El laboratorio privado registra cada plano mediante una huella única, permite aprobarlo o señalar correcciones y muestra el avance por cuadros, automatización, electrónica HVAC y sistemas embebidos. Se añaden exportación SVG/JSON, límites duros, perfiles documentales separados y una política de seguridad desactivada por defecto para el futuro servicio remoto.",
+      "areas": ["ElectroIA", "Móvil", "Calidad", "IA", "Seguridad"],
+      "kind": "platform_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
     {
       "id": "UPD-20260824-ELECTROIA-RELEASE-GATES",
       "date": "2026-08-24",

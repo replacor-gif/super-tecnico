@@ -39,7 +39,7 @@ def build() -> dict:
         public_ai_tools += 2
     return {
         "schema_version": "1.0",
-        "updated_at": "2026-08-24",
+        "updated_at": "2026-08-25",
         "release_stage": "beta_publica_competente",
         "summary": {
             "electroia_catalog_symbols": total,
@@ -53,6 +53,8 @@ def build() -> dict:
             "electroia_component_overlaps": electroia_release["summary"]["component_overlaps"],
             "electroia_wire_component_conflicts": electroia_release["summary"]["wire_component_conflicts"],
             "electroia_public_execution_ready": electroia_release["summary"]["public_execution_ready"],
+            "electroia_field_validation_recorder_ready": electroia_release["summary"]["field_validation_recorder_ready"],
+            "electroia_field_validation_target": electroia_release["summary"]["field_validation_target"],
             "public_ai_tools": public_ai_tools,
             "ai_readiness_percent": readiness["readiness_score_percent"],
         },
@@ -71,8 +73,8 @@ def build() -> dict:
                 "area": "ElectroIA",
                 "title": "Validar diagramas completos de casos reales",
                 "status": "field_validation",
-                "progress": {"done": electroia_release["summary"]["professional_examples"], "total": 20, "unit": "casos reales"},
-                "next_action": "Probar en móvil otros quince esquemas reales de cuadros, automatismos, electrónica HVAC y controladores embebidos y registrar cualquier corrección visual.",
+                "progress": {"done": 0, "total": electroia_release["summary"]["field_validation_target"], "unit": "validaciones de campo registradas"},
+                "next_action": "Usar el nuevo registro móvil para comprobar cinco esquemas distintos de cuadros, automatización, electrónica HVAC y sistemas embebidos; los cinco patrones automáticos no cuentan como validación humana.",
             },
             {
                 "id": "duct-field-validation",

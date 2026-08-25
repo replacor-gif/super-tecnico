@@ -6,7 +6,7 @@
   "provider_neutral": true,
   "embedded_ai_model": false,
   "billing_required_by_electroia": false,
-  "diagram_engine_version": "1.14.1-alpha.1",
+  "diagram_engine_version": "1.15.0-alpha.1",
   "diagram_contract_version": "1.0",
   "design_model_version": "0.9",
   "core_policy": {
@@ -39,9 +39,18 @@
   },
   "capabilities": {
     "standard_profiles": ["IEC_EXPERIMENTAL"],
+    "document_profile_registry": "document-profiles.json",
+    "execution_policy": "public-execution-policy.json",
     "document_kinds": ["circuit_diagram", "single_line_diagram", "multi_line_diagram"],
     "grid_pitch_mil": 50,
     "single_canvas_default": true,
+    "hard_limits": {
+      "request_body_bytes": 262144,
+      "components_per_document": 200,
+      "nets_per_document": 400,
+      "connections_per_net": 100,
+      "total_connections": 2000
+    },
     "normalized_symbol_count": 501,
     "catalog_symbol_count": 501,
     "engine_symbol_count": 504,

@@ -96,7 +96,7 @@ function st_electroia_unlock(string $pin): bool
     if (!password_verify($pin, $hash)) return false;
     st_electroia_start_session();
     session_regenerate_id(true);
-    $_SESSION['st_electroia_unlocked'] = true;
+    $_SESSION['electroia_unlocked'] = true;
     $_SESSION['electroia_unlocked_at'] = time();
     st_electroia_set_access_cookie();
     return true;
@@ -147,6 +147,7 @@ function st_electroia_public_status(): array
 {
     $release = st_electroia_read_json_file('data/electroia/public-release-readiness.json');
     $manifest = st_electroia_read_json_file('data/electroia/tool-manifest.json');
+    $executionPolicy = st_electroia_read_json_file('data/electroia/public-execution-policy.json');
     $summary = is_array($release['summary'] ?? null) ? $release['summary'] : [];
     $capabilities = is_array($manifest['capabilities'] ?? null) ? $manifest['capabilities'] : [];
     return [
@@ -166,6 +167,18 @@ function st_electroia_public_status(): array
             'component_overlaps' => (int) ($summary['component_overlaps'] ?? 0),
             'wire_component_conflicts' => (int) ($summary['wire_component_conflicts'] ?? 0),
             'dangerous_warnings' => (int) ($summary['dangerous_warnings'] ?? 0),
+        ],
+        'field_validation' => [
+            'recorder_ready' => ($summary['field_validation_recorder_ready'] ?? false) === true,
+            'target' => (int) ($summary['field_validation_target'] ?? 20),
+            'progress_is_private' => true,
+        ],
+        'execution_guardrails' => [
+            'policy_ready' => ($summary['public_execution_policy_ready'] ?? false) === true,
+            'enabled' => false,
+            'api_key_required' => ($executionPolicy['authentication']['required'] ?? false) === true,
+            'anonymous_execution_allowed' => false,
+            'limits' => is_array($executionPolicy['limits'] ?? null) ? $executionPolicy['limits'] : [],
         ],
         'responsibility_boundary' => [
             'calling_ai' => 'Interpreta, calcula, selecciona componentes y entrega un documento estructurado.',

@@ -74,7 +74,10 @@
         "normalized_symbol_search",
         "diagram_validation",
         "orthogonal_routing",
-        "single_canvas_svg_rendering"
+        "single_canvas_svg_rendering",
+        "hard_input_limits",
+        "experimental_document_profiles",
+        "private_field_validation"
       ],
       "discovery": "../electroia/discovery.json"
     },
