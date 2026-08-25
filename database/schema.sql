@@ -154,6 +154,7 @@ CREATE TABLE IF NOT EXISTS st_regulation_search_events (
   request_id CHAR(32) NOT NULL,
   client_hash CHAR(64) NOT NULL,
   client_type ENUM('human','ai','software','unknown') NOT NULL DEFAULT 'unknown',
+  client_detection ENUM('declared','user_agent','fallback') NOT NULL DEFAULT 'fallback',
   query_hash CHAR(64) NOT NULL,
   query_sample VARCHAR(180) NULL,
   document_filter VARCHAR(64) NULL,
@@ -274,4 +275,21 @@ CREATE TABLE IF NOT EXISTS st_electroia_field_validations (
   UNIQUE KEY uq_electroia_validation_case (case_key),
   KEY idx_electroia_validation_outcome (outcome, updated_at),
   KEY idx_electroia_validation_domain (domain, outcome, updated_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS st_electroia_usage_events (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  action_name ENUM('public_status','symbol_search') NOT NULL,
+  client_hash CHAR(64) NOT NULL,
+  client_type ENUM('human','ai','software','unknown') NOT NULL DEFAULT 'unknown',
+  client_detection ENUM('declared','user_agent','fallback') NOT NULL DEFAULT 'fallback',
+  query_hash CHAR(64) NULL,
+  query_sample VARCHAR(120) NULL,
+  result_count SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  latency_ms INT UNSIGNED NOT NULL DEFAULT 0,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY idx_electroia_usage_date (created_at),
+  KEY idx_electroia_usage_action (action_name, created_at),
+  KEY idx_electroia_usage_client (client_type, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

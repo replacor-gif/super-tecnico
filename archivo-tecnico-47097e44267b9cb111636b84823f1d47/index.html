@@ -3,12 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#101415" />
+    <meta name="theme-color" content="#05070b" />
     <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex" />
     <meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet,noimageindex" />
     <meta name="referrer" content="no-referrer" />
-    <title>Laboratorio privado — Super Técnico</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>ElectroIA Studio — Super Técnico</title>
+    <link rel="icon" type="image/png" href="../assets/super-tecnico-logo.png" />
+    <link rel="stylesheet" href="../assets/common.css?v=1" />
+    <link rel="stylesheet" href="../assets/app-theme.css?v=1" />
+    <link rel="stylesheet" href="styles.css?v=3" />
   </head>
   <body class="access-checking">
     <section id="pinGate" class="pin-gate" hidden aria-labelledby="pinTitle">
@@ -28,53 +31,131 @@
       </div>
     </section>
     <div class="noise" aria-hidden="true"></div>
-    <header class="topbar">
+    <header class="topbar electroia-header">
       <a class="brand" href="../index.html" aria-label="Volver a Super Técnico">
-        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span>Super Técnico <span>· ElectroIA</span></span>
+        <img src="../assets/super-tecnico-logo.png" alt="" />
+        <span><strong>SUPER <b>TÉCNICO</b></strong><small>REPLACOR · ELECTROIA STUDIO</small></span>
       </a>
-      <div id="engineStatus" class="case-pill local">
-        <span></span><b id="engineStatusLabel">Motor gráfico neutral</b><em> · Motor 1.15 beta</em>
+      <div class="header-actions">
+        <div id="engineStatus" class="case-pill local">
+          <span></span><b id="engineStatusLabel">Motor gráfico neutral</b><em> · 1.15</em>
+        </div>
+        <a class="header-back" href="../index.html">Volver</a>
       </div>
     </header>
 
     <main>
       <section id="introView" class="view intro-view active">
-        <div class="eyebrow">Motor de diagramas para cualquier IA</div>
-        <h1>De un circuito definido<br /><em>a un plano legible.</em></h1>
-        <p class="lede">
-          La IA decide el circuito; ElectroIA normaliza símbolos y terminales, comprueba las redes
-          y dibuja todo sobre una única rejilla.
-        </p>
-
-        <form id="requestForm" class="prompt-card">
-          <label for="requestInput">¿Qué quieres construir?</label>
-          <div class="prompt-row">
-            <textarea id="requestInput" rows="2" maxlength="500" required>Quiero encender un relé de 12 V utilizando una señal de 5 V.</textarea>
-            <button type="submit" class="arrow-button" aria-label="Analizar petición">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-            </button>
+        <section class="launch-hero">
+          <div class="launch-copy">
+            <div class="eyebrow">Motor electrotécnico para personas e inteligencias artificiales</div>
+            <h1>La IA diseña.<br /><em>ElectroIA lo convierte en plano.</em></h1>
+            <p class="lede">Un único motor para circuitos electrónicos, cuadros, automatización y sistemas embebidos. La inteligencia calcula y selecciona; ElectroIA valida los símbolos, ordena las conexiones y dibuja sobre una sola rejilla.</p>
+            <div class="launch-badges" aria-label="Capacidades principales">
+              <span><i></i> 501 símbolos revisados</span>
+              <span><i></i> Entrada universal JSON</span>
+              <span><i></i> Salida SVG trazable</span>
+            </div>
           </div>
-          <div class="prompt-footer">
-            <span><kbd>Enter</kbd> para continuar</span>
-            <span id="privacyStatus" class="privacy"><i></i> Adaptador de prueba local · sin IA integrada</span>
+          <div class="engine-orbit" aria-label="Flujo desde una IA hasta el plano final">
+            <div class="orbit-core"><span>Ω</span><strong>ElectroIA</strong><small>MOTOR GRÁFICO</small></div>
+            <div class="orbit-node orbit-ai"><b>IA</b><span>Diseña y calcula</span></div>
+            <div class="orbit-node orbit-data"><b>501</b><span>Símbolos</span></div>
+            <div class="orbit-node orbit-output"><b>SVG</b><span>Plano final</span></div>
+            <svg viewBox="0 0 420 270" aria-hidden="true"><path d="M100 75C154 30 245 29 316 73M325 105c18 38 11 80-21 112M273 231c-70 28-151 7-182-48M70 151C61 119 69 94 91 73" /></svg>
           </div>
-        </form>
+        </section>
 
-        <div class="example-row">
-          <span>Prueba con:</span>
-          <button class="example" type="button" data-request="Quiero encender un relé de 12 V utilizando una señal de 5 V.">Relé de 12 V con señal de 5 V</button>
-          <button class="example" type="button" data-request="Quiero que un ventilador de 12 V se encienda cuando llegue a 40 °C.">Ventilador de 12 V al llegar a 40 °C</button>
-          <button class="example" type="button" data-diagram-example="../data/electroia/examples/motor-starter-direct.json">Plano patrón: motor trifásico</button>
-          <button class="example" type="button" data-diagram-example="../data/electroia/examples/distribution-board-single-line.json">Plano patrón: cuadro unifilar</button>
-          <button class="example" type="button" data-diagram-example="../data/electroia/examples/plc-vfd-motor-system.json">Sistema PLC, variador y motor</button>
-          <button class="example" type="button" data-diagram-example="../data/electroia/examples/arduino-industrial-interface.json">Arduino en entorno industrial</button>
-          <button class="example" type="button" data-diagram-example="../data/electroia/examples/bms-ahu-building-control.json">BMS y climatizador</button>
-        </div>
+        <nav class="workspace-tabs" aria-label="Modo de trabajo">
+          <button type="button" class="is-active" data-workspace="quick"><span>01</span><strong>Asistente rápido</strong><small>Casos guiados para probar</small></button>
+          <button type="button" data-workspace="bridge"><span>02</span><strong>Diseño desde cualquier IA</strong><small>Entrada universal sin límite de plantilla</small></button>
+          <button type="button" data-workspace="integration"><span>03</span><strong>Conectar una IA</strong><small>Mismo contrato para uso interno y externo</small></button>
+        </nav>
 
-        <div class="input-modes" aria-label="Formas de iniciar un diseño">
-          <span class="active">Entrada humana o de una IA</span>
-          <span>Foto o boceto: contrato preparado; reconocimiento aún no disponible</span>
+        <section id="quickWorkspace" class="workspace-panel is-active" data-workspace-panel="quick">
+          <div class="workspace-heading"><div><span>DEMOSTRACIÓN GUIADA</span><h2>Describe un caso sencillo</h2></div><p>Esta entrada conserva los asistentes de relé y ventilador para comprobar el flujo completo sin depender de ninguna IA.</p></div>
+          <form id="requestForm" class="prompt-card">
+            <label for="requestInput">¿Qué quieres construir?</label>
+            <div class="prompt-row">
+              <textarea id="requestInput" rows="2" maxlength="500" required>Quiero encender un relé de 12 V utilizando una señal de 5 V.</textarea>
+              <button type="submit" class="arrow-button" aria-label="Analizar petición">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              </button>
+            </div>
+            <div class="prompt-footer">
+              <span><kbd>Enter</kbd> para continuar</span>
+              <span id="privacyStatus" class="privacy"><i></i> Adaptador local de demostración</span>
+            </div>
+          </form>
+
+          <div class="example-row">
+            <span>Prueba con:</span>
+            <button class="example" type="button" data-request="Quiero encender un relé de 12 V utilizando una señal de 5 V.">Relé 12 V / señal 5 V</button>
+            <button class="example" type="button" data-request="Quiero que un ventilador de 12 V se encienda cuando llegue a 40 °C.">Ventilador a 40 °C</button>
+            <button class="example" type="button" data-diagram-example="../data/electroia/examples/motor-starter-direct.json">Motor trifásico</button>
+            <button class="example" type="button" data-diagram-example="../data/electroia/examples/distribution-board-single-line.json">Cuadro unifilar</button>
+            <button class="example" type="button" data-diagram-example="../data/electroia/examples/plc-vfd-motor-system.json">PLC + variador</button>
+            <button class="example" type="button" data-diagram-example="../data/electroia/examples/arduino-industrial-interface.json">Arduino industrial</button>
+            <button class="example" type="button" data-diagram-example="../data/electroia/examples/bms-ahu-building-control.json">BMS + climatizador</button>
+          </div>
+        </section>
+
+        <section id="bridgeWorkspace" class="workspace-panel ai-bridge" data-workspace-panel="bridge" hidden>
+          <div class="workspace-heading"><div><span>PUENTE UNIVERSAL</span><h2>Recibe el diseño de cualquier IA</h2></div><p>La IA entrega componentes, terminales y redes en el contrato ElectroIA. El motor comprueba el documento y lo dibuja sin limitarse a las plantillas de demostración.</p></div>
+          <div class="bridge-grid">
+            <article class="bridge-card bridge-brief-card">
+              <div class="bridge-step"><b>1</b><span><strong>Prepara el encargo</strong><small>Describe el circuito para que la IA haga el diseño y los cálculos.</small></span></div>
+              <label for="aiBriefRequest">Necesidad técnica</label>
+              <textarea id="aiBriefRequest" rows="5" maxlength="2000" placeholder="Ejemplo: cuadro de control para dos bombas, alternancia automática, protección térmica y aviso de fallo…"></textarea>
+              <div class="bridge-actions">
+                <button id="copyAiBrief" class="primary-button" type="button">Copiar encargo para IA <span>→</span></button>
+                <button id="downloadAiBrief" class="secondary-button" type="button">Guardar paquete</button>
+              </div>
+              <p id="aiBriefStatus" class="bridge-message" aria-live="polite"></p>
+            </article>
+
+            <article class="bridge-card bridge-json-card">
+              <div class="bridge-step"><b>2</b><span><strong>Pega o importa la respuesta</strong><small>Acepta JSON directo, <code>document</code> o <code>diagram_document</code>.</small></span></div>
+              <label for="aiDocumentInput">Documento estructurado</label>
+              <textarea id="aiDocumentInput" class="json-editor" rows="12" spellcheck="false" placeholder='{"schema_version":"1.0","document_kind":"circuit_diagram",…}'></textarea>
+              <div class="bridge-actions bridge-actions-wrap">
+                <button id="renderAiDocument" class="primary-button" type="button">Validar y dibujar <span>→</span></button>
+                <label class="file-button" for="aiDocumentFile">Importar JSON<input id="aiDocumentFile" type="file" accept="application/json,.json" /></label>
+                <button id="loadAiExample" class="secondary-button" type="button">Cargar ejemplo</button>
+                <button id="copyAiDiagnostics" class="secondary-button" type="button" hidden>Copiar correcciones</button>
+              </div>
+              <div id="aiBridgeStatus" class="bridge-status" aria-live="polite"><span>LISTO</span><p>Esperando un documento de una IA.</p></div>
+            </article>
+          </div>
+          <div class="bridge-trust-strip">
+            <div><b>IA INTERNA</b><span>Usará este mismo puente cuando activemos un proveedor.</span></div>
+            <div><b>IA EXTERNA</b><span>Puede usar MCP, el contrato público o entregar JSON.</span></div>
+            <div><b>ELECTROIA</b><span>No inventa cálculos: valida y representa lo recibido.</span></div>
+          </div>
+        </section>
+
+        <section id="integrationWorkspace" class="workspace-panel integration-workspace" data-workspace-panel="integration" hidden>
+          <div class="workspace-heading"><div><span>ARQUITECTURA NEUTRAL</span><h2>Una sola herramienta, varias inteligencias</h2></div><p>El coste de razonamiento pertenece a la IA que diseña. ElectroIA aporta una ejecución determinista, rápida y reutilizable.</p></div>
+          <div class="integration-flow">
+            <article><span>01</span><strong>Comprender</strong><p>La IA interpreta texto, foto o boceto y pregunta lo imprescindible.</p></article>
+            <article><span>02</span><strong>Diseñar</strong><p>Calcula, elige componentes y construye el documento neutral.</p></article>
+            <article><span>03</span><strong>Verificar</strong><p>ElectroIA comprueba símbolos, terminales, redes y límites.</p></article>
+            <article><span>04</span><strong>Representar</strong><p>Genera SVG, JSON, diagnóstico y trazabilidad en una sola hoja.</p></article>
+          </div>
+          <div class="integration-links">
+            <a href="../data/electroia/discovery.openapi.json" target="_blank" rel="noopener">Contrato OpenAPI <span>↗</span></a>
+            <a href="../data/electroia/tool-manifest.json" target="_blank" rel="noopener">Manifiesto de herramientas <span>↗</span></a>
+            <a href="../data/electroia/diagram-document.schema.json" target="_blank" rel="noopener">Esquema JSON <span>↗</span></a>
+            <a href="../data/electroia/ai-bridge.json" target="_blank" rel="noopener">Puente IA <span>↗</span></a>
+          </div>
+          <div class="integration-status"><span>AHORA</span><strong>MCP local + JSON privado preparados</strong><span>SIGUIENTE</span><strong>Transporte remoto con claves, cuotas y registro</strong></div>
+        </section>
+
+        <div class="input-modes" aria-label="Entradas compatibles">
+          <span class="active">Texto guiado</span>
+          <span class="active">Documento de IA</span>
+          <span class="active">MCP local</span>
+          <span>Foto o boceto mediante visión de una IA externa</span>
         </div>
 
         <details id="engineAuditCard" class="engine-audit-card">
@@ -222,6 +303,6 @@
     <script src="diagram-symbol-library.js"></script>
     <script src="diagram-core.js"></script>
     <script src="diagram.js"></script>
-    <script src="app.js"></script>
+    <script src="app.js?v=3"></script>
   </body>
 </html>

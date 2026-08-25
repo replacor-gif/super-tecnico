@@ -143,6 +143,97 @@ function st_electroia_read_json_file(string $relativePath): array
     return $data;
 }
 
+function st_electroia_usage_ensure_schema(): void
+{
+    static $ready = false;
+    if ($ready) return;
+    st_db()->exec("CREATE TABLE IF NOT EXISTS st_electroia_usage_events (
+      id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+      action_name ENUM('public_status','symbol_search') NOT NULL,
+      client_hash CHAR(64) NOT NULL,
+      client_type ENUM('human','ai','software','unknown') NOT NULL DEFAULT 'unknown',
+      client_detection ENUM('declared','user_agent','fallback') NOT NULL DEFAULT 'fallback',
+      query_hash CHAR(64) NULL,
+      query_sample VARCHAR(120) NULL,
+      result_count SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+      latency_ms INT UNSIGNED NOT NULL DEFAULT 0,
+      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (id),
+      KEY idx_electroia_usage_date (created_at),
+      KEY idx_electroia_usage_action (action_name, created_at),
+      KEY idx_electroia_usage_client (client_type, created_at)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    $ready = true;
+}
+
+function st_electroia_query_sample(string $value): string
+{
+    $sample = preg_replace('/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/iu', '[correo]', $value) ?? $value;
+    $sample = preg_replace('~https?://\S+|www\.\S+~iu', '[enlace]', $sample) ?? $sample;
+    $sample = preg_replace('/(?<!\d)(?:\+?\d[\s().-]*){7,}(?!\d)/u', '[numero]', $sample) ?? $sample;
+    return mb_substr(trim(preg_replace('/\s+/u', ' ', $sample) ?? $sample), 0, 120, 'UTF-8');
+}
+
+function st_electroia_record_usage(string $action, string $clientHash, array $input, int $resultCount, int $latencyMs): void
+{
+    try {
+        st_electroia_usage_ensure_schema();
+        $classification = st_client_classification($input);
+        $query = trim((string) ($input['q'] ?? ''));
+        $statement = st_db()->prepare("INSERT INTO st_electroia_usage_events (action_name, client_hash, client_type, client_detection, query_hash, query_sample, result_count, latency_ms) VALUES (?, ?, ?, ?, NULLIF(?, ''), NULLIF(?, ''), ?, ?)");
+        $statement->execute([
+            $action,
+            $clientHash,
+            $classification['type'],
+            $classification['detection'],
+            $query === '' ? '' : hash('sha256', st_electroia_search_normalize($query)),
+            $query === '' ? '' : st_electroia_query_sample($query),
+            max(0, $resultCount),
+            max(0, $latencyMs),
+        ]);
+        if (random_int(1, 100) === 1) st_db()->exec('DELETE FROM st_electroia_usage_events WHERE created_at < DATE_SUB(NOW(), INTERVAL 180 DAY)');
+    } catch (Throwable $error) {
+        error_log('ElectroIA usage analytics: ' . $error->getMessage());
+    }
+}
+
+function st_electroia_analytics_summary(int $days): array
+{
+    st_electroia_usage_ensure_schema();
+    $days = min(90, max(7, $days));
+    $since = (new DateTimeImmutable('today'))->modify('-' . ($days - 1) . ' days')->format('Y-m-d 00:00:00');
+    $query = st_db()->prepare("SELECT COUNT(*) api_calls, COUNT(DISTINCT client_hash) clients, SUM(action_name = 'public_status') status_requests, SUM(action_name = 'symbol_search') symbol_searches, SUM(client_type = 'human') human_calls, SUM(client_type = 'ai') ai_calls, SUM(client_type = 'software') software_calls, SUM(client_type = 'unknown') unknown_calls, SUM(client_type = 'ai' AND client_detection = 'declared') declared_ai_calls, SUM(client_type = 'ai' AND client_detection = 'user_agent') detected_ai_calls, SUM(result_count = 0 AND action_name = 'symbol_search') empty_searches, AVG(latency_ms) average_latency_ms FROM st_electroia_usage_events WHERE created_at >= ?");
+    $query->execute([$since]);
+    $totals = $query->fetch() ?: [];
+    $popularQuery = st_db()->prepare("SELECT query_hash, MAX(query_sample) query_sample, COUNT(*) searches, SUM(result_count = 0) empty_searches, MAX(created_at) last_seen FROM st_electroia_usage_events WHERE created_at >= ? AND action_name = 'symbol_search' AND query_hash IS NOT NULL GROUP BY query_hash ORDER BY searches DESC, last_seen DESC LIMIT 15");
+    $popularQuery->execute([$since]);
+    return [
+        'period_days' => $days,
+        'totals' => [
+            'api_calls' => (int) ($totals['api_calls'] ?? 0),
+            'clients' => (int) ($totals['clients'] ?? 0),
+            'status_requests' => (int) ($totals['status_requests'] ?? 0),
+            'symbol_searches' => (int) ($totals['symbol_searches'] ?? 0),
+            'human_calls' => (int) ($totals['human_calls'] ?? 0),
+            'ai_calls' => (int) ($totals['ai_calls'] ?? 0),
+            'software_calls' => (int) ($totals['software_calls'] ?? 0),
+            'unknown_calls' => (int) ($totals['unknown_calls'] ?? 0),
+            'declared_ai_calls' => (int) ($totals['declared_ai_calls'] ?? 0),
+            'detected_ai_calls' => (int) ($totals['detected_ai_calls'] ?? 0),
+            'empty_searches' => (int) ($totals['empty_searches'] ?? 0),
+            'average_latency_ms' => (int) round((float) ($totals['average_latency_ms'] ?? 0)),
+        ],
+        'popular_symbol_queries' => array_map(static fn(array $row): array => [
+            'query' => (string) ($row['query_sample'] ?? ''),
+            'searches' => (int) ($row['searches'] ?? 0),
+            'empty_searches' => (int) ($row['empty_searches'] ?? 0),
+            'last_seen' => (string) ($row['last_seen'] ?? ''),
+        ], $popularQuery->fetchAll()),
+        'attribution' => 'La atribución IA exige X-ST-Client-Type: ai o una identificación reconocible. Software y clientes desconocidos se separan para evitar inflar el dato.',
+        'scope' => 'Se registran llamadas a la API de estado y búsqueda de símbolos. Las lecturas de archivos estáticos no pueden contabilizarse con fiabilidad.',
+    ];
+}
+
 function st_electroia_public_status(): array
 {
     $release = st_electroia_read_json_file('data/electroia/public-release-readiness.json');
@@ -183,6 +274,13 @@ function st_electroia_public_status(): array
         'responsibility_boundary' => [
             'calling_ai' => 'Interpreta, calcula, selecciona componentes y entrega un documento estructurado.',
             'electroia' => 'Valida símbolos, terminales y redes y genera el plano determinista.',
+        ],
+        'ai_bridge' => [
+            'contract_ready' => true,
+            'private_json_import_ready' => true,
+            'local_mcp_ready' => true,
+            'internal_provider_configured' => false,
+            'contract' => 'data/electroia/ai-bridge.json',
         ],
         'notice' => 'La consulta pública es informativa. El renderizado remoto continúa privado hasta completar validación de campo y límites operativos.',
     ];

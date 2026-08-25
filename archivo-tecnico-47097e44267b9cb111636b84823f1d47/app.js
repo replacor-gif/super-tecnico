@@ -11,6 +11,8 @@ const state = {
   currentCaseKey: "",
   currentValidation: { errors: 0, warnings: 0 },
   validationSummary: null,
+  activeWorkspace: "quick",
+  bridgeDiagnostics: null,
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -53,6 +55,217 @@ function setToolMode() {
   $("#engineStatusLabel").textContent = "Motor gráfico neutral";
   $("#privacyStatus").lastChild.textContent = " Motor gráfico local · sin IA integrada";
 }
+
+function setWorkspace(name) {
+  const available = new Set(["quick", "bridge", "integration"]);
+  const selected = available.has(name) ? name : "quick";
+  state.activeWorkspace = selected;
+  document.querySelectorAll("[data-workspace]").forEach((button) => {
+    const active = button.dataset.workspace === selected;
+    button.classList.toggle("is-active", active);
+    button.setAttribute("aria-selected", String(active));
+  });
+  document.querySelectorAll("[data-workspace-panel]").forEach((panel) => {
+    const active = panel.dataset.workspacePanel === selected;
+    panel.hidden = !active;
+    panel.classList.toggle("is-active", active);
+  });
+}
+
+document.querySelectorAll("[data-workspace]").forEach((button) => {
+  button.addEventListener("click", () => setWorkspace(button.dataset.workspace));
+});
+
+async function copyText(value) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+  const field = document.createElement("textarea");
+  field.value = value;
+  field.style.position = "fixed";
+  field.style.opacity = "0";
+  document.body.append(field);
+  field.select();
+  document.execCommand("copy");
+  field.remove();
+}
+
+function electroiaPublicUrl(relative) {
+  return new URL(relative, document.baseURI).href;
+}
+
+function buildAiBrief() {
+  const request = $("#aiBriefRequest").value.trim();
+  if (request.length < 8) throw new Error("Describe con algo más de detalle qué instalación o circuito necesitas.");
+  return {
+    schema_version: "1.0",
+    kind: "electroia_design_brief",
+    language: "es",
+    request,
+    objective: "Diseñar y calcular el circuito, seleccionar componentes y devolver un documento estructurado que ElectroIA pueda validar y dibujar.",
+    responsibility_boundary: {
+      ai: "Interpreta la necesidad, pregunta los datos imprescindibles, realiza los cálculos, selecciona componentes y define todas las redes.",
+      electroia: "Valida símbolos y terminales, enruta las redes sobre la rejilla y genera el plano SVG.",
+    },
+    resources: {
+      status: electroiaPublicUrl("../api/index.php?action=electroia-public-status"),
+      symbol_search: electroiaPublicUrl("../api/index.php?action=electroia-symbol-search&q={query}"),
+      manifest: electroiaPublicUrl("../data/electroia/tool-manifest.json"),
+      schema: electroiaPublicUrl("../data/electroia/diagram-document.schema.json"),
+      profiles: electroiaPublicUrl("../data/electroia/document-profiles.json"),
+    },
+    mandatory_process: [
+      "No inventes terminales ni pinouts.",
+      "Busca y utiliza únicamente symbol_id revisados por ElectroIA.",
+      "Si un bloque exige modelo exacto, pide fabricante, referencia y documentación.",
+      "Separa los cálculos y decisiones técnicas del documento gráfico.",
+      "Devuelve solo un objeto JSON válido, sin Markdown ni explicaciones alrededor.",
+    ],
+    expected_output: {
+      schema_version: "1.0",
+      standard_profile: "IEC_EXPERIMENTAL",
+      accepted_document_kinds: ["circuit_diagram", "single_line_diagram", "multi_line_diagram"],
+      required_fields: ["schema_version", "document_kind", "standard_profile", "title", "components", "nets"],
+    },
+  };
+}
+
+function aiBriefAsPrompt(brief) {
+  return [
+    "Actúa como la inteligencia de diseño que alimenta el motor gráfico ElectroIA.",
+    "Lee el siguiente encargo y sigue literalmente sus límites y recursos.",
+    "Antes de responder, resuelve los datos técnicos que falten o pregunta solo lo imprescindible.",
+    "Tu respuesta final debe contener únicamente el documento JSON que valida contra el esquema indicado.",
+    "",
+    JSON.stringify(brief, null, 2),
+  ].join("\n");
+}
+
+function setBriefMessage(message, kind = "") {
+  const status = $("#aiBriefStatus");
+  status.textContent = message;
+  status.className = `bridge-message${kind ? ` is-${kind}` : ""}`;
+}
+
+function setBridgeStatus(kind, title, message, details = []) {
+  const status = $("#aiBridgeStatus");
+  status.className = `bridge-status is-${kind}`;
+  status.innerHTML = `<span>${escapeHtml(title)}</span><p>${escapeHtml(message)}</p>${details.length ? `<ul>${details.slice(0, 8).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>` : ""}`;
+}
+
+function extractDiagramDocument(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const candidates = [
+    value,
+    value.document,
+    value.diagram_document,
+    value.structuredContent?.document,
+    value.structuredContent?.diagram_document,
+    value.result?.document,
+    value.result?.diagram_document,
+  ];
+  return candidates.find((item) => item && typeof item === "object" && Array.isArray(item.components) && Array.isArray(item.nets)) || null;
+}
+
+async function renderAiDocument() {
+  const input = $("#aiDocumentInput").value.trim();
+  if (!input) {
+    setBridgeStatus("error", "FALTA JSON", "Pega la respuesta estructurada de la IA o importa un archivo.");
+    return;
+  }
+  setLoading(true, "Validando el documento de la IA y trazando el plano…");
+  try {
+    if (new Blob([input]).size > 262144) throw new Error("El documento supera el límite de 256 KiB.");
+    const parsed = JSON.parse(input);
+    const documentData = extractDiagramDocument(parsed);
+    if (!documentData) throw new Error("No encuentro un documento con componentes y redes.");
+    if (typeof ElectroDiagramCore === "undefined") throw new Error("El núcleo gráfico no está disponible.");
+    const validation = ElectroDiagramCore.validate(documentData);
+    state.bridgeDiagnostics = validation;
+    $("#copyAiDiagnostics").hidden = validation.errors.length === 0 && validation.warnings.length === 0;
+    if (!validation.valid) {
+      setBridgeStatus("error", `${validation.errors.length} ERRORES`, "Devuelve estas correcciones a la IA y solicita un nuevo JSON.", validation.errors.map((item) => `${item.code}: ${item.message}`));
+      return;
+    }
+    setBridgeStatus(
+      validation.warnings.length ? "warning" : "success",
+      validation.warnings.length ? `${validation.warnings.length} AVISOS` : "DOCUMENTO VÁLIDO",
+      `${documentData.components.length} símbolos · ${documentData.nets.length} redes · preparado para una sola hoja.`,
+      validation.warnings.map((item) => `${item.code}: ${item.message}`),
+    );
+    renderPublicResult(publicDesignFromDiagramDocument(documentData));
+    showView($("#resultView"));
+  } catch (error) {
+    state.bridgeDiagnostics = { errors: [{ code: "INVALID_JSON", message: error.message }], warnings: [] };
+    $("#copyAiDiagnostics").hidden = false;
+    setBridgeStatus("error", "DOCUMENTO NO VÁLIDO", error instanceof SyntaxError ? "El texto no es un JSON válido. Pide a la IA que responda sin bloques Markdown." : error.message);
+  } finally {
+    setLoading(false);
+  }
+}
+
+$("#copyAiBrief").addEventListener("click", async () => {
+  try {
+    await copyText(aiBriefAsPrompt(buildAiBrief()));
+    setBriefMessage("Encargo copiado. Pégalo en la IA que prefieras y devuelve aquí su JSON.", "success");
+  } catch (error) {
+    setBriefMessage(error.message || "No se ha podido copiar el encargo.", "error");
+  }
+});
+
+$("#downloadAiBrief").addEventListener("click", () => {
+  try {
+    const brief = buildAiBrief();
+    downloadBlob("electroia-encargo-ia.json", `${JSON.stringify(brief, null, 2)}\n`, "application/json;charset=utf-8");
+    setBriefMessage("Paquete de diseño guardado.", "success");
+  } catch (error) {
+    setBriefMessage(error.message || "No se ha podido preparar el paquete.", "error");
+  }
+});
+
+$("#renderAiDocument").addEventListener("click", renderAiDocument);
+
+$("#aiDocumentFile").addEventListener("change", async (event) => {
+  const file = event.currentTarget.files?.[0];
+  if (!file) return;
+  if (file.size > 262144) {
+    setBridgeStatus("error", "ARCHIVO DEMASIADO GRANDE", "El límite de entrada es 256 KiB.");
+    return;
+  }
+  try {
+    $("#aiDocumentInput").value = await file.text();
+    setBridgeStatus("ready", "ARCHIVO CARGADO", `${file.name} está preparado para validar.`);
+  } catch (_error) {
+    setBridgeStatus("error", "NO SE PUEDE LEER", "Selecciona un archivo JSON de texto.");
+  }
+});
+
+$("#loadAiExample").addEventListener("click", async () => {
+  try {
+    const documentData = await fetchJson("../data/electroia/examples/plc-vfd-motor-system.json", "el ejemplo de integración");
+    $("#aiDocumentInput").value = JSON.stringify(documentData, null, 2);
+    setBridgeStatus("ready", "EJEMPLO CARGADO", "PLC, variador y motor preparados para validar.");
+  } catch (error) {
+    setBridgeStatus("error", "EJEMPLO NO DISPONIBLE", error.message);
+  }
+});
+
+$("#copyAiDiagnostics").addEventListener("click", async () => {
+  if (!state.bridgeDiagnostics) return;
+  const feedback = {
+    kind: "electroia_validation_feedback",
+    instruction: "Corrige el documento y devuelve únicamente un nuevo JSON completo.",
+    errors: state.bridgeDiagnostics.errors || [],
+    warnings: state.bridgeDiagnostics.warnings || [],
+  };
+  try {
+    await copyText(JSON.stringify(feedback, null, 2));
+    setBridgeStatus("ready", "CORRECCIONES COPIADAS", "Pégalas en la IA para que repare el documento.");
+  } catch (_error) {
+    setBridgeStatus("error", "NO SE PUDO COPIAR", "Selecciona y copia manualmente los mensajes de validación.");
+  }
+});
 
 function enterPrivateLab() {
   if (state.accessReady) return;

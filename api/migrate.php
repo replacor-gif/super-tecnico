@@ -19,4 +19,9 @@ foreach ($statements as $statement) {
         st_db()->exec($statement);
     }
 }
+
+$regulationDetection = st_db()->query("SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'st_regulation_search_events' AND COLUMN_NAME = 'client_detection'");
+if ((int) $regulationDetection->fetchColumn() === 0) {
+    st_db()->exec("ALTER TABLE st_regulation_search_events ADD COLUMN client_detection ENUM('declared','user_agent','fallback') NOT NULL DEFAULT 'fallback' AFTER client_type");
+}
 fwrite(STDOUT, "Esquema Super Tecnico actualizado.\n");

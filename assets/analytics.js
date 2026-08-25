@@ -175,7 +175,8 @@
     const searches = Number(totals.searches || 0);
     const noResults = Number(totals.no_result_searches || 0);
     const rows = [
-      ['Búsquedas', searches], ['Personas', totals.human_searches], ['IAs', totals.ai_searches],
+      ['Búsquedas', searches], ['Personas', totals.human_searches], ['IAs identificadas', totals.ai_searches],
+      ['Software / API', totals.software_searches], ['Sin identificar', totals.unknown_searches],
       ['Usuarios aproximados', totals.clients], ['Páginas abiertas', totals.result_opens], ['Tiempo medio', `${number(totals.average_latency_ms)} ms`],
     ];
     byId('regulationSearchMetrics').innerHTML = rows.map(([label, value]) => `<div class="regulation-search-metric"><span>${label}</span><strong>${typeof value === 'number' ? number(value) : value}</strong></div>`).join('');
@@ -183,7 +184,30 @@
     byId('regulationTopDocuments').innerHTML = (regulation.top_documents || []).length ? regulation.top_documents.map(item => `<span class="regulation-doc-pill">${escapeHtml(REGULATION_LABELS[item.document_id] || item.document_id)} <strong>${number(item.appearances)}</strong></span>`).join('') : '<p class="chart-empty">Aún no hay reglamentos destacados.</p>';
     byId('regulationPopularQueries').innerHTML = (regulation.popular_queries || []).length ? regulation.popular_queries.map(item => `<div class="regulation-query-row"><strong title="${escapeHtml(item.query)}">${escapeHtml(item.query || 'Consulta sin muestra')}</strong><span>${number(item.searches)} búsquedas</span><small>${number(item.no_results)} sin resultado · ${number(item.result_opens)} aperturas</small></div>`).join('') : '<p class="chart-empty">Las consultas más repetidas aparecerán aquí.</p>';
     byId('regulationQueryTotals').textContent = `${number(searches)} consultas`;
+    byId('regulationAttribution').textContent = regulation.attribution || '';
     byId('regulationPrivacy').textContent = regulation.privacy || '';
+  }
+
+  function renderElectroiaUsage(data) {
+    const usage = data.electroia_usage || { totals: {}, popular_symbol_queries: [] };
+    const totals = usage.totals || {};
+    const rows = [
+      ['Llamadas API', totals.api_calls],
+      ['IAs identificadas', totals.ai_calls],
+      ['Personas', totals.human_calls],
+      ['Software / API', totals.software_calls],
+      ['Sin identificar', totals.unknown_calls],
+      ['Búsquedas de símbolos', totals.symbol_searches],
+      ['Consultas de estado', totals.status_requests],
+      ['Clientes aproximados', totals.clients],
+    ];
+    byId('electroiaUsageMetrics').innerHTML = rows.map(([label, value]) => `<div class="regulation-search-metric"><span>${label}</span><strong>${number(value)}</strong></div>`).join('');
+    byId('electroiaUsagePeriod').textContent = `${data.days} días`;
+    byId('electroiaPopularQueries').innerHTML = (usage.popular_symbol_queries || []).length
+      ? usage.popular_symbol_queries.map(item => `<div class="regulation-query-row"><strong title="${escapeHtml(item.query)}">${escapeHtml(item.query || 'Consulta sin muestra')}</strong><span>${number(item.searches)} búsquedas</span><small>${number(item.empty_searches)} sin resultado</small></div>`).join('')
+      : '<p class="chart-empty">Las búsquedas de símbolos realizadas por personas o IAs aparecerán aquí.</p>';
+    byId('electroiaAttribution').textContent = usage.attribution || '';
+    byId('electroiaTrackingScope').textContent = usage.scope || '';
   }
 
   async function loadSummary() {
@@ -206,6 +230,7 @@
       renderSources(data);
       renderRatings(data);
       renderRegulationSearch(data);
+      renderElectroiaUsage(data);
       byId('analyticsStatus').textContent = data.totals.period_views ? 'Datos actualizados correctamente.' : 'El registro diario comienza con esta versión; los totales históricos se conservan.';
       byId('analyticsUpdated').textContent = `Actualizado ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
       byId('analyticsTrackingNote').textContent = data.tracking_since

@@ -15,12 +15,14 @@ const componentPath = join(PROJECT_ROOT, "data", "components", "catalog.json");
 const symbolPath = join(PROJECT_ROOT, "data", "symbols", "catalog.json");
 const connectorPath = join(PROJECT_ROOT, "data", "connectors", "catalog.json");
 const embeddedPlatformPath = join(PROJECT_ROOT, "data", "embedded-platforms", "catalog.json");
+const aiBridgePath = join(PROJECT_ROOT, "data", "electroia", "ai-bridge.json");
 
 export const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
 
 let resourcesPromise;
 let connectorsPromise;
 let embeddedPlatformsPromise;
+let aiBridgePromise;
 
 async function loadResources() {
   if (!resourcesPromise) {
@@ -53,6 +55,11 @@ async function loadEmbeddedPlatforms() {
     embeddedPlatformsPromise = readFile(embeddedPlatformPath, "utf8").then(JSON.parse);
   }
   return embeddedPlatformsPromise;
+}
+
+async function loadAiBridge() {
+  if (!aiBridgePromise) aiBridgePromise = readFile(aiBridgePath, "utf8").then(JSON.parse);
+  return aiBridgePromise;
 }
 
 function ensureObject(value, label) {
@@ -199,6 +206,38 @@ export async function callElectroIATool(tool, rawArguments = {}) {
       tool: name,
       contract: diagramCore.getContract(),
       symbol_registry: diagramCore.getRegistry(),
+    };
+  }
+
+  if (name === "electroia_prepare_design_brief") {
+    const request = String(args.request || "").trim();
+    if (request.length < 8 || request.length > 2000) throw new Error("request debe tener entre 8 y 2000 caracteres");
+    const bridge = await loadAiBridge();
+    return {
+      ok: true,
+      tool: name,
+      bridge: {
+        provider_neutral: bridge.provider_neutral === true,
+        status: bridge.status,
+        contract: bridge.architecture.single_contract,
+      },
+      brief: {
+        schema_version: "1.0",
+        kind: "electroia_design_brief",
+        request,
+        language: String(args.language || "es").slice(0, 5),
+        document_kind: args.document_kind || null,
+        responsibility_boundary: bridge.architecture,
+        resources: bridge.public_resources,
+        mandatory_process: [
+          "Pregunta solo los requisitos técnicos imprescindibles que falten.",
+          "Calcula y selecciona los componentes antes de dibujar.",
+          "Usa electroia_search_symbols y no inventes identificadores ni terminales.",
+          "Devuelve un único documento que valide contra electroia_get_diagram_contract.",
+          "Mantén los bloques de modelo exacto como no ejecutables hasta disponer de documentación del fabricante.",
+        ],
+        expected_output: bridge.response_contract,
+      },
     };
   }
 

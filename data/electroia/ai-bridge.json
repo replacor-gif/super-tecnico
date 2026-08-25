@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-08-25",
+  "name": "ElectroIA universal AI design bridge",
+  "status": "private_preview",
+  "provider_neutral": true,
+  "purpose": "Permitir que una IA interna o externa diseñe y calcule un circuito y que ElectroIA valide y represente el mismo documento neutral.",
+  "architecture": {
+    "single_contract": "diagram-document.schema.json",
+    "calling_ai": [
+      "understand_user_intent",
+      "ask_only_missing_requirements",
+      "calculate_and_select_components",
+      "resolve_reviewed_symbol_ids",
+      "return_structured_diagram_document"
+    ],
+    "electroia": [
+      "validate_document_shape_and_limits",
+      "resolve_normalized_symbols_and_terminals",
+      "route_on_common_grid",
+      "render_single_canvas_svg",
+      "return_machine_readable_diagnostics"
+    ],
+    "professional_review": [
+      "verify_input_assumptions",
+      "confirm_exact_models_and_pinouts",
+      "check_protections_and_conductor_sizes",
+      "approve_applicable_regulations_before_installation"
+    ]
+  },
+  "entry_modes": [
+    {
+      "id": "internal_ai_gateway",
+      "state": "contract_ready_provider_not_configured",
+      "description": "La futura IA integrada producirá el mismo documento neutral; ningún cálculo quedará acoplado al proveedor."
+    },
+    {
+      "id": "external_ai_mcp",
+      "state": "local_private_preview",
+      "description": "Una IA compatible con MCP puede consultar símbolos, recuperar el contrato y llamar al renderizador local."
+    },
+    {
+      "id": "external_ai_json",
+      "state": "private_lab_ready",
+      "description": "Cualquier IA puede devolver JSON para importarlo, validarlo y dibujarlo desde ElectroIA Studio."
+    },
+    {
+      "id": "image_or_sketch",
+      "state": "external_vision_required",
+      "description": "Una IA con visión extrae símbolos, terminales y redes; ElectroIA recibe el documento estructurado y no interpreta directamente la imagen."
+    }
+  ],
+  "public_resources": {
+    "status": "../../api/index.php?action=electroia-public-status",
+    "symbol_search": "../../api/index.php?action=electroia-symbol-search&q={query}",
+    "tool_manifest": "tool-manifest.json",
+    "openapi": "discovery.openapi.json",
+    "document_schema": "diagram-document.schema.json",
+    "symbol_library": "symbol-library.json",
+    "document_profiles": "document-profiles.json",
+    "execution_policy": "public-execution-policy.json"
+  },
+  "response_contract": {
+    "accepted_wrappers": ["document", "diagram_document", "structuredContent.document"],
+    "preferred_response": "Return only one JSON object that validates against diagram-document.schema.json.",
+    "required_fields": ["schema_version", "document_kind", "standard_profile", "title", "components", "nets"]
+  },
+  "launch_boundary": {
+    "public_discovery": true,
+    "public_symbol_search": true,
+    "public_anonymous_render": false,
+    "remote_render_requires": [
+      "field_validation_complete",
+      "api_keys_hashed",
+      "persistent_quotas",
+      "diagnostic_logging",
+      "load_and_abuse_tests"
+    ]
+  },
+  "analytics": {
+    "client_type_header": "X-ST-Client-Type",
+    "allowed_values": ["human", "ai", "software"],
+    "note": "Solo se contabilizan llamadas a la API. Las lecturas directas de archivos estáticos de descubrimiento no pueden atribuirse con fiabilidad."
+  }
+}

@@ -975,6 +975,10 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         output / "data" / "electroia" / "public-execution-policy.json",
         read_json(source_root / "data" / "electroia" / "public-execution-policy.json"),
     )
+    write_json(
+        output / "data" / "electroia" / "ai-bridge.json",
+        read_json(source_root / "data" / "electroia" / "ai-bridge.json"),
+    )
     for path in sorted((source_root / "data" / "electroia" / "examples").glob("*.json")):
         write_json(output / "data" / "electroia" / "examples" / path.name, read_json(path))
     for filename in (

@@ -257,6 +257,7 @@ class HiddenElectroIATests(unittest.TestCase):
     def test_ai_discovery_files_are_consistent_and_keep_remote_execution_private(self):
         discovery = json.loads((ROOT / "data" / "electroia" / "discovery.json").read_text(encoding="utf-8"))
         openapi = json.loads((ROOT / "data" / "electroia" / "discovery.openapi.json").read_text(encoding="utf-8"))
+        bridge = json.loads((ROOT / "data" / "electroia" / "ai-bridge.json").read_text(encoding="utf-8"))
         server = json.loads((ROOT / "electroia-tool-server" / "server.json").read_text(encoding="utf-8"))
         llms = (ROOT / "llms.txt").read_text(encoding="utf-8")
         self.assertEqual(discovery["status"], "public_discovery_private_execution")
@@ -269,8 +270,13 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertNotIn("electroia_render_diagram", json.dumps(openapi))
         self.assertIn("getElectroIAPublicStatus", json.dumps(openapi))
         self.assertIn("searchElectroIAReviewedSymbols", json.dumps(openapi))
+        self.assertIn("/data/electroia/ai-bridge.json", openapi["paths"])
+        self.assertTrue(bridge["provider_neutral"])
+        self.assertEqual(bridge["architecture"]["single_contract"], "diagram-document.schema.json")
+        self.assertFalse(bridge["launch_boundary"]["public_anonymous_render"])
+        self.assertEqual(bridge["analytics"]["client_type_header"], "X-ST-Client-Type")
         self.assertEqual(server["name"], "io.github.replacor-gif/electroia-diagrams")
-        self.assertEqual(server["version"], "0.15.0")
+        self.assertEqual(server["version"], "0.16.0")
         self.assertNotIn("4097", llms)
 
 

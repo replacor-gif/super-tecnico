@@ -13,6 +13,9 @@
       "get": {
         "operationId": "getElectroIAPublicStatus",
         "summary": "Get the safe public release and capability summary",
+        "parameters": [
+          { "name": "X-ST-Client-Type", "in": "header", "required": false, "description": "Declare ai, software or human for transparent aggregate usage attribution.", "schema": { "type": "string", "enum": ["ai", "software", "human"] } }
+        ],
         "responses": {
           "200": {
             "description": "Curated status without private route or credentials",
@@ -27,6 +30,7 @@
         "operationId": "searchElectroIAReviewedSymbols",
         "summary": "Search the reviewed public symbol catalog",
         "parameters": [
+          { "name": "X-ST-Client-Type", "in": "header", "required": false, "description": "Declare ai, software or human for transparent aggregate usage attribution.", "schema": { "type": "string", "enum": ["ai", "software", "human"] } },
           { "name": "q", "in": "query", "required": true, "schema": { "type": "string", "minLength": 2, "maxLength": 80 } },
           { "name": "category", "in": "query", "required": false, "schema": { "type": "string", "maxLength": 80 } },
           { "name": "limit", "in": "query", "required": false, "schema": { "type": "integer", "minimum": 1, "maximum": 12, "default": 8 } }
@@ -96,6 +100,18 @@
         "responses": {
           "200": {
             "description": "Disabled-by-default public execution policy",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          }
+        }
+      }
+    },
+    "/data/electroia/ai-bridge.json": {
+      "get": {
+        "operationId": "getElectroIAAIBridge",
+        "summary": "Get the provider-neutral internal and external AI orchestration contract",
+        "responses": {
+          "200": {
+            "description": "Design responsibilities, entry modes and launch boundary",
             "content": { "application/json": { "schema": { "type": "object" } } }
           }
         }

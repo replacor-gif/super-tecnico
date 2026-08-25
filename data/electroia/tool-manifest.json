@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "name": "electroia-tools",
   "title": "ElectroIA — motor gráfico electrotécnico neutral",
   "description": "Herramientas deterministas para validar y dibujar documentos electrotécnicos definidos por una IA o aplicación externa.",
@@ -40,6 +40,7 @@
   "capabilities": {
     "standard_profiles": ["IEC_EXPERIMENTAL"],
     "document_profile_registry": "document-profiles.json",
+    "ai_design_bridge": "ai-bridge.json",
     "execution_policy": "public-execution-policy.json",
     "document_kinds": ["circuit_diagram", "single_line_diagram", "multi_line_diagram"],
     "grid_pitch_mil": 50,
@@ -108,6 +109,20 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {}
+      }
+    },
+    {
+      "name": "electroia_prepare_design_brief",
+      "description": "Prepara un encargo neutral para que una IA interna o externa diseñe y calcule antes de entregar el documento a ElectroIA.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["request"],
+        "properties": {
+          "request": { "type": "string", "minLength": 8, "maxLength": 2000 },
+          "language": { "type": "string", "minLength": 2, "maxLength": 5, "default": "es" },
+          "document_kind": { "type": "string", "enum": ["circuit_diagram", "single_line_diagram", "multi_line_diagram"] }
+        }
       }
     },
     {

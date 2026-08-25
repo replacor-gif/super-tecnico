@@ -23,7 +23,7 @@ function st_origin_headers(): bool
     $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
     $action = preg_replace('/[^a-z0-9-]/', '', strtolower((string) ($_GET['action'] ?? '')));
     $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
-    $publicReadActions = ['regulation-search', 'connector-search', 'connector-get', 'connector-resolve'];
+    $publicReadActions = ['regulation-search', 'connector-search', 'connector-get', 'connector-resolve', 'electroia-public-status', 'electroia-symbol-search'];
     if (in_array($action, $publicReadActions, true) && in_array($method, ['GET', 'OPTIONS'], true)) {
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Headers: Content-Type, X-ST-Client, X-ST-Client-Type');
@@ -114,6 +114,25 @@ function st_client_hash(array $body = []): string
     $client = substr((string) ($_SERVER['HTTP_X_ST_CLIENT'] ?? ($body['client_token'] ?? '')), 0, 100);
     $ip = (string) ($_SERVER['REMOTE_ADDR'] ?? 'unknown');
     return hash_hmac('sha256', $client . '|' . $ip, (string) st_config('app_secret'));
+}
+
+function st_client_classification(array $input = []): array
+{
+    $explicit = strtolower(trim((string) ($_SERVER['HTTP_X_ST_CLIENT_TYPE'] ?? ($input['client_type'] ?? ''))));
+    if (in_array($explicit, ['human', 'ai', 'software'], true)) {
+        return ['type' => $explicit, 'detection' => 'declared'];
+    }
+    $agent = strtolower((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''));
+    if (preg_match('/openai|chatgpt|anthropic|claude|gemini|perplexity|copilot|language-model|llm|ai[-_ ]agent/', $agent) === 1) {
+        return ['type' => 'ai', 'detection' => 'user_agent'];
+    }
+    if (preg_match('/curl|wget|python|node-fetch|axios|postman|insomnia|httpie|go-http-client|java\//', $agent) === 1) {
+        return ['type' => 'software', 'detection' => 'user_agent'];
+    }
+    if (preg_match('/mozilla|chrome|safari|firefox|edge|opera/', $agent) === 1) {
+        return ['type' => 'human', 'detection' => 'user_agent'];
+    }
+    return ['type' => 'unknown', 'detection' => 'fallback'];
 }
 
 function st_rate_limit(string $action, string $clientHash, int $limit = 8, int $windowSeconds = 3600): void

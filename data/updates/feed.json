@@ -10,6 +10,15 @@
   },
   "entries": [
     {
+      "id": "UPD-20260825-ELECTROIA-AI-BRIDGE",
+      "date": "2026-08-25",
+      "title": "ElectroIA abre un puente universal para cualquier IA",
+      "summary": "El laboratorio adopta la estética de Super Técnico y ya puede preparar encargos neutrales, importar el documento JSON generado por una IA, validarlo y dibujarlo en una sola hoja. La analítica separa personas, IAs identificadas, software y clientes desconocidos, e incorpora medición propia de las consultas públicas de ElectroIA.",
+      "areas": ["ElectroIA", "IA", "Diseño", "Analítica", "Móvil"],
+      "kind": "platform_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
       "id": "UPD-20260825-ELECTROIA-FIELD-VALIDATION",
       "date": "2026-08-25",
       "title": "ElectroIA prepara sus pruebas reales desde el móvil",

@@ -190,5 +190,6 @@ function st_analytics_summary(int $days): array
         'pages' => $pageRows,
         'ratings' => st_rating_admin_summary(),
         'regulation_search' => st_regulations_analytics_summary($days),
+        'electroia_usage' => st_electroia_analytics_summary($days),
     ];
 }

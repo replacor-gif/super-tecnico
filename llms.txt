@@ -45,13 +45,15 @@ Do not call planned endpoints until discovery.json reports remote execution as e
 - Public-release readiness report: /data/electroia/public-release-readiness.json
 - Experimental document profiles: /data/electroia/document-profiles.json
 - Disabled-by-default remote-execution policy and hard limits: /data/electroia/public-execution-policy.json
+- Universal internal/external AI design bridge: /data/electroia/ai-bridge.json
 - Read-only OpenAPI discovery: /data/electroia/discovery.openapi.json
 - Public status: /api/index.php?action=electroia-public-status
 - Reviewed-symbol search: /api/index.php?action=electroia-symbol-search&q=rele
 - MCP Registry metadata draft: /electroia-tool-server/server.json
 - Source repository: https://github.com/replacor-gif/super-tecnico
 
-For diagrams, the calling AI interprets the request or image, chooses the topology, calculates values, and selects components. ElectroIA validates symbols, terminals, and nets and renders a deterministic single-canvas SVG. Documents over 256 KiB, 200 symbols, 400 nets, 100 connections per net, or 2,000 total connections are rejected. HTTP rendering remains disabled.
+For diagrams, start with electroia_prepare_design_brief, then search reviewed symbols, build the neutral document and call electroia_render_diagram. The calling AI interprets the request or image, chooses the topology, calculates values, and selects components. ElectroIA validates symbols, terminals, and nets and renders a deterministic single-canvas SVG. Documents over 256 KiB, 200 symbols, 400 nets, 100 connections per net, or 2,000 total connections are rejected. HTTP rendering remains disabled.
+When an AI calls the public status or symbol-search API, send `X-ST-Client-Type: ai`. Unidentified software is counted separately and static JSON reads cannot be attributed reliably.
 
 ## Connector and pinout entry points
 

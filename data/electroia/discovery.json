@@ -56,6 +56,7 @@
     "public_release_readiness": "public-release-readiness.json",
     "document_profiles": "document-profiles.json",
     "public_execution_policy": "public-execution-policy.json",
+    "ai_design_bridge": "ai-bridge.json",
     "openapi_discovery": "discovery.openapi.json",
     "shared_connector_catalog": "../connectors/tool-manifest.json",
     "shared_embedded_platform_catalog": "../embedded-platforms/tool-manifest.json"
@@ -73,6 +74,7 @@
   },
   "recommended_ai_workflow": [
     "electroia_get_capabilities",
+    "electroia_prepare_design_brief",
     "electroia_search_symbols",
     "electroia_get_symbol",
     "electroia_render_diagram"

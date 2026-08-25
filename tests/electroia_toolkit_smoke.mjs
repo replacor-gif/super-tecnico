@@ -11,6 +11,21 @@ assert.equal(manifest.embedded_ai_model, false);
 assert.equal(manifest.billing_required_by_electroia, false);
 assert.equal(manifest.diagram_contract_version, "1.0");
 
+const designBrief = await callElectroIATool("electroia_prepare_design_brief", {
+  request: "Diseña el esquema multifilar de un arrancador de motor trifásico con paro de emergencia.",
+  document_kind: "multi_line_diagram",
+});
+assert.equal(designBrief.ok, true);
+assert.equal(designBrief.bridge.provider_neutral, true);
+assert.equal(designBrief.brief.request.includes("arrancador"), true);
+assert.equal(designBrief.brief.document_kind, "multi_line_diagram");
+assert.ok(designBrief.brief.mandatory_process.some((item) => item.includes("terminales")));
+assert.ok(designBrief.brief.expected_output.required_fields.includes("schema_version"));
+await assert.rejects(
+  callElectroIATool("electroia_prepare_design_brief", { request: "motor" }),
+  /entre 8 y 2000/
+);
+
 const diagramContract = await callElectroIATool("electroia_get_diagram_contract", {});
 assert.equal(diagramContract.ok, true);
 assert.equal(diagramContract.contract.responsibility, "render_only");

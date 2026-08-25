@@ -28,13 +28,21 @@ try {
     }
 
     if ($action === 'electroia-public-status' && $method === 'GET') {
-        st_rate_limit('electroia-public-status', st_client_hash($_GET), 240, 3600);
-        st_json(st_electroia_public_status());
+        $clientHash = st_client_hash($_GET);
+        st_rate_limit('electroia-public-status', $clientHash, 240, 3600);
+        $startedAt = microtime(true);
+        $result = st_electroia_public_status();
+        st_electroia_record_usage('public_status', $clientHash, $_GET, 1, (int) round((microtime(true) - $startedAt) * 1000));
+        st_json($result);
     }
 
     if ($action === 'electroia-symbol-search' && $method === 'GET') {
-        st_rate_limit('electroia-symbol-search', st_client_hash($_GET), 240, 3600);
-        st_json(st_electroia_public_symbol_search($_GET));
+        $clientHash = st_client_hash($_GET);
+        st_rate_limit('electroia-symbol-search', $clientHash, 240, 3600);
+        $startedAt = microtime(true);
+        $result = st_electroia_public_symbol_search($_GET);
+        st_electroia_record_usage('symbol_search', $clientHash, $_GET, count($result['items'] ?? []), (int) round((microtime(true) - $startedAt) * 1000));
+        st_json($result);
     }
 
     if ($action === 'electroia-status' && $method === 'GET') {

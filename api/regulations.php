@@ -13,6 +13,7 @@ function st_regulations_ensure_schema(): void
       request_id CHAR(32) NOT NULL,
       client_hash CHAR(64) NOT NULL,
       client_type ENUM('human','ai','software','unknown') NOT NULL DEFAULT 'unknown',
+      client_detection ENUM('declared','user_agent','fallback') NOT NULL DEFAULT 'fallback',
       query_hash CHAR(64) NOT NULL,
       query_sample VARCHAR(180) NULL,
       document_filter VARCHAR(64) NULL,
@@ -29,6 +30,11 @@ function st_regulations_ensure_schema(): void
       KEY idx_regulation_search_client (client_type, created_at),
       KEY idx_regulation_search_document (top_document_id, created_at)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    $column = st_db()->prepare("SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'st_regulation_search_events' AND COLUMN_NAME = 'client_detection'");
+    $column->execute();
+    if ((int) $column->fetchColumn() === 0) {
+        st_db()->exec("ALTER TABLE st_regulation_search_events ADD COLUMN client_detection ENUM('declared','user_agent','fallback') NOT NULL DEFAULT 'fallback' AFTER client_type");
+    }
     $ready = true;
 }
 
@@ -51,13 +57,7 @@ function st_regulation_query_sample(string $query): string
 
 function st_regulation_client_type(array $input): string
 {
-    $explicit = strtolower(trim((string) ($_SERVER['HTTP_X_ST_CLIENT_TYPE'] ?? ($input['client_type'] ?? ''))));
-    if (in_array($explicit, ['human', 'ai', 'software'], true)) return $explicit;
-    $agent = strtolower((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''));
-    if (preg_match('/openai|anthropic|claude|gemini|perplexity|copilot|language-model|\bai[-_ ]agent\b/', $agent) === 1) return 'ai';
-    if (preg_match('/curl|wget|python|node-fetch|postman|insomnia|httpie/', $agent) === 1) return 'software';
-    if (preg_match('/mozilla|chrome|safari|firefox|edge/', $agent) === 1) return 'human';
-    return 'unknown';
+    return st_client_classification($input)['type'];
 }
 
 function st_regulation_load_json(string $path, string $cacheKey, bool $memoryCache = true): array
@@ -479,9 +479,10 @@ function st_regulations_record_search(string $requestId, string $clientHash, arr
 {
     try {
         st_regulations_ensure_schema();
-        $statement = st_db()->prepare('INSERT INTO st_regulation_search_events (request_id, client_hash, client_type, query_hash, query_sample, document_filter, domain_filter, result_count, top_document_id, match_mode, latency_ms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $classification = st_client_classification($input);
+        $statement = st_db()->prepare('INSERT INTO st_regulation_search_events (request_id, client_hash, client_type, client_detection, query_hash, query_sample, document_filter, domain_filter, result_count, top_document_id, match_mode, latency_ms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
         $statement->execute([
-            $requestId, $clientHash, st_regulation_client_type($input), hash('sha256', st_regulation_normalize($query)),
+            $requestId, $clientHash, $classification['type'], $classification['detection'], hash('sha256', st_regulation_normalize($query)),
             st_regulation_query_sample($query), $documentFilter ?: null, $domainFilter ?: null, $resultCount,
             $topDocument ?: null, $matchMode, $latencyMs,
         ]);
@@ -507,7 +508,7 @@ function st_regulations_analytics_summary(int $days): array
     $days = min(90, max(7, $days));
     $since = (new DateTimeImmutable('today'))->modify('-' . ($days - 1) . ' days')->format('Y-m-d');
     $pdo = st_db();
-    $totalsQuery = $pdo->prepare("SELECT COUNT(*) searches, COUNT(DISTINCT client_hash) clients, SUM(client_type = 'ai') ai_searches, SUM(client_type = 'human') human_searches, SUM(result_count = 0) no_result_searches, SUM(opened_count) result_opens, AVG(latency_ms) average_latency_ms FROM st_regulation_search_events WHERE created_at >= ?");
+    $totalsQuery = $pdo->prepare("SELECT COUNT(*) searches, COUNT(DISTINCT client_hash) clients, SUM(client_type = 'ai') ai_searches, SUM(client_type = 'human') human_searches, SUM(client_type = 'software') software_searches, SUM(client_type = 'unknown') unknown_searches, SUM(client_type = 'ai' AND client_detection = 'declared') declared_ai_searches, SUM(client_type = 'ai' AND client_detection = 'user_agent') detected_ai_searches, SUM(result_count = 0) no_result_searches, SUM(opened_count) result_opens, AVG(latency_ms) average_latency_ms FROM st_regulation_search_events WHERE created_at >= ?");
     $totalsQuery->execute([$since . ' 00:00:00']);
     $totals = $totalsQuery->fetch() ?: [];
     $popularQuery = $pdo->prepare('SELECT query_hash, MAX(query_sample) query_sample, COUNT(*) searches, SUM(result_count = 0) no_results, SUM(opened_count) result_opens, MAX(created_at) last_seen FROM st_regulation_search_events WHERE created_at >= ? GROUP BY query_hash ORDER BY searches DESC, last_seen DESC LIMIT 20');
@@ -524,11 +525,14 @@ function st_regulations_analytics_summary(int $days): array
         'totals' => [
             'searches' => (int) ($totals['searches'] ?? 0), 'clients' => (int) ($totals['clients'] ?? 0),
             'ai_searches' => (int) ($totals['ai_searches'] ?? 0), 'human_searches' => (int) ($totals['human_searches'] ?? 0),
+            'software_searches' => (int) ($totals['software_searches'] ?? 0), 'unknown_searches' => (int) ($totals['unknown_searches'] ?? 0),
+            'declared_ai_searches' => (int) ($totals['declared_ai_searches'] ?? 0), 'detected_ai_searches' => (int) ($totals['detected_ai_searches'] ?? 0),
             'no_result_searches' => (int) ($totals['no_result_searches'] ?? 0), 'result_opens' => (int) ($totals['result_opens'] ?? 0),
             'average_latency_ms' => (int) round((float) ($totals['average_latency_ms'] ?? 0)),
         ],
         'popular_queries' => $popular,
         'top_documents' => $documents,
+        'attribution' => 'Una consulta cuenta como IA solo si el cliente declara X-ST-Client-Type: ai o utiliza una identificación reconocible. El software genérico y lo no identificable se muestran aparte.',
         'privacy' => 'No se guardan direcciones IP. Los identificadores son seudónimos y las consultas eliminan correos, enlaces y números largos; se conservan como máximo 180 días.',
     ];
 }

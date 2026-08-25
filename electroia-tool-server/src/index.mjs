@@ -18,7 +18,7 @@ function toolError(error) {
 }
 
 function createServer() {
-  const server = new McpServer({ name: "electroia-tools", version: "0.15.0" });
+  const server = new McpServer({ name: "electroia-tools", version: "0.16.0" });
 
   server.registerTool(
     "electroia_get_capabilities",
@@ -47,6 +47,22 @@ function createServer() {
       } catch (error) {
         return toolError(error);
       }
+    }
+  );
+
+  server.registerTool(
+    "electroia_prepare_design_brief",
+    {
+      description: "Convierte una necesidad técnica en un encargo neutral para la IA que realizará el diseño y los cálculos antes de llamar al renderizador.",
+      inputSchema: z.object({
+        request: z.string().min(8).max(2000),
+        language: z.string().min(2).max(5).optional(),
+        document_kind: z.enum(["circuit_diagram", "single_line_diagram", "multi_line_diagram"]).optional(),
+      }),
+    },
+    async (args) => {
+      try { return toolResult(await callElectroIATool("electroia_prepare_design_brief", args)); }
+      catch (error) { return toolError(error); }
     }
   );
 
