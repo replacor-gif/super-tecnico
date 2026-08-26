@@ -39,7 +39,7 @@ def build() -> dict:
         public_ai_tools += 2
     return {
         "schema_version": "1.0",
-        "updated_at": "2026-08-25",
+        "updated_at": "2026-08-26",
         "release_stage": "beta_publica_competente",
         "summary": {
             "electroia_catalog_symbols": total,
@@ -53,6 +53,7 @@ def build() -> dict:
             "electroia_component_overlaps": electroia_release["summary"]["component_overlaps"],
             "electroia_wire_component_conflicts": electroia_release["summary"]["wire_component_conflicts"],
             "electroia_public_execution_ready": electroia_release["summary"]["public_execution_ready"],
+            "electroia_public_showcase_ready": electroia_release["summary"]["public_showcase_ready"],
             "electroia_field_validation_recorder_ready": electroia_release["summary"]["field_validation_recorder_ready"],
             "electroia_field_validation_target": electroia_release["summary"]["field_validation_target"],
             "public_ai_tools": public_ai_tools,
@@ -66,7 +67,7 @@ def build() -> dict:
                 "title": "Ampliar pruebas y perfiles profesionales",
                 "status": "in_progress",
                 "progress": {"done": reviewed, "total": total, "unit": "símbolos"},
-                "next_action": "Validar más esquemas reales y ampliar ICT, energía, documentación de cuadros y perfiles normativos sin degradar el catálogo ya revisado.",
+                "next_action": "La búsqueda pública y la galería ya muestran la base revisada. El siguiente paso es validar más esquemas reales y ampliar ICT, energía, documentación de cuadros y perfiles normativos sin degradar el catálogo.",
             },
             {
                 "id": "diagram-real-cases",

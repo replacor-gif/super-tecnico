@@ -1,12 +1,13 @@
 {
   "schema_version": "1.0",
-  "generated_on": "2026-08-25",
+  "generated_on": "2026-08-26",
   "engine_version": "1.15.0-alpha.1",
   "release_stage": "private_release_candidate",
   "decision": "keep_execution_private_until_field_validation",
   "summary": {
     "automated_gates_pass": true,
     "public_information_surface_ready": true,
+    "public_showcase_ready": true,
     "private_human_preview_ready": true,
     "public_execution_ready": false,
     "field_validation_recorder_ready": true,
@@ -114,6 +115,16 @@
         "id": "remote_execution_policy_is_machine_readable",
         "passed": true,
         "evidence": "autenticación, cuotas, límites, diagnósticos y apagado documentados"
+      },
+      {
+        "id": "public_showcase_is_read_only",
+        "passed": true,
+        "evidence": "buscador y galería públicos sin acceso al renderizador"
+      },
+      {
+        "id": "public_gallery_matches_reviewed_examples",
+        "passed": true,
+        "evidence": "5 planos estáticos regenerables y sin conflictos"
       }
     ]
   },

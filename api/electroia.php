@@ -246,6 +246,8 @@ function st_electroia_public_status(): array
         'service' => 'electroia-public-discovery',
         'release_stage' => (string) ($release['release_stage'] ?? 'unknown'),
         'public_execution_available' => false,
+        'public_showcase_available' => ($summary['public_showcase_ready'] ?? false) === true,
+        'public_showcase' => 'electroia.html',
         'private_preview_available' => ($summary['private_human_preview_ready'] ?? false) === true,
         'provider_neutral' => true,
         'embedded_ai_model' => false,
@@ -282,6 +284,7 @@ function st_electroia_public_status(): array
             'internal_provider_configured' => false,
             'contract' => 'data/electroia/ai-bridge.json',
         ],
+        'public_gallery' => 'data/electroia/public-gallery.json',
         'notice' => 'La consulta pública es informativa. El renderizado remoto continúa privado hasta completar validación de campo y límites operativos.',
     ];
 }

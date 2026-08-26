@@ -18,15 +18,18 @@ function gate(id, passed, evidence) {
 }
 
 async function buildReport() {
-  const [engineAudit, manifest, discovery, openapi, executionPolicy, documentProfiles, hiddenHtml, labApp, apiSource, electroiaApiSource, validationApiSource] = await Promise.all([
+  const [engineAudit, manifest, discovery, openapi, executionPolicy, documentProfiles, publicGallery, hiddenHtml, labApp, publicShowcaseHtml, publicShowcaseJs, apiSource, electroiaApiSource, validationApiSource] = await Promise.all([
     readJson("data/electroia/engine-audit-report.json"),
     readJson("data/electroia/tool-manifest.json"),
     readJson("data/electroia/discovery.json"),
     readJson("data/electroia/discovery.openapi.json"),
     readJson("data/electroia/public-execution-policy.json"),
     readJson("data/electroia/document-profiles.json"),
+    readJson("data/electroia/public-gallery.json"),
     readFile(join(ROOT, "archivo-tecnico-47097e44267b9cb111636b84823f1d47", "index.html"), "utf8"),
     readFile(join(ROOT, "archivo-tecnico-47097e44267b9cb111636b84823f1d47", "app.js"), "utf8"),
+    readFile(join(ROOT, "electroia.html"), "utf8"),
+    readFile(join(ROOT, "assets", "electroia-public.js"), "utf8"),
     readFile(join(ROOT, "api", "index.php"), "utf8"),
     readFile(join(ROOT, "api", "electroia.php"), "utf8"),
     readFile(join(ROOT, "api", "electroia-validation.php"), "utf8"),
@@ -88,18 +91,21 @@ async function buildReport() {
     gate("remote_execution_remains_disabled", discovery.security?.remote_public_execution === false, "motor remoto no abierto"),
     gate("field_validation_is_private_and_traceable", apiSource.includes("electroia-validation-summary") && validationApiSource.includes("case_key CHAR(64)") && labApp.includes('subtle.digest("SHA-256"'), "registro protegido, huella SHA-256 y progreso por ámbito"),
     gate("remote_execution_policy_is_machine_readable", executionPolicy.enabled === false && executionPolicy.authentication?.required === true && executionPolicy.safety?.anonymous_execution_allowed === false, "autenticación, cuotas, límites, diagnósticos y apagado documentados"),
+    gate("public_showcase_is_read_only", publicShowcaseHtml.includes("eiaSymbolResults") && publicShowcaseHtml.includes("eiaGallery") && !publicShowcaseJs.includes("electroia-render") && !publicShowcaseJs.includes("diagram-core.js"), "buscador y galería públicos sin acceso al renderizador"),
+    gate("public_gallery_matches_reviewed_examples", publicGallery.count === examples.length && publicGallery.items?.every((item) => item.single_canvas === true && Object.values(item.validation || {}).every((value) => value === 0)), `${publicGallery.count || 0} planos estáticos regenerables y sin conflictos`),
   ];
   const automatedGatesPass = [...technicalGates, ...exposureGates].every((item) => item.passed);
 
   return {
     schema_version: "1.0",
-    generated_on: "2026-08-25",
+    generated_on: "2026-08-26",
     engine_version: manifest.diagram_engine_version,
     release_stage: automatedGatesPass ? "private_release_candidate" : "engineering_blocked",
     decision: automatedGatesPass ? "keep_execution_private_until_field_validation" : "do_not_publish",
     summary: {
       automated_gates_pass: automatedGatesPass,
       public_information_surface_ready: automatedGatesPass,
+      public_showcase_ready: automatedGatesPass,
       private_human_preview_ready: automatedGatesPass,
       public_execution_ready: false,
       field_validation_recorder_ready: true,

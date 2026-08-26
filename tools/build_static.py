@@ -600,6 +600,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "averias.html",
         "feedback.html",
         "actualizaciones.html",
+        "electroia.html",
         "ia-integracion.html",
         "llms.txt",
         "robots.txt",
@@ -673,6 +674,8 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "assets/updates.js",
         "assets/electronics.css",
         "assets/electronics.js",
+        "assets/electroia-public.css",
+        "assets/electroia-public.js",
         "assets/i18n.js",
         "assets/ai-integration.css",
         "assets/page-counter.js",
@@ -698,6 +701,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "data/refrigerant-piping/design-rules.json",
         "data/refrigerant-piping/property-grid.json",
         "data/electroia/controller-ecosystems.json",
+        "data/electroia/public-gallery.json",
         "data/connectors/connector-record.schema.json",
         "data/connectors/sources.json",
         "data/connectors/tool-manifest.json",
@@ -981,6 +985,22 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
     )
     for path in sorted((source_root / "data" / "electroia" / "examples").glob("*.json")):
         write_json(output / "data" / "electroia" / "examples" / path.name, read_json(path))
+    electroia_gallery = read_json(source_root / "data" / "electroia" / "public-gallery.json")
+    write_json(output / "data" / "electroia" / "public-gallery.json", electroia_gallery)
+    if int(electroia_gallery.get("count") or 0) != 5 or len(electroia_gallery.get("items") or []) != 5:
+        raise BuildError("La galería pública de ElectroIA no contiene los cinco planos patrón")
+    for item in electroia_gallery["items"]:
+        if item.get("single_canvas") is not True or any(int(value or 0) for value in (item.get("validation") or {}).values()):
+            raise BuildError(f"Plano público de ElectroIA no apto: {item.get('id')}")
+        image_relative = Path(str(item.get("image") or ""))
+        source_relative = Path(str(item.get("source") or ""))
+        if image_relative.suffix.lower() != ".svg" or not (source_root / image_relative).is_file():
+            raise BuildError(f"Imagen de ElectroIA ausente o insegura: {image_relative}")
+        if source_relative.suffix.lower() != ".json" or not (source_root / source_relative).is_file():
+            raise BuildError(f"Documento de ElectroIA ausente o inseguro: {source_relative}")
+        target = output / image_relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source_root / image_relative, target)
     for filename in (
         "discovery.json",
         "tool-manifest.json",

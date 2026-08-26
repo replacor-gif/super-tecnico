@@ -10,6 +10,7 @@ Super Técnico is a Spanish technical knowledge project for HVAC, electronics, c
 - Commercial machine access: not open
 - Regulation search billing: free preview, no API key, rate limited
 - ElectroIA public status and reviewed-symbol search: available, read-only and rate limited
+- ElectroIA human-readable public showcase and five static reviewed examples: /electroia.html
 - ElectroIA rendering: private-preview development only; no anonymous remote execution
 - Embedded-platform search and documentary preselection: public free preview, rate limited
 
@@ -37,6 +38,8 @@ Do not call planned endpoints until discovery.json reports remote execution as e
 
 ## ElectroIA diagram entry points
 
+- Public showcase: /electroia.html
+- Static reviewed-diagram gallery: /data/electroia/public-gallery.json
 - Discovery manifest: /data/electroia/discovery.json
 - Tool manifest: /data/electroia/tool-manifest.json
 - Neutral diagram JSON Schema: /data/electroia/diagram-document.schema.json

@@ -6,6 +6,7 @@
   "provider_neutral": true,
   "embedded_ai_model": false,
   "purpose": "Validar símbolos, terminales y redes decididos por una IA y generar un SVG determinista sobre una rejilla común.",
+  "public_showcase": "../../electroia.html",
   "parent_discovery": "../ai/discovery.json",
   "responsibility_boundary": {
     "calling_ai": [
@@ -54,6 +55,7 @@
     "normalization_report": "symbol-normalization-report.json",
     "engine_audit_report": "engine-audit-report.json",
     "public_release_readiness": "public-release-readiness.json",
+    "public_gallery": "public-gallery.json",
     "document_profiles": "document-profiles.json",
     "public_execution_policy": "public-execution-policy.json",
     "ai_design_bridge": "ai-bridge.json",

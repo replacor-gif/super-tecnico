@@ -4,9 +4,9 @@
   "status": "pass",
   "scope": "Super Técnico root pages, public references, shared UX, critical copy and published text integrity",
   "summary": {
-    "root_pages": 25,
-    "public_pages_with_common_feedback": 22,
-    "local_references_checked": 364,
+    "root_pages": 26,
+    "public_pages_with_common_feedback": 23,
+    "local_references_checked": 385,
     "fatal_findings": 0,
     "warnings": 0,
     "component_count_verified": 38618,

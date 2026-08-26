@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="google-adsense-account" content="ca-pub-6950924617837531">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ElectroIA es el motor de REPLACOR que valida símbolos, conexiones y trazados para convertir diseños estructurados de una IA en diagramas electrotécnicos claros.">
+  <meta name="theme-color" content="#05070b">
+  <title>ElectroIA | Motor de diagramas para IAs · REPLACOR</title>
+  <link rel="canonical" href="https://app.replacor.com/super-tecnico/electroia.html">
+  <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
+  <link rel="stylesheet" href="assets/common.css?v=1">
+  <link rel="stylesheet" href="assets/electroia-public.css?v=1">
+  <link rel="stylesheet" href="assets/app-theme.css?v=1">
+  <script src="assets/i18n.js?v=6" defer></script>
+  <script src="assets/app-shell.js?v=11" defer></script>
+  <script src="assets/electroia-public.js?v=1" defer></script>
+</head>
+<body>
+  <header class="eia-header">
+    <a class="eia-brand" href="index.html" aria-label="Volver al menú de Super Técnico">
+      <img src="assets/super-tecnico-logo.png" alt="">
+      <span><strong>SUPER <b>TÉCNICO</b></strong><small>REPLACOR · ElectroIA</small></span>
+    </a>
+    <nav aria-label="Navegación secundaria"><a href="simbolos.html">Aprender simbología</a><a href="ia-integracion.html">Para IAs</a></nav>
+  </header>
+
+  <main>
+    <section class="eia-hero" aria-labelledby="eiaTitle">
+      <div class="eia-hero-copy">
+        <p class="eia-kicker"><span aria-hidden="true"></span> Vista pública del motor · ejecución protegida</p>
+        <h1 id="eiaTitle"><span>Electro</span><b>IA</b></h1>
+        <p class="eia-lead">Una IA piensa el circuito. ElectroIA comprueba el lenguaje eléctrico y lo convierte en un plano único, limpio y repetible.</p>
+        <div class="eia-hero-actions">
+          <a class="eia-button eia-button-primary" href="#buscarSimbolos">Explorar símbolos revisados</a>
+          <a class="eia-button" href="#planosPatron">Ver planos patrón</a>
+        </div>
+        <p class="eia-honesty"><strong>Estado honesto:</strong> el catálogo y los ejemplos ya son públicos; la generación libre seguirá privada hasta completar pruebas reales y protecciones de uso.</p>
+      </div>
+      <div class="eia-orbit" aria-hidden="true">
+        <span class="eia-orbit-ring ring-one"></span><span class="eia-orbit-ring ring-two"></span>
+        <strong>Ω</strong><small>RENDER<br>ENGINE</small>
+        <i class="node-one"></i><i class="node-two"></i><i class="node-three"></i>
+      </div>
+      <div class="eia-stats" aria-label="Estado de calidad de ElectroIA">
+        <article><strong id="eiaReviewedCount">501</strong><span>símbolos revisados</span></article>
+        <article><strong id="eiaExampleCount">5</strong><span>planos patrón</span></article>
+        <article><strong id="eiaConflictCount">0</strong><span>conflictos críticos</span></article>
+      </div>
+    </section>
+
+    <section class="eia-responsibility" aria-labelledby="responsibilityTitle">
+      <div class="eia-section-heading">
+        <p class="eia-kicker">Una tarea clara para cada motor</p>
+        <h2 id="responsibilityTitle">Inteligencia donde aporta valor; precisión donde hace falta</h2>
+      </div>
+      <div class="eia-flow">
+        <article><span>01</span><div><small>IA colaboradora</small><h3>Interpreta y calcula</h3><p>Entiende lo que se necesita, decide la topología, calcula valores y elige componentes.</p></div></article>
+        <i aria-hidden="true">→</i>
+        <article><span>02</span><div><small>Contrato neutral</small><h3>Ordena el diseño</h3><p>Referencias, símbolos, terminales y redes viajan en un documento JSON estable.</p></div></article>
+        <i aria-hidden="true">→</i>
+        <article><span>03</span><div><small>ElectroIA</small><h3>Valida y dibuja</h3><p>Comprueba las conexiones, enruta sobre rejilla y genera un SVG determinista en un solo lienzo.</p></div></article>
+      </div>
+    </section>
+
+    <section class="eia-search-section" id="buscarSimbolos" aria-labelledby="symbolSearchTitle">
+      <div class="eia-search-intro">
+        <p class="eia-kicker">Catálogo normalizado</p>
+        <h2 id="symbolSearchTitle">Busca entre 501 símbolos revisados</h2>
+        <p>Consulta nombres, familias, designadores y terminales que una IA puede utilizar para construir el documento del plano.</p>
+        <div class="eia-chips" aria-label="Búsquedas sugeridas">
+          <button type="button" data-eia-query="motor trifásico">Motor trifásico</button>
+          <button type="button" data-eia-query="contactor">Contactor</button>
+          <button type="button" data-eia-query="Arduino">Arduino</button>
+          <button type="button" data-eia-query="presostato">Presostato</button>
+        </div>
+      </div>
+      <div class="eia-search-panel">
+        <form id="eiaSearchForm" novalidate>
+          <label for="eiaQuery">Símbolo, función o componente</label>
+          <div><input id="eiaQuery" name="q" type="search" minlength="2" maxlength="80" autocomplete="off" enterkeyhint="search" placeholder="Ej.: relé térmico, sensor de presión…"><button type="submit">Buscar</button></div>
+          <p id="eiaSearchHelp">Escribe al menos dos caracteres. La consulta solo devuelve fichas públicas revisadas.</p>
+        </form>
+        <div class="eia-results-head"><strong id="eiaResultTitle">Prueba una búsqueda</strong><span id="eiaResultCount"></span></div>
+        <div class="eia-symbol-results" id="eiaSymbolResults" aria-live="polite">
+          <div class="eia-empty"><span aria-hidden="true">⌁</span><p>Los resultados mostrarán la ficha esencial sin saturar la pantalla.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="eia-gallery-section" id="planosPatron" aria-labelledby="galleryTitle">
+      <div class="eia-gallery-heading">
+        <div><p class="eia-kicker">Salida real del motor</p><h2 id="galleryTitle">Cinco planos, cinco ámbitos, un solo lenguaje</h2><p>Todos se regeneran desde su documento estructurado y deben mantener cero errores, solapes y cruces peligrosos antes de publicarse.</p></div>
+        <span><b>IEC</b> Perfil experimental</span>
+      </div>
+      <div class="eia-gallery" id="eiaGallery" aria-live="polite">
+        <div class="eia-gallery-loading">Preparando planos patrón…</div>
+      </div>
+      <p class="eia-gallery-notice" id="eiaGalleryNotice">Estas comprobaciones son automáticas. La validación profesional en instalaciones reales continúa en la fase privada.</p>
+    </section>
+
+    <aside class="ad-slot" data-ad-placement="electroia-after-gallery" aria-label="Publicidad" hidden></aside>
+
+    <section class="eia-ai-section" aria-labelledby="aiIntegrationTitle">
+      <div>
+        <p class="eia-kicker">Preparado para otras IAs</p>
+        <h2 id="aiIntegrationTitle">Una entrada documentada, no una caja negra</h2>
+        <p>El contrato explica qué decide la IA y qué verifica ElectroIA. La consulta pública permite descubrir capacidades y buscar símbolos; el renderizado remoto aún no está abierto.</p>
+      </div>
+      <div class="eia-contracts">
+        <a href="data/electroia/discovery.json"><span>01</span><strong>Discovery</strong><small>Punto de entrada legible por máquinas</small></a>
+        <a href="data/electroia/discovery.openapi.json"><span>02</span><strong>OpenAPI público</strong><small>Estado y búsqueda de símbolos</small></a>
+        <a href="data/electroia/diagram-document.schema.json"><span>03</span><strong>Esquema JSON</strong><small>Contrato neutral del diagrama</small></a>
+        <a href="data/electroia/public-release-readiness.json"><span>04</span><strong>Informe de preparación</strong><small>Puertas superadas y límites pendientes</small></a>
+      </div>
+    </section>
+
+    <section class="eia-safety" aria-labelledby="safetyTitle">
+      <span aria-hidden="true">!</span><div><h2 id="safetyTitle">La salida ayuda a documentar; no autoriza a montar</h2><p>Todo esquema destinado a una instalación real debe revisarse por una persona competente, contrastarse con los modelos exactos y cumplir la normativa aplicable.</p></div>
+    </section>
+  </main>
+
+  <dialog class="eia-dialog" id="eiaDiagramDialog" aria-labelledby="eiaDialogTitle">
+    <div class="eia-dialog-head"><div><p id="eiaDialogKind"></p><h2 id="eiaDialogTitle">Plano patrón</h2></div><button type="button" id="eiaDialogClose" aria-label="Cerrar plano">×</button></div>
+    <div class="eia-dialog-canvas"><img id="eiaDialogImage" alt=""></div>
+    <div class="eia-dialog-foot"><p id="eiaDialogMetrics"></p><a id="eiaDialogSource" href="data/electroia/public-gallery.json">Abrir documento JSON →</a></div>
+  </dialog>
+
+  <footer class="st-page-footer"><span>ElectroIA · Un motor de REPLACOR para Super Técnico</span><nav class="st-legal-links"><a href="actualizaciones.html">Últimas mejoras</a><a href="feedback.html?type=idea">Aportar una mejora</a><a href="https://www.replacor.com/aviso-legal/" target="_blank" rel="noopener">Aviso legal</a><a href="https://www.replacor.com/politica-de-privacidad/" target="_blank" rel="noopener">Privacidad</a></nav></footer>
+  <script src="assets/ads.js?v=1" defer></script>
+  <script src="assets/page-counter.js?v=2" defer></script>
+</body>
+</html>

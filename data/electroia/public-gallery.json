@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0",
+  "generated_on": "2026-08-26",
+  "engine_version": "1.15.0-alpha.1",
+  "status": "automated_review_passed_field_validation_pending",
+  "notice": "Los ejemplos superan las puertas automáticas del motor, pero no sustituyen la revisión profesional ni cuentan todavía como validación de campo.",
+  "count": 5,
+  "items": [
+    {
+      "id": "ELECTROIA-PRO-EMBEDDED-001",
+      "title": "Arduino de 5 V con interfaz aislada a campo de 24 V",
+      "document_kind": "circuit_diagram",
+      "document_kind_label": "Circuito electrónico",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "revision": "A",
+      "components": 11,
+      "nets": 10,
+      "terminals": 35,
+      "pages": 1,
+      "single_canvas": true,
+      "validation": {
+        "errors": 0,
+        "dangerous_warnings": 0,
+        "component_overlaps": 0,
+        "wire_component_conflicts": 0,
+        "off_grid_terminals": 0
+      },
+      "image": "assets/electroia-gallery/arduino-industrial-interface.svg",
+      "source": "data/electroia/examples/arduino-industrial-interface.json"
+    },
+    {
+      "id": "ELECTROIA-PRO-BUILDING-001",
+      "title": "Control BMS de unidad de tratamiento de aire",
+      "document_kind": "multi_line_diagram",
+      "document_kind_label": "Esquema multifilar",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "revision": "A",
+      "components": 9,
+      "nets": 12,
+      "terminals": 55,
+      "pages": 1,
+      "single_canvas": true,
+      "validation": {
+        "errors": 0,
+        "dangerous_warnings": 0,
+        "component_overlaps": 0,
+        "wire_component_conflicts": 0,
+        "off_grid_terminals": 0
+      },
+      "image": "assets/electroia-gallery/bms-ahu-building-control.svg",
+      "source": "data/electroia/examples/bms-ahu-building-control.json"
+    },
+    {
+      "id": "ELECTROIA-PATTERN-SLD-001",
+      "title": "Cuadro unifilar 230 V",
+      "document_kind": "single_line_diagram",
+      "document_kind_label": "Esquema unifilar",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "revision": "A",
+      "components": 11,
+      "nets": 10,
+      "terminals": 20,
+      "pages": 1,
+      "single_canvas": true,
+      "validation": {
+        "errors": 0,
+        "dangerous_warnings": 0,
+        "component_overlaps": 0,
+        "wire_component_conflicts": 0,
+        "off_grid_terminals": 0
+      },
+      "image": "assets/electroia-gallery/distribution-board-single-line.svg",
+      "source": "data/electroia/examples/distribution-board-single-line.json"
+    },
+    {
+      "id": "ELECTROIA-PATTERN-MOTOR-001",
+      "title": "Arranque directo de motor 3~",
+      "document_kind": "multi_line_diagram",
+      "document_kind_label": "Esquema multifilar",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "revision": "A",
+      "components": 18,
+      "nets": 20,
+      "terminals": 49,
+      "pages": 1,
+      "single_canvas": true,
+      "validation": {
+        "errors": 0,
+        "dangerous_warnings": 0,
+        "component_overlaps": 0,
+        "wire_component_conflicts": 0,
+        "off_grid_terminals": 0
+      },
+      "image": "assets/electroia-gallery/motor-starter-direct.svg",
+      "source": "data/electroia/examples/motor-starter-direct.json"
+    },
+    {
+      "id": "ELECTROIA-PRO-AUTO-001",
+      "title": "PLC, seguridad y variador para motor trifásico",
+      "document_kind": "multi_line_diagram",
+      "document_kind_label": "Esquema multifilar",
+      "standard_profile": "IEC_EXPERIMENTAL",
+      "revision": "A",
+      "components": 10,
+      "nets": 17,
+      "terminals": 56,
+      "pages": 1,
+      "single_canvas": true,
+      "validation": {
+        "errors": 0,
+        "dangerous_warnings": 0,
+        "component_overlaps": 0,
+        "wire_component_conflicts": 0,
+        "off_grid_terminals": 0
+      },
+      "image": "assets/electroia-gallery/plc-vfd-motor-system.svg",
+      "source": "data/electroia/examples/plc-vfd-motor-system.json"
+    }
+  ]
+}

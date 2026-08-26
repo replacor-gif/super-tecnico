@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-25",
+  "updated_at": "2026-08-26",
   "title": "Últimas mejoras de Super Técnico",
   "author_policy": {
     "maintainer": "Administrador",
@@ -9,6 +9,15 @@
     "personal_data": "Do not publish private identifiers unless the contributor explicitly chose that text as a public nickname."
   },
   "entries": [
+    {
+      "id": "UPD-20260826-ELECTROIA-PUBLIC-SHOWCASE",
+      "date": "2026-08-26",
+      "title": "ElectroIA enseña públicamente su base revisada",
+      "summary": "Nueva entrada pública integrada en Super Técnico: permite buscar entre 501 símbolos normalizados y explorar cinco diagramas profesionales regenerados por el motor, todos en un solo lienzo y sin errores, solapes ni cruces peligrosos. La generación libre continúa protegida hasta completar la validación de campo.",
+      "areas": ["ElectroIA", "IA", "Simbología", "Diagramas", "Móvil"],
+      "kind": "platform_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
     {
       "id": "UPD-20260826-PENDING-LISTS-REPLACOR-RETURN",
       "date": "2026-08-26",

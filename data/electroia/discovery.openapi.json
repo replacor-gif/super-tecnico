@@ -128,6 +128,18 @@
           }
         }
       }
+    },
+    "/data/electroia/public-gallery.json": {
+      "get": {
+        "operationId": "getElectroIAPublicGallery",
+        "summary": "Get the five static reviewed single-canvas diagram examples",
+        "responses": {
+          "200": {
+            "description": "Public gallery manifest with SVG and source-document paths",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          }
+        }
+      }
     }
   }
 }

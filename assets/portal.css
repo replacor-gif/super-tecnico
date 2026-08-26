@@ -447,6 +447,18 @@ h1 {
 .tool-card-ideas .text-icon { background: #7150a7; font-size: .75rem; }
 .tool-card-training .text-icon { background: linear-gradient(145deg, #0d7d78, #154d64); font-size: .68rem; }
 .tool-card-electronics .text-icon { background: linear-gradient(145deg, #b15a17, #753b19); font-size: .72rem; }
+.tool-card-electroia {
+  color: #f6f8fc;
+  border-color: #293b54;
+  background:
+    radial-gradient(circle at 90% 8%, rgba(0,234,255,.16), transparent 14rem),
+    linear-gradient(145deg, #080d14, #101b2a);
+}
+.tool-card-electroia .tool-badge { color: #181600; background: #ffe438; }
+.tool-card-electroia .text-icon { color: #ffe438; background: radial-gradient(circle, #223246, #070b11); box-shadow: inset 0 0 0 1px #35506f, 0 0 30px rgba(255,228,56,.12); font-family: Georgia, serif; font-size: 2.7rem; font-weight: 400; }
+.tool-card-electroia p, .tool-card-electroia li { color: #a9b8cb; }
+.tool-card-electroia li::marker { color: #00eaff; }
+.tool-card-electroia .tool-button { color: #151300; background: linear-gradient(110deg, #fff45b, #ffe438); }
 
 .tool-card h3 {
   margin-bottom: 12px;

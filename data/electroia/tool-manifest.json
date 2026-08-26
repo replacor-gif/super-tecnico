@@ -90,6 +90,8 @@
     "local_mcp_available": true,
     "public_status_endpoint": "api/index.php?action=electroia-public-status",
     "public_symbol_search_endpoint": "api/index.php?action=electroia-symbol-search&q={query}",
+    "public_showcase_path": "electroia.html",
+    "public_gallery_path": "data/electroia/public-gallery.json",
     "release_readiness_path": "data/electroia/public-release-readiness.json"
   },
   "tools": [
