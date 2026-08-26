@@ -23,7 +23,7 @@ function st_origin_headers(): bool
     $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
     $action = preg_replace('/[^a-z0-9-]/', '', strtolower((string) ($_GET['action'] ?? '')));
     $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
-    $publicReadActions = ['regulation-search', 'connector-search', 'connector-get', 'connector-resolve', 'electroia-public-status', 'electroia-symbol-search'];
+    $publicReadActions = ['regulation-search', 'connector-search', 'connector-get', 'connector-resolve', 'electroia-public-status', 'electroia-symbol-search', 'content-overrides'];
     if (in_array($action, $publicReadActions, true) && in_array($method, ['GET', 'OPTIONS'], true)) {
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Headers: Content-Type, X-ST-Client, X-ST-Client-Type');

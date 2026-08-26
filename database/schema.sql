@@ -255,6 +255,16 @@ CREATE TABLE IF NOT EXISTS st_private_backlog (
   KEY idx_private_backlog_area (area, updated_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS st_content_overrides (
+  content_key VARCHAR(120) NOT NULL,
+  value_text TEXT NOT NULL,
+  updated_by VARCHAR(40) NOT NULL DEFAULT 'Administrador',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (content_key),
+  KEY idx_content_overrides_updated (updated_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS st_electroia_field_validations (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   case_key CHAR(64) NOT NULL,

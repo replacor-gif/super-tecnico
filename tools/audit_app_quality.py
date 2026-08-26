@@ -15,7 +15,7 @@ from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 REPORT = ROOT / "data" / "core" / "app-quality-audit.json"
-PRIVATE_PAGES = {"analitica-privada.html", "bitacora-privada.html", "moderacion.html"}
+PRIVATE_PAGES = {"analitica-privada.html", "bitacora-privada.html", "editor-contenidos.html", "moderacion.html"}
 SKIP_SCHEMES = {"http", "https", "mailto", "tel", "data", "javascript", "blob"}
 
 

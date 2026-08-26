@@ -839,6 +839,21 @@
     },
   };
 
+  const defaultSpanishMessages = Object.freeze({ ...messages.es });
+  const contentReady = fetch(new URL('api/index.php?action=content-overrides', document.baseURI), {
+    cache: 'no-store',
+    credentials: 'same-origin',
+  }).then(response => response.ok ? response.json() : null).then(data => {
+    if (!data?.ok || !data.items || typeof data.items !== 'object') return;
+    Object.entries(data.items).forEach(([key, value]) => {
+      if (Object.prototype.hasOwnProperty.call(defaultSpanishMessages, key) && typeof value === 'string') {
+        messages.es[key] = value;
+      }
+    });
+  }).catch(() => {
+    // La aplicación conserva siempre los textos originales si la API no responde.
+  });
+
   const requested = new URLSearchParams(window.location.search).get('lang');
   const stored = localStorage.getItem('st.language');
   const browserLanguage = (navigator.language || 'es').slice(0, 2).toLowerCase();
@@ -853,7 +868,7 @@
   }
 
   function t(key, variables = {}) {
-    return interpolate(messages[language]?.[key] || messages.es[key] || key, variables);
+    return interpolate(messages[language]?.[key] ?? messages.es[key] ?? key, variables);
   }
 
   function applyTranslations(root = document) {
@@ -925,12 +940,21 @@
     t,
     apply: applyTranslations,
     setLanguage,
+    catalog: () => ({ ...defaultSpanishMessages }),
+    contentReady,
     get language() { return language; },
   };
 
   document.documentElement.lang = language;
   document.addEventListener('DOMContentLoaded', () => {
+    if (document.documentElement.hasAttribute('data-content-editor')) return;
     applyTranslations();
     renderBetaBar();
+  });
+  contentReady.then(() => {
+    if (document.documentElement.hasAttribute('data-content-editor')) return;
+    applyTranslations();
+    renderBetaBar();
+    document.dispatchEvent(new CustomEvent('st:contentready'));
   });
 })();

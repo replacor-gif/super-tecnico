@@ -8,6 +8,7 @@ require __DIR__ . '/analytics.php';
 require __DIR__ . '/connectors.php';
 require __DIR__ . '/embedded-platforms.php';
 require __DIR__ . '/private-backlog.php';
+require __DIR__ . '/content-editor.php';
 require __DIR__ . '/electroia-validation.php';
 
 $action = preg_replace('/[^a-z0-9-]/', '', strtolower((string) ($_GET['action'] ?? 'health')));
@@ -181,6 +182,29 @@ try {
         $body = st_body();
         st_rate_limit('private-proposal-delete', st_client_hash($body), 300, 3600);
         st_json(st_private_proposal_delete($body));
+    }
+
+    if ($action === 'content-overrides' && $method === 'GET') {
+        st_json(st_content_overrides_public());
+    }
+
+    if ($action === 'content-editor' && $method === 'GET') {
+        st_require_electroia_access();
+        st_json(st_content_overrides_admin());
+    }
+
+    if ($action === 'content-editor' && $method === 'POST') {
+        st_require_electroia_access();
+        $body = st_body();
+        st_rate_limit('content-editor-save', st_client_hash($body), 600, 3600);
+        st_json(st_content_overrides_save($body));
+    }
+
+    if ($action === 'content-editor-delete' && $method === 'POST') {
+        st_require_electroia_access();
+        $body = st_body();
+        st_rate_limit('content-editor-delete', st_client_hash($body), 600, 3600);
+        st_json(st_content_overrides_delete($body));
     }
 
     if ($action === 'fault-search' && $method === 'GET') {

@@ -78,6 +78,28 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn('id="backlogComment"', html)
         self.assertNotIn('id="backlogSearch"', html)
         self.assertNotIn('id="backlogAreaFilter"', html)
+
+    def test_epsilon_access_opens_private_plain_text_editor(self):
+        counter = (ROOT / "assets" / "page-counter.js").read_text(encoding="utf-8")
+        html = (ROOT / "editor-contenidos.html").read_text(encoding="utf-8")
+        app = (ROOT / "assets" / "content-editor.js").read_text(encoding="utf-8")
+        i18n = (ROOT / "assets" / "i18n.js").read_text(encoding="utf-8")
+        backend = (ROOT / "api" / "index.php").read_text(encoding="utf-8")
+        service = (ROOT / "api" / "content-editor.php").read_text(encoding="utf-8")
+        schema = (ROOT / "database" / "schema.sql").read_text(encoding="utf-8")
+        self.assertIn("const CONTENT_EDITOR_PATH = 'editor-contenidos.html'", counter)
+        self.assertIn("editor.textContent = '\\u03b5'", counter)
+        self.assertIn('data-content-editor', html)
+        self.assertIn('noindex,nofollow', html)
+        self.assertIn("electroia-access", app)
+        self.assertIn("electroia-unlock", app)
+        self.assertIn("content-editor-delete", app)
+        self.assertIn("catalog: () => ({ ...defaultSpanishMessages })", i18n)
+        self.assertIn("action=content-overrides", i18n)
+        self.assertIn("st_require_electroia_access", backend)
+        self.assertIn("CREATE TABLE IF NOT EXISTS st_content_overrides", service)
+        self.assertIn("CREATE TABLE IF NOT EXISTS st_content_overrides", schema)
+        self.assertNotIn("4097", html + app + service)
         for content in (counter, html, app, backend, service, schema):
             self.assertNotIn("4097", content)
 

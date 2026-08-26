@@ -7,6 +7,7 @@
   const ELECTROIA_PATH = 'archivo-tecnico-47097e44267b9cb111636b84823f1d47/';
   const ANALYTICS_PATH = 'analitica-privada.html';
   const BACKLOG_PATH = 'bitacora-privada.html';
+  const CONTENT_EDITOR_PATH = 'editor-contenidos.html';
 
   const RATING_TEXT = {
     es: {
@@ -82,6 +83,12 @@
     backlog.textContent = '\u03a3';
     backlog.setAttribute('aria-label', 'Lista privada de ideas y trabajo pendiente');
     tools.append(access, analytics, backlog);
+    const editor = document.createElement('a');
+    editor.className = 'st-electro-access st-content-editor-access';
+    editor.href = CONTENT_EDITOR_PATH;
+    editor.textContent = '\u03b5';
+    editor.setAttribute('aria-label', 'Editor privado de textos');
+    tools.append(editor);
     footer.append(tools);
     return tools;
   }
