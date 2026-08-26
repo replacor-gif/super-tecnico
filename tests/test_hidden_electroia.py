@@ -72,7 +72,12 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn("st_private_backlog_list", backend)
         self.assertIn("CREATE TABLE IF NOT EXISTS st_private_backlog", service)
         self.assertIn("CREATE TABLE IF NOT EXISTS st_private_backlog", schema)
-        self.assertNotIn("DELETE FROM st_private_backlog", service)
+        self.assertIn("DELETE FROM st_private_backlog", service)
+        self.assertIn("private-backlog-delete", app)
+        self.assertIn("private-proposal-delete", app)
+        self.assertIn('id="backlogComment"', html)
+        self.assertNotIn('id="backlogSearch"', html)
+        self.assertNotIn('id="backlogAreaFilter"', html)
         for content in (counter, html, app, backend, service, schema):
             self.assertNotIn("4097", content)
 

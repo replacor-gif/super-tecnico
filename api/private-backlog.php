@@ -88,8 +88,12 @@ function st_private_backlog_create(array $body): array
     if (!in_array($priority, ['normal', 'high', 'urgent'], true)) {
         st_json(['ok' => false, 'error' => 'invalid_priority'], 422);
     }
-    $area = st_text($body, 'area', 2, 100);
-    $title = st_text($body, 'title', 3, 140);
+    $area = trim((string) ($body['area'] ?? 'Aplicación general'));
+    if ($area === '') $area = 'Aplicación general';
+    if (mb_strlen($area) > 100) st_json(['ok' => false, 'error' => 'invalid_field', 'field' => 'area'], 422);
+    $title = trim((string) ($body['title'] ?? ''));
+    if ($title === '') $title = 'Anotación sin texto';
+    if (mb_strlen($title) > 140) st_json(['ok' => false, 'error' => 'invalid_field', 'field' => 'title'], 422);
     $details = st_text($body, 'details', 0, 5000, false);
     $author = trim((string) ($body['author_alias'] ?? 'Administrador'));
     if ($author === '') $author = 'Administrador';
@@ -100,6 +104,27 @@ function st_private_backlog_create(array $body): array
     );
     $stmt->execute([$type, $area, $title, $details, $priority, $author]);
     return ['ok' => true, 'id' => (int) st_db()->lastInsertId(), 'status' => 'pending'];
+}
+
+function st_private_backlog_delete(array $body): array
+{
+    st_private_backlog_ensure_schema();
+    $id = filter_var($body['id'] ?? null, FILTER_VALIDATE_INT);
+    if (!$id) st_json(['ok' => false, 'error' => 'invalid_id'], 422);
+    $statement = st_db()->prepare('DELETE FROM st_private_backlog WHERE id = ?');
+    $statement->execute([$id]);
+    if ($statement->rowCount() !== 1) st_json(['ok' => false, 'error' => 'not_found'], 404);
+    return ['ok' => true, 'id' => (int) $id, 'deleted' => true];
+}
+
+function st_private_proposal_delete(array $body): array
+{
+    $id = filter_var($body['id'] ?? null, FILTER_VALIDATE_INT);
+    if (!$id) st_json(['ok' => false, 'error' => 'invalid_id'], 422);
+    $statement = st_db()->prepare("DELETE FROM st_proposals WHERE id = ? AND status = 'pending'");
+    $statement->execute([$id]);
+    if ($statement->rowCount() !== 1) st_json(['ok' => false, 'error' => 'not_found'], 404);
+    return ['ok' => true, 'id' => (int) $id, 'deleted' => true];
 }
 
 function st_private_backlog_update(array $body): array

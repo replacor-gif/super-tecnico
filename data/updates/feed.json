@@ -10,6 +10,15 @@
   },
   "entries": [
     {
+      "id": "UPD-20260826-PENDING-LISTS-REPLACOR-RETURN",
+      "date": "2026-08-26",
+      "title": "Ideas y pendientes se vuelven inmediatos",
+      "summary": "La aportación pública queda reducida a apodo y comentario opcionales, se publica directamente en la lista pendiente y ya no exige revisión previa. La sección privada Σ reúne en una sola pantalla las notas personales y las aportaciones de usuarios, permite borrarlas al completarlas y todas las páginas de Super Técnico incorporan regreso visible a REPLACOR.COM.",
+      "areas": ["Super Técnico", "Comunidad", "Pendientes", "Navegación", "Móvil"],
+      "kind": "platform_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
       "id": "UPD-20260825-ELECTROIA-AI-BRIDGE",
       "date": "2026-08-25",
       "title": "ElectroIA abre un puente universal para cualquier IA",

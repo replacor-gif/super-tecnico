@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_VERSION = 'super-tecnico-shell-v10';
+const CACHE_VERSION = 'super-tecnico-shell-v11';
 const APP_SHELL = [
   './', './index.html', './proyectos.html', './conductos.html', './ventilacion.html', './tuberias-frigorificas.html', './frigorista.html', './normativa.html', './conectores.html', './plataformas-embebidas.html', './actualizaciones.html',
   './assets/common.css', './assets/app-theme.css', './assets/app-shell.js', './assets/project-core.js', './assets/project-manager.css', './assets/project-manager.js', './assets/super-tecnico-logo.png',

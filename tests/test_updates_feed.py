@@ -51,10 +51,18 @@ class UpdatesFeedTests(unittest.TestCase):
         script = (ROOT / "assets" / "feedback.js").read_text(encoding="utf-8")
         backend = (ROOT / "api" / "index.php").read_text(encoding="utf-8")
         nickname_input = re.search(r'<input id="feedbackNickname"[^>]*>', html)
+        comment_input = re.search(r'<textarea id="feedbackMessage"[^>]*>', html)
         self.assertIsNotNone(nickname_input)
+        self.assertIsNotNone(comment_input)
         self.assertNotIn("required", nickname_input.group(0))
+        self.assertNotIn("required", comment_input.group(0))
         self.assertIn("Usuario anónimo", script)
         self.assertIn("$body['nickname'] = 'Usuario anónimo'", backend)
+        self.assertIn("'comment'", backend)
+        self.assertIn("'pending', 1, NOW()", backend)
+        self.assertIn("window.ST_COMMUNITY_API.request", script)
+        self.assertNotIn("feedbackType", script)
+        self.assertNotIn("boardSearch", script)
 
 
 if __name__ == "__main__":

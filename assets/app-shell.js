@@ -1,6 +1,8 @@
 (() => {
   'use strict';
 
+  const REPLACOR_URL = 'https://www.replacor.com/';
+
   const tools = [
     { href: 'index.html', label: 'Inicio', short: 'Inicio', color: '#ff7a00', icon: 'home', terms: 'inicio portada herramientas' },
     { href: 'proyectos.html', label: 'Mis proyectos técnicos', short: 'Proyectos', color: '#ffe438', icon: 'project', terms: 'proyectos guardar obra instalación resultados mediciones planos pdf' },
@@ -74,6 +76,14 @@
       trigger.setAttribute('aria-label', 'Abrir menú de herramientas');
       trigger.innerHTML = `${icons.menu}<span>Menú</span>`;
       header.prepend(trigger);
+      if (!header.querySelector('.st-replacor-home')) {
+        const replacorLink = document.createElement('a');
+        replacorLink.className = 'st-replacor-home';
+        replacorLink.href = REPLACOR_URL;
+        replacorLink.setAttribute('aria-label', 'Volver a la página principal de REPLACOR');
+        replacorLink.innerHTML = '<b>R</b><span>REPLACOR.COM</span>';
+        header.append(replacorLink);
+      }
     }
 
     const shell = document.createElement('div');
@@ -89,6 +99,7 @@
         <button class="st-install-app" type="button" data-st-install hidden><span>${icons.project}</span><span><strong>Instalar Super Técnico</strong><small>Acceso directo y herramientas disponibles sin cobertura</small></span><b>INSTALAR</b></button>
         <nav class="st-drawer-grid" aria-label="Todas las herramientas">${tools.map(tool => toolLink(tool)).join('')}</nav>
         <a class="st-drawer-updates${currentFile() === 'actualizaciones.html' ? ' is-active' : ''}" href="actualizaciones.html" style="--tool-color:#ffe438"><span class="st-tool-icon">${icons.updates}</span><span><strong>Últimas mejoras</strong><small>Consulta cómo sigue creciendo la aplicación</small></span><b>VER →</b></a>
+        <a class="st-drawer-replacor" href="${REPLACOR_URL}"><b>R</b><span><strong>Volver a REPLACOR.COM</strong><small>Página principal del ecosistema</small></span><em>→</em></a>
         <div class="st-drawer-foot"><strong>TÉCNICA REAL.</strong><span>DECISIONES RÁPIDAS.</span></div>
       </aside>
       <nav class="st-bottom-nav" aria-label="Navegación rápida">

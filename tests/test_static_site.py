@@ -1000,10 +1000,13 @@ class StaticSiteTests(unittest.TestCase):
             "Version bêta publique",
         ):
             self.assertIn(marker, i18n)
-        self.assertIn("mailto:info@replacor.com", feedback)
+        self.assertIn("proposal-submit", feedback)
+        self.assertIn("comment:byId('feedbackMessage').value.trim()", feedback)
         self.assertNotIn("fetch(", feedback)
         self.assertIn('id="feedbackForm"', pages["feedback.html"])
         self.assertIn("https://www.replacor.com/", pages["feedback.html"])
+        self.assertNotIn('id="boardSearch"', pages["feedback.html"])
+        self.assertNotIn('id="feedbackType"', pages["feedback.html"])
 
     def test_calculators_and_component_reference_modules_are_public(self):
         calculators = (self.dist / "calculadoras.html").read_text(encoding="utf-8")
@@ -3124,11 +3127,26 @@ class StaticSiteTests(unittest.TestCase):
         for filename in public_pages:
             html = (self.dist / filename).read_text(encoding="utf-8")
             self.assertIn('assets/app-theme.css?v=1', html, filename)
-            self.assertIn('assets/app-shell.js?v=8', html, filename)
+            self.assertRegex(html, r'assets/app-shell\.js\?v=\d+', filename)
 
         shell = (self.dist / "assets" / "app-shell.js").read_text(encoding="utf-8")
         for marker in ("st-app-drawer", "st-bottom-nav", "st-drawer-search", "Calculadoras", "Componentes"):
             self.assertIn(marker, shell)
+        self.assertIn("https://www.replacor.com/", shell)
+        self.assertIn("st-drawer-replacor", shell)
+
+    def test_every_super_tecnico_page_can_return_to_replacor(self):
+        shell = (self.dist / "assets" / "app-shell.js").read_text(encoding="utf-8")
+        self.assertIn("https://www.replacor.com/", shell)
+        for page in self.dist.glob("*.html"):
+            html = page.read_text(encoding="utf-8")
+            with self.subTest(page=page.name):
+                self.assertTrue(
+                    "assets/app-shell.js" in html or "https://www.replacor.com/" in html,
+                    f"{page.name} no ofrece regreso a REPLACOR",
+                )
+        electroia = (self.dist / "archivo-tecnico-47097e44267b9cb111636b84823f1d47" / "index.html").read_text(encoding="utf-8")
+        self.assertIn("https://www.replacor.com/", electroia)
 
     def test_refrigerant_piping_designer_is_public_traceable_and_unpriced(self):
         expected = (

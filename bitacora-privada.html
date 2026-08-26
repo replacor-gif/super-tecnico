@@ -1,82 +1,29 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
-  <meta name="theme-color" content="#070912">
-  <title>Bitácora privada | Super Técnico</title>
-  <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
-  <link rel="stylesheet" href="assets/common.css?v=1">
-  <link rel="stylesheet" href="assets/backlog.css?v=1">
-  <script src="assets/backlog.js?v=1" defer></script>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex"><meta name="theme-color" content="#070912">
+  <title>Pendientes privados | Super Técnico</title><link rel="icon" type="image/png" href="assets/super-tecnico-logo.png"><link rel="stylesheet" href="assets/common.css?v=1"><link rel="stylesheet" href="assets/backlog.css?v=2"><script src="assets/backlog.js?v=2" defer></script>
 </head>
 <body class="backlog-body access-checking">
   <section id="backlogPinGate" class="backlog-gate" hidden aria-labelledby="backlogPinTitle">
     <form id="backlogPinForm" class="backlog-pin-card">
-      <span class="backlog-pin-mark" aria-hidden="true">Σ</span>
-      <p class="backlog-kicker">ACCESO PRIVADO</p>
-      <h1 id="backlogPinTitle">Bitácora de ideas</h1>
-      <p>Todo lo que anotes aquí queda guardado en Super Técnico y estará disponible desde cualquier dispositivo.</p>
-      <label for="backlogPin">PIN de cuatro cifras</label>
-      <div class="backlog-pin-row">
-        <input id="backlogPin" name="pin" type="password" inputmode="numeric" autocomplete="current-password" pattern="[0-9]{4}" maxlength="4" required>
-        <button type="submit">Entrar</button>
-      </div>
-      <p id="backlogPinError" class="backlog-form-error" role="alert"></p>
-      <a href="index.html">Volver a Super Técnico</a>
+      <span class="backlog-pin-mark" aria-hidden="true">Σ</span><p class="backlog-kicker">ACCESO PRIVADO</p><h1 id="backlogPinTitle">Lista personal</h1><p>Aquí quedan reunidas tus notas y las aportaciones públicas pendientes.</p>
+      <label for="backlogPin">PIN de cuatro cifras</label><div class="backlog-pin-row"><input id="backlogPin" name="pin" type="password" inputmode="numeric" autocomplete="current-password" pattern="[0-9]{4}" maxlength="4" required><button type="submit">Entrar</button></div><p id="backlogPinError" class="backlog-form-error" role="alert"></p>
+      <div class="backlog-gate-links"><a href="index.html">Super Técnico</a><a href="https://www.replacor.com/">REPLACOR.COM</a></div>
     </form>
   </section>
-
   <div id="backlogApp" hidden>
-    <header class="backlog-header">
-      <a class="backlog-brand" href="index.html">
-        <img src="assets/super-tecnico-logo.png" alt="">
-        <span><strong>Super Técnico</strong><small>Bitácora privada · Σ</small></span>
-      </a>
-      <div class="backlog-header-actions">
-        <button id="backlogExport" type="button">Exportar</button>
-        <button id="backlogNew" class="primary" type="button">+ Anotar idea</button>
-      </div>
-    </header>
-
+    <header class="backlog-header"><a class="backlog-brand" href="index.html"><img src="assets/super-tecnico-logo.png" alt=""><span><strong>Super Técnico</strong><small>Pendientes privados · Σ</small></span></a><nav><a href="https://www.replacor.com/">REPLACOR.COM</a><a href="index.html">Herramientas</a></nav></header>
     <main class="backlog-main">
-      <section class="backlog-hero">
-        <div>
-          <p class="backlog-kicker">MEMORIA DE TRABAJO DEL PROYECTO</p>
-          <h1>Nada se vuelve a olvidar.</h1>
-          <p>Apunta una idea en segundos. Después podremos filtrarla, ponerla en curso y marcarla como terminada sin perder su historial.</p>
-        </div>
-        <div id="backlogSummary" class="backlog-summary" aria-label="Resumen de pendientes"></div>
-      </section>
-
-      <section class="backlog-toolbar" aria-label="Filtros de la lista">
-        <label class="backlog-search"><span>Buscar</span><input id="backlogSearch" type="search" placeholder="Texto, área o detalle…"></label>
-        <label><span>Estado</span><select id="backlogStatusFilter"><option value="active">Activos y terminados</option><option value="pending">Pendientes</option><option value="in_progress">En curso</option><option value="done">Terminados</option><option value="archived">Archivados</option><option value="all">Todos</option></select></label>
-        <label><span>Área</span><select id="backlogAreaFilter"><option value="">Todas</option></select></label>
-      </section>
-
-      <p id="backlogStatus" class="backlog-status" role="status">Cargando ideas…</p>
-      <section id="backlogList" class="backlog-list" aria-label="Ideas y tareas pendientes"></section>
-      <p class="backlog-private-note">Esta sección no aparece en buscadores y requiere el mismo acceso privado que Ω y β. La opción Exportar genera una copia JSON legible para nuestras sesiones de trabajo.</p>
+      <section class="backlog-hero"><p class="backlog-kicker">MEMORIA DE TRABAJO</p><h1>Todo pendiente,<br>en un solo lugar.</h1><p>Sin formularios largos, filtros ni campos obligatorios. Anota algo y aparecerá directamente en la lista.</p></section>
+      <form id="backlogForm" class="backlog-quick-form" novalidate><label for="backlogComment">Nueva nota personal <small>(opcional)</small></label><div><textarea id="backlogComment" rows="3" maxlength="5000" placeholder="Escribe aquí lo que no quieres que se olvide…"></textarea><button id="backlogSave" type="submit">Guardar pendiente</button></div><p id="backlogFormError" class="backlog-form-error" role="alert"></p></form>
+      <p id="backlogStatus" class="backlog-status" role="status">Cargando pendientes…</p>
+      <div class="backlog-columns">
+        <section class="backlog-section" aria-labelledby="personalTitle"><header><div><p class="backlog-kicker">PRIVADO</p><h2 id="personalTitle">Mis anotaciones</h2></div><strong id="personalCount">0</strong></header><div id="backlogList" class="backlog-list"></div></section>
+        <section class="backlog-section public-pending" aria-labelledby="publicTitle"><header><div><p class="backlog-kicker">APORTACIONES</p><h2 id="publicTitle">Ideas de usuarios</h2></div><strong id="publicCount">0</strong></header><div id="publicPendingList" class="backlog-list"></div></section>
+      </div>
+      <p class="backlog-private-note">Los datos quedan guardados en Super Técnico para que podamos consultarlos en futuras sesiones. Al pulsar «Hecho · borrar», el pendiente se elimina de la lista.</p>
     </main>
   </div>
-
-  <dialog id="backlogDialog" class="backlog-dialog" aria-labelledby="backlogDialogTitle">
-    <form id="backlogForm" method="dialog">
-      <header><div><p class="backlog-kicker">ANOTACIÓN PRIVADA</p><h2 id="backlogDialogTitle">Nueva idea</h2></div><button id="backlogClose" class="icon-button" type="button" aria-label="Cerrar">×</button></header>
-      <input id="backlogId" type="hidden">
-      <div class="backlog-form-grid">
-        <label class="wide"><span>Título</span><input id="backlogTitle" maxlength="140" required placeholder="¿Qué no queremos olvidar?"></label>
-        <label><span>Tipo</span><select id="backlogType"><option value="idea">Idea nueva</option><option value="improvement">Mejora</option><option value="bug">Fallo</option><option value="content">Contenido o datos</option></select></label>
-        <label><span>Área</span><input id="backlogArea" list="backlogAreas" maxlength="100" required placeholder="ElectroIA, Conductos…"><datalist id="backlogAreas"><option>ElectroIA</option><option>Conductos</option><option>Frigorista</option><option>Normativa</option><option>Ventilación</option><option>Aplicación general</option><option>Base de datos</option><option>SINAPSYS / IA</option></datalist></label>
-        <label><span>Prioridad</span><select id="backlogPriority"><option value="normal">Normal</option><option value="high">Alta</option><option value="urgent">Urgente</option></select></label>
-        <label id="backlogStatusField" hidden><span>Estado</span><select id="backlogItemStatus"><option value="pending">Pendiente</option><option value="in_progress">En curso</option><option value="done">Terminado</option><option value="archived">Archivado</option></select></label>
-        <label class="wide"><span>Detalles opcionales</span><textarea id="backlogDetails" rows="6" maxlength="5000" placeholder="Escribe todos los matices que recuerdes. Se pueden completar después."></textarea></label>
-      </div>
-      <p id="backlogFormError" class="backlog-form-error" role="alert"></p>
-      <footer><button id="backlogCancel" type="button">Cancelar</button><button id="backlogSave" class="primary" type="submit">Guardar en la bitácora</button></footer>
-    </form>
-  </dialog>
 </body>
 </html>

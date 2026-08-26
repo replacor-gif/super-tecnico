@@ -10,6 +10,10 @@ const items = [
   { id: 2, item_type: "improvement", area: "Conductos", title: "Afinar movimiento táctil de rejillas", details: "Comprobar arrastre con un dedo y recálculo inmediato.", priority: "high", status: "pending", author_alias: "Administrador", created_at: "2026-08-23 09:00:00", updated_at: "2026-08-23 17:00:00", completed_at: null },
   { id: 1, item_type: "content", area: "Normativa", title: "Convertir consultas repetidas en reglas revisadas", details: "Guardar ámbito, excepciones y fuente exacta.", priority: "normal", status: "done", author_alias: "Administrador", created_at: "2026-08-22 09:00:00", updated_at: "2026-08-23 16:00:00", completed_at: "2026-08-23 16:00:00" },
 ];
+const proposals = [
+  { id: 12, nickname: "Técnico Málaga", description: "Haría más grande el botón de guardar en el móvil.", language: "es", source_page: "feedback.html", created_at: "2026-08-26 09:30:00" },
+  { id: 11, nickname: "Usuario anónimo", description: "Añadir una guía rápida para las rejillas.", language: "es", source_page: "conductos.html", created_at: "2026-08-26 08:10:00" },
+];
 
 function json(response, status, payload) {
   response.writeHead(status, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
@@ -35,7 +39,10 @@ const server = createServer(async (request, response) => {
     if (url.pathname === "/api/index.php") {
       const action = url.searchParams.get("action");
       if (action === "electroia-access") return json(response, 200, { ok: true, required: false, unlocked: true });
-      if (action === "private-backlog" && request.method === "GET") return json(response, 200, { ok: true, items, counts: counts(), privacy: "test" });
+      if (action === "private-backlog" && request.method === "GET") {
+        const status = url.searchParams.get("status");
+        return json(response, 200, { ok: true, items: status && status !== "all" ? items.filter(item => item.status === status) : items, counts: counts(), privacy: "test" });
+      }
       if (action === "private-backlog" && request.method === "POST") {
         const input = await body(request);
         items.unshift({ id: Math.max(...items.map(item => item.id)) + 1, item_type: input.item_type, area: input.area, title: input.title, details: input.details || null, priority: input.priority, status: "pending", author_alias: "Administrador", created_at: "2026-08-23 19:00:00", updated_at: "2026-08-23 19:00:00", completed_at: null });
@@ -47,6 +54,22 @@ const server = createServer(async (request, response) => {
         if (!item) return json(response, 404, { ok: false, error: "not_found" });
         Object.assign(item, input, { updated_at: "2026-08-23 19:05:00" });
         return json(response, 200, { ok: true, id: item.id, status: item.status });
+      }
+      if (action === "private-backlog-delete" && request.method === "POST") {
+        const input = await body(request); const index = items.findIndex(row => row.id === Number(input.id));
+        if (index < 0) return json(response, 404, { ok: false, error: "not_found" });
+        items.splice(index, 1); return json(response, 200, { ok: true, deleted: true });
+      }
+      if (action === "proposals" && request.method === "GET") return json(response, 200, { ok: true, items: proposals });
+      if (action === "proposal-submit" && request.method === "POST") {
+        const input = await body(request); const id = Math.max(...proposals.map(item => item.id), 0) + 1;
+        proposals.unshift({ id, nickname: input.nickname || "Usuario anónimo", description: input.comment || "Aportación sin comentario.", language: input.language || "es", source_page: input.source_page || null, created_at: "2026-08-26 10:00:00" });
+        return json(response, 201, { ok: true, id, status: "pending" });
+      }
+      if (action === "private-proposal-delete" && request.method === "POST") {
+        const input = await body(request); const index = proposals.findIndex(row => row.id === Number(input.id));
+        if (index < 0) return json(response, 404, { ok: false, error: "not_found" });
+        proposals.splice(index, 1); return json(response, 200, { ok: true, deleted: true });
       }
       return json(response, 404, { ok: false, error: "not_found" });
     }

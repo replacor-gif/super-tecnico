@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-25",
+  "updated_at": "2026-08-26",
   "status": "pass",
   "scope": "Super Técnico root pages, public references, shared UX, critical copy and published text integrity",
   "summary": {
     "root_pages": 25,
     "public_pages_with_common_feedback": 22,
-    "local_references_checked": 363,
+    "local_references_checked": 364,
     "fatal_findings": 0,
     "warnings": 0,
     "component_count_verified": 38618,

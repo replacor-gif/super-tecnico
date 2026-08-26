@@ -169,6 +169,20 @@ try {
         st_json(st_private_backlog_update($body));
     }
 
+    if ($action === 'private-backlog-delete' && $method === 'POST') {
+        st_require_electroia_access();
+        $body = st_body();
+        st_rate_limit('private-backlog-delete', st_client_hash($body), 300, 3600);
+        st_json(st_private_backlog_delete($body));
+    }
+
+    if ($action === 'private-proposal-delete' && $method === 'POST') {
+        st_require_electroia_access();
+        $body = st_body();
+        st_rate_limit('private-proposal-delete', st_client_hash($body), 300, 3600);
+        st_json(st_private_proposal_delete($body));
+    }
+
     if ($action === 'fault-search' && $method === 'GET') {
         $query = trim((string) ($_GET['q'] ?? ''));
         $normalized = st_normalize($query);
@@ -377,35 +391,24 @@ try {
     }
 
     if ($action === 'proposals' && $method === 'GET') {
-        $stmt = st_db()->query("SELECT id, nickname, type, area, context, title, description, proposed_change, language, source_page, status, supports_count, official_note, created_at FROM st_proposals WHERE is_public = 1 ORDER BY supports_count DESC, created_at DESC LIMIT 250");
+        $stmt = st_db()->query("SELECT id, nickname, description, language, source_page, created_at FROM st_proposals WHERE is_public = 1 AND status = 'pending' ORDER BY created_at DESC, id DESC LIMIT 500");
         st_json(['ok' => true, 'items' => $stmt->fetchAll()]);
     }
 
     if ($action === 'proposal-submit' && $method === 'POST') {
         $body = st_body();
-        st_verify_turnstile($body);
         $clientHash = st_client_hash($body);
-        st_rate_limit('proposal-submit', $clientHash, 5, 3600);
-        $types = ['idea', 'change', 'bug', 'technical'];
-        $type = (string) ($body['type'] ?? '');
-        if (!in_array($type, $types, true)) st_json(['ok' => false, 'error' => 'invalid_type'], 422);
+        st_rate_limit('proposal-submit', $clientHash, 10, 3600);
         if (trim((string) ($body['nickname'] ?? '')) === '') $body['nickname'] = 'Usuario anónimo';
-        $nickname = st_text($body, 'nickname', 2, 40);
-        $area = st_text($body, 'area', 2, 100);
-        $context = st_text($body, 'context', 0, 160, false);
-        $title = st_text($body, 'title', 5, 100);
-        $description = st_text($body, 'description', 20, 1800);
-        $change = st_text($body, 'proposed_change', 0, 1200, false);
+        $nickname = st_text($body, 'nickname', 1, 40);
+        $description = st_text($body, 'comment', 0, 1800, false);
+        if ($description === '') $description = 'Aportación sin comentario.';
+        $title = mb_substr(preg_replace('/\s+/u', ' ', $description) ?? $description, 0, 100, 'UTF-8');
         $language = in_array(($body['language'] ?? 'es'), ['es', 'en', 'pt', 'fr'], true) ? $body['language'] : 'es';
         $page = st_text($body, 'source_page', 0, 500, false);
-        $contentHash = hash('sha256', st_normalize($area) . '|' . st_normalize($title) . '|' . st_normalize($description));
-        $stmt = st_db()->prepare('INSERT INTO st_proposals (nickname, type, area, context, title, description, proposed_change, language, source_page, content_hash) VALUES (?, ?, ?, NULLIF(?, \'\'), ?, ?, NULLIF(?, \'\'), ?, NULLIF(?, \'\'), ?)');
-        try {
-            $stmt->execute([$nickname, $type, $area, $context, $title, $description, $change, $language, $page, $contentHash]);
-        } catch (PDOException $error) {
-            if ((string) $error->getCode() === '23000') st_json(['ok' => false, 'error' => 'duplicate_submission'], 409);
-            throw $error;
-        }
+        $contentHash = hash('sha256', $clientHash . '|' . microtime(true) . '|' . bin2hex(random_bytes(8)));
+        $stmt = st_db()->prepare("INSERT INTO st_proposals (nickname, type, area, title, description, language, source_page, content_hash, status, is_public, published_at) VALUES (?, 'idea', 'Aplicación general', ?, ?, ?, NULLIF(?, ''), ?, 'pending', 1, NOW())");
+        $stmt->execute([$nickname, $title, $description, $language, $page, $contentHash]);
         st_json(['ok' => true, 'id' => (int) st_db()->lastInsertId(), 'status' => 'pending'], 201);
     }
 
