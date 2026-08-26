@@ -10,14 +10,38 @@ de estas herramientas:
 - `electroia_get_diagram_contract`
 - `electroia_search_symbols`
 - `electroia_get_symbol`
+- `electroia_compile_diagram`
 - `electroia_render_diagram`
 - `electroia_analyze_request`
 - `electroia_generate_relay_driver`
 - `electroia_generate_temperature_fan`
 
 La IA llamante decide la topología, los valores y los componentes. La herramienta
-`electroia_render_diagram` recibe símbolos, terminales y redes ya decididos, comprueba
-su conectividad y devuelve un SVG sobre una rejilla común.
+`electroia_compile_diagram` acepta nombres técnicos de símbolos, referencias locales y
+alias seguros de terminales; ElectroIA los resuelve, asigna referencias, coloca, comprueba
+la conectividad y devuelve el documento neutral y el SVG. `electroia_render_diagram`
+continúa disponible cuando la IA necesita control exacto de bajo nivel.
+
+Ejemplo reducido del compilador:
+
+```json
+{
+  "tool": "electroia_compile_diagram",
+  "arguments": {
+    "spec": {
+      "title": "Fuente, protección y carga",
+      "components": [
+        { "id": "source", "symbol_query": "fuente continua", "value": "24 V DC" },
+        { "id": "load", "symbol_id": "ST-GENERIC-2P", "value": "Carga" }
+      ],
+      "nets": [
+        { "id": "24V", "role": "power", "connections": [{ "component": "source", "port": "+" }, { "component": "load", "port": "1" }] },
+        { "id": "0V", "role": "ground", "connections": ["source.-", "load.2"] }
+      ]
+    }
+  }
+}
+```
 
 La biblioteca externa contiene las 501 fichas revisadas del catálogo y 3 elementos auxiliares
 del motor. Las 19 familias públicas tienen geometría y terminales revisados. Los 75 bloques

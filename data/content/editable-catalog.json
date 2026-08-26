@@ -3506,14 +3506,14 @@
       "default": "Electro"
     },
     {
-      "key": "page.electroia.text.5abb34a6.1",
+      "key": "page.electroia.text.ced44781.1",
       "page": "electroia.html",
       "page_slug": "electroia",
       "page_title": "ElectroIA",
       "kind": "text",
       "tag": "p",
-      "label": "Párrafo · Una IA piensa el circuito. ElectroIA comprueba el lenguaje eléctr…",
-      "default": "Una IA piensa el circuito. ElectroIA comprueba el lenguaje eléctrico y lo convierte en un plano único, limpio y repetible."
+      "label": "Párrafo · Una IA piensa el circuito. ElectroIA entiende su especificación t…",
+      "default": "Una IA piensa el circuito. ElectroIA entiende su especificación técnica, resuelve símbolos y bornes y la convierte en un plano único, limpio y repetible."
     },
     {
       "key": "page.electroia.text.1ae3123f.1",
@@ -3646,34 +3646,34 @@
       "default": "Entiende lo que se necesita, decide la topología, calcula valores y elige componentes."
     },
     {
-      "key": "page.electroia.text.26143b1d.1",
+      "key": "page.electroia.text.a5c6afcd.1",
       "page": "electroia.html",
       "page_slug": "electroia",
       "page_title": "ElectroIA",
       "kind": "text",
       "tag": "small",
-      "label": "Texto · Contrato neutral",
-      "default": "Contrato neutral"
+      "label": "Texto · Compilador universal",
+      "default": "Compilador universal"
     },
     {
-      "key": "page.electroia.text.fb7f2911.1",
+      "key": "page.electroia.text.cd38f83f.1",
       "page": "electroia.html",
       "page_slug": "electroia",
       "page_title": "ElectroIA",
       "kind": "text",
       "tag": "h3",
-      "label": "Título de bloque · Ordena el diseño",
-      "default": "Ordena el diseño"
+      "label": "Título de bloque · Resuelve el diseño",
+      "default": "Resuelve el diseño"
     },
     {
-      "key": "page.electroia.text.d6945006.1",
+      "key": "page.electroia.text.f4f04365.1",
       "page": "electroia.html",
       "page_slug": "electroia",
       "page_title": "ElectroIA",
       "kind": "text",
       "tag": "p",
-      "label": "Párrafo · Referencias, símbolos, terminales y redes viajan en un documento…",
-      "default": "Referencias, símbolos, terminales y redes viajan en un documento JSON estable."
+      "label": "Párrafo · Acepta nombres técnicos y conexiones normales; asigna símbolos, r…",
+      "default": "Acepta nombres técnicos y conexiones normales; asigna símbolos, referencias, bornes y posición automáticamente."
     },
     {
       "key": "page.electroia.text.1b1a2f08.1",
@@ -3936,14 +3936,14 @@
       "default": "Una entrada documentada, no una caja negra"
     },
     {
-      "key": "page.electroia.text.51837dcf.1",
+      "key": "page.electroia.text.2e61cce8.1",
       "page": "electroia.html",
       "page_slug": "electroia",
       "page_title": "ElectroIA",
       "kind": "text",
       "tag": "p",
-      "label": "Párrafo · El contrato explica qué decide la IA y qué verifica ElectroIA. La…",
-      "default": "El contrato explica qué decide la IA y qué verifica ElectroIA. La consulta pública permite descubrir capacidades y buscar símbolos; el renderizado remoto aún no está abierto."
+      "label": "Párrafo · El nuevo compilador permite a una IA describir componentes y cone…",
+      "default": "El nuevo compilador permite a una IA describir componentes y conexiones sin conocer identificadores internos ni coordenadas. ElectroIA resuelve esa entrada, la valida y genera el SVG; la ejecución remota pública aún permanece protegida."
     },
     {
       "key": "page.electroia.text.eca8b120.1",
@@ -3966,44 +3966,44 @@
       "default": "Punto de entrada legible por máquinas"
     },
     {
-      "key": "page.electroia.text.c371fd6f.1",
+      "key": "page.electroia.text.475b4752.1",
       "page": "electroia.html",
       "page_slug": "electroia",
       "page_title": "ElectroIA",
       "kind": "text",
       "tag": "strong",
-      "label": "Texto · OpenAPI público",
-      "default": "OpenAPI público"
+      "label": "Texto · Entrada para IAs",
+      "default": "Entrada para IAs"
     },
     {
-      "key": "page.electroia.text.1116b677.1",
+      "key": "page.electroia.text.8bf2d90a.1",
       "page": "electroia.html",
       "page_slug": "electroia",
       "page_title": "ElectroIA",
       "kind": "text",
       "tag": "small",
-      "label": "Texto · Estado y búsqueda de símbolos",
-      "default": "Estado y búsqueda de símbolos"
+      "label": "Texto · Componentes y conexiones de alto nivel",
+      "default": "Componentes y conexiones de alto nivel"
     },
     {
-      "key": "page.electroia.text.a5895085.1",
+      "key": "page.electroia.text.0e576d2c.1",
       "page": "electroia.html",
       "page_slug": "electroia",
       "page_title": "ElectroIA",
       "kind": "text",
       "tag": "strong",
-      "label": "Texto · Esquema JSON",
-      "default": "Esquema JSON"
+      "label": "Texto · Documento compilado",
+      "default": "Documento compilado"
     },
     {
-      "key": "page.electroia.text.18f26644.1",
+      "key": "page.electroia.text.cd99fa16.1",
       "page": "electroia.html",
       "page_slug": "electroia",
       "page_title": "ElectroIA",
       "kind": "text",
       "tag": "small",
-      "label": "Texto · Contrato neutral del diagrama",
-      "default": "Contrato neutral del diagrama"
+      "label": "Texto · Contrato neutral exacto del diagrama",
+      "default": "Contrato neutral exacto del diagrama"
     },
     {
       "key": "page.electroia.text.5c621183.1",

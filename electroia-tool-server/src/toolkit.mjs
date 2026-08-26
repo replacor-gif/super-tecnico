@@ -2,6 +2,7 @@ import { createRequire } from "node:module";
 import { readFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { compileDiagramSpec } from "./compiler.mjs";
 
 const require = createRequire(import.meta.url);
 const SERVER_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -86,7 +87,7 @@ const SYMBOL_TERM_ALIASES = Object.freeze({
   pulsador: ["pushbutton", "boton"], boton: ["pulsador", "pushbutton"],
   abierto: ["no", "normally open"], cerrado: ["nc", "normally closed"],
   automata: ["plc"], plc: ["automata"],
-  variador: ["vfd", "frecuencia"], vfd: ["variador", "frecuencia"],
+  variador: ["vfd", "variable frequency drive"], vfd: ["variador", "variable frequency drive"],
   tierra: ["pe", "ground"], masa: ["gnd", "ground"],
   alimentacion: ["power", "supply"], sensor: ["transductor"],
 });
@@ -232,8 +233,8 @@ export async function callElectroIATool(tool, rawArguments = {}) {
         mandatory_process: [
           "Pregunta solo los requisitos técnicos imprescindibles que falten.",
           "Calcula y selecciona los componentes antes de dibujar.",
-          "Usa electroia_search_symbols y no inventes identificadores ni terminales.",
-          "Devuelve un único documento que valide contra electroia_get_diagram_contract.",
+          "Entrega una especificación de alto nivel a electroia_compile_diagram; usa la búsqueda exacta solo si la resolución necesita confirmación.",
+          "Revisa la resolución de símbolos, terminales y los diagnósticos antes de aceptar el SVG.",
           "Mantén los bloques de modelo exacto como no ejecutables hasta disponer de documentación del fabricante.",
         ],
         expected_output: bridge.response_contract,
@@ -364,6 +365,15 @@ export async function callElectroIATool(tool, rawArguments = {}) {
 
   if (name === "electroia_render_diagram") {
     return { ok: true, tool: name, diagram: diagramCore.render(args.document) };
+  }
+
+  if (name === "electroia_compile_diagram") {
+    const compiled = compileDiagramSpec(args.spec, {
+      registry: diagramCore.getRegistry(),
+      rankSymbol: symbolSearchRank,
+      render: diagramCore.render,
+    });
+    return { ok: true, tool: name, ...compiled };
   }
 
   if (name === "electroia_analyze_request") {

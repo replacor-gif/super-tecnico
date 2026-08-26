@@ -60,6 +60,58 @@ const platformRecommendation = await callElectroIATool("supertecnico_recommend_e
 assert.equal(platformRecommendation.decision_status, "preselection_only");
 assert.ok(platformRecommendation.items.every((item) => ["single_board_computer", "system_on_module", "edge_ai_computer", "soc_fpga_board"].includes(item.platform.platform_class)));
 assert.ok(platformRecommendation.items.every((item) => !item.matched_terms.includes("con")));
+
+const compiledPowerDiagram = await callElectroIATool("electroia_compile_diagram", {spec: {
+  title: "Fuente y carga compiladas desde nombres técnicos",
+  components: [
+    {id: "source", symbol_query: "fuente continua", value: "24 V DC"},
+    {id: "load", symbol_id: "ST-GENERIC-2P", value: "Carga"},
+  ],
+  nets: [
+    {id: "24V", role: "power", connections: [{component: "source", port: "positivo"}, {component: "load", port: "1"}]},
+    {id: "0V", role: "ground", connections: ["source.negativo", "load.2"]},
+  ],
+}});
+assert.equal(compiledPowerDiagram.ok, true);
+assert.equal(compiledPowerDiagram.resolution.summary.requested_components, 2);
+assert.equal(compiledPowerDiagram.resolution.summary.automatic_symbol_matches, 1);
+assert.equal(compiledPowerDiagram.resolution.components[0].symbol_id, "SYM-0018");
+assert.deepEqual(compiledPowerDiagram.document.nets[0].connections, ["V1.+", "X1.1"]);
+assert.ok(compiledPowerDiagram.diagram.document.components.every((component) => component.position));
+assert.equal(compiledPowerDiagram.diagram.diagnostics.metrics.component_overlaps, 0);
+assert.equal(compiledPowerDiagram.diagram.diagnostics.metrics.wire_component_conflicts, 0);
+
+const compiledAutomationDiagram = await callElectroIATool("electroia_compile_diagram", {spec: {
+  title: "PLC, variador y motor compilados por intención",
+  document_kind: "multi_line_diagram",
+  components: [
+    {id: "plc", symbol_query: "PLC CPU", model: "Siemens S7-1200 CPU 1212C"},
+    {id: "vfd", symbol_query: "variador frecuencia", model: "ABB ACS580"},
+    {id: "motor", symbol_query: "motor trifasico"},
+  ],
+  nets: [
+    {id: "BUS", role: "bus", connections: ["plc.FIELD_BUS", "vfd.BUS"]},
+    {id: "U", role: "power", connections: ["vfd.U", "motor.U"]},
+    {id: "V", role: "power", connections: ["vfd.V", "motor.V"]},
+    {id: "W", role: "power", connections: ["vfd.W", "motor.W"]},
+    {id: "PE", role: "protective_earth", connections: ["vfd.PE", "motor.PE"]},
+  ],
+}});
+assert.deepEqual(
+  compiledAutomationDiagram.resolution.components.map((item) => item.symbol_id),
+  ["SYM-0461", "SYM-0481", "SYM-0151"]
+);
+assert.equal(compiledAutomationDiagram.diagram.diagnostics.metrics.component_overlaps, 0);
+assert.equal(compiledAutomationDiagram.diagram.diagnostics.metrics.wire_component_conflicts, 0);
+assert.ok(!compiledAutomationDiagram.diagram.diagnostics.warnings.some((item) => item.code === "EXACT_MODEL_REQUIRED"));
+await assert.rejects(
+  callElectroIATool("electroia_compile_diagram", {spec: {
+    title: "Terminal inexistente",
+    components: [{id: "source", symbol_query: "fuente continua"}, {id: "load", symbol_id: "ST-GENERIC-2P"}],
+    nets: [{id: "N1", connections: ["source.TERMINAL_INVENTADO", "load.1"]}],
+  }}),
+  /terminal .* no resuelto/i
+);
 const roundTwoDiagram = await callElectroIATool("electroia_render_diagram", {document: {
   schema_version: "1.0", document_kind: "circuit_diagram", standard_profile: "IEC_EXPERIMENTAL", title: "Tanda 2",
   components: [

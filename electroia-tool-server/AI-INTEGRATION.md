@@ -5,10 +5,11 @@ ElectroIA separa dos responsabilidades: la IA decide qué circuito necesita y el
 ## Flujo recomendado
 
 1. Llama a `electroia_get_capabilities` para conocer la versión y los límites.
-2. Llama a `electroia_search_symbols` con palabras normales, una categoría o un estado de revisión.
-3. Llama a `electroia_get_symbol` para obtener los nombres y tipos exactos de los terminales.
-4. Construye un documento conforme a `diagram-document.schema.json`.
-5. Llama a `electroia_render_diagram` y revisa los errores y advertencias antes de mostrar el SVG.
+2. Llama a `electroia_prepare_design_brief` y completa los requisitos técnicos que falten.
+3. Construye una especificación conforme a `diagram-spec.schema.json`: puede usar `symbol_query` y conexiones por identificador local y nombre de terminal.
+4. Llama a `electroia_compile_diagram`; revisa la resolución, los errores y las advertencias antes de mostrar el SVG.
+5. Si una coincidencia necesita confirmación, usa `electroia_search_symbols` y `electroia_get_symbol` y repite con `symbol_id`.
+6. Usa `electroia_render_diagram` con `diagram-document.schema.json` cuando necesites posiciones y terminales exactos de bajo nivel.
 
 Los 501 símbolos públicos son `engine_reviewed`. Un bloque con `requires_exact_model=true` representa funciones, no un bornero físico: la IA debe aportar fabricante, modelo, variante y manual antes de expandir sus terminales reales.
 

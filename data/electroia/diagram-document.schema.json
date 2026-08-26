@@ -54,6 +54,10 @@
           "mirror": { "type": "boolean" },
           "label_position": { "enum": ["below", "above", "left", "right", "inside"] },
           "role": { "type": "string", "maxLength": 60 },
+          "manufacturer": { "type": "string", "maxLength": 80 },
+          "model": { "type": "string", "maxLength": 120 },
+          "part_number": { "type": "string", "maxLength": 120 },
+          "exact_model": { "type": "string", "maxLength": 120 },
           "connector": {
             "type": "object",
             "additionalProperties": false,

@@ -10,6 +10,15 @@
   },
   "entries": [
     {
+      "id": "UPD-20260826-ELECTROIA-UNIVERSAL-COMPILER",
+      "date": "2026-08-26",
+      "title": "ElectroIA incorpora un compilador universal para IAs",
+      "summary": "La versión 0.17 permite describir un plano mediante nombres técnicos y conexiones legibles. El motor resuelve los 501 símbolos revisados y sus bornes, asigna referencias, distribuye los elementos, valida las redes, enruta en un solo lienzo y devuelve el documento neutral y el SVG con trazabilidad de cada decisión.",
+      "areas": ["ElectroIA", "IA", "Diagramas", "Simbología", "Automatización"],
+      "kind": "platform_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
       "id": "UPD-20260826-ELECTROIA-PUBLIC-SHOWCASE",
       "date": "2026-08-26",
       "title": "ElectroIA enseña públicamente su base revisada",

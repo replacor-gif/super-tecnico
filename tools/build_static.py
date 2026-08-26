@@ -627,6 +627,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "electroia-tool-server/pnpm-lock.yaml",
         "electroia-tool-server/server.json",
         "electroia-tool-server/src/cli.mjs",
+        "electroia-tool-server/src/compiler.mjs",
         "electroia-tool-server/src/index.mjs",
         "electroia-tool-server/src/toolkit.mjs",
         "simbolos.html",
@@ -959,6 +960,10 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
     write_json(
         output / "data" / "electroia" / "diagram-document.schema.json",
         read_json(source_root / "data" / "electroia" / "diagram-document.schema.json"),
+    )
+    write_json(
+        output / "data" / "electroia" / "diagram-spec.schema.json",
+        read_json(source_root / "data" / "electroia" / "diagram-spec.schema.json"),
     )
     write_json(
         output / "data" / "electroia" / "discovery.json",

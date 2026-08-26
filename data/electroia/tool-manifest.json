@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.3",
+  "schema_version": "1.4",
   "name": "electroia-tools",
   "title": "ElectroIA — motor gráfico electrotécnico neutral",
   "description": "Herramientas deterministas para validar y dibujar documentos electrotécnicos definidos por una IA o aplicación externa.",
@@ -8,11 +8,12 @@
   "billing_required_by_electroia": false,
   "diagram_engine_version": "1.15.0-alpha.1",
   "diagram_contract_version": "1.0",
-  "design_model_version": "0.9",
+  "design_model_version": "1.0",
   "core_policy": {
     "calculates_values": false,
     "selects_components": false,
-    "renders_only": true
+    "renders_only": true,
+    "compiles_ai_friendly_specifications": true
   },
   "shared_catalogs": {
     "connectors": "../connectors/tool-manifest.json",
@@ -41,6 +42,7 @@
     "standard_profiles": ["IEC_EXPERIMENTAL"],
     "document_profile_registry": "document-profiles.json",
     "ai_design_bridge": "ai-bridge.json",
+    "diagram_spec_schema": "diagram-spec.schema.json",
     "execution_policy": "public-execution-policy.json",
     "document_kinds": ["circuit_diagram", "single_line_diagram", "multi_line_diagram"],
     "grid_pitch_mil": 50,
@@ -151,6 +153,18 @@
         "required": ["symbol_id"],
         "properties": {
           "symbol_id": { "type": "string", "minLength": 3, "maxLength": 64 }
+        }
+      }
+    },
+    {
+      "name": "electroia_compile_diagram",
+      "description": "Compila una especificación amigable para IAs: resuelve consultas de símbolos y terminales, asigna referencias, coloca, valida, enruta y devuelve documento neutral y SVG.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["spec"],
+        "properties": {
+          "spec": { "$ref": "diagram-spec.schema.json" }
         }
       }
     },

@@ -5,7 +5,7 @@
   "status": "public_discovery_private_execution",
   "provider_neutral": true,
   "embedded_ai_model": false,
-  "purpose": "Validar símbolos, terminales y redes decididos por una IA y generar un SVG determinista sobre una rejilla común.",
+  "purpose": "Compilar especificaciones electrotécnicas de cualquier IA, resolver símbolos y terminales revisados, validar redes y generar un SVG determinista sobre una rejilla común.",
   "public_showcase": "../../electroia.html",
   "parent_discovery": "../ai/discovery.json",
   "responsibility_boundary": {
@@ -19,6 +19,8 @@
     ],
     "electroia": [
       "search_normalized_symbols",
+      "compile_symbol_queries_and_terminal_aliases",
+      "assign_references_and_automatic_layout",
       "validate_document",
       "route_orthogonal_connections",
       "render_single_canvas_svg",
@@ -51,6 +53,7 @@
   "contracts": {
     "tool_manifest": "tool-manifest.json",
     "diagram_schema": "diagram-document.schema.json",
+    "diagram_spec_schema": "diagram-spec.schema.json",
     "symbol_library": "symbol-library.json",
     "normalization_report": "symbol-normalization-report.json",
     "engine_audit_report": "engine-audit-report.json",
@@ -77,9 +80,9 @@
   "recommended_ai_workflow": [
     "electroia_get_capabilities",
     "electroia_prepare_design_brief",
-    "electroia_search_symbols",
-    "electroia_get_symbol",
-    "electroia_render_diagram"
+    "electroia_compile_diagram",
+    "inspect_resolution_and_diagnostics",
+    "use_electroia_search_symbols_and_electroia_get_symbol_only_when_resolution_needs_confirmation"
   ],
   "security": {
     "preview_access": "private",

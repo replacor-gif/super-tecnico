@@ -18,7 +18,7 @@ function toolError(error) {
 }
 
 function createServer() {
-  const server = new McpServer({ name: "electroia-tools", version: "0.16.0" });
+  const server = new McpServer({ name: "electroia-tools", version: "0.17.0" });
 
   server.registerTool(
     "electroia_get_capabilities",
@@ -209,6 +209,10 @@ function createServer() {
       mirror: z.boolean().optional(),
       label_position: z.enum(["below", "above", "left", "right", "inside"]).optional(),
       role: z.string().max(60).optional(),
+      manufacturer: z.string().max(80).optional(),
+      model: z.string().max(120).optional(),
+      part_number: z.string().max(120).optional(),
+      exact_model: z.string().max(120).optional(),
       connector: z.object({
         connector_id: z.string().min(3).max(80),
         perspective: z.enum(["mating_face", "wiring_side", "device_front", "logical_only"]).optional(),
@@ -245,6 +249,70 @@ function createServer() {
     async (args) => {
       try {
         return toolResult(await callElectroIATool("electroia_render_diagram", args));
+      } catch (error) {
+        return toolError(error);
+      }
+    }
+  );
+
+  const compilerComponentSchema = z.object({
+    id: z.string().regex(/^[A-Za-z][A-Za-z0-9_-]{0,31}$/),
+    ref: z.string().regex(/^[A-Za-z][A-Za-z0-9_.-]{0,31}$/).optional(),
+    symbol_id: z.string().min(3).max(64).optional(),
+    symbol_query: z.string().min(2).max(120).optional(),
+    value: z.string().max(120).optional(),
+    position: positionSchema.optional(),
+    rotation: z.union([z.literal(0), z.literal(90), z.literal(180), z.literal(270)]).optional(),
+    mirror: z.boolean().optional(),
+    role: z.string().max(60).optional(),
+    manufacturer: z.string().max(80).optional(),
+    model: z.string().max(120).optional(),
+    part_number: z.string().max(120).optional(),
+    exact_model: z.string().max(120).optional(),
+  }).refine((component) => Boolean(component.symbol_id || component.symbol_query), {
+    message: "Cada componente necesita symbol_id o symbol_query",
+  });
+  const compilerEndpointSchema = z.union([
+    z.string().min(3).max(80),
+    z.object({ component: z.string().min(1).max(32), port: z.string().min(1).max(24) }),
+  ]);
+  const compilerSpecSchema = z.object({
+    title: z.string().min(1).max(160),
+    document_kind: z.enum(["circuit_diagram", "single_line_diagram", "multi_line_diagram"]).optional(),
+    document_id: z.string().max(80).optional(),
+    revision: z.string().max(20).optional(),
+    notes: z.array(z.string().max(160)).max(6).optional(),
+    strict_resolution: z.boolean().optional(),
+    components: z.array(compilerComponentSchema).min(1).max(200),
+    nets: z.array(z.object({
+      id: z.string().min(1).max(64),
+      label: z.string().max(80).optional(),
+      show_label: z.boolean().optional(),
+      role: z.enum(["signal", "power", "ground", "protective_earth", "bus"]).optional(),
+      conductors: z.number().int().min(1).max(99).optional(),
+      connections: z.array(compilerEndpointSchema).min(1).max(100),
+    })).min(1).max(400),
+    relationships: z.array(z.object({
+      from: z.string().min(1).max(32),
+      to: z.string().min(1).max(32),
+      kind: z.enum(["mechanical", "functional"]),
+      via: z.array(positionSchema).optional(),
+    })).max(400).optional(),
+    layout: z.object({
+      direction: z.enum(["left_to_right", "top_to_bottom"]).optional(),
+      single_canvas: z.literal(true).optional(),
+    }).optional(),
+  });
+
+  server.registerTool(
+    "electroia_compile_diagram",
+    {
+      description: "Compila una especificación amigable para IAs: resuelve consultas de símbolos y bornes, asigna referencias, coloca, valida, enruta y devuelve el SVG.",
+      inputSchema: z.object({ spec: compilerSpecSchema }),
+    },
+    async (args) => {
+      try {
+        return toolResult(await callElectroIATool("electroia_compile_diagram", args));
       } catch (error) {
         return toolError(error);
       }

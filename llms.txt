@@ -55,7 +55,7 @@ Do not call planned endpoints until discovery.json reports remote execution as e
 - MCP Registry metadata draft: /electroia-tool-server/server.json
 - Source repository: https://github.com/replacor-gif/super-tecnico
 
-For diagrams, start with electroia_prepare_design_brief, then search reviewed symbols, build the neutral document and call electroia_render_diagram. The calling AI interprets the request or image, chooses the topology, calculates values, and selects components. ElectroIA validates symbols, terminals, and nets and renders a deterministic single-canvas SVG. Documents over 256 KiB, 200 symbols, 400 nets, 100 connections per net, or 2,000 total connections are rejected. HTTP rendering remains disabled.
+For diagrams, start with electroia_prepare_design_brief and call electroia_compile_diagram with an AI-friendly specification. Components may use reviewed symbol queries and connections may use terminal names or safe aliases; ElectroIA resolves identifiers and references, places the symbols, validates the networks and renders a deterministic single-canvas SVG. Use electroia_search_symbols, electroia_get_symbol and electroia_render_diagram when exact low-level control is needed. The calling AI still chooses the topology, calculates values and selects components. Documents over 256 KiB, 200 symbols, 400 nets, 100 connections per net, or 2,000 total connections are rejected. HTTP rendering remains disabled.
 When an AI calls the public status or symbol-search API, send `X-ST-Client-Type: ai`. Unidentified software is counted separately and static JSON reads cannot be attributed reliably.
 
 ## Connector and pinout entry points
