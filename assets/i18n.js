@@ -840,18 +840,18 @@
   };
 
   const defaultSpanishMessages = Object.freeze({ ...messages.es });
-  const contentReady = fetch(new URL('api/index.php?action=content-overrides', document.baseURI), {
+  const contentOverridesRequest = window.ST_CONTENT_OVERRIDES_REQUEST || fetch(new URL('api/index.php?action=content-overrides', document.baseURI), {
     cache: 'no-store',
     credentials: 'same-origin',
-  }).then(response => response.ok ? response.json() : null).then(data => {
+  }).then(response => response.ok ? response.json() : null).catch(() => null);
+  window.ST_CONTENT_OVERRIDES_REQUEST = contentOverridesRequest;
+  const contentReady = contentOverridesRequest.then(data => {
     if (!data?.ok || !data.items || typeof data.items !== 'object') return;
     Object.entries(data.items).forEach(([key, value]) => {
       if (Object.prototype.hasOwnProperty.call(defaultSpanishMessages, key) && typeof value === 'string') {
         messages.es[key] = value;
       }
     });
-  }).catch(() => {
-    // La aplicación conserva siempre los textos originales si la API no responde.
   });
 
   const requested = new URLSearchParams(window.location.search).get('lang');

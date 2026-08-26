@@ -12,6 +12,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+try:
+    from build_editable_content_catalog import build as build_editable_content_catalog
+except ModuleNotFoundError:  # Importación como paquete desde la raíz del proyecto.
+    from tools.build_editable_content_catalog import build as build_editable_content_catalog
+
 
 SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,63}$")
 AD_PUBLISHER_RE = re.compile(r"^ca-pub-\d+$")
@@ -575,6 +580,9 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
     output = output.resolve()
     if output == Path(output.anchor) or output == source_root:
         raise BuildError("Directorio de salida inseguro")
+    editable_catalog_path = source_root / "data" / "content" / "editable-catalog.json"
+    if read_json(editable_catalog_path) != build_editable_content_catalog(source_root):
+        raise BuildError("El catálogo del editor está desactualizado; ejecuta tools/build_editable_content_catalog.py")
     if output.exists():
         shutil.rmtree(output)
     output.mkdir(parents=True)
@@ -656,6 +664,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "assets/backlog.css",
         "assets/backlog.js",
         "assets/content-editor.css",
+        "assets/content-editor-v2.css",
         "assets/content-editor.js",
         "assets/common.css",
         "assets/components.css",
@@ -719,6 +728,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "data/core/motor-registry.json",
         "data/core/project-roadmap.json",
         "data/core/app-quality-audit.json",
+        "data/content/editable-catalog.json",
         "data/electrical-panels/examples/motor-pump-dol-auto-manual.json",
         "data/electrical-panels/panel-project.schema.json",
         "data/electrical-panels/standards-registry.json",

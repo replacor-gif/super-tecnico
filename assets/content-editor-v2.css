@@ -1,0 +1,17 @@
+.editor-page-preview {
+  display: inline-flex;
+  margin: 0 12px 12px;
+  padding: 8px 11px;
+  border: 1px solid rgba(39, 232, 255, .3);
+  border-radius: 9px;
+  color: var(--ed-cyan);
+  background: rgba(39, 232, 255, .05);
+  font-size: .66rem;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.editor-page-preview:hover {
+  border-color: var(--ed-cyan);
+  background: rgba(39, 232, 255, .1);
+}

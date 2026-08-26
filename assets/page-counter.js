@@ -59,6 +59,84 @@
     }
   }
 
+  function editableText(value) {
+    const normalized = String(value || '').replace(/\s+/g, ' ').trim();
+    return normalized.length >= 3 && /[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/.test(normalized) ? normalized : '';
+  }
+
+  function contentHash(value) {
+    let current = 2166136261;
+    for (let index = 0; index < value.length; index += 1) {
+      current ^= value.charCodeAt(index);
+      current = Math.imul(current, 16777619) >>> 0;
+    }
+    return current.toString(16).padStart(8, '0');
+  }
+
+  function hardcodedContentKey(kind, value, occurrences) {
+    const digest = contentHash(`${kind}|${value}`);
+    const occurrenceKey = `${kind}.${digest}`;
+    occurrences[occurrenceKey] = (occurrences[occurrenceKey] || 0) + 1;
+    return `page.${pageKey()}.${kind}.${digest}.${occurrences[occurrenceKey]}`;
+  }
+
+  function blockedContentNode(element) {
+    return !element || Boolean(element.closest('script,style,template,svg,noscript,[aria-hidden="true"],[data-i18n]'));
+  }
+
+  function replaceTextNode(node, value) {
+    const original = node.nodeValue || '';
+    const leading = original.match(/^\s*/)?.[0] || '';
+    const trailing = original.match(/\s*$/)?.[0] || '';
+    node.nodeValue = `${leading}${value}${trailing}`;
+  }
+
+  async function applyHardcodedContentOverrides() {
+    const url = new URL(API_ENDPOINT, window.location.href);
+    url.searchParams.set('action', 'content-overrides');
+    try {
+      const contentOverridesRequest = window.ST_CONTENT_OVERRIDES_REQUEST || fetch(url, {
+        cache: 'no-store',
+        credentials: 'same-origin',
+      }).then(response => response.ok ? response.json() : null).catch(() => null);
+      window.ST_CONTENT_OVERRIDES_REQUEST = contentOverridesRequest;
+      const data = await contentOverridesRequest;
+      if (!data?.ok || !data.items) return;
+      const pagePrefix = `page.${pageKey()}.`;
+      const overrides = Object.fromEntries(Object.entries(data.items).filter(([key]) => key.startsWith(pagePrefix)));
+      if (!Object.keys(overrides).length) return;
+      const occurrences = {};
+      const textTags = new Set(['A','B','BUTTON','DD','DT','EM','FIGCAPTION','H1','H2','H3','H4','H5','H6','I','LABEL','LEGEND','LI','OPTION','P','SMALL','SPAN','STRONG','SUMMARY','TD','TH']);
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      let node;
+      while ((node = walker.nextNode())) {
+        const parent = node.parentElement;
+        if (!parent || !textTags.has(parent.tagName) || blockedContentNode(parent)) continue;
+        const value = editableText(node.nodeValue);
+        if (!value) continue;
+        const key = hardcodedContentKey('text', value, occurrences);
+        if (Object.prototype.hasOwnProperty.call(overrides, key)) replaceTextNode(node, String(overrides[key]));
+      }
+      document.querySelectorAll('[placeholder]:not([data-i18n-placeholder])').forEach(element => {
+        if (blockedContentNode(element)) return;
+        const value = editableText(element.getAttribute('placeholder'));
+        if (!value) return;
+        const key = hardcodedContentKey('placeholder', value, occurrences);
+        if (Object.prototype.hasOwnProperty.call(overrides, key)) element.setAttribute('placeholder', String(overrides[key]));
+      });
+      document.querySelectorAll('[aria-label]:not([data-i18n-aria])').forEach(element => {
+        if (blockedContentNode(element)) return;
+        const value = editableText(element.getAttribute('aria-label'));
+        if (!value) return;
+        const key = hardcodedContentKey('aria', value, occurrences);
+        if (Object.prototype.hasOwnProperty.call(overrides, key)) element.setAttribute('aria-label', String(overrides[key]));
+      });
+      document.dispatchEvent(new CustomEvent('st:hardcodedcontentready'));
+    } catch {
+      // Los textos originales permanecen intactos si la API no está disponible.
+    }
+  }
+
   function footerTools() {
     const footer = document.querySelector('body > footer:last-of-type') || document.querySelector('.st-page-footer');
     if (!footer) return null;
@@ -227,6 +305,7 @@
   }
 
   function start() {
+    applyHardcodedContentOverrides();
     footerTools();
     count();
     startRating();
