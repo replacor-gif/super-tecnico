@@ -51,6 +51,7 @@ jobs:
           node --check archivo-tecnico-47097e44267b9cb111636b84823f1d47/app.js
           node tests/electroia_guardrails_smoke.mjs
           node tests/electroia_toolkit_smoke.mjs
+          node tests/electroia_professional_benchmark.mjs
           php -l api/electroia.php
           php -l api/electroia-validation.php
 

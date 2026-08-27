@@ -161,8 +161,8 @@ def build_report() -> tuple[dict, list[str]]:
 
     report = {
         "schema_version": "1.0",
-        "updated_at": "2026-08-23",
-        "engine_version_expected": "1.15.0-alpha.1",
+        "updated_at": "2026-08-27",
+        "engine_version_expected": "1.16.0-alpha.1",
         "status": "pass" if not failures else "fail",
         "release_class": "hardened_beta_engine",
         "summary": {

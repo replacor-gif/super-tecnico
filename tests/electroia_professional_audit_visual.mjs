@@ -8,7 +8,7 @@ const core = require("../archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagra
 const registryResult = core.getRegistry();
 const registry = registryResult.symbols;
 
-assert.equal(registryResult.engine_version, "1.15.0-alpha.1");
+assert.equal(registryResult.engine_version, "1.16.0-alpha.1");
 assert.equal(registry.length, 504);
 assert.equal(registry.filter((item) => item.catalog_id).length, 501);
 assert.equal(registry.filter((item) => item.review_status === "engine_reviewed").length, 501);

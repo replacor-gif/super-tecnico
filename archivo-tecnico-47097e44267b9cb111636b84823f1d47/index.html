@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" href="../assets/super-tecnico-logo.png" />
     <link rel="stylesheet" href="../assets/common.css?v=1" />
     <link rel="stylesheet" href="../assets/app-theme.css?v=1" />
-    <link rel="stylesheet" href="styles.css?v=3" />
+    <link rel="stylesheet" href="styles.css?v=4" />
   </head>
   <body class="access-checking">
     <section id="pinGate" class="pin-gate" hidden aria-labelledby="pinTitle">
@@ -39,7 +39,7 @@
       </a>
       <div class="header-actions">
         <div id="engineStatus" class="case-pill local">
-          <span></span><b id="engineStatusLabel">Motor gráfico neutral</b><em> · 1.15</em>
+          <span></span><b id="engineStatusLabel">Motor gráfico neutral</b><em> · 1.16</em>
         </div>
         <a class="header-back" href="https://www.replacor.com/">REPLACOR.COM</a>
         <a class="header-back" href="../index.html">Volver</a>
@@ -117,14 +117,26 @@
             </article>
 
             <article class="bridge-card bridge-json-card">
-              <div class="bridge-step"><b>2</b><span><strong>Pega o importa la respuesta</strong><small>Acepta JSON directo, <code>document</code> o <code>diagram_document</code>.</small></span></div>
-              <label for="aiDocumentInput">Documento estructurado</label>
-              <textarea id="aiDocumentInput" class="json-editor" rows="12" spellcheck="false" placeholder='{"schema_version":"1.0","document_kind":"circuit_diagram",…}'></textarea>
+              <div class="bridge-step"><b>2</b><span><strong>Pega o importa la respuesta</strong><small>Acepta especificaciones sencillas, JSON directo, <code>spec</code>, <code>document</code> o <code>diagram_document</code>.</small></span></div>
+              <label for="aiDocumentInput">Especificación o documento estructurado</label>
+              <textarea id="aiDocumentInput" class="json-editor" rows="12" spellcheck="false" placeholder='{"title":"Control de bomba","components":[{"id":"pump","symbol_query":"bomba"}],"nets":[…]}'></textarea>
               <div class="bridge-actions bridge-actions-wrap">
                 <button id="renderAiDocument" class="primary-button" type="button">Validar y dibujar <span>→</span></button>
                 <label class="file-button" for="aiDocumentFile">Importar JSON<input id="aiDocumentFile" type="file" accept="application/json,.json" /></label>
                 <button id="loadAiExample" class="secondary-button" type="button">Cargar ejemplo</button>
                 <button id="copyAiDiagnostics" class="secondary-button" type="button" hidden>Copiar correcciones</button>
+              </div>
+              <div class="benchmark-loader" aria-label="Banco profesional de pruebas">
+                <div><strong>Banco profesional · 20 casos</strong><small>Cuadros, automatización, HVAC y sistemas embebidos.</small></div>
+                <select id="benchmarkDomain" aria-label="Filtrar ámbito del banco profesional">
+                  <option value="all">Todos los ámbitos</option>
+                  <option value="electrical_panels">Cuadros eléctricos</option>
+                  <option value="automation">Automatización</option>
+                  <option value="hvac_electronics">Electrónica HVAC</option>
+                  <option value="embedded_systems">Sistemas embebidos</option>
+                </select>
+                <select id="benchmarkCase" aria-label="Seleccionar caso profesional"><option value="">Cargando casos…</option></select>
+                <button id="loadBenchmarkCase" class="secondary-button" type="button">Cargar caso</button>
               </div>
               <div id="aiBridgeStatus" class="bridge-status" aria-live="polite"><span>LISTO</span><p>Esperando un documento de una IA.</p></div>
             </article>
@@ -155,7 +167,7 @@
 
         <div class="input-modes" aria-label="Entradas compatibles">
           <span class="active">Texto guiado</span>
-          <span class="active">Documento de IA</span>
+          <span class="active">Especificación sencilla de IA</span>
           <span class="active">MCP local</span>
           <span>Foto o boceto mediante visión de una IA externa</span>
         </div>
@@ -217,10 +229,22 @@
             <div class="panel-title">
               <span>Plano electrotécnico</span>
               <div class="panel-title-actions">
+                <button id="toggleLayoutEditor" class="diagram-button" type="button" aria-pressed="false">Ajustar plano</button>
                 <button id="downloadSvg" class="diagram-button" type="button">Guardar SVG</button>
                 <button id="downloadJson" class="diagram-button" type="button">Guardar JSON</button>
                 <button id="expandDiagram" class="diagram-button" type="button">Ampliar</button>
               </div>
+            </div>
+            <div id="layoutEditor" class="layout-editor" hidden>
+              <span><b id="selectedComponentLabel">Toca un símbolo</b><small>Movimiento sobre la rejilla normalizada</small></span>
+              <div class="layout-pad" aria-label="Mover símbolo seleccionado">
+                <button type="button" data-move-x="0" data-move-y="-1" aria-label="Mover arriba">↑</button>
+                <button type="button" data-move-x="-1" data-move-y="0" aria-label="Mover a la izquierda">←</button>
+                <button type="button" data-move-x="1" data-move-y="0" aria-label="Mover a la derecha">→</button>
+                <button type="button" data-move-x="0" data-move-y="1" aria-label="Mover abajo">↓</button>
+              </div>
+              <button id="autoArrangeDiagram" class="diagram-button" type="button">Reordenar por zonas</button>
+              <span id="layoutEditorMetrics" class="layout-editor-metrics"></span>
             </div>
             <div id="schematic" class="schematic"></div>
             <div class="schematic-legend">
@@ -303,8 +327,8 @@
 
     <script src="engine.js"></script>
     <script src="diagram-symbol-library.js"></script>
-    <script src="diagram-core.js"></script>
+    <script src="diagram-core.js?v=16"></script>
     <script src="diagram.js"></script>
-    <script src="app.js?v=3"></script>
+    <script src="app.js?v=4"></script>
   </body>
 </html>

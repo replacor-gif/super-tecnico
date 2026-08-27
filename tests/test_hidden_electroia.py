@@ -20,7 +20,7 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn("noindex,nofollow,noarchive,nosnippet,noimageindex", html)
         self.assertIn('<script src="engine.js"></script>', html)
         self.assertIn('<script src="diagram-symbol-library.js"></script>', html)
-        self.assertIn('<script src="diagram-core.js"></script>', html)
+        self.assertIn('<script src="diagram-core.js?v=16"></script>', html)
         self.assertIn('<script src="diagram.js"></script>', html)
 
     def test_omega_access_is_added_below_the_page_counter(self):
@@ -189,7 +189,7 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn('"electroia_get_symbol"', manifest)
         self.assertIn('"electroia_compile_diagram"', manifest)
         self.assertIn('"electroia_render_diagram"', manifest)
-        self.assertIn('"diagram_engine_version": "1.15.0-alpha.1"', manifest)
+        self.assertIn('"diagram_engine_version": "1.16.0-alpha.1"', manifest)
         self.assertIn('"normalized_symbol_count": 501', manifest)
         self.assertIn('"calculates_values"', manifest)
         self.assertIn('server.registerTool(', server)

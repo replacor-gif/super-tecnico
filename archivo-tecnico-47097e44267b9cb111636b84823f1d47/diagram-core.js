@@ -1,7 +1,7 @@
 "use strict";
 
 const ElectroDiagramCore = (() => {
-  const ENGINE_VERSION = "1.15.0-alpha.1";
+  const ENGINE_VERSION = "1.16.0-alpha.1";
   const CONTRACT_VERSION = "1.0";
   const GRID_PITCH_MIL = 50;
   const UNIT = 24;
@@ -492,7 +492,24 @@ const ElectroDiagramCore = (() => {
     return document;
   }
 
+  const LAYOUT_LANES = Object.freeze(["power", "safety", "control", "communications", "field", "reference"]);
+
+  function componentLayoutLane(component, document) {
+    if (LAYOUT_LANES.includes(component.layout_lane)) return component.layout_lane;
+    const definition = SYMBOLS[component.symbol_id] || {};
+    const connectedNets = (document.nets || []).filter((net) => (net.connections || []).some((connection) => splitConnection(connection)?.ref === component.ref));
+    const roles = new Set(connectedNets.map((net) => net.role || "signal"));
+    const text = `${component.role || ""} ${component.ref || ""} ${component.value || ""} ${definition.name || ""} ${definition.kind || ""} ${definition.category || ""} ${definition.subcategory || ""} ${connectedNets.map((net) => `${net.id} ${net.label || ""}`).join(" ")}`.toLowerCase();
+    if (/protective.?earth|functional.?earth|ground|tierra|masa|\bpe\b|\bgnd\b/.test(text) && !/motor|drive|variador|fuente|supply/.test(text)) return "reference";
+    if (/safety|seguridad|emergencia|emergency|sto|guard|resguardo/.test(text)) return "safety";
+    if (roles.has("bus") || /communication|comunicaci|ethernet|modbus|rs.?485|can.?bus|field.?bus|i2c|spi|uart|knx|bacnet/.test(text)) return "communications";
+    if (/motor|variador|vfd|drive|contactor|breaker|disyuntor|diferencial|transformador|transformer|source|fuente|supply|rectificador|rectifier|potencia|power/.test(text)) return "power";
+    if (/sensor|transductor|temperatura|temperature|presi.n|pressure|termostato|thermostat|actuador|actuator|fan|ventilador|pump|bomba|field/.test(text)) return "field";
+    return "control";
+  }
+
   function autoPlace(document) {
+    for (const component of document.components) component.layout_lane = componentLayoutLane(component, document);
     const unplaced = document.components.filter((item) => !item.position);
     if (!unplaced.length) return;
     const byRef = new Map(document.components.map((item) => [item.ref, item]));
@@ -547,16 +564,44 @@ const ElectroDiagramCore = (() => {
       primaryCenters.set(column, primaryCursor + span / 2);
       primaryCursor += span + 7;
     }
+    const laneSpans = new Map();
+    for (const lane of LAYOUT_LANES) {
+      let maximum = 0;
+      for (const column of orderedRanks) {
+        const laneComponents = groups.get(column).filter((component) => component.layout_lane === lane);
+        const span = laneComponents.reduce((total, component) => {
+          const definition = SYMBOLS[component.symbol_id];
+          const rotated = [90, 270].includes(component.rotation || 0);
+          return total + (horizontal
+            ? (rotated ? definition.width : definition.height)
+            : (rotated ? definition.height : definition.width));
+        }, 0) + Math.max(0, laneComponents.length - 1) * 6;
+        maximum = Math.max(maximum, span);
+      }
+      if (maximum > 0) laneSpans.set(lane, maximum);
+    }
+    const laneStarts = new Map();
+    let laneCursor = 5;
+    for (const lane of LAYOUT_LANES) {
+      if (!laneSpans.has(lane)) continue;
+      laneStarts.set(lane, laneCursor);
+      laneCursor += laneSpans.get(lane) + 9;
+    }
     for (const column of orderedRanks) {
-      let secondaryCursor = 5;
-      for (const component of groups.get(column)) {
+      const secondaryCursors = new Map([...laneStarts.entries()]);
+      const laneSorted = [...groups.get(column)].sort((left, right) => {
+        const laneDifference = LAYOUT_LANES.indexOf(left.layout_lane) - LAYOUT_LANES.indexOf(right.layout_lane);
+        return laneDifference || naturalCompare(left.ref, right.ref);
+      });
+      for (const component of laneSorted) {
         const definition = SYMBOLS[component.symbol_id];
         const rotated = [90, 270].includes(component.rotation || 0);
         const secondarySpan = horizontal
           ? (rotated ? definition.width : definition.height)
           : (rotated ? definition.height : definition.width);
+        const secondaryCursor = secondaryCursors.get(component.layout_lane) ?? 5;
         const secondaryCenter = secondaryCursor + secondarySpan / 2;
-        secondaryCursor += secondarySpan + 6;
+        secondaryCursors.set(component.layout_lane, secondaryCursor + secondarySpan + 6);
         if (!component.position) {
           component.position = horizontal
             ? { x: Math.round(primaryCenters.get(column)), y: Math.round(secondaryCenter) }
@@ -872,6 +917,7 @@ const ElectroDiagramCore = (() => {
           off_grid_terminals: 0,
           pages: 1,
           single_canvas: true,
+          layout_domains: [...new Set(document.components.map((component) => component.layout_lane))],
         },
       },
     };
@@ -929,7 +975,7 @@ const ElectroDiagramCore = (() => {
       data-document-kind="${escapeXml(document.document_kind)}" data-standard-profile="${escapeXml(document.standard_profile)}"
       data-grid-pitch-mil="${GRID_PITCH_MIL}" data-pages="1" aria-label="${escapeXml(document.title)}">
       <style>
-        .sheet{fill:#fff;stroke:#222a27;stroke-width:2}.wire{fill:none;stroke:#26302c;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.electroia-core-diagram[data-document-kind="single_line_diagram"] .wire{stroke-width:3.2}.net-protective_earth{stroke-width:3}.junction{fill:#26302c}.bridge-gap{fill:none;stroke:#fff;stroke-width:8}.relationship{fill:none;stroke:#7d8782;stroke-width:2;stroke-dasharray:8 6}.symbol-line{fill:none;stroke:#202824;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.symbol-bus{fill:none;stroke:#202824;stroke-width:6;stroke-linecap:round}.symbol-fill{fill:#fff;stroke:#202824;stroke-width:2.6}.symbol-accent{fill:none;stroke:#202824;stroke-width:2}.symbol-linkage{fill:none;stroke:#68736d;stroke-width:1.8;stroke-dasharray:5 4}.component-ref{font:700 15px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.component-value{font:500 12px Inter,Arial,sans-serif;fill:#58625d;text-anchor:middle}.net-label{font:700 11px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#47504c;paint-order:stroke;stroke:#fff;stroke-width:5;stroke-linejoin:round}.polarity{font:800 14px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.title-main{font:800 13px Inter,Arial,sans-serif;fill:#202824}.title-small{font:600 10px Inter,Arial,sans-serif;fill:#59635e}.title-rule{stroke:#202824;stroke-width:1.4}.standard-note{font:700 10px Inter,Arial,sans-serif;fill:#606a65;letter-spacing:.8px}.document-note{font:800 10px Inter,Arial,sans-serif;fill:#8a3d25}.family-code{font:800 15px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.draft-badge{display:none;font:800 9px Inter,Arial,sans-serif;fill:#a64b2a;text-anchor:end}.review-auto_draft .symbol-fill{stroke:#a64b2a;stroke-dasharray:6 4}.review-auto_draft .draft-badge{display:block}
+        .sheet{fill:#fff;stroke:#222a27;stroke-width:2}.wire{fill:none;stroke:#26302c;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.electroia-core-diagram[data-document-kind="single_line_diagram"] .wire{stroke-width:3.2}.net-protective_earth{stroke-width:3}.junction{fill:#26302c}.bridge-gap{fill:none;stroke:#fff;stroke-width:8}.relationship{fill:none;stroke:#7d8782;stroke-width:2;stroke-dasharray:8 6}.symbol-line{fill:none;stroke:#202824;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.symbol-bus{fill:none;stroke:#202824;stroke-width:6;stroke-linecap:round}.symbol-fill{fill:#fff;stroke:#202824;stroke-width:2.6}.symbol-accent{fill:none;stroke:#202824;stroke-width:2}.symbol-linkage{fill:none;stroke:#68736d;stroke-width:1.8;stroke-dasharray:5 4}.component-ref{font:700 15px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.component-value{font:500 12px Inter,Arial,sans-serif;fill:#58625d;text-anchor:middle}.component{cursor:default}.component.editable{cursor:pointer}.component.is-edit-selected .symbol-line,.component.is-edit-selected .symbol-fill,.component.is-edit-selected .symbol-bus{stroke:#008bff;stroke-width:4}.net-label{font:700 11px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#47504c;paint-order:stroke;stroke:#fff;stroke-width:5;stroke-linejoin:round}.polarity{font:800 14px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.title-main{font:800 13px Inter,Arial,sans-serif;fill:#202824}.title-small{font:600 10px Inter,Arial,sans-serif;fill:#59635e}.title-rule{stroke:#202824;stroke-width:1.4}.standard-note{font:700 10px Inter,Arial,sans-serif;fill:#606a65;letter-spacing:.8px}.document-note{font:800 10px Inter,Arial,sans-serif;fill:#8a3d25}.family-code{font:800 15px Inter,Arial,sans-serif;fill:#202824;text-anchor:middle}.draft-badge{display:none;font:800 9px Inter,Arial,sans-serif;fill:#a64b2a;text-anchor:end}.review-auto_draft .symbol-fill{stroke:#a64b2a;stroke-dasharray:6 4}.review-auto_draft .draft-badge{display:block}
       </style>
       <rect class="sheet" x="8" y="8" width="${width - 16}" height="${height - 16}"/>
       ${gridPattern}

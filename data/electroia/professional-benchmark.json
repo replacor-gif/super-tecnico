@@ -1,0 +1,171 @@
+{
+  "version": "1.0.0",
+  "engine_target": "1.16.0-alpha.1",
+  "description": "Banco profesional para validar compilación, resolución, maquetación y trazado desde especificaciones de alto nivel.",
+  "domains": ["electrical_panels", "automation", "hvac_electronics", "embedded_systems"],
+  "cases": [
+    {
+      "id": "PAN-001", "domain": "electrical_panels", "title": "Cuadro monofásico con medida y diferencial",
+      "spec": { "title": "Cuadro monofásico con medida y diferencial", "document_id": "ELECTROIA-PAN-001", "document_kind": "single_line_diagram", "components": [
+        {"id":"supply","symbol_id":"SYM-0019","ref":"V1","value":"230 VAC","role":"power"}, {"id":"meter","symbol_query":"Contador de energía","ref":"EM1"}, {"id":"main_breaker","symbol_id":"SYM-0128","ref":"QF1"}, {"id":"rcd","symbol_id":"SYM-0129","ref":"FI1"}, {"id":"outgoing","symbol_id":"SYM-0258","ref":"X1"}
+      ], "nets": [
+        {"id":"L_IN","role":"power","connections":["supply.L","meter.IN"]}, {"id":"L_METERED","role":"power","connections":["meter.OUT","main_breaker.IN"]}, {"id":"L_PROTECTED","role":"power","connections":["main_breaker.OUT","rcd.IN"]}, {"id":"L_OUT","role":"power","connections":["rcd.OUT","outgoing.1"]}, {"id":"N_OUT","role":"power","connections":["supply.N","outgoing.2"]}
+      ] }
+    },
+    {
+      "id": "PAN-002", "domain": "electrical_panels", "title": "Salida trifásica protegida para motor",
+      "spec": { "title": "Salida trifásica protegida para motor", "document_id": "ELECTROIA-PAN-002", "document_kind": "multi_line_diagram", "components": [
+        {"id":"l1","symbol_id":"SYM-0019","ref":"L1","value":"400 VAC"}, {"id":"l2","symbol_id":"SYM-0019","ref":"L2","value":"400 VAC"}, {"id":"l3","symbol_id":"SYM-0019","ref":"L3","value":"400 VAC"}, {"id":"protector","symbol_id":"SYM-0488","ref":"QF1","value":"Guardamotor","role":"power"}, {"id":"motor","symbol_id":"SYM-0151","ref":"M1","value":"Motor trifásico","role":"power"}
+      ], "nets": [
+        {"id":"PH_L1","role":"power","connections":["l1.L","protector.1L1"]}, {"id":"PH_L2","role":"power","connections":["l2.L","protector.3L2"]}, {"id":"PH_L3","role":"power","connections":["l3.L","protector.5L3"]}, {"id":"M_U","role":"power","connections":["protector.2T1","motor.U"]}, {"id":"M_V","role":"power","connections":["protector.4T2","motor.V"]}, {"id":"M_W","role":"power","connections":["protector.6T3","motor.W"]}
+      ] }
+    },
+    {
+      "id": "PAN-003", "domain": "electrical_panels", "title": "Conmutación automática red-reserva",
+      "spec": { "title": "Conmutación automática red-reserva", "document_id": "ELECTROIA-PAN-003", "document_kind": "single_line_diagram", "components": [
+        {"id":"normal","symbol_id":"SYM-0019","ref":"V1","value":"Red"}, {"id":"reserve","symbol_id":"SYM-0019","ref":"V2","value":"Grupo"}, {"id":"ats","symbol_id":"SYM-0491","ref":"ATS1","exact_model":"ATS de prueba documentado","role":"power"}, {"id":"load","symbol_id":"SYM-0258","ref":"X1","value":"Carga"}, {"id":"control","symbol_id":"SYM-0464","ref":"DO1","exact_model":"Módulo DO documentado","role":"control"}, {"id":"status","symbol_id":"SYM-0463","ref":"DI1","exact_model":"Módulo DI documentado","role":"control"}
+      ], "nets": [
+        {"id":"NORMAL","role":"power","connections":["normal.L","ats.NORMAL"]}, {"id":"RESERVE","role":"power","connections":["reserve.L","ats.RESERVE"]}, {"id":"LOAD","role":"power","connections":["ats.LOAD","load.1"]}, {"id":"ATS_CMD","role":"signal","connections":["control.Q0","ats.CONTROL"]}, {"id":"ATS_STATUS","role":"signal","connections":["ats.STATUS","status.I0"]}
+      ] }
+    },
+    {
+      "id": "PAN-004", "domain": "electrical_panels", "title": "Alimentación ininterrumpida de control",
+      "spec": { "title": "Alimentación ininterrumpida de control", "document_id": "ELECTROIA-PAN-004", "document_kind": "single_line_diagram", "components": [
+        {"id":"mains","symbol_id":"SYM-0019","ref":"V1","value":"230 VAC"}, {"id":"ups","symbol_id":"SYM-0492","ref":"UPS1","exact_model":"UPS industrial documentado","role":"power"}, {"id":"load","symbol_id":"SYM-0258","ref":"X1","value":"Control crítico"}, {"id":"pe","symbol_id":"SYM-0011","ref":"PE1","role":"reference"}
+      ], "nets": [
+        {"id":"UPS_INPUT","role":"power","connections":["mains.L","ups.INPUT"]}, {"id":"UPS_OUTPUT","role":"power","connections":["ups.OUTPUT","load.1"]}, {"id":"PE","role":"protective_earth","connections":["ups.PE","pe.1"]}
+      ] }
+    },
+    {
+      "id": "PAN-005", "domain": "electrical_panels", "title": "Fuente auxiliar 24 VDC de cuadro",
+      "spec": { "title": "Fuente auxiliar 24 VDC de cuadro", "document_id": "ELECTROIA-PAN-005", "document_kind": "multi_line_diagram", "components": [
+        {"id":"mains","symbol_id":"SYM-0019","ref":"V1","value":"230 VAC"}, {"id":"breaker","symbol_id":"SYM-0128","ref":"QF1"}, {"id":"psu","symbol_id":"SYM-0469","ref":"PS1","exact_model":"Fuente 24 VDC documentada","role":"power"}, {"id":"dc_out","symbol_id":"SYM-0258","ref":"X1","value":"24 VDC"}
+      ], "nets": [
+        {"id":"L","role":"power","connections":["mains.L","breaker.IN"]}, {"id":"L_PROT","role":"power","connections":["breaker.OUT","psu.L"]}, {"id":"N","role":"power","connections":["mains.N","psu.N"]}, {"id":"P24","role":"power","connections":["psu.L+","dc_out.1"]}, {"id":"M24","role":"ground","connections":["psu.M","dc_out.2"]}
+      ] }
+    },
+
+    {
+      "id": "AUT-001", "domain": "automation", "title": "PLC, variador y motor con bus industrial",
+      "spec": { "title": "PLC, variador y motor con bus industrial", "document_id": "ELECTROIA-AUT-001", "components": [
+        {"id":"psu","symbol_id":"SYM-0469","ref":"PS1","exact_model":"Fuente 24 VDC documentada"}, {"id":"plc","symbol_query":"CPU de PLC industrial","ref":"PLC1","exact_model":"PLC documentado","role":"control"}, {"id":"drive","symbol_id":"SYM-0481","ref":"VFD1","exact_model":"Variador documentado","role":"power"}, {"id":"motor","symbol_id":"SYM-0151","ref":"M1","role":"power"}
+      ], "nets": [
+        {"id":"P24","role":"power","connections":["psu.L+","plc.L+"]}, {"id":"M24","role":"ground","connections":["psu.M","plc.M"]}, {"id":"FIELDBUS","role":"bus","connections":["plc.FIELD_BUS","drive.BUS"]}, {"id":"U","role":"power","connections":["drive.U","motor.U"]}, {"id":"V","role":"power","connections":["drive.V","motor.V"]}, {"id":"W","role":"power","connections":["drive.W","motor.W"]}, {"id":"PE","role":"protective_earth","connections":["drive.PE","motor.PE"]}
+      ] }
+    },
+    {
+      "id": "AUT-002", "domain": "automation", "title": "Parada de emergencia con relé de seguridad",
+      "spec": { "title": "Parada de emergencia con relé de seguridad", "document_id": "ELECTROIA-AUT-002", "components": [
+        {"id":"psu","symbol_id":"SYM-0018","ref":"PS1","value":"24 VDC"}, {"id":"emergency1","symbol_id":"SYM-0111","ref":"S0.1","value":"Canal 1","role":"safety"}, {"id":"emergency2","symbol_id":"SYM-0111","ref":"S0.2","value":"Canal 2","role":"safety"}, {"id":"safety","symbol_id":"SYM-0489","ref":"SR1","exact_model":"Relé de seguridad documentado","role":"safety"}, {"id":"coil","symbol_id":"SYM-0119","ref":"K1","value":"Contactor"}
+      ], "nets": [
+        {"id":"P24","role":"power","connections":["psu.+","safety.A1","emergency1.1","emergency2.1"]}, {"id":"M24","role":"ground","connections":["psu.-","safety.A2","coil.A2"]}, {"id":"CH1","role":"signal","connections":["emergency1.2","safety.CH1"]}, {"id":"CH2","role":"signal","connections":["emergency2.2","safety.CH2"]}, {"id":"SAFE_OUT","role":"signal","connections":["safety.13_14","coil.A1"]}
+      ] }
+    },
+    {
+      "id": "AUT-003", "domain": "automation", "title": "PLC con entradas digitales de campo",
+      "spec": { "title": "PLC con entradas digitales de campo", "document_id": "ELECTROIA-AUT-003", "components": [
+        {"id":"psu","symbol_id":"SYM-0018","ref":"PS1","value":"24 VDC"}, {"id":"cpu","symbol_id":"SYM-0461","ref":"PLC1","exact_model":"PLC documentado"}, {"id":"di","symbol_id":"SYM-0463","ref":"DI1","exact_model":"Módulo DI documentado"}, {"id":"start","symbol_id":"SYM-0110","ref":"S1"}, {"id":"stop","symbol_id":"SYM-0111","ref":"S2"}
+      ], "nets": [
+        {"id":"P24","role":"power","connections":["psu.+","cpu.L+","di.L+","start.1","stop.1"]}, {"id":"M24","role":"ground","connections":["psu.-","cpu.M","di.M"]}, {"id":"BACKPLANE","role":"bus","connections":["cpu.IO_BUS","di.BACKPLANE"]}, {"id":"START","role":"signal","connections":["start.2","di.I0"]}, {"id":"STOP","role":"signal","connections":["stop.2","di.I1"]}
+      ] }
+    },
+    {
+      "id": "AUT-004", "domain": "automation", "title": "PLC y HMI sobre Ethernet industrial",
+      "spec": { "title": "PLC y HMI sobre Ethernet industrial", "document_id": "ELECTROIA-AUT-004", "components": [
+        {"id":"psu","symbol_id":"SYM-0018","ref":"PS1","value":"24 VDC"}, {"id":"plc","symbol_id":"SYM-0461","ref":"PLC1","exact_model":"PLC documentado"}, {"id":"hmi","symbol_id":"SYM-0468","ref":"HMI1","exact_model":"HMI documentada"}, {"id":"switch","symbol_id":"SYM-0470","ref":"SW1","exact_model":"Switch industrial documentado","role":"communications"}
+      ], "nets": [
+        {"id":"P24","role":"power","connections":["psu.+","plc.L+","hmi.L+","switch.L+"]}, {"id":"M24","role":"ground","connections":["psu.-","plc.M","hmi.M","switch.M"]}, {"id":"ETH_PLC","role":"bus","connections":["plc.ETH","switch.ETH1"]}, {"id":"ETH_HMI","role":"bus","connections":["hmi.ETH","switch.ETH2"]}
+      ] }
+    },
+    {
+      "id": "AUT-005", "domain": "automation", "title": "Medida analógica de presión en PLC",
+      "spec": { "title": "Medida analógica de presión en PLC", "document_id": "ELECTROIA-AUT-005", "components": [
+        {"id":"psu","symbol_id":"SYM-0018","ref":"PS1","value":"24 VDC"}, {"id":"sensor","symbol_id":"SYM-0166","ref":"PT1","value":"4–20 mA","role":"field"}, {"id":"ai","symbol_id":"SYM-0465","ref":"AI1","exact_model":"Módulo AI documentado","role":"control"}
+      ], "nets": [
+        {"id":"P24","role":"power","connections":["psu.+","sensor.V+","ai.L+"]}, {"id":"M24","role":"ground","connections":["psu.-","sensor.GND","ai.MANA","ai.AI0-"]}, {"id":"PRESSURE","role":"signal","connections":["sensor.OUT","ai.AI0+"]}
+      ] }
+    },
+
+    {
+      "id": "HVA-001", "domain": "hvac_electronics", "title": "Control de climatizador con BMS y variador",
+      "spec": { "title": "Control de climatizador con BMS y variador", "document_id": "ELECTROIA-HVA-001", "components": [
+        {"id":"bms","symbol_id":"SYM-0493","ref":"DDC1","exact_model":"DDC documentado","role":"control"}, {"id":"ahu","symbol_query":"Controlador de unidad de tratamiento de aire","ref":"AHU1","exact_model":"Controlador AHU documentado","role":"control"}, {"id":"pressure","symbol_id":"SYM-0166","ref":"PT1","role":"field"}, {"id":"drive","symbol_id":"SYM-0481","ref":"VFD1","exact_model":"Variador documentado","role":"power"}, {"id":"motor","symbol_id":"SYM-0151","ref":"M1","value":"Ventilador impulsión","role":"power"}
+      ], "nets": [
+        {"id":"BMS","role":"bus","connections":["bms.RS485","ahu.BMS_BUS"]}, {"id":"PRESSURE","role":"signal","connections":["pressure.OUT","ahu.SENSORS"]}, {"id":"FAN_CMD","role":"signal","connections":["ahu.FANS_VFD","drive.DI_AI"]}, {"id":"U","role":"power","connections":["drive.U","motor.U"]}, {"id":"V","role":"power","connections":["drive.V","motor.V"]}, {"id":"W","role":"power","connections":["drive.W","motor.W"]}
+      ] }
+    },
+    {
+      "id": "HVA-002", "domain": "hvac_electronics", "title": "Zona HVAC con termostato y actuadores",
+      "spec": { "title": "Zona HVAC con termostato y actuadores", "document_id": "ELECTROIA-HVA-002", "components": [
+        {"id":"room","symbol_id":"SYM-0494","ref":"RC1","exact_model":"Controlador de ambiente documentado","role":"control"}, {"id":"sensor","symbol_id":"SYM-0163","ref":"RT1","value":"Sonda ambiente","role":"field"}, {"id":"valve","symbol_id":"SYM-0258","ref":"Y1","value":"Válvula","role":"field"}, {"id":"fan","symbol_id":"SYM-0400","ref":"K1","value":"Relé ventilador","role":"field"}
+      ], "nets": [
+        {"id":"TEMP","role":"signal","connections":["sensor.1","room.SENSOR"]}, {"id":"VALVE","role":"signal","connections":["room.VALVE","valve.1"]}, {"id":"FAN","role":"signal","connections":["room.FAN","fan.A1"]}, {"id":"COMMON","role":"ground","connections":["sensor.2","valve.2","fan.A2"]}
+      ] }
+    },
+    {
+      "id": "HVA-003", "domain": "hvac_electronics", "title": "Control electrónico de refrigeración",
+      "spec": { "title": "Control electrónico de refrigeración", "document_id": "ELECTROIA-HVA-003", "components": [
+        {"id":"controller","symbol_id":"SYM-0496","ref":"ERC1","exact_model":"Controlador frigorífico documentado","role":"control"}, {"id":"probe","symbol_id":"SYM-0163","ref":"T1","value":"Sonda evaporador","role":"field"}, {"id":"pressures","symbol_id":"SYM-0291","ref":"PSH1","role":"safety"}, {"id":"compressor","symbol_id":"SYM-0119","ref":"KM1","value":"Compresor","role":"power"}, {"id":"fan","symbol_id":"SYM-0400","ref":"KF1","role":"field"}
+      ], "nets": [
+        {"id":"PROBE","role":"signal","connections":["probe.1","controller.PROBES"]}, {"id":"SAFETY","role":"signal","connections":["pressures.HP_OUT","controller.DIGITAL_IN"]}, {"id":"COMPRESSOR","role":"signal","connections":["controller.COMPRESSOR","compressor.A1"]}, {"id":"FAN","role":"signal","connections":["controller.FANS","fan.A1"]}, {"id":"COMMON","role":"ground","connections":["probe.2","pressures.HP_COM","compressor.A2","fan.A2"]}
+      ] }
+    },
+    {
+      "id": "HVA-004", "domain": "hvac_electronics", "title": "Secuencia de seguridad de caldera",
+      "spec": { "title": "Secuencia de seguridad de caldera", "document_id": "ELECTROIA-HVA-004", "components": [
+        {"id":"boiler","symbol_id":"SYM-0497","ref":"BC1","exact_model":"Control de caldera documentado","role":"control"}, {"id":"thermostat","symbol_id":"SYM-0115","ref":"TH1","role":"field"}, {"id":"pressure","symbol_id":"SYM-0114","ref":"PS1","role":"safety"}, {"id":"fan","symbol_id":"SYM-0400","ref":"KF1","role":"field"}, {"id":"valve","symbol_id":"SYM-0258","ref":"Y1","value":"Válvula gas","role":"field"}
+      ], "nets": [
+        {"id":"THERMOSTAT","role":"signal","connections":["thermostat.1","boiler.THERMOSTATS"]}, {"id":"PRESSOSTAT","role":"signal","connections":["pressure.1","boiler.PRESSOSTATS"]}, {"id":"FAN","role":"signal","connections":["boiler.FAN","fan.A1"]}, {"id":"VALVE","role":"signal","connections":["boiler.VALVES","valve.1"]}, {"id":"COMMON","role":"ground","connections":["thermostat.2","pressure.2","fan.A2","valve.2"]}
+      ] }
+    },
+    {
+      "id": "HVA-005", "domain": "hvac_electronics", "title": "Grupo de presión de dos bombas",
+      "spec": { "title": "Grupo de presión de dos bombas", "document_id": "ELECTROIA-HVA-005", "components": [
+        {"id":"controller","symbol_id":"SYM-0498","ref":"PCTRL1","exact_model":"Controlador de bombas documentado","role":"control"}, {"id":"pressure","symbol_id":"SYM-0166","ref":"PT1","role":"field"}, {"id":"pump1","symbol_id":"SYM-0119","ref":"K1","value":"Bomba 1","role":"power"}, {"id":"pump2","symbol_id":"SYM-0119","ref":"K2","value":"Bomba 2","role":"power"}
+      ], "nets": [
+        {"id":"PRESSURE","role":"signal","connections":["pressure.OUT","controller.PRESSURE"]}, {"id":"PUMP1","role":"signal","connections":["controller.PUMP1","pump1.A1"]}, {"id":"PUMP2","role":"signal","connections":["controller.PUMP2","pump2.A1"]}, {"id":"COMMON","role":"ground","connections":["pressure.GND","pump1.A2","pump2.A2"]}
+      ] }
+    },
+
+    {
+      "id": "EMB-001", "domain": "embedded_systems", "title": "Arduino con salida LED protegida",
+      "spec": { "title": "Arduino con salida LED protegida", "document_id": "ELECTROIA-EMB-001", "components": [
+        {"id":"source","symbol_id":"SYM-0018","ref":"PS1","value":"5 VDC"}, {"id":"arduino","symbol_query":"Controlador Arduino de lógica 5 V","ref":"MCU1","exact_model":"Arduino documentado","role":"control"}, {"id":"resistor","symbol_id":"SYM-0023","ref":"R1","value":"330 Ω"}, {"id":"led","symbol_id":"SYM-0067","ref":"D1","role":"field"}
+      ], "nets": [
+        {"id":"P5","role":"power","connections":["source.+","arduino.5V"]}, {"id":"GPIO_LED","role":"signal","connections":["arduino.GPIO","resistor.1"]}, {"id":"LED_A","role":"signal","connections":["resistor.2","led.A"]}, {"id":"GND","role":"ground","connections":["source.-","arduino.GND","led.K"]}
+      ] }
+    },
+    {
+      "id": "EMB-002", "domain": "embedded_systems", "title": "ESP32 con sensor analógico de presión",
+      "spec": { "title": "ESP32 con sensor analógico de presión", "document_id": "ELECTROIA-EMB-002", "components": [
+        {"id":"source","symbol_id":"SYM-0018","ref":"PS1","value":"3.3 VDC"}, {"id":"esp","symbol_id":"SYM-0477","ref":"MCU1","exact_model":"ESP32 documentado","role":"control"}, {"id":"sensor","symbol_id":"SYM-0166","ref":"PT1","value":"0–3.3 V","role":"field"}
+      ], "nets": [
+        {"id":"P3V3","role":"power","connections":["source.+","esp.3V3","sensor.V+"]}, {"id":"GND","role":"ground","connections":["source.-","esp.GND","sensor.GND"]}, {"id":"ANALOG","role":"signal","connections":["sensor.OUT","esp.ADC"]}
+      ] }
+    },
+    {
+      "id": "EMB-003", "domain": "embedded_systems", "title": "Raspberry Pi como pasarela Ethernet",
+      "spec": { "title": "Raspberry Pi como pasarela Ethernet", "document_id": "ELECTROIA-EMB-003", "components": [
+        {"id":"source","symbol_id":"SYM-0018","ref":"PS1","value":"5 VDC"}, {"id":"pi","symbol_id":"SYM-0476","ref":"SBC1","exact_model":"Raspberry Pi documentada","role":"control"}, {"id":"switch","symbol_id":"SYM-0470","ref":"SW1","exact_model":"Switch industrial documentado","role":"communications"}, {"id":"gateway","symbol_id":"SYM-0471","ref":"GW1","exact_model":"Pasarela documentada","role":"communications"}
+      ], "nets": [
+        {"id":"P5","role":"power","connections":["source.+","pi.5V"]}, {"id":"GND","role":"ground","connections":["source.-","pi.GND"]}, {"id":"ETH_PI","role":"bus","connections":["pi.ETH","switch.ETH1"]}, {"id":"ETH_GATEWAY","role":"bus","connections":["switch.ETH2","gateway.NETWORK_A"]}
+      ] }
+    },
+    {
+      "id": "EMB-004", "domain": "embedded_systems", "title": "Enlace I2C entre Arduino y Raspberry Pi",
+      "spec": { "title": "Enlace I2C entre Arduino y Raspberry Pi", "document_id": "ELECTROIA-EMB-004", "components": [
+        {"id":"source","symbol_id":"SYM-0018","ref":"PS1","value":"5 VDC"}, {"id":"arduino","symbol_id":"SYM-0472","ref":"MCU1","exact_model":"Arduino documentado"}, {"id":"pi","symbol_id":"SYM-0476","ref":"SBC1","exact_model":"Raspberry Pi documentada"}
+      ], "nets": [
+        {"id":"P5","role":"power","connections":["source.+","arduino.5V","pi.5V"]}, {"id":"GND","role":"ground","connections":["source.-","arduino.GND","pi.GND"]}, {"id":"I2C","role":"bus","connections":["arduino.I2C","pi.I2C_SPI"]}
+      ] }
+    },
+    {
+      "id": "EMB-005", "domain": "embedded_systems", "title": "Arduino con accionamiento de motor DC",
+      "spec": { "title": "Arduino con accionamiento de motor DC", "document_id": "ELECTROIA-EMB-005", "components": [
+        {"id":"arduino","symbol_id":"SYM-0472","ref":"MCU1","exact_model":"Arduino documentado","role":"control"}, {"id":"drive","symbol_id":"SYM-0485","ref":"DCD1","exact_model":"Accionamiento DC documentado","role":"power"}, {"id":"motor","symbol_id":"SYM-0149","ref":"M1","value":"Motor DC","role":"power"}, {"id":"alarm","symbol_id":"SYM-0067","ref":"D1","value":"Alarma","role":"field"}
+      ], "nets": [
+        {"id":"SPEED","role":"signal","connections":["arduino.PWM","drive.SPEED_REF"]}, {"id":"MOTOR_PLUS","role":"power","connections":["drive.A+","motor.+"]}, {"id":"MOTOR_MINUS","role":"power","connections":["drive.A-","motor.-"]}, {"id":"ALARM","role":"signal","connections":["drive.ALARM","alarm.A"]}, {"id":"ALARM_RETURN","role":"ground","connections":["alarm.K","arduino.GND"]}
+      ] }
+    }
+  ]
+}

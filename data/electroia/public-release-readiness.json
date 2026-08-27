@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_on": "2026-08-26",
-  "engine_version": "1.15.0-alpha.1",
+  "generated_on": "2026-08-27",
+  "engine_version": "1.16.0-alpha.1",
   "release_stage": "private_release_candidate",
   "decision": "keep_execution_private_until_field_validation",
   "summary": {
@@ -16,6 +16,16 @@
     "public_execution_policy_ready": true,
     "reviewed_symbols": 501,
     "professional_examples": 5,
+    "professional_benchmark_cases": 20,
+    "benchmark_domains": {
+      "automation": 5,
+      "electrical_panels": 5,
+      "embedded_systems": 5,
+      "hvac_electronics": 5
+    },
+    "benchmark_symbols": 86,
+    "benchmark_nets": 91,
+    "benchmark_automatic_symbol_matches": 4,
     "example_components": 59,
     "example_nets": 69,
     "component_overlaps": 0,
@@ -38,6 +48,26 @@
         "id": "five_professional_examples",
         "passed": true,
         "evidence": "5 planos patrón"
+      },
+      {
+        "id": "twenty_professional_benchmark_cases",
+        "passed": true,
+        "evidence": "20 casos · 5 por ámbito"
+      },
+      {
+        "id": "benchmark_is_deterministic",
+        "passed": true,
+        "evidence": "20/20 salidas repetibles"
+      },
+      {
+        "id": "benchmark_has_no_layout_conflicts",
+        "passed": true,
+        "evidence": "0 conflictos"
+      },
+      {
+        "id": "benchmark_tests_automatic_resolution",
+        "passed": true,
+        "evidence": "4 resoluciones por nombre"
       },
       {
         "id": "examples_have_no_validation_errors",
@@ -149,6 +179,7 @@
     "estado y capacidades resumidas",
     "búsqueda limitada de símbolos revisados",
     "contrato JSON y ejemplos profesionales revisados",
+    "banco automatizado de 20 casos profesionales para integración con IA",
     "documentación para integrar el servidor MCP local",
     "perfiles documentales experimentales y política de futura ejecución"
   ],
@@ -232,6 +263,300 @@
       "component_overlaps": 0,
       "wire_component_conflicts": 0,
       "off_grid_terminals": 0,
+      "single_canvas": true
+    }
+  ],
+  "professional_benchmark": [
+    {
+      "id": "PAN-001",
+      "domain": "electrical_panels",
+      "title": "Cuadro monofásico con medida y diferencial",
+      "symbols": 5,
+      "nets": 5,
+      "errors": 0,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 1,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "PAN-002",
+      "domain": "electrical_panels",
+      "title": "Salida trifásica protegida para motor",
+      "symbols": 5,
+      "nets": 6,
+      "errors": 0,
+      "dangerous_warnings": [
+        "EXACT_MODEL_REQUIRED"
+      ],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 0,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "PAN-003",
+      "domain": "electrical_panels",
+      "title": "Conmutación automática red-reserva",
+      "symbols": 6,
+      "nets": 5,
+      "errors": 0,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 0,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "PAN-004",
+      "domain": "electrical_panels",
+      "title": "Alimentación ininterrumpida de control",
+      "symbols": 4,
+      "nets": 3,
+      "errors": 0,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 0,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "PAN-005",
+      "domain": "electrical_panels",
+      "title": "Fuente auxiliar 24 VDC de cuadro",
+      "symbols": 4,
+      "nets": 5,
+      "errors": 0,
+      "dangerous_warnings": [
+        "NET_ROLE_MISMATCH"
+      ],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 0,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "AUT-001",
+      "domain": "automation",
+      "title": "PLC, variador y motor con bus industrial",
+      "symbols": 4,
+      "nets": 7,
+      "errors": 0,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 1,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "AUT-002",
+      "domain": "automation",
+      "title": "Parada de emergencia con relé de seguridad",
+      "symbols": 5,
+      "nets": 5,
+      "errors": 0,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 0,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "AUT-003",
+      "domain": "automation",
+      "title": "PLC con entradas digitales de campo",
+      "symbols": 5,
+      "nets": 5,
+      "errors": 0,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 0,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "AUT-004",
+      "domain": "automation",
+      "title": "PLC y HMI sobre Ethernet industrial",
+      "symbols": 4,
+      "nets": 4,
+      "errors": 0,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 0,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "AUT-005",
+      "domain": "automation",
+      "title": "Medida analógica de presión en PLC",
+      "symbols": 3,
+      "nets": 3,
+      "errors": 0,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 0,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "HVA-001",
+      "domain": "hvac_electronics",
+      "title": "Control de climatizador con BMS y variador",
+      "symbols": 5,
+      "nets": 6,
+      "errors": 0,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 1,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "HVA-002",
+      "domain": "hvac_electronics",
+      "title": "Zona HVAC con termostato y actuadores",
+      "symbols": 4,
+      "nets": 4,
+      "errors": 0,
+      "dangerous_warnings": [
+        "NET_ROLE_MISMATCH"
+      ],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 0,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "HVA-003",
+      "domain": "hvac_electronics",
+      "title": "Control electrónico de refrigeración",
+      "symbols": 5,
+      "nets": 5,
+      "errors": 0,
+      "dangerous_warnings": [
+        "NET_ROLE_MISMATCH"
+      ],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 0,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "HVA-004",
+      "domain": "hvac_electronics",
+      "title": "Secuencia de seguridad de caldera",
+      "symbols": 5,
+      "nets": 5,
+      "errors": 0,
+      "dangerous_warnings": [
+        "NET_ROLE_MISMATCH"
+      ],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 0,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "HVA-005",
+      "domain": "hvac_electronics",
+      "title": "Grupo de presión de dos bombas",
+      "symbols": 4,
+      "nets": 4,
+      "errors": 0,
+      "dangerous_warnings": [
+        "NET_ROLE_MISMATCH"
+      ],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 0,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "EMB-001",
+      "domain": "embedded_systems",
+      "title": "Arduino con salida LED protegida",
+      "symbols": 4,
+      "nets": 4,
+      "errors": 0,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 1,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "EMB-002",
+      "domain": "embedded_systems",
+      "title": "ESP32 con sensor analógico de presión",
+      "symbols": 3,
+      "nets": 3,
+      "errors": 0,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 0,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "EMB-003",
+      "domain": "embedded_systems",
+      "title": "Raspberry Pi como pasarela Ethernet",
+      "symbols": 4,
+      "nets": 4,
+      "errors": 0,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 0,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "EMB-004",
+      "domain": "embedded_systems",
+      "title": "Enlace I2C entre Arduino y Raspberry Pi",
+      "symbols": 3,
+      "nets": 3,
+      "errors": 0,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 0,
+      "deterministic": true,
+      "single_canvas": true
+    },
+    {
+      "id": "EMB-005",
+      "domain": "embedded_systems",
+      "title": "Arduino con accionamiento de motor DC",
+      "symbols": 4,
+      "nets": 5,
+      "errors": 0,
+      "dangerous_warnings": [],
+      "component_overlaps": 0,
+      "wire_component_conflicts": 0,
+      "automatic_symbol_matches": 0,
+      "deterministic": true,
       "single_canvas": true
     }
   ]

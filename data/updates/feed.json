@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-26",
+  "updated_at": "2026-08-27",
   "title": "Últimas mejoras de Super Técnico",
   "author_policy": {
     "maintainer": "Administrador",
@@ -9,6 +9,15 @@
     "personal_data": "Do not publish private identifiers unless the contributor explicitly chose that text as a public nickname."
   },
   "entries": [
+    {
+      "id": "UPD-20260827-ELECTROIA-PROFESSIONAL-116",
+      "date": "2026-08-27",
+      "title": "ElectroIA 1.16 prueba su motor profesional en 20 sistemas",
+      "summary": "El laboratorio privado ya compila especificaciones sencillas de cualquier IA, resuelve símbolos y bornes por nombre, distribuye potencia, seguridad, control, comunicaciones y campo por zonas y permite ajustar el plano desde el móvil. Un banco regresivo de 20 casos —cinco de cuadros, automatización, HVAC y sistemas embebidos— verifica 86 símbolos y 91 redes con salida determinista, sin solapes ni cables sobre componentes. Las aprobaciones reales de técnicos siguen separadas como puerta previa a la apertura pública.",
+      "areas": ["ElectroIA", "IA", "Diagramas", "Móvil", "Calidad"],
+      "kind": "platform_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
     {
       "id": "UPD-20260826-ELECTROIA-UNIVERSAL-COMPILER",
       "date": "2026-08-26",

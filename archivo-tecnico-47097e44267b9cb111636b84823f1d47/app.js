@@ -13,6 +13,10 @@ const state = {
   validationSummary: null,
   activeWorkspace: "quick",
   bridgeDiagnostics: null,
+  bridgeResolution: null,
+  benchmarkCatalog: null,
+  layoutEditMode: false,
+  selectedComponentRef: "",
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -103,30 +107,32 @@ function buildAiBrief() {
     kind: "electroia_design_brief",
     language: "es",
     request,
-    objective: "Diseñar y calcular el circuito, seleccionar componentes y devolver un documento estructurado que ElectroIA pueda validar y dibujar.",
+    objective: "Diseñar y calcular el circuito, seleccionar componentes y devolver una especificación de alto nivel que ElectroIA resuelva, valide y dibuje.",
     responsibility_boundary: {
       ai: "Interpreta la necesidad, pregunta los datos imprescindibles, realiza los cálculos, selecciona componentes y define todas las redes.",
-      electroia: "Valida símbolos y terminales, enruta las redes sobre la rejilla y genera el plano SVG.",
+      electroia: "Resuelve nombres de símbolos y terminales, valida el contrato, separa dominios, enruta sobre la rejilla y genera el plano SVG.",
     },
     resources: {
       status: electroiaPublicUrl("../api/index.php?action=electroia-public-status"),
       symbol_search: electroiaPublicUrl("../api/index.php?action=electroia-symbol-search&q={query}"),
       manifest: electroiaPublicUrl("../data/electroia/tool-manifest.json"),
-      schema: electroiaPublicUrl("../data/electroia/diagram-document.schema.json"),
+      schema: electroiaPublicUrl("../data/electroia/diagram-spec.schema.json"),
       profiles: electroiaPublicUrl("../data/electroia/document-profiles.json"),
     },
     mandatory_process: [
       "No inventes terminales ni pinouts.",
-      "Busca y utiliza únicamente symbol_id revisados por ElectroIA.",
+      "Puedes indicar symbol_query con un nombre técnico claro; ElectroIA resolverá el symbol_id revisado.",
       "Si un bloque exige modelo exacto, pide fabricante, referencia y documentación.",
       "Separa los cálculos y decisiones técnicas del documento gráfico.",
+      "Usa identificadores cortos en components[].id y referencia las redes con {component, port}.",
       "Devuelve solo un objeto JSON válido, sin Markdown ni explicaciones alrededor.",
     ],
     expected_output: {
-      schema_version: "1.0",
-      standard_profile: "IEC_EXPERIMENTAL",
+      title: "Nombre del plano",
       accepted_document_kinds: ["circuit_diagram", "single_line_diagram", "multi_line_diagram"],
-      required_fields: ["schema_version", "document_kind", "standard_profile", "title", "components", "nets"],
+      required_fields: ["title", "components", "nets"],
+      component_example: { id: "power_supply", symbol_query: "fuente industrial 24 VDC", value: "24 VDC" },
+      connection_example: { component: "power_supply", port: "positive" },
     },
   };
 }
@@ -154,9 +160,30 @@ function setBridgeStatus(kind, title, message, details = []) {
   status.innerHTML = `<span>${escapeHtml(title)}</span><p>${escapeHtml(message)}</p>${details.length ? `<ul>${details.slice(0, 8).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>` : ""}`;
 }
 
-function extractDiagramDocument(value) {
+function looksLikeHighLevelSpec(value) {
+  return Boolean(value && Array.isArray(value.components) && value.components.length
+    && value.components.every((component) => component && component.id && (component.symbol_id || component.symbol_query)));
+}
+
+function looksLikeDiagramDocument(value) {
+  return Boolean(value && Array.isArray(value.components) && Array.isArray(value.nets)
+    && value.components.every((component) => component && component.ref && component.symbol_id));
+}
+
+function extractDiagramInput(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
-  const candidates = [
+  const specCandidates = [
+    value.spec,
+    value.diagram_spec,
+    value.structuredContent?.spec,
+    value.structuredContent?.diagram_spec,
+    value.result?.spec,
+    value.result?.diagram_spec,
+    value,
+  ];
+  const spec = specCandidates.find(looksLikeHighLevelSpec);
+  if (spec) return { kind: "spec", value: spec };
+  const documentCandidates = [
     value,
     value.document,
     value.diagram_document,
@@ -165,7 +192,8 @@ function extractDiagramDocument(value) {
     value.result?.document,
     value.result?.diagram_document,
   ];
-  return candidates.find((item) => item && typeof item === "object" && Array.isArray(item.components) && Array.isArray(item.nets)) || null;
+  const documentData = documentCandidates.find(looksLikeDiagramDocument);
+  return documentData ? { kind: "document", value: documentData } : null;
 }
 
 async function renderAiDocument() {
@@ -178,21 +206,36 @@ async function renderAiDocument() {
   try {
     if (new Blob([input]).size > 262144) throw new Error("El documento supera el límite de 256 KiB.");
     const parsed = JSON.parse(input);
-    const documentData = extractDiagramDocument(parsed);
-    if (!documentData) throw new Error("No encuentro un documento con componentes y redes.");
+    const diagramInput = extractDiagramInput(parsed);
+    if (!diagramInput) throw new Error("No encuentro una especificación ni un documento con componentes y redes.");
     if (typeof ElectroDiagramCore === "undefined") throw new Error("El núcleo gráfico no está disponible.");
+    let documentData = diagramInput.value;
+    let resolutionDetails = [];
+    state.bridgeResolution = null;
+    if (diagramInput.kind === "spec") {
+      const { compileBrowserDiagramSpec } = await import("./diagram-compiler-browser.mjs?v=1");
+      const compiled = compileBrowserDiagramSpec(diagramInput.value);
+      state.bridgeResolution = compiled.resolution;
+      documentData = compiled.diagram.document;
+      resolutionDetails = compiled.resolution.components.map((item) => `${item.component_id} → ${item.symbol_id} ${item.symbol_name}`);
+    } else {
+      documentData = ElectroDiagramCore.render(documentData).document;
+    }
     const validation = ElectroDiagramCore.validate(documentData);
-    state.bridgeDiagnostics = validation;
-    $("#copyAiDiagnostics").hidden = validation.errors.length === 0 && validation.warnings.length === 0;
+    state.bridgeDiagnostics = {
+      errors: validation.errors,
+      warnings: [...(state.bridgeResolution?.warnings || []), ...validation.warnings],
+    };
+    $("#copyAiDiagnostics").hidden = state.bridgeDiagnostics.errors.length === 0 && state.bridgeDiagnostics.warnings.length === 0;
     if (!validation.valid) {
       setBridgeStatus("error", `${validation.errors.length} ERRORES`, "Devuelve estas correcciones a la IA y solicita un nuevo JSON.", validation.errors.map((item) => `${item.code}: ${item.message}`));
       return;
     }
     setBridgeStatus(
       validation.warnings.length ? "warning" : "success",
-      validation.warnings.length ? `${validation.warnings.length} AVISOS` : "DOCUMENTO VÁLIDO",
-      `${documentData.components.length} símbolos · ${documentData.nets.length} redes · preparado para una sola hoja.`,
-      validation.warnings.map((item) => `${item.code}: ${item.message}`),
+      diagramInput.kind === "spec" ? "ESPECIFICACIÓN COMPILADA" : (validation.warnings.length ? `${validation.warnings.length} AVISOS` : "DOCUMENTO VÁLIDO"),
+      `${documentData.components.length} símbolos · ${documentData.nets.length} redes · ${state.bridgeResolution?.summary?.automatic_symbol_matches || 0} símbolos resueltos por nombre · una sola hoja.`,
+      [...resolutionDetails, ...validation.warnings.map((item) => `${item.code}: ${item.message}`)],
     );
     renderPublicResult(publicDesignFromDiagramDocument(documentData));
     showView($("#resultView"));
@@ -249,6 +292,37 @@ $("#loadAiExample").addEventListener("click", async () => {
   } catch (error) {
     setBridgeStatus("error", "EJEMPLO NO DISPONIBLE", error.message);
   }
+});
+
+const BENCHMARK_DOMAINS = {
+  electrical_panels: "Cuadros eléctricos",
+  automation: "Automatización",
+  hvac_electronics: "Electrónica HVAC",
+  embedded_systems: "Sistemas embebidos",
+};
+
+function renderBenchmarkOptions() {
+  const selectedDomain = $("#benchmarkDomain").value;
+  const cases = (state.benchmarkCatalog?.cases || []).filter((item) => selectedDomain === "all" || item.domain === selectedDomain);
+  $("#benchmarkCase").innerHTML = cases.map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.title)}</option>`).join("") || '<option value="">Sin casos</option>';
+}
+
+async function loadBenchmarkCatalog() {
+  try {
+    state.benchmarkCatalog = await fetchJson("../data/electroia/professional-benchmark.json", "el banco profesional");
+    renderBenchmarkOptions();
+  } catch (error) {
+    $("#benchmarkCase").innerHTML = '<option value="">Banco no disponible</option>';
+    setBridgeStatus("error", "BANCO NO DISPONIBLE", error.message);
+  }
+}
+
+$("#benchmarkDomain").addEventListener("change", renderBenchmarkOptions);
+$("#loadBenchmarkCase").addEventListener("click", () => {
+  const selected = (state.benchmarkCatalog?.cases || []).find((item) => item.id === $("#benchmarkCase").value);
+  if (!selected) return;
+  $("#aiDocumentInput").value = JSON.stringify(selected.spec, null, 2);
+  setBridgeStatus("ready", "CASO PROFESIONAL CARGADO", `${BENCHMARK_DOMAINS[selected.domain]} · ${selected.title}. Pulsa «Validar y dibujar».`);
 });
 
 $("#copyAiDiagnostics").addEventListener("click", async () => {
@@ -374,13 +448,14 @@ async function loadEngineAudit() {
     const releaseSummary = release.summary || {};
     const gatesPass = report.status === "pass" && releaseSummary.automated_gates_pass === true;
     $("#engineAuditHeadline").textContent = gatesPass
-      ? `Candidata privada · ${releaseSummary.professional_examples || 0} planos sin conflictos`
+      ? `Candidata privada · ${releaseSummary.professional_benchmark_cases || 0} casos automáticos sin conflictos`
       : "La auditoría necesita revisión";
     const limitations = (report.known_limitations || []).map((item) => `<li><b>${escapeHtml(item.message)}</b></li>`).join("");
     const blockers = (release.manual_release_blockers || []).map((item) => `<li><b>${escapeHtml(item.exit_criteria)}</b></li>`).join("");
     $("#engineAuditContent").innerHTML = `<div class="engine-audit-metrics">
       <span><b>${Number(summary.public_symbols || 0)}</b> símbolos públicos</span>
       <span><b>${Number(releaseSummary.professional_examples || 0)}</b> planos patrón</span>
+      <span><b>${Number(releaseSummary.professional_benchmark_cases || 0)}</b> casos regresivos</span>
       <span><b>${Number(releaseSummary.component_overlaps || 0)}</b> solapes</span>
       <span><b>${Number(releaseSummary.wire_component_conflicts || 0)}</b> cables sobre símbolos</span>
     </div><p>Puertas automáticas: <strong>${gatesPass ? "superadas" : "pendientes"}</strong>. El motor seguirá privado hasta completar:</p><ul>${blockers}</ul><p>Límites técnicos declarados:</p><ul>${limitations}</ul>`;
@@ -727,6 +802,9 @@ $("#startOver").addEventListener("click", () => {
 });
 
 function renderPublicResult(design) {
+  if (design.diagram_document && typeof ElectroDiagramCore !== "undefined") {
+    design.diagram_document = ElectroDiagramCore.render(design.diagram_document).document;
+  }
   $("#designTitle").textContent = design.title;
   $("#designSummary").textContent = design.summary;
 
@@ -772,7 +850,91 @@ function renderPublicResult(design) {
     warnings: relevantWarnings.length,
   };
   prepareFieldValidation(design);
+  $("#toggleLayoutEditor").hidden = !design.diagram_document;
+  if (design.diagram_document) {
+    updateLayoutEditorMetrics(ElectroDiagramCore.render(design.diagram_document).diagnostics.metrics);
+    attachLayoutEditor();
+  } else {
+    setLayoutEditMode(false);
+  }
 }
+
+function updateLayoutEditorMetrics(metrics = {}) {
+  const domains = Array.isArray(metrics.layout_domains) ? metrics.layout_domains.length : 0;
+  $("#layoutEditorMetrics").textContent = `${domains} zonas · ${metrics.component_overlaps || 0} solapes · ${metrics.wire_component_conflicts || 0} cables sobre símbolos · ${metrics.bridged_crossings || 0} cruces salvados`;
+}
+
+function markSelectedComponents() {
+  document.querySelectorAll("#schematic g.component, #expandedSchematic g.component").forEach((group) => {
+    group.classList.toggle("editable", state.layoutEditMode);
+    group.classList.toggle("is-edit-selected", group.dataset.ref === state.selectedComponentRef);
+  });
+  $("#selectedComponentLabel").textContent = state.selectedComponentRef || "Toca un símbolo";
+}
+
+function attachLayoutEditor() {
+  $("#schematic").classList.toggle("is-editing", state.layoutEditMode);
+  document.querySelectorAll("#schematic g.component, #expandedSchematic g.component").forEach((group) => {
+    if (group.dataset.layoutBound === "true") return;
+    group.dataset.layoutBound = "true";
+    group.addEventListener("click", (event) => {
+      if (!state.layoutEditMode) return;
+      event.preventDefault();
+      event.stopPropagation();
+      state.selectedComponentRef = group.dataset.ref || "";
+      markSelectedComponents();
+    });
+  });
+  markSelectedComponents();
+}
+
+function refreshCurrentDiagram() {
+  const documentData = state.currentDesign?.diagram_document;
+  if (!documentData) return;
+  const result = ElectroDiagramCore.render(documentData);
+  state.currentDesign.diagram_document = result.document;
+  $("#schematic").innerHTML = result.svg;
+  $("#expandedSchematic").innerHTML = result.svg;
+  state.currentValidation = {
+    errors: result.diagnostics.errors.length,
+    warnings: result.diagnostics.warnings.length,
+  };
+  updateLayoutEditorMetrics(result.diagnostics.metrics);
+  attachLayoutEditor();
+  prepareFieldValidation(state.currentDesign);
+}
+
+function setLayoutEditMode(enabled) {
+  state.layoutEditMode = Boolean(enabled);
+  if (!state.layoutEditMode) state.selectedComponentRef = "";
+  $("#layoutEditor").hidden = !state.layoutEditMode;
+  $("#toggleLayoutEditor").setAttribute("aria-pressed", String(state.layoutEditMode));
+  $("#toggleLayoutEditor").textContent = state.layoutEditMode ? "Finalizar ajuste" : "Ajustar plano";
+  attachLayoutEditor();
+}
+
+$("#toggleLayoutEditor").addEventListener("click", () => setLayoutEditMode(!state.layoutEditMode));
+
+document.querySelectorAll("[data-move-x][data-move-y]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const component = state.currentDesign?.diagram_document?.components?.find((item) => item.ref === state.selectedComponentRef);
+    if (!component?.position) {
+      $("#selectedComponentLabel").textContent = "Selecciona primero un símbolo";
+      return;
+    }
+    component.position.x += Number(button.dataset.moveX || 0);
+    component.position.y += Number(button.dataset.moveY || 0);
+    refreshCurrentDiagram();
+  });
+});
+
+$("#autoArrangeDiagram").addEventListener("click", () => {
+  const components = state.currentDesign?.diagram_document?.components;
+  if (!components) return;
+  components.forEach((component) => { delete component.position; delete component.layout_lane; });
+  state.selectedComponentRef = "";
+  refreshCurrentDiagram();
+});
 
 function downloadBlob(filename, content, type) {
   const link = document.createElement("a");
@@ -875,4 +1037,5 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+loadBenchmarkCatalog();
 initializeAccess();

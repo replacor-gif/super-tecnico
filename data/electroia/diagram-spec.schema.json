@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://super-tecnico.local/schemas/electroia-diagram-spec-1.0.json",
+  "$id": "https://replacor.com/schemas/electroia-diagram-spec-1.0.json",
   "title": "ElectroIA AI-friendly diagram specification",
   "description": "Especificación de alto nivel que ElectroIA compila a un documento neutral validado y a SVG.",
   "type": "object",

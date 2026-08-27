@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { compileDiagramSpec } from "./compiler.mjs";
+import { symbolSearchRank } from "./symbol-ranking.mjs";
 
 const require = createRequire(import.meta.url);
 const SERVER_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -79,59 +80,6 @@ function folded(value) {
 
 function searchFolded(value) {
   return folded(value).replace(/[^a-z0-9]+/g, " ").trim();
-}
-
-const SYMBOL_IGNORED_TERMS = new Set(["a", "al", "de", "del", "la", "las", "el", "los", "y", "o", "con", "para", "por", "en", "un", "una", "tipo", "simbolo", "componente"]);
-const SYMBOL_TERM_ALIASES = Object.freeze({
-  rele: ["relay"], relay: ["rele"],
-  pulsador: ["pushbutton", "boton"], boton: ["pulsador", "pushbutton"],
-  abierto: ["no", "normally open"], cerrado: ["nc", "normally closed"],
-  automata: ["plc"], plc: ["automata"],
-  variador: ["vfd", "variable frequency drive"], vfd: ["variador", "variable frequency drive"],
-  tierra: ["pe", "ground"], masa: ["gnd", "ground"],
-  alimentacion: ["power", "supply"], sensor: ["transductor"],
-});
-
-function symbolTerms(value) {
-  const normalized = searchFolded(value);
-  return [...new Set(normalized.split(/\s+/).filter((term) => term.length >= 2 && !SYMBOL_IGNORED_TERMS.has(term)))];
-}
-
-function termAppears(haystack, compactHaystack, term) {
-  const variants = [term, ...(SYMBOL_TERM_ALIASES[term] || [])];
-  return variants.some((variant) => {
-    const normalized = searchFolded(variant);
-    return haystack.includes(normalized) || (normalized.length <= 5 && compactHaystack.includes(normalized.replace(/\s+/g, "")));
-  });
-}
-
-function symbolSearchRank(symbol, rawQuery) {
-  const query = searchFolded(rawQuery);
-  const terms = symbolTerms(query);
-  const fields = {
-    id: searchFolded(symbol.id),
-    name: searchFolded(symbol.name),
-    aliases: searchFolded(symbol.aliases),
-    keywords: searchFolded(symbol.keywords),
-    classification: searchFolded(`${symbol.kind} ${symbol.designator} ${symbol.category} ${symbol.subcategory}`),
-    detail: searchFolded(`${symbol.description} ${symbol.interpretation} ${symbol.catalog_drawing_type}`),
-  };
-  const haystack = Object.values(fields).join(" ");
-  const compact = haystack.replace(/\s+/g, "");
-  const matchedTerms = terms.filter((term) => termAppears(haystack, compact, term));
-  if (!matchedTerms.length || (terms.length <= 2 && matchedTerms.length !== terms.length) || (terms.length > 2 && matchedTerms.length / terms.length < 0.6)) return null;
-  let score = matchedTerms.length * 24 + (matchedTerms.length / Math.max(1, terms.length)) * 80;
-  if (fields.id === query) score += 800;
-  if (fields.name === query) score += 500;
-  if (fields.name.includes(query)) score += 220;
-  if (fields.aliases.includes(query)) score += 150;
-  matchedTerms.forEach((term) => {
-    if (termAppears(fields.name, fields.name.replace(/\s+/g, ""), term)) score += 45;
-    else if (termAppears(fields.aliases, fields.aliases.replace(/\s+/g, ""), term)) score += 32;
-    else if (termAppears(fields.keywords, fields.keywords.replace(/\s+/g, ""), term)) score += 20;
-    else if (termAppears(fields.classification, fields.classification.replace(/\s+/g, ""), term)) score += 12;
-  });
-  return {score, matchedTerms, coverage: matchedTerms.length / Math.max(1, terms.length)};
 }
 
 const EMBEDDED_IGNORED_TERMS = new Set(["a", "al", "de", "del", "la", "las", "el", "los", "y", "o", "u", "con", "para", "por", "en", "un", "una", "unos", "unas", "que", "como", "quiero", "necesito", "the", "and", "with", "for", "from", "to", "an", "of", "on", "in"]);

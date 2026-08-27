@@ -11,7 +11,7 @@ const expected = new Map([
   ["Conectores y comunicaciones", 19],
 ]);
 const registryResult = core.getRegistry();
-assert.equal(registryResult.engine_version, "1.15.0-alpha.1");
+assert.equal(registryResult.engine_version, "1.16.0-alpha.1");
 const registry = registryResult.symbols;
 for (const [category, count] of expected) {
   const family = registry.filter((symbol) => symbol.category === category);

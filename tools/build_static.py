@@ -621,6 +621,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/engine.js",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagram-symbol-library.js",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagram-core.js",
+        "archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagram-compiler-browser.mjs",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/diagram.js",
         "archivo-tecnico-47097e44267b9cb111636b84823f1d47/app.js",
         "electroia-tool-server/package.json",
@@ -628,6 +629,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "electroia-tool-server/server.json",
         "electroia-tool-server/src/cli.mjs",
         "electroia-tool-server/src/compiler.mjs",
+        "electroia-tool-server/src/symbol-ranking.mjs",
         "electroia-tool-server/src/index.mjs",
         "electroia-tool-server/src/toolkit.mjs",
         "simbolos.html",
@@ -988,6 +990,10 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
     write_json(
         output / "data" / "electroia" / "public-release-readiness.json",
         read_json(source_root / "data" / "electroia" / "public-release-readiness.json"),
+    )
+    write_json(
+        output / "data" / "electroia" / "professional-benchmark.json",
+        read_json(source_root / "data" / "electroia" / "professional-benchmark.json"),
     )
     write_json(
         output / "data" / "electroia" / "document-profiles.json",

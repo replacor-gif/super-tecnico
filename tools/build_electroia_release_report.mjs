@@ -3,6 +3,8 @@ import { readFile, readdir, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { compileDiagramSpec } from "../electroia-tool-server/src/compiler.mjs";
+import { symbolSearchRank } from "../electroia-tool-server/src/symbol-ranking.mjs";
 
 const require = createRequire(import.meta.url);
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
@@ -18,7 +20,7 @@ function gate(id, passed, evidence) {
 }
 
 async function buildReport() {
-  const [engineAudit, manifest, discovery, openapi, executionPolicy, documentProfiles, publicGallery, hiddenHtml, labApp, publicShowcaseHtml, publicShowcaseJs, apiSource, electroiaApiSource, validationApiSource] = await Promise.all([
+  const [engineAudit, manifest, discovery, openapi, executionPolicy, documentProfiles, publicGallery, professionalBenchmark, hiddenHtml, labApp, publicShowcaseHtml, publicShowcaseJs, apiSource, electroiaApiSource, validationApiSource] = await Promise.all([
     readJson("data/electroia/engine-audit-report.json"),
     readJson("data/electroia/tool-manifest.json"),
     readJson("data/electroia/discovery.json"),
@@ -26,6 +28,7 @@ async function buildReport() {
     readJson("data/electroia/public-execution-policy.json"),
     readJson("data/electroia/document-profiles.json"),
     readJson("data/electroia/public-gallery.json"),
+    readJson("data/electroia/professional-benchmark.json"),
     readFile(join(ROOT, "archivo-tecnico-47097e44267b9cb111636b84823f1d47", "index.html"), "utf8"),
     readFile(join(ROOT, "archivo-tecnico-47097e44267b9cb111636b84823f1d47", "app.js"), "utf8"),
     readFile(join(ROOT, "electroia.html"), "utf8"),
@@ -69,11 +72,39 @@ async function buildReport() {
     });
   }
 
+  const benchmarkDomains = new Map();
+  const benchmarkCases = [];
+  for (const item of professionalBenchmark.cases || []) {
+    benchmarkDomains.set(item.domain, (benchmarkDomains.get(item.domain) || 0) + 1);
+    const first = compileDiagramSpec(item.spec, { registry: core.getRegistry(), rankSymbol: symbolSearchRank, render: core.render });
+    const second = compileDiagramSpec(item.spec, { registry: core.getRegistry(), rankSymbol: symbolSearchRank, render: core.render });
+    const warningCodes = first.diagram.diagnostics.warnings.map((warning) => warning.code);
+    benchmarkCases.push({
+      id: item.id,
+      domain: item.domain,
+      title: item.title,
+      symbols: first.diagram.diagnostics.metrics.symbols,
+      nets: first.diagram.diagnostics.metrics.nets,
+      errors: first.diagram.diagnostics.errors.length,
+      dangerous_warnings: warningCodes.filter((code) => dangerousWarningCodes.has(code)),
+      component_overlaps: first.diagram.diagnostics.metrics.component_overlaps,
+      wire_component_conflicts: first.diagram.diagnostics.metrics.wire_component_conflicts,
+      automatic_symbol_matches: first.resolution.summary.automatic_symbol_matches,
+      deterministic: first.diagram.svg === second.diagram.svg,
+      single_canvas: first.diagram.diagnostics.metrics.single_canvas,
+    });
+  }
+  const benchmarkDomainCoverage = (professionalBenchmark.domains || []).every((domain) => benchmarkDomains.get(domain) === 5);
+
   const openapiText = JSON.stringify(openapi);
   const technicalGates = [
     gate("engine_audit_passes", engineAudit.status === "pass" && engineAudit.summary?.fatal_failures === 0, `${engineAudit.summary?.fatal_failures ?? "?"} fallos críticos`),
     gate("public_symbols_reviewed", manifest.capabilities?.reviewed_catalog_symbol_count === manifest.capabilities?.catalog_symbol_count && manifest.capabilities?.auto_draft_catalog_symbol_count === 0, `${manifest.capabilities?.reviewed_catalog_symbol_count ?? 0}/${manifest.capabilities?.catalog_symbol_count ?? 0} revisados`),
     gate("five_professional_examples", examples.length >= 5, `${examples.length} planos patrón`),
+    gate("twenty_professional_benchmark_cases", benchmarkCases.length === 20 && benchmarkDomainCoverage, `${benchmarkCases.length} casos · 5 por ámbito`),
+    gate("benchmark_is_deterministic", benchmarkCases.every((item) => item.deterministic), `${benchmarkCases.filter((item) => item.deterministic).length}/${benchmarkCases.length} salidas repetibles`),
+    gate("benchmark_has_no_layout_conflicts", benchmarkCases.every((item) => item.component_overlaps === 0 && item.wire_component_conflicts === 0), `${benchmarkCases.reduce((sum, item) => sum + item.component_overlaps + item.wire_component_conflicts, 0)} conflictos`),
+    gate("benchmark_tests_automatic_resolution", benchmarkCases.reduce((sum, item) => sum + item.automatic_symbol_matches, 0) >= 4, `${benchmarkCases.reduce((sum, item) => sum + item.automatic_symbol_matches, 0)} resoluciones por nombre`),
     gate("examples_have_no_validation_errors", examples.every((item) => item.errors === 0), `${examples.reduce((sum, item) => sum + item.errors, 0)} errores`),
     gate("examples_have_no_dangerous_warnings", examples.every((item) => item.dangerous_warnings.length === 0), `${examples.reduce((sum, item) => sum + item.dangerous_warnings.length, 0)} avisos peligrosos`),
     gate("examples_have_no_component_overlaps", examples.every((item) => item.component_overlaps === 0), `${examples.reduce((sum, item) => sum + item.component_overlaps, 0)} solapes`),
@@ -98,7 +129,7 @@ async function buildReport() {
 
   return {
     schema_version: "1.0",
-    generated_on: "2026-08-26",
+    generated_on: "2026-08-27",
     engine_version: manifest.diagram_engine_version,
     release_stage: automatedGatesPass ? "private_release_candidate" : "engineering_blocked",
     decision: automatedGatesPass ? "keep_execution_private_until_field_validation" : "do_not_publish",
@@ -114,6 +145,11 @@ async function buildReport() {
       public_execution_policy_ready: true,
       reviewed_symbols: manifest.capabilities?.reviewed_catalog_symbol_count ?? 0,
       professional_examples: examples.length,
+      professional_benchmark_cases: benchmarkCases.length,
+      benchmark_domains: Object.fromEntries([...benchmarkDomains.entries()].sort()),
+      benchmark_symbols: benchmarkCases.reduce((sum, item) => sum + item.symbols, 0),
+      benchmark_nets: benchmarkCases.reduce((sum, item) => sum + item.nets, 0),
+      benchmark_automatic_symbol_matches: benchmarkCases.reduce((sum, item) => sum + item.automatic_symbol_matches, 0),
       example_components: examples.reduce((sum, item) => sum + item.components, 0),
       example_nets: examples.reduce((sum, item) => sum + item.nets, 0),
       component_overlaps: examples.reduce((sum, item) => sum + item.component_overlaps, 0),
@@ -145,6 +181,7 @@ async function buildReport() {
       "estado y capacidades resumidas",
       "búsqueda limitada de símbolos revisados",
       "contrato JSON y ejemplos profesionales revisados",
+      "banco automatizado de 20 casos profesionales para integración con IA",
       "documentación para integrar el servidor MCP local",
       "perfiles documentales experimentales y política de futura ejecución",
     ],
@@ -155,6 +192,7 @@ async function buildReport() {
       "inferir pinouts de bloques funcionales sin modelo exacto",
     ],
     examples,
+    professional_benchmark: benchmarkCases,
   };
 }
 
