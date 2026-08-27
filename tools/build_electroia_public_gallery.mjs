@@ -81,7 +81,7 @@ async function buildGallery() {
 
   return {
     schema_version: "1.0",
-    generated_on: "2026-08-26",
+    generated_on: "2026-08-28",
     engine_version: core.getContract().engine_version,
     status: "automated_review_passed_field_validation_pending",
     notice: "Los ejemplos superan las puertas automáticas del motor, pero no sustituyen la revisión profesional ni cuentan todavía como validación de campo.",

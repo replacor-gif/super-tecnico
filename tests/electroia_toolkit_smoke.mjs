@@ -10,6 +10,8 @@ assert.equal(manifest.provider_neutral, true);
 assert.equal(manifest.embedded_ai_model, false);
 assert.equal(manifest.billing_required_by_electroia, false);
 assert.equal(manifest.diagram_contract_version, "1.0");
+assert.equal(manifest.diagram_engine_version, "1.17.0-alpha.1");
+assert.equal(manifest.core_policy.generates_technical_documentation, true);
 
 const designBrief = await callElectroIATool("electroia_prepare_design_brief", {
   request: "Diseña el esquema multifilar de un arrancador de motor trifásico con paro de emergencia.",
@@ -80,6 +82,9 @@ assert.deepEqual(compiledPowerDiagram.document.nets[0].connections, ["V1.+", "X1
 assert.ok(compiledPowerDiagram.diagram.document.components.every((component) => component.position));
 assert.equal(compiledPowerDiagram.diagram.diagnostics.metrics.component_overlaps, 0);
 assert.equal(compiledPowerDiagram.diagram.diagnostics.metrics.wire_component_conflicts, 0);
+assert.equal(compiledPowerDiagram.technical_package.summary.components, 2);
+assert.equal(compiledPowerDiagram.technical_package.summary.errors, 0);
+assert.equal(compiledPowerDiagram.technical_package.wire_schedule.length, 2);
 
 const compiledAutomationDiagram = await callElectroIATool("electroia_compile_diagram", {spec: {
   title: "PLC, variador y motor compilados por intención",
@@ -124,6 +129,7 @@ const roundTwoDiagram = await callElectroIATool("electroia_render_diagram", {doc
 assert.match(roundTwoDiagram.diagram.svg, />&amp;<\/text>/);
 assert.match(roundTwoDiagram.diagram.svg, />ƒ<\/text>/);
 assert.match(roundTwoDiagram.diagram.svg, />W<\/text>/);
+assert.equal(roundTwoDiagram.technical_package.summary.components, 3);
 assert.equal(diagramContract.symbol_registry.symbols.filter((symbol) => symbol.review_status === "engine_internal").length, 3);
 for (const symbolId of ["SYM-0001", "SYM-0006", "SYM-0011", "SYM-0109", "SYM-0110", "SYM-0114", "SYM-0122", "SYM-0123", "SYM-0125", "SYM-0129", "SYM-0130", "SYM-0139", "SYM-0142", "SYM-0151", "SYM-0160", "SYM-0163", "SYM-0167", "SYM-0168", "SYM-0173", "SYM-0177", "SYM-0256", "SYM-0264", "SYM-0356", "SYM-0439", "SYM-0441", "SYM-0299", "SYM-0387", "SYM-0390", "SYM-0427", "SYM-0445", "SYM-0460"]) {
   assert.ok(diagramContract.symbol_registry.symbols.some((symbol) => symbol.id === symbolId), symbolId);

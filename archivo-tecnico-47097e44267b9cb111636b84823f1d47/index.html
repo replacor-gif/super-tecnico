@@ -39,7 +39,7 @@
       </a>
       <div class="header-actions">
         <div id="engineStatus" class="case-pill local">
-          <span></span><b id="engineStatusLabel">Motor gráfico neutral</b><em> · 1.16</em>
+          <span></span><b id="engineStatusLabel">Motor gráfico neutral</b><em> · 1.17</em>
         </div>
         <a class="header-back" href="https://www.replacor.com/">REPLACOR.COM</a>
         <a class="header-back" href="../index.html">Volver</a>
@@ -52,11 +52,11 @@
           <div class="launch-copy">
             <div class="eyebrow">Motor electrotécnico para personas e inteligencias artificiales</div>
             <h1>La IA diseña.<br /><em>ElectroIA lo convierte en plano.</em></h1>
-            <p class="lede">Un único motor para circuitos electrónicos, cuadros, automatización y sistemas embebidos. La inteligencia calcula y selecciona; ElectroIA valida los símbolos, ordena las conexiones y dibuja sobre una sola rejilla.</p>
+            <p class="lede">Un único motor para circuitos electrónicos, cuadros, automatización y sistemas embebidos. La inteligencia calcula y selecciona; ElectroIA valida, dibuja y entrega el dossier técnico completo del proyecto.</p>
             <div class="launch-badges" aria-label="Capacidades principales">
               <span><i></i> 501 símbolos revisados</span>
               <span><i></i> Entrada universal JSON</span>
-              <span><i></i> Salida SVG trazable</span>
+              <span><i></i> SVG + dossier trazable</span>
             </div>
           </div>
           <div class="engine-orbit" aria-label="Flujo desde una IA hasta el plano final">
@@ -266,6 +266,43 @@
           </article>
         </div>
 
+        <article id="technicalDossier" class="technical-dossier panel" hidden>
+          <div class="dossier-head">
+            <div>
+              <span class="eyebrow">Documentación derivada del mismo plano</span>
+              <h3>Dossier técnico del proyecto</h3>
+              <p>ElectroIA cruza componentes, redes y terminales sin inventar datos técnicos que no hayan sido aportados.</p>
+            </div>
+            <div class="dossier-actions">
+              <button id="downloadTechnicalJson" class="diagram-button" type="button">Dossier JSON</button>
+              <button id="downloadTechnicalCsv" class="diagram-button" type="button">Tablas CSV</button>
+            </div>
+          </div>
+          <div id="dossierSummary" class="dossier-summary"></div>
+          <div class="dossier-sections">
+            <details open>
+              <summary><span>Materiales</span><b id="dossierBomCount">0 partidas</b></summary>
+              <div class="dossier-table-wrap"><table><thead><tr><th>Pos.</th><th>Referencias</th><th>Cant.</th><th>Descripción</th><th>Modelo / referencia</th><th>Estado</th></tr></thead><tbody id="dossierBom"></tbody></table></div>
+            </details>
+            <details>
+              <summary><span>Conductores y redes</span><b id="dossierWireCount">0 conductores</b></summary>
+              <div class="dossier-table-wrap"><table><thead><tr><th>N.º</th><th>Red</th><th>Desde</th><th>Hasta</th><th>Sección</th><th>Cable / señal</th></tr></thead><tbody id="dossierWires"></tbody></table></div>
+            </details>
+            <details>
+              <summary><span>Bornes y terminales</span><b id="dossierTerminalCount">0 terminales</b></summary>
+              <div class="dossier-table-wrap"><table><thead><tr><th>Elemento</th><th>Borne</th><th>Red</th><th>Conductor</th><th>Tipo eléctrico</th><th>Ubicación</th></tr></thead><tbody id="dossierTerminals"></tbody></table></div>
+            </details>
+            <details>
+              <summary><span>Entradas y salidas</span><b id="dossierIoCount">0 puntos</b></summary>
+              <div class="dossier-table-wrap"><table><thead><tr><th>Elemento</th><th>Canal</th><th>Tipo</th><th>Señal</th><th>Dirección</th><th>Conductor</th></tr></thead><tbody id="dossierIo"></tbody></table></div>
+            </details>
+            <details>
+              <summary><span>Control de calidad</span><b id="dossierQualityStatus">Preparando…</b></summary>
+              <ul id="dossierFindings" class="dossier-findings"></ul>
+            </details>
+          </div>
+        </article>
+
         <article class="warning-panel">
           <div class="warning-icon">!</div>
           <div><h3>Antes de montar</h3><ul id="warningsList"></ul></div>
@@ -327,8 +364,8 @@
 
     <script src="engine.js"></script>
     <script src="diagram-symbol-library.js"></script>
-    <script src="diagram-core.js?v=16"></script>
+    <script src="diagram-core.js?v=17"></script>
     <script src="diagram.js"></script>
-    <script src="app.js?v=4"></script>
+    <script src="app.js?v=5"></script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" class="electrical-diagram electroia-core-diagram" viewBox="0 0 1920 1836" role="img"
-      data-engine-version="1.16.0-alpha.1" data-contract-version="1.0"
+      data-engine-version="1.17.0-alpha.1" data-contract-version="1.0"
       data-document-kind="multi_line_diagram" data-standard-profile="IEC_EXPERIMENTAL"
       data-grid-pitch-mil="50" data-pages="1" aria-label="Arranque directo de motor 3~">
       <style>
@@ -75,7 +75,7 @@
         <text class="title-small" x="1777" y="1780">REV. A</text>
         <text class="title-small" x="1777" y="1812">HOJA 1 / 1</text>
       </g>
-      <text class="title-small" x="24" y="1786">ElectroIA Diagram Engine 1.16.0-alpha.1</text>
+      <text class="title-small" x="24" y="1786">ElectroIA Diagram Engine 1.17.0-alpha.1</text>
       <text class="title-small" x="24" y="1804">multi_line_diagram · IEC_EXPERIMENTAL</text>
       <text class="document-note" x="24" y="1822">ESQUEMA PATRÓN: POTENCIA Y MANDO EN UN SOLO LIENZO</text>
     </svg>

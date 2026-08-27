@@ -27,7 +27,11 @@ try {
   await page.waitForSelector("#resultView.active #schematic svg.electroia-core-diagram");
 
   assert.match(await page.locator("#aiBridgeStatus").innerText(), /ESPECIFICACIÓN COMPILADA/);
-  assert.match(await page.locator("#schematic svg").getAttribute("data-engine-version"), /^1\.16\./);
+  assert.match(await page.locator("#schematic svg").getAttribute("data-engine-version"), /^1\.17\./);
+  await page.waitForSelector("#technicalDossier:not([hidden]) #dossierSummary .is-review, #technicalDossier:not([hidden]) #dossierSummary .is-ready");
+  assert.match(await page.locator("#dossierSummary").innerText(), /componentes/i);
+  assert.ok(await page.locator("#dossierWires tr").count() >= 1);
+  assert.ok(await page.locator("#dossierTerminals tr").count() >= 1);
   assert.match(await page.locator("#layoutEditorMetrics").innerText(), /0 solapes · 0 cables sobre símbolos/);
 
   const before = await page.locator("#schematic svg").innerHTML();
@@ -37,8 +41,11 @@ try {
   await page.locator('[data-move-x="1"][data-move-y="0"]').click();
   const after = await page.locator("#schematic svg").innerHTML();
   assert.notEqual(after, before, "Mover un símbolo debe regenerar el plano");
+  if (process.env.ELECTROIA_SCREENSHOT) {
+    await page.screenshot({ path: process.env.ELECTROIA_SCREENSHOT, fullPage: true });
+  }
   assert.equal(pageErrors.length, 0, pageErrors.join("\n"));
-  console.log("ElectroIA Studio mobile browser smoke: OK · compilación IA + banco 20 + ajuste táctil");
+  console.log("ElectroIA Studio mobile browser smoke: OK · compilación IA + dossier técnico + banco 20 + ajuste táctil");
 } finally {
   await browser.close();
 }

@@ -91,6 +91,12 @@ async function buildReport() {
       wire_component_conflicts: first.diagram.diagnostics.metrics.wire_component_conflicts,
       automatic_symbol_matches: first.resolution.summary.automatic_symbol_matches,
       deterministic: first.diagram.svg === second.diagram.svg,
+      technical_package_deterministic: JSON.stringify(first.technical_package) === JSON.stringify(second.technical_package),
+      technical_package_errors: first.technical_package.summary.errors,
+      bom_items: first.technical_package.summary.bom_items,
+      conductors: first.technical_package.summary.conductors,
+      connected_terminals: first.technical_package.summary.connected_terminals,
+      io_points: first.technical_package.summary.io_points,
       single_canvas: first.diagram.diagnostics.metrics.single_canvas,
     });
   }
@@ -105,6 +111,7 @@ async function buildReport() {
     gate("benchmark_is_deterministic", benchmarkCases.every((item) => item.deterministic), `${benchmarkCases.filter((item) => item.deterministic).length}/${benchmarkCases.length} salidas repetibles`),
     gate("benchmark_has_no_layout_conflicts", benchmarkCases.every((item) => item.component_overlaps === 0 && item.wire_component_conflicts === 0), `${benchmarkCases.reduce((sum, item) => sum + item.component_overlaps + item.wire_component_conflicts, 0)} conflictos`),
     gate("benchmark_tests_automatic_resolution", benchmarkCases.reduce((sum, item) => sum + item.automatic_symbol_matches, 0) >= 4, `${benchmarkCases.reduce((sum, item) => sum + item.automatic_symbol_matches, 0)} resoluciones por nombre`),
+    gate("benchmark_generates_technical_packages", benchmarkCases.every((item) => item.technical_package_errors === 0 && item.technical_package_deterministic), `${benchmarkCases.length} dosieres deterministas · ${benchmarkCases.reduce((sum, item) => sum + item.connected_terminals, 0)} terminales documentados`),
     gate("examples_have_no_validation_errors", examples.every((item) => item.errors === 0), `${examples.reduce((sum, item) => sum + item.errors, 0)} errores`),
     gate("examples_have_no_dangerous_warnings", examples.every((item) => item.dangerous_warnings.length === 0), `${examples.reduce((sum, item) => sum + item.dangerous_warnings.length, 0)} avisos peligrosos`),
     gate("examples_have_no_component_overlaps", examples.every((item) => item.component_overlaps === 0), `${examples.reduce((sum, item) => sum + item.component_overlaps, 0)} solapes`),
@@ -129,7 +136,7 @@ async function buildReport() {
 
   return {
     schema_version: "1.0",
-    generated_on: "2026-08-27",
+    generated_on: "2026-08-28",
     engine_version: manifest.diagram_engine_version,
     release_stage: automatedGatesPass ? "private_release_candidate" : "engineering_blocked",
     decision: automatedGatesPass ? "keep_execution_private_until_field_validation" : "do_not_publish",
@@ -150,6 +157,10 @@ async function buildReport() {
       benchmark_symbols: benchmarkCases.reduce((sum, item) => sum + item.symbols, 0),
       benchmark_nets: benchmarkCases.reduce((sum, item) => sum + item.nets, 0),
       benchmark_automatic_symbol_matches: benchmarkCases.reduce((sum, item) => sum + item.automatic_symbol_matches, 0),
+      benchmark_bom_items: benchmarkCases.reduce((sum, item) => sum + item.bom_items, 0),
+      benchmark_conductors: benchmarkCases.reduce((sum, item) => sum + item.conductors, 0),
+      benchmark_connected_terminals: benchmarkCases.reduce((sum, item) => sum + item.connected_terminals, 0),
+      benchmark_io_points: benchmarkCases.reduce((sum, item) => sum + item.io_points, 0),
       example_components: examples.reduce((sum, item) => sum + item.components, 0),
       example_nets: examples.reduce((sum, item) => sum + item.nets, 0),
       component_overlaps: examples.reduce((sum, item) => sum + item.component_overlaps, 0),

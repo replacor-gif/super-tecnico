@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" class="electrical-diagram electroia-core-diagram" viewBox="0 0 3600 2076" role="img"
-      data-engine-version="1.16.0-alpha.1" data-contract-version="1.0"
+      data-engine-version="1.17.0-alpha.1" data-contract-version="1.0"
       data-document-kind="circuit_diagram" data-standard-profile="IEC_EXPERIMENTAL"
       data-grid-pitch-mil="50" data-pages="1" aria-label="Arduino de 5 V con interfaz aislada a campo de 24 V">
       <style>
@@ -54,7 +54,7 @@
         <text class="title-small" x="3457" y="2020">REV. A</text>
         <text class="title-small" x="3457" y="2052">HOJA 1 / 1</text>
       </g>
-      <text class="title-small" x="24" y="2026">ElectroIA Diagram Engine 1.16.0-alpha.1</text>
+      <text class="title-small" x="24" y="2026">ElectroIA Diagram Engine 1.17.0-alpha.1</text>
       <text class="title-small" x="24" y="2044">circuit_diagram · IEC_EXPERIMENTAL</text>
       <text class="document-note" x="24" y="2062">EL ARDUINO NO SE CONECTA DIRECTAMENTE AL CAMPO DE 24 V</text>
     </svg>

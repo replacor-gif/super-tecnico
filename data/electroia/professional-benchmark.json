@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "engine_target": "1.16.0-alpha.1",
+  "engine_target": "1.17.0-alpha.1",
   "description": "Banco profesional para validar compilación, resolución, maquetación y trazado desde especificaciones de alto nivel.",
   "domains": ["electrical_panels", "automation", "hvac_electronics", "embedded_systems"],
   "cases": [

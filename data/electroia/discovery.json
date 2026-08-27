@@ -5,7 +5,7 @@
   "status": "public_discovery_private_execution",
   "provider_neutral": true,
   "embedded_ai_model": false,
-  "purpose": "Compilar especificaciones electrotécnicas de cualquier IA, resolver símbolos y terminales revisados, validar redes y generar un SVG determinista sobre una rejilla común.",
+  "purpose": "Compilar especificaciones electrotécnicas de cualquier IA, resolver símbolos y terminales, validar redes y generar un SVG determinista con dossier técnico trazable.",
   "public_showcase": "../../electroia.html",
   "parent_discovery": "../ai/discovery.json",
   "responsibility_boundary": {
@@ -24,6 +24,7 @@
       "validate_document",
       "route_orthogonal_connections",
       "render_single_canvas_svg",
+      "generate_technical_package",
       "report_quality_and_connectivity_diagnostics"
     ]
   },
@@ -81,7 +82,7 @@
     "electroia_get_capabilities",
     "electroia_prepare_design_brief",
     "electroia_compile_diagram",
-    "inspect_resolution_and_diagnostics",
+    "inspect_resolution_diagnostics_and_technical_package",
     "use_electroia_search_symbols_and_electroia_get_symbol_only_when_resolution_needs_confirmation"
   ],
   "security": {

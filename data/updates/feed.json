@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-27",
+  "updated_at": "2026-08-28",
   "title": "Últimas mejoras de Super Técnico",
   "author_policy": {
     "maintainer": "Administrador",
@@ -9,6 +9,15 @@
     "personal_data": "Do not publish private identifiers unless the contributor explicitly chose that text as a public nickname."
   },
   "entries": [
+    {
+      "id": "UPD-20260828-ELECTROIA-TECHNICAL-DOSSIER-117",
+      "date": "2026-08-28",
+      "title": "ElectroIA 1.17 convierte cada plano en un proyecto documentado",
+      "summary": "Cada diagrama genera ahora un dossier enlazado con lista de materiales agrupada, numeración determinista de conductores, tabla de bornes, cables declarados, entradas y salidas, referencias cruzadas y control automático de calidad. La IA puede aportar secciones, colores, tensiones, tipos de señal y direcciones; si faltan, ElectroIA los marca para revisión en vez de inventarlos. El dossier se consulta desde el móvil y se exporta en JSON o CSV.",
+      "areas": ["ElectroIA", "Documentación", "IA", "Cuadros eléctricos", "Calidad"],
+      "kind": "platform_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
     {
       "id": "UPD-20260827-ELECTROIA-PROFESSIONAL-116",
       "date": "2026-08-27",

@@ -722,3 +722,23 @@ main { width: min(1240px, calc(100% - 24px)); }
   .launch-hero { min-height: 0; padding: 29px 20px; border-radius: 18px; }.launch-hero h1 { font-size: 43px; }.launch-hero .lede { font-size: 15px; }.engine-orbit { min-height: 230px; transform: scale(.93); }
   .workspace-tabs { grid-template-columns: 1fr; }.workspace-tabs button { min-height: 70px; }.workspace-panel { padding: 19px 14px; }.workspace-heading h2 { font-size: 28px; }.bridge-card { padding: 17px 13px; }.bridge-actions > * { flex: 1 1 auto; }.bridge-card .json-editor { min-height: 245px; }.benchmark-loader { grid-template-columns: 1fr; }.benchmark-loader > * { width: 100%; }.bridge-trust-strip { grid-template-columns: 1fr; }.integration-flow, .integration-links { grid-template-columns: 1fr; }.integration-flow article { min-height: 135px; }.integration-flow article::after { display: none !important; }.integration-status { grid-template-columns: auto 1fr; }.launch-badges span { width: 100%; }.layout-editor { grid-template-columns: 1fr; }.layout-pad { justify-self: center; }.layout-editor .diagram-button { min-height: 42px; }
 }
+
+.technical-dossier { margin-top: 18px; padding: clamp(18px,3vw,30px); border-color: rgba(0,238,255,.2); background: linear-gradient(145deg,rgba(0,238,255,.045),rgba(5,9,16,.96) 42%); }
+.dossier-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 22px; }
+.dossier-head h3 { margin: 7px 0 6px; font-size: clamp(1.35rem,2.4vw,2rem); }.dossier-head p { margin: 0; max-width: 760px; color: var(--muted); }
+.dossier-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+.dossier-summary { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 10px; margin: 22px 0 14px; }
+.dossier-summary span { min-width: 0; padding: 13px; border: 1px solid rgba(255,255,255,.08); border-radius: 13px; background: rgba(255,255,255,.025); color: var(--muted); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; }
+.dossier-summary b { display: block; margin-bottom: 3px; color: var(--ink); font-size: 1.35rem; letter-spacing: 0; }.dossier-summary .is-ready b { color: var(--green); }.dossier-summary .is-review b { color: #ffd43b; }.dossier-summary .is-blocked b { color: #ff6b6b; }
+.dossier-sections { display: grid; gap: 8px; }.dossier-sections details { overflow: hidden; border: 1px solid rgba(255,255,255,.08); border-radius: 13px; background: rgba(0,0,0,.2); }
+.dossier-sections summary { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 15px 17px; cursor: pointer; list-style: none; }.dossier-sections summary::-webkit-details-marker { display: none; }.dossier-sections summary span { font-weight: 800; }.dossier-sections summary b { color: var(--cyan); font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; }
+.dossier-table-wrap { overflow-x: auto; border-top: 1px solid rgba(255,255,255,.07); }.dossier-table-wrap table { width: 100%; min-width: 760px; border-collapse: collapse; font-size: .8rem; }.dossier-table-wrap th,.dossier-table-wrap td { padding: 11px 13px; border-bottom: 1px solid rgba(255,255,255,.055); text-align: left; vertical-align: top; }.dossier-table-wrap th { color: var(--muted); font-size: .67rem; letter-spacing: .08em; text-transform: uppercase; }.dossier-table-wrap td:first-child { color: var(--cyan); font-family: ui-monospace,monospace; font-weight: 800; }.dossier-table-wrap tr:last-child td { border-bottom: 0; }
+.dossier-empty { color: var(--muted); font-style: italic; }.dossier-findings { margin: 0; padding: 0 18px 16px 40px; border-top: 1px solid rgba(255,255,255,.07); }.dossier-findings li { padding: 10px 0 0; color: var(--muted); }.dossier-findings li.is-error { color: #ff9b9b; }.dossier-findings li.is-warning { color: #ffe27a; }
+
+@media (max-width: 840px) {
+  .dossier-summary { grid-template-columns: repeat(2,minmax(0,1fr)); }.dossier-head { display: grid; }.dossier-actions { justify-content: stretch; }.dossier-actions button { flex: 1; min-height: 44px; }
+}
+
+@media (max-width: 520px) {
+  .technical-dossier { padding: 15px; }.dossier-summary { grid-template-columns: 1fr 1fr; gap: 7px; }.dossier-summary span { padding: 10px; font-size: .63rem; }.dossier-summary span:last-child { grid-column: 1 / -1; }.dossier-sections summary { padding: 14px 12px; }
+}

@@ -17,6 +17,7 @@ const state = {
   benchmarkCatalog: null,
   layoutEditMode: false,
   selectedComponentRef: "",
+  technicalPackage: null,
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -107,7 +108,7 @@ function buildAiBrief() {
     kind: "electroia_design_brief",
     language: "es",
     request,
-    objective: "Diseñar y calcular el circuito, seleccionar componentes y devolver una especificación de alto nivel que ElectroIA resuelva, valide y dibuje.",
+    objective: "Diseñar y calcular el circuito, seleccionar componentes y devolver una especificación de alto nivel que ElectroIA resuelva, valide, dibuje y convierta en dossier técnico.",
     responsibility_boundary: {
       ai: "Interpreta la necesidad, pregunta los datos imprescindibles, realiza los cálculos, selecciona componentes y define todas las redes.",
       electroia: "Resuelve nombres de símbolos y terminales, valida el contrato, separa dominios, enruta sobre la rejilla y genera el plano SVG.",
@@ -124,6 +125,7 @@ function buildAiBrief() {
       "Puedes indicar symbol_query con un nombre técnico claro; ElectroIA resolverá el symbol_id revisado.",
       "Si un bloque exige modelo exacto, pide fabricante, referencia y documentación.",
       "Separa los cálculos y decisiones técnicas del documento gráfico.",
+      "Si los has calculado, aporta numeración, sección, color, cable, tensión, tipo de señal y dirección de E/S en cada red; ElectroIA no inventará los valores ausentes.",
       "Usa identificadores cortos en components[].id y referencia las redes con {component, port}.",
       "Devuelve solo un objeto JSON válido, sin Markdown ni explicaciones alrededor.",
     ],
@@ -133,6 +135,7 @@ function buildAiBrief() {
       required_fields: ["title", "components", "nets"],
       component_example: { id: "power_supply", symbol_query: "fuente industrial 24 VDC", value: "24 VDC" },
       connection_example: { component: "power_supply", port: "positive" },
+      optional_net_documentation: ["wire_number", "conductor_size_mm2", "color", "cable_id", "cable_type", "voltage", "signal_type", "io_address"],
     },
   };
 }
@@ -211,12 +214,14 @@ async function renderAiDocument() {
     if (typeof ElectroDiagramCore === "undefined") throw new Error("El núcleo gráfico no está disponible.");
     let documentData = diagramInput.value;
     let resolutionDetails = [];
+    let technicalPackage = null;
     state.bridgeResolution = null;
     if (diagramInput.kind === "spec") {
       const { compileBrowserDiagramSpec } = await import("./diagram-compiler-browser.mjs?v=1");
       const compiled = compileBrowserDiagramSpec(diagramInput.value);
       state.bridgeResolution = compiled.resolution;
       documentData = compiled.diagram.document;
+      technicalPackage = compiled.technical_package;
       resolutionDetails = compiled.resolution.components.map((item) => `${item.component_id} → ${item.symbol_id} ${item.symbol_name}`);
     } else {
       documentData = ElectroDiagramCore.render(documentData).document;
@@ -234,10 +239,12 @@ async function renderAiDocument() {
     setBridgeStatus(
       validation.warnings.length ? "warning" : "success",
       diagramInput.kind === "spec" ? "ESPECIFICACIÓN COMPILADA" : (validation.warnings.length ? `${validation.warnings.length} AVISOS` : "DOCUMENTO VÁLIDO"),
-      `${documentData.components.length} símbolos · ${documentData.nets.length} redes · ${state.bridgeResolution?.summary?.automatic_symbol_matches || 0} símbolos resueltos por nombre · una sola hoja.`,
+      `${documentData.components.length} símbolos · ${documentData.nets.length} redes · ${state.bridgeResolution?.summary?.automatic_symbol_matches || 0} símbolos resueltos por nombre · plano y dossier técnico generados.`,
       [...resolutionDetails, ...validation.warnings.map((item) => `${item.code}: ${item.message}`)],
     );
-    renderPublicResult(publicDesignFromDiagramDocument(documentData));
+    const design = publicDesignFromDiagramDocument(documentData);
+    if (technicalPackage) design.technical_package = technicalPackage;
+    renderPublicResult(design);
     showView($("#resultView"));
   } catch (error) {
     state.bridgeDiagnostics = { errors: [{ code: "INVALID_JSON", message: error.message }], warnings: [] };
@@ -801,6 +808,108 @@ $("#startOver").addEventListener("click", () => {
   $("#requestInput").focus();
 });
 
+function tableEmpty(columns, message) {
+  return `<tr><td colspan="${columns}" class="dossier-empty">${escapeHtml(message)}</td></tr>`;
+}
+
+function technicalStatusLabel(status) {
+  if (status === "ready") return "LISTO";
+  if (status === "blocked") return "BLOQUEADO";
+  return "REVISAR";
+}
+
+function renderTechnicalPackage(technicalPackage) {
+  const summary = technicalPackage.summary || {};
+  const statusClass = summary.status === "ready" ? "is-ready" : (summary.status === "blocked" ? "is-blocked" : "is-review");
+  $("#technicalDossier").hidden = false;
+  $("#dossierSummary").innerHTML = `
+    <span><b>${Number(summary.components || 0)}</b>componentes</span>
+    <span><b>${Number(summary.conductors || 0)}</b>conductores</span>
+    <span><b>${Number(summary.connected_terminals || 0)}</b>terminales</span>
+    <span><b>${Number(summary.io_points || 0)}</b>puntos de E/S</span>
+    <span class="${statusClass}"><b>${technicalStatusLabel(summary.status)}</b>control documental</span>
+  `;
+
+  const bom = technicalPackage.bom || [];
+  $("#dossierBomCount").textContent = `${bom.length} partidas`;
+  $("#dossierBom").innerHTML = bom.length ? bom.map((row) => `<tr>
+    <td>${row.item}</td><td>${escapeHtml(row.refs.join(", "))}</td><td>${row.quantity}</td>
+    <td>${escapeHtml(row.description)}</td><td>${escapeHtml([row.manufacturer, row.model, row.part_number].filter(Boolean).join(" · ") || "Por especificar")}</td>
+    <td>${escapeHtml(row.specification_status.replaceAll("_", " "))}</td>
+  </tr>`).join("") : tableEmpty(6, "No hay partidas disponibles.");
+
+  const wires = technicalPackage.wire_schedule || [];
+  $("#dossierWireCount").textContent = `${summary.conductors || 0} conductores`;
+  $("#dossierWires").innerHTML = wires.length ? wires.map((row) => `<tr>
+    <td>${escapeHtml(row.wire_number)}</td><td>${escapeHtml(row.label)}</td><td>${escapeHtml(row.from)}</td><td>${escapeHtml(row.to.join(" · "))}</td>
+    <td>${row.conductor_size_mm2 ? `${escapeHtml(row.conductor_size_mm2)} mm²` : "Por calcular"}</td>
+    <td>${escapeHtml([row.cable_id, row.cable_type, row.signal_type, row.voltage].filter(Boolean).join(" · ") || row.role)}</td>
+  </tr>`).join("") : tableEmpty(6, "No hay redes disponibles.");
+
+  const terminals = technicalPackage.terminal_schedule || [];
+  $("#dossierTerminalCount").textContent = `${terminals.length} terminales`;
+  $("#dossierTerminals").innerHTML = terminals.length ? terminals.map((row) => `<tr>
+    <td>${escapeHtml(row.ref)}</td><td>${escapeHtml(row.terminal)}</td><td>${escapeHtml(row.net_label)}</td>
+    <td>${escapeHtml(row.wire_number)}</td><td>${escapeHtml(row.electrical_type)}</td><td>${escapeHtml(row.location || "Sin indicar")}</td>
+  </tr>`).join("") : tableEmpty(6, "No hay terminales conectados.");
+
+  const io = technicalPackage.io_schedule || [];
+  $("#dossierIoCount").textContent = `${io.length} puntos`;
+  $("#dossierIo").innerHTML = io.length ? io.map((row) => `<tr>
+    <td>${escapeHtml(row.ref)}</td><td>${escapeHtml(row.channel)}</td><td>${escapeHtml(row.direction)}</td><td>${escapeHtml(row.signal)}</td>
+    <td>${escapeHtml(row.address || "Por asignar")}</td><td>${escapeHtml(row.wire_number)}</td>
+  </tr>`).join("") : tableEmpty(6, "Este plano no contiene canales de E/S identificados.");
+
+  const findings = technicalPackage.quality?.findings || [];
+  $("#dossierQualityStatus").textContent = findings.length ? `${findings.length} comprobaciones` : "Sin incidencias";
+  $("#dossierFindings").innerHTML = findings.length
+    ? findings.map((item) => `<li class="is-${escapeHtml(item.severity)}"><b>${escapeHtml(item.code)}</b> · ${escapeHtml(item.message)}</li>`).join("")
+    : "<li>Sin incidencias documentales automáticas. Debe mantenerse la revisión profesional del proyecto.</li>";
+}
+
+async function prepareTechnicalPackage(design) {
+  if (!design?.diagram_document || typeof ElectroDiagramCore === "undefined") {
+    state.technicalPackage = null;
+    $("#technicalDossier").hidden = true;
+    return;
+  }
+  const expectedDesign = design;
+  $("#technicalDossier").hidden = false;
+  $("#dossierSummary").innerHTML = "<span><b>…</b>Generando documentación</span>";
+  try {
+    let technicalPackage = design.technical_package;
+    if (!technicalPackage) {
+      const module = await import("../electroia-tool-server/src/technical-documentation.mjs?v=1");
+      technicalPackage = module.buildTechnicalPackage(design.diagram_document, ElectroDiagramCore.getRegistry());
+    }
+    if (state.currentDesign !== expectedDesign) return;
+    design.technical_package = technicalPackage;
+    state.technicalPackage = technicalPackage;
+    renderTechnicalPackage(technicalPackage);
+  } catch (error) {
+    if (state.currentDesign !== expectedDesign) return;
+    state.technicalPackage = null;
+    $("#dossierSummary").innerHTML = `<span class="is-blocked"><b>ERROR</b>${escapeHtml(error.message)}</span>`;
+  }
+}
+
+function csvCell(value) {
+  return `"${String(value ?? "").replaceAll('"', '""')}"`;
+}
+
+function rowsToCsv(title, headers, rows) {
+  return [csvCell(title), headers.map(csvCell).join(";"), ...rows.map((row) => row.map(csvCell).join(";")), ""].join("\r\n");
+}
+
+function technicalPackageCsv(technicalPackage) {
+  return [
+    rowsToCsv("MATERIALES", ["Posición", "Referencias", "Cantidad", "Descripción", "Fabricante", "Modelo", "Referencia", "Estado"], (technicalPackage.bom || []).map((row) => [row.item, row.refs.join(", "), row.quantity, row.description, row.manufacturer, row.model, row.part_number, row.specification_status])),
+    rowsToCsv("CONDUCTORES", ["Número", "Red", "Función", "Desde", "Hasta", "Sección mm2", "Color", "Cable", "Tipo", "Tensión", "Señal"], (technicalPackage.wire_schedule || []).map((row) => [row.wire_number, row.net_id, row.role, row.from, row.to.join(", "), row.conductor_size_mm2, row.color, row.cable_id, row.cable_type, row.voltage, row.signal_type])),
+    rowsToCsv("TERMINALES", ["Elemento", "Borne", "Red", "Conductor", "Tipo eléctrico", "Ubicación"], (technicalPackage.terminal_schedule || []).map((row) => [row.ref, row.terminal, row.net_label, row.wire_number, row.electrical_type, row.location])),
+    rowsToCsv("ENTRADAS Y SALIDAS", ["Elemento", "Canal", "Dirección", "Señal", "Tipo", "Dirección E/S", "Conductor"], (technicalPackage.io_schedule || []).map((row) => [row.ref, row.channel, row.direction, row.signal, row.signal_type, row.address, row.wire_number])),
+  ].join("\r\n");
+}
+
 function renderPublicResult(design) {
   if (design.diagram_document && typeof ElectroDiagramCore !== "undefined") {
     design.diagram_document = ElectroDiagramCore.render(design.diagram_document).document;
@@ -850,6 +959,7 @@ function renderPublicResult(design) {
     warnings: relevantWarnings.length,
   };
   prepareFieldValidation(design);
+  prepareTechnicalPackage(design);
   $("#toggleLayoutEditor").hidden = !design.diagram_document;
   if (design.diagram_document) {
     updateLayoutEditorMetrics(ElectroDiagramCore.render(design.diagram_document).diagnostics.metrics);
@@ -902,6 +1012,7 @@ function refreshCurrentDiagram() {
   updateLayoutEditorMetrics(result.diagnostics.metrics);
   attachLayoutEditor();
   prepareFieldValidation(state.currentDesign);
+  prepareTechnicalPackage(state.currentDesign);
 }
 
 function setLayoutEditMode(enabled) {
@@ -965,6 +1076,16 @@ $("#downloadJson").addEventListener("click", () => {
   const documentData = state.currentDesign?.diagram_document || state.currentDesign;
   if (!documentData) return;
   downloadBlob(designFilename("json"), `${JSON.stringify(documentData, null, 2)}\n`, "application/json;charset=utf-8");
+});
+
+$("#downloadTechnicalJson").addEventListener("click", () => {
+  if (!state.technicalPackage) return;
+  downloadBlob(designFilename("dossier.json"), `${JSON.stringify(state.technicalPackage, null, 2)}\n`, "application/json;charset=utf-8");
+});
+
+$("#downloadTechnicalCsv").addEventListener("click", () => {
+  if (!state.technicalPackage) return;
+  downloadBlob(designFilename("dossier.csv"), `\ufeff${technicalPackageCsv(state.technicalPackage)}`, "text/csv;charset=utf-8");
 });
 
 $("#fieldValidationForm").addEventListener("submit", async (event) => {

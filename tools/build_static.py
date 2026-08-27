@@ -630,6 +630,7 @@ def build(source_root: Path, output: Path) -> dict[str, Any]:
         "electroia-tool-server/src/cli.mjs",
         "electroia-tool-server/src/compiler.mjs",
         "electroia-tool-server/src/symbol-ranking.mjs",
+        "electroia-tool-server/src/technical-documentation.mjs",
         "electroia-tool-server/src/index.mjs",
         "electroia-tool-server/src/toolkit.mjs",
         "simbolos.html",

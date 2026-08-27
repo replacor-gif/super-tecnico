@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" class="electrical-diagram electroia-core-diagram" viewBox="0 0 3456 2004" role="img"
-      data-engine-version="1.16.0-alpha.1" data-contract-version="1.0"
+      data-engine-version="1.17.0-alpha.1" data-contract-version="1.0"
       data-document-kind="multi_line_diagram" data-standard-profile="IEC_EXPERIMENTAL"
       data-grid-pitch-mil="50" data-pages="1" aria-label="Control BMS de unidad de tratamiento de aire">
       <style>
@@ -48,7 +48,7 @@
         <text class="title-small" x="3313" y="1948">REV. A</text>
         <text class="title-small" x="3313" y="1980">HOJA 1 / 1</text>
       </g>
-      <text class="title-small" x="24" y="1954">ElectroIA Diagram Engine 1.16.0-alpha.1</text>
+      <text class="title-small" x="24" y="1954">ElectroIA Diagram Engine 1.17.0-alpha.1</text>
       <text class="title-small" x="24" y="1972">multi_line_diagram · IEC_EXPERIMENTAL</text>
       <text class="document-note" x="24" y="1990">EJEMPLO FUNCIONAL DE ARQUITECTURA, NO ES UN PROYECTO EJECUTIVO</text>
     </svg>

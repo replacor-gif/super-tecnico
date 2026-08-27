@@ -1,9 +1,9 @@
 {
   "name": "electroia-tool-server",
-  "version": "0.17.0",
+  "version": "0.18.0",
   "private": true,
   "type": "module",
-  "description": "Servidor MCP neutral para generar diagramas electrotécnicos desde cualquier IA compatible.",
+  "description": "Servidor MCP neutral para generar diagramas y documentación electrotécnica desde cualquier IA compatible.",
   "mcpName": "io.github.replacor-gif/electroia-diagrams",
   "repository": {
     "type": "git",

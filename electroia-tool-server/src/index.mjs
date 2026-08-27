@@ -18,7 +18,7 @@ function toolError(error) {
 }
 
 function createServer() {
-  const server = new McpServer({ name: "electroia-tools", version: "0.17.0" });
+  const server = new McpServer({ name: "electroia-tools", version: "0.18.0" });
 
   server.registerTool(
     "electroia_get_capabilities",
@@ -213,6 +213,8 @@ function createServer() {
       model: z.string().max(120).optional(),
       part_number: z.string().max(120).optional(),
       exact_model: z.string().max(120).optional(),
+      location: z.string().max(80).optional(),
+      mounting: z.string().max(80).optional(),
       connector: z.object({
         connector_id: z.string().min(3).max(80),
         perspective: z.enum(["mating_face", "wiring_side", "device_front", "logical_only"]).optional(),
@@ -226,6 +228,14 @@ function createServer() {
       label_position: positionSchema.optional(),
       role: z.enum(["signal", "power", "ground", "protective_earth", "bus"]).optional(),
       conductors: z.number().int().min(1).max(99).optional(),
+      wire_number: z.string().min(1).max(24).optional(),
+      conductor_size_mm2: z.number().positive().max(1000).optional(),
+      color: z.string().max(40).optional(),
+      cable_id: z.string().max(40).optional(),
+      cable_type: z.string().max(80).optional(),
+      voltage: z.string().max(40).optional(),
+      signal_type: z.string().max(80).optional(),
+      io_address: z.string().max(40).optional(),
       connections: z.array(z.string().min(3).max(80)).min(1),
     })).min(1),
     relationships: z.array(z.object({
@@ -255,6 +265,21 @@ function createServer() {
     }
   );
 
+  server.registerTool(
+    "electroia_generate_technical_package",
+    {
+      description: "Genera BOM, conductores, bornes, cables, E/S, referencias cruzadas y control documental desde un documento ElectroIA validado.",
+      inputSchema: z.object({ document: diagramDocumentSchema }),
+    },
+    async (args) => {
+      try {
+        return toolResult(await callElectroIATool("electroia_generate_technical_package", args));
+      } catch (error) {
+        return toolError(error);
+      }
+    }
+  );
+
   const compilerComponentSchema = z.object({
     id: z.string().regex(/^[A-Za-z][A-Za-z0-9_-]{0,31}$/),
     ref: z.string().regex(/^[A-Za-z][A-Za-z0-9_.-]{0,31}$/).optional(),
@@ -269,6 +294,8 @@ function createServer() {
     model: z.string().max(120).optional(),
     part_number: z.string().max(120).optional(),
     exact_model: z.string().max(120).optional(),
+    location: z.string().max(80).optional(),
+    mounting: z.string().max(80).optional(),
   }).refine((component) => Boolean(component.symbol_id || component.symbol_query), {
     message: "Cada componente necesita symbol_id o symbol_query",
   });
@@ -290,6 +317,14 @@ function createServer() {
       show_label: z.boolean().optional(),
       role: z.enum(["signal", "power", "ground", "protective_earth", "bus"]).optional(),
       conductors: z.number().int().min(1).max(99).optional(),
+      wire_number: z.string().min(1).max(24).optional(),
+      conductor_size_mm2: z.number().positive().max(1000).optional(),
+      color: z.string().max(40).optional(),
+      cable_id: z.string().max(40).optional(),
+      cable_type: z.string().max(80).optional(),
+      voltage: z.string().max(40).optional(),
+      signal_type: z.string().max(80).optional(),
+      io_address: z.string().max(40).optional(),
       connections: z.array(compilerEndpointSchema).min(1).max(100),
     })).min(1).max(400),
     relationships: z.array(z.object({
@@ -307,7 +342,7 @@ function createServer() {
   server.registerTool(
     "electroia_compile_diagram",
     {
-      description: "Compila una especificación amigable para IAs: resuelve consultas de símbolos y bornes, asigna referencias, coloca, valida, enruta y devuelve el SVG.",
+      description: "Compila una especificación amigable para IAs: resuelve símbolos y bornes, asigna referencias, coloca, valida, enruta y devuelve SVG y dossier técnico.",
       inputSchema: z.object({ spec: compilerSpecSchema }),
     },
     async (args) => {

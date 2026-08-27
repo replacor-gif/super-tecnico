@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_on": "2026-08-26",
-  "engine_version": "1.16.0-alpha.1",
+  "generated_on": "2026-08-28",
+  "engine_version": "1.17.0-alpha.1",
   "status": "automated_review_passed_field_validation_pending",
   "notice": "Los ejemplos superan las puertas automáticas del motor, pero no sustituyen la revisión profesional ni cuentan todavía como validación de campo.",
   "count": 5,

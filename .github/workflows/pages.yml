@@ -52,6 +52,7 @@ jobs:
           node tests/electroia_guardrails_smoke.mjs
           node tests/electroia_toolkit_smoke.mjs
           node tests/electroia_professional_benchmark.mjs
+          node tests/electroia_technical_package.mjs
           php -l api/electroia.php
           php -l api/electroia-validation.php
 

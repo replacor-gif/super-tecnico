@@ -1,3 +1,5 @@
+import { buildTechnicalPackage } from "./technical-documentation.mjs";
+
 const DOCUMENT_KINDS = new Set(["circuit_diagram", "single_line_diagram", "multi_line_diagram"]);
 const NET_ROLES = new Set(["signal", "power", "ground", "protective_earth", "bus"]);
 const REF_PATTERN = /^[A-Za-z][A-Za-z0-9_.-]{0,31}$/;
@@ -169,6 +171,8 @@ export function compileDiagramSpec(rawSpec, services) {
       ...(component.model ? { model: text(component.model).slice(0, 120) } : {}),
       ...(component.part_number ? { part_number: text(component.part_number).slice(0, 120) } : {}),
       ...(component.exact_model ? { exact_model: text(component.exact_model).slice(0, 120) } : {}),
+      ...(component.location ? { location: text(component.location).slice(0, 80) } : {}),
+      ...(component.mounting ? { mounting: text(component.mounting).slice(0, 80) } : {}),
     };
     byId.set(id, { id, ref, symbol: resolution.symbol, output });
     resolutions.push({
@@ -208,6 +212,14 @@ export function compileDiagramSpec(rawSpec, services) {
       show_label: net.show_label !== false,
       role: inferNetRole(net),
       ...(Number.isInteger(net.conductors) ? { conductors: net.conductors } : {}),
+      ...(net.wire_number ? { wire_number: text(net.wire_number).slice(0, 24) } : {}),
+      ...(Number(net.conductor_size_mm2) > 0 ? { conductor_size_mm2: Number(net.conductor_size_mm2) } : {}),
+      ...(net.color ? { color: text(net.color).slice(0, 40) } : {}),
+      ...(net.cable_id ? { cable_id: text(net.cable_id).slice(0, 40) } : {}),
+      ...(net.cable_type ? { cable_type: text(net.cable_type).slice(0, 80) } : {}),
+      ...(net.voltage ? { voltage: text(net.voltage).slice(0, 40) } : {}),
+      ...(net.signal_type ? { signal_type: text(net.signal_type).slice(0, 80) } : {}),
+      ...(net.io_address ? { io_address: text(net.io_address).slice(0, 40) } : {}),
       connections,
     };
   });
@@ -237,9 +249,11 @@ export function compileDiagramSpec(rawSpec, services) {
     },
   };
   const diagram = services.render(document);
+  const technicalPackage = buildTechnicalPackage(diagram.document, registry);
   return {
     document,
     diagram,
+    technical_package: technicalPackage,
     resolution: {
       strict: strictResolution,
       components: resolutions,

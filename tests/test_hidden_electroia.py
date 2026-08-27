@@ -20,7 +20,7 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn("noindex,nofollow,noarchive,nosnippet,noimageindex", html)
         self.assertIn('<script src="engine.js"></script>', html)
         self.assertIn('<script src="diagram-symbol-library.js"></script>', html)
-        self.assertIn('<script src="diagram-core.js?v=16"></script>', html)
+        self.assertIn('<script src="diagram-core.js?v=17"></script>', html)
         self.assertIn('<script src="diagram.js"></script>', html)
 
     def test_omega_access_is_added_below_the_page_counter(self):
@@ -189,7 +189,8 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertIn('"electroia_get_symbol"', manifest)
         self.assertIn('"electroia_compile_diagram"', manifest)
         self.assertIn('"electroia_render_diagram"', manifest)
-        self.assertIn('"diagram_engine_version": "1.16.0-alpha.1"', manifest)
+        self.assertIn('"electroia_generate_technical_package"', manifest)
+        self.assertIn('"diagram_engine_version": "1.17.0-alpha.1"', manifest)
         self.assertIn('"normalized_symbol_count": 501', manifest)
         self.assertIn('"calculates_values"', manifest)
         self.assertIn('server.registerTool(', server)
@@ -231,6 +232,7 @@ class HiddenElectroIATests(unittest.TestCase):
             self.assertTrue((output / "assets" / "analytics.js").is_file())
             self.assertTrue((output / "bitacora-privada.html").is_file())
             self.assertTrue((output / "electroia-tool-server" / "src" / "compiler.mjs").is_file())
+            self.assertTrue((output / "electroia-tool-server" / "src" / "technical-documentation.mjs").is_file())
             self.assertTrue((output / "assets" / "backlog.css").is_file())
             self.assertTrue((output / "assets" / "backlog.js").is_file())
             self.assertTrue((output / "electroia-tool-server" / "server.json").is_file())
@@ -310,7 +312,7 @@ class HiddenElectroIATests(unittest.TestCase):
         self.assertFalse(bridge["launch_boundary"]["public_anonymous_render"])
         self.assertEqual(bridge["analytics"]["client_type_header"], "X-ST-Client-Type")
         self.assertEqual(server["name"], "io.github.replacor-gif/electroia-diagrams")
-        self.assertEqual(server["version"], "0.17.0")
+        self.assertEqual(server["version"], "0.18.0")
         self.assertNotIn("4097", llms)
 
 

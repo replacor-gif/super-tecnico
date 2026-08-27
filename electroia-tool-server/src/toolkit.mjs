@@ -4,6 +4,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { compileDiagramSpec } from "./compiler.mjs";
 import { symbolSearchRank } from "./symbol-ranking.mjs";
+import { buildTechnicalPackage } from "./technical-documentation.mjs";
 
 const require = createRequire(import.meta.url);
 const SERVER_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -182,6 +183,7 @@ export async function callElectroIATool(tool, rawArguments = {}) {
           "Pregunta solo los requisitos técnicos imprescindibles que falten.",
           "Calcula y selecciona los componentes antes de dibujar.",
           "Entrega una especificación de alto nivel a electroia_compile_diagram; usa la búsqueda exacta solo si la resolución necesita confirmación.",
+          "Incluye los datos calculados de conductores, cables, tensión, señales y direcciones de E/S para que ElectroIA los incorpore al dossier técnico; nunca inventes los que falten.",
           "Revisa la resolución de símbolos, terminales y los diagnósticos antes de aceptar el SVG.",
           "Mantén los bloques de modelo exacto como no ejecutables hasta disponer de documentación del fabricante.",
         ],
@@ -312,7 +314,13 @@ export async function callElectroIATool(tool, rawArguments = {}) {
   }
 
   if (name === "electroia_render_diagram") {
-    return { ok: true, tool: name, diagram: diagramCore.render(args.document) };
+    const diagram = diagramCore.render(args.document);
+    return {
+      ok: true,
+      tool: name,
+      diagram,
+      technical_package: buildTechnicalPackage(diagram.document, diagramCore.getRegistry()),
+    };
   }
 
   if (name === "electroia_compile_diagram") {
@@ -322,6 +330,15 @@ export async function callElectroIATool(tool, rawArguments = {}) {
       render: diagramCore.render,
     });
     return { ok: true, tool: name, ...compiled };
+  }
+
+  if (name === "electroia_generate_technical_package") {
+    const diagram = diagramCore.render(args.document);
+    return {
+      ok: true,
+      tool: name,
+      technical_package: buildTechnicalPackage(diagram.document, diagramCore.getRegistry()),
+    };
   }
 
   if (name === "electroia_analyze_request") {

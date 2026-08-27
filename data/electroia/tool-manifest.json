@@ -1,19 +1,21 @@
 {
-  "schema_version": "1.4",
+  "schema_version": "1.5",
   "name": "electroia-tools",
   "title": "ElectroIA — motor gráfico electrotécnico neutral",
-  "description": "Herramientas deterministas para validar y dibujar documentos electrotécnicos definidos por una IA o aplicación externa.",
+  "description": "Herramientas deterministas para validar, dibujar y documentar proyectos electrotécnicos definidos por una IA o aplicación externa.",
   "provider_neutral": true,
   "embedded_ai_model": false,
   "billing_required_by_electroia": false,
-  "diagram_engine_version": "1.16.0-alpha.1",
+  "diagram_engine_version": "1.17.0-alpha.1",
   "diagram_contract_version": "1.0",
   "design_model_version": "1.0",
   "core_policy": {
     "calculates_values": false,
     "selects_components": false,
-    "renders_only": true,
-    "compiles_ai_friendly_specifications": true
+    "renders_only": false,
+    "compiles_ai_friendly_specifications": true,
+    "generates_technical_documentation": true,
+    "invents_missing_engineering_values": false
   },
   "shared_catalogs": {
     "connectors": "../connectors/tool-manifest.json",
@@ -28,6 +30,7 @@
       "place_on_common_grid",
       "route_orthogonal_connections",
       "render_single_canvas_svg",
+      "generate_bom_wires_terminals_io_and_cross_references",
       "report_diagnostics"
     ],
     "calling_ai": [
@@ -43,6 +46,7 @@
     "document_profile_registry": "document-profiles.json",
     "ai_design_bridge": "ai-bridge.json",
     "diagram_spec_schema": "diagram-spec.schema.json",
+    "technical_package_schema_version": "1.0",
     "execution_policy": "public-execution-policy.json",
     "document_kinds": ["circuit_diagram", "single_line_diagram", "multi_line_diagram"],
     "grid_pitch_mil": 50,
@@ -158,7 +162,7 @@
     },
     {
       "name": "electroia_compile_diagram",
-      "description": "Compila una especificación amigable para IAs: resuelve consultas de símbolos y terminales, asigna referencias, coloca, valida, enruta y devuelve documento neutral y SVG.",
+      "description": "Compila una especificación amigable para IAs: resuelve símbolos y terminales, asigna referencias, coloca, valida, enruta y devuelve documento neutral, SVG y dossier técnico.",
       "input_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -170,7 +174,21 @@
     },
     {
       "name": "electroia_render_diagram",
-      "description": "Valida símbolos, terminales y redes y devuelve un plano SVG. No calcula ni selecciona componentes.",
+      "description": "Valida símbolos, terminales y redes y devuelve un plano SVG junto con su dossier técnico. No calcula ni selecciona componentes.",
+      "input_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["document"],
+        "properties": {
+          "document": {
+            "$ref": "diagram-document.schema.json"
+          }
+        }
+      }
+    },
+    {
+      "name": "electroia_generate_technical_package",
+      "description": "Genera BOM, numeración de conductores, bornes, cables, E/S, referencias cruzadas y control documental sin inventar valores técnicos ausentes.",
       "input_schema": {
         "type": "object",
         "additionalProperties": false,

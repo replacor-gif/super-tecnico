@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "updated_at": "2026-08-26",
+  "updated_at": "2026-08-28",
   "name": "ElectroIA universal AI design bridge",
   "status": "private_preview",
   "provider_neutral": true,
-  "purpose": "Permitir que una IA interna o externa diseñe y calcule un circuito y que ElectroIA valide y represente el mismo documento neutral.",
+  "purpose": "Permitir que una IA interna o externa diseñe y calcule un circuito y que ElectroIA valide, represente y documente el mismo proyecto neutral.",
   "architecture": {
     "single_contract": "diagram-document.schema.json",
     "calling_ai": [
@@ -20,6 +20,7 @@
       "resolve_normalized_symbols_and_terminals",
       "route_on_common_grid",
       "render_single_canvas_svg",
+      "generate_bom_wires_terminals_cables_io_and_cross_references",
       "return_machine_readable_diagnostics"
     ],
     "professional_review": [
@@ -65,7 +66,8 @@
   "response_contract": {
     "accepted_wrappers": ["document", "diagram_document", "structuredContent.document"],
     "preferred_response": "Prefer one JSON specification that validates against diagram-spec.schema.json and call electroia_compile_diagram; use diagram-document.schema.json only for exact low-level control.",
-    "required_fields": ["schema_version", "document_kind", "standard_profile", "title", "components", "nets"]
+    "required_fields": ["schema_version", "document_kind", "standard_profile", "title", "components", "nets"],
+    "electroia_outputs": ["document", "diagram.svg", "diagram.diagnostics", "technical_package"]
   },
   "launch_boundary": {
     "public_discovery": true,
