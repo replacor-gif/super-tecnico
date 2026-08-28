@@ -10,6 +10,15 @@
   },
   "entries": [
     {
+      "id": "UPD-20260828-FUJITSU-LEGACY-AUDIT-221",
+      "date": "2026-08-28",
+      "title": "Fujitsu recupera E01, E02 y la tabla legacy completa",
+      "summary": "Se han auditado 54 manuales y 1.617 páginas, incluidas dos publicaciones escaneadas revisadas visualmente. La base incorpora 20 códigos antiguos —E00-E0F y E11-E14—, sus formatos alternativos de mando y separa por familia los significados que cambian, especialmente E01, E02, E0E, E11 y E12.",
+      "areas": ["Fujitsu", "Códigos de error", "Documentación", "Diagnóstico"],
+      "kind": "content_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
       "id": "UPD-20260828-DUCT-DESIGNER-070",
       "date": "2026-08-28",
       "title": "El diseñador de conductos entra en edición técnica móvil",

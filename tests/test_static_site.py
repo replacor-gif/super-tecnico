@@ -107,8 +107,8 @@ class StaticSiteTests(unittest.TestCase):
             "categories": 18,
             "topics": 39,
             "variants": 71,
-            "errors": 117,
-            "search_entries": 188,
+            "errors": 137,
+            "search_entries": 208,
         })
         self.assertEqual(brands["daikin"]["counts"], {
             "categories": 13,
@@ -2155,16 +2155,57 @@ class StaticSiteTests(unittest.TestCase):
         expected = audit_brand(brand)
         actual = load(brand / "web" / "quality.json")
         self.assertEqual(actual, expected)
-        self.assertEqual(actual["errors"]["entries"], 117)
-        self.assertEqual(actual["errors"]["interpretations"], 127)
-        self.assertEqual(actual["errors"]["technical_interpretations"], 118)
-        self.assertEqual(actual["errors"]["status_counts"].get("complete"), 118)
+        self.assertEqual(actual["errors"]["entries"], 137)
+        self.assertEqual(actual["errors"]["interpretations"], 155)
+        self.assertEqual(actual["errors"]["technical_interpretations"], 146)
+        self.assertEqual(actual["errors"]["status_counts"].get("complete"), 146)
         self.assertEqual(actual["errors"]["status_counts"].get("developed", 0), 0)
         self.assertEqual(actual["errors"]["status_counts"].get("partial", 0), 0)
         self.assertEqual(actual["errors"]["status_counts"].get("reference_only", 0), 0)
         self.assertEqual(actual["technical_variants"]["entries"], 71)
         self.assertEqual(actual["technical_variants"]["status_counts"].get("partial", 0), 0)
         self.assertEqual(actual["technical_variants"]["status_counts"].get("reference_only", 0), 0)
+
+    def test_fujitsu_legacy_e01_e02_are_searchable_and_family_scoped(self):
+        web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
+        index = load(web / "errors" / "index.json")
+        search = load(web / "search.json")
+
+        e01_row = next(row for row in index if row["code_normalized"] == "E01")
+        e02_row = next(row for row in index if row["code_normalized"] == "E02")
+        self.assertEqual(e01_row["interpretation_count"], 3)
+        self.assertEqual(e02_row["interpretation_count"], 2)
+        self.assertTrue(contains_query(search, "E01 transferencia serie inversa"))
+        self.assertTrue(contains_query(search, "E1:00 comunicacion interior exterior"))
+        self.assertTrue(contains_query(search, "E02 sonda ambiente abierta"))
+        self.assertTrue(contains_query(search, "E2:00 circuito abierto"))
+
+        e01 = load(web / "errors" / "details" / f"{e01_row['id']}.json")
+        e02 = load(web / "errors" / "details" / f"{e02_row['id']}.json")
+        e0e = load(web / "errors" / "details" / "132.json")
+        self.assertEqual({item["id"] for item in e01["interpretations"]}, {201, 202, 203})
+        self.assertEqual({item["id"] for item in e02["interpretations"]}, {204, 205})
+        self.assertEqual(len(e0e["interpretations"]), 2)
+        self.assertTrue(any("presión" in item["title"].lower() for item in e0e["interpretations"]))
+        self.assertTrue(any("disipador" in item["title"].lower() for item in e0e["interpretations"]))
+
+        legacy_e11 = load(web / "errors" / "details" / "134.json")
+        legacy_e12 = load(web / "errors" / "details" / "135.json")
+        legacy_e13 = load(web / "errors" / "details" / "136.json")
+        legacy_e14 = load(web / "errors" / "details" / "137.json")
+        self.assertIn("modelo", legacy_e11["short_label"].lower())
+        self.assertIn("ventilador", legacy_e12["short_label"].lower())
+        self.assertIn("señal", legacy_e13["short_label"].lower())
+        self.assertIn("eeprom", legacy_e14["short_label"].lower())
+        self.assertTrue(contains_query(search, "E11 modelo legacy"))
+        self.assertTrue(contains_query(search, "E12 ventilador interior legacy"))
+        self.assertTrue(contains_query(search, "E14 EEPROM exterior"))
+
+        audit = load(web / "manual_audit.json")
+        self.assertEqual(audit["corpus"]["pdf_files"], 54)
+        self.assertEqual(audit["corpus"]["pages"], 1617)
+        self.assertEqual(audit["corpus"]["scanned_pdf_files_reviewed_visually"], 2)
+        self.assertEqual(len(audit["duplicate_pairs"]), 4)
 
     def test_fujitsu_confirmation_only_duplicates_are_consolidated(self):
         web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
@@ -2308,7 +2349,7 @@ class StaticSiteTests(unittest.TestCase):
         web = ROOT / "data" / "brands" / "fujitsu-general" / "web"
         quality = load(web / "quality.json")
         self.assertEqual(quality["errors"]["grouping_references"], 9)
-        self.assertEqual(quality["errors"]["technical_interpretations"], 118)
+        self.assertEqual(quality["errors"]["technical_interpretations"], 146)
         self.assertEqual(quality["errors"]["status_counts"].get("grouping_reference"), 9)
         self.assertLessEqual(quality["errors"]["status_counts"].get("reference_only", 0), 6)
         for component in quality["errors"]["component_coverage"].values():
@@ -2538,7 +2579,7 @@ class StaticSiteTests(unittest.TestCase):
 
         quality = load(web / "quality.json")
         self.assertEqual(quality["errors"]["status_counts"].get("reference_only", 0), 0)
-        self.assertEqual(quality["errors"]["status_counts"].get("complete"), 118)
+        self.assertEqual(quality["errors"]["status_counts"].get("complete"), 146)
 
         search = load(web / "search.json")
         for query in (
@@ -2663,7 +2704,7 @@ class StaticSiteTests(unittest.TestCase):
                     (path, interpretation["id"]),
                 )
                 self.assertTrue(any(source.get("page_start") for source in interpretation["sources"]))
-        self.assertEqual(technical_count, 118)
+        self.assertEqual(technical_count, 146)
 
         e11_return = load(web / "errors" / "details" / "1.json")["interpretations"][0]
         e11_behavior = next(item for item in e11_return["info_items"] if item["item_type"] == "machine_behavior")
@@ -2679,8 +2720,8 @@ class StaticSiteTests(unittest.TestCase):
         ))
 
         quality = load(web / "quality.json")
-        self.assertEqual(quality["errors"]["status_counts"], {"complete": 118, "grouping_reference": 9})
-        self.assertEqual(quality["errors"]["component_coverage"]["operational_impacts"], {"count": 105, "percent": 89.0})
+        self.assertEqual(quality["errors"]["status_counts"], {"complete": 146, "grouping_reference": 9})
+        self.assertEqual(quality["errors"]["component_coverage"]["operational_impacts"], {"count": 133, "percent": 91.1})
 
         search = load(web / "search.json")
         for query in (
