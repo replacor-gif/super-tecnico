@@ -22,6 +22,10 @@ assert.ok(example.sections.some(section => !section.isMain));
 assert.ok(example.activeEdges.filter(edge => edge.environment === 'hallway').length / example.activeEdges.length > .7);
 assert.ok(example.warnings.some(item => item.level === 'ok'));
 assert.ok(example.activeEdges.every(edge => edge.widthCm % 5 === 0 && edge.heightCm % 5 === 0));
+assert.equal(example.totals.constantHeightVerified, true);
+assert.equal(example.totals.constantHeightCm, 25);
+assert.ok(example.activeEdges.filter(edge => edge.loadFg > 0).every(edge => edge.heightCm === example.totals.constantHeightCm));
+assert.ok(example.sections.every(section => section.heightCm === example.totals.constantHeightCm));
 
 const network = D.automaticNetwork(state);
 assert.equal(network.outlets.length, 3);
@@ -92,6 +96,11 @@ assert.deepEqual({ x: diagonalPlacement.x, y: diagonalPlacement.y }, { x: 2.5, y
 assert.equal(diagonalPlacement.wallIndex, 0);
 assert.equal(diagonalPlacement.centered, true);
 assert.ok(Math.abs(diagonalPlacement.wallAngleDeg - 30.96) < .01);
+const diagonalManualPlacement = D.snapOutletToWall(diagonalRoom, { x: 3, y: 2 }, { preservePosition: true });
+assert.equal(diagonalManualPlacement.wallIndex, 0);
+assert.equal(diagonalManualPlacement.wallAngleDeg, diagonalPlacement.wallAngleDeg);
+assert.equal(diagonalManualPlacement.centered, false);
+assert.ok(diagonalManualPlacement.x > diagonalPlacement.x, 'La rejilla manual debe poder deslizarse por la pared');
 
 const legacy = D.normalizeState({
   workflowStep: 3,
@@ -126,17 +135,20 @@ assert.match(configured.svg, /UNIDAD INTERIOR/);
 const selectedOnTouch = D.renderPlanSvg(example, { selectedAdjustment: { kind: 'outlet-drag', roomId: 'bed-1' } });
 assert.match(selectedOnTouch.svg, /plan-outlet is-draggable is-selected/);
 assert.match(selectedOnTouch.svg, /data-centered="true"/);
-assert.match(selectedOnTouch.svg, /centrada y alineada con la pared/);
+assert.match(selectedOnTouch.svg, /centrada automáticamente.*alineada con la pared/);
 assert.match(selectedOnTouch.svg, /rotate\((?:0|90|30\.96)\)/);
 assert.equal((selectedOnTouch.svg.match(/data-kind="outlet-wall-target"/g) || []).length, 4);
 assert.match(selectedOnTouch.svg, /wall-snap-target is-current/);
+assert.match(selectedOnTouch.svg, /data-kind="machine-drag"/);
+assert.match(selectedOnTouch.svg, /class="route-hit"/);
+assert.match(selectedOnTouch.svg, /class="section-leader"/);
 
 const movedState = D.normalizeState({
   ...state,
   phase: 'layout',
-  outletOverrides: { 'bed-1': { x: 7.8, y: 4 } },
-  branchGuides: { 'bed-1': { x: 9, y: 5 } },
-  trunkGuide: { x: 8, y: 12 },
+  outletOverrides: { 'bed-1': { x: 7.8, y: 4, wallIndex: 1 } },
+  branchWaypoints: { 'bed-1': [{ x: 9, y: 5 }] },
+  trunkWaypoints: [{ x: 8, y: 12 }],
 });
 const moved = D.calculateProject(movedState);
 assert.deepEqual(moved.outletMap.get('bed-1'), {
@@ -144,9 +156,43 @@ assert.deepEqual(moved.outletMap.get('bed-1'), {
   wallA: { x: 8, y: 1 }, wallB: { x: 8, y: 7 }, centered: true,
 });
 assert.deepEqual(moved.roomConnections.get('bed-1').branchHandle, { x: 9, y: 5 });
+assert.deepEqual(moved.roomConnections.get('bed-1').branchHandles, [{ x: 9, y: 5 }]);
 assert.deepEqual(moved.state.trunkGuide, { x: 8, y: 12 });
 assert.deepEqual(moved.trunkHandle, { x: 8, y: 12 });
 assert.ok(moved.activeEdges.some(edge => [edge.a, edge.b].some(point => point.x === 8 && point.y === 12)), 'El principal no respeta el punto de paso manual');
 assert.match(D.renderPlanSvg(moved, { selectedAdjustment: { kind: 'trunk-drag', roomId: 'main' } }).svg, /trunk-drag is-selected/);
+
+const multiGuide = D.calculateProject({
+  ...state,
+  phase: 'layout',
+  branchWaypoints: { 'bed-1': [{ x: 9, y: 5 }, { x: 10, y: 5.5 }] },
+  trunkWaypoints: [{ x: 8, y: 12 }, { x: 8.5, y: 10 }],
+});
+assert.equal(multiGuide.roomConnections.get('bed-1').branchHandles.length, 2);
+assert.equal(multiGuide.trunkHandles.length, 2);
+assert.match(D.renderPlanSvg(multiGuide).svg, /data-guide-index="1"/);
+
+const movedMachineState = D.normalizeState({ ...state, machine: { roomId: 'hall', x: 8, y: 10.5 } });
+assert.deepEqual(movedMachineState.machine, { roomId: 'hall', x: 8, y: 10.5 });
+const movedMachine = D.calculateProject(movedMachineState);
+assert.equal(movedMachine.totals.connectedRooms, movedMachine.totals.selectedRooms);
+assert.match(D.renderPlanSvg(movedMachine, { selectedAdjustment: { kind: 'machine-drag', roomId: 'machine' } }).svg, /plan-machine is-draggable is-selected/);
+
+const labelLayout = D.layoutSectionLabels(example);
+assert.equal(labelLayout.length, example.sections.length);
+labelLayout.forEach((label, index) => {
+  const section = example.sections[index];
+  const edge = section.representative;
+  const routeMargin = Math.min(24, Math.max(9, 7 + section.widthCm * .28)) / 2 + 4;
+  const edgeBox = {
+    x: Math.min(edge.a.x, edge.b.x) * 44 - routeMargin,
+    y: Math.min(edge.a.y, edge.b.y) * 44 - routeMargin,
+    width: Math.abs(edge.b.x - edge.a.x) * 44 + routeMargin * 2,
+    height: Math.abs(edge.b.y - edge.a.y) * 44 + routeMargin * 2,
+  };
+  const overlaps = label.box.x < edgeBox.x + edgeBox.width && label.box.x + label.box.width > edgeBox.x
+    && label.box.y < edgeBox.y + edgeBox.height && label.box.y + label.box.height > edgeBox.y;
+  assert.equal(overlaps, false, `${example.sections[index].id} tapa su conducto`);
+});
 
 console.log('Plano poligonal y red principal de conductos: pruebas superadas.');

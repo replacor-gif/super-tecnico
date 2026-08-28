@@ -10,6 +10,15 @@
   },
   "entries": [
     {
+      "id": "UPD-20260828-DUCT-DESIGNER-070",
+      "date": "2026-08-28",
+      "title": "El diseñador de conductos entra en edición técnica móvil",
+      "summary": "La versión 0.7 permite arrastrar o ajustar con botones grandes la unidad interior, cada rejilla, los ramales y el conducto principal. Las rejillas se deslizan por su pared sin perder la alineación, principal y ramales admiten varios puntos de paso y cada movimiento recalcula la red. Una comprobación garantiza la misma altura en todos los tramos y los rótulos de dimensiones se sitúan fuera de los conductos mediante líneas guía.",
+      "areas": ["Climatización", "Conductos", "Móvil", "Planos", "Cálculo"],
+      "kind": "platform_improvement",
+      "author": {"type": "maintainer", "label": "Administrador"}
+    },
+    {
       "id": "UPD-20260828-ELECTROIA-TECHNICAL-DOSSIER-117",
       "date": "2026-08-28",
       "title": "ElectroIA 1.17 convierte cada plano en un proyecto documentado",

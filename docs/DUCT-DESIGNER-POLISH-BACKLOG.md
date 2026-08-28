@@ -23,10 +23,20 @@ Sigue siendo una propuesta de diseño previo basada en criterios prácticos. Tod
 - En móvil se puede tocar el cuadrado y después el paso real, sin arrastre de precisión.
 - «Principal automático» elimina la corrección manual y recupera la propuesta del motor.
 
+## Edición técnica móvil — realizada en 0.7.0
+
+- Selección directa tocando cualquier tramo, además de los tiradores del principal y los ramales.
+- Arrastre real y panel de ajuste con botones grandes para máquina, rejillas, principal y ramales.
+- Entrada automática en plano grande al seleccionar un elemento desde el móvil.
+- Rejillas deslizables por su pared y cambio de pared desde el panel, conservando siempre la alineación.
+- Varios puntos de paso consecutivos en el principal y en cada ramal, con recálculo inmediato.
+- Altura única de la red verificada tramo a tramo; únicamente cambia el ancho en escalones de 5 cm.
+- Rótulos exteriores con líneas guía y búsqueda automática de un espacio que no tape ningún conducto.
+
 ## Prioridad 2: trazado profesional y editable
 
 - Permitir marcar zonas preferentes de paso, zonas prohibidas, falsos techos disponibles, vigas y pasos entre habitaciones.
-- Permitir bloquear varios tramos del conducto principal, además del punto de paso ya ajustable.
+- Permitir bloquear tramos completos del conducto principal; los varios puntos de paso ya son ajustables desde 0.7.0.
 - Conservar los tramos bloqueados por el técnico cuando se recalcula el resto de la red.
 - Evitar recorridos con demasiados giros y mostrar por qué se eligió un trazado.
 - Añadir transiciones, derivaciones, codos y reducciones como elementos identificables.
@@ -50,4 +60,4 @@ Sigue siendo una propuesta de diseño previo basada en criterios prácticos. Tod
 
 ## Próximo incremento recomendado
 
-El siguiente cambio debe concentrarse en marcar zonas preferentes o prohibidas de paso y en mover o bloquear el conducto principal. Es la base necesaria para que el trazado automático respete falsos techos, vigas y decisiones reales del técnico.
+El siguiente cambio debe concentrarse en dibujar zonas preferentes y prohibidas de paso, falsos techos, vigas y pasos disponibles. Los puntos múltiples de 0.7.0 ya permiten imponer el recorrido; las restricciones convertirán esas decisiones en reglas permanentes del plano.

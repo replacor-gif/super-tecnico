@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "summary": {
     "pages": 23,
-    "editable_fields": 1258
+    "editable_fields": 1276
   },
   "entries": [
     {
@@ -2026,14 +2026,14 @@
       "default": "Diseño de conductos"
     },
     {
-      "key": "page.conductos.text.6741b988.1",
+      "key": "page.conductos.text.cd804daf.1",
       "page": "conductos.html",
       "page_slug": "conductos",
       "page_title": "Diseño intuitivo de conductos",
       "kind": "text",
       "tag": "span",
-      "label": "Texto · PRUEBA · VERSIÓN 0.6.0",
-      "default": "PRUEBA · VERSIÓN 0.6.0"
+      "label": "Texto · PRUEBA · VERSIÓN 0.7.0",
+      "default": "PRUEBA · VERSIÓN 0.7.0"
     },
     {
       "key": "page.conductos.text.0b92eeda.1",
@@ -2146,14 +2146,14 @@
       "default": "1 metro"
     },
     {
-      "key": "page.conductos.text.fbe4211e.1",
+      "key": "page.conductos.text.87d629d2.1",
       "page": "conductos.html",
       "page_slug": "conductos",
       "page_title": "Diseño intuitivo de conductos",
       "kind": "text",
       "tag": "span",
-      "label": "Texto · Altura conducto",
-      "default": "Altura conducto"
+      "label": "Texto · Altura única de red",
+      "default": "Altura única de red"
     },
     {
       "key": "page.conductos.text.89f4c50a.1",
@@ -2346,6 +2346,186 @@
       "default": "Plano interactivo de la vivienda"
     },
     {
+      "key": "page.conductos.aria.32d5c149.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "aria",
+      "tag": "section",
+      "label": "Nombre accesible · Control preciso del elemento seleccionado",
+      "default": "Control preciso del elemento seleccionado"
+    },
+    {
+      "key": "page.conductos.text.e6c71f25.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "text",
+      "tag": "span",
+      "label": "Texto · AJUSTE PRECISO",
+      "default": "AJUSTE PRECISO"
+    },
+    {
+      "key": "page.conductos.text.b0ed4e68.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "text",
+      "tag": "strong",
+      "label": "Texto · Elemento seleccionado",
+      "default": "Elemento seleccionado"
+    },
+    {
+      "key": "page.conductos.aria.f838afc5.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "aria",
+      "tag": "button",
+      "label": "Nombre accesible · Cerrar ajuste",
+      "default": "Cerrar ajuste"
+    },
+    {
+      "key": "page.conductos.text.87fbfc1d.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "text",
+      "tag": "p",
+      "label": "Párrafo · Muévelo con los botones o directamente sobre el plano. La red se…",
+      "default": "Muévelo con los botones o directamente sobre el plano. La red se recalcula con cada cambio."
+    },
+    {
+      "key": "page.conductos.aria.2f7a99f6.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "aria",
+      "tag": "div",
+      "label": "Nombre accesible · Desplazamiento por cuadrícula",
+      "default": "Desplazamiento por cuadrícula"
+    },
+    {
+      "key": "page.conductos.aria.290be5e0.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "aria",
+      "tag": "button",
+      "label": "Nombre accesible · Mover arriba",
+      "default": "Mover arriba"
+    },
+    {
+      "key": "page.conductos.aria.f2ce78ad.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "aria",
+      "tag": "button",
+      "label": "Nombre accesible · Mover a la izquierda",
+      "default": "Mover a la izquierda"
+    },
+    {
+      "key": "page.conductos.aria.e35c45b3.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "aria",
+      "tag": "button",
+      "label": "Nombre accesible · Centrar",
+      "default": "Centrar"
+    },
+    {
+      "key": "page.conductos.aria.4d3c39c9.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "aria",
+      "tag": "button",
+      "label": "Nombre accesible · Mover a la derecha",
+      "default": "Mover a la derecha"
+    },
+    {
+      "key": "page.conductos.aria.4c8db298.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "aria",
+      "tag": "button",
+      "label": "Nombre accesible · Mover abajo",
+      "default": "Mover abajo"
+    },
+    {
+      "key": "page.conductos.text.d41416a8.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "text",
+      "tag": "button",
+      "label": "Botón · ← Pared",
+      "default": "← Pared"
+    },
+    {
+      "key": "page.conductos.text.58936d4a.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "text",
+      "tag": "button",
+      "label": "Botón · ← Deslizar",
+      "default": "← Deslizar"
+    },
+    {
+      "key": "page.conductos.text.85714a19.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "text",
+      "tag": "button",
+      "label": "Botón · Centrar",
+      "default": "Centrar"
+    },
+    {
+      "key": "page.conductos.text.1c9c5444.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "text",
+      "tag": "button",
+      "label": "Botón · Deslizar →",
+      "default": "Deslizar →"
+    },
+    {
+      "key": "page.conductos.text.b6a511de.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "text",
+      "tag": "button",
+      "label": "Botón · Pared →",
+      "default": "Pared →"
+    },
+    {
+      "key": "page.conductos.text.385b2657.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "text",
+      "tag": "button",
+      "label": "Botón · ＋ Otro punto de paso",
+      "default": "＋ Otro punto de paso"
+    },
+    {
+      "key": "page.conductos.text.4ad3d5d9.1",
+      "page": "conductos.html",
+      "page_slug": "conductos",
+      "page_title": "Diseño intuitivo de conductos",
+      "kind": "text",
+      "tag": "button",
+      "label": "Botón · ↺ Recuperar automático",
+      "default": "↺ Recuperar automático"
+    },
+    {
       "key": "page.conductos.aria.f4e4cc82.1",
       "page": "conductos.html",
       "page_slug": "conductos",
@@ -2446,14 +2626,14 @@
       "default": "Instalación calculada sobre tu plano"
     },
     {
-      "key": "page.conductos.text.3859dccb.1",
+      "key": "page.conductos.text.392fb3dc.1",
       "page": "conductos.html",
       "page_slug": "conductos",
       "page_title": "Diseño intuitivo de conductos",
       "kind": "text",
       "tag": "p",
-      "label": "Párrafo · Elige una pared para cada rejilla: quedará centrada y girada en s…",
-      "default": "Elige una pared para cada rejilla: quedará centrada y girada en su misma dirección. Ajusta el principal con el cuadrado y los ramales con los rombos. En móvil basta con tocar el elemento y después el paso real; todo se recalcula inmediatamente."
+      "label": "Párrafo · Toca cualquier conducto, rejilla o la propia máquina. Puedes arra…",
+      "default": "Toca cualquier conducto, rejilla o la propia máquina. Puedes arrastrarlo, colocarlo con dos toques o afinarlo con los botones grandes. Añade varios puntos de paso cuando necesites obligar a un ramal o al principal a seguir la obra real."
     },
     {
       "key": "page.conductos.text.6e74d088.1",

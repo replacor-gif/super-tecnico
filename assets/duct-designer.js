@@ -5,8 +5,8 @@
 })(typeof window !== 'undefined' ? window : globalThis, function () {
   'use strict';
 
-  const STORAGE_KEY = 'st.ductDesigner.v5';
-  const LEGACY_KEYS = ['st.ductDesigner.v4', 'st.ductDesigner.v3', 'st.ductDesigner.v2'];
+  const STORAGE_KEY = 'st.ductDesigner.v6';
+  const LEGACY_KEYS = ['st.ductDesigner.v5', 'st.ductDesigner.v4', 'st.ductDesigner.v3', 'st.ductDesigner.v2'];
   const CELL_PX = 44;
   const ROUTE_STEP = .5;
 
@@ -34,7 +34,7 @@
   });
 
   const DEFAULTS = Object.freeze({
-    schemaVersion: 5,
+    schemaVersion: 6,
     phase: 'draw',
     projectName: 'Vivienda',
     cellSizeM: .5,
@@ -252,15 +252,10 @@
       };
     });
     const numbered = renumberRooms(rooms);
-    const machineRoomId = String(input.machine?.roomId || '');
-    const machineRoom = numbered.find(room => room.id === machineRoomId);
-    const legacyMachine = input.machine && !machineRoom ? numbered.find(room => pointInPolygon(input.machine, room.points, true)) : null;
-    const chosenMachineRoom = machineRoom || legacyMachine;
-    const machine = chosenMachineRoom ? {
-      roomId: chosenMachineRoom.id,
-      ...point(input.machine?.roomId ? input.machine : nearestInteriorPoint(chosenMachineRoom, input.machine), gridCols, gridRows),
-    } : null;
     const roomById = new Map(numbered.map(room => [room.id, room]));
+    const machineRoomId = String(input.machine?.roomId || '');
+    const machineRoom = roomById.get(machineRoomId);
+    const machine = input.machine ? snapMachineToPlan({ rooms: numbered, gridCols, gridRows }, input.machine, machineRoom) : null;
     const outletOverrides = {};
     Object.entries(input.outletOverrides || {}).forEach(([roomId, value]) => {
       const room = roomById.get(roomId);
@@ -269,14 +264,23 @@
         x: clamp(finite(value?.x), 0, gridCols),
         y: clamp(finite(value?.y), 0, gridRows),
       };
-      const snapped = snapOutletToWall(room, target);
-      if (snapped) outletOverrides[roomId] = { x: snapped.x, y: snapped.y };
+      const snapped = snapOutletToWall(room, target, { wallIndex: value?.wallIndex, preservePosition: true });
+      if (snapped) outletOverrides[roomId] = { x: snapped.x, y: snapped.y, wallIndex: snapped.wallIndex };
     });
-    const branchGuides = {};
-    Object.entries(input.branchGuides || {}).forEach(([roomId, value]) => {
-      if (roomById.has(roomId)) branchGuides[roomId] = point(value, gridCols, gridRows);
+    const branchWaypoints = {};
+    const rawBranchWaypoints = input.branchWaypoints || input.branchGuides || {};
+    Object.entries(rawBranchWaypoints).forEach(([roomId, value]) => {
+      if (!roomById.has(roomId)) return;
+      const values = Array.isArray(value) ? value : [value];
+      const waypoints = values.filter(Boolean).slice(0, 8).map(item => routePoint(item, gridCols, gridRows));
+      if (waypoints.length) branchWaypoints[roomId] = waypoints;
     });
-    const trunkGuide = input.trunkGuide ? point(input.trunkGuide, gridCols, gridRows) : null;
+    const rawTrunkWaypoints = Array.isArray(input.trunkWaypoints)
+      ? input.trunkWaypoints
+      : input.trunkGuide ? [input.trunkGuide] : [];
+    const trunkWaypoints = rawTrunkWaypoints.filter(Boolean).slice(0, 12).map(item => routePoint(item, gridCols, gridRows));
+    const branchGuides = Object.fromEntries(Object.entries(branchWaypoints).map(([roomId, values]) => [roomId, values[0]]));
+    const trunkGuide = trunkWaypoints[0] || null;
     return {
       ...DEFAULTS,
       phase: ['configure', 'layout'].includes(input.phase) ? input.phase : input.workflowStep >= 2 ? 'configure' : 'draw',
@@ -291,6 +295,8 @@
       outletOverrides,
       branchGuides,
       trunkGuide,
+      branchWaypoints,
+      trunkWaypoints,
     };
   }
 
@@ -411,26 +417,58 @@
     }).filter(segment => segment.length >= ROUTE_STEP);
   }
 
-  function outletPlacement(segment) {
+  function outletPlacement(segment, position = null) {
+    const placed = position || { x: segment.x, y: segment.y };
+    const centered = Math.hypot(placed.x - segment.x, placed.y - segment.y) < 1e-7;
     return {
-      x: segment.x,
-      y: segment.y,
+      x: Number(placed.x.toFixed(3)),
+      y: Number(placed.y.toFixed(3)),
       wallIndex: segment.index,
       wallAngleDeg: segment.angleDeg,
       wallA: segment.a,
       wallB: segment.b,
-      centered: true,
+      centered,
     };
   }
 
-  function snapOutletToWall(room, targetValue) {
+  function snapOutletToWall(room, targetValue, options = {}) {
     const target = targetValue || polygonCentroid(pointsForRoom(room));
-    const segment = wallSegments(room).sort((one, two) => {
+    const walls = wallSegments(room);
+    const requestedWall = Number.isInteger(Number(options.wallIndex))
+      ? walls.find(item => item.index === Number(options.wallIndex))
+      : null;
+    const segment = requestedWall || walls.sort((one, two) => {
       const distanceDifference = distanceToSegment(target, one.a, one.b) - distanceToSegment(target, two.a, two.b);
       if (Math.abs(distanceDifference) > 1e-8) return distanceDifference;
       return Math.hypot(target.x - one.x, target.y - one.y) - Math.hypot(target.x - two.x, target.y - two.y);
     })[0];
-    return segment ? outletPlacement(segment) : null;
+    if (!segment) return null;
+    if (!options.preservePosition) return outletPlacement(segment);
+    const closest = closestPointOnSegment(target, segment.a, segment.b);
+    const margin = Math.min(.35, segment.length * .18);
+    const dx = segment.b.x - segment.a.x;
+    const dy = segment.b.y - segment.a.y;
+    const length = Math.max(segment.length, 1e-9);
+    const rawRatio = ((closest.x - segment.a.x) * dx + (closest.y - segment.a.y) * dy) / (length * length);
+    const safeRatio = clamp(rawRatio, margin / length, 1 - margin / length);
+    return outletPlacement(segment, {
+      x: segment.a.x + dx * safeRatio,
+      y: segment.a.y + dy * safeRatio,
+    });
+  }
+
+  function snapMachineToPlan(state, targetValue, preferredRoom = null) {
+    if (!state?.rooms?.length || !targetValue) return null;
+    const target = routePoint(targetValue, state.gridCols, state.gridRows);
+    const containingRoom = state.rooms.find(room => pointInPolygon(target, room.points, true));
+    const room = containingRoom || preferredRoom || [...state.rooms].sort((one, two) => {
+      const onePoint = nearestInteriorPoint(one, target);
+      const twoPoint = nearestInteriorPoint(two, target);
+      return Math.hypot(target.x - onePoint.x, target.y - onePoint.y) - Math.hypot(target.x - twoPoint.x, target.y - twoPoint.y);
+    })[0];
+    if (!room) return null;
+    const position = pointInPolygon(target, room.points, true) ? target : routePoint(nearestInteriorPoint(room, target), state.gridCols, state.gridRows);
+    return { roomId: room.id, x: position.x, y: position.y };
   }
 
   function roomAtMidpoint(a, b, rooms) {
@@ -539,12 +577,12 @@
     ordered.forEach((room, index) => {
       const starts = index === 0 ? [{ x: state.machine.x, y: state.machine.y }] : [...nodes.values()];
       const outlet = state.outletOverrides[room.id]
-        ? snapOutletToWall(room, state.outletOverrides[room.id])
+        ? snapOutletToWall(room, state.outletOverrides[room.id], { wallIndex: state.outletOverrides[room.id].wallIndex, preservePosition: true })
         : chooseOutletPlacement(room, state, occupiedOutlets);
       if (!outlet) return;
       const waypoints = [];
-      if (index === 0 && state.trunkGuide) waypoints.push(state.trunkGuide);
-      if (state.branchGuides[room.id]) waypoints.push(state.branchGuides[room.id]);
+      if (index === 0) waypoints.push(...state.trunkWaypoints);
+      waypoints.push(...(state.branchWaypoints[room.id] || []));
       let path = [];
       let segmentStarts = starts;
       for (const destination of [...waypoints, outlet]) {
@@ -557,12 +595,12 @@
       addPathToNetwork(path, edges, nodes);
       if (index === 0) {
         for (let pointIndex = 1; pointIndex < path.length; pointIndex += 1) trunkKeys.add(edgeKey(path[pointIndex - 1], path[pointIndex]));
-        trunkHandle = state.trunkGuide || path[Math.floor(path.length / 2)] || path[0];
+        trunkHandle = state.trunkWaypoints[0] || path[Math.floor(path.length / 2)] || path[0];
       }
       occupiedOutlets.add(pointKey(outlet));
       outlets.push({ id: `outlet-${room.id}`, roomId: room.id, ...outlet });
     });
-    return { routeEdges: [...edges.values()], outlets, trunkKeys, trunkHandle };
+    return { routeEdges: [...edges.values()], outlets, trunkKeys, trunkHandle, trunkHandles: state.trunkWaypoints.length ? state.trunkWaypoints : [trunkHandle].filter(Boolean) };
   }
 
   function buildGraph(edges) {
@@ -671,8 +709,9 @@
     const activeEdgeMap = new Map(activeEdges.map(edge => [edge.key, edge]));
     roomConnections.forEach((connection, roomId) => {
       if (!connection.connected || connection.path.length < 2) return;
-      if (state.branchGuides[roomId]) {
-        connection.branchHandle = state.branchGuides[roomId];
+      if (state.branchWaypoints[roomId]?.length) {
+        connection.branchHandles = [...state.branchWaypoints[roomId]];
+        connection.branchHandle = connection.branchHandles[0];
         return;
       }
       const exclusiveNodes = [];
@@ -684,6 +723,7 @@
       const candidates = exclusiveNodes.length ? exclusiveNodes : connection.path.slice(1, -1);
       const candidate = candidates[Math.floor(candidates.length / 2)] || connection.path[Math.floor(connection.path.length / 2)];
       connection.branchHandle = parsePointKey(candidate);
+      connection.branchHandles = [connection.branchHandle];
     });
     const buckets = new Map();
     activeEdges.filter(edge => edge.loadFg > 0).forEach(edge => {
@@ -725,7 +765,10 @@
     if (rooms.some(room => room.type === 'unassigned')) warnings.push({ level: 'warn', text: 'Falta identificar alguna estancia.' });
     if (identified.length && !selectedRooms.length) warnings.push({ level: 'warn', text: 'Marca al menos una estancia con rejilla.' });
     if (selectedRooms.length && !state.machine) warnings.push({ level: 'info', text: 'Marca la estancia de la unidad interior.' });
-    if (state.machine && connectedRooms.length === selectedRooms.length && selectedRooms.length) warnings.push({ level: 'ok', text: 'La red forma un conducto principal y deriva ramales hasta rejillas centradas y alineadas con sus paredes.' });
+    if (state.machine && connectedRooms.length === selectedRooms.length && selectedRooms.length) warnings.push({ level: 'ok', text: 'La red forma un conducto principal y deriva ramales hasta rejillas alineadas con sus paredes.' });
+    const constantHeight = activeEdges.every(edge => edge.loadFg <= 0 || edge.heightCm === state.ductHeightCm)
+      && sections.every(section => section.heightCm === state.ductHeightCm);
+    if (!constantHeight) warnings.push({ level: 'danger', text: 'Se ha detectado una altura incoherente entre tramos. Recalcula el proyecto antes de ejecutarlo.' });
     sections.forEach(section => {
       if (section.velocityMps > 5.2) warnings.push({ level: 'warn', text: `${section.id}: velocidad elevada (${formatNumber(section.velocityMps, 1)} m/s).` });
     });
@@ -736,6 +779,7 @@
       outletMap,
       roomConnections,
       trunkHandle: generated.trunkHandle,
+      trunkHandles: generated.trunkHandles || [generated.trunkHandle].filter(Boolean),
       activeEdges,
       sections,
       totals: {
@@ -749,6 +793,8 @@
         airflowM3h,
         suggestedCapacityFg: loadFg > 0 ? roundUp(loadFg, 500) : 0,
         mainDuct: sizeDuct(loadFg, state),
+        constantHeightCm: state.ductHeightCm,
+        constantHeightVerified: constantHeight,
         hallwayLengthM: activeEdges.filter(edge => edge.environment === 'hallway').reduce((sum, edge) => sum + edgeLengthGrid(edge), 0) * state.cellSizeM,
       },
       warnings: uniqueWarnings(warnings),
@@ -780,6 +826,63 @@
       grille: nearestInteriorPoint(room, { x: bounds.x + bounds.width - .7, y: bounds.y + .7 }),
       machine: nearestInteriorPoint(room, { x: bounds.x + bounds.width - .7, y: bounds.y + bounds.height - .7 }),
     };
+  }
+
+  function rectanglesOverlap(one, two, padding = 0) {
+    return one.x - padding < two.x + two.width
+      && one.x + one.width + padding > two.x
+      && one.y - padding < two.y + two.height
+      && one.y + one.height + padding > two.y;
+  }
+
+  function layoutSectionLabels(result, width = result.state.gridCols * CELL_PX, height = result.state.gridRows * CELL_PX) {
+    const labelWidth = 118;
+    const labelHeight = 30;
+    const occupied = [];
+    const routeBounds = result.activeEdges.filter(edge => edge.loadFg > 0).map(edge => {
+      const stroke = clamp(7 + edge.widthCm * .28, 9, 24);
+      const x1 = edge.a.x * CELL_PX, y1 = edge.a.y * CELL_PX;
+      const x2 = edge.b.x * CELL_PX, y2 = edge.b.y * CELL_PX;
+      return {
+        x: Math.min(x1, x2) - stroke / 2 - 18,
+        y: Math.min(y1, y2) - stroke / 2 - 18,
+        width: Math.abs(x2 - x1) + stroke + 36,
+        height: Math.abs(y2 - y1) + stroke + 36,
+      };
+    });
+    return result.sections.map(section => {
+      const edge = section.representative;
+      const x1 = edge.a.x * CELL_PX, y1 = edge.a.y * CELL_PX;
+      const x2 = edge.b.x * CELL_PX, y2 = edge.b.y * CELL_PX;
+      const anchorX = (x1 + x2) / 2, anchorY = (y1 + y2) / 2;
+      const dx = x2 - x1, dy = y2 - y1;
+      const length = Math.max(1, Math.hypot(dx, dy));
+      const normal = { x: -dy / length, y: dx / length };
+      const tangent = { x: dx / length, y: dy / length };
+      const candidates = [];
+      const routeStroke = clamp(7 + section.widthCm * .28, 9, 24);
+      const clearance = Math.abs(normal.x) * labelWidth / 2 + Math.abs(normal.y) * labelHeight / 2 + routeStroke / 2 + 22;
+      const addCandidate = (centerXValue, centerYValue, baseScore = 0) => {
+        const centerX = clamp(centerXValue, labelWidth / 2 + 6, width - labelWidth / 2 - 6);
+        const centerY = clamp(centerYValue, labelHeight / 2 + 6, height - labelHeight / 2 - 6);
+        const box = { x: centerX - labelWidth / 2, y: centerY - labelHeight / 2, width: labelWidth, height: labelHeight };
+        const routeConflicts = routeBounds.filter(route => rectanglesOverlap(box, route, 2)).length;
+        const labelConflicts = occupied.filter(previous => rectanglesOverlap(box, previous, 5)).length;
+        const distance = Math.hypot(centerX - anchorX, centerY - anchorY);
+        candidates.push({ x: centerX, y: centerY, box, score: routeConflicts * 1000000 + labelConflicts * 100000 + distance + baseScore });
+      };
+      [clearance, -clearance, clearance + 34, -clearance - 34, clearance + 72, -clearance - 72].forEach(offset => {
+        [0, 58, -58, 116, -116, 174, -174].forEach(along => {
+          addCandidate(anchorX + normal.x * offset + tangent.x * along, anchorY + normal.y * offset + tangent.y * along);
+        });
+      });
+      for (let y = labelHeight / 2 + 9; y <= height - labelHeight / 2 - 9; y += 38) {
+        for (let x = labelWidth / 2 + 9; x <= width - labelWidth / 2 - 9; x += 64) addCandidate(x, y, 24);
+      }
+      const chosen = candidates.sort((one, two) => one.score - two.score || one.y - two.y || one.x - two.x)[0];
+      occupied.push(chosen.box);
+      return { sectionId: section.id, x: chosen.x, y: chosen.y, anchorX, anchorY, width: labelWidth, height: labelHeight, box: chosen.box };
+    });
   }
 
   function renderPlanSvg(result, options = {}) {
@@ -830,12 +933,15 @@
     if (state.phase === 'layout' && state.machine) {
       result.activeEdges.filter(edge => edge.loadFg > 0).forEach(edge => {
         const routeWidth = clamp(7 + edge.widthCm * .28, 9, 24);
-        parts.push(`<line class="route-edge ${edge.isMain ? 'is-main' : 'is-branch'}${edge.environment === 'hallway' ? ' through-hallway' : ''}" x1="${px(edge.a.x)}" y1="${px(edge.a.y)}" x2="${px(edge.b.x)}" y2="${px(edge.b.y)}" style="--route-width:${routeWidth}px"><title>${edge.isMain ? 'Conducto principal' : 'Ramal'} ${edge.sectionId}: ${edge.widthCm} × ${edge.heightCm} cm</title></line>`);
+        const adjustmentKind = edge.isMain || edge.roomIds.length !== 1 ? 'trunk-drag' : 'branch-drag';
+        const adjustmentId = adjustmentKind === 'trunk-drag' ? 'main' : edge.roomIds[0];
+        parts.push(`<line class="route-hit" data-kind="${adjustmentKind}" data-id="${escapeHtml(adjustmentId)}" x1="${px(edge.a.x)}" y1="${px(edge.a.y)}" x2="${px(edge.b.x)}" y2="${px(edge.b.y)}"><title>Toca o arrastra este ${adjustmentKind === 'trunk-drag' ? 'conducto principal' : 'ramal'} para ajustar su recorrido</title></line>`);
+        parts.push(`<line class="route-edge ${edge.isMain ? 'is-main' : 'is-branch'}${edge.environment === 'hallway' ? ' through-hallway' : ''}" x1="${px(edge.a.x)}" y1="${px(edge.a.y)}" x2="${px(edge.b.x)}" y2="${px(edge.b.y)}" style="--route-width:${routeWidth}px"><title>${edge.isMain ? 'Conducto principal' : 'Ramal'} ${edge.sectionId}: ${edge.widthCm} × ${edge.heightCm} cm · altura común verificada</title></line>`);
       });
-      result.sections.forEach(section => {
-        const edge = section.representative;
-        const x = px((edge.a.x + edge.b.x) / 2), y = px((edge.a.y + edge.b.y) / 2);
-        parts.push(`<g class="section-label ${section.isMain ? 'main-label' : ''}"><rect x="${x - 51}" y="${y - 15}" width="102" height="30" rx="8"/><text x="${x}" y="${y + 5}" text-anchor="middle">${section.id} · ${section.widthCm}×${section.heightCm}</text></g>`);
+      const sectionLabels = layoutSectionLabels(result, width, height);
+      result.sections.forEach((section, index) => {
+        const label = sectionLabels[index];
+        parts.push(`<g class="section-label ${section.isMain ? 'main-label' : ''}" data-section-id="${escapeHtml(section.id)}" transform="translate(${label.x} ${label.y})"><line class="section-leader" x1="${label.anchorX - label.x}" y1="${label.anchorY - label.y}" x2="0" y2="0"/><circle class="section-leader-dot" cx="${label.anchorX - label.x}" cy="${label.anchorY - label.y}" r="3"/><rect x="${-label.width / 2}" y="${-label.height / 2}" width="${label.width}" height="${label.height}" rx="8"/><text x="0" y="4" text-anchor="middle">${section.id} · ${section.widthCm}×${section.heightCm} cm</text><title>${formatNumber(section.airflowM3h)} m³/h · altura ${section.heightCm} cm común a toda la red</title></g>`);
       });
       if (selectedAdjustment?.kind === 'outlet-drag') {
         const selectedRoom = result.roomMap.get(selectedAdjustment.roomId);
@@ -849,19 +955,22 @@
         const outlet = result.outletMap.get(room.id);
         if (!outlet) return;
         const selected = selectedAdjustment?.kind === 'outlet-drag' && selectedAdjustment.roomId === room.id;
-        parts.push(`<g class="plan-outlet is-draggable${selected ? ' is-selected' : ''}" data-kind="outlet-drag" data-id="${escapeHtml(room.id)}" data-wall-index="${outlet.wallIndex}" data-wall-angle="${outlet.wallAngleDeg}" data-centered="${outlet.centered ? 'true' : 'false'}" transform="translate(${px(outlet.x)} ${px(outlet.y)}) rotate(${outlet.wallAngleDeg})"><circle class="drag-hit" r="25"/><rect x="-22" y="-8" width="44" height="16" rx="4"/><path d="M-15-3h30M-15 2h30"/><title>Rejilla centrada y alineada con la pared · Tócala y elige otra pared para recolocarla · ${escapeHtml(room.name)} · ${room.grille.widthCm} × ${room.grille.heightCm} cm</title></g>`);
+        parts.push(`<g class="plan-outlet is-draggable${selected ? ' is-selected' : ''}" data-kind="outlet-drag" data-id="${escapeHtml(room.id)}" data-wall-index="${outlet.wallIndex}" data-wall-angle="${outlet.wallAngleDeg}" data-centered="${outlet.centered ? 'true' : 'false'}" transform="translate(${px(outlet.x)} ${px(outlet.y)}) rotate(${outlet.wallAngleDeg})"><circle class="drag-hit" r="36"/><rect x="-22" y="-8" width="44" height="16" rx="4"/><path d="M-15-3h30M-15 2h30"/><title>Rejilla ${outlet.centered ? 'centrada automáticamente' : 'ajustada manualmente'} y alineada con la pared · ${escapeHtml(room.name)} · ${room.grille.widthCm} × ${room.grille.heightCm} cm</title></g>`);
       });
       result.roomConnections.forEach((connection, roomId) => {
-        if (!connection.branchHandle) return;
+        if (!connection.branchHandles?.length) return;
         const room = result.roomMap.get(roomId);
-        const selected = selectedAdjustment?.kind === 'branch-drag' && selectedAdjustment.roomId === roomId;
-        parts.push(`<g class="branch-drag${selected ? ' is-selected' : ''}" data-kind="branch-drag" data-id="${escapeHtml(roomId)}" transform="translate(${px(connection.branchHandle.x)} ${px(connection.branchHandle.y)})"><circle class="drag-hit" r="25"/><path d="M0-10L10 0 0 10-10 0Z"/><circle r="3"/><title>Arrastra este punto o tócalo y después toca el recorrido real de ${escapeHtml(room?.name || '')}</title></g>`);
+        connection.branchHandles.forEach((handle, guideIndex) => {
+          const selected = selectedAdjustment?.kind === 'branch-drag' && selectedAdjustment.roomId === roomId && finite(selectedAdjustment.guideIndex) === guideIndex;
+          parts.push(`<g class="branch-drag${selected ? ' is-selected' : ''}" data-kind="branch-drag" data-id="${escapeHtml(roomId)}" data-guide-index="${guideIndex}" transform="translate(${px(handle.x)} ${px(handle.y)})"><circle class="drag-hit" r="34"/><path d="M0-10L10 0 0 10-10 0Z"/><circle r="3"/><title>Punto ${guideIndex + 1} del ramal de ${escapeHtml(room?.name || '')} · arrastra o toca para ajustar</title></g>`);
+        });
       });
-      if (result.trunkHandle) {
-        const selected = selectedAdjustment?.kind === 'trunk-drag';
-        parts.push(`<g class="trunk-drag${selected ? ' is-selected' : ''}" data-kind="trunk-drag" data-id="main" transform="translate(${px(result.trunkHandle.x)} ${px(result.trunkHandle.y)})"><circle class="drag-hit" r="27"/><rect x="-11" y="-11" width="22" height="22" rx="5"/><path d="M-6 0h12M0-6v12"/><title>Conducto principal · Arrastra o toca y elige el paso real</title></g>`);
-      }
-      parts.push(`<g class="plan-machine" transform="translate(${px(state.machine.x)} ${px(state.machine.y)})"><rect x="-35" y="-27" width="70" height="54" rx="12"/><circle cx="0" cy="0" r="15"/><path d="M0-15c9 3 11 8 5 14M15 0c-3 9-8 11-14 5M0 15c-9-3-11-8-5-14M-15 0c3-9 8-11 14-5"/><text x="0" y="-37" text-anchor="middle">UNIDAD INTERIOR</text></g>`);
+      result.trunkHandles.forEach((handle, guideIndex) => {
+        const selected = selectedAdjustment?.kind === 'trunk-drag' && finite(selectedAdjustment.guideIndex) === guideIndex;
+        parts.push(`<g class="trunk-drag${selected ? ' is-selected' : ''}" data-kind="trunk-drag" data-id="main" data-guide-index="${guideIndex}" transform="translate(${px(handle.x)} ${px(handle.y)})"><circle class="drag-hit" r="36"/><rect x="-11" y="-11" width="22" height="22" rx="5"/><path d="M-6 0h12M0-6v12"/><title>Punto ${guideIndex + 1} del conducto principal · arrastra o toca para ajustar</title></g>`);
+      });
+      const machineSelected = selectedAdjustment?.kind === 'machine-drag';
+      parts.push(`<g class="plan-machine is-draggable${machineSelected ? ' is-selected' : ''}" data-kind="machine-drag" data-id="machine" transform="translate(${px(state.machine.x)} ${px(state.machine.y)})"><circle class="drag-hit" r="42"/><rect x="-35" y="-27" width="70" height="54" rx="12"/><circle class="machine-fan" cx="0" cy="0" r="15"/><path d="M0-15c9 3 11 8 5 14M15 0c-3 9-8 11-14 5M0 15c-9-3-11-8-5-14M-15 0c3-9 8-11 14-5"/><text x="0" y="-37" text-anchor="middle">UNIDAD INTERIOR</text><title>Arrastra o toca la máquina para situarla en su posición real</title></g>`);
     }
 
     if (state.phase === 'draw' && drawingPoints.length) {
@@ -883,6 +992,7 @@
       automaticResult: $('automaticResult'), networkStatus: $('networkStatus'), resultSummary: $('resultSummary'), alerts: $('ductAlerts'), networkResults: $('networkResults'), roomResults: $('roomResults'),
       legend: $('planControlLegend'), undo: $('undoProject'), redo: $('redoProject'), planFrame: document.querySelector('.plan-frame'), focus: $('planFocusToggle'), cancelAdjustment: $('cancelAdjustment'), resetTrunk: $('resetTrunkGuide'), saveProject: $('saveDuctProject'),
       roomContext: $('ductRoomContext'), contextTitle: $('ductRoomContextTitle'), contextClose: $('ductRoomContextClose'), contextType: $('ductContextType'), contextLoad: $('ductContextLoad'), contextLoadField: $('ductContextLoadField'), contextGrille: $('ductContextGrille'), contextMachine: $('ductContextMachine'),
+      adjustmentDock: $('ductAdjustmentDock'), adjustmentTitle: $('ductAdjustmentTitle'), adjustmentHelp: $('ductAdjustmentHelp'), adjustmentClose: $('ductAdjustmentClose'), directionalPad: $('ductDirectionalPad'), outletPad: $('ductOutletPad'), addGuide: $('addAdjustmentGuide'), resetSelected: $('resetSelectedAdjustment'), heightConsistency: $('heightConsistencyBadge'),
     };
     let state = loadState();
     let result = calculateProject(state);
@@ -953,17 +1063,53 @@
       return point({ x: local.x / CELL_PX, y: local.y / CELL_PX }, state.gridCols, state.gridRows);
     }
 
+    function adjustmentPosition(adjustment) {
+      if (!adjustment) return null;
+      const guideIndex = Math.max(0, Math.round(finite(adjustment.guideIndex)));
+      if (adjustment.kind === 'outlet-drag') return result.outletMap.get(adjustment.roomId) || null;
+      if (adjustment.kind === 'machine-drag') return state.machine;
+      if (adjustment.kind === 'branch-drag') return result.roomConnections.get(adjustment.roomId)?.branchHandles?.[guideIndex] || null;
+      if (adjustment.kind === 'trunk-drag') return result.trunkHandles?.[guideIndex] || null;
+      return null;
+    }
+
+    function stateWithMovedAdjustment(currentState, adjustment, position) {
+      const guideIndex = Math.max(0, Math.round(finite(adjustment.guideIndex)));
+      if (adjustment.kind === 'outlet-drag') {
+        const room = currentState.rooms.find(item => item.id === adjustment.roomId);
+        if (!room) return currentState;
+        const currentOutlet = result.outletMap.get(adjustment.roomId);
+        const snapped = snapOutletToWall(room, position, { wallIndex: position?.wallIndex ?? currentOutlet?.wallIndex, preservePosition: true });
+        if (!snapped) return currentState;
+        return { ...currentState, outletOverrides: { ...currentState.outletOverrides, [adjustment.roomId]: { x: snapped.x, y: snapped.y, wallIndex: snapped.wallIndex } } };
+      }
+      if (adjustment.kind === 'machine-drag') {
+        const machine = snapMachineToPlan(currentState, position, currentState.rooms.find(room => room.id === currentState.machine?.roomId));
+        return machine ? { ...currentState, machine } : currentState;
+      }
+      if (adjustment.kind === 'branch-drag') {
+        const nextBranchWaypoints = { ...currentState.branchWaypoints };
+        const values = [...(nextBranchWaypoints[adjustment.roomId] || [])];
+        values[guideIndex] = routePoint(position, currentState.gridCols, currentState.gridRows);
+        nextBranchWaypoints[adjustment.roomId] = values.filter(Boolean).slice(0, 8);
+        return { ...currentState, branchWaypoints: nextBranchWaypoints };
+      }
+      if (adjustment.kind === 'trunk-drag') {
+        const values = [...currentState.trunkWaypoints];
+        values[guideIndex] = routePoint(position, currentState.gridCols, currentState.gridRows);
+        return { ...currentState, trunkWaypoints: values.filter(Boolean).slice(0, 12) };
+      }
+      return currentState;
+    }
+
     function beginPlanDrag(event) {
       if (state.phase !== 'layout') return;
-      const target = event.target.closest('[data-kind="outlet-drag"], [data-kind="branch-drag"], [data-kind="trunk-drag"]');
+      const target = event.target.closest('[data-kind="outlet-drag"], [data-kind="branch-drag"], [data-kind="trunk-drag"], [data-kind="machine-drag"]');
       if (!target) return;
       event.preventDefault();
-      const current = target.dataset.kind === 'outlet-drag'
-        ? result.outletMap.get(target.dataset.id)
-        : target.dataset.kind === 'branch-drag'
-          ? result.roomConnections.get(target.dataset.id)?.branchHandle
-          : result.trunkHandle;
-      drag = { kind: target.dataset.kind, roomId: target.dataset.id, pointerId: event.pointerId, initial: JSON.stringify(state), moved: false, lastPoint: current ? pointKey(current) : '' };
+      const adjustment = { kind: target.dataset.kind, roomId: target.dataset.id, guideIndex: Math.max(0, Math.round(finite(target.dataset.guideIndex))) };
+      const current = adjustmentPosition(adjustment);
+      drag = { ...adjustment, pointerId: event.pointerId, initial: JSON.stringify(state), moved: false, lastPoint: current ? pointKey(current) : '' };
       document.body.classList.add('is-dragging-duct');
     }
 
@@ -974,7 +1120,11 @@
       if (drag.kind === 'outlet-drag') {
         const room = state.rooms.find(item => item.id === drag.roomId);
         if (!room) return;
-        position = snapOutletToWall(room, position);
+        const currentOutlet = result.outletMap.get(drag.roomId);
+        position = snapOutletToWall(room, position, { wallIndex: currentOutlet?.wallIndex, preservePosition: true });
+        if (!position) return;
+      } else if (drag.kind === 'machine-drag') {
+        position = snapMachineToPlan(state, position, state.rooms.find(room => room.id === state.machine?.roomId));
         if (!position) return;
       }
       const positionKey = pointKey(position);
@@ -987,15 +1137,15 @@
         future.length = 0;
         drag.moved = true;
       }
+      state = normalizeState(stateWithMovedAdjustment(state, drag, position));
       if (drag.kind === 'outlet-drag') {
-        state = normalizeState({ ...state, outletOverrides: { ...state.outletOverrides, [drag.roomId]: position } });
-        transientMessage = '<strong>Rejilla ajustada a la pared.</strong> Se centra, se alinea con ella y toda la red se recalcula.';
+        transientMessage = '<strong>Rejilla ajustada a la pared.</strong> Conserva su alineación y toda la red se recalcula.';
       } else if (drag.kind === 'branch-drag') {
-        state = normalizeState({ ...state, branchGuides: { ...state.branchGuides, [drag.roomId]: position } });
         transientMessage = '<strong>Ajustando ramal.</strong> Suelta el rombo cuando el conducto pase por el lugar real.';
-      } else {
-        state = normalizeState({ ...state, trunkGuide: position });
+      } else if (drag.kind === 'trunk-drag') {
         transientMessage = '<strong>Ajustando el principal.</strong> Suelta el cuadrado sobre el pasillo o paso real; los ramales se recalculan.';
+      } else {
+        transientMessage = '<strong>Moviendo la unidad interior.</strong> La red completa se redibuja desde su nueva posición.';
       }
       render();
     }
@@ -1056,11 +1206,38 @@
       elements.phaseAction.classList.toggle('is-layout', state.phase === 'layout');
       elements.phaseAction.querySelector('span').textContent = drawing ? 'He terminado de dibujar' : state.phase === 'configure' ? 'Calcular y ajustar' : 'Editar estancias';
       elements.cancelAdjustment.hidden = !selectedAdjustment;
-      elements.resetTrunk.hidden = state.phase !== 'layout' || !state.trunkGuide;
+      elements.resetTrunk.hidden = state.phase !== 'layout' || !state.trunkWaypoints.length;
       elements.saveProject.disabled = state.phase !== 'layout' || !ready;
       elements.legend.innerHTML = state.phase === 'layout'
-        ? '<span><i class="legend-grille">▤</i><b>Rejilla centrada en pared</b></span><span><i class="legend-branch">◆</i><b>Mueve cada ramal</b></span><span><i class="legend-main">＋</i><b>Mueve el principal</b></span><span><i class="legend-live">↻</i><b>Recálculo inmediato</b></span>'
+        ? '<span><i class="legend-grille">▤</i><b>Desliza la rejilla</b></span><span><i class="legend-branch">◆</i><b>Mueve cada ramal</b></span><span><i class="legend-main">＋</i><b>Mueve el principal</b></span><span><i class="legend-machine">M</i><b>Mueve la máquina</b></span><span><i class="legend-live">↻</i><b>Recálculo inmediato</b></span>'
         : '<span><i class="legend-type">▼</i><b>Qué estancia es</b></span><span><i class="legend-grille">▤</i><b>Lleva rejilla</b></span><span><i class="legend-machine">M</i><b>Aquí va la máquina</b></span>';
+    }
+
+    function renderAdjustmentDock() {
+      const visible = state.phase === 'layout' && Boolean(selectedAdjustment);
+      elements.adjustmentDock.hidden = !visible;
+      if (!visible) return;
+      const room = result.roomMap.get(selectedAdjustment.roomId);
+      const guideIndex = Math.max(0, Math.round(finite(selectedAdjustment.guideIndex)));
+      const labels = {
+        'outlet-drag': `Rejilla · ${room?.name || 'estancia'}`,
+        'branch-drag': `Ramal de ${room?.name || 'estancia'} · punto ${guideIndex + 1}`,
+        'trunk-drag': `Conducto principal · punto ${guideIndex + 1}`,
+        'machine-drag': 'Unidad interior',
+      };
+      elements.adjustmentTitle.textContent = labels[selectedAdjustment.kind] || 'Elemento seleccionado';
+      const stepCm = Math.round(ROUTE_STEP * state.cellSizeM * 100);
+      elements.adjustmentHelp.textContent = selectedAdjustment.kind === 'outlet-drag'
+        ? `Desliza la rejilla ${stepCm} cm por la pared, céntrala o toca otra pared del plano. Siempre conservará su alineación.`
+        : `Muévelo en pasos de ${stepCm} cm o toca directamente su nueva posición. Todas las secciones se recalculan al instante.`;
+      const outlet = selectedAdjustment.kind === 'outlet-drag';
+      elements.outletPad.hidden = !outlet;
+      elements.directionalPad.hidden = outlet;
+      elements.addGuide.hidden = !['branch-drag', 'trunk-drag'].includes(selectedAdjustment.kind);
+      elements.resetSelected.textContent = selectedAdjustment.kind === 'machine-drag' ? '◎ Centrar en estancia' : '↺ Recuperar automático';
+      const centerButton = elements.directionalPad.querySelector('[data-adjust-action="center"]');
+      centerButton.disabled = selectedAdjustment.kind !== 'machine-drag';
+      centerButton.title = selectedAdjustment.kind === 'machine-drag' ? 'Centrar la máquina en su estancia actual' : 'Usa las flechas para desplazar';
     }
 
     function renderRoomContext() {
@@ -1103,9 +1280,9 @@
       } else {
         icon.textContent = '↔';
         if (selectedAdjustment) {
-          const item = selectedAdjustment.kind === 'outlet-drag' ? 'rejilla' : selectedAdjustment.kind === 'branch-drag' ? 'ramal' : 'principal';
-          copy.innerHTML = `<strong>${item === 'rejilla' ? 'Rejilla seleccionada' : item === 'ramal' ? 'Ramal seleccionado' : 'Conducto principal seleccionado'}.</strong> ${item === 'rejilla' ? 'Toca la pared deseada: quedará centrada y alineada automáticamente.' : 'Ahora toca en el plano el lugar por el que debe pasar.'}`;
-        } else copy.innerHTML = '<strong>Ajusta la instalación a la obra real.</strong> Mueve el cuadrado del conducto principal, los rombos de los ramales o las rejillas. En móvil, toca el elemento y después su nueva zona.';
+          const item = selectedAdjustment.kind === 'outlet-drag' ? 'rejilla' : selectedAdjustment.kind === 'branch-drag' ? 'ramal' : selectedAdjustment.kind === 'machine-drag' ? 'máquina' : 'principal';
+          copy.innerHTML = `<strong>${item === 'rejilla' ? 'Rejilla seleccionada' : item === 'ramal' ? 'Ramal seleccionado' : item === 'máquina' ? 'Unidad interior seleccionada' : 'Conducto principal seleccionado'}.</strong> ${item === 'rejilla' ? 'Toca la posición exacta sobre una pared o usa el ajuste preciso.' : 'Toca en el plano el lugar real o utiliza las flechas grandes.'}`;
+        } else copy.innerHTML = '<strong>Ajusta la instalación a la obra real.</strong> Puedes tocar o arrastrar cualquier conducto, rejilla o la máquina. Los rótulos quedan fuera del trazado para no ocultarlo.';
         elements.planStatus.textContent = drag ? 'Recalculando mientras mueves' : selectedAdjustment ? 'Toca la nueva posición' : 'Plano calculado y ajustable';
       }
     }
@@ -1131,6 +1308,10 @@
         metric('Salida principal', `${result.totals.mainDuct.widthCm} × ${result.totals.mainDuct.heightCm} cm`, `${formatNumber(result.totals.mainDuct.velocityMps, 1)} m/s`, '#ff3fa7'),
       ].join('');
       elements.alerts.innerHTML = result.warnings.filter(item => item.level !== 'info').map(item => `<p class="alert-${item.level}"><span>${item.level === 'ok' ? '✓' : '!'}</span>${escapeHtml(item.text)}</p>`).join('');
+      elements.heightConsistency.innerHTML = result.totals.constantHeightVerified
+        ? `<span>✓</span><strong>Altura única verificada: ${result.totals.constantHeightCm} cm en principal y ramales</strong><small>Solo cambia el ancho, siempre en escalones comerciales de 5 cm.</small>`
+        : '<span>!</span><strong>Revisar altura de la red</strong><small>Hay un tramo incoherente y no debe ejecutarse.</small>';
+      elements.heightConsistency.classList.toggle('is-error', !result.totals.constantHeightVerified);
       elements.networkResults.innerHTML = result.sections.map(section => `<div class="result-row ${section.isMain ? 'main-section' : ''}"><b>${section.id}</b><span><strong>${section.isMain ? 'Conducto principal' : section.rooms.map(room => escapeHtml(room.name)).join(' · ')}</strong><small>${formatNumber(section.lengthM, 1)} m · ${formatNumber(section.airflowM3h)} m³/h</small></span><em>${section.widthCm} × ${section.heightCm} cm</em></div>`).join('');
       elements.roomResults.innerHTML = result.rooms.filter(room => room.conditioned && room.type !== 'unassigned').map(room => `<div class="result-row room-result"><b>▥</b><span><strong>${escapeHtml(room.name)} · ${formatNumber(room.loadFg)} frg/h</strong><small>${formatNumber(room.airflowM3h)} m³/h · ramal ${room.branchDuct.widthCm} × ${room.branchDuct.heightCm} cm</small></span><em>${room.grille.widthCm} × ${room.grille.heightCm} cm</em></div>`).join('');
     }
@@ -1140,6 +1321,7 @@
       renderControls();
       renderMessage();
       renderPlan();
+      renderAdjustmentDock();
       renderRoomContext();
       renderSummary();
       renderResults();
@@ -1189,11 +1371,12 @@
         return;
       }
       if (state.phase === 'layout') {
-        if (target && ['outlet-drag', 'branch-drag', 'trunk-drag'].includes(target.dataset.kind)) {
-          const next = { kind: target.dataset.kind, roomId: target.dataset.id };
-          selectedAdjustment = selectedAdjustment?.kind === next.kind && selectedAdjustment.roomId === next.roomId ? null : next;
+        if (target && ['outlet-drag', 'branch-drag', 'trunk-drag', 'machine-drag'].includes(target.dataset.kind)) {
+          const next = { kind: target.dataset.kind, roomId: target.dataset.id, guideIndex: Math.max(0, Math.round(finite(target.dataset.guideIndex))) };
+          selectedAdjustment = selectedAdjustment?.kind === next.kind && selectedAdjustment.roomId === next.roomId && finite(selectedAdjustment.guideIndex) === next.guideIndex ? null : next;
           transientMessage = '';
           render();
+          if (selectedAdjustment && window.matchMedia('(max-width: 760px)').matches && !focusMode) toggleFocus(true);
           return;
         }
         if (!selectedAdjustment) return;
@@ -1201,18 +1384,19 @@
         if (selectedAdjustment.kind === 'outlet-drag') {
           const room = state.rooms.find(item => item.id === selectedAdjustment.roomId);
           if (!room) return;
-          position = snapOutletToWall(room, position);
+          position = snapOutletToWall(room, position, { wallIndex: target?.dataset.kind === 'outlet-wall-target' ? target.dataset.wallIndex : undefined, preservePosition: true });
           if (!position) return;
-          const roomId = selectedAdjustment.roomId;
+          const adjustment = selectedAdjustment;
           selectedAdjustment = null;
-          commit({ ...state, outletOverrides: { ...state.outletOverrides, [roomId]: position } });
-        } else if (selectedAdjustment.kind === 'branch-drag') {
-          const roomId = selectedAdjustment.roomId;
+          commit(stateWithMovedAdjustment(state, adjustment, position));
+        } else if (selectedAdjustment.kind === 'machine-drag') {
+          const adjustment = selectedAdjustment;
           selectedAdjustment = null;
-          commit({ ...state, branchGuides: { ...state.branchGuides, [roomId]: position } });
+          commit(stateWithMovedAdjustment(state, adjustment, position));
         } else {
+          const adjustment = selectedAdjustment;
           selectedAdjustment = null;
-          commit({ ...state, trunkGuide: position });
+          commit(stateWithMovedAdjustment(state, adjustment, position));
         }
         return;
       }
@@ -1280,6 +1464,88 @@
       }
     }
 
+    function moveSelectedWithButton(action) {
+      if (!selectedAdjustment) return;
+      const current = adjustmentPosition(selectedAdjustment);
+      if (!current) return;
+      let target = { x: current.x, y: current.y };
+      if (selectedAdjustment.kind === 'outlet-drag') {
+        const room = state.rooms.find(item => item.id === selectedAdjustment.roomId);
+        const walls = room ? wallSegments(room) : [];
+        const wallPosition = walls.findIndex(item => item.index === current.wallIndex);
+        const wall = walls[wallPosition];
+        if (!wall) return;
+        if (action === 'wall-previous' || action === 'wall-next') {
+          const direction = action === 'wall-previous' ? -1 : 1;
+          const nextWall = walls[(wallPosition + direction + walls.length) % walls.length];
+          target = { x: nextWall.x, y: nextWall.y, wallIndex: nextWall.index };
+        } else if (action === 'center') target = { x: wall.x, y: wall.y, wallIndex: wall.index };
+        else {
+          const direction = action === 'outlet-back' ? -1 : action === 'outlet-forward' ? 1 : 0;
+          if (!direction) return;
+          target = {
+            x: current.x + (wall.b.x - wall.a.x) / wall.length * ROUTE_STEP * direction,
+            y: current.y + (wall.b.y - wall.a.y) / wall.length * ROUTE_STEP * direction,
+            wallIndex: wall.index,
+          };
+        }
+      } else if (selectedAdjustment.kind === 'machine-drag' && action === 'center') {
+        const room = state.rooms.find(item => item.id === state.machine?.roomId);
+        if (!room) return;
+        target = nearestInteriorPoint(room, polygonCentroid(room.points));
+      } else {
+        const deltas = { up: [0, -ROUTE_STEP], down: [0, ROUTE_STEP], left: [-ROUTE_STEP, 0], right: [ROUTE_STEP, 0] };
+        const delta = deltas[action];
+        if (!delta) return;
+        target = { x: current.x + delta[0], y: current.y + delta[1] };
+      }
+      commit(stateWithMovedAdjustment(state, selectedAdjustment, target));
+    }
+
+    function addSelectedGuide() {
+      if (!selectedAdjustment || !['branch-drag', 'trunk-drag'].includes(selectedAdjustment.kind)) return;
+      const isBranch = selectedAdjustment.kind === 'branch-drag';
+      const existing = isBranch
+        ? [...(state.branchWaypoints[selectedAdjustment.roomId] || result.roomConnections.get(selectedAdjustment.roomId)?.branchHandles || [])]
+        : [...(state.trunkWaypoints.length ? state.trunkWaypoints : result.trunkHandles || [])];
+      const base = existing.at(-1) || state.machine;
+      if (!base) return;
+      const candidate = routePoint({ x: base.x + (base.x + ROUTE_STEP <= state.gridCols ? ROUTE_STEP : -ROUTE_STEP), y: base.y }, state.gridCols, state.gridRows);
+      existing.push(candidate);
+      const guideIndex = existing.length - 1;
+      if (isBranch) {
+        const branchWaypoints = { ...state.branchWaypoints, [selectedAdjustment.roomId]: existing.slice(0, 8) };
+        selectedAdjustment = { ...selectedAdjustment, guideIndex };
+        commit({ ...state, branchWaypoints });
+      } else {
+        selectedAdjustment = { ...selectedAdjustment, guideIndex };
+        commit({ ...state, trunkWaypoints: existing.slice(0, 12) });
+      }
+      transientMessage = '<strong>Nuevo punto de paso añadido.</strong> Muévelo hasta el siguiente codo o paso obligado de la obra.';
+      render();
+    }
+
+    function resetCurrentAdjustment() {
+      if (!selectedAdjustment) return;
+      let next = state;
+      if (selectedAdjustment.kind === 'outlet-drag') {
+        const outletOverrides = { ...state.outletOverrides };
+        delete outletOverrides[selectedAdjustment.roomId];
+        next = { ...state, outletOverrides };
+      } else if (selectedAdjustment.kind === 'branch-drag') {
+        const branchWaypoints = { ...state.branchWaypoints };
+        delete branchWaypoints[selectedAdjustment.roomId];
+        next = { ...state, branchWaypoints };
+      } else if (selectedAdjustment.kind === 'trunk-drag') {
+        next = { ...state, trunkWaypoints: [], trunkGuide: null };
+      } else if (selectedAdjustment.kind === 'machine-drag') {
+        const room = state.rooms.find(item => item.id === state.machine?.roomId);
+        if (room) next = { ...state, machine: { roomId: room.id, ...routePoint(nearestInteriorPoint(room, polygonCentroid(room.points)), state.gridCols, state.gridRows) } };
+      }
+      selectedAdjustment = null;
+      commit(next);
+    }
+
     function saveInProject() {
       const API = window.SuperTecnicoProjects;
       if (!API || state.phase !== 'layout') return;
@@ -1329,7 +1595,14 @@
     elements.redo.addEventListener('click', redo);
     elements.focus.addEventListener('click', () => toggleFocus());
     elements.cancelAdjustment.addEventListener('click', () => { selectedAdjustment = null; render(); });
-    elements.resetTrunk.addEventListener('click', () => { selectedAdjustment = null; commit({ ...state, trunkGuide: null }); });
+    elements.resetTrunk.addEventListener('click', () => { selectedAdjustment = null; commit({ ...state, trunkWaypoints: [], trunkGuide: null }); });
+    elements.adjustmentClose.addEventListener('click', () => { selectedAdjustment = null; render(); });
+    elements.adjustmentDock.addEventListener('click', event => {
+      const actionButton = event.target.closest('[data-adjust-action]');
+      if (actionButton) moveSelectedWithButton(actionButton.dataset.adjustAction);
+    });
+    elements.addGuide.addEventListener('click', addSelectedGuide);
+    elements.resetSelected.addEventListener('click', resetCurrentAdjustment);
     elements.contextClose.addEventListener('click', () => { selectedRoomId = ''; render(); });
     elements.contextType.addEventListener('change', () => {
       const roomId = selectedRoomId;
@@ -1391,10 +1664,12 @@
     roomOverlap,
     wallSegments,
     snapOutletToWall,
+    snapMachineToPlan,
     sizeDuct,
     loadForRoom,
     automaticNetwork,
     calculateProject,
+    layoutSectionLabels,
     renderPlanSvg,
     roundUp,
     geometry: Object.freeze({

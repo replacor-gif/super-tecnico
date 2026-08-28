@@ -10,11 +10,11 @@
   <link rel="icon" type="image/png" href="assets/super-tecnico-logo.png">
   <link rel="stylesheet" href="assets/common.css?v=1">
   <link rel="stylesheet" href="assets/app-theme.css?v=1">
-  <link rel="stylesheet" href="assets/duct-designer.css?v=9">
+  <link rel="stylesheet" href="assets/duct-designer.css?v=10">
   <script src="assets/i18n.js?v=8" defer></script>
   <script src="assets/app-shell.js?v=8" defer></script>
   <script src="assets/project-core.js?v=1" defer></script>
-  <script src="assets/duct-designer.js?v=11" defer></script>
+  <script src="assets/duct-designer.js?v=12" defer></script>
 </head>
 <body>
   <header class="duct-header">
@@ -23,7 +23,7 @@
       <span><strong>Super Técnico</strong><small>Diseño de conductos</small></span>
     </a>
     <div class="duct-header-actions">
-      <span>PRUEBA · VERSIÓN 0.6.0</span>
+      <span>PRUEBA · VERSIÓN 0.7.0</span>
       <button id="saveDuctProject" type="button" disabled>Guardar en Proyecto</button>
       <button id="printProject" type="button">Imprimir / PDF</button>
     </div>
@@ -48,7 +48,7 @@
         </div>
 
         <div id="technicalSettings" class="inline-settings technical-settings" hidden>
-          <label for="ductHeightCm"><span>Altura conducto</span><span class="number-unit"><input id="ductHeightCm" type="number" min="10" max="80" step="5" value="25"><b>cm</b></span></label>
+          <label for="ductHeightCm"><span>Altura única de red</span><span class="number-unit"><input id="ductHeightCm" type="number" min="10" max="80" step="5" value="25"><b>cm</b></span></label>
           <label for="grilleHeightCm"><span>Altura rejilla</span><span class="number-unit"><input id="grilleHeightCm" type="number" min="8" max="60" step="1" value="15"><b>cm</b></span></label>
         </div>
 
@@ -82,6 +82,32 @@
           <div id="planScroll" class="plan-scroll"><div id="planStage" class="plan-stage" aria-label="Plano interactivo de la vivienda"></div></div>
         </div>
         <div class="plan-foot"><div id="planSummary" class="plan-summary"></div></div>
+
+        <section id="ductAdjustmentDock" class="duct-adjustment-dock" hidden aria-label="Control preciso del elemento seleccionado">
+        <header>
+          <div><span>AJUSTE PRECISO</span><strong id="ductAdjustmentTitle">Elemento seleccionado</strong></div>
+          <button id="ductAdjustmentClose" type="button" aria-label="Cerrar ajuste">×</button>
+        </header>
+        <p id="ductAdjustmentHelp">Muévelo con los botones o directamente sobre el plano. La red se recalcula con cada cambio.</p>
+        <div class="duct-adjustment-controls">
+          <div id="ductDirectionalPad" class="duct-direction-pad" aria-label="Desplazamiento por cuadrícula">
+            <span></span><button type="button" data-adjust-action="up" aria-label="Mover arriba">↑</button><span></span>
+            <button type="button" data-adjust-action="left" aria-label="Mover a la izquierda">←</button><button type="button" data-adjust-action="center" aria-label="Centrar">◎</button><button type="button" data-adjust-action="right" aria-label="Mover a la derecha">→</button>
+            <span></span><button type="button" data-adjust-action="down" aria-label="Mover abajo">↓</button><span></span>
+          </div>
+          <div id="ductOutletPad" class="duct-outlet-pad" hidden>
+            <button type="button" data-adjust-action="wall-previous">← Pared</button>
+            <button type="button" data-adjust-action="outlet-back">← Deslizar</button>
+            <button type="button" data-adjust-action="center">Centrar</button>
+            <button type="button" data-adjust-action="outlet-forward">Deslizar →</button>
+            <button type="button" data-adjust-action="wall-next">Pared →</button>
+          </div>
+          <div class="duct-adjustment-actions">
+            <button id="addAdjustmentGuide" type="button">＋ Otro punto de paso</button>
+            <button id="resetSelectedAdjustment" type="button">↺ Recuperar automático</button>
+          </div>
+        </div>
+        </section>
       </div>
 
       <section id="ductRoomContext" class="duct-room-context" hidden aria-label="Editor de la estancia seleccionada">
@@ -97,9 +123,10 @@
 
     <section id="automaticResult" class="automatic-result" hidden>
       <header>
-        <div><p class="duct-eyebrow">PROPUESTA AJUSTABLE</p><h2>Instalación calculada sobre tu plano</h2><p>Elige una pared para cada rejilla: quedará centrada y girada en su misma dirección. Ajusta el principal con el cuadrado y los ramales con los rombos. En móvil basta con tocar el elemento y después el paso real; todo se recalcula inmediatamente.</p></div>
+        <div><p class="duct-eyebrow">PROPUESTA AJUSTABLE</p><h2>Instalación calculada sobre tu plano</h2><p>Toca cualquier conducto, rejilla o la propia máquina. Puedes arrastrarlo, colocarlo con dos toques o afinarlo con los botones grandes. Añade varios puntos de paso cuando necesites obligar a un ramal o al principal a seguir la obra real.</p></div>
         <span id="networkStatus" class="network-status">RED COMPLETA</span>
       </header>
+      <div id="heightConsistencyBadge" class="height-consistency-badge"></div>
       <div id="resultSummary" class="result-summary"></div>
       <div id="ductAlerts" class="duct-alerts"></div>
       <div class="result-columns">
